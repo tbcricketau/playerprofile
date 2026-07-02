@@ -1,0 +1,4 @@
+streamlit==1.58.0
+pyodbc==5.3.0
+msal==1.37.0
+plotly==6.8.0

@@ -1,0 +1,36 @@
+# ── Python ─────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# ── Virtual environment ────────────────────────────────
+venv/
+.venv/
+env/
+
+# ── Claude Code tooling (machine-specific) ─────────────
+.claude/
+
+# ── Secrets / env ──────────────────────────────────────
+.env
+*.env
+.streamlit/secrets.toml
+
+# ── Generated reports (rebuildable via build_reports.py / build_batting_reports.py) ──
+reports/*
+!reports/.gitkeep
+
+# ── Photo cache (SharePoint/Graph backend; local photos/ is the source) ─
+.photo_cache/
+
+# ── Manual backup folder (local only) ──────────────────
+_backup_pre_width/
+
+# ── OS / editor cruft ──────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
