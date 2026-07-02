@@ -4,7 +4,36 @@ Bump `REPORT_VERSION` in `version.py` on every git commit that changes report
 output, and record it here. The version + build date print in the top-right of
 the front page.
 
-## Unreleased
+## v1.1 — 2026-07-02
+- **Swing described by ball age (new vs old).** A bowler whose swing *direction* flips with
+  ball age (e.g. Starc's new-ball out-swing that reverses back into the LHB when it's old) was
+  read as a misleading "swinging both ways". Movement now splits swing by simple over bands
+  (new ≤25, old ≥40) on the hand-filtered set (`profile._swing_age_split`): when the dominant
+  direction flips between phases the archetype reads "swings it away with the new ball and
+  reverses it back in when it's old", the ball-type cells read "swinging away, reverses in",
+  and a swing-by-ball-age line is added under Movement. Hand-specific (the flip is opposite for
+  LHB/RHB so it washes out across both); shown only for genuine swing bowlers.
+- **Over vs Round the Wicket always shown** (table + both pitch maps), instead of being
+  hidden when the split isn't a 15%+ two-way tactic. A lopsided/absent angle now gets a
+  full comparative read only when it's a genuine tactic; otherwise a usage note that
+  caveats a small sample ("rare change-up — 5%, 272 balls") or an absent one ("never goes
+  round in this data"). Maps for sparse/empty angles are kept for layout consistency and
+  captioned with their ball count. Surfaces e.g. Starc's round-the-wicket bouncer plan to
+  LHB that the old gate hid.
+- **Dismissal mix is now peer-normalised** (Threat Profile). "Most likely out" was
+  tautological (caught is ~⅔ of all pace wickets), so it's replaced by a **"How he gets
+  you out" index table**: his share of each dismissal type indexed against the population
+  base rate for his peer group (pace/spin × batter hand). Index &gt;1 = he does it more
+  than most (highlighted). New reference `referencebuilder/data/dismissal_baseline.csv`
+  (`build_dismissal_baseline.py`); report falls back to raw split if absent. Example: Starc
+  vs LHB over-indexes Bowled 1.43× and LBW 1.22×.
+- **Ball-type Movement reports swing *and* seam.** The classifier used only
+  `movement_off_pitch`, so a swing bowler was mislabelled "seaming". It now tracks swing
+  (`movement_in_air`) alongside seam/turn and names whichever is material, dominant first
+  (e.g. "swinging away, seaming back").
+- **Danger-zone wicket denominator clarified.** The card now reads "% of **mapped** wickets"
+  with a footnote counting wickets that pitched too full to place on the map (negative/
+  at-crease tracked length) — reconciles the earlier "24 of 134" vs 137-wicket header.
 - **Scope = official international Tests only** (via `Matches.series_id → Series.name`,
   `ludis_cricket.config.international_series_sql`), not `match_length_id` — reproduces
   official Test tallies; Sheffield Shield etc. excluded.
@@ -26,6 +55,12 @@ the front page.
   an outcomes-by-band table (avg/wkts/econ/SR when tight/standard/wide) + the over/round
   usage mix, with the map underneath. Crease-position mix across the over added to the
   Sequencing read.
+- **Page layout tuned so sections land predictably** (verified pace + spin, both 6 pages):
+  p3 = Pitch Maps + Speed & Spells, **p4 starts Over vs Round → Sequencing → Length by
+  Match-up**, **p5 = Release Point & Crease Use** (+ Movement), p6 = Beaten Zones. Speed &
+  Spells lost its forced page break; Movement moved to sit with Release Point; a page break
+  now precedes Over vs Round and Release Point. Pitch-map and over/round-map charts trimmed
+  ~25% (denser, still legible) so each page fills to its section boundary.
 - **Bowling Fingerprint** panel (after the Scouting Summary): 7–8 StatsBomb-style
   distribution cards (`ludis_cricket.charts.fingerprint_strip`) — pace, release height,
   crease width/variation, seam/turn, swing/drift, bounce, repeatability — each a mini peer

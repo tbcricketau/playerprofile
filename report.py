@@ -220,7 +220,9 @@ def _figures(P: dict) -> dict:
         figs["beaten"] = _fig_uri(pitch_scatter_map(bdf, lz, fine_ez, value="count", title="", min_balls=1, flip_x=is_lhb), w=pw, h=ph)
         figs["beaten_heat"] = _fig_uri(pitch_heatmap(bdf, value="count", title="", flip_x=is_lhb), w=pw, h=ph)
     orr = P.get("over_round")
-    if orr and orr["show"]:
+    if orr:
+        # Always render both maps (even a near-empty one) so the two-column layout stays
+        # consistent — the sparse/empty side just shows the pitch backdrop.
         over_df = [r for r in df if r.get("is_round") is False]
         rnd_df  = [r for r in df if r.get("is_round") is True]
         figs["over_map"]  = _fig_uri(pitch_heatmap(over_df, value="count", title="", flip_x=is_lhb), w=pw, h=ph)
@@ -258,9 +260,6 @@ def _threat_cards(P: dict) -> list:
         ("Beaten %", _pct(P["beaten_pct"], 1), f"n={P['n_tracked']:,}"),
         ("False-shot %", _pct(P["false_pct"], 1), "beaten + edges"),
     ]
-    if P["top_dismissal"]:
-        md = P["top_dismissal"][1] / P["n_dismissals"] * 100
-        cards.append(("Most likely out", P["top_dismissal"][0], f"{_pct(md)} of {P['n_dismissals']} wkts"))
     if P["is_spin"]:
         cards.append(("Avg turn", _fmt(P["avg_turn"], ".1f", "°"), f"{_pct(P['big_turn_pct'])} ≥5°"))
         cards.append(("Avg drift", _fmt(P["avg_drift"], ".1f", "°"), "in-air"))
@@ -274,13 +273,42 @@ def _threat_cards(P: dict) -> list:
     return cards
 
 
+def _dismissal_rows(P: dict) -> list:
+    """Normalised dismissal mix: (type, his %, base %, index text, colour). Caught
+    dominates for everyone, so we index each type against the peer base rate and
+    highlight where he over-indexes (his genuine wicket-taking signature)."""
+    di = P.get("dismissal_index") or []
+    rows = []
+    for d in di:
+        if d["count"] < 2:          # drop one-off freak modes (e.g. a single hit-wicket)
+            continue
+        idx = d["index"]
+        if idx is None:
+            idx_txt, colour = "—", TEXT_SEC
+        else:
+            idx_txt = f"{idx:.2f}×"
+            colour = (DANGER if idx >= 1.15 else "#9aa3b2" if idx <= 0.85 else TEXT_PRI)
+        rows.append((
+            d["type"], f"{d['share']:.0f}%",
+            f"{d['base_share']:.0f}%" if d["base_share"] is not None else "—",
+            idx_txt, colour,
+        ))
+    return rows
+
+
+def _dismissal_peer_label(P: dict) -> str:
+    kind = "pace" if P.get("is_pace") else ("spin" if P.get("is_spin") else "")
+    hand = {"vs LHB": " to LHB", "vs RHB": " to RHB"}.get(P["filters"]["hand"], "")
+    return f"vs the average {kind} bowler{hand}".strip()
+
+
 def _danger_cards(P: dict) -> list:
     """(header, big, sub, is_danger) tuples for the danger grid."""
     out = []
     if P["wkt_zone"]:
         w = P["wkt_zone"]
         out.append(("Wickets — where most come from", _cap(_ball_phrase(w['length'], w['line'])),
-                    f"{_pct(w['share'] * 100)} of wickets ({int(w['value'])} of {int(w['total'])})", True))
+                    f"{_pct(w['share'] * 100)} of mapped wickets ({int(w['value'])} of {int(w['total'])})", True))
     if P["run_zone"]:
         r = P["run_zone"]
         out.append(("Runs — where most conceded", _cap(_ball_phrase(r['length'], r['line'])),
@@ -438,6 +466,67 @@ def _movement_read(P: dict) -> str:
     return read + "."
 
 
+def _swing_verdict(m: dict) -> dict | None:
+    """Is this bowler's swing phase-dependent? From movement['swing_age'] (new vs old
+    ball). Returns a dict only when the dominant swing DIRECTION flips between the new and
+    old ball (each phase >=55% one way, and they differ) — the exact case that a flat
+    'both ways' label hides (e.g. new-ball out-swing that reverses in). Else None."""
+    sa = (m or {}).get("swing_age") or {}
+    def dom(x):
+        if not x or x["n"] < 20:
+            return None, None
+        if x["out_pct"] >= 55:
+            return "away", x["out_pct"]
+        if x["in_pct"] >= 55:
+            return "in", x["in_pct"]
+        return None, None
+    nd, npc = dom(sa.get("new"))
+    od, opc = dom(sa.get("old"))
+    if nd and od and nd != od:
+        return {"new": nd, "old": od, "new_pct": npc, "old_pct": opc,
+                "new_n": sa["new"]["n"], "old_n": sa["old"]["n"]}
+    return None
+
+
+def _swing_shape_phrase(v: dict) -> str:
+    """Sentence phrase for a phase-dependent swinger (archetype read)."""
+    if v["new"] == "away" and v["old"] == "in":
+        return (f"swings it away with the new ball ({v['new_pct']:.0f}%) and reverses it "
+                f"back in when it's old ({v['old_pct']:.0f}%)")
+    if v["new"] == "in" and v["old"] == "away":
+        return (f"swings it in with the new ball ({v['new_pct']:.0f}%) and away once it's "
+                f"old ({v['old_pct']:.0f}%)")
+    return f"swings it {v['new']} with the new ball and {v['old']} when it's old"
+
+
+def _swing_cell_word(v: dict) -> str:
+    """Compact swing-direction word for a ball-type table cell (phase-dependent case)."""
+    if v["new"] == "away" and v["old"] == "in":
+        return "away, reverses in"
+    if v["new"] == "in" and v["old"] == "away":
+        return "in, reverses away"
+    return f"{v['new']} new / {v['old']} old"
+
+
+def _swing_age_read(P: dict) -> str:
+    """One-line swing-by-ball-age readout (shown when both phases have a usable sample)."""
+    m = P.get("movement") or {}
+    if P.get("is_spin") or not (m.get("avg_swing") and m["avg_swing"] >= 0.4):
+        return ""   # only for bowlers who actually swing it (else a seamer gets a noisy line)
+    sa = m.get("swing_age") or {}
+    new, old = sa.get("new"), sa.get("old")
+    if not (new and old and new["n"] >= 20 and old["n"] >= 20):
+        return ""
+    who = _BATTER_DESC.get(P["filters"]["hand"], "the batter")
+    def part(d):
+        return f"{d['out_pct']:.0f}% away / {d['in_pct']:.0f}% in"
+    read = (f"Swing by ball age to {who}: new ball (≤25 ov, n={new['n']}) {part(new)}; "
+            f"old ball (≥40 ov, n={old['n']}) {part(old)}")
+    if _swing_verdict(m):
+        read += " — the swing direction reverses with the old ball"
+    return read + "."
+
+
 def _pace_style(m: dict) -> str:
     """Archetype read for a seam/pace bowler: hit-the-deck seamer vs swing bowler,
     two-way movement vs one-directional."""
@@ -470,8 +559,12 @@ def _pace_style(m: dict) -> str:
             base += " and seams it around"
         parts.append(base)
     elif hi(swing_p) and swing_p >= (seam_p or 0):
-        _, ph = _dir_phrase(wd, "outswing", "inswing")
-        parts.append(f"a swing bowler who {ph}" if ph else "a genuine swing bowler")
+        v = _swing_verdict(m)
+        if v:                                    # direction flips new ball -> old ball
+            parts.append(f"a swing bowler who {_swing_shape_phrase(v)}")
+        else:
+            _, ph = _dir_phrase(wd, "outswing", "inswing")
+            parts.append(f"a swing bowler who {ph}" if ph else "a genuine swing bowler")
     elif hi(seam_p):
         _, ph = _dir_phrase(sd, "leaves the bat off the seam", "nips it back off the seam")
         parts.append(f"a seam bowler who {ph}" if ph else "a seam bowler")
@@ -596,34 +689,51 @@ def _scoring_read(P: dict) -> str:
 
 
 def _over_round_rows(P: dict) -> list:
-    """(Angle, Balls, Line, Length, Short%, Econ, Wkts, Bdry%) rows — only when
-    the over/round split is a genuine tactic for this hand."""
+    """(Angle, Balls, Line, Length, Short%, Econ, Wkts, Bdry%) rows — always both angles
+    when the section exists, so the table is present even for a lopsided split. An angle
+    with no balls shows dashes; the read caveats a small/absent sample."""
     orr = P.get("over_round")
-    if not orr or not orr["show"]:
+    if not orr:
         return []
     rows = []
-    for name, share, m in [("Over", orr["over_share"], orr["over"]),
-                           ("Round", orr["round_share"], orr["round"])]:
-        if not m:
-            continue
-        rows.append((
-            name,
-            f"{m['balls']} ({share:.0f}%)",
-            m["modal_zone"] or "—",
-            f"{m['med_len']:.1f} m" if m["med_len"] is not None else "—",
-            f"{m['short_pct']:.0f}%" if m["short_pct"] is not None else "—",
-            f"{m['econ']:.2f}" if m["econ"] is not None else "—",
-            str(m["wkts"]),
-            f"{m['bdry_pct']:.0f}%" if m["bdry_pct"] is not None else "—",
-        ))
+    for name, share, n, m in [("Over", orr["over_share"], orr["over_n"], orr["over"]),
+                              ("Round", orr["round_share"], orr["round_n"], orr["round"])]:
+        if m:
+            rows.append((
+                name, f"{n} ({share:.0f}%)",
+                m["modal_zone"] or "—",
+                f"{m['med_len']:.1f} m" if m["med_len"] is not None else "—",
+                f"{m['short_pct']:.0f}%" if m["short_pct"] is not None else "—",
+                f"{m['econ']:.2f}" if m["econ"] is not None else "—",
+                str(m["wkts"]),
+                f"{m['bdry_pct']:.0f}%" if m["bdry_pct"] is not None else "—",
+            ))
+        else:
+            rows.append((name, f"{n} ({share:.0f}%)", "—", "—", "—", "—", "0", "—"))
     return rows
 
 
 def _over_round_read(P: dict) -> str:
-    """Interpretive read of how line/length/threat shift between over and round."""
+    """Interpretive read of how line/length/threat shift between over and round. Full
+    comparative narrative only when the split is a genuine two-way tactic; otherwise a
+    usage note that caveats a small or absent minority sample."""
     orr = P.get("over_round")
-    if not orr or not orr["show"]:
+    if not orr:
         return ""
+    if not orr["show"]:
+        o_n, r_n = orr["over_n"], orr["round_n"]
+        o_s, r_s = orr["over_share"], orr["round_share"]
+        if o_n >= r_n:
+            dom, ds, dn = "over the wicket", o_s, o_n
+            minor, ms, mn, enough = "round the wicket", r_s, r_n, orr["round_enough"]
+        else:
+            dom, ds, dn = "round the wicket", r_s, r_n
+            minor, ms, mn, enough = "over the wicket", o_s, o_n, orr["over_enough"]
+        if mn == 0:
+            return f"Bowls exclusively {dom} to this hand ({dn:,} balls) — never goes {minor} in this data."
+        tail = (f"{minor} is a rare change-up ({ms:.0f}%, {mn} balls)" if enough
+                else f"the {minor} sample ({mn} balls) is too small to read into")
+        return f"Almost exclusively {dom} to this hand ({ds:.0f}%, {dn:,} balls); {tail}."
     o, r = orr["over"], orr["round"]
     bits = []
     if o["modal_zone"] and r["modal_zone"] and o["modal_zone"] != r["modal_zone"]:
@@ -904,23 +1014,47 @@ def _at_stumps_phrase(ats: dict | None) -> str | None:
     return "hitting the top of off" if line == "off stump" else "hitting the stumps"
 
 
-def _move_phrase(t: dict, is_spin: bool) -> str | None:
-    """Dominant off-pitch movement for a ball type (tracked balls only)."""
-    p = t.get("mv_in_pct")
-    if p is None or t["mv_n"] < 20:
-        return None
-    verb = "turning" if is_spin else "seaming"
+def _dir_word(p, verb) -> str:
+    """in / away / both ways from an in-swing %. 'seaming in' reads as 'seaming back'."""
     if p >= 65:
-        return f"{verb} in"
+        return "back" if verb == "seaming" else "in"
     if p <= 35:
-        return f"{verb} away"
-    return f"{verb} both ways"
+        return "away"
+    return "both ways"
 
 
-def _ball_type_desc(t: dict, is_spin: bool) -> str:
+def _move_phrase(t: dict, is_spin: bool, swing_override: str | None = None) -> str | None:
+    """What the ball does through the air and off the pitch for a ball type. Reports
+    BOTH swing (in-air) and seam/turn (off-pitch) when each is material, dominant
+    first — so a swing bowler reads 'swinging away', not just 'seaming'.
+    `swing_override` replaces a per-ball-type 'both ways' swing word with a bowler-level
+    phase phrase (e.g. 'away, reverses in') when the swing is really ball-age driven."""
+    _MAT = 0.4    # mean |movement| (deg) below this is negligible for this ball type
+    comps = []    # (magnitude, phrase)
+    # swing / drift — in-air
+    swm, swp, swn = t.get("swing_mag"), t.get("sw_in_pct"), t.get("sw_n") or 0
+    if swm is not None and swm >= _MAT:
+        verb = "drifting" if is_spin else "swinging"
+        word = _dir_word(swp, verb) if (swp is not None and swn >= 15) else ""
+        if swing_override and word == "both ways":   # a flat 'both ways' hides a ball-age flip
+            word = swing_override
+        comps.append((swm, f"{verb} {word}".strip()))
+    # seam / turn — off the pitch
+    smm, smp, smn = t.get("seam_mag"), t.get("mv_in_pct"), t.get("mv_n") or 0
+    if smm is not None and smm >= _MAT:
+        verb = "turning" if is_spin else "seaming"
+        word = _dir_word(smp, verb) if (smp is not None and smn >= 15) else ""
+        comps.append((smm, f"{verb} {word}".strip()))
+    if not comps:
+        return None
+    comps.sort(key=lambda c: -c[0])   # dominant movement first
+    return ", ".join(c[1] for c in comps)
+
+
+def _ball_type_desc(t: dict, is_spin: bool, swing_override: str | None = None) -> str:
     """Full 'what it does' description: length/line + movement + at-stumps."""
     parts = [t["phrase"]]
-    mv = _move_phrase(t, is_spin)
+    mv = _move_phrase(t, is_spin, swing_override)
     if mv:
         parts.append(mv)
     ats = _at_stumps_phrase(t["at_stumps"])
@@ -935,7 +1069,9 @@ def _stock_read(P: dict) -> str:
     if not bt or not bt["stock"]:
         return ""
     s = bt["stock"]
-    read = f"Stock ball — <b>{_ball_type_desc(s, P['is_spin'])}</b> ({s['pct']:.0f}% of deliveries"
+    _sv = None if P["is_spin"] else _swing_verdict(P.get("movement"))
+    _sov = _swing_cell_word(_sv) if _sv else None
+    read = f"Stock ball — <b>{_ball_type_desc(s, P['is_spin'], _sov)}</b> ({s['pct']:.0f}% of deliveries"
     if s["econ"] is not None:
         read += f", economy {s['econ']:.2f}"
     read += ")"
@@ -954,9 +1090,11 @@ def _ball_type_rows(P: dict) -> list:
     if not bt:
         return []
     is_spin = P["is_spin"]
+    _sv = None if is_spin else _swing_verdict(P.get("movement"))
+    _sov = _swing_cell_word(_sv) if _sv else None
     return [
         (t["phrase"],
-         _move_phrase(t, is_spin) or "—",
+         _move_phrase(t, is_spin, _sov) or "—",
          f"{t['pct']:.0f}%",
          f"{t['econ']:.2f}" if t["econ"] is not None else "—",
          str(t["wkts"]),
@@ -1016,6 +1154,8 @@ def build_html(P: dict) -> str:
         "P": P, "hand_label": _HAND_LABEL.get(hand, hand), "code": _country_code(P["team"]),
         "photo_uri": photo_uri, "figs": _figures(P), "cards": _cards(P),
         "threat_cards": _threat_cards(P), "danger_cards": _danger_cards(P),
+        "dismissal_rows": _dismissal_rows(P), "dismissal_peer": _dismissal_peer_label(P),
+        "unmapped_wkts": (P["n_wkts"] - int(P["wkt_zone"]["total"])) if P.get("wkt_zone") else 0,
         "narrative": _narrative(P), "miss_zone": miss_zone,
         "dismissals": sorted(P["dismissal_counts"].items(), key=lambda kv: -kv[1]),
         "catch_positions": P["catch_pos_counts"].most_common(6),
@@ -1027,6 +1167,7 @@ def build_html(P: dict) -> str:
         "danger_read": _danger_read(P),
         "speed_read": _speed_read(P),
         "movement_read": _movement_read(P),
+        "swing_age_read": _swing_age_read(P),
         "bowler_style": _bowler_style(P),
         "scoring_stats": _scoring_stats(P),
         "scoring_rows": _scoring_rows(P),
@@ -1236,19 +1377,36 @@ _TEMPLATE = r"""
   {% endif %}
 
   <h2>Threat Profile</h2>
-  <div class="tcards">
+  <div class="cards">
     {% for lab, val, csub in threat_cards %}
       <div class="card"><div class="lab">{{lab}}</div><div class="val">{{val}}</div>
       <div class="csub">{{csub}}</div></div>
     {% endfor %}
   </div>
+  {% if dismissal_rows %}
+  <div class="grid2 avoid" style="margin-top:8px;align-items:start">
+    <div>
+      <table class="mtab">
+        <tr><th>How he gets you out</th><th>His&nbsp;%</th><th>Base</th><th>Index</th></tr>
+        {% for typ, share, base, idx_txt, colour in dismissal_rows %}
+        <tr><td class="lab">{{typ}}</td><td>{{share}}</td><td>{{base}}</td><td style="color:{{colour}};font-weight:700">{{idx_txt}}</td></tr>
+        {% endfor %}
+      </table>
+      <div class="cap" style="text-align:left">Share of his {{P.n_dismissals}} wickets by type, indexed against the base rate {{dismissal_peer}} (men's Tests). <b>Index&nbsp;&gt;1</b> = he does it more than most, <b>&lt;1</b> = less. Caught is high for everyone — the signal is the over-indexed row.</div>
+    </div>
+    <div class="pills">
+      {% if catch_positions %}<b>Catches to:</b>
+        {% for k, v in catch_positions %}<span>{{k}} {{v}}</span>{% endfor %}{% endif %}
+      {% if angle_variation %}<br><b>Angle &amp; variations:</b> {{angle_variation}}{% endif %}
+    </div>
+  </div>
+  {% else %}
   <div style="margin-top:8px" class="pills">
-    {% if dismissals %}<b>How they take wickets:</b>
-      {% for k, v in dismissals %}<span>{{k}} {{pct(v / P.n_dismissals * 100)}}</span>{% endfor %}{% endif %}
-    {% if catch_positions %}<br><b>Catches to:</b>
+    {% if catch_positions %}<b>Catches to:</b>
       {% for k, v in catch_positions %}<span>{{k}} {{v}}</span>{% endfor %}{% endif %}
     {% if angle_variation %}<br><b>Angle &amp; variations:</b> {{angle_variation}}{% endif %}
   </div>
+  {% endif %}
 
   {% if ball_type_rows %}
   <h2>Stock Ball &amp; Ball Types <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
@@ -1260,9 +1418,9 @@ _TEMPLATE = r"""
     {% endfor %}
   </table>
   <div class="cap" style="text-align:left;margin:4px 0 0">
-    Ball type = pitch-length band × pitching-line region. <b>Movement</b> = dominant seam/turn off the pitch
-    (ball-tracking, tracked balls only; blank if too few). <b>Beaten %</b> = false-shot rate on tracked balls.
-    The stock-ball line above also notes where it passes the stumps.
+    Ball type = pitch-length band × pitching-line region. <b>Movement</b> = swing in the air + seam/turn off
+    the pitch, whichever is material, dominant first (ball-tracking, tracked balls only; blank if too few).
+    <b>Beaten %</b> = false-shot rate on tracked balls. The stock-ball line above also notes where it passes the stumps.
   </div>
   {% endif %}
 
@@ -1280,6 +1438,7 @@ _TEMPLATE = r"""
     {% endfor %}
   </div>
   {% if danger_read %}<div class="read" style="margin-top:7px">{{danger_read}}</div>{% endif %}
+  {% if unmapped_wkts > 0 %}<div class="cap" style="text-align:left;margin-top:4px">Zone shares are over his <b>mapped</b> wickets — {{unmapped_wkts}} wicket{{'s' if unmapped_wkts != 1 else ''}} pitched too full to place on the map (tracked length at/behind the crease), so they sit outside the grid.</div>{% endif %}
 
   {% if scoring_stats %}
   <h2>Scoring Profile <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
@@ -1306,20 +1465,28 @@ _TEMPLATE = r"""
 
   <h2>Pitch Maps &amp; Scoring</h2>
   <div class="grid2 avoid">
-    <div class="fig"><div class="ct">At the Stumps (wickets)</div><img class="chart bee" src="{{figs.beehive}}">
+    <div class="fig"><div class="ct">At the Stumps (wickets)</div><img class="chart bee" style="width:58%" src="{{figs.beehive}}">
       <div class="cap">{{reads.beehive or "Ball position as it passes the stumps for wicket balls."}}</div></div>
-    <div class="fig"><div class="ct">Where They're Scored Off</div><img class="chart wag" src="{{figs.wagon}}">
+    <div class="fig"><div class="ct">Where They're Scored Off</div><img class="chart wag" style="width:66%" src="{{figs.wagon}}">
       <div class="cap">{{reads.wagon or "Where runs are scored, by fielding area."}}</div></div>
   </div>
-  <div class="grid2 avoid" style="margin-top:10px">
-    <div class="fig"><div class="ct">Where They Pitch It</div><img class="chart pmap" src="{{figs.pitch_count}}">
+  <div class="grid2 avoid" style="margin-top:6px">
+    <div class="fig"><div class="ct">Where They Pitch It</div><img class="chart pmap" style="width:66%" src="{{figs.pitch_count}}">
       <div class="cap">{{reads.pitch_count or "Density of pitch locations — length down, line across."}}</div></div>
-    <div class="fig"><div class="ct">Where Wickets Come From</div><img class="chart pmap" src="{{figs.pitch_wkts}}">
+    <div class="fig"><div class="ct">Where Wickets Come From</div><img class="chart pmap" style="width:66%" src="{{figs.pitch_wkts}}">
       <div class="cap">{{reads.pitch_wkts or "Pitch location of wicket-taking balls."}}</div></div>
   </div>
 
+  <h2>Speed &amp; Spells</h2>
+  {% if speed_read %}<div class="read">{{speed_read}}</div>{% endif %}
+  <div class="grid3 avoid">
+    <div class="fig"><img class="chart" src="{{figs.violin_spell}}"><div class="cap">By spell — opening burst vs later spells.</div></div>
+    <div class="fig"><img class="chart" src="{{figs.violin_inns}}"><div class="cap">1st vs 2nd innings of the match.</div></div>
+    <div class="fig"><img class="chart" src="{{figs.violin_day}}"><div class="cap">By match day — fatigue across the game.</div></div>
+  </div>
+
   {% if over_round_rows %}
-  <h2>Over vs Round the Wicket <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
+  <h2 class="pbreak">Over vs Round the Wicket <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
   {% if over_round_read %}<div class="read" style="font-weight:700;color:{{c.TEXT_PRI}};border-left:3px solid {{c.ACCENT}};padding-left:8px;margin-bottom:6px">{{over_round_read}}</div>{% endif %}
   <table class="mtab">
     <tr><th>Angle</th><th>Balls</th><th>Pitch line</th><th>Length</th><th>Short %</th><th>Econ</th><th>Wkts</th><th>Bdry %</th></tr>
@@ -1327,11 +1494,11 @@ _TEMPLATE = r"""
     <tr><td class="lab">{{ang}}</td><td>{{balls}}</td><td>{{line}}</td><td>{{length}}</td><td>{{short}}</td><td>{{econ}}</td><td>{{wkts}}</td><td>{{bdry}}</td></tr>
     {% endfor %}
   </table>
-  <div class="grid2 avoid" style="margin-top:10px">
-    <div class="fig"><div class="ct">Over the Wicket</div><img class="chart pmap" src="{{figs.over_map}}">
-      <div class="cap">Where he pitches it from over the wicket.</div></div>
-    <div class="fig"><div class="ct">Round the Wicket</div><img class="chart pmap" src="{{figs.round_map}}">
-      <div class="cap">Where he pitches it from round the wicket.</div></div>
+  <div class="grid2 avoid" style="margin-top:6px">
+    <div class="fig"><div class="ct">Over the Wicket</div><img class="chart pmap" style="width:66%" src="{{figs.over_map}}">
+      <div class="cap">{% if P.over_round.over_enough %}Where he pitches it from over the wicket ({{P.over_round.over_n}} balls).{% else %}Over the wicket — only {{P.over_round.over_n}} balls to this hand, too few to read into.{% endif %}</div></div>
+    <div class="fig"><div class="ct">Round the Wicket</div><img class="chart pmap" style="width:66%" src="{{figs.round_map}}">
+      <div class="cap">{% if P.over_round.round_enough %}Where he pitches it from round the wicket ({{P.over_round.round_n}} balls).{% else %}Round the wicket — only {{P.over_round.round_n}} balls to this hand, too few to read into.{% endif %}</div></div>
   </div>
   {% endif %}
 
@@ -1354,29 +1521,6 @@ _TEMPLATE = r"""
   {% endif %}
   {% endif %}
 
-  <h2 class="pbreak">Speed &amp; Spells</h2>
-  {% if speed_read %}<div class="read">{{speed_read}}</div>{% endif %}
-  <div class="grid3 avoid">
-    <div class="fig"><img class="chart" src="{{figs.violin_spell}}"><div class="cap">By spell — opening burst vs later spells.</div></div>
-    <div class="fig"><img class="chart" src="{{figs.violin_inns}}"><div class="cap">1st vs 2nd innings of the match.</div></div>
-    <div class="fig"><img class="chart" src="{{figs.violin_day}}"><div class="cap">By match day — fatigue across the game.</div></div>
-  </div>
-
-  {% if movement_rows %}
-  <h2>Movement <span class="sub" style="font-weight:400">(vs the average {{P.movement.pace_spin}} bowler · {{hand_label}})</span></h2>
-  {% if bowler_style %}<div class="read" style="font-weight:700;color:{{c.TEXT_PRI}};border-left:3px solid {{c.ACCENT}};padding-left:8px;margin-bottom:5px">{{bowler_style}}</div>{% endif %}
-  {% if movement_read %}<div class="read">{{movement_read}}</div>{% endif %}
-  <div class="cap" style="text-align:left;margin:0 0 6px">
-    Percentile vs all Test {{P.movement.pace_spin}} bowlers; direction is which way it moves to this batter. Bounce = extra bounce vs expected.
-  </div>
-  <table class="mtab">
-    <tr><th>Movement</th><th>Avg</th><th>vs average</th><th>Direction ({{hand_label}})</th></tr>
-    {% for lbl, val, pctl, dir in movement_rows %}
-    <tr><td class="lab">{{lbl}}</td><td>{{val}}</td><td>{{pctl}}</td><td>{{dir}}</td></tr>
-    {% endfor %}
-  </table>
-  {% endif %}
-
   <h2>Length by Match-up</h2>
   <div class="cap" style="text-align:left;margin:0 0 6px">
     How the length changes with ball age and who's on strike. <b>Full%</b> = pitched up (&lt;4&nbsp;m, yorker/full);
@@ -1396,7 +1540,7 @@ _TEMPLATE = r"""
   {% if matchup_insight %}<div class="read" style="margin-top:6px">{{matchup_insight}}</div>{% endif %}
 
   {% if crease_read %}
-  <h2>Release Point &amp; Crease Use</h2>
+  <h2 class="pbreak">Release Point &amp; Crease Use</h2>
   <div class="read" style="font-weight:700;color:{{c.TEXT_PRI}};border-left:3px solid #15803d;padding-left:8px;margin-bottom:6px">{{crease_read}}</div>
   <div class="grid2 avoid" style="align-items:start">
     <div>
@@ -1424,6 +1568,22 @@ _TEMPLATE = r"""
       <div class="cap">Where he lets the ball go — lateral position × height (purple density). Over and round labelled; dotted lines mark tight/standard/wide and the return creases.</div></div>
     {% endif %}
   </div>
+  {% endif %}
+
+  {% if movement_rows %}
+  <h2>Movement <span class="sub" style="font-weight:400">(vs the average {{P.movement.pace_spin}} bowler · {{hand_label}})</span></h2>
+  {% if bowler_style %}<div class="read" style="font-weight:700;color:{{c.TEXT_PRI}};border-left:3px solid {{c.ACCENT}};padding-left:8px;margin-bottom:5px">{{bowler_style}}</div>{% endif %}
+  {% if movement_read %}<div class="read">{{movement_read}}</div>{% endif %}
+  {% if swing_age_read %}<div class="read">{{swing_age_read}}</div>{% endif %}
+  <div class="cap" style="text-align:left;margin:0 0 6px">
+    Percentile vs all Test {{P.movement.pace_spin}} bowlers; direction is which way it moves to this batter. Bounce = extra bounce vs expected.
+  </div>
+  <table class="mtab">
+    <tr><th>Movement</th><th>Avg</th><th>vs average</th><th>Direction ({{hand_label}})</th></tr>
+    {% for lbl, val, pctl, dir in movement_rows %}
+    <tr><td class="lab">{{lbl}}</td><td>{{val}}</td><td>{{pctl}}</td><td>{{dir}}</td></tr>
+    {% endfor %}
+  </table>
   {% endif %}
 
   {% if figs.beaten %}

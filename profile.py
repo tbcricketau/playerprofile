@@ -123,6 +123,8 @@ _REPEAT_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_repeatability_prof
 _REPEAT_PROFILES = None
 _CREASE_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_crease_profile.csv"
 _CREASE_PROFILES = None
+_DISMISSAL_BASELINE_CSV = r"c:\Ludis\referencebuilder\data\dismissal_baseline.csv"
+_DISMISSAL_BASELINE = None
 
 
 def load_movement_profiles() -> dict:
@@ -160,6 +162,20 @@ def load_crease_profiles() -> dict:
     return _CREASE_PROFILES
 
 
+def load_dismissal_baseline() -> dict:
+    """Population dismissal base rates, memoised. Keyed by (pace_spin, batter_hand)
+    -> {how_out: base_share_pct}. Absent CSV -> empty dict (report omits the index)."""
+    global _DISMISSAL_BASELINE
+    if _DISMISSAL_BASELINE is None:
+        _DISMISSAL_BASELINE = {}
+        if os.path.exists(_DISMISSAL_BASELINE_CSV):
+            with open(_DISMISSAL_BASELINE_CSV, encoding="utf-8", newline="") as f:
+                for row in csv.DictReader(f):
+                    key = (row["pace_spin"], row["batter_hand"])
+                    _DISMISSAL_BASELINE.setdefault(key, {})[row["how_out"]] = _safe_float(row["share"])
+    return _DISMISSAL_BASELINE
+
+
 def _dir_split(rows: list, col: str, thresh: float = 0.2) -> dict | None:
     """In/out split for a signed movement column (drift_n = swing, turn_n = seam).
     Movement is stored *absolute* (physical side), so a ball moves INTO the batter
@@ -177,6 +193,29 @@ def _dir_split(rows: list, col: str, thresh: float = 0.2) -> dict | None:
     if not tot:
         return None
     return {"in_pct": inn / tot * 100, "out_pct": out / tot * 100, "n": tot}
+
+
+def _swing_age_split(rows: list, new_max: int = 25, old_min: int = 40, thresh: float = 0.3) -> dict:
+    """Swing (drift_n) away/in split by ball age, using simple over bands: new ball =
+    overs <= new_max, old ball = overs >= old_min. Same absolute-sign convention as
+    _dir_split. Purpose: a bowler whose direction flips with ball age (e.g. new-ball
+    out-swing that reverses back in when old) reads as 'both ways' in aggregate — this
+    separates the phases so the report can say so. (Simple bands: overs after a 2nd new
+    ball still count as 'old' — a known approximation.)"""
+    def tally(sel):
+        inn = out = 0
+        for r in sel:
+            v = r.get("drift_n")
+            if v is None or abs(v) < thresh:
+                continue
+            is_in = (v > 0) != r["is_lhb"]
+            inn += is_in
+            out += not is_in
+        tot = inn + out
+        return {"in_pct": inn / tot * 100, "out_pct": out / tot * 100, "n": tot} if tot else None
+    new = [r for r in rows if r.get("over_n") is not None and r["over_n"] <= new_max]
+    old = [r for r in rows if r.get("over_n") is not None and r["over_n"] >= old_min]
+    return {"new": tally(new), "old": tally(old)}
 
 
 def process_rows(rows: list) -> list:
@@ -407,20 +446,27 @@ def _mode_stats(rows: list, line_zones: list) -> dict | None:
     }
 
 
+_OR_MIN_STATS = 30    # balls needed before an angle's map/stats are worth reading
+_OR_TACTIC_PCT = 15.0  # minority share above which the split is a genuine two-way tactic
+
+
 def _over_round(df: list, line_zones: list) -> dict | None:
     """How the bowler changes between over and round the wicket for the current hand.
-    Adaptive: `show` is only true when the minority mode is a genuine tactic
-    (≥15% share and ≥50 balls) — so same-handed pace (≈100% over) stays dark."""
+    The section is always shown (for layout consistency), but per-angle flags say
+    whether each side has enough of a sample to read into, and `show` marks a genuine
+    two-way tactic (both angles ≥15% & ≥50 balls) worth the full comparative narrative."""
     legal = [r for r in df if r.get("is_legal")]
     n = len(legal)
     if n < 100:
         return None
     over = [r for r in legal if r.get("is_round") is False]
     rnd  = [r for r in legal if r.get("is_round") is True]
-    o_share = len(over) / n * 100
-    r_share = len(rnd) / n * 100
-    minority = min(len(over), len(rnd))
-    show = minority >= 50 and min(o_share, r_share) >= 15.0
+    o_n, r_n = len(over), len(rnd)
+    o_share = o_n / n * 100
+    r_share = r_n / n * 100
+    over_enough  = o_n >= _OR_MIN_STATS
+    round_enough = r_n >= _OR_MIN_STATS
+    show = min(o_n, r_n) >= 50 and min(o_share, r_share) >= _OR_TACTIC_PCT
     os_, rs_ = _mode_stats(over, line_zones), _mode_stats(rnd, line_zones)
 
     def _delta(key):
@@ -430,7 +476,9 @@ def _over_round(df: list, line_zones: list) -> dict | None:
 
     return {
         "show": show,
+        "over_n": o_n, "round_n": r_n,
         "over_share": o_share, "round_share": r_share,
+        "over_enough": over_enough, "round_enough": round_enough,
         "over": os_, "round": rs_,
         "line_delta": _delta("med_line"),   # <0 = round is more to the off side
         "len_delta": _delta("med_len"),     # <0 = round is fuller
@@ -512,6 +560,8 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
         a = agg.setdefault((band, region), {
             "balls": 0, "runs": 0.0, "wkts": 0, "false": 0, "shot_n": 0,
             "asl": [], "ash": [], "mv_in": 0, "mv_out": 0, "mv_n": 0,
+            "sm_sum": 0.0, "sm_cnt": 0, "sw_in": 0, "sw_out": 0, "sw_n": 0,
+            "sw_sum": 0.0, "sw_cnt": 0,
         })
         a["balls"] += 1
         a["runs"] += ((r.get("bat_score_n") or 0.0) + (r.get("wide_runs_n") or 0.0)
@@ -527,12 +577,24 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
             a["asl"].append(asl)
         if ash is not None:
             a["ash"].append(ash)
-        mv = r.get("turn_n")   # movement_off_pitch = seam (pace) / turn (spin)
-        if mv is not None and abs(mv) >= 0.3:
-            is_in = (mv > 0) != r["is_lhb"]
-            a["mv_in"] += is_in
-            a["mv_out"] += (not is_in)
-            a["mv_n"] += 1
+        seam = r.get("turn_n")   # movement_off_pitch = seam (pace) / turn (spin)
+        if seam is not None:
+            a["sm_sum"] += abs(seam)
+            a["sm_cnt"] += 1
+            if abs(seam) >= 0.3:
+                is_in = (seam > 0) != r["is_lhb"]
+                a["mv_in"] += is_in
+                a["mv_out"] += (not is_in)
+                a["mv_n"] += 1
+        swing = r.get("drift_n")   # movement_in_air = swing (pace) / drift (spin)
+        if swing is not None:
+            a["sw_sum"] += abs(swing)
+            a["sw_cnt"] += 1
+            if abs(swing) >= 0.3:
+                is_in = (swing > 0) != r["is_lhb"]
+                a["sw_in"] += is_in
+                a["sw_out"] += (not is_in)
+                a["sw_n"] += 1
 
     classified = sum(a["balls"] for a in agg.values())
     if classified < 100:
@@ -552,6 +614,12 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
             "at_stumps": _at_stumps_desc(a["asl"], a["ash"]),
             "mv_in_pct": a["mv_in"] / a["mv_n"] * 100 if a["mv_n"] else None,
             "mv_n": a["mv_n"],
+            # swing (in-air) vs seam (off-pitch): mean |magnitude| + in%/n for each, so
+            # the report can name whichever is material (a swing bowler reads "swinging").
+            "seam_mag": a["sm_sum"] / a["sm_cnt"] if a["sm_cnt"] else None,
+            "swing_mag": a["sw_sum"] / a["sw_cnt"] if a["sw_cnt"] else None,
+            "sw_in_pct": a["sw_in"] / a["sw_n"] * 100 if a["sw_n"] else None,
+            "sw_n": a["sw_n"],
         })
     types.sort(key=lambda t: -t["balls"])
     return {"types": types, "n": classified, "stock": types[0] if types else None}
@@ -982,6 +1050,22 @@ def build_profile(
     # "Caught (posn?)" when catch positions are poorly recorded (e.g. spinners).
     _broad = Counter(r["how_out"] for r in wkts)
     top_dismissal = _broad.most_common(1)[0] if _broad else None
+    # Normalised dismissal mix: his share of each type vs the population base rate for
+    # his own peer group (pace/spin × batter hand). Caught dominates for everyone, so the
+    # signal is where he *over-indexes* (index = his share / base share).
+    _ps = "pace" if is_pace else ("spin" if is_spin else None)
+    _hand_key = {"All": "All", "vs LHB": "LHB", "vs RHB": "RHB"}.get(hand, "All")
+    _base = load_dismissal_baseline().get((_ps, _hand_key), {}) if _ps else {}
+    dismissal_index = []
+    if n_dismissals:
+        for how, cnt in _broad.most_common():
+            share = cnt / n_dismissals * 100
+            bshare = _base.get(how)
+            dismissal_index.append({
+                "type": how, "count": cnt, "share": share,
+                "base_share": bshare,
+                "index": (share / bshare) if bshare else None,
+            })
     # Specific catching positions (edges to the cordon etc.)
     catch_pos_counts = Counter(
         r["catch_position"] for r in wkts if r["how_out"] == "Caught" and r.get("catch_position")
@@ -1025,6 +1109,10 @@ def build_profile(
             "avg_seam": _safe_float(mp.get("avg_seam")),     "seam_pctl": _safe_float(mp.get("seam_pctl")),
             "avg_bounce": _safe_float(mp.get("avg_bounce")), "bounce_pctl": _safe_float(mp.get("bounce_pctl")),
             "swing_dir": _dir_split(legal, "drift_n"),   # movement_in_air
+            # swing_age needs the hand-filtered set (legal already is, when a vs-LHB/vs-RHB
+            # filter is active): the new->old direction flip is opposite for LHB vs RHB, so
+            # it only shows per hand — across all batters it washes out to "both ways".
+            "swing_age": _swing_age_split(legal),
             "seam_dir":  _dir_split(legal, "turn_n"),    # movement_off_pitch
         }
 
@@ -1060,6 +1148,7 @@ def build_profile(
         # threat
         "beaten_pct": beaten_pct, "false_pct": false_pct, "n_tracked": n_tracked,
         "dismissal_counts": dismissal_counts, "n_dismissals": n_dismissals, "top_dismissal": top_dismissal,
+        "dismissal_index": dismissal_index,
         "catch_pos_counts": catch_pos_counts, "n_caught": n_caught,
         "caught_behind": caught_behind, "caught_field": caught_field,
         "avg_turn": avg_turn, "avg_drift": avg_drift, "big_turn_pct": big_turn_pct,
