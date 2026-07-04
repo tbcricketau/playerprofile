@@ -127,8 +127,30 @@ def build(out_dir, ids, hand, sas_hours):
         for n, title, c, pdf in cards)
     open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(
         _INDEX.replace("{{rows}}", rows))
+    open(os.path.join(out_dir, ".nojekyll"), "w").close()   # serve files as-is (no Jekyll)
     print(f"\nBuilt {len(cards)} report(s) -> {os.path.abspath(out_dir)}")
-    print("Upload that folder to your static host. Re-run this every few days to refresh video.")
+    return cards
+
+
+def deploy_github(out_dir, repo_url, branch="main"):
+    """Publish the site/ folder to a GitHub repo as a single fresh commit (force), so the Pages
+    repo never accumulates history. Enable Pages once: repo Settings → Pages → Deploy from branch
+    → <branch> / root. Site then serves at https://<user>.github.io/<repo>/."""
+    import datetime
+    import subprocess
+    gitdir = os.path.join(out_dir, ".git")
+    if os.path.isdir(gitdir):
+        shutil.rmtree(gitdir)
+
+    def run(*a):
+        subprocess.run(a, cwd=out_dir, check=True, capture_output=True, text=True)
+    run("git", "init", "-q", "-b", branch)
+    run("git", "add", "-A")
+    run("git", "-c", "user.name=scouting-bot", "-c", "user.email=bot@local",
+        "commit", "-q", "-m", f"publish {datetime.datetime.now():%Y-%m-%d %H:%M}")
+    run("git", "push", "-f", repo_url, branch)
+    print(f"Deployed to {repo_url} ({branch}). "
+          f"If Pages isn't on yet: repo Settings → Pages → Deploy from branch → {branch} / root.")
 
 
 _INDEX = """<!doctype html><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">
@@ -153,9 +175,16 @@ def main():
     ap.add_argument("--ids", nargs="+", help="only these bowler ids")
     ap.add_argument("--hand", help="only this hand tag: all | lhb | rhb")
     ap.add_argument("--sas-hours", type=int, default=DEFAULT_SAS_HOURS, help="SAS lifetime (max ~168)")
+    ap.add_argument("--deploy-repo", help="GitHub repo URL to publish site/ to (e.g. "
+                    "https://github.com/tbcricketau/scouting-reports.git)")
+    ap.add_argument("--branch", default="main", help="branch to push (default: main)")
     args = ap.parse_args()
-    build(os.path.join(os.path.dirname(os.path.abspath(__file__)), args.out),
-          args.ids, args.hand, min(args.sas_hours, 167))
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), args.out)
+    build(out, args.ids, args.hand, min(args.sas_hours, 167))
+    if args.deploy_repo:
+        deploy_github(out, args.deploy_repo, args.branch)
+    else:
+        print("Upload that folder to your static host, or pass --deploy-repo to push to GitHub Pages.")
 
 
 if __name__ == "__main__":
