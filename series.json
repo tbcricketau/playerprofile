@@ -1,0 +1,36 @@
+{
+  "title": "Australia — Opposition Scouting",
+  "series": [
+    {
+      "slug": "bangladesh-home-2026",
+      "name": "Bangladesh Home Test Series 2026",
+      "subtitle": "Australia v Bangladesh · 2 Tests · in Australia",
+      "target_country": "Australia",
+      "groups": [
+        {
+          "slug": "bowlers-vs-lhb",
+          "name": "Opposition Bowlers to LHB",
+          "reports": [
+            { "id": "2700039", "hand": "lhb" },
+            { "id": "3080087", "hand": "lhb" },
+            { "id": "5460155", "hand": "lhb" }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "south-africa-away-2026",
+      "name": "South Africa Away Test Series 2026",
+      "subtitle": "Australia v South Africa · in South Africa",
+      "target_country": "South Africa",
+      "groups": []
+    },
+    {
+      "slug": "new-zealand-home-2026-27",
+      "name": "New Zealand Home Test Series 2026/27",
+      "subtitle": "Australia v New Zealand · in Australia",
+      "target_country": "Australia",
+      "groups": []
+    }
+  ]
+}
