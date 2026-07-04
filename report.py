@@ -27,6 +27,7 @@ from ludis_cricket.charts import (
     fingerprint_strip, speed_violin, innings_violin, day_violin, zone_concentration,
     LENGTH_ZONES_1M, LENGTH_ZONES_05M,
 )
+from ludis_cricket.video import first_example as _first_example, get_fairplay_sas as _get_fairplay_sas
 
 # ── Opta light theme (mirrors theme.py / CLAUDE.md) ─────────────────────────────
 BG_PAGE, BG_PANEL = "#F5F7FA", "#FFFFFF"
@@ -212,13 +213,21 @@ def _figures(P: dict) -> dict:
         "pitch_wkts":  _fig_uri(pitch_heatmap(df, value="wickets", title="", flip_x=is_lhb), w=pw, h=ph),
         "beehive":     _fig_uri(beehive(df, metric="wickets", title="", line_zones=lz, flip_x=is_lhb), w=380, h=400),
         "wagon":       _fig_uri(wagon_wheel_zones(df, metric="runs", title="", n_sectors=8, is_lhb=is_lhb), w=500, h=430),
-        "violin_spell": _fig_uri(speed_violin(df, speed_min=p05, speed_max=p95), w=560, h=400),
-        "violin_inns":  _fig_uri(innings_violin(df, speed_min=p05, speed_max=p95), w=560, h=400),
-        "violin_day":   _fig_uri(day_violin(df, speed_min=p05, speed_max=p95), w=560, h=400),
+        "violin_spell": _fig_uri(speed_violin(df, speed_min=p05, speed_max=p95, title=""), w=560, h=400),
+        "violin_inns":  _fig_uri(innings_violin(df, speed_min=p05, speed_max=p95, title=""), w=560, h=400),
+        "violin_day":   _fig_uri(day_violin(df, speed_min=p05, speed_max=p95, title=""), w=560, h=400),
     }
     if bdf:
-        figs["beaten"] = _fig_uri(pitch_scatter_map(bdf, lz, fine_ez, value="count", title="", min_balls=1, flip_x=is_lhb), w=pw, h=ph)
-        figs["beaten_heat"] = _fig_uri(pitch_heatmap(bdf, value="count", title="", flip_x=is_lhb), w=pw, h=ph)
+        # Shared length scale so the grid and heatmap align (a horizontal line at 6m matches on
+        # both). Cap just past his deepest beaten balls (p98) to drop the empty long-length rows.
+        _bl = sorted(r["pitch_length_m"] for r in bdf
+                     if r.get("pitch_length_m") is not None and -1.0 <= r["pitch_length_m"] <= 15.0)
+        _bmax = max(9.0, min(13.5, _bl[int(len(_bl) * 0.98)] + 1.0)) if _bl else 12.0
+        beaten_yrange = (_bmax, -0.6)
+        figs["beaten"] = _fig_uri(pitch_scatter_map(bdf, lz, fine_ez, value="count", title="",
+                                  min_balls=1, flip_x=is_lhb, y_range=beaten_yrange), w=pw, h=ph)
+        figs["beaten_heat"] = _fig_uri(pitch_heatmap(bdf, value="count", title="",
+                                       flip_x=is_lhb, y_range=beaten_yrange), w=pw, h=ph)
     orr = P.get("over_round")
     if orr:
         # Always render both maps (even a near-empty one) so the two-column layout stays
@@ -435,15 +444,41 @@ def _danger_read(P: dict) -> str:
 
 
 def _speed_read(P: dict) -> str:
+    """Pace trend across all three axes the charts show — spell, innings and match day."""
+    unit = "km/h"
     s1, s3, i1, i2 = P["spd_spell1"], P["spd_spell3p"], P["spd_inn1"], P["spd_inn2"]
     out = []
+    # spell
     if s1 and s3:
         d = s1 - s3
-        out.append("Holds his pace across spells" if abs(d) < 1.5 else f"Drops ~{abs(d):.1f} kph from the first to later spells")
+        out.append("holds his pace across spells" if abs(d) < 1.5
+                   else (f"drops ~{abs(d):.1f} {unit} from his opening spell to later spells" if d > 0
+                         else f"is ~{abs(d):.1f} {unit} quicker in later spells"))
+    # innings
     if i1 and i2:
         di = i1 - i2
-        out.append("a touch slower in the 2nd innings" if di > 0.7 else "with no real drop-off by the 2nd innings")
-    return (", ".join(out) + ".") if out else ""
+        out.append("is a touch slower in the 2nd innings" if di > 0.7
+                   else ("is quicker in the 2nd innings" if di < -0.7 else "keeps his pace into the 2nd innings"))
+    # match day — day 1 vs the later days (fatigue across a Test)
+    def _mean(vs):
+        return sum(vs) / len(vs) if vs else None
+    day_speeds = {}
+    for r in P.get("df", []):
+        d = r.get("match_day_n")
+        if r.get("is_legal") and r.get("ball_speed_n") is not None and d:
+            day_speeds.setdefault(min(int(d), 5), []).append(r["ball_speed_n"])
+    d1 = _mean(day_speeds.get(1))
+    late = [v for k in (4, 5) for v in day_speeds.get(k, [])]
+    dl = _mean(late)
+    if d1 and dl and len(late) >= 30:
+        dd = d1 - dl
+        out.append("and is as quick on the final day as day one" if abs(dd) < 1.5
+                   else (f"and loses ~{abs(dd):.1f} {unit} by the later days" if dd > 0
+                         else f"and is ~{abs(dd):.1f} {unit} quicker later in the match"))
+    if not out:
+        return ""
+    sentence = "He " + ", ".join(out)
+    return sentence + "."
 
 
 def _movement_read(P: dict) -> str:
@@ -713,6 +748,31 @@ def _over_round_rows(P: dict) -> list:
     return rows
 
 
+def _hand_word(P: dict, plural: bool = True) -> str | None:
+    """The batter-hand this view is filtered to, as a noun — or None for 'All batters'."""
+    h = (P.get("filters") or {}).get("hand")
+    if h == "vs LHB":
+        return "left-handers" if plural else "the left-hander"
+    if h == "vs RHB":
+        return "right-handers" if plural else "the right-hander"
+    return None
+
+
+def _round_by_hand_read(P: dict) -> str:
+    """Over/round tendency stated per hand (for the All-batters view, where a single
+    aggregate hides that a bowler's angle is usually hand-specific)."""
+    def phrase(h, rpct):
+        if rpct is None:
+            return None
+        if rpct >= 70:
+            return f"round the wicket to {h} ({rpct:.0f}%)"
+        if rpct <= 30:
+            return f"over the wicket to {h} ({100 - rpct:.0f}% over)"
+        return f"a mix to {h} ({rpct:.0f}% round)"
+    parts = [p for p in (phrase("RHB", P.get("round_rhb")), phrase("LHB", P.get("round_lhb"))) if p]
+    return "Bowls " + "; ".join(parts) + "." if parts else ""
+
+
 def _over_round_read(P: dict) -> str:
     """Interpretive read of how line/length/threat shift between over and round. Full
     comparative narrative only when the split is a genuine two-way tactic; otherwise a
@@ -721,6 +781,13 @@ def _over_round_read(P: dict) -> str:
     if not orr:
         return ""
     if not orr["show"]:
+        # All-batters view: over/round is hand-specific, so describe it per hand.
+        hw = _hand_word(P)
+        if hw is None:
+            byhand = _round_by_hand_read(P)
+            if byhand:
+                return byhand
+        target = f"to {hw}" if hw else "in this view"
         o_n, r_n = orr["over_n"], orr["round_n"]
         o_s, r_s = orr["over_share"], orr["round_share"]
         if o_n >= r_n:
@@ -730,10 +797,10 @@ def _over_round_read(P: dict) -> str:
             dom, ds, dn = "round the wicket", r_s, r_n
             minor, ms, mn, enough = "over the wicket", o_s, o_n, orr["over_enough"]
         if mn == 0:
-            return f"Bowls exclusively {dom} to this hand ({dn:,} balls) — never goes {minor} in this data."
+            return f"Bowls exclusively {dom} {target} ({dn:,} balls) — never goes {minor} in this data."
         tail = (f"{minor} is a rare change-up ({ms:.0f}%, {mn} balls)" if enough
                 else f"the {minor} sample ({mn} balls) is too small to read into")
-        return f"Almost exclusively {dom} to this hand ({ds:.0f}%, {dn:,} balls); {tail}."
+        return f"Almost exclusively {dom} {target} ({ds:.0f}%, {dn:,} balls); {tail}."
     o, r = orr["over"], orr["round"]
     bits = []
     if o["modal_zone"] and r["modal_zone"] and o["modal_zone"] != r["modal_zone"]:
@@ -1093,14 +1160,116 @@ def _ball_type_rows(P: dict) -> list:
     _sv = None if is_spin else _swing_verdict(P.get("movement"))
     _sov = _swing_cell_word(_sv) if _sv else None
     return [
-        (t["phrase"],
-         _move_phrase(t, is_spin, _sov) or "—",
-         f"{t['pct']:.0f}%",
-         f"{t['econ']:.2f}" if t["econ"] is not None else "—",
-         str(t["wkts"]),
-         f"{t['beaten_pct']:.0f}%" if t["beaten_pct"] is not None else "—")
-        for t in bt["types"][:6]
+        {"phrase": t["phrase"],
+         "move": _move_phrase(t, is_spin, _sov) or "—",
+         "pct": f"{t['pct']:.0f}%",
+         "econ": f"{t['econ']:.2f}" if t["econ"] is not None else "—",
+         "wkts": str(t["wkts"]),
+         "beat": f"{t['beaten_pct']:.0f}%" if t["beaten_pct"] is not None else "—",
+         "key": f"bt_{i}"}
+        for i, t in enumerate(bt["types"][:6])
     ]
+
+
+def _fmt_stat(v, dp=1, suffix=""):
+    return "—" if v is None else f"{v:.{dp}f}{suffix}"
+
+
+def _ball_age_data(P: dict) -> dict | None:
+    """New-ball vs old-ball view: top ball types + headline threat + danger cell for each phase."""
+    ba = P.get("ball_age")
+    if not ba:
+        return None
+
+    def block(b, label):
+        if not b:
+            return None
+        rows = [(t["phrase"], f"{t['pct']:.0f}%",
+                 f"{t['econ']:.2f}" if t["econ"] is not None else "—", str(t["wkts"]))
+                for t in b["types"]]
+        dc = b.get("danger_cell")
+        dl = b.get("danger_length")
+        return {
+            "label": label, "n": f"{b['n_balls']:,}", "wkts": b["wkts"],
+            "econ": f"{b['econ']:.2f}" if b["econ"] is not None else "—", "rows": rows,
+            "danger": f"{dc['length'].lower()} {dc['line']}" if dc else None,
+            "danger_rate": f"{dc['adj_rate']:.1f}" if dc and dc.get("adj_rate") else None,
+            "danger_len": dl["length"] if dl else None,
+            "danger_len_rate": f"{dl['adj_rate']:.1f}" if dl and dl.get("adj_rate") else None,
+        }
+    new = block(ba["new"], f"New ball (≤{ba['split_over']} ov)")
+    old = block(ba["old"], f"Old ball ({ba['split_over'] + 1}+ ov)")
+    if not (new or old):
+        return None
+    return {"new": new, "old": old}
+
+
+def _recent_form_rows(P: dict) -> dict | None:
+    """Two comparable rows — recent window vs career — for the Current Form table."""
+    rf = P.get("recent_form")
+    if not rf:
+        return None
+
+    def row(s):
+        return {"balls": f"{s['balls']:,}", "wkts": str(s["wkts"]),
+                "avg": _fmt_stat(s["avg"], 1), "econ": _fmt_stat(s["econ"], 2),
+                "sr": _fmt_stat(s["sr"], 1), "false": _fmt_stat(s["false_pct"], 0, "%"),
+                "speed": _fmt_stat(s["speed"], 0), "length": _fmt_stat(s["length"], 2, " m")}
+    return {"recent": row(rf["recent"]), "career": row(rf["career"]),
+            "n_matches": rf["n_matches"], "date_from": rf["date_from"], "date_to": rf["date_to"],
+            "read": _recent_form_read(P)}
+
+
+def _recent_form_read(P: dict) -> str:
+    rf = P.get("recent_form")
+    if not rf:
+        return ""
+    r, c = rf["recent"], rf["career"]
+    if not (r["avg"] and c["avg"]):
+        return f"Last {rf['n_matches']} Tests: {r['wkts']} wickets."
+    if r["avg"] <= c["avg"] * 0.8:
+        trend = f"striking more often right now (avg {r['avg']:.0f} in his last {rf['n_matches']} Tests vs {c['avg']:.0f} career)"
+    elif r["avg"] >= c["avg"] * 1.2:
+        trend = f"less penetrative of late (avg {r['avg']:.0f} in his last {rf['n_matches']} Tests vs {c['avg']:.0f} career)"
+    else:
+        trend = f"around his career level lately (avg {r['avg']:.0f} last {rf['n_matches']} vs {c['avg']:.0f} career)"
+    return f"He's {trend}."
+
+
+def _matchup_split_tables(P: dict) -> dict:
+    """Three side-by-side comparison tables (hand / ball age / batting phase). Each row:
+    (label, balls, wkts, avg, econ, sr, false%). Empty groups already dropped in the profile."""
+    mu = P.get("matchups") or {}
+
+    def rows(group):
+        out = []
+        for label, s in group.items():
+            out.append((label, f"{s['balls']:,}", str(s["wkts"]),
+                        _fmt_stat(s["avg"], 1), _fmt_stat(s["econ"], 2),
+                        _fmt_stat(s["sr"], 1), _fmt_stat(s["false_pct"], 0, "%")))
+        return out
+    return {"hand": rows(mu.get("hand", {})), "ball": rows(mu.get("ball", {})),
+            "position": rows(mu.get("position", {}))}
+
+
+def _wicket_setup_read(P: dict) -> str:
+    """Concrete 'ball before the wicket' line for the sequencing section."""
+    ws = P.get("wicket_setup")
+    if not ws or ws.get("n", 0) < 12:
+        return ""
+    parts = []
+    dl = ws["wk_len"] - ws["prev_len"]
+    if abs(dl) >= 0.25:
+        parts.append(f"the wicket ball lands about {abs(dl) * 100:.0f} cm "
+                     f"{'fuller' if dl < 0 else 'shorter'} than the ball before it")
+    if ws.get("wk_spd") and ws.get("prev_spd"):
+        dv = ws["wk_spd"] - ws["prev_spd"]
+        if abs(dv) >= 2:
+            parts.append(f"about {abs(dv):.0f} km/h {'quicker' if dv > 0 else 'slower'}")
+    if not parts:
+        return (f"Across {ws['n']} dismissals, his wicket ball is close in length and pace to the "
+                f"delivery before it — he builds pressure with repetition, not a big change-up.")
+    return f"Across {ws['n']} dismissals, {' and '.join(parts)} — that's the change that brings the wicket."
 
 
 def _angle_variation(P: dict) -> str:
@@ -1142,7 +1311,31 @@ def _matchup_insight(P: dict) -> str:
     return "; ".join(bits)[0].upper() + "; ".join(bits)[1:] + "."
 
 
-def build_html(P: dict) -> str:
+def _examples(P: dict) -> dict:
+    """One playable example clip per key insight (stock ball, a wicket) for 'watch' PDF links.
+    Best-effort; empty if video is unavailable."""
+    try:
+        _get_fairplay_sas(ttl_hours=72)   # long-lived SAS so baked PDF links last a few days
+    except Exception:
+        return {}
+    df = P.get("df") or []
+
+    def _first(rows):
+        rows = [r for r in rows if r.get("clip_stem")]
+        rows.sort(key=lambda r: r.get("match_date") or "", reverse=True)   # recent first (coverage)
+        return _first_example(rows)
+
+    ex = {}
+    st = (P.get("ball_types") or {}).get("stock")
+    if st:
+        stock = [r for r in df if r.get("ball_type") == (st["band"], st["region"])]
+        stock.sort(key=lambda r: (not r.get("is_wicket"), not r.get("is_false_shot")))  # illustrative first
+        ex["stock"] = _first(stock)
+    ex["wicket"] = _first([r for r in df if r.get("is_wicket")])
+    return ex
+
+
+def build_html(P: dict, video: dict = None) -> str:
     hand = P["filters"]["hand"]
     photo_uri = get_photo_data_uri(P["bowler_id"])
 
@@ -1151,6 +1344,7 @@ def build_html(P: dict) -> str:
         miss_zone = zone_concentration(P["beaten_df"], P["line_zones"], P["length_zones"], "count")
 
     ctx = {
+        "video": video or {},
         "P": P, "hand_label": _HAND_LABEL.get(hand, hand), "code": _country_code(P["team"]),
         "photo_uri": photo_uri, "figs": _figures(P), "cards": _cards(P),
         "threat_cards": _threat_cards(P), "danger_cards": _danger_cards(P),
@@ -1175,7 +1369,13 @@ def build_html(P: dict) -> str:
         "over_round_rows": _over_round_rows(P),
         "over_round_read": _over_round_read(P),
         "ball_type_rows": _ball_type_rows(P),
+        "ball_age": _ball_age_data(P),
         "stock_read": _stock_read(P),
+        "how_to_play": P.get("how_to_play"),
+        "hand_noun": _hand_word(P) or "batters of this hand",
+        "recent_form": _recent_form_rows(P),
+        "matchup_tables": _matchup_split_tables(P),
+        "wicket_setup_read": _wicket_setup_read(P),
         "sequencing_read": _sequencing_read(P),
         "seq_pattern_read": _seq_pattern_read(P),
         "crease_read": _crease_read(P),
@@ -1203,6 +1403,13 @@ def _find_chromium() -> str:
     hits = sorted(glob.glob(os.path.join(base, "chromium-*", "chrome-win", "chrome.exe")), reverse=True)
     if hits:
         return hits[0]
+    # Chrome-for-Testing fetched by kaleido/choreographer (plotly_get_chrome). Preferred over a
+    # system Edge: it uses an isolated profile so `--print-to-pdf` never hands off to a running
+    # Edge and return early (which prints an ERR_FILE_NOT_FOUND page once the temp html is cleaned).
+    local = os.environ.get("LOCALAPPDATA") or os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local")
+    choreo = sorted(glob.glob(os.path.join(local, "plotly", "choreographer", "deps", "chrome-*", "chrome.exe")), reverse=True)
+    if choreo:
+        return choreo[0]
     for p in [
         r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
         r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
@@ -1236,12 +1443,35 @@ def _html_to_pdf(html: str, out_path: str) -> None:
             pass
 
 
+def _file_url(path: str) -> str:
+    return "file:///" + os.path.abspath(path).replace("\\", "/").replace(" ", "%20")
+
+
+def _build_player(P: dict, pdf_path: str, subtitle: str) -> dict:
+    """Build per-insight playlists, write a self-contained modal video player next to the PDF,
+    and return {player: file-url, keys: {...}} for the report's ▶ links. Best-effort."""
+    try:
+        _get_fairplay_sas(ttl_hours=72)          # long-lived SAS baked into the player
+        from playlists import build_playlists
+        from ludis_cricket.video import build_player_html, write_playlists
+        pls = build_playlists(P, cap=8)["playlists"]
+        if not pls:
+            return {}
+        player_path = pdf_path[:-4] + ".player.html"
+        build_player_html(pls, player_path, title=P["name"], subtitle=subtitle)
+        write_playlists(pdf_path[:-4] + ".playlists.json", pls)   # portable sidecar too
+        return {"player": _file_url(player_path), "lists": {k: True for k in pls}, "playlists": pls}
+    except Exception:
+        return {}
+
+
 def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
                   position: str = "All positions", spell: str = "All",
-                  length_mode: str = "Zones") -> str:
-    """Build the profile, render HTML, print to PDF. Returns the PDF path."""
+                  length_mode: str = "Zones", with_playlists: bool = True) -> str:
+    """Build the profile, render HTML, print to PDF. Returns the PDF path. When
+    `with_playlists`, also builds video playlists + a `<pdf>.player.html` modal player and links
+    the report's ▶ buttons to it (best-effort — never breaks the report if video is unavailable)."""
     P = build_profile(bowler_id, hand=hand, position=position, spell=spell, length_mode=length_mode)
-    html = build_html(P)
 
     os.makedirs(out_dir, exist_ok=True)
     # firstname_surname_bowling_{pace|spin}_{format}_{hand}.pdf
@@ -1260,6 +1490,17 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
     fmt = "test"   # Test-match data for now; will branch when white-ball is added
     hand_tag = {"All": "all", "vs LHB": "lhb", "vs RHB": "rhb"}.get(hand, "all")
     out_path = os.path.abspath(os.path.join(out_dir, f"{who}_bowling_{btype}_{fmt}_{hand_tag}.pdf"))
+
+    video = _build_player(P, out_path, subtitle=f"{P['name']} — bowling scout") if with_playlists else {}
+    html = build_html(P, video=video)
+    if video.get("playlists"):
+        # Interactive HTML report: same page + an in-page lightbox. ▶ opens the playlist as a
+        # modal OVER the report (same tab — the iOS/Safari use case); the PDF keeps the href
+        # fallback to the standalone player.html (the snippet is display:none in print).
+        from ludis_cricket.video import inline_player_snippet
+        html = html.replace("</body>", inline_player_snippet(video["playlists"]) + "</body>")
+        with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
+            f.write(html)
     _html_to_pdf(html, out_path)
     return out_path
 
@@ -1315,12 +1556,17 @@ _TEMPLATE = r"""
   .fig { }
   .ct { font-size: 12.5px; font-weight: 700; text-align: center; color: {{c.TEXT_PRI}}; margin: 0 0 2px; }
   .cap { font-size: 8.5px; color: {{c.TEXT_SEC}}; font-style: italic; text-align: center; margin: 2px 4px 0; line-height: 1.25; }
+  a.vlink { display:inline-block; font-size:9px; font-weight:700; color:#fff; background:{{c.ACCENT}};
+            text-decoration:none; padding:2px 8px; border-radius:5px; margin-left:6px; vertical-align:middle; }
+  a.vlink.tiny { padding:0 5px; margin-left:4px; font-size:8px; border-radius:4px; }
   .read { font-size: 10px; color: {{c.TEXT_PRI}}; margin: 0 0 7px; line-height: 1.35; }
   .pbreak { page-break-before: always; }
   .mtab { width: 100%; border-collapse: collapse; font-size: 10px; }
   .mtab th, .mtab td { border: 1px solid {{c.BORDER}}; padding: 3px 6px; text-align: center; }
   .mtab th { background: #eef1f6; color: {{c.TEXT_SEC}}; font-weight: 600; }
   .mtab td.lab { text-align: left; font-weight: 600; }
+  .mtab tr.weakrow td { background: #eef3fb; font-weight: 600; }
+  .mtab tr.weakrow td.lab { color: {{c.ACCENT}}; }
   .dcard { border-radius: 8px; padding: 8px 10px; border: 1px solid {{c.BORDER}}; background: {{c.BG_PANEL}}; page-break-inside: avoid; }
   .dcard.warn { background: #fdf1f1; border-color: #f2c9c9; }
   .dcard .dh { font-size: 9px; text-transform: uppercase; letter-spacing:.06em; color: {{c.DANGER}}; }
@@ -1361,6 +1607,32 @@ _TEMPLATE = r"""
       {% for t in narrative.expose %}<li>{{t|safe}}</li>{% endfor %}</ul></div>
   </div>
 
+  {% if how_to_play and (how_to_play.respect or how_to_play.attack or how_to_play.watch) %}
+  <h2>How to Play Him</h2>
+  <div class="summary">
+    <div class="sbox"><h3 style="color:{{c.DANGER}}">Respect</h3><ul>
+      {% for t in how_to_play.respect %}<li>{{t|safe}}</li>{% endfor %}
+      {% if not how_to_play.respect %}<li style="color:{{c.TEXT_SEC}}">No stand-out wicket ball — he builds pressure rather than threatening every ball.</li>{% endif %}</ul></div>
+    <div class="sbox"><h3 style="color:#15803d">Score off</h3><ul>
+      {% for t in how_to_play.attack %}<li>{{t|safe}}</li>{% endfor %}
+      {% if not how_to_play.attack %}<li style="color:{{c.TEXT_SEC}}">Few easy release balls — rotation over risk.</li>{% endif %}</ul></div>
+    <div class="sbox"><h3 style="color:#b45309">Watch for</h3><ul>
+      {% for t in how_to_play.watch %}<li>{{t|safe}}</li>{% endfor %}
+      {% if not how_to_play.watch %}<li style="color:{{c.TEXT_SEC}}">No strong set-up pattern in the data.</li>{% endif %}</ul></div>
+  </div>
+  <div class="cap" style="text-align:left">Counter-strategy synthesised from his danger zones, scoring leaks, match-ups and wicket set-ups. Each line is drawn from the numbers below.</div>
+  {% endif %}
+
+  {% if recent_form %}
+  <h2>Current Form <span class="sub" style="font-weight:400">(last {{recent_form.n_matches}} Tests · {{recent_form.date_from}} → {{recent_form.date_to}})</span></h2>
+  {% if recent_form.read %}<div class="read">{{recent_form.read|safe}}</div>{% endif %}
+  <table class="mtab" style="max-width:760px">
+    <tr><th>Window</th><th>Balls</th><th>Wkts</th><th>Avg</th><th>Econ</th><th>SR</th><th>False%</th><th>Avg speed</th><th>Avg length</th></tr>
+    <tr class="weakrow"><td class="lab">Last {{recent_form.n_matches}} Tests</td><td>{{recent_form.recent.balls}}</td><td>{{recent_form.recent.wkts}}</td><td>{{recent_form.recent.avg}}</td><td>{{recent_form.recent.econ}}</td><td>{{recent_form.recent.sr}}</td><td>{{recent_form.recent.false}}</td><td>{{recent_form.recent.speed}}</td><td>{{recent_form.recent.length}}</td></tr>
+    <tr><td class="lab">Career</td><td>{{recent_form.career.balls}}</td><td>{{recent_form.career.wkts}}</td><td>{{recent_form.career.avg}}</td><td>{{recent_form.career.econ}}</td><td>{{recent_form.career.sr}}</td><td>{{recent_form.career.false}}</td><td>{{recent_form.career.speed}}</td><td>{{recent_form.career.length}}</td></tr>
+  </table>
+  {% endif %}
+
   {% if fingerprint_cards %}
   <h2>Bowling Fingerprint</h2>
   <div class="fpgrid">
@@ -1376,7 +1648,7 @@ _TEMPLATE = r"""
   <div class="cap" style="text-align:left">Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Repeatability</b> is a consistency score: a high percentile = tighter, more metronomic lengths than peers (low length spread); a low percentile = he varies his length more.</div>
   {% endif %}
 
-  <h2>Threat Profile</h2>
+  <h2>Threat Profile{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ watch wickets</a>{% endif %}{% if video.lists.new_ball_outswing %}<a class="vlink" data-pl="new_ball_outswing" href="{{video.player}}#new_ball_outswing">▶ new-ball swing</a>{% endif %}</h2>
   <div class="cards">
     {% for lab, val, csub in threat_cards %}
       <div class="card"><div class="lab">{{lab}}</div><div class="val">{{val}}</div>
@@ -1409,12 +1681,13 @@ _TEMPLATE = r"""
   {% endif %}
 
   {% if ball_type_rows %}
-  <h2>Stock Ball &amp; Ball Types <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
+  <h2>Stock Ball &amp; Ball Types <span class="sub" style="font-weight:400">({{hand_label}})</span>
+    {% if video.lists.stock_ball %}<a class="vlink" data-pl="stock_ball" href="{{video.player}}#stock_ball">▶ watch stock balls</a>{% endif %}</h2>
   {% if stock_read %}<div class="read" style="font-weight:700;color:{{c.TEXT_PRI}};border-left:3px solid {{c.ACCENT}};padding-left:8px;margin-bottom:6px">{{stock_read|safe}}</div>{% endif %}
   <table class="mtab">
     <tr><th>Ball type (pitch length × pitching line)</th><th>Movement</th><th>%</th><th>Econ</th><th>Wkts</th><th>Beaten %</th></tr>
-    {% for phrase, move, pct_, econ, wkts, beat in ball_type_rows %}
-    <tr><td class="lab">{{phrase}}</td><td>{{move}}</td><td>{{pct_}}</td><td>{{econ}}</td><td>{{wkts}}</td><td>{{beat}}</td></tr>
+    {% for row in ball_type_rows %}
+    <tr><td class="lab">{{row.phrase}}{% if video.lists[row.key] %} <a class="vlink tiny" data-pl="{{row.key}}" href="{{video.player}}#{{row.key}}" title="Watch {{row.phrase}}">▶</a>{% endif %}</td><td>{{row.move}}</td><td>{{row.pct}}</td><td>{{row.econ}}</td><td>{{row.wkts}}</td><td>{{row.beat}}</td></tr>
     {% endfor %}
   </table>
   <div class="cap" style="text-align:left;margin:4px 0 0">
@@ -1422,9 +1695,31 @@ _TEMPLATE = r"""
     the pitch, whichever is material, dominant first (ball-tracking, tracked balls only; blank if too few).
     <b>Beaten %</b> = false-shot rate on tracked balls. The stock-ball line above also notes where it passes the stumps.
   </div>
+  {% if ball_age and (ball_age.new or ball_age.old) %}
+  {% macro agecol(b) %}
+    {% if b %}
+    <div>
+      <div style="font-weight:700;font-size:10.5px;margin:0 0 3px">{{b.label}} <span style="font-weight:400;color:{{c.TEXT_SEC}}">· {{b.n}} balls · {{b.wkts}} wkts · econ {{b.econ}}</span></div>
+      <table class="mtab">
+        <tr><th>Top ball type</th><th>%</th><th>Econ</th><th>Wkts</th></tr>
+        {% for phrase, pct_, econ, wkts in b.rows %}
+        <tr><td class="lab">{{phrase}}</td><td>{{pct_}}</td><td>{{econ}}</td><td>{{wkts}}</td></tr>
+        {% endfor %}
+      </table>
+      {% if b.danger %}<div class="cap" style="text-align:left;margin-top:2px">Most lethal: <b>{{b.danger}}</b>{% if b.danger_rate %} ({{b.danger_rate}} wkts/100){% endif %}.</div>{% endif %}
+    </div>
+    {% endif %}
+  {% endmacro %}
+  <div style="font-weight:700;font-size:11px;margin:10px 0 4px;color:{{c.ACCENT}}">New ball vs old ball</div>
+  <div class="grid2 avoid" style="align-items:start">
+    {{ agecol(ball_age.new) }}
+    {{ agecol(ball_age.old) }}
+  </div>
+  <div class="cap" style="text-align:left">How his ball types and threat shift with ball age (split at {{P.ball_age.split_over}} overs). Empty side = too few balls in that phase.</div>
+  {% endif %}
   {% endif %}
 
-  <h2>Danger Zones <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
+  <h2>Danger Zones <span class="sub" style="font-weight:400">({{hand_label}})</span>{% if video.lists.danger_cell %}<a class="vlink" data-pl="danger_cell" href="{{video.player}}#danger_cell">▶ watch danger balls</a>{% endif %}</h2>
   <div class="grid2 avoid">
     {% for h, b, s, warn in danger_cards[:2] %}
       <div class="dcard {{'warn' if warn else 'plain'}}"><div class="dh">{{h}}</div>
@@ -1439,6 +1734,45 @@ _TEMPLATE = r"""
   </div>
   {% if danger_read %}<div class="read" style="margin-top:7px">{{danger_read}}</div>{% endif %}
   {% if unmapped_wkts > 0 %}<div class="cap" style="text-align:left;margin-top:4px">Zone shares are over his <b>mapped</b> wickets — {{unmapped_wkts}} wicket{{'s' if unmapped_wkts != 1 else ''}} pitched too full to place on the map (tracked length at/behind the crease), so they sit outside the grid.</div>{% endif %}
+  {% if ball_age and ((ball_age.new and ball_age.new.danger) or (ball_age.old and ball_age.old.danger)) %}
+  {% macro agedanger(b) %}
+    {% if b %}
+      <div class="dcard plain"><div class="dh">{{b.label}}</div>
+        <div class="db">{% if b.danger %}{{b.danger}}{% else %}—{% endif %}</div>
+        <div class="ds">{% if b.danger_rate %}most lethal cell · {{b.danger_rate}} wkts/100{% endif %}{% if b.danger_len %} · danger length {{b.danger_len.lower()}}{% endif %} · {{b.wkts}} wkts off {{b.n}} balls</div></div>
+    {% endif %}
+  {% endmacro %}
+  <div style="font-weight:700;font-size:11px;margin:10px 0 4px;color:{{c.ACCENT}}">Danger by ball age</div>
+  <div class="grid2 avoid">
+    {{ agedanger(ball_age.new) }}
+    {{ agedanger(ball_age.old) }}
+  </div>
+  {% endif %}
+
+  {% if matchup_tables.hand or matchup_tables.ball or matchup_tables.position %}
+  {% macro mutable(title, rows) %}
+    {% if rows %}
+    <div>
+      <div style="font-weight:700;font-size:10.5px;margin:0 0 3px">{{title}}</div>
+      <table class="mtab">
+        <tr><th>Split</th><th>Balls</th><th>Wkts</th><th>Avg</th><th>Econ</th><th>SR</th><th>False%</th></tr>
+        {% for lab, balls, wkts, avg, econ, sr, fs in rows %}
+        <tr><td class="lab">{{lab}}</td><td>{{balls}}</td><td>{{wkts}}</td><td>{{avg}}</td><td>{{econ}}</td><td>{{sr}}</td><td>{{fs}}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endif %}
+  {% endmacro %}
+  <h2 class="pbreak">Match-ups <span class="sub" style="font-weight:400">(all batters)</span></h2>
+  <div class="grid2 avoid" style="align-items:start">
+    {{ mutable('By batter hand', matchup_tables.hand) }}
+    {{ mutable('New ball vs old ball', matchup_tables.ball) }}
+  </div>
+  {% if matchup_tables.position %}
+  <div style="margin-top:8px">{{ mutable('By batting position', matchup_tables.position) }}</div>
+  {% endif %}
+  <div class="cap" style="text-align:left">Across all batters he's faced, independent of the hand filter above. Lower average / higher false-shot = the match-up that suits him; higher average = where batters have got on top.</div>
+  {% endif %}
 
   {% if scoring_stats %}
   <h2>Scoring Profile <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
@@ -1480,9 +1814,9 @@ _TEMPLATE = r"""
   <h2>Speed &amp; Spells</h2>
   {% if speed_read %}<div class="read">{{speed_read}}</div>{% endif %}
   <div class="grid3 avoid">
-    <div class="fig"><img class="chart" src="{{figs.violin_spell}}"><div class="cap">By spell — opening burst vs later spells.</div></div>
-    <div class="fig"><img class="chart" src="{{figs.violin_inns}}"><div class="cap">1st vs 2nd innings of the match.</div></div>
-    <div class="fig"><img class="chart" src="{{figs.violin_day}}"><div class="cap">By match day — fatigue across the game.</div></div>
+    <div class="fig"><div class="ct">Speed by Spell</div><img class="chart" src="{{figs.violin_spell}}"><div class="cap">By spell — opening burst vs later spells.</div></div>
+    <div class="fig"><div class="ct">Speed by Innings</div><img class="chart" src="{{figs.violin_inns}}"><div class="cap">1st vs 2nd innings of the match.</div></div>
+    <div class="fig"><div class="ct">Speed by Day</div><img class="chart" src="{{figs.violin_day}}"><div class="cap">By match day — fatigue across the game.</div></div>
   </div>
 
   {% if over_round_rows %}
@@ -1496,16 +1830,17 @@ _TEMPLATE = r"""
   </table>
   <div class="grid2 avoid" style="margin-top:6px">
     <div class="fig"><div class="ct">Over the Wicket</div><img class="chart pmap" style="width:66%" src="{{figs.over_map}}">
-      <div class="cap">{% if P.over_round.over_enough %}Where he pitches it from over the wicket ({{P.over_round.over_n}} balls).{% else %}Over the wicket — only {{P.over_round.over_n}} balls to this hand, too few to read into.{% endif %}</div></div>
+      <div class="cap">{% if P.over_round.over_enough %}Where he pitches it from over the wicket ({{P.over_round.over_n}} balls).{% else %}Over the wicket — only {{P.over_round.over_n}} balls to {{hand_noun}}, too few to read into.{% endif %}</div></div>
     <div class="fig"><div class="ct">Round the Wicket</div><img class="chart pmap" style="width:66%" src="{{figs.round_map}}">
-      <div class="cap">{% if P.over_round.round_enough %}Where he pitches it from round the wicket ({{P.over_round.round_n}} balls).{% else %}Round the wicket — only {{P.over_round.round_n}} balls to this hand, too few to read into.{% endif %}</div></div>
+      <div class="cap">{% if P.over_round.round_enough %}Where he pitches it from round the wicket ({{P.over_round.round_n}} balls).{% else %}Round the wicket — only {{P.over_round.round_n}} balls to {{hand_noun}}, too few to read into.{% endif %}</div></div>
   </div>
   {% endif %}
 
-  {% if sequencing_read or seq_pattern_read or crease_read %}
+  {% if sequencing_read or seq_pattern_read or crease_read or wicket_setup_read %}
   <h2>Sequencing &amp; Over Construction</h2>
   {% if sequencing_read %}<div class="read" style="font-weight:700;color:{{c.TEXT_PRI}};border-left:3px solid {{c.ACCENT}};padding-left:8px;margin-bottom:6px">{{sequencing_read}}</div>{% endif %}
   {% if seq_pattern_read %}<div class="read" style="font-weight:700;color:{{c.TEXT_PRI}};border-left:3px solid {{c.DANGER}};padding-left:8px;margin-bottom:6px">{{seq_pattern_read}}</div>{% endif %}
+  {% if wicket_setup_read %}<div class="read">{{wicket_setup_read}}</div>{% endif %}
   {% if sequencing_rows %}
   <table class="mtab">
     <tr><th>Ball in over</th><th>Median length</th><th>Short %</th><th>Econ</th><th>Wkt %</th></tr>

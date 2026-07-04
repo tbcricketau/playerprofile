@@ -4,6 +4,80 @@ Bump `REPORT_VERSION` in `version.py` on every git commit that changes report
 output, and record it here. The version + build date print in the top-right of
 the front page.
 
+## v1.2 — 4 July 2026
+- **Bowling report — player-facing upgrade (shippable to players).** Four new content
+  sections + video/UX polish:
+  - **How to Play Him** — a counter-strategy synthesis (Respect / Score off / Watch for),
+    every line drawn from his own danger zones, scoring leaks, match-ups and wicket set-ups
+    (e.g. "His short ball is scoreable — economy 4.2, 13 wkts off 877"; short-ball line fires
+    for pace only).
+  - **Current Form** — last 5 Tests vs career (avg/econ/SR/false%/speed/length), with a read.
+  - **Match-ups** — LHB/RHB, new/old ball, and batting position side by side (all batters,
+    independent of the hand filter).
+  - **Setup & wicket patterns** — the "ball before the wicket" length/pace read in Sequencing.
+  - **Per-ball-type playlists** — a ▶ on every ball-type row opens that ball type's clips;
+    **▶ watch danger balls** on Danger Zones (most-lethal-cell playlist).
+  - **New ball vs old ball** split (one consistent 30-over threshold across the report):
+    ball-type mix + "Danger by ball age" cards.
+  - Speed & Spells: chart titles moved on top (matching the pitch maps) + the read now covers
+    spell, innings **and** match day. Over/round now names the actual hand (LHB/RHB), never
+    "this hand". Beaten grid: length labels moved into a clear gutter, y-scale aligned to the
+    heatmap (a 6 m line matches on both) and auto-cropped to the data.
+- **Stroke norms — how he scores vs the typical Test batter.** New reference
+  `batter_stroke_norms.csv` (referencebuilder, 122-batter cohort, ≥500 stroke-coded Test balls):
+  per batter × stroke family the share of runs/balls, runs-per-ball, outs/100 and boundary
+  share, each with a cohort median + percentile. The batting report's "How He Scores" section
+  gains a **"Scoring mix vs the typical Test batter"** table (his runs% · typical · index ·
+  percentile; signature shot highlighted, ▼ = under-indexed) and a narrative read naming his
+  most over/under-indexed scoring shots (e.g. Smith: ramp/scoop 7.3× the typical share, P98;
+  cut only 5% vs 8% typical). Shares are within stroke-coded balls (coding coverage varies).
+- **Modal video player + playlists (replaces raw clip links).** `ludis_cricket.video.
+  build_player_html` writes a self-contained `<pdf>.player.html` beside each report: clip cards
+  per playlist tab; clicking opens a **lightbox that greys out the page** (prev/next, arrow keys,
+  Esc). The PDF ▶ links open it at `#<playlist>` — no more raw-mp4 download/click-back. Bowling:
+  stock ball / wickets / new-ball out-swingers; batting: danger ball / risky stroke / dismissals.
+  (Fixed a Jinja gotcha: `video.keys.x` silently failed — `.keys` collides with dict.keys.)
+- **Hawkeye multi-angle footage wired in** (`amshawkeyeupload/hawkeyeupload`, same SSO/RBAC).
+  Folder layout `<date_teams_matchid>/<HHMM_inn_over_ball>/Camera N_*.mp4` — the ball folder
+  encodes the delivery, so `hawkeye_angles(match_id, inn, over, ball)` joins deterministically;
+  `attach_hawkeye` adds per-clip **angle toggles (Broadcast + Camera 1–6)** to playlists
+  automatically where a match has coverage (457 matches from 2026-04-04; per-match — e.g. the
+  Ban v Aus T20s are fully covered, the Eng-NZ Test folder is an empty placeholder so far).
+  Demo: `reports/_hk_demo_player.html`.
+- **Batting profile v0.2 — vulnerability engine + two report types + fingerprint.** Measures how
+  a batter fares vs **seam & swing (each way, from the coder labels), speed, length, pitching
+  line, over/round, shot type, and dismissal mode**, with a length×line **danger cell**. Two
+  reports off one engine (`batter_profile.build_batter_profile(group=...)`): a **combined
+  overview** (all bowler types + a **batting fingerprint** — percentile vs Test batters on
+  avg/SR/false-shot and false% vs pace/spin/seam/swing/short, from new reference
+  `batter_vulnerability_profile.csv`, 203 batters) to find weaknesses fast; and a **focused
+  per-bowler-type exploit report** (start `right_pace`; also left_pace/off_spin/leg_spin/
+  left_orthodox/left_unorthodox) that filters to that group and adds a **bowling plan**. Loader
+  gains swing/seam labels + bowler hand/style + video cols; `build_batting_reports.py` gets
+  `--mode combined|focused|both --group`.
+- **Example-video links in the reports** (both batting and bowling). `ludis_cricket.video.
+  first_example` resolves one playable clip per key insight; the PDF now carries clickable
+  "▶ watch" links — bowling: stock ball + a wicket; batting: danger ball + his risky stroke +
+  a dismissal. Links use a 72h SAS (baked, time-limited); best-effort (absent if no clip).
+- **Video: report insights are now backed by clips.** New shared module `ludis_cricket.video`
+  (reusable by every project) resolves a delivery → a playable Fairplay URL via SSO/RBAC (SAS,
+  no secret), handling the real blob layout + `.mp4`/`.MP4` case. `playerprofile.playlists`
+  builds per-insight playlists — **Stock ball, Wickets, New-ball out-swingers** — with captions
+  from the report vocabulary; `render_report` writes a `<pdf>.playlists.json` sidecar beside each
+  PDF (best-effort, never breaks the report). `video_viewer.py` (`streamlit run`) plays them via
+  the shared `playlist_widget`. Loader now pulls `video_file_name`/season/gender/match_length;
+  rows carry `clip_stem`; ball rows tagged with `ball_type` for stock-ball pull. Plan +
+  next phases in `VIDEO_PLAN.md`.
+- **Swing/seam direction now comes from the coders' group labels, not a raw-degree gate.**
+  `movement_in_air_group_swing_id` (2827: In/No/Out Swing; spin Drift In/No/Away) and
+  `movement_off_pitch_group_seam_id` (2828: Seam In/No/Away; spin Turn In/No/Away) are
+  **batter-relative** (verified: In = into the batter for both hands, so no sign flip), and the
+  coder has already excluded non-moving balls. So direction is read from the label instead of
+  `sign(movement) + 0.3°` — cleaner and un-diluted. Applied to: swing-by-ball-age
+  (`_swing_age_split`), the Movement table's in/away split (`_label_dir_split`), and the
+  ball-type Movement cells. Starc vs LHB new-ball out-swing reads **60%** (was a diluted 56%),
+  old-ball in-swing **70%** — the flip is clearer. New loader cols + `profile.swing_dir/seam_dir`.
+
 ## v1.1 — 2026-07-02
 - **Swing described by ball age (new vs old).** A bowler whose swing *direction* flips with
   ball age (e.g. Starc's new-ball out-swing that reverses back into the LHB when it's old) was

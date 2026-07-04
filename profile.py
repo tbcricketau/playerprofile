@@ -24,6 +24,7 @@ from ludis_cricket.charts import (
     zone_concentration, danger_length, danger_line, danger_cell,
     LENGTH_ZONES_PACE, LENGTH_ZONES_SPIN, LENGTH_ZONES_1M, LENGTH_ZONES_05M, PITCH_HW,
 )
+from ludis_cricket.video import clip_stem as _clip_stem, resolve_clip as _resolve_clip
 from ludis_cricket.lookups import (
     SHOT_QUALITY_MAP as _SHOT_QUALITY_MAP,
     BEATEN_QUALITIES as _BEATEN_QUALITIES,
@@ -40,6 +41,12 @@ from ludis_cricket.lookups import (
 _SPEED_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_speed_profile.csv"
 
 _SHORT_BUCKETS = {"8-9m", "9-10m", "10-11m", "11-12m", "12-13m", "13-14m", "14m+"}
+
+# Coder swing/seam group labels (batter-relative). Pace and spin share the same three
+# directions under different codes: swing/drift 100/400 = INTO batter, 200/500 = none,
+# 300/600 = AWAY from batter; seam/turn likewise. Map to a common vocabulary.
+_SWING_DIR = {"100": "in", "400": "in", "200": "straight", "500": "straight", "300": "out", "600": "out"}
+_SEAM_DIR  = {"100": "in", "400": "in", "200": "straight", "500": "straight", "300": "away", "600": "away"}
 
 _POS_MAX = {"Openers (1-2)": 2, "Top 3": 3, "Top 4": 4}
 _LATER_SPELLS = {"Spell 2", "Spell 3", "Spell 4", "Spell 5+"}
@@ -195,22 +202,30 @@ def _dir_split(rows: list, col: str, thresh: float = 0.2) -> dict | None:
     return {"in_pct": inn / tot * 100, "out_pct": out / tot * 100, "n": tot}
 
 
-def _swing_age_split(rows: list, new_max: int = 25, old_min: int = 40, thresh: float = 0.3) -> dict:
-    """Swing (drift_n) away/in split by ball age, using simple over bands: new ball =
-    overs <= new_max, old ball = overs >= old_min. Same absolute-sign convention as
-    _dir_split. Purpose: a bowler whose direction flips with ball age (e.g. new-ball
-    out-swing that reverses back in when old) reads as 'both ways' in aggregate — this
-    separates the phases so the report can say so. (Simple bands: overs after a 2nd new
-    ball still count as 'old' — a known approximation.)"""
+def _label_dir_split(rows: list, key: str) -> dict | None:
+    """In/out(away) split from a batter-relative direction LABEL field (`swing_dir` or
+    `seam_dir`, each 'in' / 'out'|'away' / 'straight' / None). Preferred over `_dir_split`:
+    the coder's label already excludes non-moving balls and handles handedness, so the split
+    isn't diluted or mis-signed. Returns in_pct/out_pct over balls that actually moved."""
+    inn = sum(1 for r in rows if r.get(key) == "in")
+    out = sum(1 for r in rows if r.get(key) in ("out", "away"))
+    tot = inn + out
+    if not tot:
+        return None
+    return {"in_pct": inn / tot * 100, "out_pct": out / tot * 100, "n": tot}
+
+
+def _swing_age_split(rows: list, new_max: int = 25, old_min: int = 40) -> dict:
+    """Swing direction by ball age, from the coder swing label (`swing_dir`, batter-relative),
+    using simple over bands: new ball = overs <= new_max, old ball = overs >= old_min. The
+    label (In/No/Out Swing) is cleaner than a raw-degree gate — the coder has already excluded
+    non-swinging balls, so the phase directions aren't diluted by near-straight deliveries.
+    Purpose: a bowler whose direction flips with ball age (new-ball out-swing that reverses in
+    when old) reads as 'both ways' in aggregate — this separates the phases so the report can
+    say so. (Simple bands: overs after a 2nd new ball still count as 'old' — a known approx.)"""
     def tally(sel):
-        inn = out = 0
-        for r in sel:
-            v = r.get("drift_n")
-            if v is None or abs(v) < thresh:
-                continue
-            is_in = (v > 0) != r["is_lhb"]
-            inn += is_in
-            out += not is_in
+        inn = sum(1 for r in sel if r.get("swing_dir") == "in")
+        out = sum(1 for r in sel if r.get("swing_dir") == "out")
         tot = inn + out
         return {"in_pct": inn / tot * 100, "out_pct": out / tot * 100, "n": tot} if tot else None
     new = [r for r in rows if r.get("over_n") is not None and r["over_n"] <= new_max]
@@ -255,10 +270,21 @@ def process_rows(rows: list) -> list:
         r["is_false_shot"] = _sq in _FALSE_SHOT_QUALITIES
         r["turn_n"]  = _safe_float(r.get("movement_off_pitch"))
         r["drift_n"] = _safe_float(r.get("movement_in_air"))
+        # Coder swing/seam group labels (lookups 2827/2828) — already BATTER-RELATIVE
+        # (verified: In Swing = into the batter for both hands), so no sign flip needed.
+        # Pace: swing 100 In/200 No/300 Out, seam 100 In/200 No/300 Away.
+        # Spin: drift 400 In/500 No/600 Away, turn 400 In/500 No/600 Away.
+        r["swing_dir"] = _SWING_DIR.get(str(r.get("movement_in_air_group_swing_id", "")).strip())
+        r["seam_dir"]  = _SEAM_DIR.get(str(r.get("movement_off_pitch_group_seam_id", "")).strip())
         r["release_line_n"] = _safe_float(r.get("release_line_unmirrored"))  # mm, absolute (over/round flip sign)
         _rh = _safe_float(r.get("release_height"))                            # mm above ground; clip garbage
         r["release_height_n"] = _rh if (_rh is not None and 1500 <= _rh <= 2400) else None
         r["how_out"] = _HOW_OUT_MAP.get(str(r.get("how_out_id", "")).strip()) if r.get("bowler_dismissal") in ("1", "True", "true") else None
+        # Fairplay video: extension-less blob stem for this delivery (cheap, pure string).
+        # Resolve to a playable URL lazily (HEAD probe) only when a playlist is built.
+        r["clip_stem"] = _clip_stem(r.get("season"), r.get("gender_id"),
+                                    r.get("match_length_id"), r.get("match_id"),
+                                    r.get("video_file_name"))
         ln = r["pitch_line_n"]
         r["pitch_line_m"] = -ln / 1000 if ln is not None else None
         asl = _safe_float(r.get("at_stumps_line"))
@@ -557,6 +583,7 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
         region = _LINE_REGION.get(_zone_lbl(X, line_zones) or "")
         if not band or not region:
             continue
+        r["ball_type"] = (band, region)   # tag the row so playlists can pull the stock ball
         a = agg.setdefault((band, region), {
             "balls": 0, "runs": 0.0, "wkts": 0, "false": 0, "shot_n": 0,
             "asl": [], "ash": [], "mv_in": 0, "mv_out": 0, "mv_n": 0,
@@ -577,24 +604,24 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
             a["asl"].append(asl)
         if ash is not None:
             a["ash"].append(ash)
+        # Magnitude from the raw degrees; DIRECTION from the coder label (batter-relative,
+        # already hand-adjusted) — cleaner than a raw-sign + 0.3° gate.
         seam = r.get("turn_n")   # movement_off_pitch = seam (pace) / turn (spin)
         if seam is not None:
             a["sm_sum"] += abs(seam)
             a["sm_cnt"] += 1
-            if abs(seam) >= 0.3:
-                is_in = (seam > 0) != r["is_lhb"]
-                a["mv_in"] += is_in
-                a["mv_out"] += (not is_in)
-                a["mv_n"] += 1
+        if r.get("seam_dir") == "in":
+            a["mv_in"] += 1; a["mv_n"] += 1
+        elif r.get("seam_dir") == "away":
+            a["mv_out"] += 1; a["mv_n"] += 1
         swing = r.get("drift_n")   # movement_in_air = swing (pace) / drift (spin)
         if swing is not None:
             a["sw_sum"] += abs(swing)
             a["sw_cnt"] += 1
-            if abs(swing) >= 0.3:
-                is_in = (swing > 0) != r["is_lhb"]
-                a["sw_in"] += is_in
-                a["sw_out"] += (not is_in)
-                a["sw_n"] += 1
+        if r.get("swing_dir") == "in":
+            a["sw_in"] += 1; a["sw_n"] += 1
+        elif r.get("swing_dir") == "out":
+            a["sw_out"] += 1; a["sw_n"] += 1
 
     classified = sum(a["balls"] for a in agg.values())
     if classified < 100:
@@ -924,6 +951,195 @@ def _sequencing_patterns(raw: list, is_pace: bool, is_spin: bool) -> dict | None
     }
 
 
+def _form_stats(rows: list) -> dict:
+    """Comparable headline block for a subset of deliveries (used by recent-form and
+    match-ups): balls, wkts, econ, bowling avg, SR, false-shot %, median length, speed."""
+    legal = [r for r in rows if r.get("is_legal")]
+    nb = len(legal)
+    wk = sum(1 for r in rows if r.get("is_wicket"))
+    runs = int(sum((r.get("bat_score_n") or 0) + (r.get("wide_runs_n") or 0)
+                   + (r.get("noball_runs_n") or 0) for r in legal))
+    spd = [r["ball_speed_n"] for r in legal if r.get("ball_speed_n") is not None]
+    lens = [r["pitch_length_m"] for r in legal
+            if r.get("pitch_length_m") is not None and -1.0 <= r["pitch_length_m"] <= 16.0]
+    tracked = [r for r in legal if r.get("has_shot_q")]
+    false = sum(1 for r in tracked if r.get("is_false_shot"))
+    return {
+        "balls": nb, "wkts": wk, "runs": runs,
+        "econ": runs / (nb / 6) if nb else None,
+        "avg": runs / wk if wk else None,
+        "sr": nb / wk if wk else None,
+        "false_pct": false / len(tracked) * 100 if tracked else None,
+        "length": statistics.median(lens) if lens else None,
+        "speed": _mean(spd),
+    }
+
+
+def _recent_form(raw: list, n_matches: int = 5) -> dict | None:
+    """Last `n_matches` Tests vs whole career — is he bowling better/worse right now than
+    his baseline? Keyed on distinct match dates (recent-first). None if too few matches."""
+    by_match = {}
+    for r in raw:
+        mid, d = r.get("match_id"), r.get("match_date")
+        if mid and d:
+            by_match[mid] = d
+    if len(by_match) < 4:
+        return None
+    recent_ids = set(sorted(by_match, key=lambda m: by_match[m], reverse=True)[:n_matches])
+    recent = [r for r in raw if r.get("match_id") in recent_ids]
+    rec = _form_stats(recent)
+    if rec["balls"] < 60:
+        return None
+    return {
+        "recent": rec, "career": _form_stats(raw),
+        "n_matches": len(recent_ids), "n_career_matches": len(by_match),
+        "date_from": min(by_match[m] for m in recent_ids),
+        "date_to": max(by_match[m] for m in recent_ids),
+    }
+
+
+def _matchups(raw: list, min_balls: int = 120) -> dict:
+    """Side-by-side splits across all batters (independent of the report's hand filter):
+    LHB vs RHB, new vs old ball, and by batting position. Each entry is a _form_stats block;
+    splits below `min_balls` are dropped."""
+    legal = [r for r in raw if r.get("is_legal")]
+
+    def block(rows):
+        s = _form_stats(rows)
+        return s if s["balls"] >= min_balls else None
+
+    def _phase(lo, hi):
+        return [r for r in raw if (r.get("bat_pos_n") or 0) >= lo and (r.get("bat_pos_n") or 0) <= hi]
+
+    hand = {"vs LHB": block([r for r in raw if r.get("is_lhb")]),
+            "vs RHB": block([r for r in raw if not r.get("is_lhb")])}
+    # Same 30-over new/old split used by the ball-age section, for one consistent definition.
+    ball = {"New ball (≤30 ov)": block([r for r in raw if (r.get("over_n") or 999) <= 30]),
+            "Old ball (31+ ov)": block([r for r in raw if (r.get("over_n") or 0) > 30])}
+    pos = {"Top order (1–3)": block(_phase(1, 3)),
+           "Middle (4–7)": block(_phase(4, 7)),
+           "Tail (8–11)": block(_phase(8, 11))}
+    return {
+        "hand": {k: v for k, v in hand.items() if v},
+        "ball": {k: v for k, v in ball.items() if v},
+        "position": {k: v for k, v in pos.items() if v},
+    }
+
+
+def _wicket_setup(raw: list) -> dict | None:
+    """Concrete 'ball before the wicket' read: median length/line/speed of the wicket ball
+    vs the delivery that preceded it in the same over. Complements _sequencing_patterns
+    (which gives the % deltas) with the actual numbers a batter can picture."""
+    overs = _build_overs(raw)
+    if not overs:
+        return None
+    wl, wx, ws, pl, px, ps = [], [], [], [], [], []
+    for seq in overs:
+        for i, cur in enumerate(seq):
+            if not cur.get("is_wicket") or i == 0:
+                continue
+            prev = seq[i - 1]
+            cL, cX, cS = cur.get("pitch_length_m"), cur.get("pitch_line_m"), cur.get("ball_speed_n")
+            pL, pX, pS = prev.get("pitch_length_m"), prev.get("pitch_line_m"), prev.get("ball_speed_n")
+            if cL is not None and pL is not None and -1 <= cL <= 16 and -1 <= pL <= 16:
+                wl.append(cL); pl.append(pL)
+            if cX is not None and pX is not None:
+                wx.append(cX); px.append(pX)
+            if cS is not None and pS is not None:
+                ws.append(cS); ps.append(pS)
+    if len(wl) < 12:
+        return None
+    med = statistics.median
+    return {
+        "n": len(wl),
+        "wk_len": med(wl), "prev_len": med(pl),
+        "wk_line": med(wx) if wx else None, "prev_line": med(px) if px else None,
+        "wk_spd": med(ws) if ws else None, "prev_spd": med(ps) if ps else None,
+    }
+
+
+def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, matchups,
+                 seq_patterns, wicket_setup, ball_types, sb_econ, sb_wkts, sb_n,
+                 repeatability, common_len_band) -> dict:
+    """Counter-strategy synthesis — the 'what do I do about him' section players want.
+    Every line is drawn from a computed number; only asserts when the data supports it."""
+    respect, attack, watch = [], [], []
+
+    # RESPECT — his wicket ball (danger cell / length)
+    if danger_cell and danger_cell.get("adj_rate"):
+        respect.append(
+            f"Respect the <b>{danger_cell['length'].lower()} {danger_cell['line']}</b> — "
+            f"his wicket ball ({danger_cell['adj_rate']:.1f} wickets per 100, "
+            f"{danger_cell['wickets']} off {danger_cell['balls']}).")
+    elif danger_length and danger_length.get("adj_rate"):
+        respect.append(f"Respect the <b>{danger_length['length'].lower()}</b> — his most threatening length "
+                       f"({danger_length['adj_rate']:.1f} wickets per 100).")
+
+    # ATTACK — scoring direction + the least-threatening length to cash in on
+    if scoring and scoring.get("dir_pct"):
+        d = scoring["dir_pct"]
+        top = max(d, key=lambda k: d[k]) if d else None
+        side = {"off": "square/through the off side", "leg": "through the leg side",
+                "straight": "straight down the ground"}.get(top)
+        if side and d.get(top):
+            attack.append(f"Most of his runs leak {side} ({d[top]:.0f}%) — his main scoring release.")
+    # a scoreable ball type: highest econ among his common types with low beaten%
+    if ball_types and ball_types.get("types"):
+        cand = [t for t in ball_types["types"]
+                if t.get("econ") is not None and (t.get("pct") or 0) >= 8]
+        if cand:
+            loose = max(cand, key=lambda t: t["econ"])
+            if loose["econ"] and loose["econ"] >= 3.3:
+                attack.append(
+                    f"Cash in when he goes <b>{loose['band'].lower()} {loose['region']}</b> "
+                    f"(economy {loose['econ']:.1f}{', beats the bat only ' + format(loose['beaten_pct'], '.0f') + '%' if loose.get('beaten_pct') is not None else ''}).")
+    # short ball (pace)
+    if is_pace and sb_n and sb_n >= 40 and sb_econ is not None:
+        if sb_econ >= 4.0 and sb_wkts <= max(1, sb_n // 60):
+            attack.append(f"His short ball is scoreable (economy {sb_econ:.1f}, {sb_wkts} wkts off {sb_n}).")
+        elif sb_wkts and sb_wkts >= 3:
+            respect.append(f"Watch the short ball — {sb_wkts} of his wickets come from it.")
+
+    # WATCH — his setups (sequencing + the ball-before-the-wicket numbers)
+    sp = seq_patterns or {}
+    if sp.get("wk_with_prev", 0) >= 15:
+        if sp.get("wk_fuller_pct") and sp["wk_fuller_pct"] >= 45:
+            watch.append(f"The wicket ball is usually <b>fuller</b> than the one before ({sp['wk_fuller_pct']:.0f}%) — beware the ball that draws you forward.")
+        elif sp.get("wk_shorter_pct") and sp["wk_shorter_pct"] >= 45:
+            watch.append(f"The wicket ball is usually <b>shorter</b> than the one before ({sp['wk_shorter_pct']:.0f}%) — beware the ball that pushes you back.")
+        if sp.get("wk_straighter_pct") and sp["wk_straighter_pct"] >= 45:
+            watch.append(f"He tends to <b>straighten his line</b> for the wicket ball ({sp['wk_straighter_pct']:.0f}%).")
+    if wicket_setup and wicket_setup.get("wk_spd") and wicket_setup.get("prev_spd"):
+        dv = wicket_setup["wk_spd"] - wicket_setup["prev_spd"]
+        if abs(dv) >= 3:
+            watch.append(f"The wicket ball is ~{abs(dv):.0f} km/h {'quicker' if dv > 0 else 'slower'} than the ball before it — a change of pace sets it up.")
+
+    # spin: repeatability → use feet / disrupt length. length_sd_pctl is the percentile of
+    # his length standard deviation among peers, so LOW = tight/metronomic.
+    if is_spin and isinstance(repeatability, dict):
+        try:
+            rp = float(repeatability.get("length_sd_pctl"))
+        except (TypeError, ValueError):
+            rp = None
+        if rp is not None and rp <= 35:
+            watch.append("Very repeatable with his length — using your feet to change his length is more effective than waiting for a loose ball.")
+
+    # MATCH-UP — is one hand markedly safer?
+    mh = (matchups or {}).get("hand", {})
+    if "vs LHB" in mh and "vs RHB" in mh:
+        l, r = mh["vs LHB"], mh["vs RHB"]
+        if l.get("avg") and r.get("avg"):
+            if l["avg"] >= r["avg"] * 1.3:
+                attack.append(f"Left-handers fare better against him (avg {l['avg']:.0f} vs {r['avg']:.0f} for RHB).")
+            elif r["avg"] >= l["avg"] * 1.3:
+                attack.append(f"Right-handers fare better against him (avg {r['avg']:.0f} vs {l['avg']:.0f} for LHB).")
+
+    summary = None
+    if respect and attack:
+        summary = "Respect his wicket ball, cash in on his release ball — the plan is patience for the threat length and intent for the loose one."
+    return {"respect": respect, "attack": attack, "watch": watch, "summary": summary}
+
+
 def build_profile(
     bowler_id: str,
     hand: str = "All",
@@ -1090,6 +1306,30 @@ def build_profile(
 
     beaten_df = [r for r in df if r.get("is_beaten")]
 
+    # ── New ball vs old ball (ball-type mix + danger shift by ball age) ───────────
+    # Split at 30 overs: hard/new-ball phase vs old/soft-ball phase (Test-relevant; still
+    # informative in ODI, less so in T20). Guarded by min balls so a thin phase is dropped.
+    NEW_MAX_OVER = 30
+    _new_df = [r for r in df if r.get("over_n") is not None and r["over_n"] <= NEW_MAX_OVER]
+    _old_df = [r for r in df if r.get("over_n") is not None and r["over_n"] > NEW_MAX_OVER]
+
+    def _age_block(rows):
+        legal_n = sum(1 for r in rows if r["is_legal"])
+        if legal_n < 120:
+            return None
+        bt = classify_balls(rows, is_pace, is_spin)
+        runs = int(sum(r["bat_score_n"] + r["wide_runs_n"] + r["noball_runs_n"] for r in rows if r["is_legal"]))
+        return {
+            "n_balls": legal_n, "wkts": sum(1 for r in rows if r["is_wicket"]),
+            "econ": runs / (legal_n / 6) if legal_n else None,
+            "types": (bt or {}).get("types", [])[:4],
+            "danger_cell": danger_cell(rows, line_zones, length_zones),
+            "danger_length": danger_length(rows, length_zones),
+        }
+    ball_age = {"new": _age_block(_new_df), "old": _age_block(_old_df), "split_over": NEW_MAX_OVER}
+    if not (ball_age["new"] or ball_age["old"]):
+        ball_age = None
+
     # ── Length match-ups (on the hand-filtered set, all positions/overs) ─────────
     new_ball = _len_stats([r for r in hand_df if r.get("over_n") is not None and r["over_n"] < 10])
     old_ball = _len_stats([r for r in hand_df if r.get("over_n") is not None and r["over_n"] >= 40])
@@ -1108,18 +1348,37 @@ def build_profile(
             "avg_swing": _safe_float(mp.get("avg_swing")),   "swing_pctl": _safe_float(mp.get("swing_pctl")),
             "avg_seam": _safe_float(mp.get("avg_seam")),     "seam_pctl": _safe_float(mp.get("seam_pctl")),
             "avg_bounce": _safe_float(mp.get("avg_bounce")), "bounce_pctl": _safe_float(mp.get("bounce_pctl")),
-            "swing_dir": _dir_split(legal, "drift_n"),   # movement_in_air
+            "swing_dir": _label_dir_split(legal, "swing_dir"),   # coder swing label (batter-relative)
             # swing_age needs the hand-filtered set (legal already is, when a vs-LHB/vs-RHB
             # filter is active): the new->old direction flip is opposite for LHB vs RHB, so
             # it only shows per hand — across all batters it washes out to "both ways".
             "swing_age": _swing_age_split(legal),
-            "seam_dir":  _dir_split(legal, "turn_n"),    # movement_off_pitch
+            "seam_dir":  _label_dir_split(legal, "seam_dir"),    # coder seam label (batter-relative)
         }
+
+    # ── Player-facing additions: recent form, match-ups, wicket setup, how-to-play ──
+    _scoring = _scoring_profile(df)
+    _ball_types = classify_balls(df, is_pace, is_spin)
+    _seq_patterns = _sequencing_patterns(raw, is_pace, is_spin)
+    _repeat = load_repeatability_profiles().get(str(bowler_id))
+    _danger_length = danger_length(df, length_zones)
+    _danger_cell = danger_cell(df, line_zones, length_zones)
+    recent_form = _recent_form(raw)
+    matchups = _matchups(raw)
+    wicket_setup = _wicket_setup(raw)
+    how_to_play = _how_to_play(
+        is_pace=is_pace, is_spin=is_spin, danger_cell=_danger_cell, danger_length=_danger_length,
+        scoring=_scoring, matchups=matchups, seq_patterns=_seq_patterns, wicket_setup=wicket_setup,
+        ball_types=_ball_types, sb_econ=sb_econ, sb_wkts=sb_wkts, sb_n=len(short_balls),
+        repeatability=_repeat, common_len_band=common_len_band)
 
     return {
         # identity
         "bowler_id": str(bowler_id), "name": name, "team": team, "flag": flag,
         "primary_type": primary_type, "is_pace": is_pace, "is_spin": is_spin,
+        # player-facing additions
+        "recent_form": recent_form, "matchups": matchups,
+        "wicket_setup": wicket_setup, "how_to_play": how_to_play,
         # delivery lists + zones (for figures)
         "raw": raw, "df": df, "legal": legal, "beaten_df": beaten_df,
         "line_zones": line_zones, "length_zones": length_zones,
@@ -1136,12 +1395,13 @@ def build_profile(
         "movement": movement,
         "round_pct": round_pct, "round_lhb": round_lhb, "round_rhb": round_rhb,
         "slower_ball_pct": slower_ball_pct, "slower_ball_kph": slower_ball_kph,
-        "scoring": _scoring_profile(df),
+        "scoring": _scoring,
         "over_round": _over_round(df, line_zones),
-        "ball_types": classify_balls(df, is_pace, is_spin),
+        "ball_types": _ball_types,
+        "ball_age": ball_age,
         "sequencing": _sequencing(df),
-        "seq_patterns": _sequencing_patterns(raw, is_pace, is_spin),
-        "repeatability": load_repeatability_profiles().get(str(bowler_id)),
+        "seq_patterns": _seq_patterns,
+        "repeatability": _repeat,
         "crease": _crease_usage(raw),
         "crease_ref": load_crease_profiles().get(str(bowler_id)),
         "fingerprint": _fingerprint(bowler_id, is_pace, is_spin),
@@ -1161,8 +1421,8 @@ def build_profile(
         "wkt_zone": zone_concentration(df, line_zones, length_zones, "wickets"),
         "run_zone": zone_concentration(df, line_zones, length_zones, "runs"),
         "danger_line": danger_line(df, line_zones),
-        "danger_length": danger_length(df, length_zones),
-        "danger_cell": danger_cell(df, line_zones, length_zones),
+        "danger_length": _danger_length,
+        "danger_cell": _danger_cell,
         # short ball (pace)
         "sb_wkts": sb_wkts, "sb_runs": sb_runs, "sb_econ": sb_econ, "sb_n": len(short_balls),
     }

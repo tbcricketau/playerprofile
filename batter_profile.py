@@ -26,6 +26,41 @@ from ludis_cricket.lookups import (
     SPIN_TYPES as _SPIN_TYPES,
     team_flag,
 )
+from ludis_cricket.charts import LENGTH_ZONES_PACE as _LZ_PACE, LENGTH_ZONES_SPIN as _LZ_SPIN
+from ludis_cricket.video import clip_stem as _clip_stem
+# Shared zone vocabulary (length bands, line regions) lives with the bowling profile.
+from profile import build_line_zones as _build_line_zones, _LEN_BAND, _LINE_REGION, _zone_lbl
+
+# Coder swing/seam group labels (2827/2828) are BATTER-RELATIVE: in = into the batter, out/away
+# = away from the batter (same for pace swing/seam and spin drift/turn). Verified in the bowling work.
+_SWING_DIR = {"100": "in", "400": "in", "200": "straight", "500": "straight", "300": "out", "600": "out"}
+_SEAM_DIR  = {"100": "in", "400": "in", "200": "straight", "500": "straight", "300": "away", "600": "away"}
+_LINE_ZONES = _build_line_zones("All")   # hand-agnostic pitching-line zones
+
+# The six bowler groups we build focused reports for (who is bowling AT the batter).
+EARLY_BALLS = 30      # "start of innings" = his first 30 balls faced; after that he's set
+
+BOWLER_GROUPS = {
+    "right_pace":      ({"Right Fast", "Right Medium"}, "right-arm pace"),
+    "left_pace":       ({"Left Fast", "Left Medium"},   "left-arm pace"),
+    "off_spin":        ({"Off Spin"},                   "off spin"),
+    "leg_spin":        ({"Leg Break"},                  "leg spin"),
+    "left_orthodox":   ({"Left Orthodox"},              "left-arm orthodox"),
+    "left_unorthodox": ({"Left Unorthodox"},            "left-arm wrist spin"),
+}
+
+
+def _speed_band(v):
+    """Pace speed bands (km/h). Spin speeds all fall in the slow bucket, so only use for pace."""
+    if v is None:
+        return None
+    if v < 125:
+        return "<125"
+    if v < 133:
+        return "125–133"
+    if v < 140:
+        return "133–140"
+    return "140+"
 
 
 def _safe_float(v):
@@ -49,6 +84,9 @@ def _pctl(sorted_vals, p):
 
 def process_batting_rows(rows: list) -> list:
     """Enrich raw string rows with parsed numeric/boolean fields."""
+    # rows arrive innings-ordered (loader ORDER BY match_date, innings, over, ball), so a
+    # running count per innings gives his ball-of-innings — the start-vs-set axis.
+    _faced = defaultdict(int)
     for r in rows:
         r["is_legal"] = r.get("legal_ball") in ("1", "True", "true")
         r["is_out"] = r.get("striker_dismissed") in ("1", "True", "true")
@@ -82,6 +120,29 @@ def process_batting_rows(rows: list) -> list:
         _t = r.get("bowler_type_simple")
         r["vs_pace"] = _t in _PACE_TYPES
         r["vs_spin"] = _t in _SPIN_TYPES
+        # movement: magnitude (deg) + batter-relative direction from the coder labels
+        r["turn_n"] = _safe_float(r.get("movement_off_pitch"))   # seam (pace) / turn (spin)
+        r["drift_n"] = _safe_float(r.get("movement_in_air"))     # swing (pace) / drift (spin)
+        r["seam_dir"] = _SEAM_DIR.get(str(r.get("movement_off_pitch_group_seam_id", "")).strip())
+        r["swing_dir"] = _SWING_DIR.get(str(r.get("movement_in_air_group_swing_id", "")).strip())
+        _otw = r.get("over_the_wicket")
+        r["is_round"] = (False if _otw in ("True", "1", "true") else True) if _otw in ("True", "1", "true", "False", "0", "false") else None
+        r["speed_band"] = _speed_band(r["ball_speed_n"])
+        # length band & pitching-line region (pace vs spin zones as appropriate)
+        L, X = r["pitch_length_m"], r["pitch_line_m"]
+        zlen = _LZ_PACE if r["vs_pace"] else _LZ_SPIN
+        r["length_band"] = _LEN_BAND.get(_zone_lbl(L, zlen) or "") if L is not None else None
+        r["line_region"] = _LINE_REGION.get(_zone_lbl(X, _LINE_ZONES) or "") if X is not None else None
+        # ball of innings (1-based) — legal balls he has faced in this innings so far
+        _ik = (r.get("match_id"), r.get("match_innings"))
+        r["ball_of_innings"] = _faced[_ik] + 1
+        if r["is_legal"]:
+            _faced[_ik] += 1
+        r["is_early"] = r["ball_of_innings"] <= EARLY_BALLS
+        # video clip stem (resolved lazily when a playlist is built)
+        r["clip_stem"] = _clip_stem(r.get("season"), r.get("gender_id"),
+                                    r.get("match_length_id"), r.get("match_id"),
+                                    r.get("video_file_name"))
     return rows
 
 
@@ -147,7 +208,70 @@ def _split_stats(rows: list) -> dict:
     }
 
 
-def build_batter_profile(batter_id: str, raw: list | None = None) -> dict:
+def _bdry_pct(rows: list):
+    """Boundary runs as a share of runs scored (4s+6s ÷ runs)."""
+    runs = sum(r["runs"] for r in rows)
+    bdry = sum(r["runs"] for r in rows if r["runs"] in (4.0, 6.0))
+    return bdry / runs * 100 if runs else None
+
+
+# Display order for the categorical dimensions.
+_ORDER = {
+    "seam_dir":   ["in", "straight", "away"],
+    "swing_dir":  ["in", "straight", "out"],
+    "speed_band": ["<125", "125–133", "133–140", "140+"],
+    "length_band": ["Full", "Good length", "Back of a length", "Short"],
+    "line_region": ["wide outside off", "outside off", "in the channel", "on the stumps", "down the leg side"],
+}
+
+
+def dimension_split(rows: list, key: str, min_balls: int = 40) -> list:
+    """Split faced deliveries by a categorical row key -> per-bucket batting stats. Ordered by
+    the natural zone order where we have one, else by vulnerability (false-shot % desc). Buckets
+    thinner than `min_balls` are dropped so a handful of balls can't define a weakness."""
+    groups = defaultdict(list)
+    for r in rows:
+        v = r.get(key)
+        if v is None:
+            continue
+        groups[v].append(r)
+    out = []
+    for v, sub in groups.items():
+        s = _split_stats(sub)
+        if s["balls"] < min_balls:
+            continue
+        s["bucket"] = v
+        s["bdry_pct"] = _bdry_pct(sub)
+        s["rows"] = sub                      # kept for playlists / drill-down (dropped before JSON)
+        out.append(s)
+    order = _ORDER.get(key)
+    if order:
+        out.sort(key=lambda d: order.index(d["bucket"]) if d["bucket"] in order else 99)
+    else:
+        out.sort(key=lambda d: -(d["false_pct"] or 0))
+    return out
+
+
+def grid_danger(rows: list, min_balls: int = 25) -> dict | None:
+    """The (length band × line region) cell where the batter is most vulnerable — highest
+    dismissals per 100 balls among cells with >= min_balls. Returns the cell's stats or None."""
+    cells = defaultdict(list)
+    for r in rows:
+        lb, lr = r.get("length_band"), r.get("line_region")
+        if lb and lr:
+            cells[(lb, lr)].append(r)
+    best = None
+    for (lb, lr), sub in cells.items():
+        s = _split_stats(sub)
+        if s["balls"] < min_balls or not s["outs"]:
+            continue
+        s["length_band"], s["line_region"] = lb, lr
+        if best is None or (s["dismissal_per100"] or 0) > (best["dismissal_per100"] or 0):
+            best = s
+    return best
+
+
+def build_batter_profile(batter_id: str, raw: list | None = None, group: str | None = None) -> dict:
     if raw is None:
         raw = process_batting_rows(load_batter_deliveries(batter_id))
     # correct known warehouse hand errors for the profiled batter (all his deliveries)
@@ -158,6 +282,15 @@ def build_batter_profile(batter_id: str, raw: list | None = None) -> dict:
     innings = load_batter_innings(batter_id)
     info = load_batter_info(batter_id)
 
+    # Optional bowler-group filter (focused report). Headline + dimensions then reflect only
+    # deliveries from that group; hand + share-of-runs stay on the full career.
+    raw_all = raw
+    group_label = None
+    is_spin_group = group in ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox")
+    if group and group in BOWLER_GROUPS:
+        types, group_label = BOWLER_GROUPS[group]
+        raw = [r for r in raw_all if r.get("bowler_type_simple") in types]
+
     name = (info.get("player_name") or f"Batter {batter_id}").strip()
     team = (info.get("team_name") or "").strip()
     flag = team_flag(team)
@@ -166,7 +299,7 @@ def build_batter_profile(batter_id: str, raw: list | None = None) -> dict:
     n_balls = len(legal)
     runs = sum(r["runs"] for r in raw)
     n_out = sum(1 for r in raw if r["is_out"])
-    is_lhb = sum(1 for r in raw if r["is_lhb"]) > len(raw) / 2 if raw else False
+    is_lhb = sum(1 for r in raw_all if r["is_lhb"]) > len(raw_all) / 2 if raw_all else False
 
     # vs bowler type
     vs = {}
@@ -204,6 +337,36 @@ def build_batter_profile(batter_id: str, raw: list | None = None) -> dict:
          for k, v in fam.items() if v["balls"] >= 15),
         key=lambda d: -d["runs"])
 
+    # start of innings vs set (his first EARLY_BALLS balls of each innings vs the rest)
+    phase = None
+    early_rows = [r for r in raw if r["is_early"]]
+    set_rows = [r for r in raw if not r["is_early"]]
+    if (sum(1 for r in early_rows if r["is_legal"]) >= 150
+            and sum(1 for r in set_rows if r["is_legal"]) >= 150):
+        phase = {}
+        for key, sub in (("early", early_rows), ("set", set_rows)):
+            s = _split_stats(sub)
+            s["bdry_pct"] = _bdry_pct(sub)
+            # what he scores off in this phase (top stroke families by runs)
+            fr = defaultdict(float)
+            for r in sub:
+                if r.get("stroke_family") and r["runs"] > 0:
+                    fr[r["stroke_family"]] += r["runs"]
+            ftot = sum(fr.values())
+            s["top_shots"] = [(k, v / ftot * 100) for k, v in
+                              sorted(fr.items(), key=lambda kv: -kv[1])[:2]] if ftot else []
+            # where the runs go in this phase (for field placement by phase)
+            dr = {"off": 0.0, "leg": 0.0, "straight": 0.0}
+            dk = 0.0
+            for r in sub:
+                if r["runs"] > 0:
+                    side = _hit_side(r)
+                    if side:
+                        dr[side] += r["runs"]
+                        dk += r["runs"]
+            s["dir_pct"] = {k: v / dk * 100 for k, v in dr.items()} if dk else None
+            phase[key] = s
+
     # scoring areas (off_bat_angle)
     dir_runs = {"off": 0.0, "leg": 0.0, "straight": 0.0}
     dir_known = 0.0
@@ -232,14 +395,41 @@ def build_batter_profile(batter_id: str, raw: list | None = None) -> dict:
             elif p["avg"] < s["avg"] * 0.75:
                 weakness = "pace"
 
+    # ── Vulnerability dimensions ─────────────────────────────────────────────────
+    # Focused report: on the group. Combined report: the movement/speed detail is pace-centric
+    # (seam/swing live on pace), so run it on the pace subset; spin gets a length/line block.
+    if group:
+        arows, is_pace_dims = raw, not is_spin_group
+    else:
+        arows, is_pace_dims = [r for r in raw if r["vs_pace"]], True
+    dims = {
+        "seam":  dimension_split(arows, "seam_dir"),
+        "swing": dimension_split(arows, "swing_dir"),
+        "speed": dimension_split(arows, "speed_band") if is_pace_dims else [],
+        "length": dimension_split(arows, "length_band"),
+        "line":  dimension_split(arows, "line_region"),
+        "over_round": dimension_split(arows, "is_round", min_balls=60),
+        "stroke": dimension_split(arows, "stroke_family", min_balls=25),
+    }
+    grid = grid_danger(arows)
+    dims_spin = None
+    if group is None:
+        srows = [r for r in raw if r["vs_spin"]]
+        if sum(1 for r in srows if r["is_legal"]) >= 150:
+            dims_spin = {"length": dimension_split(srows, "length_band"),
+                         "line": dimension_split(srows, "line_region"),
+                         "turn": dimension_split(srows, "seam_dir")}
+
     return {
         "batter_id": str(batter_id), "name": name, "team": team, "flag": flag, "is_lhb": is_lhb,
-        "raw": raw, "n_balls": n_balls, "runs": runs, "n_out": n_out,
+        "raw": raw, "raw_all": raw_all, "n_balls": n_balls, "runs": runs, "n_out": n_out,
+        "group": group, "group_label": group_label, "is_spin_group": is_spin_group,
         "average": runs / n_out if n_out else None,
         "strike_rate": runs / n_balls * 100 if n_balls else None,
         "share": _bat_share(innings),
-        "vs": vs, "vs_detail": detail, "weakness": weakness,
+        "vs": vs, "vs_detail": detail, "weakness": weakness, "phase": phase,
         "shot_groups": shot_groups, "dir_pct": dir_pct,
         "dismissals": dis, "n_dismissals": sum(dis.values()),
         "dismissal_bowler_type": dismissal_bowler_type,
+        "dims": dims, "dims_spin": dims_spin, "grid_danger": grid, "n_faced_dims": len(arows),
     }

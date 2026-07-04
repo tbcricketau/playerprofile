@@ -183,6 +183,10 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0) -> list:
         D.[match_id],
         D.[delivery_id],
         D.[striker_id],
+        D.[video_file_name],
+        M.[match_length_id],
+        S.[name]                                     AS season,
+        SR.[gender_id],
         CONVERT(VARCHAR(10), M.[match_date], 120)   AS match_date,
         CONCAT(
             L_ml.[description], ' ',
@@ -220,6 +224,8 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0) -> list:
         D.[at_stumps_height],
         D.[movement_in_air],
         D.[movement_off_pitch],
+        D.[movement_in_air_group_swing_id],
+        D.[movement_off_pitch_group_seam_id],
         D.[release_line_unmirrored],
         D.[release_height],
         D.[striker_hand_id],
@@ -243,6 +249,8 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0) -> list:
         L_plgs.[description]                         AS pitch_line_group_spin
     FROM [{DATA_SCHEMA}].[Deliveries] AS D
     JOIN [{DATA_SCHEMA}].[Matches]    AS M   ON D.[match_id]     = M.[match_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Seasons] AS S ON M.[season_id]    = S.[season_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Series] AS SR ON M.[series_id]    = SR.[series_id]
     LEFT JOIN [{DATA_SCHEMA}].[Teams] AS TA  ON M.[team_a_id]   = TA.[team_id]
     LEFT JOIN [{DATA_SCHEMA}].[Teams] AS TB  ON M.[team_b_id]   = TB.[team_id]
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_ml

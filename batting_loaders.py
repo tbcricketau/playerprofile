@@ -116,12 +116,19 @@ def load_batter_deliveries(batter_id: str) -> list:
         D.[ball_speed],
         D.[pitch_line], D.[pitch_length], D.[at_stumps_line], D.[at_stumps_height],
         D.[movement_in_air], D.[movement_off_pitch],
+        D.[movement_in_air_group_swing_id], D.[movement_off_pitch_group_seam_id],
         D.[over_the_wicket],
         D.[striker_hand_id], L_sh.[description] AS striker_hand,
-        D.[bowler_id], D.[bowler_pace_spin_id], L_bps.[description] AS bowler_pace_spin,
-        {_BOWLER_TYPE_CASE} AS bowler_type_simple
+        D.[bowler_id], D.[bowler_hand_id], D.[bowler_style_id],
+        D.[bowler_pace_spin_id], L_bps.[description] AS bowler_pace_spin,
+        {_BOWLER_TYPE_CASE} AS bowler_type_simple,
+        D.[delivery_id], D.[video_file_name], M.[match_length_id],
+        S.[name] AS season, SR.[gender_id],
+        CONVERT(VARCHAR(10), M.[match_date], 120) AS match_date
     FROM [{DATA_SCHEMA}].[Deliveries] AS D
     JOIN [{DATA_SCHEMA}].[Matches] AS M ON D.[match_id] = M.[match_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Seasons] AS S ON M.[season_id] = S.[season_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Series] AS SR ON M.[series_id] = SR.[series_id]
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_str ON L_str.[lookup_type_id]=24 AND L_str.[id]=D.[stroke_id]
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_sh  ON L_sh.[lookup_type_id]=10 AND L_sh.[id]=D.[striker_hand_id]
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_bps ON L_bps.[lookup_type_id]=2805 AND L_bps.[id]=D.[bowler_pace_spin_id]
