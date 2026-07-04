@@ -1447,19 +1447,21 @@ def _file_url(path: str) -> str:
     return "file:///" + os.path.abspath(path).replace("\\", "/").replace(" ", "%20")
 
 
-def _build_player(P: dict, pdf_path: str, subtitle: str) -> dict:
+def _build_player(P: dict, pdf_path: str, subtitle: str, target_country: str | None = None) -> dict:
     """Build per-insight playlists, write a self-contained modal video player next to the PDF,
-    and return {player: file-url, keys: {...}} for the report's ▶ links. Best-effort."""
+    and return {player: file-url, keys: {...}} for the report's ▶ links. Best-effort.
+    `target_country` orders clips by like-for-like conditions (see build_playlists)."""
     try:
         _get_fairplay_sas(ttl_hours=72)          # long-lived SAS baked into the player
         from playlists import build_playlists
         from ludis_cricket.video import build_player_html, write_playlists
-        pls = build_playlists(P, cap=8)["playlists"]
+        built = build_playlists(P, cap=8, target_country=target_country)
+        pls, pl_meta = built["playlists"], built.get("meta")
         if not pls:
             return {}
         player_path = pdf_path[:-4] + ".player.html"
         build_player_html(pls, player_path, title=P["name"], subtitle=subtitle)
-        write_playlists(pdf_path[:-4] + ".playlists.json", pls)   # portable sidecar too
+        write_playlists(pdf_path[:-4] + ".playlists.json", pls, meta=pl_meta)   # portable sidecar too
         return {"player": _file_url(player_path), "lists": {k: True for k in pls}, "playlists": pls}
     except Exception:
         return {}
@@ -1467,10 +1469,15 @@ def _build_player(P: dict, pdf_path: str, subtitle: str) -> dict:
 
 def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
                   position: str = "All positions", spell: str = "All",
-                  length_mode: str = "Zones", with_playlists: bool = True) -> str:
+                  length_mode: str = "Zones", with_playlists: bool = True,
+                  target_country: str | None = "Australia") -> str:
     """Build the profile, render HTML, print to PDF. Returns the PDF path. When
     `with_playlists`, also builds video playlists + a `<pdf>.player.html` modal player and links
-    the report's ▶ buttons to it (best-effort — never breaks the report if video is unavailable)."""
+    the report's ▶ buttons to it (best-effort — never breaks the report if video is unavailable).
+
+    `target_country` = where the next series is played; video examples are ordered like-for-like
+    (that country's conditions first, then similar, then the rest). Defaults to Australia (home
+    series). Pass None for pure recency."""
     P = build_profile(bowler_id, hand=hand, position=position, spell=spell, length_mode=length_mode)
 
     os.makedirs(out_dir, exist_ok=True)
@@ -1491,7 +1498,8 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
     hand_tag = {"All": "all", "vs LHB": "lhb", "vs RHB": "rhb"}.get(hand, "all")
     out_path = os.path.abspath(os.path.join(out_dir, f"{who}_bowling_{btype}_{fmt}_{hand_tag}.pdf"))
 
-    video = _build_player(P, out_path, subtitle=f"{P['name']} — bowling scout") if with_playlists else {}
+    video = (_build_player(P, out_path, subtitle=f"{P['name']} — bowling scout",
+                           target_country=target_country) if with_playlists else {})
     html = build_html(P, video=video)
     if video.get("playlists"):
         # Interactive HTML report: same page + an in-page lightbox. ▶ opens the playlist as a

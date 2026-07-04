@@ -6,6 +6,7 @@ Uses the shared `ludis_cricket.video` clip resolver, so the format/plumbing is r
 other projects (livetrackingdashboard etc.).
 """
 from ludis_cricket.video import playlist_item, resolve_playlist, write_playlists, attach_hawkeye
+from ludis_cricket.lookups import conditions_tier, conditions_bucket
 
 # Over-select this many candidates per list, then keep the first `cap` whose clip exists
 # (coverage is patchy, so we need headroom). One HEAD probe per candidate (cached).
@@ -45,6 +46,10 @@ def _caption(r, is_spin):
     for x in (_fmt_speed(r), _swing_word(r, is_spin), _outcome(r)):
         if x:
             parts.append(x)
+    vc = r.get("venue_country")
+    if vc and vc != "None":
+        yr = (r.get("match_date") or "")[:4]
+        parts.append(f"{vc}{(' ' + yr) if yr else ''}")   # conditions cue for like-for-like
     return " · ".join(parts)
 
 
@@ -57,6 +62,7 @@ def _item(r, is_spin):
             "length_m": r.get("pitch_length_m"), "line_m": r.get("pitch_line_m"),
             "is_wicket": bool(r.get("is_wicket")), "how_out": r.get("how_out"),
             "match": r.get("match_name"), "date": r.get("match_date"),
+            "country": r.get("venue_country"), "city": r.get("venue_city"),
         },
     )
 
@@ -71,18 +77,28 @@ def _with_hawkeye(items, rows):
         return items
 
 
-def _resolve_take(rows, is_spin, cap):
-    """Resolve candidate rows' clips, keep the first `cap` that exist. Returns
-    (items_with_url, n_available, n_considered)."""
-    items = [_item(r, is_spin) for r in rows[: cap * _CAND_MULT]]
+def _resolve_take(rows, is_spin, cap, target_country=None):
+    """Resolve candidate clips (probing recency-first, since storage coverage is concentrated
+    on recent matches), then order the ones that EXIST by like-for-like conditions tier —
+    target country, then same conditions bucket, then the rest — recency within each tier.
+    Ordering the *resolved* set (not the candidates) avoids un-clipped tier-1 balls crowding
+    out the clipped ones. Returns (items_with_url, n_available, n_considered)."""
+    items = [_item(r, is_spin) for r in rows[: max(cap * _CAND_MULT, 48)]]
     resolved, avail, _ = resolve_playlist(items, drop_missing=True)
+    # stable tier sort keeps the incoming (recency/illustrative) order within each tier
+    resolved.sort(key=lambda it: conditions_tier((it.get("meta") or {}).get("country"), target_country))
     return _with_hawkeye(resolved[:cap], rows), min(avail, cap), len(rows)
 
 
-def build_playlists(P: dict, cap: int = 10) -> dict:
+def build_playlists(P: dict, cap: int = 10, target_country: str | None = None) -> dict:
     """Return {playlists: {...}, meta: {...}} ready for write_playlists. Insights: stock ball,
     wickets, new-ball out-swingers (pace). Illustrative balls first (false shots / wickets),
-    only deliveries whose clip is actually in storage."""
+    only deliveries whose clip is actually in storage.
+
+    `target_country` = where the upcoming series is played (e.g. 'Australia' for a home
+    series). When set, clips are ordered by LIKE-FOR-LIKE conditions first — same country,
+    then the same conditions bucket (AUS↔SA/NZ etc.), then the rest — and by recency within
+    each tier. When None, pure recency (coverage is better on recent matches anyway)."""
     df = [r for r in P["df"] if r.get("clip_stem")]
     is_spin, is_pace = P["is_spin"], P["is_pace"]
     out, counts = {}, {}
@@ -90,13 +106,14 @@ def build_playlists(P: dict, cap: int = 10) -> dict:
     def add(key, rows):
         if not rows:
             return
-        items, avail, considered = _resolve_take(rows, is_spin, cap)
+        # Probe in the caller's order (recency / illustrative-first); _resolve_take then orders
+        # the clips that actually exist by like-for-like conditions tier.
+        items, avail, considered = _resolve_take(rows, is_spin, cap, target_country)
         if items:
             out[key] = items
             counts[key] = {"shown": len(items), "available": avail, "in_group": considered}
 
-    # Recency helps coverage (recent matches are clipped), so order recent-first everywhere and,
-    # for the stock ball, stable-lift the illustrative balls (wickets/false shots) to the top.
+    # Recency ordering (coverage is better on recent matches); tier is layered on in add().
     def _recent_first(rows):
         rows.sort(key=lambda r: r.get("match_date") or "", reverse=True)
         return rows
@@ -141,12 +158,16 @@ def build_playlists(P: dict, cap: int = 10) -> dict:
             [r for r in df if r.get("swing_dir") == "out"
              and r.get("over_n") is not None and r["over_n"] <= 25]))
 
+    order_note = ("most recent first" if not target_country else
+                  f"like-for-like conditions first ({target_country} → similar conditions "
+                  f"[{conditions_bucket(target_country) or 'n/a'}] → rest), most recent within each")
     meta = {
         "bowler": P.get("name"), "bowler_id": P.get("bowler_id"),
         "hand_filter": P.get("filters", {}).get("hand"),
+        "target_country": target_country, "order": order_note,
         "counts": counts,
         "note": "Clips resolved via ludis_cricket.video (SSO SAS). 'available' = clips found in "
-                "storage; coverage is per-delivery so some balls have no clip.",
+                "storage; coverage is per-delivery so some balls have no clip. Order: " + order_note + ".",
     }
     return {"playlists": out, "meta": meta}
 

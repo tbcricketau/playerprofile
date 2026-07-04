@@ -59,7 +59,11 @@ def main():
     ap.add_argument("--position", default="All positions", help='e.g. "Openers (1-2)", "Top 3", "Top 4"')
     ap.add_argument("--spell", default="All", help='e.g. "Opening (Spell 1)", "Later (Spell 2+)"')
     ap.add_argument("--length", default="Zones", help='"Zones", "1m bands", "0.5m bands"')
+    ap.add_argument("--target-country", default="Australia",
+                    help="Where the next series is played — orders video examples like-for-like "
+                         "(that country's conditions first). Use 'none' for pure recency.")
     args = ap.parse_args()
+    target_country = None if args.target_country.strip().lower() in ("none", "") else args.target_country
 
     hand = _HAND.get(args.hand.strip().lower())
     if hand is None:
@@ -69,12 +73,14 @@ def main():
     if not ids:
         sys.exit("No bowler IDs to run (empty --ids and no include=Y rows in the CSV).")
 
-    print(f"Generating {len(ids)} report(s) — hand={hand}, position={args.position}, spell={args.spell}")
+    print(f"Generating {len(ids)} report(s) — hand={hand}, position={args.position}, "
+          f"spell={args.spell}, video conditions={target_country or 'recency'}")
     ok, fail = 0, 0
     for i, bid in enumerate(ids, 1):
         try:
             path = render_report(bid, hand=hand, out_dir=args.out,
-                                 position=args.position, spell=args.spell, length_mode=args.length)
+                                 position=args.position, spell=args.spell, length_mode=args.length,
+                                 target_country=target_country)
             print(f"  [{i}/{len(ids)}] {bid} -> {os.path.basename(path)}")
             ok += 1
         except Exception as e:

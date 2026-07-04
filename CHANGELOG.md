@@ -5,6 +5,17 @@ output, and record it here. The version + build date print in the top-right of
 the front page.
 
 ## v1.2 — 4 July 2026
+- **Video example precedence — like-for-like conditions.** Clips linked from the report are now
+  ordered by where the next series is played: same country first, then the same conditions
+  bucket (AUS↔SA/NZ; ENG; subcontinent; Caribbean), then the rest — most recent within each
+  tier. Falls back to pure recency when no like-conditions footage exists (the common case for
+  opposition bowlers touring Australia). `--target-country` on `build_reports.py` (default
+  Australia); taxonomy in `ludis_cricket.lookups.conditions_tier`; loader now carries the venue
+  country; clip captions show country + year. (Ordering is applied to the clips that actually
+  resolve, so sparse-coverage tiers don't crowd out available clips.)
+- **Bowler-type override** (`ludis_cricket.lookups.BOWLER_TYPE_OVERRIDE`) for warehouse
+  mis-codes — e.g. Nahid Rana (express quick coded Medium) now reads Right Fast. Mirrors the
+  batting-hand override pattern.
 - **Bowling report — player-facing upgrade (shippable to players).** Four new content
   sections + video/UX polish:
   - **How to Play Him** — a counter-strategy synthesis (Respect / Score off / Watch for),

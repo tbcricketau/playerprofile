@@ -246,9 +246,13 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0) -> list:
         L_plgp2.[description]                        AS pitch_length_group_pace_2,
         L_plgp.[description]                         AS pitch_line_group_pace,
         L_plgs1.[description]                        AS pitch_length_group_spin,
-        L_plgs.[description]                         AS pitch_line_group_spin
+        L_plgs.[description]                         AS pitch_line_group_spin,
+        VC.[name]                                    AS venue_country,
+        V.[city_name]                                AS venue_city
     FROM [{DATA_SCHEMA}].[Deliveries] AS D
     JOIN [{DATA_SCHEMA}].[Matches]    AS M   ON D.[match_id]     = M.[match_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Venues] AS V  ON M.[venue_id]     = V.[venue_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Countries] AS VC ON V.[country_id] = VC.[country_id]
     LEFT JOIN [{DATA_SCHEMA}].[Seasons] AS S ON M.[season_id]    = S.[season_id]
     LEFT JOIN [{DATA_SCHEMA}].[Series] AS SR ON M.[series_id]    = SR.[series_id]
     LEFT JOIN [{DATA_SCHEMA}].[Teams] AS TA  ON M.[team_a_id]   = TA.[team_id]

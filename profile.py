@@ -32,6 +32,7 @@ from ludis_cricket.lookups import (
     HOW_OUT_MAP as _HOW_OUT_MAP,
     STROKE_FAMILY as _STROKE_FAMILY,
     BATTING_HAND_OVERRIDE as _HAND_OVERRIDE,
+    BOWLER_TYPE_OVERRIDE as _BOWLER_TYPE_OVERRIDE,
     CAUGHT_BEHIND_POS as _CAUGHT_BEHIND_POS,
     PACE_TYPES as _PACE_TYPES,
     SPIN_TYPES as _SPIN_TYPES,
@@ -1157,6 +1158,12 @@ def build_profile(
     if raw is None:
         raw = process_rows(load_bowler_deliveries(bowler_id))
     _annotate_catches(raw, bowler_id)
+
+    # Bowler-type override for warehouse mis-codes (e.g. an express quick coded Medium).
+    _bt_fix = _BOWLER_TYPE_OVERRIDE.get(str(bowler_id))
+    if _bt_fix:
+        for r in raw:
+            r["bowler_type_simple"] = _bt_fix
 
     info = load_bowler_info(str(bowler_id)) or {}
     name = (info.get("player_name") or "").strip() or f"Bowler {bowler_id}"
