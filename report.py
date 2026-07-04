@@ -130,14 +130,21 @@ def _narrative(P: dict) -> dict:
                       f"median {_fmt(P['avg_len_m'], '.1f')} m.")
     if P.get("ball_types") and P["ball_types"]["stock"]:
         s = P["ball_types"]["stock"]
-        themes.append(f"Stock ball is <b>{_ball_type_desc(s, is_spin)}</b> "
+        themes.append(f"Stock ball is <b>{_ball_type_desc(s, is_spin, hand=P['filters']['hand'])}</b> "
                       f"({_pct(s['pct'])} of deliveries).")
     elif P["stock"]:
         themes.append(f"Stock ball is <b>{_ball_phrase(P['stock']['length'], P['stock']['line'])}</b> "
                       f"({_pct(P['stock']['share'] * 100)} of deliveries).")
     if P["round_pct"] is not None:
-        themes.append(f"Goes round the wicket {_pct(P['round_pct'])} of the time in this view "
-                      f"(career LHB {_pct(P['round_lhb'])} · RHB {_pct(P['round_rhb'])}).")
+        hw = _hand_word(P)
+        rl, rr = P.get("round_lhb"), P.get("round_rhb")
+        if hw:   # per-hand report — name the hand this view is for
+            themes.append(f"Goes round the wicket {_pct(P['round_pct'])} of the time against {hw}.")
+        elif rl is not None and rr is not None:   # combined — give the per-hand split (it's what matters)
+            themes.append(f"Round the wicket to LHB {_pct(rl)} · over the wicket to RHB "
+                          f"(round {_pct(rr)}).")
+        else:
+            themes.append(f"Goes round the wicket {_pct(P['round_pct'])} of the time.")
     orr = P.get("over_round")
     if orr and orr["show"]:
         o, r = orr["over"], orr["round"]
@@ -193,6 +200,17 @@ def _narrative(P: dict) -> dict:
     if P["danger_length"]:
         expose.append(f"Away from {P['danger_length']['length'].lower()}, the wicket threat drops off — "
                       f"look to score in the less-productive lengths.")
+
+    # Fold the counter-strategy ("How to Play Him") into the three boxes: what to score off →
+    # Areas to Exploit; his set-ups/traps → Biggest Threats. (Respect items duplicate the danger
+    # threats already listed, so they're not repeated.)
+    htp = P.get("how_to_play") or {}
+    for line in htp.get("attack", []):
+        if "short ball" in line.lower() and any("short ball" in e.lower() for e in expose):
+            continue
+        expose.append(line)
+    for line in htp.get("watch", []):
+        threats.append(line)
     return {"themes": themes, "threats": threats, "expose": expose}
 
 
@@ -624,6 +642,7 @@ def _spin_style(m: dict) -> str:
     def hi(p): return p is not None and p >= 60
     def lo(p): return p is not None and p <= 30
 
+    tp = m.get("turn_physical")
     parts = []
     if hi(turn_p):
         parts.append("a big turner of the ball")
@@ -631,9 +650,11 @@ def _spin_style(m: dict) -> str:
         parts.append("not a big spinner — relies on flight, drift and accuracy")
     else:
         parts.append("a moderate spinner of the ball")
-    if td and min(td["out_pct"], td["in_pct"]) >= 30:
-        parts.append(f"turns it both ways ({td['out_pct']:.0f}% away / {td['in_pct']:.0f}% in) — "
-                     "a genuine two-way threat")
+    # 'two-way threat' only if he genuinely turns it both PHYSICAL ways (a real wrong'un/doosra)
+    # — not the batter-relative artefact where a stock off-break reads in-to-RHB / away-from-LHB.
+    if tp and min(tp["off_pct"], tp["leg_pct"]) >= 25:
+        parts.append(f"turns it both ways ({tp['off_pct']:.0f}% off break / {tp['leg_pct']:.0f}% "
+                     "leg break) — a genuine two-way threat")
     if hi(bounce_p):
         parts.append("extracts steep bounce")
     elif lo(bounce_p):
@@ -857,7 +878,7 @@ def _sequencing_read(P: dict) -> str:
                    else "Consistent with his length")
         else:
             rep = ("Metronomic — hammers the same length repeatedly, little to feast on" if sd < 1.85
-                   else "Mixes his lengths a lot — variation is the weapon, but offers more to score off" if sd > 2.25
+                   else "Variable with his length" if sd > 2.25
                    else "Moderately consistent with his length")
         peer = _repeatability_peer(P)
         parts.append(f"{rep} (length spread ±{sd:.1f} m{peer})")
@@ -876,6 +897,9 @@ def _sequencing_read(P: dict) -> str:
             parts.append("drops shorter early, then pitches up later in the over")
         elif ll - el <= -0.4:
             parts.append("pitches fuller as the over goes on")
+        elif sd is not None and ((is_spin and sd > 1.45) or (not is_spin and sd > 2.25)):
+            # high overall spread → 'no trend' rather than a contradictory 'steady length'
+            parts.append("with no consistent trend to his length across the over")
         else:
             parts.append("holds a steady length right through the over")
 
@@ -1090,10 +1114,14 @@ def _dir_word(p, verb) -> str:
     return "both ways"
 
 
-def _move_phrase(t: dict, is_spin: bool, swing_override: str | None = None) -> str | None:
+def _move_phrase(t: dict, is_spin: bool, swing_override: str | None = None,
+                 hand: str = "All") -> str | None:
     """What the ball does through the air and off the pitch for a ball type. Reports
     BOTH swing (in-air) and seam/turn (off-pitch) when each is material, dominant
     first — so a swing bowler reads 'swinging away', not just 'seaming'.
+    For SPIN in a combined (All) view, turn is described by PHYSICAL break (off/leg break) —
+    off-spin turns 'in' to a RHB but 'away' from a LHB, so the batter-relative label reads a
+    false 'both ways' across hands. A hand-filtered view keeps the batter-relative 'in/away'.
     `swing_override` replaces a per-ball-type 'both ways' swing word with a bowler-level
     phase phrase (e.g. 'away, reverses in') when the swing is really ball-age driven."""
     _MAT = 0.4    # mean |movement| (deg) below this is negligible for this ball type
@@ -1109,19 +1137,30 @@ def _move_phrase(t: dict, is_spin: bool, swing_override: str | None = None) -> s
     # seam / turn — off the pitch
     smm, smp, smn = t.get("seam_mag"), t.get("mv_in_pct"), t.get("mv_n") or 0
     if smm is not None and smm >= _MAT:
-        verb = "turning" if is_spin else "seaming"
-        word = _dir_word(smp, verb) if (smp is not None and smn >= 15) else ""
-        comps.append((smm, f"{verb} {word}".strip()))
+        if is_spin and hand == "All":
+            ob = t.get("mv_offbreak_pct")
+            if ob is not None and smn >= 15:
+                phrase = ("turning in to the RHB / away from the LHB" if ob >= 60
+                          else "turning away from the RHB / in to the LHB" if ob <= 40
+                          else "turning both ways")
+            else:
+                phrase = "turning"
+            comps.append((smm, phrase))
+        else:
+            verb = "turning" if is_spin else "seaming"
+            word = _dir_word(smp, verb) if (smp is not None and smn >= 15) else ""
+            comps.append((smm, f"{verb} {word}".strip()))
     if not comps:
         return None
     comps.sort(key=lambda c: -c[0])   # dominant movement first
     return ", ".join(c[1] for c in comps)
 
 
-def _ball_type_desc(t: dict, is_spin: bool, swing_override: str | None = None) -> str:
+def _ball_type_desc(t: dict, is_spin: bool, swing_override: str | None = None,
+                    hand: str = "All") -> str:
     """Full 'what it does' description: length/line + movement + at-stumps."""
     parts = [t["phrase"]]
-    mv = _move_phrase(t, is_spin, swing_override)
+    mv = _move_phrase(t, is_spin, swing_override, hand=hand)
     if mv:
         parts.append(mv)
     ats = _at_stumps_phrase(t["at_stumps"])
@@ -1138,7 +1177,7 @@ def _stock_read(P: dict) -> str:
     s = bt["stock"]
     _sv = None if P["is_spin"] else _swing_verdict(P.get("movement"))
     _sov = _swing_cell_word(_sv) if _sv else None
-    read = f"Stock ball — <b>{_ball_type_desc(s, P['is_spin'], _sov)}</b> ({s['pct']:.0f}% of deliveries"
+    read = f"Stock ball — <b>{_ball_type_desc(s, P['is_spin'], _sov, hand=P['filters']['hand'])}</b> ({s['pct']:.0f}% of deliveries"
     if s["econ"] is not None:
         read += f", economy {s['econ']:.2f}"
     read += ")"
@@ -1157,11 +1196,12 @@ def _ball_type_rows(P: dict) -> list:
     if not bt:
         return []
     is_spin = P["is_spin"]
+    _hand = P["filters"]["hand"]
     _sv = None if is_spin else _swing_verdict(P.get("movement"))
     _sov = _swing_cell_word(_sv) if _sv else None
     return [
         {"phrase": t["phrase"],
-         "move": _move_phrase(t, is_spin, _sov) or "—",
+         "move": _move_phrase(t, is_spin, _sov, hand=_hand) or "—",
          "pct": f"{t['pct']:.0f}%",
          "econ": f"{t['econ']:.2f}" if t["econ"] is not None else "—",
          "wkts": str(t["wkts"]),
@@ -1237,8 +1277,9 @@ def _recent_form_read(P: dict) -> str:
 
 
 def _matchup_split_tables(P: dict) -> dict:
-    """Three side-by-side comparison tables (hand / ball age / batting phase). Each row:
-    (label, balls, wkts, avg, econ, sr, false%). Empty groups already dropped in the profile."""
+    """Match-up tables (ball age / batting phase) within the report's hand. Each row:
+    (label, balls, wkts, avg, econ, sr, false%, med-length). Includes length so it subsumes the
+    old length-by-match-up section. Empty groups already dropped in the profile."""
     mu = P.get("matchups") or {}
 
     def rows(group):
@@ -1246,10 +1287,10 @@ def _matchup_split_tables(P: dict) -> dict:
         for label, s in group.items():
             out.append((label, f"{s['balls']:,}", str(s["wkts"]),
                         _fmt_stat(s["avg"], 1), _fmt_stat(s["econ"], 2),
-                        _fmt_stat(s["sr"], 1), _fmt_stat(s["false_pct"], 0, "%")))
+                        _fmt_stat(s["sr"], 1), _fmt_stat(s["false_pct"], 0, "%"),
+                        _fmt_stat(s["length"], 2, " m")))
         return out
-    return {"hand": rows(mu.get("hand", {})), "ball": rows(mu.get("ball", {})),
-            "position": rows(mu.get("position", {}))}
+    return {"ball": rows(mu.get("ball", {})), "position": rows(mu.get("position", {}))}
 
 
 def _wicket_setup_read(P: dict) -> str:
@@ -1506,7 +1547,9 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
         # modal OVER the report (same tab — the iOS/Safari use case); the PDF keeps the href
         # fallback to the standalone player.html (the snippet is display:none in print).
         from ludis_cricket.video import inline_player_snippet
-        html = html.replace("</body>", inline_player_snippet(video["playlists"]) + "</body>")
+        # Markers let the web app swap this baked-SAS player for a mint-on-demand one (webapp.py).
+        snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(video["playlists"]) + "<!--PLAYER_SNIPPET_END-->"
+        html = html.replace("</body>", snippet + "</body>")
         with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
             f.write(html)
     _html_to_pdf(html, out_path)
@@ -1615,32 +1658,6 @@ _TEMPLATE = r"""
       {% for t in narrative.expose %}<li>{{t|safe}}</li>{% endfor %}</ul></div>
   </div>
 
-  {% if how_to_play and (how_to_play.respect or how_to_play.attack or how_to_play.watch) %}
-  <h2>How to Play Him</h2>
-  <div class="summary">
-    <div class="sbox"><h3 style="color:{{c.DANGER}}">Respect</h3><ul>
-      {% for t in how_to_play.respect %}<li>{{t|safe}}</li>{% endfor %}
-      {% if not how_to_play.respect %}<li style="color:{{c.TEXT_SEC}}">No stand-out wicket ball — he builds pressure rather than threatening every ball.</li>{% endif %}</ul></div>
-    <div class="sbox"><h3 style="color:#15803d">Score off</h3><ul>
-      {% for t in how_to_play.attack %}<li>{{t|safe}}</li>{% endfor %}
-      {% if not how_to_play.attack %}<li style="color:{{c.TEXT_SEC}}">Few easy release balls — rotation over risk.</li>{% endif %}</ul></div>
-    <div class="sbox"><h3 style="color:#b45309">Watch for</h3><ul>
-      {% for t in how_to_play.watch %}<li>{{t|safe}}</li>{% endfor %}
-      {% if not how_to_play.watch %}<li style="color:{{c.TEXT_SEC}}">No strong set-up pattern in the data.</li>{% endif %}</ul></div>
-  </div>
-  <div class="cap" style="text-align:left">Counter-strategy synthesised from his danger zones, scoring leaks, match-ups and wicket set-ups. Each line is drawn from the numbers below.</div>
-  {% endif %}
-
-  {% if recent_form %}
-  <h2>Current Form <span class="sub" style="font-weight:400">(last {{recent_form.n_matches}} Tests · {{recent_form.date_from}} → {{recent_form.date_to}})</span></h2>
-  {% if recent_form.read %}<div class="read">{{recent_form.read|safe}}</div>{% endif %}
-  <table class="mtab" style="max-width:760px">
-    <tr><th>Window</th><th>Balls</th><th>Wkts</th><th>Avg</th><th>Econ</th><th>SR</th><th>False%</th><th>Avg speed</th><th>Avg length</th></tr>
-    <tr class="weakrow"><td class="lab">Last {{recent_form.n_matches}} Tests</td><td>{{recent_form.recent.balls}}</td><td>{{recent_form.recent.wkts}}</td><td>{{recent_form.recent.avg}}</td><td>{{recent_form.recent.econ}}</td><td>{{recent_form.recent.sr}}</td><td>{{recent_form.recent.false}}</td><td>{{recent_form.recent.speed}}</td><td>{{recent_form.recent.length}}</td></tr>
-    <tr><td class="lab">Career</td><td>{{recent_form.career.balls}}</td><td>{{recent_form.career.wkts}}</td><td>{{recent_form.career.avg}}</td><td>{{recent_form.career.econ}}</td><td>{{recent_form.career.sr}}</td><td>{{recent_form.career.false}}</td><td>{{recent_form.career.speed}}</td><td>{{recent_form.career.length}}</td></tr>
-  </table>
-  {% endif %}
-
   {% if fingerprint_cards %}
   <h2>Bowling Fingerprint</h2>
   <div class="fpgrid">
@@ -1653,7 +1670,17 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left">Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Repeatability</b> is a consistency score: a high percentile = tighter, more metronomic lengths than peers (low length spread); a low percentile = he varies his length more.</div>
+  <div class="cap" style="text-align:left">Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much he moves his release point sideways across the crease from ball to ball (within his main angle): a high percentile = he varies where he lets the ball go a lot, a low percentile = he releases from the same spot every ball. <b>Repeatability</b> = length consistency over his stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers; a low percentile = he varies his length more. A marker at the very edge = he sits beyond the typical peer range on that trait.</div>
+  {% endif %}
+
+  {% if recent_form %}
+  <h2 class="pbreak">Current Form <span class="sub" style="font-weight:400">(last {{recent_form.n_matches}} Tests · {{recent_form.date_from}} → {{recent_form.date_to}})</span></h2>
+  {% if recent_form.read %}<div class="read">{{recent_form.read|safe}}</div>{% endif %}
+  <table class="mtab" style="max-width:760px">
+    <tr><th>Window</th><th>Balls</th><th>Wkts</th><th>Avg</th><th>Econ</th><th>SR</th><th>False%</th><th>Avg speed</th><th>Avg length</th></tr>
+    <tr class="weakrow"><td class="lab">Last {{recent_form.n_matches}} Tests</td><td>{{recent_form.recent.balls}}</td><td>{{recent_form.recent.wkts}}</td><td>{{recent_form.recent.avg}}</td><td>{{recent_form.recent.econ}}</td><td>{{recent_form.recent.sr}}</td><td>{{recent_form.recent.false}}</td><td>{{recent_form.recent.speed}}</td><td>{{recent_form.recent.length}}</td></tr>
+    <tr><td class="lab">Career</td><td>{{recent_form.career.balls}}</td><td>{{recent_form.career.wkts}}</td><td>{{recent_form.career.avg}}</td><td>{{recent_form.career.econ}}</td><td>{{recent_form.career.sr}}</td><td>{{recent_form.career.false}}</td><td>{{recent_form.career.speed}}</td><td>{{recent_form.career.length}}</td></tr>
+  </table>
   {% endif %}
 
   <h2>Threat Profile{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ watch wickets</a>{% endif %}{% if video.lists.new_ball_outswing %}<a class="vlink" data-pl="new_ball_outswing" href="{{video.player}}#new_ball_outswing">▶ new-ball swing</a>{% endif %}</h2>
@@ -1757,29 +1784,27 @@ _TEMPLATE = r"""
   </div>
   {% endif %}
 
-  {% if matchup_tables.hand or matchup_tables.ball or matchup_tables.position %}
+  {% if matchup_tables.ball or matchup_tables.position %}
   {% macro mutable(title, rows) %}
     {% if rows %}
     <div>
       <div style="font-weight:700;font-size:10.5px;margin:0 0 3px">{{title}}</div>
       <table class="mtab">
-        <tr><th>Split</th><th>Balls</th><th>Wkts</th><th>Avg</th><th>Econ</th><th>SR</th><th>False%</th></tr>
-        {% for lab, balls, wkts, avg, econ, sr, fs in rows %}
-        <tr><td class="lab">{{lab}}</td><td>{{balls}}</td><td>{{wkts}}</td><td>{{avg}}</td><td>{{econ}}</td><td>{{sr}}</td><td>{{fs}}</td></tr>
+        <tr><th>Split</th><th>Balls</th><th>Wkts</th><th>Avg</th><th>Econ</th><th>SR</th><th>False%</th><th>Med length</th></tr>
+        {% for lab, balls, wkts, avg, econ, sr, fs, ln in rows %}
+        <tr><td class="lab">{{lab}}</td><td>{{balls}}</td><td>{{wkts}}</td><td>{{avg}}</td><td>{{econ}}</td><td>{{sr}}</td><td>{{fs}}</td><td>{{ln}}</td></tr>
         {% endfor %}
       </table>
     </div>
     {% endif %}
   {% endmacro %}
-  <h2 class="pbreak">Match-ups <span class="sub" style="font-weight:400">(all batters)</span></h2>
+  <h2 class="pbreak">Match-ups <span class="sub" style="font-weight:400">({{hand_label}})</span></h2>
   <div class="grid2 avoid" style="align-items:start">
-    {{ mutable('By batter hand', matchup_tables.hand) }}
     {{ mutable('New ball vs old ball', matchup_tables.ball) }}
+    {{ mutable('By batting position', matchup_tables.position) }}
   </div>
-  {% if matchup_tables.position %}
-  <div style="margin-top:8px">{{ mutable('By batting position', matchup_tables.position) }}</div>
-  {% endif %}
-  <div class="cap" style="text-align:left">Across all batters he's faced, independent of the hand filter above. Lower average / higher false-shot = the match-up that suits him; higher average = where batters have got on top.</div>
+  {% if matchup_insight %}<div class="read" style="margin-top:6px">{{matchup_insight}}</div>{% endif %}
+  <div class="cap" style="text-align:left">Lower average / higher false-shot = the match-up that suits him; higher average = where batters have got on top. Med length = his median pitch length in that split.</div>
   {% endif %}
 
   {% if scoring_stats %}
@@ -1863,24 +1888,6 @@ _TEMPLATE = r"""
   </div>
   {% endif %}
   {% endif %}
-
-  <h2>Length by Match-up</h2>
-  <div class="cap" style="text-align:left;margin:0 0 6px">
-    How the length changes with ball age and who's on strike. <b>Full%</b> = pitched up (&lt;4&nbsp;m, yorker/full);
-    <b>Short%</b> = banged in (≥10&nbsp;m, short/bouncer). Median is the typical length.
-  </div>
-  <div class="grid2">
-    <table class="mtab">
-      <tr><th>Ball age</th><th>Median</th><th>Full %</th><th>Short %</th></tr>
-      {% if P.new_ball %}<tr><td class="lab">New (&lt;10 ov)</td><td>{{fmt(P.new_ball.median,'.1f')}} m</td><td>{{pct(P.new_ball.full_pct)}}</td><td>{{pct(P.new_ball.short_pct)}}</td></tr>{% endif %}
-      {% if P.old_ball %}<tr><td class="lab">Old (40+ ov)</td><td>{{fmt(P.old_ball.median,'.1f')}} m</td><td>{{pct(P.old_ball.full_pct)}}</td><td>{{pct(P.old_ball.short_pct)}}</td></tr>{% endif %}
-    </table>
-    <table class="mtab">
-      <tr><th>Batting</th><th>Median</th><th>Full %</th><th>Short %</th></tr>
-      {% for g, s in pos_groups %}{% if s %}<tr><td class="lab">{{g}}</td><td>{{fmt(s.median,'.1f')}} m</td><td>{{pct(s.full_pct)}}</td><td>{{pct(s.short_pct)}}</td></tr>{% endif %}{% endfor %}
-    </table>
-  </div>
-  {% if matchup_insight %}<div class="read" style="margin-top:6px">{{matchup_insight}}</div>{% endif %}
 
   {% if crease_read %}
   <h2 class="pbreak">Release Point &amp; Crease Use</h2>

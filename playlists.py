@@ -26,6 +26,15 @@ def _swing_word(r, is_spin):
     return f"{verb} in" if d == "in" else (f"{verb} away")
 
 
+def _turn_word(r, is_spin):
+    """Turn/seam direction off the pitch, batter-relative to the clip's batter."""
+    d = r.get("seam_dir")
+    if d == "straight" or d is None:
+        return None
+    verb = "turn" if is_spin else "seam"
+    return f"{verb} in" if d == "in" else (f"{verb} away")
+
+
 def _outcome(r):
     if r.get("is_wicket"):
         return (r.get("how_out") or "wicket").lower()
@@ -43,7 +52,7 @@ def _caption(r, is_spin):
     bt = r.get("ball_type")
     if bt:
         parts.append(f"{bt[0].lower()} {bt[1]}")
-    for x in (_fmt_speed(r), _swing_word(r, is_spin), _outcome(r)):
+    for x in (_fmt_speed(r), _turn_word(r, is_spin), _swing_word(r, is_spin), _outcome(r)):
         if x:
             parts.append(x)
     vc = r.get("venue_country")
@@ -65,6 +74,34 @@ def _item(r, is_spin):
             "country": r.get("venue_country"), "city": r.get("venue_city"),
         },
     )
+
+
+def _diversify(rows):
+    """Interleave a recency-ordered list across outcome types (wicket / boundary / dot /
+    other) so the top of a stock-ball playlist shows a VARIETY of the delivery rather than a
+    clump of wickets. Recency is preserved within each outcome bucket."""
+    buckets = {"wkt": [], "bdry": [], "dot": [], "other": []}
+    for r in rows:
+        if r.get("is_wicket"):
+            k = "wkt"
+        elif (r.get("bat_score_n") or 0) in (4.0, 6.0):
+            k = "bdry"
+        elif (r.get("bat_score_n") or 0) == 0:
+            k = "dot"
+        else:
+            k = "other"
+        buckets[k].append(r)
+    # round-robin, leading with a couple of representative outcomes rather than wickets first
+    order = ["dot", "other", "bdry", "wkt"]
+    out, i = [], 0
+    while any(buckets[k] for k in order):
+        for k in order:
+            if buckets[k]:
+                out.append(buckets[k].pop(0))
+        i += 1
+        if i > 500:
+            break
+    return out
 
 
 def _with_hawkeye(items, rows):
@@ -118,19 +155,19 @@ def build_playlists(P: dict, cap: int = 10, target_country: str | None = None) -
         rows.sort(key=lambda r: r.get("match_date") or "", reverse=True)
         return rows
 
-    # Stock ball: the modal ball type; illustrative (wicket/false-shot) first, recent within.
+    # Stock ball & each ball type: show a VARIETY of the delivery (dots, ones, the odd wicket) —
+    # not just his wicket balls — so a viewer sees the typical ball. Recency order gives a natural
+    # spread of outcomes; _diversify then interleaves outcomes so wickets don't clump at the top.
     st = (P.get("ball_types") or {}).get("stock")
     if st:
-        stock = _recent_first([r for r in df if r.get("ball_type") == (st["band"], st["region"])])
-        stock.sort(key=lambda r: (not r.get("is_wicket"), not r.get("is_false_shot")))  # stable
-        add("stock_ball", stock)
+        add("stock_ball", _diversify(_recent_first(
+            [r for r in df if r.get("ball_type") == (st["band"], st["region"])])))
 
     # One playlist per ball type shown in the report table (keyed bt_0.. matching row order),
     # so each ball-type row can link straight to that ball type's clips.
     for i, t in enumerate(((P.get("ball_types") or {}).get("types") or [])[:6]):
-        rows = _recent_first([r for r in df if r.get("ball_type") == (t["band"], t["region"])])
-        rows.sort(key=lambda r: (not r.get("is_wicket"), not r.get("is_false_shot")))
-        add(f"bt_{i}", rows)
+        add(f"bt_{i}", _diversify(_recent_first(
+            [r for r in df if r.get("ball_type") == (t["band"], t["region"])])))
 
     # Wickets: all bowler-credited wicket balls, most recent first.
     add("wickets", _recent_first([r for r in df if r.get("is_wicket") and r.get("how_out")]))

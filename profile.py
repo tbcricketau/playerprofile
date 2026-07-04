@@ -216,6 +216,26 @@ def _label_dir_split(rows: list, key: str) -> dict | None:
     return {"in_pct": inn / tot * 100, "out_pct": out / tot * 100, "n": tot}
 
 
+def _turn_physical_split(rows: list) -> dict | None:
+    """PHYSICAL turn split (off-break vs leg-break), hand-independent. Off-spin turns 'in' to
+    a RHB but 'away' from a LHB — the same physical off-break — so a batter-relative split reads
+    a false 'both ways' across hands. off-break = in-to-RHB / away-from-LHB. Returns off_pct/
+    leg_pct over balls that actually turned; 'genuine two-way' only if both are materially high."""
+    off = leg = 0
+    for r in rows:
+        sd, lhb = r.get("seam_dir"), r.get("is_lhb")
+        if sd == "in":
+            leg += 1 if lhb else 0
+            off += 0 if lhb else 1
+        elif sd in ("out", "away"):
+            off += 1 if lhb else 0
+            leg += 0 if lhb else 1
+    tot = off + leg
+    if not tot:
+        return None
+    return {"off_pct": off / tot * 100, "leg_pct": leg / tot * 100, "n": tot}
+
+
 def _swing_age_split(rows: list, new_max: int = 25, old_min: int = 40) -> dict:
     """Swing direction by ball age, from the coder swing label (`swing_dir`, batter-relative),
     using simple over bands: new ball = overs <= new_max, old ball = overs >= old_min. The
@@ -588,6 +608,7 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
         a = agg.setdefault((band, region), {
             "balls": 0, "runs": 0.0, "wkts": 0, "false": 0, "shot_n": 0,
             "asl": [], "ash": [], "mv_in": 0, "mv_out": 0, "mv_n": 0,
+            "mv_off": 0, "mv_leg": 0,   # PHYSICAL turn (off-break/leg-break), hand-independent
             "sm_sum": 0.0, "sm_cnt": 0, "sw_in": 0, "sw_out": 0, "sw_n": 0,
             "sw_sum": 0.0, "sw_cnt": 0,
         })
@@ -611,10 +632,16 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
         if seam is not None:
             a["sm_sum"] += abs(seam)
             a["sm_cnt"] += 1
+        # batter-relative (in/away) for per-hand views; PHYSICAL break for the combined view —
+        # off-spin turns "in" to a RHB but "away" from a LHB (same physical off-break), so the
+        # batter-relative count reads "both ways" across hands. off-break = in-to-RHB / away-from-LHB.
+        _lhb = r.get("is_lhb")
         if r.get("seam_dir") == "in":
             a["mv_in"] += 1; a["mv_n"] += 1
+            a["mv_leg" if _lhb else "mv_off"] += 1
         elif r.get("seam_dir") == "away":
             a["mv_out"] += 1; a["mv_n"] += 1
+            a["mv_off" if _lhb else "mv_leg"] += 1
         swing = r.get("drift_n")   # movement_in_air = swing (pace) / drift (spin)
         if swing is not None:
             a["sw_sum"] += abs(swing)
@@ -642,6 +669,10 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
             "at_stumps": _at_stumps_desc(a["asl"], a["ash"]),
             "mv_in_pct": a["mv_in"] / a["mv_n"] * 100 if a["mv_n"] else None,
             "mv_n": a["mv_n"],
+            # physical off-break share (hand-independent) — for describing spin turn in a
+            # combined view without the batter-relative "both ways" artefact.
+            "mv_offbreak_pct": (a["mv_off"] / (a["mv_off"] + a["mv_leg"]) * 100
+                                if (a["mv_off"] + a["mv_leg"]) else None),
             # swing (in-air) vs seam (off-pitch): mean |magnitude| + in%/n for each, so
             # the report can name whichever is material (a swing bowler reads "swinging").
             "seam_mag": a["sm_sum"] / a["sm_cnt"] if a["sm_cnt"] else None,
@@ -999,29 +1030,25 @@ def _recent_form(raw: list, n_matches: int = 5) -> dict | None:
     }
 
 
-def _matchups(raw: list, min_balls: int = 120) -> dict:
-    """Side-by-side splits across all batters (independent of the report's hand filter):
-    LHB vs RHB, new vs old ball, and by batting position. Each entry is a _form_stats block;
-    splits below `min_balls` are dropped."""
-    legal = [r for r in raw if r.get("is_legal")]
-
-    def block(rows):
-        s = _form_stats(rows)
+def _matchups(rows: list, min_balls: int = 120) -> dict:
+    """Match-up splits within the report's hand context (rows are the hand-filtered set):
+    new vs old ball, and by batting position. Each entry is a _form_stats block (carries median
+    length too, so this subsumes the old length-by-match-up section). Splits below `min_balls`
+    are dropped. No LHB/RHB split — a report is already for a specific hand."""
+    def block(sub):
+        s = _form_stats(sub)
         return s if s["balls"] >= min_balls else None
 
     def _phase(lo, hi):
-        return [r for r in raw if (r.get("bat_pos_n") or 0) >= lo and (r.get("bat_pos_n") or 0) <= hi]
+        return [r for r in rows if (r.get("bat_pos_n") or 0) >= lo and (r.get("bat_pos_n") or 0) <= hi]
 
-    hand = {"vs LHB": block([r for r in raw if r.get("is_lhb")]),
-            "vs RHB": block([r for r in raw if not r.get("is_lhb")])}
     # Same 30-over new/old split used by the ball-age section, for one consistent definition.
-    ball = {"New ball (≤30 ov)": block([r for r in raw if (r.get("over_n") or 999) <= 30]),
-            "Old ball (31+ ov)": block([r for r in raw if (r.get("over_n") or 0) > 30])}
+    ball = {"New ball (≤30 ov)": block([r for r in rows if (r.get("over_n") or 999) <= 30]),
+            "Old ball (31+ ov)": block([r for r in rows if (r.get("over_n") or 0) > 30])}
     pos = {"Top order (1–3)": block(_phase(1, 3)),
            "Middle (4–7)": block(_phase(4, 7)),
            "Tail (8–11)": block(_phase(8, 11))}
     return {
-        "hand": {k: v for k, v in hand.items() if v},
         "ball": {k: v for k, v in ball.items() if v},
         "position": {k: v for k, v in pos.items() if v},
     }
@@ -1361,6 +1388,7 @@ def build_profile(
             # it only shows per hand — across all batters it washes out to "both ways".
             "swing_age": _swing_age_split(legal),
             "seam_dir":  _label_dir_split(legal, "seam_dir"),    # coder seam label (batter-relative)
+            "turn_physical": _turn_physical_split(legal),        # off/leg break (hand-independent)
         }
 
     # ── Player-facing additions: recent form, match-ups, wicket setup, how-to-play ──
@@ -1371,7 +1399,7 @@ def build_profile(
     _danger_length = danger_length(df, length_zones)
     _danger_cell = danger_cell(df, line_zones, length_zones)
     recent_form = _recent_form(raw)
-    matchups = _matchups(raw)
+    matchups = _matchups(df)   # within the report's hand context
     wicket_setup = _wicket_setup(raw)
     how_to_play = _how_to_play(
         is_pace=is_pace, is_spin=is_spin, danger_cell=_danger_cell, danger_length=_danger_length,

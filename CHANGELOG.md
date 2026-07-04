@@ -4,6 +4,29 @@ Bump `REPORT_VERSION` in `version.py` on every git commit that changes report
 output, and record it here. The version + build date print in the top-right of
 the front page.
 
+## v1.3 — 4 July 2026
+- **Player-review pass on the bowling report** (from coach feedback, verified on Nahid/Mehidy):
+  - **Spin turn described physically** — an off-spinner reads *"turning in to the RHB / away from
+    the LHB"* (off-break) instead of a false *"both ways"*; the batter-relative label only
+    aggregated to "both ways" across hands. `mv_offbreak_pct`/`_turn_physical_split`; the movement
+    "two-way threat" now needs genuine off+leg break. Per-hand reports read one clean direction.
+  - **How to Play Him removed** — folded into the three summary boxes (Score off → Areas to
+    Exploit, set-ups → Biggest Threats).
+  - **Layout** — Bowling Fingerprint now ends page 1; page 2 opens Current Form → Threat Profile.
+  - **Match-ups** — dropped the LHB/RHB split (reports are per-hand), added a Med-length column,
+    and removed the now-duplicate "Length by Match-up" section.
+  - **Stock-ball playlists show variety** (dot/1/boundary/wicket interleaved), not just wickets;
+    clip captions now include turn direction.
+  - **Fingerprint** — the marker clamps to the edge of the distribution (no floating outside);
+    added a crease-variation description; **repeatability now measured over the stock-length band
+    (2–11 m)** so deliberate yorkers/bouncers don't read as poor length control (Nahid P1→P8).
+  - Over/round names the hand (not "this view"); sequencing drops "variation is the weapon"
+    (neutral "variable with his length") and the steady-vs-mixed contradiction.
+- **Web app (`webapp.py`)** — Flask app serving reports with **mint-on-demand video** so clips
+  work for months, not the 72 h baked-SAS limit (`/clip?stem=…` mints a fresh SAS per view).
+  Index + `/r/<report>` + `/player`. Runs locally on SSO now; public hosting needs a managed
+  identity with Storage Blob Data Reader (see `WEBAPP_PLAN.md`).
+
 ## v1.2 — 4 July 2026
 - **Video example precedence — like-for-like conditions.** Clips linked from the report are now
   ordered by where the next series is played: same country first, then the same conditions
