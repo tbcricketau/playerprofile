@@ -37,6 +37,32 @@ with the link gets working video for months:
 | Video for ~6 months | ➖ | ✅ (SAS minted per view) |
 | One shareable link | file | ✅ (once hosted) |
 
+## Option 3 (BUILT) — static host + periodic refresh (no IT needed)
+`publish_site.py` bakes a self-contained `site/` folder (index + each report's `.html` +
+`.player.html` + `.pdf`) with a long, near-7-day read SAS minted from **your** SSO — no backend,
+no managed identity. Upload `site/` to any static host; re-run every few days to refresh the SAS.
+
+    .\venv\Scripts\python.exe publish_site.py --hand lhb --ids 2700039 3080087 5460155
+    # -> site\  (verified: clips return HTTP 200, SAS ~6 days out)
+
+**Free hosts** (bundle is host-agnostic):
+- **Cloudflare Pages** + **Cloudflare Access** (free) — gated by email/SSO. *Recommended* for
+  scouting video (not fully public).
+- **Azure Static Web Apps** (free) — built-in Entra auth; restrict to the org.
+- **GitHub Pages** — simplest, but public (private-repo Pages needs a paid plan).
+- **Netlify / Vercel** — free static; password protection is paid.
+
+Deploy examples: Cloudflare `wrangler pages deploy site`; GitHub Pages: push `site/` to a
+`gh-pages` branch; Azure `$web`: `azcopy copy "site/*" "<$web-url>" --recursive`.
+
+**Refresh cadence:** the SAS lasts ~6.5 days, so schedule the rebuild **every 5 days** (Windows
+Task Scheduler → run `publish_site.py` then re-upload `site/`). The scheduled run is silent on your
+cached token for ~90 days, then needs one interactive re-auth. Offline copies go stale after the
+SAS window — the **PDF** is the offline fallback (bundled).
+
+**Caveat:** a public host exposes the (read-only, time-limited) video SAS to anyone with the URL —
+use a gated host (Cloudflare Access / Azure SWA auth) unless an obscure public URL is acceptable.
+
 ## Follow-ons
 - Re-render reports so `/r` cleanly swaps the baked player (markers added to `report.py`;
   batting_report.py still to add).
