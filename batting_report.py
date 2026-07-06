@@ -389,7 +389,8 @@ def _dim_weakness_reads(P: dict) -> list:
         out.append(f"Struggles <b>{w['bucket']}</b> ({w['avg']:.0f} avg, {w['dismissal_per100']:.1f} outs/100).")
     # seam / swing (movement each way)
     for dk, word in (("seam", "turn" if is_spin else "seam"), ("swing", "drift" if is_spin else "swing")):
-        mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out") and d["balls"] >= 60]
+        mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
+              and d["balls"] >= 60 and d["avg"] is not None]
         straight = next((d for d in dims.get(dk, []) if d["bucket"] == "straight"), None)
         if mv and straight and straight["avg"]:
             worst = min(mv, key=lambda d: d["avg"])
@@ -464,7 +465,8 @@ def _plan_read(P: dict) -> str:
     if wl and ln:
         bits.append(f"hunt the <b>{wl['bucket'].lower()} {ln['bucket']}</b>")
     for dk in ("seam", "swing"):
-        mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out") and d["balls"] >= 60]
+        mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
+              and d["balls"] >= 60 and d["avg"] is not None]
         straight = next((d for d in dims.get(dk, []) if d["bucket"] == "straight"), None)
         if mv and straight and straight["avg"]:
             worst = min(mv, key=lambda d: d["avg"])
