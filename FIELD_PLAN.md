@@ -1,7 +1,14 @@
 # Field Settings v2 — stock-first fields with justified deviations (PLAN, 2026-07-05)
 
-**Status (2026-07-06): stock dictionary + GPS-corrected base BUILD & SIGNED OFF by Tom. Ready to
-build the v2 assembly + batting-report wiring — see ▶ HANDOVER below.**
+**Status (2026-07-06): stock dictionary + GPS-corrected base signed off; ✅ ASSEMBLY v2 + REPORT
+WIRING BUILT.** `build_field_trigger_norms.py` (R2/R3/R6 cohort norms) done; `field_engine.build_field`
+now = GPS-corrected stock base ± ≤3 evidenced, legality-checked, backtested deviations (R1/R4/R5/R7
+from stroke norms, R2/R3/R6 from trigger norms); `batting_report` has the Stock/Change column +
+deviations-only read. **All 8 rules + the short-ball plan now built** — R8 (charger vs spin:
+stumped ≥2 or slog P75 → keep the straight boundary back) + the named **short-ball / bumper field**
+(`fields.SHORT_BALL`, surfaced for R5 pull P80+ pace). Verified Smith/Head (RHB/LHB), Jaker Ali
+(puller → short-ball plan), Santner (charger → R8). Artifacts `batting-fields-v2`,
+`field-v2-r8-shortball`. **Remaining: Tom red-pen only.** See ▶ HANDOVER below.
 
 ## ▶ HANDOVER — build the GPS-grounded field assembly (2026-07-06)
 
