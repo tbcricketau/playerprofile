@@ -1,133 +1,238 @@
-# Field Settings Plan — justified fields without fielder-position data
+# Field Settings v2 — stock-first fields with justified deviations (PLAN, 2026-07-05)
 
-**Goal:** for each batter × bowler group × phase (first 30 balls vs set), recommend a full
-field (9 placements + keeper + bowler) where **every fielder is justified by a stat** the
-coach can read and challenge. We never get the actual field placements per ball, so the
-field must be *derived* from what the batter does — which is arguably the better
-justification anyway ("this is where HIS runs and HIS edges go", not "this is what fields
-he has faced").
+**Status: awaiting Tom's sign-off. No engine code until approved.**
 
-## 1. What the warehouse gives us (data audit)
+## 0. Why the rework (review verdict on v1)
 
-| Signal | Column(s) | Coverage | Use |
+v1 (shipped 2026-07-05, reviewed same day) assembled fields bottom-up from the batter's own
+data: rank expected-catch positions, fill the rest from his run sectors. Every *fielder* was
+justified, but the *field* wasn't credible as a whole — Smith's set field had **seven boundary
+riders**, which no Test captain sets; catcher counts floated free of match practice; nothing
+anchored the shape to how fields are actually set in each format.
+
+**Tom's steer:** fields should be **generally close to stock**, with a small number of
+deviations backed by strong reasoning — *does he lap/reverse? does he look to score square
+early?* — not a from-scratch rebuild per batter.
+
+v1 pieces that survive: the run-flow sectors (Layer 1), the false-shot × cohort catch-carry
+model (Layer 2), the phase split, the diagram (orientation + single-colour fixed 2026-07-05),
+the report wiring. What changes is the **assembly**: stock template first, deviations second.
+
+## 1. Target output (per batter × bowler group × phase)
+
+A field that is **STOCK ± at most 3 deviations**, rendered as:
+- the field diagram (house orientation: bowler bottom, striker top, uniform markers);
+- a justification table — `Fielder | Stock/Change | Why`:
+  - **stock** fielders carry the orthodoxy line ("standard new-ball cordon");
+  - **changes** carry *his* stat ("he laps 14% of balls vs off spin (cohort P88, n=41) —
+    45 saver in, deep backward square back");
+- a **backtest vs pure stock**: "this field = stock + 2 changes; those changes put fielders
+  under N more of his caught dismissals / intercept M% more of his boundary flow than the
+  stock field." **If the deviated field doesn't beat stock on either metric, ship pure stock**
+  and say so — that IS the strong-reasoning bar.
+
+## 2. Stock field library (investigation part A — codify, don't derive)
+
+**✅ BUILT 2026-07-05 → `ludis_cricket/fields.py`** (was a draft table; now the live dictionary).
+A field follows how the ball behaves *relative to the batter*, so the 12 (bowler-type × hand)
+combinations collapse to **six scenarios** + a resolver; each carries a field per format × phase.
+`stock_field(fmt, bowler_type, batter_hand, phase)` returns the 9 names. `validate_stock()`
+gates every entry on: 9 fielders, the format's **out-of-circle limit** (ODI 2/4/5, T20 2/5/5 —
+all sit exactly at limit), and the **≤2-behind-square-leg Law** — all 54 pass. Reviewable page:
+the scenario table + six Test shapes rendered + full matrix (artifact `stock-dictionary-v1`).
+The tables below are the source for that dictionary — Tom red-pens here, code tracks it.
+
+Hand-written templates in the FIELD_POS vocabulary, one per
+**format × bowler group × phase (× batter hand by mirror)**, grounded in the lit review
+(§2a) — reviewed by Tom before any code.
+
+### 2a. Lit review — base-level stock fields (web, 2026-07-05)
+
+Sources triangulated: Wikipedia *Fielding (cricket)* + *Slip (cricket)*, ESPNcricinfo
+(Ramnarayan on leg slip), Australian Cricket Tours & Cricketers Hub fielding guides,
+CricketWorld "From Orthodox to Funky". (PitchVision has a per-scenario field-settings series
+— right-arm fast in/outswing new-ball long-format etc. — but the domain is unreachable
+[DNS dead / archive blocked]; the Australian Cricket Institute swing-field PDF is vector
+art with outlined text, unreadable programmatically. Neither blocks the consensus below.)
+
+**Consensus findings:**
+1. **The standard Test start field** (multiple guides, near-identical wording): keeper,
+   2–3 slips, gully, point, cover, mid-off, mid-on, midwicket, square leg, fine leg /
+   third man — trading the last ring fielder for a 3rd slip. With 3 slips that is exactly:
+   `K · S1 S2 S3 · gully · point · cover · mid-off · mid-on · fine leg` (+1 of
+   square leg / midwicket / third man when only 2 slips).
+2. **Attacking = 7–2**: 3–4 slips, 1–2 gullies (up to six in the arc), + mid-off, mid-on,
+   fine leg; large gaps in front are deliberate bait (Wikipedia).
+3. **Swing direction changes less than folklore says, at elite level**: inswing bowlers at
+   the top level still bowl to a **three-slip, no-leg-slip** field — leg slip is a junior/
+   club sight (ESPNcricinfo). The inswing adjustment is straighter ring fielders (midwicket
+   in for cover), not a leg cordon.
+4. **Hard law constraint**: **max 2 fielders behind square on the leg side** (anti-bodyline,
+   Law 28.4/41.5 in sources) — binds every leg-side template, especially short-ball plans.
+5. **Left-arm over to RHB** (angle across): the cordon + gully stay the core; sources add
+   that the ball is *"likely to go square"* — so backward point / third man live for the
+   cut, and the cordon effectively sits a touch wider. Elite composition commonly runs
+   **2 slips + gully (or 2 gullies)** rather than 3 slips. *(Weakest-sourced cell — Tom to
+   confirm from his eye; see Q1.)*
+6. **Short-ball / bouncer trap**: the two allowed behind-square leg riders go back —
+   **deep square leg + deep fine leg** (or deep backward square as one of the two) — with
+   the catcher **in front of square (leg gully / short midwicket)**, cordon trimmed to one
+   slip (Wikipedia leg-trap description + law).
+7. **Spin cordons are smaller by geometry** (Wikipedia Slip) — matches the pilot's event
+   data (short leg is the offie's signature catcher, not a slip wall).
+8. **Philosophy check**: CricketWorld's coaching line — orthodox fields persist *because
+   they work*; deviate only from batter-specific reasoning, and never set a funky field to
+   bad bowling — is exactly the v2 stance.
+
+### Tests (to RHB; LHB = mirror unless noted) — post-review draft
+| Template | 9 fielders (+ keeper, bowler) | Source basis |
+|---|---|---|
+| **RF pace — new ball / attack** | S1 S2 S3, gully, point, cover, mid-off, mid-on, fine leg | consensus #1/#2 verbatim |
+| **RF pace — set / older ball** | S1 S2, gully, point, cover, mid-off, mid-on, midwicket, fine leg | #1 (2-slip start variant) |
+| **RF pace — inswing lean** (adjustment, not separate field) | as new-ball but midwicket for point | #3 |
+| **LF pace — new ball / attack (over, angling across)** | S1 S2, gully, backward point, point, cover, mid-off, mid-on, fine leg | #5 (2 slips + strong square-off cover) |
+| **LF pace — set** | S1, gully, backward point, cover, mid-off, mid-on, midwicket, square leg, fine leg | #5 + #1 |
+| **Pace — short-ball plan** (named variant, both arms) | S1, leg gully, point, cover, mid-off, mid-on, midwicket, deep square leg, deep fine leg | #4/#6 — exactly 2 behind square leg |
+| **Off spin — attack** | S1, short leg, silly point, point, cover, mid-off, mid-on, midwicket, square leg | #7 + pilot |
+| **Off spin — contain / set** | S1, short leg, backward point, cover, mid-off, long-on, deep midwicket, square leg, short fine leg | #7 |
+| **Leg spin — attack** | S1, leg slip, gully, point, cover, mid-off, mid-on, midwicket, fine leg | #7 (≤2 behind sq. leg ✓) |
+| **SLA — attack** (turning away from RHB) | S1, gully, backward point, cover, mid-off, mid-on, midwicket, square leg, short fine leg | #7 |
+| **SLA — contain / set** | S1, backward point, cover, extra cover, long-off, mid-on, deep midwicket, square leg, short fine leg | #7 |
+
+**Hand/arm equivalence (angle logic):** RF→RHB ≡ LF→LHB (mirror); **LF→RHB ≡ RF→LHB**
+(mirror) — so the two pace shapes above cover all four arm×hand combinations. Spin resolves
+by *turn direction* relative to the batter, not group name. Over/round-the-wicket noted per
+template where it changes the shape.
+
+### ODI (fielding restrictions are hard constraints)
+| Phase | Constraint | Pace stock | Spin stock |
 |---|---|---|---|
-| Shot direction | `hit_to_angle` (absolute, flip LHB) | ~100% of **scoring** balls | run-flow sectors |
-| Shot distance | `hit_to_length`, `hit_to_x/y_physical` | same | ring vs boundary split |
-| Catch position | `DeliveryFielders.fielder_event_position_id` (lookup 33), catcher = `fielder_catch=1` | ~83% of catches | where he gets caught |
-| False shots | `shot_quality_id` (2811): edges, top edge, mistimed, play-and-miss | ~38% | which strokes are risky |
-| Stroke | `stroke_id` (24) → `STROKE_FAMILY` | ~50% of scoring balls | stroke → destination mapping |
-| Intent | lookup 2810 (attacked/defended) | partial | early-phase intent |
-| Phase | `ball_of_innings` (derived, in `batter_profile`) | 100% | early vs set split |
+| P1 overs 1–10 | max 2 out | S1 S2, point, cover, mid-off, mid-on, midwicket, **third man, fine leg (out)** | rare; treat as P2 |
+| P2 11–40 | max 4 out | S1 or extra ring, ring 5, **deep point/third man, deep square, long-on, deep midwicket** | ring 5 + **long-on, long-off, deep midwicket, deep square** |
+| P3 41–50 | max 5 out | ring 4, **third man, fine leg, deep cover, long-off/on, deep midwicket** | ring 4 + 5 out (both straight boundaries) |
 
-**Known holes:**
-- **Dot balls have no placement** — defended/left balls are invisible in the wagon wheel.
-- **Caught dismissals have no hit coordinates** — use the DeliveryFielders position label.
-- **Aerial vs along-the-ground is not coded** — proxy: 6s + top-edge/mistimed = aerial;
-  catches are aerial by definition; 4s treated as ground unless edged.
+### T20
+| Phase | Constraint | Stock notes |
+|---|---|---|
+| Powerplay 1–6 | max 2 out | pace: third man + fine leg (or deep cover) out; ring 7. slip only over 1–2 |
+| Middle 7–15 | max 5 out | pace: third man, fine leg, deep cover, deep midwicket, long-on · spin: long-off, long-on, deep midwicket, deep square, deep cover |
+| Death 16–20 | max 5 out | yorker field: third man, fine leg, long-off, long-on, deep cover/deep midwicket by plan |
 
-**✅ DeliveryFielders audit (done 2026-07-04) — the upgrade landed.** It codes **ordinary
-fielded balls**, not just wickets: 4.36M distinct deliveries carry a fielder row, and
-**97% have exactly one** — the fielder who *made the play on the ball*.
-`fielder_event_position_id` (lookup 33, **90+ positions**, "Area: qualifier" naming e.g.
-"Cover: deep", "Midwicket: regulation") is where that fielder stood = **where the ball
-actually went and a fielder was there**. Plus `fielder_runs_saved` / `fielder_runs_cost`
-(per event) and `fielder_catch`/`fielder_runout` bits. Coverage: **position known on 45%**
-of fielder rows.
-- **This gives three real signals** (not proxies): (1) a **catch map** — where he's actually
-  caught, by bowler group (`fielder_catch=1` + position); (2) an **observed-field prior** —
-  which positions are posted against him and how often (validates our recommendation against
-  what captains already do); (3) **runs conceded / saved per position** — the high-value
-  positions against him.
-- **Bias to respect:** a fielder is logged only when one *makes a play*, so clean boundaries
-  that beat the field are under-represented here. So **`hit_to_angle` (100% of scoring balls)
-  stays the run-flow / boundary signal (Layer 1)**; DeliveryFielders drives the **catch map
-  (Layer 2)** and the **observed-field cross-check**, where its "actual fielded position" is
-  exactly right.
+Plus the legality checker: circle counts per phase, **leg-side max 5 always**, (T20 behind-square
+leg-side max 2 in PP). Encoded once, applied to every generated field.
 
-## 2. Method — three evidence layers
+## 3. What the data can and cannot verify (pilot run 2026-07-05)
 
-### Layer 1 — Run flow (containment fielders)
-16-sector wagon (batter-relative, LHB mirrored) × 2 rings (inside ring / to+over the rope)
-from `hit_to_angle` + `hit_to_length`, per bowler group × phase:
-- runs per 100 balls per sector, boundary-runs share per sector
-- **Justification stat:** "deep point cuts off the sector carrying 24% of his boundary
-  runs vs off-spin" — straight from sector shares, with `n=`.
+`referencebuilder/scripts/pilot_stock_fields.py` (read-only scoping):
 
-### Layer 2 — Catch generation (wicket-taking fielders)
-Personal catch positions are thin (career ~30–60 caught dismissals, split by bowler type
-→ 5–25 per type), so **blend with a cohort prior**:
-1. New reference `build_catch_position_norms.py`: over ALL batters, the distribution
-   **stroke family × bowler group → catch position** (lookup 33), e.g. "drives vs right-arm
-   pace: 55% cordon, 12% cover, 9% mid-off…". This is stable (thousands of catches) and
-   intuitive to a coach.
-2. The batter's own false-shot profile: which strokes he mishits (shot_quality × stroke),
-   by phase — already computed in the risk table.
-3. Expected catch map = Σ over strokes: (his false-shot rate on stroke s) × (cohort
-   destination distribution of stroke s) — **shrunk toward his own observed catch
-   positions** (empirical-Bayes, K≈15 catches, house method).
-- **Justification stat:** "his early false shots are 61% drives; drives vs RF pace go to
-  the cordon 55% of the time; 6 of his 9 caught-vs-pace dismissals were slips/gully →
-  three slips + gully."
+**Coverage (position-known fielder events on legal balls):** Test **350,878** events /
+635 matches (53.3% of fielder rows) · ODI **227,758** / 1,434 (57.3%) · T20I **107,765** /
+1,092 (**78.5%** — best coded). → All three formats have enough volume for cohort work.
 
-### Layer 3 — Phase weighting (start vs set)
-- **First 30 balls**: wicket-biased — rank catching positions first, accept leakage in his
-  low-flow sectors (their run cost early is small: his early SR/bdry% are in the phase
-  table).
-- **Set**: containment-biased — boundary riders on his top Layer-1 sectors, retain only the
-  top 1–2 catchers.
-- The weighting itself is justified by the phase table ("4.0 vs 1.0 dismissals/100" ⇒
-  attack early; "false shot 13% once set" ⇒ save runs later).
+**De-facto position ranking, Test vs RHB (share of position-known events):**
+- right-arm pace: Keeper 40.9%, short extra cover 7.6%, bowler 5.0%, mid-on 4.6%, point 4.5%,
+  mid-off 3.7%, short midwicket 3.6%, midwicket 3.5%, cover 3.2%, gully 3.2%, … deep fine leg
+  2.1%, deep backward square 2.0%, deep midwicket 1.9%, short leg 1.9%.
+- off spin: bowler 12.5%, **short leg 11.4%**, short midwicket 8.5%, keeper 8.2%, midwicket
+  7.2%, short extra cover 5.6%, **long-on 5.5%**, silly point 5.4%, silly mid-on 5.2%,
+  deep midwicket 4.5%.
 
-### Assembly
-- Keeper + bowler fixed → choose 9. Score every candidate position:
-  `value = w_phase · P(catch arrives there) + (1 − w_phase) · runs/100 it intercepts`.
-- Positions snap to the **standard vocabulary** (lookup 33 names — cover, deep point,
-  midwicket…) with fixed batter-relative polar coordinates defined once in
-  `ludis_cricket.lookups.FIELD_POS`; mirror for LHB; annotate over/round-the-wicket with
-  the bowling plan (field + plan are one artefact — reuse `plan_read`).
-- Greedy fill with a diversity constraint (≤ N catchers behind square, cover both sides).
+**Findings that shape the method:**
+1. **The pace slip cordon is nearly invisible in event data** (no slip in the pace top-20
+   despite being manned ~100% of new-ball overs) — slips only "make a play" on the rare edge.
+   Event frequency = manning × ball-flow, so **stock fields cannot be derived from event
+   frequency**. They must be **codified** (§2). This kills the "derive stock empirically"
+   shortcut *before* we built it.
+2. Ring events skew to short/silly qualifiers (short extra cover 7.6%, silly mid-on for
+   pace!?) → `fielder_event_position_id` often records **where the ball was fielded** (mid-off
+   running in to a block) rather than the stationed post. Fine for catch maps (a catch is
+   taken where the fielder is), weak for manning.
+3. **Spin close-catchers ARE visible** (short leg 11.4% — bat-pad makes plays constantly),
+   and deep riders register cleanly in both lists → event data remains useful as a
+   *sanity check* on ring/deep structure and as the runs-saved/cost source.
+4. So DeliveryFielders' roles in v2: **catch-position norms** (already built, solid) +
+   **runs saved/cost per position** + **rider-frequency sanity checks**. Nothing else.
 
-## 3. Output & the justification contract
-- **Field diagram**: Plotly polar on the wagon-wheel ground (FIELD_COLOR), 11 dots +
-  labels, catchers vs savers coloured differently. PDF section per report (per group ×
-  phase: "Early field vs right-arm pace" / "Set field").
-- **Justification table** (the part that matters): one row per fielder —
-  `Position | Role (catch/save) | Why` — where *Why* is the stat + sample:
-  "Deep square leg — save: pull/hook = 18% of his set-phase runs, 64% of it in boundaries
-  (n=214 balls)".
-- **Backtest line** (validation, printed on the report): "this early field would have been
-  under **7 of his 9** caught dismissals vs off-spin" — computed by replaying his caught
-  positions against the recommended catcher set; plus "% of his boundary runs through
-  covered sectors". If the numbers are weak, the field doesn't ship.
+## 4. Deviation rule library (investigation part C — the "strong reasoning")
 
-## 4. Small-sample handling
-- Sector rates and catch maps use the house empirical-Bayes shrinkage (K≈80 balls / K≈15
-  catches) toward the bowler-group baseline; `n=` printed everywhere; minimum-ball floors
-  (sector ≥ 25 balls, stroke ≥ 30) below which the cohort prior carries the estimate and
-  the justification says so ("cohort prior — his own sample is 12 balls").
+Each rule: trigger stat (his) → threshold (vs cohort) → the change it makes to the stock
+template → justification sentence template. A rule that doesn't fire leaves stock intact.
 
-## 5. Build order
-1. `ludis_cricket.lookups.FIELD_POS` — position id → (name, angle°, radius frac, catching?)
-   for the lookup-33 vocabulary (define once; the diagram, the norms and the backtest all
-   share it). *(offline-able)*
-2. **[DB]** DeliveryFielders audit (section 6 queries) — decides the observed-field upgrade.
-3. **[DB]** `referencebuilder/scripts/build_catch_position_norms.py` — stroke × bowler group
-   → catch-position distribution (+ per-batter observed catch positions).
-4. `playerprofile/field_engine.py` — layers 1–3 + assembly + backtest, off the existing
-   `build_batter_profile` rows (phase + stroke + hit_to fields already there).
-5. `charts.field_diagram()` + report section (combined report: early/set vs the report's
-   group; focused report: that group only).
+| # | Rule | Trigger (computed today from profile rows) | Fires when | Change (≤2 fielders) | Justification template |
+|---|---|---|---|---|---|
+| R1 | **Lap / reverse** (Tom's example) | (Sweep + Ramp/Scoop) share of scoring shots vs spin; reverse split if stroke coded | ≥ cohort P75 and n≥20 | short fine leg → **45 back / deep backward square**; reverse → backward point stays deep | "He laps/reverses X% vs spin (P__): protect behind square both sides" |
+| R2 | **Scores square early** (Tom's example) | early-phase run share, point + square-leg sectors | ≥ P75 and n≥60 early balls | early field: point → **backward point deeper**; mid-on → **square leg saver** | "X% of his first-30-ball runs go square (P__): square savers early" |
+| R3 | **Down-ground driver** | straight-sector run share (mid-off/straight/mid-on) | ≥ P75 (set) | spin: mid-off/mid-on → **long-off/long-on**; pace: straight mid-off deeper | "X% of his runs go straight (P__): straight boundaries back" |
+| R4 | **Cut-heavy** | Cut family run share vs pace | ≥ P75 | gully retained into set field OR **deep point** rider | "Cuts carry X% of his runs (P__)" |
+| R5 | **Pull/hook** | Pull/Hook share + SR vs short balls | ≥ P75 | activates the **short-ball variant** template as a named alternative field | "Pulls X% at SR Y: bumper plan field" |
+| R6 | **Edge-prone starter** | early false-shot % (has_shot_q rows) | ≥ P75 | **+1 slip** over stock early (3→4); extend attack phase 30→40 balls | "False shot X% in his first 30 (P__): extra slip, stay attacking longer" |
+| R7 | **Leg-side nudger** | Work/Nudge leg-side share | ≥ P75 | **leg slip** early; midwicket squarer | "X% of his early scoring is worked to leg (P__)" |
+| R8 | **Charger vs spin** | stumped share of dismissals vs spin ≥2, or Slog early | flag | keep **long-off back even early** vs spin | "Stumped N times / advances early: keep the straight boundary back" |
 
-## 6. DB queries queued for when access returns
-```sql
--- (a) DeliveryFielders columns
-SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_SCHEMA='GA20260618' AND TABLE_NAME='DeliveryFielders';
--- (b) does it code ordinary fielded balls? events per delivery + share of deliveries covered
-SELECT COUNT(*) n_rows, COUNT(DISTINCT delivery_id) n_delivs FROM [GA20260618].[DeliveryFielders];
-SELECT TOP 50 * FROM [GA20260618].[DeliveryFielders] DF
-JOIN [GA20260618].[Deliveries] D ON D.delivery_id=DF.delivery_id AND D.bat_score='0';
--- (c) full lookup-33 position vocabulary (for FIELD_POS)
-SELECT id, description FROM [GA20260618].[Lookups] WHERE lookup_type_id=33 ORDER BY id;
--- (d) catch-position coverage by era/format (is 83% stable?)
+- **Evidence bar:** default **cohort P75** + minimum sample (n printed in the table);
+  P80+ for exotic positions (leg slip, 45). Below the bar → stock stands.
+- **Cap:** ≤3 deviations per field, ranked by (percentile strength × runs-or-wickets value);
+  each must displace the *least-valuable* stock fielder for that batter, never a cordon
+  fielder unless the rule is specifically about the cordon (R6).
+- Cohort percentile sources: stroke-family shares already exist (`batter_stroke_norms.csv`
+  percentiles); **new small build** for sector-share and phase distributions →
+  `referencebuilder/build_field_trigger_norms.csv` (one job, Tests first, ODI/T20 same query
+  with the format flag).
+
+## 5. Assembly algorithm v2
+
 ```
+stock = template[format][group][phase]            # §2, mirrored for hand
+legal = restrictions[format][phase]               # circle counts, leg-side max 5
+cands = [rule.evaluate(P) for rule in R1..R8]     # each: fired?, percentile, value, change
+apply top-k fired rules (k≤3, ranked), each swap validated against `legal`
+tag every fielder stock | moved | added
+justify: stock line (orthodoxy) or his-stat line (rule)
+backtest vs the untouched stock template (catch coverage + run interception)
+if backtest shows no gain → return pure stock, note "no deviation earned"
+```
+
+## 6. Report changes (small — wiring already exists)
+
+- Table gains a **Stock/Change** column; changes highlighted.
+- The read line lists **only the deviations** ("Stock new-ball field, two changes: …").
+- Both backtest numbers printed: ours vs stock.
+- Diagram unchanged (orientation/colour conventions now in `c:\Ludis\CLAUDE.md`).
+
+## 7. Build order (after sign-off)
+
+1. `ludis_cricket/fields.py` — stock templates (§2) + format legality checker. *(no DB)*
+2. `referencebuilder/build_field_trigger_norms.py` — cohort percentile distributions for the
+   R1–R8 trigger stats (phase × group × format). *(DB, one query family)*
+3. Rework `playerprofile/field_engine.py` — assembly v2 (§5); keep run_flow/expected_catches
+   as the value model inside rules + backtest.
+4. `batting_report.py` — Stock/Change column + deviations-only read. *(small)*
+5. Verify renders: Smith (RHB benchmark), a LHB (Khawaja/Head), a known sweeper vs spin
+   (checks R1), a square-scorer (checks R2); eyeball vs real fields bowled to them.
+6. Later, with white-ball reports: ODI/T20 loaders + the white-ball templates go live.
+
+## 8. Open questions for Tom (answer on the plan, then we build)
+
+1. **Template red-pen (§2)** — now lit-grounded (§2a); the cells the sources left thin:
+   **(a) LF-pace to RHB cordon** — review says 2 slips + gully/backward point over 3 slips;
+   right? **(b)** is **third man** stock in the RF set field (sources waver between third
+   man / midwicket / square leg as the flex fielder)? **(c)** spin contain shapes.
+2. **Cap ≤3 deviations** and **P75 evidence bar** — right levels?
+3. **Short-ball plan (R5)**: separate named variant field in the report, or a note on the set field?
+4. Keeper counted implicitly (9 + keeper + bowler) — any case for keeper-up-to-pace as a
+   deviation (needs evidence source)?
+5. Verification batters for step 5 — who would you trust your eye on most?
+
+---
+
+## Appendix — v1 data audit (still valid, unchanged)
+
+| Signal | Column(s) | Coverage | Use in v2 |
+|---|---|---|---|
+| Shot direction | `hit_to_angle` (absolute, flip LHB) | ~100% of scoring balls | run-flow sectors (rule triggers + backtest) |
+| Shot distance | `hit_to_length`, `hit_to_x/y_physical` | same | ring vs rope split |
+| Catch position | `DeliveryFielders.fielder_event_position_id` (lookup 33) | ~83% of catches | catch maps + backtest |
+| False shots | `shot_quality_id` (2811) | ~38% | R6 + catch-carry model |
+| Stroke | `stroke_id` (24) → `STROKE_FAMILY` | ~50% of scoring | R1/R4/R5/R7 triggers |
+| Phase | `ball_of_innings` (derived) | 100% | early/set split |
+| Fielder events | DeliveryFielders (1 row/ball, 97%) | position known 45% | catch norms, runs saved/cost, rider sanity checks — **not** manning (see §3) |

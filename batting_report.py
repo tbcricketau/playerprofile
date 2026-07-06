@@ -15,7 +15,8 @@ import re
 from jinja2 import Template
 
 from version import REPORT_VERSION
-from batter_profile import build_batter_profile
+from batter_profile import build_batter_profile, BOWLER_GROUPS
+import field_engine as fe
 from photos import get_photo_data_uri
 from ludis_cricket.charts import wagon_wheel_zones, fingerprint_strip
 from ludis_cricket.video import first_example, get_fairplay_sas
@@ -483,6 +484,76 @@ def _file_url(path: str) -> str:
     return "file:///" + os.path.abspath(path).replace("\\", "/").replace(" ", "%20")
 
 
+# ── Suggested fields (field_engine) ────────────────────────────────────────────────
+_TYPE_TO_GROUP = {t: g for g, (types, _) in BOWLER_GROUPS.items() for t in types}
+_ROLE_LABEL = {"catch": "Catch", "save": "Save"}
+_PACE_GROUPS = ("right_pace", "left_pace")
+_SPIN_GROUPS = ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox")
+_FIELD_MIN_BALLS = 120           # a group needs this many career balls to earn a field
+
+
+def _field_targets(P: dict) -> list:
+    """[(group, rows)] to draw a field for. Focused report → the report's group; combined →
+    the batter's most-faced pace group + most-faced spin group (each on its own filtered rows)."""
+    if P.get("group"):
+        return [(P["group"], P["raw"])]
+    from collections import Counter
+    cnt = Counter()
+    for r in P["raw_all"]:
+        if r["is_legal"]:
+            g = _TYPE_TO_GROUP.get(r.get("bowler_type_simple"))
+            if g:
+                cnt[g] += 1
+    out = []
+    for pool in (_PACE_GROUPS, _SPIN_GROUPS):
+        avail = [g for g in pool if cnt.get(g, 0) >= _FIELD_MIN_BALLS]
+        if not avail:
+            continue
+        g = max(avail, key=lambda x: cnt[x])
+        types = BOWLER_GROUPS[g][0]
+        out.append((g, [r for r in P["raw_all"] if r.get("bowler_type_simple") in types]))
+    return out
+
+
+def _field_backtest_line(fs: dict, phase: str) -> str:
+    bt, lbl, n_catch = fs["backtest"], fs["group_label"], fs["n_catchers"] - 1
+    if phase == "early":
+        s = (f"This attacking field sits under <b>{bt['exp_catch_covered_pct']:.0f}%</b> of where "
+             f"his mishits vs {lbl} are expected to carry")
+        if bt["catches_total"]:
+            s += (f" — {bt['catches_covered']} of his {bt['catches_total']} recorded caught "
+                  f"dismissals vs {lbl} were at these positions")
+        return s + "."
+    s = (f"The riders cover <b>{bt['bdry_covered_pct']:.0f}%</b> of his boundary runs vs {lbl}, "
+         f"keeping {n_catch} catcher{'s' if n_catch != 1 else ''} back")
+    if bt["catches_total"]:
+        s += f"; {bt['catches_covered']}/{bt['catches_total']} of his caught dismissals sit in the retained cordon"
+    return s + "."
+
+
+def _field_blocks(P: dict) -> list:
+    """Render-ready field blocks: one per bowler group, each with an early + set column
+    (field diagram data-URI, justification rows, backtest line)."""
+    blocks = []
+    for group, rows in _field_targets(P):
+        subP = {"is_lhb": P["is_lhb"], "batter_id": P["batter_id"], "raw": rows}
+        cols = []
+        for phase, title in (("early", "Early — first 30 balls"), ("set", "Once set")):
+            fs = fe.build_field(subP, group, phase)
+            if not fs:
+                continue
+            try:
+                uri = _fig_uri(fe.field_diagram(fs["field"], P["is_lhb"], title=""), w=300, h=300)
+            except Exception:
+                uri = ""
+            jrows = [(f["position"], _ROLE_LABEL[f["kind"]], f["why"], f["kind"]) for f in fs["field"]]
+            cols.append({"title": title, "fig": uri, "rows": jrows,
+                         "backtest": _field_backtest_line(fs, phase), "legal": fs["legal"]})
+        if cols:
+            blocks.append({"label": fe._group_label(group), "cols": cols})
+    return blocks
+
+
 def _build_player(P: dict, pdf_path: str) -> dict:
     """Build batting playlists, write a self-contained modal video player next to the PDF, and
     return {player, keys, stroke_name} for the report's ▶ links. Best-effort."""
@@ -553,6 +624,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "dismissals": P["dismissals"].most_common(6),
         "narrative": _narrative(P), "figs": figs,
         "fp_cards": fp_cards, "dim": dim_tables, "plan_read": _plan_read(P),
+        "field_blocks": _field_blocks(P),
         "mv_label": ("Turn" if isg else "Seam"), "sw_label": ("Drift" if isg else "Swing"),
         "version": REPORT_VERSION, "build_date": datetime.date.today().strftime("%d %b %Y"),
         "c": dict(BG_PAGE=BG_PAGE, BG_PANEL=BG_PANEL, TEXT_PRI=TEXT_PRI, TEXT_SEC=TEXT_SEC,
@@ -648,6 +720,8 @@ _TEMPLATE = r"""
   .dcard .db { font-size: 15px; font-weight: 800; margin: 2px 0; }
   .dcard .ds { font-size: 10px; color: {{c.TEXT_SEC}}; }
   img.wag { width: 96%; display: block; margin: 0 auto; border: 1px solid {{c.BORDER}}; border-radius: 8px; background:#fff; }
+  img.fieldmap { width: 100%; max-width: 250px; display: block; margin: 0 auto; }
+  .fgrid { display: grid; grid-template-columns: 250px 1fr; gap: 12px; align-items: start; margin-bottom: 8px; }
   .cap { font-size: 8.5px; color: {{c.TEXT_SEC}}; font-style: italic; text-align:center; margin-top: 3px; }
   a.vlink { display:inline-block; font-size:9px; font-weight:700; color:#fff; background:{{c.ACCENT}};
             text-decoration:none; padding:2px 8px; border-radius:5px; margin-left:6px; vertical-align:middle; }
@@ -798,6 +872,29 @@ _TEMPLATE = r"""
     <tr><td class="lab">{{mode}}</td><td>{{cnt}}</td><td>{{ (cnt / P.n_dismissals * 100) | round | int }}%</td></tr>
     {% endfor %}
   </table>
+
+  {% if field_blocks %}
+  <h2 class="pbreak">Suggested Fields <span class="sub" style="font-weight:400">(built from where his runs &amp; edges go — no fielder-position data)</span></h2>
+  <div class="cap" style="text-align:left;margin-bottom:6px">Every fielder is justified by what <b>he</b> does — catchers from his false-shot mix &times; where those mishits carry across Tests, run-savers from the sectors carrying most of his runs; the table gives each fielder's role and reason. Early field = wicket-biased (first 30 balls); Set field = run-biased. Drawn from behind the bowler (bowler at the bottom, striker at the top); off side is on the {% if P.is_lhb %}right{% else %}left{% endif %}.</div>
+  {% for blk in field_blocks %}
+    <div style="font-weight:700;font-size:11.5px;margin:10px 0 4px;color:{{c.ACCENT}}">Field vs {{blk.label}}</div>
+    {% for col in blk.cols %}
+    <div style="font-weight:700;font-size:10px;margin:4px 0 2px">{{col.title}} <span style="font-weight:400;color:{{c.TEXT_SEC}}">· {{col.legal}} balls</span></div>
+    <div class="fgrid">
+      <div>
+        {% if col.fig %}<img class="fieldmap" src="{{col.fig}}">{% endif %}
+        <div class="read" style="margin-top:4px">{{col.backtest|safe}}</div>
+      </div>
+      <table class="mtab">
+        <tr><th>Fielder</th><th>Role</th><th style="text-align:left">Why he's there</th></tr>
+        {% for pos, role, why, kind in col.rows %}
+        <tr class="{{ 'sig' if kind=='catch' else '' }}"><td class="lab">{{pos}}</td><td>{{role}}</td><td style="text-align:left">{{why}}</td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    {% endfor %}
+  {% endfor %}
+  {% endif %}
 
 </div></body></html>
 """

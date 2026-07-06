@@ -59,13 +59,27 @@ def _load_csv(path):
     return _CACHE[path]
 
 
+# Fall back to a broader cohort when a narrow group has no catch norms (e.g. left-arm
+# wrist spin is rare → borrow the general spin cordon; missing pace → general pace).
+_GROUP_FALLBACK = {
+    "left_unorthodox": "spin", "left_orthodox": "spin", "off_spin": "spin", "leg_spin": "spin",
+    "right_pace": "pace", "left_pace": "pace",
+}
+
+
 def _cohort_catch_dist(group):
-    """{stroke_family: {position: share%}} for this bowler group (Tests)."""
-    out = defaultdict(dict)
-    for r in _load_csv(_COHORT_CSV):
-        if r["format"] == _FMT and r["bowler_group"] == group:
-            out[r["stroke_family"]][r["position"]] = float(r["share"])
-    return out
+    """{stroke_family: {position: share%}} for this bowler group (Tests). Falls back to the
+    broader spin/pace cohort, then 'all', if the specific group has no rows."""
+    for g in (group, _GROUP_FALLBACK.get(group), "all"):
+        if not g:
+            continue
+        out = defaultdict(dict)
+        for r in _load_csv(_COHORT_CSV):
+            if r["format"] == _FMT and r["bowler_group"] == g:
+                out[r["stroke_family"]][r["position"]] = float(r["share"])
+        if out:
+            return out
+    return defaultdict(dict)
 
 
 def _batter_field(batter_id, group):
@@ -266,10 +280,31 @@ def _sector_phrase(s):
             "fine leg": "fine on the leg"}.get(s, f"to {s}")
 
 
+_SLIP_CODE = {"1st": "S1", "2nd": "S2", "3rd": "S3", "4th": "S4", "5th": "S5", "6th": "S6",
+              "1": "S1", "2": "S2", "3": "S3", "4": "S4", "5": "S5", "6": "S6"}
+
+
+def _short_label(pos):
+    """Compact code for a close catcher so the cordon doesn't stack long labels. Handles both
+    the lookup-33 form ('Slip: 2nd') and the canonical name ('Slip 2')."""
+    p = (pos or "").strip()
+    low = p.lower()
+    if low.startswith("slip"):
+        tail = low.split(":", 1)[1].strip() if ":" in low else low.replace("slip", "").strip()
+        return _SLIP_CODE.get(tail, "slip")
+    if low == "gully":
+        return "gully"
+    if ":" in p:                       # "Square leg: short leg" -> "short leg"
+        return p.split(":", 1)[1].strip()
+    return p
+
+
 # ── Field diagram ────────────────────────────────────────────────────────────────
 def field_diagram(fieldset, is_lhb, title=""):
-    """Circular field map — striker at centre, bowler at top, off side on the left for a
-    RHB (mirrored for LHB). Catchers filled accent, run-savers hollow. Returns a go.Figure."""
+    """Circular field map drawn from behind the bowler — bowler at the BOTTOM, striker at
+    the top of the pitch, so the keeper/slip cordon renders at the top (house convention,
+    matches wagon_wheel_zones). Off side on the left for a RHB (mirrored for LHB). All
+    fielders one uniform colour; roles live in the justification table. Returns a go.Figure."""
     import math
     import plotly.graph_objects as go
     from ludis_cricket.theme import (BG_PANEL, BG_PITCH, ACCENT, DANGER, TEXT_PRI, TEXT_SEC)
@@ -285,33 +320,57 @@ def field_diagram(fieldset, is_lhb, title=""):
     fig.add_trace(go.Scatter(x=[ring * math.cos(t) for t in th], y=[ring * math.sin(t) for t in th],
                              mode="lines", line=dict(color="#2e7d32", width=1, dash="dot"),
                              hoverinfo="skip", showlegend=False))
-    # pitch (striker at centre, bowler toward top)
-    fig.add_shape(type="rect", x0=-0.05, x1=0.05, y0=-0.08, y1=0.34,
+    # Ground centred on the PITCH (not the striker): striker sits one half-pitch behind the
+    # centre, bowler one ahead, so both straight boundaries are equidistant. Fielder radius
+    # (batter-relative, 0 = at the bat, 1 = at the rope) is scaled per direction so radius=1
+    # lands on the boundary — farther down the ground than behind the keeper, since the striker
+    # is now off-centre. tb(θ) = distance striker→boundary along θ.
+    mirror = -1 if not is_lhb else 1     # RHB off side to the left
+    D = 0.14                             # half the pitch length, as a fraction of the boundary
+
+    def place(radius, ang_deg):
+        th = math.radians(ang_deg)
+        tb = D * math.cos(th) + math.sqrt(max(0.0, 1 - (D * math.sin(th)) ** 2))
+        d = radius * tb
+        return mirror * d * math.sin(th), -D + d * math.cos(th)
+
+    # pitch strip, centred: striker end at -D (renders top), bowler end at +D (renders bottom)
+    fig.add_shape(type="rect", x0=-0.045, x1=0.045, y0=-D, y1=D,
                   fillcolor="#c8a25a", line=dict(color="#a07d3a", width=1), opacity=0.55)
 
-    mirror = -1 if not is_lhb else 1     # RHB off side to the left
     for f in fieldset:
-        ang = math.radians(f["angle"])
-        x = mirror * f["radius"] * math.sin(ang)
-        y = f["radius"] * math.cos(ang)
-        is_catch = f["kind"] == "catch"
+        if f["position"] == "Keeper":
+            continue                      # drawn as its own cue behind the striker
+        x, y = place(f["radius"], f["angle"])
         fig.add_trace(go.Scatter(
             x=[x], y=[y], mode="markers",
-            marker=dict(size=15 if is_catch else 13,
-                        color=(DANGER if is_catch else BG_PANEL),
-                        line=dict(color=(DANGER if is_catch else ACCENT), width=2),
+            marker=dict(size=10, color=ACCENT, line=dict(color="#ffffff", width=1.5),
                         symbol="circle"),
             hovertext=f"{f['position']} — {f['why']}", hoverinfo="text", showlegend=False))
-        # label just outside the marker, pushed toward the boundary
-        lx = mirror * min(f["radius"] + 0.12, 1.05) * math.sin(ang)
-        ly = min(f["radius"] + 0.12, 1.05) * math.cos(ang)
-        fig.add_annotation(x=lx, y=ly, text=f["position"], showarrow=False,
-                           font=dict(size=8.5, color=TEXT_PRI),
-                           bgcolor="rgba(255,255,255,0.6)", borderpad=1)
-    # batter/bowler cues
-    fig.add_annotation(x=0, y=-0.14, text="▲ striker", showarrow=False,
+        # Close catchers get a compact code (S1/S2/gully…) so the tight cordon doesn't stack
+        # verbose labels; the full name + reason live in the justification table.
+        is_close = f["radius"] <= 0.4 or f["position"].lower().startswith("slip")
+        text = _short_label(f["position"]) if is_close else f["position"]
+        lx, ly = place(min(f["radius"] + (0.13 if is_close else 0.12), 1.06), f["angle"])
+        fig.add_annotation(x=lx, y=ly, text=text, showarrow=False,
+                           font=dict(size=7.5 if is_close else 8, color=TEXT_PRI),
+                           bgcolor="rgba(255,255,255,0.72)", borderpad=1)
+    # striker (at the striker's end) + keeper standing back behind (labels on the leg side,
+    # clear of the off-side cordon; separated vertically so they don't stack)
+    sx, sy = place(0.0, 0)
+    kx, ky = place(0.13, 180)
+    fig.add_trace(go.Scatter(x=[sx], y=[sy], mode="markers",
+                  marker=dict(size=10, color=TEXT_PRI, symbol="triangle-down"),
+                  hovertext="Striker", hoverinfo="text", showlegend=False))
+    fig.add_trace(go.Scatter(x=[kx], y=[ky], mode="markers",
+                  marker=dict(size=10, color=ACCENT, line=dict(color="#ffffff", width=1.5),
+                              symbol="circle"),
+                  hovertext="Keeper", hoverinfo="text", showlegend=False))
+    fig.add_annotation(x=-mirror * 0.135, y=sy + 0.02, text="striker", showarrow=False,
                        font=dict(size=8, color=TEXT_SEC))
-    fig.add_annotation(x=0, y=0.40, text="bowler", showarrow=False,
+    fig.add_annotation(x=-mirror * 0.145, y=ky, text="keeper", showarrow=False,
+                       font=dict(size=8, color=TEXT_SEC))
+    fig.add_annotation(x=0, y=D + 0.06, text="bowler ▲", showarrow=False,
                        font=dict(size=8, color=TEXT_SEC))
     hand = "LHB — off side right" if is_lhb else "RHB — off side left"
     fig.update_layout(
@@ -319,7 +378,9 @@ def field_diagram(fieldset, is_lhb, title=""):
         paper_bgcolor=BG_PANEL, plot_bgcolor=BG_PANEL,
         margin=dict(l=6, r=6, t=28 if title else 6, b=16), showlegend=False,
         xaxis=dict(visible=False, range=[-1.15, 1.15], scaleanchor="y", scaleratio=1),
-        yaxis=dict(visible=False, range=[-1.15, 1.15]),
+        # Reversed y-axis (house convention, same as wagon_wheel_zones): bowler renders at
+        # the BOTTOM, striker at the top — so the keeper/slip cordon sits at the top.
+        yaxis=dict(visible=False, range=[1.15, -1.15]),
         annotations=list(fig.layout.annotations) + [dict(
-            x=0, y=-1.12, text=hand, showarrow=False, font=dict(size=8, color=TEXT_SEC))])
+            x=0, y=1.12, text=hand, showarrow=False, font=dict(size=8, color=TEXT_SEC))])
     return fig
