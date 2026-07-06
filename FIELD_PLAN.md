@@ -153,6 +153,33 @@ leg-side max 2 in PP). Encoded once, applied to every generated field.
 4. So DeliveryFielders' roles in v2: **catch-position norms** (already built, solid) +
    **runs saved/cost per position** + **rider-frequency sanity checks**. Nothing else.
 
+## 3b. GPS now measures manning directly — corrected stock base (2026-07-06)
+
+§3 concluded the warehouse **cannot** derive manning (event frequency = manning × ball-flow, so
+the ~100%-manned pace slip is invisible). **Catapult GPS on our own players closes that exact gap.**
+The `catapultgps` project (bulk-run over **39 matches, 2024/25 → now**) places every fielder at the
+GPS-detected release and, in `validate.py`, tallies **how often each named position is actually
+manned** per (format × scenario × phase) over **5,547 classified deliveries** — the direct manning
+evidence this section said didn't exist.
+
+**Finding (consistent across scenarios):** the hand-built stock **over-calls the slip cordon and
+under-calls the deep sweepers + midwicket**, sharpest through the middle/death overs — AUS sets more
+defensive fields than the attacking stock defaults. Visual overlay:
+`https://claude.ai/code/artifact/263f1806-e49b-40a1-9a41-c26e00d455b0`.
+
+**How it feeds the engine — the corrected stock base.** `ludis_cricket.fields.gps_corrected_field()`
+returns the stock with the **≤3 strongest GPS-evidenced, legality-checked swaps** applied (drop the
+least-manned stock position, add the most-manned position the stock omits; 9 fielders + out-of-circle
+limit + ≤2-behind-square-leg all re-validated — 24/24 corrected cells legal). It falls back to raw
+`stock_field` where there's no correction (Test attack/defend has no per-ball label yet; unbuilt
+cells). Evidence tables: `catapultgps/data/field_corrections.csv` (the swaps) + `field_validation.csv`
+(per-position manning), read via `ludis_cricket.gps.load_field_corrections()`.
+
+So the assembly (§5) **starts from `gps_corrected_field` instead of raw `stock`**, then applies the
+per-batter deviations below on top. The base is now empirically grounded; the batter rules stay the
+"strong reasoning" layer. Example — T20 pace vs RHB, powerplay: drop Fine leg (2% manned) → add
+Midwicket (77%); drop Deep square leg (5%) → add Deep backward square (68%).
+
 ## 4. Deviation rule library (investigation part C — the "strong reasoning")
 
 Each rule: trigger stat (his) → threshold (vs cohort) → the change it makes to the stock
@@ -182,7 +209,8 @@ template → justification sentence template. A rule that doesn't fire leaves st
 ## 5. Assembly algorithm v2
 
 ```
-stock = template[format][group][phase]            # §2, mirrored for hand
+stock = fields.gps_corrected_field(fmt, type, hand, phase)   # §3b — GPS-corrected base,
+                                                             # falls back to raw §2 template
 legal = restrictions[format][phase]               # circle counts, leg-side max 5
 cands = [rule.evaluate(P) for rule in R1..R8]     # each: fired?, percentile, value, change
 apply top-k fired rules (k≤3, ranked), each swap validated against `legal`
