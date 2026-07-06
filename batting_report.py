@@ -540,18 +540,29 @@ def _field_blocks(P: dict) -> list:
     for group, rows in _field_targets(P):
         subP = {"is_lhb": P["is_lhb"], "batter_id": P["batter_id"], "raw": rows}
         cols = []
+        short_ball = None
+
+        def _jrows(field):
+            return [(f["position"], "Change" if f["tag"] == "change" else "Stock",
+                     f["why"], f["tag"]) for f in field]
+
+        def _diagram(field):
+            try:
+                return _fig_uri(fe.field_diagram(field, P["is_lhb"], title=""), w=300, h=300)
+            except Exception:
+                return ""
+
         for phase, title in (("early", "Early — first 30 balls"), ("set", "Once set")):
             fs = fe.build_field(subP, group, phase)
             if not fs:
                 continue
-            try:
-                uri = _fig_uri(fe.field_diagram(fs["field"], P["is_lhb"], title=""), w=300, h=300)
-            except Exception:
-                uri = ""
-            jrows = [(f["position"], "Change" if f["tag"] == "change" else "Stock",
-                      f["why"], f["tag"]) for f in fs["field"]]
-            cols.append({"title": title, "fig": uri, "rows": jrows,
+            short_ball = short_ball or fs.get("short_ball")
+            cols.append({"title": title, "fig": _diagram(fs["field"]), "rows": _jrows(fs["field"]),
                          "backtest": _field_backtest_line(fs, phase), "legal": fs["legal"]})
+        # heavy puller → the named short-ball / bumper plan as an extra alternative field
+        if short_ball:
+            cols.append({"title": "Short-ball plan", "fig": _diagram(short_ball["field"]),
+                         "rows": _jrows(short_ball["field"]), "backtest": short_ball["note"], "legal": None})
         if cols:
             blocks.append({"label": fe._group_label(group), "cols": cols})
     return blocks
@@ -844,7 +855,7 @@ _TEMPLATE = r"""
   {% for blk in field_blocks %}
     <div style="font-weight:700;font-size:11.5px;margin:10px 0 4px;color:{{c.ACCENT}}">Field vs {{blk.label}}</div>
     {% for col in blk.cols %}
-    <div style="font-weight:700;font-size:10px;margin:4px 0 2px">{{col.title}} <span style="font-weight:400;color:{{c.TEXT_SEC}}">· {{col.legal}} balls</span></div>
+    <div style="font-weight:700;font-size:10px;margin:4px 0 2px">{{col.title}}{% if col.legal %} <span style="font-weight:400;color:{{c.TEXT_SEC}}">· {{col.legal}} balls</span>{% endif %}</div>
     <div class="fgrid">
       <div>
         {% if col.fig %}<img class="fieldmap" src="{{col.fig}}">{% endif %}

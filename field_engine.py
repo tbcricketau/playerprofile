@@ -239,6 +239,17 @@ def _rules(P, group, phase, is_spin):
         p, v = _sr("spin", "Sweep")
         fire("R1", p, v, ["Deep backward square leg", "Deep square leg"],
              f"He sweeps/laps {v:.0f}% of his runs vs spin (P{p:.0f}) — protect deep backward square." if v else "")
+        # R8 charger — stumped-prone or a slogger vs spin → keep the straight boundary back even early
+        stumped = sum(1 for r in P["raw"] if r.get("is_out") and r.get("how_out") == "Stumped")
+        sp, sv = _sr("spin", "Slog")
+        if stumped >= 2 or (sp is not None and sp >= 75):
+            strength = sp if (sp is not None and sp >= 75) else 80.0
+            why = ((f"He's been stumped {stumped}× vs spin" if stumped >= 2
+                    else f"He slogs {sv:.0f}% of his runs vs spin (P{sp:.0f})")
+                   + " — he uses his feet, so keep the straight boundary back even early.")
+            fired.append({"id": "R8", "pctl": strength, "value": float(stumped),
+                          "add": ["Long-on", "Long-off"], "why": why,
+                          "protect": True, "strength": strength})
     else:                                                # R4 cut (vs pace)
         p, v = _sr("pace", "Cut")
         fire("R4", p, v, ["Deep point", "Third man"],
@@ -296,6 +307,29 @@ def _legal(names, phase):
     return True
 
 
+_SHORT_BALL_WHY = {
+    "Slip 1": "One slip kept for the top / outside edge.",
+    "Short leg": "Catcher in front of square for the fend or glove off the hip.",
+    "Gully": "The steer or fend that flies squarer of the wicket.",
+    "Deep backward square": "Deep behind square for the top-edged pull (1 of the 2 the Law allows).",
+    "Deep fine leg": "Deep behind square for the hook (2 of 2 — the leg-side limit).",
+}
+
+
+def _short_ball_field(is_lhb, note):
+    """The named short-ball / bumper-plan field (ludis_cricket.fields.SHORT_BALL): one slip, a
+    front-of-square catcher, and the two Law-max behind-square riders — shown as an alternative
+    field for heavy pullers/hookers (R5)."""
+    from ludis_cricket import fields
+    out = []
+    for nm in fields.SHORT_BALL:
+        c = FIELD_POS.get(nm) or field_coords(nm)
+        out.append({"position": nm, "angle": c["angle"], "radius": c["radius"],
+                    "role": c["role"], "kind": "catch" if c["role"] == "catch" else "save",
+                    "tag": "change", "why": _SHORT_BALL_WHY.get(nm, "Ring saver for the bumper plan.")})
+    return {"field": out, "note": note}
+
+
 def build_field(P, group, phase):
     """Assembly v2 — the GPS-corrected stock field ± the top (<=3) evidenced deviations.
     Returns {phase, group, group_label, n_catchers, false_rate, legal, field:[{position, angle,
@@ -321,8 +355,9 @@ def build_field(P, group, phase):
     false_rate = (sum(1 for r in rows if r.get("is_false_shot")) / shotq * 100) if shotq else None
 
     # apply the top <=3 fired rules, each swap re-validated for legality
+    fired = _rules(P, group, phase, is_spin)
     names, changes = list(base_names), []
-    for rule in sorted(_rules(P, group, phase, is_spin), key=lambda r: -r["strength"]):
+    for rule in sorted(fired, key=lambda r: -r["strength"]):
         if len(changes) >= 3:
             break
         add = next((a for a in rule["add"] if a not in names), None)
@@ -349,10 +384,18 @@ def build_field(P, group, phase):
     n_catch = sum(1 for f in field if f["kind"] == "catch")
     base_note = ("GPS-corrected stock field" if base_changes not in ("none", "", None)
                  else "stock field")
+    # strong puller (pace) → surface the named short-ball / bumper plan as an alternative field
+    r5 = next((r for r in fired if r["id"] == "R5" and r["pctl"] >= 80), None)
+    short_ball = None
+    if r5 and not is_spin:
+        sb_note = (f"He's a heavy puller/hooker (P{r5['pctl']:.0f} of his runs vs pace) — the bumper "
+                   f"plan: one slip kept, a catcher in front of square, and both riders behind square "
+                   f"(deep backward square + deep fine leg, the two the leg-side Law allows).")
+        short_ball = _short_ball_field(is_lhb, sb_note)
     return {"phase": phase, "group": group, "group_label": _group_label(group),
             "n_catchers": n_catch, "false_rate": false_rate, "legal": legal,
             "field": field, "changes": [c["why"] for c in changes],
-            "base_note": base_note, "base_changes": base_changes,
+            "base_note": base_note, "base_changes": base_changes, "short_ball": short_ball,
             "backtest": _backtest(names, base_names, flow, exp, observed)}
 
 
