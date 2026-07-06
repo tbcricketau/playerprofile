@@ -1,6 +1,65 @@
 # Field Settings v2 — stock-first fields with justified deviations (PLAN, 2026-07-05)
 
-**Status: awaiting Tom's sign-off. No engine code until approved.**
+**Status (2026-07-06): stock dictionary + GPS-corrected base BUILD & SIGNED OFF by Tom. Ready to
+build the v2 assembly + batting-report wiring — see ▶ HANDOVER below.**
+
+## ▶ HANDOVER — build the GPS-grounded field assembly (2026-07-06)
+
+A new playerprofile session picks up here. Field GPS work is done in the sibling **catapultgps**
+project; this project builds the batter-facing assembly + report. Tom has **signed off the
+GPS-corrected fields** — proceed to the engine.
+
+**What's already done (don't rebuild):**
+- **§2 stock dictionary** — `ludis_cricket.fields.STOCK`, `stock_field(fmt, bowler_type, hand, phase)`,
+  `validate_stock()` (all legal). 6 scenarios (pace_same/across, finger/wrist × in/away).
+- **§3b GPS corrections** — GPS now measures manning directly (what §3 said the warehouse couldn't).
+  **`ludis_cricket.fields.gps_corrected_field(fmt, bowler_type, hand, phase, with_changes=False)`**
+  returns the stock with the ≤3 strongest GPS-evidenced, legality-checked swaps applied (falls back
+  to raw stock for Test / unbuilt cells). Evidence CSVs in `catapultgps/data`
+  (`field_corrections.csv`, `field_validation.csv`) read via
+  `ludis_cricket.gps.load_field_corrections()` / `load_field_validation()`. **This is the base to
+  start the assembly from — not raw `STOCK`.**
+- **field_engine.py** currently holds the **v1 data-derived** `build_field` (run_flow +
+  expected_catches + `_backtest` + `field_diagram`). Keep those as the **value model + renderer**;
+  rework only the **assembly**.
+
+**Build next, in order:**
+1. **`referencebuilder/build_field_trigger_norms.py`** *(DB, one query family)* — cohort percentile
+   distributions for the R1–R8 trigger stats (§4) per phase × group × format (sector share, lap/
+   reverse rate, square-early scoring, etc.). The per-batter rules need these baselines.
+2. **Rework `field_engine.build_field` → assembly v2 (§5):**
+   - `base = fields.gps_corrected_field(fmt, bowler_type, hand, phase)` (GPS-corrected stock).
+   - Evaluate R1–R8 (§4) on the batter; apply the **top ≤3 fired** rules, each swap re-validated with
+     `fields._is_out` / `fields._behind_square_leg` / `fields.OUT_LIMIT[fmt][phase]` (9 fielders,
+     out-of-circle limit, ≤2 behind square leg).
+   - Tag each fielder `base | moved | added`; justify (base = GPS-corrected stock line, using the
+     `with_changes` string; deviation = his-stat line from the rule).
+   - **Backtest vs the untouched GPS-corrected base** (reuse `_backtest`); if no gain → return base,
+     note "no deviation earned".
+3. **`batting_report.py`** — Stock/Change column + a deviations-only read line
+   ("GPS-corrected pace field, 2 changes: …").
+4. **Verify renders** — Smith (RHB benchmark), a LHB (Khawaja/Head), a sweeper vs spin (R1), a
+   square-scorer (R2); eyeball against real fields bowled to them.
+
+**Dimension mapping (report `group`/over → stock keys):**
+- `fmt` = `'test' | 'odi' | 't20'` (lowercase). `hand` = `'RHB' | 'LHB'`.
+- `bowler_type` STRINGS for `scenario()`: pace = `"Right Fast"|"Left Fast"|"Right Medium"|"Left Medium"`,
+  spin = `"Off Spin"|"Left Orthodox"|"Leg Break"|"Left Unorthodox"`. Derive from warehouse
+  `bowler_style_id` (1,2=Fast · 3=Medium · 4=Off/LA-orthodox · 5=Leg/LA-unorthodox) + `bowler_hand_id`
+  (1=R,2=L).
+- `phase`: t20 `powerplay`(<6)/`middle`/`death`(≥15); odi `pp1`(<10)/`middle`/`death`(≥40);
+  test `attack`/`defend`.
+
+**Gotchas:**
+- **GPS corrections are white-ball only** (Test `attack`/`defend` has no per-ball GPS label yet) →
+  `gps_corrected_field` returns raw stock for Test. Test reports use the hand-built base for now.
+- The base is already close to reality → **deviations should be small**; backtest vs the corrected
+  base, not raw stock. If a batter's report shows 0 earned deviations, that's fine — the corrected
+  stock is the answer.
+- `FIELD_POS` / stock lists are **batter-relative** (angle 0 = to bowler, +off/−leg, ±180 behind);
+  the LHB mirror is baked into the scenario. `field_diagram` handles rendering (house convention).
+- `load_field_validation()` also gives per-position **median GPS location** — useful for a "where he's
+  actually manned" evidence panel or to nudge a moved fielder's exact spot.
 
 ## 0. Why the rework (review verdict on v1)
 
@@ -229,15 +288,17 @@ if backtest shows no gain → return pure stock, note "no deviation earned"
 
 ## 7. Build order (after sign-off)
 
-1. `ludis_cricket/fields.py` — stock templates (§2) + format legality checker. *(no DB)*
+1. ✅ `ludis_cricket/fields.py` — stock templates (§2) + legality checker. **DONE + GPS-corrected
+   base (§3b): `fields.gps_corrected_field()`. Signed off 2026-07-06.**
 2. `referencebuilder/build_field_trigger_norms.py` — cohort percentile distributions for the
-   R1–R8 trigger stats (phase × group × format). *(DB, one query family)*
-3. Rework `playerprofile/field_engine.py` — assembly v2 (§5); keep run_flow/expected_catches
-   as the value model inside rules + backtest.
+   R1–R8 trigger stats (phase × group × format). *(DB, one query family)* — **NEXT.**
+3. Rework `playerprofile/field_engine.py` — assembly v2 (§5); **base = `gps_corrected_field`**,
+   keep run_flow/expected_catches as the value model inside rules + backtest.
 4. `batting_report.py` — Stock/Change column + deviations-only read. *(small)*
 5. Verify renders: Smith (RHB benchmark), a LHB (Khawaja/Head), a known sweeper vs spin
    (checks R1), a square-scorer (checks R2); eyeball vs real fields bowled to them.
-6. Later, with white-ball reports: ODI/T20 loaders + the white-ball templates go live.
+6. ✅ White-ball GPS corrections already live (§3b); ODI/T20 loaders + templates go live with the
+   white-ball reports.
 
 ## 8. Open questions for Tom (answer on the plan, then we build)
 
