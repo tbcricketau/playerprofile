@@ -16,7 +16,8 @@ from collections import Counter, defaultdict
 
 from data_loaders import load_bowler_deliveries, load_bowler_info
 import statistics
-from profile import process_rows, _safe_float, _quantile, _SHORT_BUCKETS, _fingerprint
+from profile import (process_rows, _safe_float, _quantile, _SHORT_BUCKETS, _fingerprint,
+                    _pctl_of, load_phase_profiles)
 from ludis_cricket.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE)
 from ludis_cricket.lookups import team_flag
@@ -284,6 +285,25 @@ def build_odi_profile(bowler_id: str) -> dict:
         s = _phase_stats([r for r in raw if r["phase"] == ph])
         if s:
             phases.append({"phase": ph, "pct_balls": s["balls"] / nb * 100, **s})
+
+    # Peer-benchmark each phase vs modern-era ODI peers of the same pace/spin, so the reader knows
+    # if an economy/wicket-rate is good *for that phase* (economy: lower = better -> inverted so a
+    # high percentile = elite; wicket rate: higher = better).
+    _pnorm = load_phase_profiles("ODI")
+    _ps = "pace" if is_pace else "spin"
+    for ph in phases:
+        _pe = [_safe_float(r["economy"]) for r in _pnorm
+               if r.get("pace_spin") == _ps and r.get("phase") == ph["phase"]]
+        _pe = [x for x in _pe if x is not None]
+        _pw = [_safe_float(r["wkt_rate"]) for r in _pnorm
+               if r.get("pace_spin") == _ps and r.get("phase") == ph["phase"]]
+        _pw = [x for x in _pw if x is not None]
+        _raw_e = _pctl_of(ph["economy"], _pe) if len(_pe) >= 8 else None
+        ph["econ_pctl"] = round(100 - _raw_e) if _raw_e is not None else None
+        _wr = ph["wickets"] / ph["balls"] * 100 if ph["balls"] else None
+        _raw_w = _pctl_of(_wr, _pw) if len(_pw) >= 8 else None
+        ph["wkt_pctl"] = round(_raw_w) if _raw_w is not None else None
+        ph["peer_n"] = len(_pe)
 
     eras = {}
     for era in ("A", "B", "C", "D"):

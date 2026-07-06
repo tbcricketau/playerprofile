@@ -10,7 +10,7 @@ the front page.
   batting** reports. Each template embeds `{{ css }}` then only its report-specific overrides, so
   the look changes in one place. Test cards render byte-identical; minor pills/grid tweaks align
   the Test look to the shared one.
-- **ODI bowler pack → odi-1.1 — first page now identical to the Test report:**
+- **ODI bowler pack → odi-1.2 — first page now identical to the Test report:**
   - Same 8 headline cards via the shared `headline_cards()`, so **Avg speed carries its P99**
     (was missing), plus Bowling Avg, Strike Rate, Avg length + Short %, and Round-the-wicket with
     the LHB/RHB split. Metric-card fonts/formatting now consistent across formats.
@@ -18,6 +18,13 @@ the front page.
     seam/swing/bounce, length repeatability), from new ODI-scoped norm CSVs
     (`referencebuilder/scripts/build_odi_norms.py`, min-balls 150). `profile.py` peer-norm loaders
     and `_fingerprint()` take a `fmt` arg ("Test" default; "ODI" reads the `_odi` sibling CSVs).
+  - **Phase economy/wicket percentiles** — the phase table now shows a `P##` badge vs modern-era
+    ODI peers of the same pace/spin (economy inverted so higher = harder to score off), so a death
+    economy reads "good *for the death*". New `referencebuilder/scripts/build_bowler_phase_profile.py`
+    (era 2011+, per phase); `load_phase_profiles()` + `_pctl_of` in the profile.
+  - **Video ▶ playlists** — wickets / powerplay / death / yorkers / slower-balls, resolved via the
+    shared Fairplay clip resolver (`playlists.build_odi_playlists`), like-for-like conditions order,
+    in-page modal player + standalone `.player.html`.
 
 ## v1.3 — 4 July 2026
 - **Player-review pass on the bowling report** (from coach feedback, verified on Nahid/Mehidy):

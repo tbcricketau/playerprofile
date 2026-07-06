@@ -220,6 +220,61 @@ def write_profile_playlists(P: dict, pdf_path: str, cap: int = 10) -> str | None
     return out_path
 
 
+# ── ODI bowling playlists ──────────────────────────────────────────────────────────
+_ODI_VARIATION_MOVES = {"Slower ball", "Offcutter", "Legcutter", "Knuckle Ball", "Back of Hand"}
+
+
+def _is_odi_variation(r, off_pace):
+    """A slower-ball / cutter: coded as one (lookup 2812), or clearly off his stock pace."""
+    if r.get("ball_movement") in _ODI_VARIATION_MOVES:
+        return True
+    s = r.get("ball_speed_n")
+    return bool(off_pace and s and s <= off_pace)
+
+
+def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None) -> dict:
+    """Video playlists for an ODI bowler profile — wickets, powerplay, death, yorkers, slower
+    balls — reusing the shared clip resolver + captions. Only deliveries whose clip is actually
+    in storage (coverage is per-delivery, concentrated on recent matches)."""
+    df = [r for r in (P.get("raw") or []) if r.get("clip_stem")]
+    is_spin, is_pace = P["is_spin"], P["is_pace"]
+    off_pace = P.get("off_pace_kph")
+    out, counts = {}, {}
+
+    def _recent(rows):
+        return sorted(rows, key=lambda r: r.get("match_date") or "", reverse=True)
+
+    def add(key, rows):
+        if not rows:
+            return
+        items, avail, considered = _resolve_take(rows, is_spin, cap, target_country)
+        if items:
+            out[key] = items
+            counts[key] = {"shown": len(items), "available": avail, "in_group": considered}
+
+    # Wickets — all bowler-credited, most recent first
+    add("wickets", _recent([r for r in df if r.get("is_wicket") and r.get("how_out")]))
+    # Powerplay / Death — a VARIETY of how he bowls in the phase (outcomes interleaved)
+    add("powerplay", _diversify(_recent([r for r in df if r.get("phase") == "Powerplay"])))
+    add("death", _diversify(_recent([r for r in df if r.get("phase") == "Death"])))
+    if is_pace:
+        # Yorkers / very full — the block-hole balls
+        add("yorkers", _diversify(_recent(
+            [r for r in df if r.get("pitch_length_m") is not None and r["pitch_length_m"] < 2.0])))
+        # Slower balls / cutters — coded variation or clearly off his stock pace
+        if off_pace:
+            add("slower_balls", _diversify(_recent(
+                [r for r in df if _is_odi_variation(r, off_pace)])))
+
+    meta = {
+        "bowler": P.get("name"), "bowler_id": P.get("bowler_id"), "format": "ODI",
+        "target_country": target_country, "counts": counts,
+        "note": "Clips via ludis_cricket.video (SSO SAS); coverage is per-delivery, concentrated "
+                "on recent matches, so older balls may have no clip.",
+    }
+    return {"playlists": out, "meta": meta}
+
+
 # ── Batting playlists ────────────────────────────────────────────────────────────
 def _bat_caption(r):
     parts = []

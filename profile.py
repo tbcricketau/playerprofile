@@ -158,6 +158,24 @@ def load_crease_profiles(fmt: str = "Test") -> dict:
     return _load_profile_csv(_CREASE_PROFILE_CSV, fmt)
 
 
+_PHASE_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_phase_profile.csv"
+_PHASE_PROFILES: dict = {}
+
+
+def load_phase_profiles(fmt: str = "ODI") -> list:
+    """Per-bowler, per-phase economy / wicket-rate norm ROWS (a list of dicts — many rows per
+    bowler), memoised per format.  ODI reads the *_odi.csv sibling (modern two-ball era);
+    Tests have no phases so the base file is absent -> empty list."""
+    if fmt not in _PHASE_PROFILES:
+        p = _PHASE_PROFILE_CSV if fmt == "Test" else _PHASE_PROFILE_CSV[:-4] + "_odi.csv"
+        rows = []
+        if os.path.exists(p):
+            with open(p, encoding="utf-8", newline="") as f:
+                rows = list(csv.DictReader(f))
+        _PHASE_PROFILES[fmt] = rows
+    return _PHASE_PROFILES[fmt]
+
+
 def load_dismissal_baseline() -> dict:
     """Population dismissal base rates, memoised. Keyed by (pace_spin, batter_hand)
     -> {how_out: base_share_pct}. Absent CSV -> empty dict (report omits the index)."""
