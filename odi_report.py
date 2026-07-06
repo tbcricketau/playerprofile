@@ -91,21 +91,33 @@ def _build_odi_player(P, pdf_path, subtitle, target_country=None):
         return {"lists": {}}
 
 
+def _grid_figs(legal, off_pace):
+    """The 8 small Where-He-Bowls charts: over/round × on-pace/off-pace, each a pitch map + a beehive.
+    Off pace = a slower-ball variation (odi_profile._var_type); cells with < 25 balls are skipped."""
+    from odi_profile import _var_type
+    lz = build_line_zones("All")
+    figs = {}
+    for pk, offp in (("on", False), ("off", True)):
+        for sk, rnd in (("over", False), ("round", True)):
+            rows = [r for r in legal if ((_var_type(r, off_pace) is not None) == offp) and (r.get("is_round") == rnd)]
+            if len(rows) < 25:
+                continue
+            try:
+                figs[f"{pk}_{sk}_pitch"] = _fig_uri(pitch_heatmap(rows, value="count", title=""), w=224, h=240)
+                figs[f"{pk}_{sk}_bee"] = _fig_uri(beehive(rows, metric="count", title="", line_zones=lz), w=214, h=232)
+            except Exception:
+                pass
+    return figs
+
+
 def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
                       with_playlists: bool = True, target_country: str | None = "Australia") -> str:
     P = build_odi_profile(str(bowler_id))
     if P.get("empty"):
         raise ValueError(f"No ODI data for bowler {bowler_id}")
     legal = [r for r in P["raw"] if r["is_legal"]]
-    lz = build_line_zones("All")
 
-    figs = {}
-    try:
-        figs["pitch"] = _fig_uri(pitch_heatmap(legal, value="count", title=""), w=430, h=440)
-        figs["pitch_wkts"] = _fig_uri(pitch_heatmap(legal, value="wickets", title=""), w=430, h=440)
-        figs["beehive"] = _fig_uri(beehive(legal, metric="wickets", title="", line_zones=lz), w=380, h=400)
-    except Exception:
-        pass
+    figs = _grid_figs(legal, P.get("off_pace_kph")) if P["is_pace"] else {}
 
     # Identical 8-card headline row to the Test pack — one canonical builder in report_style,
     # so Avg speed (with P99), length, round-the-wicket etc. match Test exactly.
@@ -154,6 +166,8 @@ _TEMPLATE = r"""
   .page { padding: 14px 16px; }
   h1 { font-size: 21px; }
   .pk { font-size: 8.5px; font-weight: 700; margin-left: 2px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; align-items: start; }
+  .grid4 .fig { text-align: center; }
 </style></head><body><div class="page">
 
   <div class="header">
@@ -201,75 +215,55 @@ _TEMPLATE = r"""
   </table>
   <div class="cap" style="text-align:left">Blue <b>P##</b> = percentile vs modern-era ODI {{ 'pace' if P.is_pace else 'spin' }} peers in that phase (two-new-balls era, 2011+; economy inverted so <b>higher = harder to score off</b>, wickets = strike threat; grey = bottom third). So a high death-economy percentile means cheap <em>for the death</em>, where everyone leaks.</div>
 
-  {% if P.is_pace and (P.powerplay or P.death) %}
-  <h2>Phase Deep-Dives</h2>
+  {% if P.deepdive and P.deepdive.overall %}
+  {% set o = P.deepdive.overall %}
+  <h2>Length &amp; Variation Deep-Dive <span class="sub" style="font-weight:400">(yorkers, bouncers &amp; slower balls — how often, what line)</span>{% if video.lists.slower_balls %}<a class="vlink" data-pl="slower_balls" href="{{video.player}}#slower_balls">▶ slower balls</a>{% endif %}</h2>
+  <div style="font-weight:700;font-size:10.5px;margin:4px 0 3px">How often, by phase <span class="sub" style="font-weight:400">— % of that phase's legal balls</span></div>
+  <table class="mtab" style="max-width:700px">
+    <tr><th>Phase</th><th>Yorker / full</th><th>Bouncer / short</th><th>Slower ball</th><th>Slower yorker</th><th>Slower bouncer</th><th>Econ</th></tr>
+    {% for p in P.deepdive.phases %}
+    <tr class="{{ 'hl' if p.phase == 'Death' else '' }}"><td class="lab">{{p.phase}}</td>
+      <td>{{p.yorker_pct|round|int}}%</td><td>{{p.bouncer_pct|round|int}}%</td><td>{{p.slower_pct|round|int}}%</td>
+      <td>{{p.slower_yorker.pct|round(1)}}%</td><td>{{p.slower_bouncer.pct|round(1)}}%</td><td>{{p.economy|round(2)}}</td></tr>
+    {% endfor %}
+    <tr style="font-weight:700"><td class="lab">Overall</td><td>{{o.yorker_pct|round|int}}%</td><td>{{o.bouncer_pct|round|int}}%</td><td>{{o.slower_pct|round|int}}%</td><td>{{o.slower_yorker.pct|round(1)}}%</td><td>{{o.slower_bouncer.pct|round(1)}}%</td><td>{{o.economy|round(2)}}</td></tr>
+  </table>
   <div class="grid2">
-    {% if P.powerplay %}<div class="dd"><h3>Powerplay (overs 1–10){% if video.lists.powerplay %}<a class="vlink tiny" data-pl="powerplay" href="{{video.player}}#powerplay">▶</a>{% endif %}</h3>
-      <div class="row"><span>Economy</span><b>{{P.powerplay.economy|round(2)}}</b></div>
-      <div class="row"><span>Wickets ({{ (P.powerplay.wkt_rate)|round(1) }}/100)</span><b>{{P.powerplay.wickets}}</b></div>
-      {% if P.powerplay.swing_in_pct is not none %}<div class="row"><span>Swings (in / out)</span><b>{{P.powerplay.swing_in_pct|round|int}}% / {{P.powerplay.swing_out_pct|round|int}}%</b></div>{% endif %}
-      <div class="row"><span>Hard length (6–8.5m)</span><b>{{P.powerplay.hard_length_pct|round|int}}%</b></div>
-      <div class="row"><span>Avg speed</span><b>{{ P.powerplay.avg_speed|round|int if P.powerplay.avg_speed else '—' }} kph</b></div>
-    </div>{% endif %}
-    {% if P.death and P.death.overall %}<div class="dd"><h3>Death (overs 41–50){% if video.lists.death %}<a class="vlink tiny" data-pl="death" href="{{video.player}}#death">▶</a>{% endif %}</h3>
-      <div class="row"><span>Economy</span><b>{{P.death.overall.economy|round(2)}}</b></div>
-      <div class="row"><span>Yorker / very full</span><b>{{P.death.overall.yorker_pct|round|int}}%</b></div>
-      <div class="row"><span>Slower-ball variations</span><b>{{P.death.overall.slower_pct|round|int}}%</b></div>
-      <div class="row"><span>Boundary %</span><b>{{P.death.overall.boundary_pct|round|int}}%</b></div>
-      {% for era, b in P.death.by_era.items() %}<div class="row"><span style="font-size:9.5px">econ · {{b.label}}</span><b>{{b.economy|round(2)}}</b></div>{% endfor %}
-    </div>{% endif %}
+    <div class="dd"><h3>Yorker line{% if video.lists.yorkers %}<a class="vlink tiny" data-pl="yorkers" href="{{video.player}}#yorkers">▶</a>{% endif %}</h3>
+      {% if o.yorker_line.bands %}{% for b in o.yorker_line.bands %}<div class="row"><span>{{b.band}}</span><b>{{b.pct|round|int}}%</b></div>{% endfor %}
+      <div class="cap" style="text-align:left;margin-top:3px">Full balls only ({{o.yorker_line.n}}), by pitch line.{% if o.slower_yorker.n >= 6 %} Slower-ball yorkers <b>{{o.slower_yorker.pct|round(1)}}%</b> ({{o.slower_yorker.n}}){% if o.slower_yorker.line.top_band %}, mostly {{o.slower_yorker.line.top_band|lower}}{% endif %}{% if video.lists.slower_yorkers %} <a class="vlink tiny" data-pl="slower_yorkers" href="{{video.player}}#slower_yorkers">▶</a>{% endif %}.{% endif %}</div>
+      {% else %}<div class="sub" style="font-size:9.5px">Too few full balls to read ({{o.yorker_line.n}}).</div>{% endif %}</div>
+    <div class="dd"><h3>Bouncer line{% if video.lists.bouncers %}<a class="vlink tiny" data-pl="bouncers" href="{{video.player}}#bouncers">▶</a>{% endif %}</h3>
+      {% if o.bouncer_line.bands %}{% for b in o.bouncer_line.bands %}<div class="row"><span>{{b.band}}</span><b>{{b.pct|round|int}}%</b></div>{% endfor %}
+      <div class="cap" style="text-align:left;margin-top:3px">Short balls only ({{o.bouncer_line.n}}), line at the stumps.{% if o.slower_bouncer.n >= 6 %} Slower-ball bouncers <b>{{o.slower_bouncer.pct|round(1)}}%</b> ({{o.slower_bouncer.n}}){% if o.slower_bouncer.line.top_band %}, mostly {{o.slower_bouncer.line.top_band|lower}}{% endif %}{% if video.lists.slower_bouncers %} <a class="vlink tiny" data-pl="slower_bouncers" href="{{video.player}}#slower_bouncers">▶</a>{% endif %}.{% endif %}</div>
+      {% else %}<div class="sub" style="font-size:9.5px">Too few bouncers to read ({{o.bouncer_line.n}}).</div>{% endif %}</div>
   </div>
-  {% if P.death and P.death.by_era|length > 1 %}<div class="cap" style="text-align:left">Death economy is split by ball-change era — under the two-ball rule the death ball is hard &amp; newish; from Jul-2025 the bowling side picks one older ball, so the conditions (and the numbers) differ.</div>{% endif %}
   {% endif %}
 
-  {% if P.yorker_line and (P.yorker_line.death.bands or P.yorker_line.overall.bands) %}
-  <div style="font-weight:700;font-size:10.5px;margin:10px 0 3px">Yorker line
-    <span class="sub" style="font-weight:400">— where he aims the full ball ("leg-stump yorker vs the wide hole")</span>{% if video.lists.yorkers %}<a class="vlink tiny" data-pl="yorkers" href="{{video.player}}#yorkers">▶</a>{% endif %}</div>
-  <table class="mtab" style="max-width:660px">
-    <tr><th>When full</th><th>Wide (hole)</th><th>Off / channel</th><th>At the stumps</th><th>Leg / straight</th><th>Balls</th></tr>
-    {% for ctx, s in [("Death (41–50)", P.yorker_line.death), ("All overs", P.yorker_line.overall)] %}
-    {% if s.bands %}<tr><td class="lab">{{ctx}}{% if s.thin %} <span class="sub" style="font-weight:400">· small n</span>{% endif %}</td>
-      {% for b in s.bands %}<td>{{b.pct|round|int}}%</td>{% endfor %}<td>{{s.n}}</td></tr>{% endif %}
+  <h2>Where He Bowls <span class="sub" style="font-weight:400">(pitch map + beehive · over vs round · stock vs slower)</span></h2>
+  {% for plabel, pk in [("On pace (stock speed)", "on"), ("Off pace (slower balls)", "off")] %}
+  <div style="font-weight:700;font-size:10px;margin:8px 0 2px;color:{{c.ACCENT}}">{{plabel}}</div>
+  <div class="grid4">
+    {% for clabel, ck in [("Over — pitch", pk+"_over_pitch"), ("Over — stumps", pk+"_over_bee"), ("Round — pitch", pk+"_round_pitch"), ("Round — stumps", pk+"_round_bee")] %}
+    <div class="fig">{% if figs[ck] %}<img class="chart" src="{{figs[ck]}}"><div class="cap">{{clabel}}</div>{% else %}<div class="cap" style="padding:26px 4px;color:{{c.TEXT_SEC}}">{{clabel}}<br>— too few —</div>{% endif %}</div>
     {% endfor %}
-  </table>
-  <div class="cap" style="text-align:left">Yorker/very-full length only (&lt;2 m). Line is batter-relative — the wide "hole" is wide outside off; useful both to scout his death plan and to pick our own.</div>
-  {% endif %}
-
-  {% if var_tables and var_tables.phase_tbl %}
-  <h2>Variations <span class="sub" style="font-weight:400">(slower balls &amp; cutters — what &amp; where)</span>{% if video.lists.slower_balls %}<a class="vlink" data-pl="slower_balls" href="{{video.player}}#slower_balls">▶ slower balls</a>{% endif %}</h2>
-  {% if variation_read %}<div class="read">{{variation_read|safe}}</div>{% endif %}
-  <div style="font-weight:700;font-size:10.5px;margin:4px 0 3px">What he bowls, by phase
-    <span class="sub" style="font-weight:400">— % of that phase's balls</span></div>
-  <table class="mtab" style="max-width:640px">
-    <tr><th>Variation</th>{% for p in var_tables.phases %}<th>{{p}}</th>{% endfor %}<th>All overs</th></tr>
-    {% for row in var_tables.phase_tbl %}
-    <tr><td class="lab">{{row.type}}</td>{% for cc in row.cells %}<td>{{cc|round|int}}%</td>{% endfor %}<td>{{row.all|round|int}}%</td></tr>
-    {% endfor %}
-  </table>
-  <div style="font-weight:700;font-size:10.5px;margin:10px 0 3px">How each variation is bowled
-    <span class="sub" style="font-weight:400">— length, % of that variation</span></div>
-  <table class="mtab">
-    <tr><th>Variation</th>{% for b in var_tables.bands %}<th>{{ b.replace('Back of Length','Back of Len').replace('Yorker/Full','York/Full') }}</th>{% endfor %}<th>Balls</th></tr>
-    {% for row in var_tables.length_tbl %}
-    <tr><td class="lab">{{row.type}}</td>{% for cc in row.cells %}<td>{{cc|round|int}}%</td>{% endfor %}<td>{{row.n}}</td></tr>
-    {% endfor %}
-  </table>
-  {% endif %}
-
-  <h2>Where He Bowls</h2>
-  <div class="grid2">
-    {% if figs.pitch %}<div class="fig"><img class="chart" src="{{figs.pitch}}"><div class="cap">Pitch map — where he lands the ball (all deliveries).</div></div>{% endif %}
-    {% if figs.beehive %}<div class="fig"><img class="chart" src="{{figs.beehive}}"><div class="cap">At the stumps — where wicket balls pass the stumps.</div></div>{% endif %}
   </div>
+  {% endfor %}
 
   {% if P.vs_hand %}
-  <h2>Match-ups</h2>
-  <table class="mtab" style="max-width:640px">
-    <tr><th>Batter</th><th>Balls</th><th>Economy</th><th>Wkts</th><th>Average</th><th>SR</th><th>Boundary %</th></tr>
+  <h2>Match-ups <span class="sub" style="font-weight:400">(each hand, split over vs round the wicket)</span></h2>
+  <table class="mtab" style="max-width:680px">
+    <tr><th>Batter</th><th>Balls</th><th>Round %</th><th>Economy</th><th>Wkts</th><th>Average</th><th>SR</th><th>Boundary %</th></tr>
     {% for lab, s in P.vs_hand.items() %}
-    <tr><td class="lab">{{lab}}</td><td>{{s.balls}}</td><td><b>{{s.economy|round(2)}}</b></td><td>{{s.wickets}}</td>
-      <td>{{ s.average|round(1) if s.average else '—' }}</td><td>{{ s.strike_rate|round(1) if s.strike_rate else '—' }}</td><td>{{s.boundary_pct|round|int}}%</td></tr>{% endfor %}
+    <tr class="hl"><td class="lab">{{lab}}</td><td>{{s.balls}}</td><td><b>{{ s.round_pct|round|int if s.round_pct is not none else '—' }}%</b></td><td>{{s.economy|round(2)}}</td><td>{{s.wickets}}</td>
+      <td>{{ s.average|round(1) if s.average else '—' }}</td><td>{{ s.strike_rate|round(1) if s.strike_rate else '—' }}</td><td>{{s.boundary_pct|round|int}}%</td></tr>
+    {% for ang, sub in [("· over the wkt", s.over), ("· round the wkt", s.round)] %}
+    {% if sub and sub.balls >= 30 %}<tr><td class="lab" style="padding-left:14px;font-weight:400;color:{{c.TEXT_SEC}}">{{ang}}</td><td>{{sub.balls}}</td><td></td><td>{{sub.economy|round(2)}}</td><td>{{sub.wickets}}</td>
+      <td>{{ sub.average|round(1) if sub.average else '—' }}</td><td>{{ sub.strike_rate|round(1) if sub.strike_rate else '—' }}</td><td>{{sub.boundary_pct|round|int}}%</td></tr>{% endif %}
+    {% endfor %}
+    {% endfor %}
   </table>
+  <div class="cap" style="text-align:left">Round % = share of his balls to that hand bowled from round the wicket. Sub-rows split each hand over vs round (shown when ≥30 balls).</div>
   {% endif %}
 
   <div class="note">

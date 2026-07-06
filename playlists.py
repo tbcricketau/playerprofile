@@ -258,13 +258,21 @@ def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None
     add("powerplay", _diversify(_recent([r for r in df if r.get("phase") == "Powerplay"])))
     add("death", _diversify(_recent([r for r in df if r.get("phase") == "Death"])))
     if is_pace:
+        from odi_profile import _is_bouncer
         # Yorkers / very full — the block-hole balls
         add("yorkers", _diversify(_recent(
             [r for r in df if r.get("pitch_length_m") is not None and r["pitch_length_m"] < 2.0])))
-        # Slower balls / cutters — coded variation or clearly off his stock pace
+        # Bouncers / short balls
+        add("bouncers", _diversify(_recent([r for r in df if _is_bouncer(r)])))
+        # Slower balls, and the slower-ball yorker / slower-ball bouncer specifically
         if off_pace:
             add("slower_balls", _diversify(_recent(
                 [r for r in df if _is_odi_variation(r, off_pace)])))
+            add("slower_yorkers", _diversify(_recent(
+                [r for r in df if r.get("pitch_length_m") is not None and r["pitch_length_m"] < 2.0
+                 and _is_odi_variation(r, off_pace)])))
+            add("slower_bouncers", _diversify(_recent(
+                [r for r in df if _is_bouncer(r) and _is_odi_variation(r, off_pace)])))
 
     meta = {
         "bowler": P.get("name"), "bowler_id": P.get("bowler_id"), "format": "ODI",

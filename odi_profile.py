@@ -208,6 +208,101 @@ def _yorker_line_split(rows):
                        for b in _YORKER_LINE_ORDER] if n >= 6 else None)}
 
 
+# ── Bouncer line + unified pace deep-dive (yorker/bouncer/slower, per phase + overall) ──
+_BOUNCER_LINE_ORDER = ["Wide (outside off)", "At the body / head", "Down the leg side"]
+
+
+def _is_bouncer(r):
+    """Short / banged-in delivery (the bouncer length band)."""
+    return _length_band(r.get("pitch_length_m")) == "Short"
+
+
+def _bouncer_line_band(m):
+    """Where a bouncer passes the stump line (at_stumps_line_m, neg = off): head/body vs wide."""
+    if m < -0.25:
+        return "Wide (outside off)"
+    if m <= 0.20:
+        return "At the body / head"
+    return "Down the leg side"
+
+
+def _line_bands(balls, band_fn, key, order, min_show=6, thin_below=15):
+    """Generic stump/pitch-line split of a ball set (yorker line, bouncer line)."""
+    vals = [r for r in balls if r["is_legal"] and r.get(key) is not None]
+    n = len(vals)
+    c = Counter(band_fn(r[key]) for r in vals)
+    top = max(c.items(), key=lambda kv: kv[1])[0] if c else None
+    return {"n": n, "thin": n < thin_below, "top_band": top,
+            "bands": ([{"band": b, "pct": c.get(b, 0) / n * 100, "count": c.get(b, 0)} for b in order]
+                      if n >= min_show else None)}
+
+
+def _deepdive(rows, off_pace):
+    """One pace deep-dive block (a phase, or overall): economy/wkts/boundary/dot, new-ball swing,
+    plus YORKER and BOUNCER frequency + line, and the slower-ball yorker / slower-ball bouncer
+    split (with their lines). Merges the old variation + yorker sections into one."""
+    legal = [r for r in rows if r["is_legal"]]
+    nb = len(legal)
+    if not nb:
+        return None
+    runs = sum(_bowler_runs(r) for r in rows)
+    yorkers = [r for r in legal if _yorker_full(r)]
+    bouncers = [r for r in legal if _is_bouncer(r)]
+    slower = [r for r in legal if _var_type(r, off_pace)]
+    sl_york = [r for r in yorkers if _var_type(r, off_pace)]
+    sl_bounce = [r for r in bouncers if _var_type(r, off_pace)]
+    moved = [r for r in legal if r.get("swing_dir") in ("in", "out")]
+    inn = sum(1 for r in moved if r["swing_dir"] == "in")
+
+    def pct(x):
+        return len(x) / nb * 100
+    return {
+        "balls": nb, "economy": runs / (nb / 6.0),
+        "wickets": sum(1 for r in legal if r["is_wicket"]),
+        "wkt_rate": sum(1 for r in legal if r["is_wicket"]) / nb * 100,
+        "boundary_pct": sum(1 for r in legal if _is_boundary(r)) / nb * 100,
+        "dot_pct": sum(1 for r in legal if _bowler_runs(r) == 0) / nb * 100,
+        "avg_speed": _mean(_num(legal, "ball_speed_n")),
+        "swing_seen_pct": len(moved) / nb * 100,
+        "swing_in_pct": inn / len(moved) * 100 if moved else None,
+        "swing_out_pct": (len(moved) - inn) / len(moved) * 100 if moved else None,
+        "yorker_pct": pct(yorkers), "bouncer_pct": pct(bouncers), "slower_pct": pct(slower),
+        "yorker_line": _line_bands(yorkers, _yorker_line_band, "pitch_line_m", _YORKER_LINE_ORDER),
+        "bouncer_line": _line_bands(bouncers, _bouncer_line_band, "at_stumps_line_m", _BOUNCER_LINE_ORDER),
+        "slower_yorker": {"pct": pct(sl_york), "n": len(sl_york),
+                          "line": _line_bands(sl_york, _yorker_line_band, "pitch_line_m", _YORKER_LINE_ORDER)},
+        "slower_bouncer": {"pct": pct(sl_bounce), "n": len(sl_bounce),
+                           "line": _line_bands(sl_bounce, _bouncer_line_band, "at_stumps_line_m", _BOUNCER_LINE_ORDER)},
+    }
+
+
+def _deepdive_all(raw, off_pace, phases):
+    """Overall + per-phase deep-dives (pace) — the overall block first, then each phase."""
+    out = {"overall": _deepdive(raw, off_pace), "phases": []}
+    for ph in phases:
+        blk = _deepdive([r for r in raw if r["phase"] == ph], off_pace)
+        if blk:
+            out["phases"].append({"phase": ph, **blk})
+    return out
+
+
+def _hand_over_round(rows):
+    """vs LHB / vs RHB, each split over vs round the wicket + the round-the-wicket share of that
+    hand (e.g. 40% of his balls to LHB are round the wicket)."""
+    out = {}
+    for lab, is_lhb in (("vs LHB", True), ("vs RHB", False)):
+        hand = [r for r in rows if r["is_lhb"] == is_lhb]
+        s = _phase_stats(hand)
+        if not s or s["balls"] < 40:
+            continue
+        known = [r for r in hand if r["is_legal"] and r.get("is_round") is not None]
+        round_n = sum(1 for r in known if r["is_round"])
+        out[lab] = {**s, "round_pct": round_n / len(known) * 100 if known else None,
+                    "over": _phase_stats([r for r in hand if r.get("is_round") is False]),
+                    "round": _phase_stats([r for r in hand if r.get("is_round") is True])}
+    return out
+
+
 def _powerplay_deepdive(pp_rows):
     """Powerplay (1-10) for pace — new-ball swing + wicket threat + length."""
     legal = [r for r in pp_rows if r["is_legal"]]
@@ -333,11 +428,8 @@ def build_odi_profile(bowler_id: str) -> dict:
         "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="ODI"),
         "phases": phases,
         "variations": _variations(raw, off_pace),
-        "death": _death_deepdive(death_rows, off_pace) if is_pace else None,
-        "powerplay": _powerplay_deepdive(pp_rows) if is_pace else None,
-        "yorker_line": {"death": _yorker_line_split(death_rows),
-                        "overall": _yorker_line_split(raw)} if is_pace else None,
-        "vs_hand": _hand_split(raw),
+        "deepdive": _deepdive_all(raw, off_pace, PHASES) if is_pace else None,
+        "vs_hand": _hand_over_round(raw),
         "eras": eras,
         "off_pace_kph": off_pace, "med_speed_kph": med_speed,
     }

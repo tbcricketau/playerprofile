@@ -18,7 +18,7 @@ from collections import Counter, defaultdict
 from data_loaders import load_bowler_deliveries, load_bowler_info
 from profile import process_rows, _quantile, _fingerprint
 from odi_profile import (_phase_stats, _variations, _bowler_runs, _num, _mean,
-                         _death_deepdive, _powerplay_deepdive, _yorker_line_split, _hand_split)
+                         _deepdive_all, _hand_over_round)
 from ludis_cricket.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE, team_flag)
 
@@ -175,11 +175,8 @@ def build_t20_profile(bowler_id: str) -> dict:
         "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="T20"),
         "phases": phases,
         "variations": _variations(raw, off_pace),
-        "death": _death_deepdive([r for r in raw if r["phase"] == "Death"], off_pace) if is_pace else None,
-        "powerplay": _powerplay_deepdive([r for r in raw if r["phase"] == "Powerplay"]) if is_pace else None,
-        "yorker_line": ({"death": _yorker_line_split([r for r in raw if r["phase"] == "Death"]),
-                         "overall": _yorker_line_split(raw)} if is_pace else None),
-        "vs_hand": _hand_split(raw),
+        "deepdive": _deepdive_all(raw, off_pace, T20_PHASES) if is_pace else None,
+        "vs_hand": _hand_over_round(raw),
         "where_bowled": _where_bowled(raw),
         "off_pace_kph": off_pace, "n_leagues": len({r["league"] for r in legal}),
     }
