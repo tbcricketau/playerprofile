@@ -111,63 +111,51 @@ def fmt(v, spec=".1f", unit="", fallback="—"):
     return f"{v:{spec}}{unit}"
 
 
-_SPEED_PROFILES = None
+# Peer-norm CSVs are memoised per (path, format). Test reads the base file; ODI reads the
+# *_odi.csv sibling (built by referencebuilder/scripts/build_odi_norms.py) so the fingerprint
+# benchmarks each bowler against his OWN format's population.
+_PROFILE_CACHE: dict = {}
 
 
-def load_speed_profiles() -> dict:
-    """Bowler speed-profile CSV, keyed by bowler_id (memoised)."""
-    global _SPEED_PROFILES
-    if _SPEED_PROFILES is None:
-        _SPEED_PROFILES = {}
-        if os.path.exists(_SPEED_PROFILE_CSV):
-            with open(_SPEED_PROFILE_CSV, encoding="utf-8", newline="") as f:
-                _SPEED_PROFILES = {row["bowler_id"]: row for row in csv.DictReader(f)}
-    return _SPEED_PROFILES
+def _load_profile_csv(path: str, fmt: str) -> dict:
+    key = (path, fmt)
+    if key not in _PROFILE_CACHE:
+        p = path if fmt == "Test" else path[:-4] + "_odi.csv"
+        d = {}
+        if os.path.exists(p):
+            with open(p, encoding="utf-8", newline="") as f:
+                d = {row["bowler_id"]: row for row in csv.DictReader(f)}
+        _PROFILE_CACHE[key] = d
+    return _PROFILE_CACHE[key]
+
+
+def load_speed_profiles(fmt: str = "Test") -> dict:
+    """Bowler speed-profile CSV keyed by bowler_id (memoised per format)."""
+    return _load_profile_csv(_SPEED_PROFILE_CSV, fmt)
 
 
 _MOVEMENT_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_movement_profile.csv"
-_MOVEMENT_PROFILES = None
 _REPEAT_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_repeatability_profile.csv"
-_REPEAT_PROFILES = None
 _CREASE_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_crease_profile.csv"
-_CREASE_PROFILES = None
 _DISMISSAL_BASELINE_CSV = r"c:\Ludis\referencebuilder\data\dismissal_baseline.csv"
 _DISMISSAL_BASELINE = None
 
 
-def load_movement_profiles() -> dict:
-    """Bowler movement-profile CSV (swing/seam/bounce + percentiles), memoised."""
-    global _MOVEMENT_PROFILES
-    if _MOVEMENT_PROFILES is None:
-        _MOVEMENT_PROFILES = {}
-        if os.path.exists(_MOVEMENT_PROFILE_CSV):
-            with open(_MOVEMENT_PROFILE_CSV, encoding="utf-8", newline="") as f:
-                _MOVEMENT_PROFILES = {row["bowler_id"]: row for row in csv.DictReader(f)}
-    return _MOVEMENT_PROFILES
+def load_movement_profiles(fmt: str = "Test") -> dict:
+    """Bowler movement-profile CSV (swing/seam/bounce + percentiles), memoised per format."""
+    return _load_profile_csv(_MOVEMENT_PROFILE_CSV, fmt)
 
 
-def load_repeatability_profiles() -> dict:
+def load_repeatability_profiles(fmt: str = "Test") -> dict:
     """Bowler repeatability-profile CSV (length/line spread + within-type percentile),
-    memoised.  Absent CSV -> empty dict (report simply omits the peer line)."""
-    global _REPEAT_PROFILES
-    if _REPEAT_PROFILES is None:
-        _REPEAT_PROFILES = {}
-        if os.path.exists(_REPEAT_PROFILE_CSV):
-            with open(_REPEAT_PROFILE_CSV, encoding="utf-8", newline="") as f:
-                _REPEAT_PROFILES = {row["bowler_id"]: row for row in csv.DictReader(f)}
-    return _REPEAT_PROFILES
+    memoised per format.  Absent CSV -> empty dict (report simply omits the peer line)."""
+    return _load_profile_csv(_REPEAT_PROFILE_CSV, fmt)
 
 
-def load_crease_profiles() -> dict:
+def load_crease_profiles(fmt: str = "Test") -> dict:
     """Bowler crease-usage profile CSV (release width + variation + within-type
-    percentile), memoised.  Absent CSV -> empty dict."""
-    global _CREASE_PROFILES
-    if _CREASE_PROFILES is None:
-        _CREASE_PROFILES = {}
-        if os.path.exists(_CREASE_PROFILE_CSV):
-            with open(_CREASE_PROFILE_CSV, encoding="utf-8", newline="") as f:
-                _CREASE_PROFILES = {row["bowler_id"]: row for row in csv.DictReader(f)}
-    return _CREASE_PROFILES
+    percentile), memoised per format.  Absent CSV -> empty dict."""
+    return _load_profile_csv(_CREASE_PROFILE_CSV, fmt)
 
 
 def load_dismissal_baseline() -> dict:
@@ -815,7 +803,7 @@ def _pctl_of(value, pop) -> float | None:
     return sum(1 for p in pop if p <= value) / len(pop) * 100
 
 
-def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool) -> list:
+def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test") -> list:
     """Percentile 'fingerprint' — release/crease + movement + speed metrics, each with the
     peer distribution (its correctly-scoped group) and where this bowler sits.  Returns a
     list of card dicts: label, value (for the strip), values (peer distribution), pctl,
@@ -831,7 +819,7 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool) -> list:
 
     # ── speed (pace only) — no precomputed pctl, so rank mean_kph among pace bowlers ──
     if is_pace:
-        sp = load_speed_profiles(); srow = sp.get(bid)
+        sp = load_speed_profiles(fmt); srow = sp.get(bid)
         if srow:
             v = _num(srow, "mean_kph")
             peers = [_num(r, "mean_kph") for r in sp.values()
@@ -843,7 +831,7 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool) -> list:
                               "disp": f"{v:.0f} kph", "peer": "pace bowlers"})
 
     # ── crease / release (hand × pace/spin peer group) ──
-    cr = load_crease_profiles(); crow = cr.get(bid)
+    cr = load_crease_profiles(fmt); crow = cr.get(bid)
     if crow:
         pg = crow.get("peer_group")
         peers_rows = [r for r in cr.values() if r.get("peer_group") == pg]
@@ -862,7 +850,7 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool) -> list:
                               "invert": invert, "disp": disp(v), "peer": plabel})
 
     # ── movement (pace/spin peer group) ──
-    mv = load_movement_profiles(); mrow = mv.get(bid)
+    mv = load_movement_profiles(fmt); mrow = mv.get(bid)
     if mrow:
         ps = mrow.get("pace_spin")
         peers_rows = [r for r in mv.values() if r.get("pace_spin") == ps]
@@ -882,7 +870,7 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool) -> list:
                               "disp": f"{v:.1f}°", "peer": f"{ps} bowlers"})
 
     # ── length repeatability (pace/spin) — lower SD = tighter, so invert ──
-    rp = load_repeatability_profiles(); rrow = rp.get(bid)
+    rp = load_repeatability_profiles(fmt); rrow = rp.get(bid)
     if rrow:
         ps = rrow.get("pace_spin")
         v = _num(rrow, "length_sd")

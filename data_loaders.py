@@ -15,6 +15,13 @@ def _intl_test(alias: str = "M") -> str:
             f"(SELECT series_id FROM [{DATA_SCHEMA}].[Series] WHERE name IN {_TEST_SERIES})")
 
 
+def _intl(fmt: str = "Test", alias: str = "M") -> str:
+    """WHERE fragment restricting to official internationals of a format (Test / ODI / T20I).
+    match_length_id mixes internationals with domestic, so we scope by Series.name."""
+    return (f"{alias}.series_id IN (SELECT series_id FROM [{DATA_SCHEMA}].[Series] "
+            f"WHERE name IN {international_series_sql(fmt)})")
+
+
 @st.cache_data(ttl=3600)
 def load_test_teams() -> list:
     """Teams that have bowled in Test matches."""
@@ -100,8 +107,10 @@ def load_bowler_catch_positions(bowler_id: str) -> dict:
 
 
 @st.cache_data(ttl=3600)
-def load_bowler_info(bowler_id: str) -> dict:
-    """Name, surname and primary (most-common) Test bowling team for a bowler."""
+def load_bowler_info(bowler_id: str, fmt: str = "Test") -> dict:
+    """Name, surname and primary (most-common) bowling team for a bowler in a format's
+    internationals. Falls back to the Players table for the name if the bowler has no
+    deliveries in that format (e.g. a white-ball specialist with no Tests)."""
     conn, cursor = set_conn_cursor()
     query = f"""
     SELECT TOP 1
@@ -113,11 +122,15 @@ def load_bowler_info(bowler_id: str) -> dict:
     JOIN [{DATA_SCHEMA}].[Players] AS P ON D.bowler_id = P.player_id
     JOIN [{DATA_SCHEMA}].[Teams]   AS T ON D.team_bowling_id = T.team_id
     WHERE D.bowler_id = '{bowler_id}'
-      AND {_intl_test('M')}
+      AND {_intl(fmt, 'M')}
     GROUP BY P.name, P.surname, T.team_name
     ORDER BY COUNT(*) DESC
     """
     result = run_query(query, conn, cursor)
+    if not result:      # no deliveries in this format — at least get the name
+        result = run_query(f"SELECT TOP 1 P.name AS player_name, P.surname AS last_name, "
+                           f"'' AS team_name FROM [{DATA_SCHEMA}].[Players] P "
+                           f"WHERE P.player_id = '{bowler_id}'", conn, cursor)
     conn.close()
     return result[0] if result else {}
 
@@ -172,8 +185,9 @@ def search_bowlers(name_like: str) -> list:
 
 
 @st.cache_data(ttl=3600)
-def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0) -> list:
-    """All Test deliveries for a bowler with fields needed for profiling.
+def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test") -> list:
+    """All deliveries for a bowler in a format's internationals, with fields needed for profiling.
+    fmt: 'Test' | 'ODI' | 'T20I' (scopes to that format's official international series).
     dev_limit: if > 0, caps rows returned (for fast local testing only).
     """
     conn, cursor = set_conn_cursor()
@@ -226,6 +240,8 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0) -> list:
         D.[movement_off_pitch],
         D.[movement_in_air_group_swing_id],
         D.[movement_off_pitch_group_seam_id],
+        D.[ball_movement_id],
+        L_bm.[description]                           AS ball_movement,
         D.[release_line_unmirrored],
         D.[release_height],
         D.[striker_hand_id],
@@ -275,8 +291,10 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0) -> list:
         ON L_plgs1.[lookup_type_id] = 2821 AND L_plgs1.[id] = D.[pitch_length_group_spin_1_id]
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_plgs
         ON L_plgs.[lookup_type_id]  = 2824 AND L_plgs.[id]  = D.[pitch_line_group_spin_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_bm
+        ON L_bm.[lookup_type_id]    = 2812 AND L_bm.[id]    = D.[ball_movement_id]
     WHERE D.[bowler_id]          = '{bowler_id}'
-      AND {_intl_test('M')}
+      AND {_intl(fmt, 'M')}
     ORDER BY M.[match_date], D.[match_innings], D.[over], D.[ball_in_over]
     """
     result = run_query(query, conn, cursor)

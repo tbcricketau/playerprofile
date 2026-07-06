@@ -23,6 +23,7 @@ from jinja2 import Template
 from version import REPORT_VERSION
 from profile import build_profile, fmt as _fmt
 from photos import get_photo_data_uri
+from report_style import REPORT_CSS, headline_cards
 from ludis_cricket.charts import (
     pitch_scatter_map, pitch_heatmap, beehive, wagon_wheel_zones, release_map,
     fingerprint_strip, speed_violin, innings_violin, day_violin, zone_concentration,
@@ -267,20 +268,9 @@ def _figures(P: dict) -> dict:
 
 
 def _cards(P: dict) -> list:
-    """Headline metric cards (label, value, sub)."""
-    split = (f"LHB {_pct(P['round_lhb'])} · RHB {_pct(P['round_rhb'])}"
-             if (P["round_lhb"] is not None or P["round_rhb"] is not None) else "no data")
-    cards = [
-        ("Balls", f"{P['n_balls']:,}", ""),
-        ("Wickets", f"{P['n_wkts']}", ""),
-        ("Economy", _fmt(P["economy"]), ""),
-        ("Bowling Avg", _fmt(P["bowl_avg"]), ""),
-        ("Strike Rate", _fmt(P["strike_rate"]), ""),
-        ("Avg speed", f"{_fmt(P['avg_spd'])} kph", f"P99 {_fmt(P['max_spd_99'])}"),
-        ("Avg length", f"{_fmt(P['avg_len_m'], '.2f')} m", f"Short {_pct(P['short_pct'])}"),
-        ("Round the wkt", _pct(P["round_pct"]), split),
-    ]
-    return cards
+    """Headline metric cards (label, value, sub). Canonical builder lives in report_style so
+    the Test / ODI / T20 reports share one identical top-card row."""
+    return headline_cards(P)
 
 
 def _threat_cards(P: dict) -> list:
@@ -1427,7 +1417,7 @@ def build_html(P: dict, video: dict = None) -> str:
         "sequencing_rows": _sequencing_rows(P),
         "version": REPORT_VERSION,
         "build_date": datetime.date.today().strftime("%d %b %Y"),
-        "pct": _pct, "fmt": _fmt,
+        "pct": _pct, "fmt": _fmt, "css": REPORT_CSS,
         "c": dict(BG_PAGE=BG_PAGE, BG_PANEL=BG_PANEL, TEXT_PRI=TEXT_PRI,
                   TEXT_SEC=TEXT_SEC, ACCENT=ACCENT, DANGER=DANGER, BORDER=BORDER),
     }
@@ -1591,70 +1581,7 @@ _TEMPLATE = r"""
       margin-right: 10mm; }
     @bottom-left { content: "{{P.name}} · bowling scout"; font-family: Inter, sans-serif;
       font-size: 8px; color: {{c.TEXT_SEC}}; margin-left: 10mm; } }
-  * { box-sizing: border-box; }
-  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body { font-family: Inter, -apple-system, "Segoe UI", sans-serif; color: {{c.TEXT_PRI}};
-         background: {{c.BG_PAGE}}; margin: 0; padding: 0; font-size: 11px; }
-  .page { padding: 4px 2px; }
-  h1 { font-size: 24px; margin: 0; }
-  h2 { font-size: 14px; color: {{c.ACCENT}}; border-bottom: 2px solid {{c.ACCENT}};
-       padding-bottom: 3px; margin: 22px 0 9px; page-break-after: avoid; }
-  .sub { color: {{c.TEXT_SEC}}; font-size: 11px; }
-  .flag { font-size: 12px; font-weight: 700; color: #fff; background: {{c.ACCENT}};
-          padding: 2px 7px; border-radius: 6px; vertical-align: middle; letter-spacing: .05em; }
-  .header { display: flex; gap: 16px; align-items: center; }
-  .header img { width: 84px; height: 84px; object-fit: cover; border-radius: 10px; }
-  .ph { width: 84px; height: 84px; border-radius: 10px; background: #1e2530; color:#555;
-        display:flex; align-items:center; justify-content:center; font-size: 34px; }
-  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 10px; }
-  .tcards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; margin-top: 10px; }
-  .tcards .card .val { font-size: 15px; }
-  .card { background: {{c.BG_PANEL}}; border: 1px solid {{c.BORDER}}; border-radius: 8px;
-          padding: 8px 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-  .card .lab { color: {{c.TEXT_SEC}}; font-size: 9px; text-transform: uppercase; letter-spacing:.04em; }
-  .card .val { font-size: 18px; font-weight: 700; margin-top: 2px; }
-  .card .csub { color: {{c.TEXT_SEC}}; font-size: 9px; margin-top: 2px; }
-  .summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .sbox { background: {{c.BG_PANEL}}; border: 1px solid {{c.BORDER}}; border-radius: 8px; padding: 10px 12px; }
-  .sbox h3 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing:.05em; }
-  .sbox ul { margin: 0; padding-left: 15px; } .sbox li { margin-bottom: 4px; line-height: 1.35; }
-  .fpgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
-  .fpcard { background: {{c.BG_PANEL}}; border: 1px solid {{c.BORDER}}; border-radius: 8px; padding: 6px 8px 4px; text-align: center; }
-  .fpcard .lab { font-size: 9.5px; font-weight: 600; color: {{c.TEXT_PRI}}; }
-  .fpcard .pct { font-size: 22px; font-weight: 800; line-height: 1.05; }
-  .fpcard img { width: 100%; height: 42px; display: block; }
-  .fpcard .sub { font-size: 8px; color: {{c.TEXT_SEC}}; }
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-  img.chart { width: 100%; border: 1px solid {{c.BORDER}}; border-radius: 8px; background: #fff; }
-  img.pmap { width: 90%; display: block; margin: 0 auto; }   /* pitch maps: wide enough for 6 stump columns */
-  img.bee  { width: 78%; display: block; margin: 0 auto; }
-  img.wag  { width: 88%; display: block; margin: 0 auto; }
-  .fig { }
-  .ct { font-size: 12.5px; font-weight: 700; text-align: center; color: {{c.TEXT_PRI}}; margin: 0 0 2px; }
-  .cap { font-size: 8.5px; color: {{c.TEXT_SEC}}; font-style: italic; text-align: center; margin: 2px 4px 0; line-height: 1.25; }
-  a.vlink { display:inline-block; font-size:9px; font-weight:700; color:#fff; background:{{c.ACCENT}};
-            text-decoration:none; padding:2px 8px; border-radius:5px; margin-left:6px; vertical-align:middle; }
-  a.vlink.tiny { padding:0 5px; margin-left:4px; font-size:8px; border-radius:4px; }
-  .read { font-size: 10px; color: {{c.TEXT_PRI}}; margin: 0 0 7px; line-height: 1.35; }
-  .pbreak { page-break-before: always; }
-  .mtab { width: 100%; border-collapse: collapse; font-size: 10px; }
-  .mtab th, .mtab td { border: 1px solid {{c.BORDER}}; padding: 3px 6px; text-align: center; }
-  .mtab th { background: #eef1f6; color: {{c.TEXT_SEC}}; font-weight: 600; }
-  .mtab td.lab { text-align: left; font-weight: 600; }
-  .mtab tr.weakrow td { background: #eef3fb; font-weight: 600; }
-  .mtab tr.weakrow td.lab { color: {{c.ACCENT}}; }
-  .dcard { border-radius: 8px; padding: 8px 10px; border: 1px solid {{c.BORDER}}; background: {{c.BG_PANEL}}; page-break-inside: avoid; }
-  .dcard.warn { background: #fdf1f1; border-color: #f2c9c9; }
-  .dcard .dh { font-size: 9px; text-transform: uppercase; letter-spacing:.06em; color: {{c.DANGER}}; }
-  .dcard.plain .dh { color: {{c.TEXT_SEC}}; }
-  .dcard .db { font-size: 14px; font-weight: 700; margin: 3px 0; }
-  .dcard .ds { font-size: 10px; color: {{c.TEXT_SEC}}; }
-  .pills span { display:inline-block; background:#eef1f6; border-radius: 10px; padding: 2px 8px; margin: 2px 3px 0 0; font-size:10px; }
-  .foot { margin-top: 8px; color: {{c.TEXT_SEC}}; font-size: 9px; border-top: 1px solid {{c.BORDER}}; padding-top: 5px; }
-  .avoid { page-break-inside: avoid; }
-  .ver { margin-left: auto; align-self: flex-start; text-align: right; font-size: 8.5px;
-         color: {{c.TEXT_SEC}}; line-height: 1.3; letter-spacing: .02em; }
+  {{ css }}
 </style></head>
 <body><div class="page">
 

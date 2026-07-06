@@ -666,65 +666,27 @@ _TEMPLATE = r"""
   @page { size: A4; margin: 0 0 9mm 0;
     @bottom-right { content: counter(page) " / " counter(pages); font-family: Inter, sans-serif; font-size: 8px; color: {{c.TEXT_SEC}}; margin-right: 10mm; }
     @bottom-left { content: "{{P.name}} · batting scout"; font-family: Inter, sans-serif; font-size: 8px; color: {{c.TEXT_SEC}}; margin-left: 10mm; } }
-  * { box-sizing: border-box; }
-  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body { font-family: Inter, -apple-system, "Segoe UI", sans-serif; color: {{c.TEXT_PRI}};
-         background: {{c.BG_PAGE}}; margin: 0; padding: 0; font-size: 11px; }
+  {{ css }}
+  /* ── batting-report specifics (extend / override the shared core) ── */
   .page { padding: 6px 4px; }
-  h1 { font-size: 23px; margin: 0; }
-  h2 { font-size: 14px; color: {{c.ACCENT}}; border-bottom: 2px solid {{c.ACCENT}};
-       padding-bottom: 3px; margin: 18px 0 8px; page-break-after: avoid; }
-  .pbreak { page-break-before: always; }
-  .sub { color: {{c.TEXT_SEC}}; font-size: 11px; }
-  .flag { font-size: 12px; font-weight: 700; color: #fff; background: {{c.ACCENT}};
-          padding: 2px 7px; border-radius: 6px; vertical-align: middle; letter-spacing:.05em; }
+  h1 { font-size: 23px; }
+  h2 { margin: 18px 0 8px; }
+  .cards { grid-template-columns: repeat(5, 1fr); }
   .tag { font-size: 11px; font-weight: 700; color: #fff; background: {{c.DANGER}}; padding: 2px 8px; border-radius: 6px; }
-  .header { display: flex; gap: 16px; align-items: center; }
-  .header img { width: 84px; height: 84px; object-fit: cover; border-radius: 10px; }
-  .ph { width: 84px; height: 84px; border-radius: 10px; background: #1e2530; color:#555;
-        display:flex; align-items:center; justify-content:center; font-size: 34px; }
-  .ver { margin-left: auto; align-self: flex-start; text-align: right; font-size: 8.5px; color: {{c.TEXT_SEC}}; line-height: 1.3; }
-  .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 10px; }
-  .card { background: {{c.BG_PANEL}}; border: 1px solid {{c.BORDER}}; border-radius: 8px;
-          padding: 8px 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-  .card .lab { color: {{c.TEXT_SEC}}; font-size: 9px; text-transform: uppercase; letter-spacing:.04em; }
-  .card .val { font-size: 18px; font-weight: 700; margin-top: 2px; }
-  .card .csub { color: {{c.TEXT_SEC}}; font-size: 9px; margin-top: 2px; }
-  .summary { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
-  .sbox { background: {{c.BG_PANEL}}; border: 1px solid {{c.BORDER}}; border-radius: 8px; padding: 10px 12px; }
-  .sbox h3 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing:.05em; }
-  .sbox ul { margin: 0; padding-left: 15px; } .sbox li { margin-bottom: 4px; line-height: 1.35; }
-  .read { font-size: 10.5px; margin: 0 0 7px; line-height: 1.4; }
-  .impact { font-weight: 700; border-left: 3px solid {{c.ACCENT}}; padding: 6px 10px; background: {{c.BG_PANEL}};
-            border-radius: 0 8px 8px 0; }
-  .plan { font-weight: 700; border-left: 3px solid {{c.DANGER}}; padding: 7px 11px; background: #fdf1f1;
-          border-radius: 0 8px 8px 0; font-size: 11.5px; }
-  .grid2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; align-items: start; }
+  .read { font-size: 10.5px; line-height: 1.4; }
+  .impact { font-weight: 700; border-left: 3px solid {{c.ACCENT}}; padding: 6px 10px; background: {{c.BG_PANEL}}; border-radius: 0 8px 8px 0; }
+  .plan { font-weight: 700; border-left: 3px solid {{c.DANGER}}; padding: 7px 11px; background: #fdf1f1; border-radius: 0 8px 8px 0; font-size: 11.5px; }
+  .grid2 { grid-template-columns: 1.2fr 1fr; }
   .grid2b { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
-  .mtab { width: 100%; border-collapse: collapse; font-size: 10px; }
-  .mtab th, .mtab td { border: 1px solid {{c.BORDER}}; padding: 3px 6px; text-align: center; }
-  .mtab th { background: #eef1f6; color: {{c.TEXT_SEC}}; font-weight: 600; }
-  .mtab td.lab { text-align: left; font-weight: 600; }
-  .mtab tr.weak td { background: #fdf1f1; }
-  .mtab tr.weak td.lab { color: {{c.DANGER}}; }
-  .mtab tr.sig td { background: #eef3fb; }
-  .mtab tr.sig td.lab { color: {{c.ACCENT}}; font-weight: 700; }
-  .fpgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-  .fpcard { background: {{c.BG_PANEL}}; border: 1px solid {{c.BORDER}}; border-radius: 8px; padding: 6px 8px 4px; text-align: center; }
-  .fpcard .lab { font-size: 9.5px; font-weight: 600; color: {{c.TEXT_PRI}}; }
-  .fpcard .pct { font-size: 20px; font-weight: 800; line-height: 1.05; }
-  .fpcard img { width: 100%; height: 40px; display: block; }
-  .fpcard .sub { font-size: 8px; color: {{c.TEXT_SEC}}; }
-  .dcard { border-radius: 8px; padding: 9px 12px; border: 1px solid #f2c9c9; background: #fdf1f1; margin-top: 6px; }
-  .dcard .dh { font-size: 9px; text-transform: uppercase; letter-spacing:.06em; color: {{c.DANGER}}; }
-  .dcard .db { font-size: 15px; font-weight: 800; margin: 2px 0; }
-  .dcard .ds { font-size: 10px; color: {{c.TEXT_SEC}}; }
+  .mtab tr.weak td { background: #fdf1f1; } .mtab tr.weak td.lab { color: {{c.DANGER}}; }
+  .mtab tr.sig td { background: #eef3fb; } .mtab tr.sig td.lab { color: {{c.ACCENT}}; font-weight: 700; }
+  .fpgrid { grid-template-columns: repeat(3, 1fr); }
+  .fpcard .pct { font-size: 20px; }
+  .dcard { border: 1px solid #f2c9c9; background: #fdf1f1; margin-top: 6px; padding: 9px 12px; }
+  .dcard .db { font-size: 15px; font-weight: 800; }
   img.wag { width: 96%; display: block; margin: 0 auto; border: 1px solid {{c.BORDER}}; border-radius: 8px; background:#fff; }
   img.fieldmap { width: 100%; max-width: 250px; display: block; margin: 0 auto; }
   .fgrid { display: grid; grid-template-columns: 250px 1fr; gap: 12px; align-items: start; margin-bottom: 8px; }
-  .cap { font-size: 8.5px; color: {{c.TEXT_SEC}}; font-style: italic; text-align:center; margin-top: 3px; }
-  a.vlink { display:inline-block; font-size:9px; font-weight:700; color:#fff; background:{{c.ACCENT}};
-            text-decoration:none; padding:2px 8px; border-radius:5px; margin-left:6px; vertical-align:middle; }
 </style></head>
 <body><div class="page">
 
