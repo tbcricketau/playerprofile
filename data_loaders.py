@@ -22,6 +22,29 @@ def _intl(fmt: str = "Test", alias: str = "M") -> str:
             f"WHERE name IN {international_series_sql(fmt)})")
 
 
+# The T20 pack pools ALL major men's T20 competitions (mlid='7'), not just internationals, then
+# neutralises by league strength (referencebuilder/t20_league_strength.csv). Keep this list in
+# sync with build_t20_league_strength.py. See memory t20-league-strength.
+_T20_LEAGUES = (
+    "International T20 M", "International T20 World Cup M", "England Domestic T20 M",
+    "Aus Domestic T20 M", "Indian Premier League T20 M", "West Indies Domestic T20 M",
+    "UAE Domestic T20 M", "Pakistan Domestic T20 M", "South Africa Domestic T20 M",
+    "NZ Domestic T20 M", "USA Domestic T20 M", "Sri Lanka Domestic T20 M", "Global Super League M",
+)
+
+
+def _t20_all(alias: str = "M") -> str:
+    """WHERE fragment for all major men's T20 competitions (T20 format = match_length_id '7')."""
+    names = ",".join(f"'{n}'" for n in _T20_LEAGUES)
+    return (f"{alias}.match_length_id='7' AND {alias}.series_id IN "
+            f"(SELECT series_id FROM [{DATA_SCHEMA}].[Series] WHERE name IN ({names}))")
+
+
+def _scope(fmt: str, alias: str = "M") -> str:
+    """Format scope: 'T20' pools all major T20 leagues; everything else = that format's internationals."""
+    return _t20_all(alias) if str(fmt).upper() == "T20" else _intl(fmt, alias)
+
+
 @st.cache_data(ttl=3600)
 def load_test_teams() -> list:
     """Teams that have bowled in Test matches."""
@@ -264,7 +287,8 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
         L_plgs1.[description]                        AS pitch_length_group_spin,
         L_plgs.[description]                         AS pitch_line_group_spin,
         VC.[name]                                    AS venue_country,
-        V.[city_name]                                AS venue_city
+        V.[city_name]                                AS venue_city,
+        SR.[name]                                    AS competition
     FROM [{DATA_SCHEMA}].[Deliveries] AS D
     JOIN [{DATA_SCHEMA}].[Matches]    AS M   ON D.[match_id]     = M.[match_id]
     LEFT JOIN [{DATA_SCHEMA}].[Venues] AS V  ON M.[venue_id]     = V.[venue_id]
@@ -294,7 +318,7 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_bm
         ON L_bm.[lookup_type_id]    = 2812 AND L_bm.[id]    = D.[ball_movement_id]
     WHERE D.[bowler_id]          = '{bowler_id}'
-      AND {_intl(fmt, 'M')}
+      AND {_scope(fmt, 'M')}
     ORDER BY M.[match_date], D.[match_innings], D.[over], D.[ball_in_over]
     """
     result = run_query(query, conn, cursor)
