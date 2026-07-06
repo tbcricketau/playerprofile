@@ -16,8 +16,9 @@ import os
 from collections import Counter, defaultdict
 
 from data_loaders import load_bowler_deliveries, load_bowler_info
-from profile import process_rows, _quantile
-from odi_profile import _phase_stats, _variations, _bowler_runs, _num, _mean
+from profile import process_rows, _quantile, _fingerprint
+from odi_profile import (_phase_stats, _variations, _bowler_runs, _num, _mean,
+                         _death_deepdive, _powerplay_deepdive, _yorker_line_split, _hand_split)
 from ludis_cricket.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE, team_flag)
 
@@ -40,6 +41,22 @@ def _league_effects() -> dict:
                     except (KeyError, ValueError):
                         pass
     return _STRENGTH
+
+
+_PHASE_NORM_CSV = r"c:\Ludis\referencebuilder\data\bowler_t20_phase_profile.csv"
+_PHASE_NORM = None
+
+
+def _phase_norms() -> dict:
+    """(bowler_id, pace_spin, phase) -> precomputed league-ADJUSTED econ/wkt percentiles, memoised."""
+    global _PHASE_NORM
+    if _PHASE_NORM is None:
+        _PHASE_NORM = {}
+        if os.path.exists(_PHASE_NORM_CSV):
+            with open(_PHASE_NORM_CSV, encoding="utf-8", newline="") as f:
+                for r in csv.DictReader(f):
+                    _PHASE_NORM[(r["bowler_id"], r["pace_spin"], r["phase"])] = r
+    return _PHASE_NORM
 
 
 def _t20_phase(over_n):
@@ -98,6 +115,7 @@ def build_t20_profile(bowler_id: str) -> dict:
         if bt_fix:
             r["bowler_type_simple"] = bt_fix
         r["phase"] = _t20_phase(r.get("over_n"))
+        r["era"] = None                          # T20 has no ball-change era; keeps _death_deepdive happy
         info_lg = eff.get(r.get("competition"))
         r["lg_eff"] = info_lg["eff"] if info_lg else 0.0
         r["league"] = info_lg["league"] if info_lg else (r.get("competition") or "?")
@@ -129,6 +147,16 @@ def build_t20_profile(bowler_id: str) -> dict:
         if blk:
             phases.append(dict(phase=ph, **blk))
 
+    # league-ADJUSTED economy/wicket percentiles vs T20 phase peers (precomputed in the norm)
+    pn = _phase_norms()
+    ps = "pace" if is_pace else ("spin" if is_spin else None)
+    for ph in phases:
+        row = pn.get((str(bowler_id), ps, ph["phase"])) if ps else None
+        _pv = lambda k: (int(float(row[k])) if row and row.get(k) not in (None, "") else None)
+        ph["econ_pctl"] = _pv("econ_pctl")
+        ph["wkt_pctl"] = _pv("wkt_pctl")
+        ph["peer_n"] = _pv("peer_n")
+
     return {
         "bowler_id": str(bowler_id), "name": name, "team": team, "flag": flag,
         "primary_type": primary_type, "is_pace": is_pace, "is_spin": is_spin, "hand": hand,
@@ -144,8 +172,14 @@ def build_t20_profile(bowler_id: str) -> dict:
         "n_balls": nb, "n_wkts": wkts, "bowl_avg": runs / wkts if wkts else None,
         "avg_spd": _mean(speeds), "max_spd_99": _quantile(speeds, 0.99) if speeds else None,
         # sections
+        "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="T20"),
         "phases": phases,
         "variations": _variations(raw, off_pace),
+        "death": _death_deepdive([r for r in raw if r["phase"] == "Death"], off_pace) if is_pace else None,
+        "powerplay": _powerplay_deepdive([r for r in raw if r["phase"] == "Powerplay"]) if is_pace else None,
+        "yorker_line": ({"death": _yorker_line_split([r for r in raw if r["phase"] == "Death"]),
+                         "overall": _yorker_line_split(raw)} if is_pace else None),
+        "vs_hand": _hand_split(raw),
         "where_bowled": _where_bowled(raw),
         "off_pace_kph": off_pace, "n_leagues": len({r["league"] for r in legal}),
     }

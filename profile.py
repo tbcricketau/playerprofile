@@ -120,7 +120,7 @@ _PROFILE_CACHE: dict = {}
 def _load_profile_csv(path: str, fmt: str) -> dict:
     key = (path, fmt)
     if key not in _PROFILE_CACHE:
-        p = path if fmt == "Test" else path[:-4] + "_odi.csv"
+        p = path if fmt == "Test" else path[:-4] + f"_{fmt.lower()}.csv"
         d = {}
         if os.path.exists(p):
             with open(p, encoding="utf-8", newline="") as f:
