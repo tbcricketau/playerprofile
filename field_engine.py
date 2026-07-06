@@ -165,100 +165,226 @@ def _n_catchers(phase, is_spin, false_rate):
     return max(1, min(4, base))
 
 
+# ── Assembly v2: GPS-corrected stock base + ≤3 evidenced, legality-checked deviations ──
+# (FIELD_PLAN §5). The run-flow / expected-catch value model above stays; only the assembly
+# changes — start from the stock template, deviate on strong per-batter reasoning.
+_TRIGGER_CSV = os.path.join(_REF, "field_trigger_norms.csv")
+_STROKE_CSV = os.path.join(_REF, "batter_stroke_norms.csv")
+
+# report fine group -> the bowler_type string the stock scenario() expects
+_GROUP_TO_TYPE = {
+    "right_pace": "Right Fast", "left_pace": "Left Fast", "pace": "Right Fast",
+    "off_spin": "Off Spin", "leg_spin": "Leg Break", "spin": "Off Spin",
+    "left_orthodox": "Left Orthodox", "left_unorthodox": "Left Unorthodox",
+}
+
+# stock fielder name -> run-flow sector (so a deviation can drop his least-used stock post)
+_NAME_SECTOR = {}
+for _sec, (_ring, _deep) in _SECTOR_POS.items():
+    _NAME_SECTOR[_ring] = _sec
+    _NAME_SECTOR[_deep] = _sec
+_NAME_SECTOR.update({
+    "Backward point": "point", "Deep backward point": "point", "Silly point": "point",
+    "Extra cover": "cover", "Deep extra cover": "cover",
+    "Long-off": "mid-off", "Long-on": "mid-on", "Silly mid-on": "mid-on",
+    "Backward square leg": "square leg", "Deep backward square leg": "square leg", "Short leg": "square leg",
+    "Slip 1": "third man", "Slip 2": "third man", "Slip 3": "third man", "Slip 4": "third man",
+    "Gully": "third man", "Third man": "third man", "Deep third man": "third man", "Leg slip": "fine leg",
+})
+# the cordon / close catchers — protected from being dropped by a run-saving deviation
+_CORDON = {"Slip 1", "Slip 2", "Slip 3", "Slip 4", "Gully", "Leg slip", "Short leg",
+           "Silly point", "Silly mid-on", "Bat pad", "Keeper", "Wicketkeeper"}
+
+
+def _fnum(v):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def _trigger_row(batter_id, coarse_group, phase):
+    for r in _load_csv(_TRIGGER_CSV):
+        if (r.get("format") == _FMT and r.get("batter_id") == str(batter_id)
+                and r.get("group") == coarse_group and r.get("phase") == phase):
+            return r
+    return {}
+
+
+def _stroke_row(batter_id, coarse_group, family):
+    for r in _load_csv(_STROKE_CSV):
+        if (r.get("format") == _FMT and r.get("batter_id") == str(batter_id)
+                and r.get("bowler_group") == coarse_group and r.get("family") == family):
+            return r
+    return {}
+
+
+def _rules(P, group, phase, is_spin):
+    """Evaluate R1–R8 (FIELD_PLAN §4) from the cohort norms; return the fired rules
+    (percentile >= 75). Each: id, pctl, value, add [candidate positions], why, protect."""
+    bid, coarse = P["batter_id"], ("spin" if is_spin else "pace")
+    fired = []
+
+    def fire(rid, pctl, val, add, why, protect=True):
+        if pctl is None or val is None or pctl < 75:
+            return
+        fired.append({"id": rid, "pctl": pctl, "value": val, "add": add,
+                      "why": why, "protect": protect, "strength": pctl})
+
+    def _sr(cg, fam):
+        s = _stroke_row(bid, cg, fam)
+        return _fnum(s.get("runs_pct_pctl")), _fnum(s.get("runs_pct"))
+
+    if is_spin:                                          # R1 lap/sweep (vs spin)
+        p, v = _sr("spin", "Sweep")
+        fire("R1", p, v, ["Deep backward square leg", "Deep square leg"],
+             f"He sweeps/laps {v:.0f}% of his runs vs spin (P{p:.0f}) — protect deep backward square." if v else "")
+    else:                                                # R4 cut (vs pace)
+        p, v = _sr("pace", "Cut")
+        fire("R4", p, v, ["Deep point", "Third man"],
+             f"Cuts carry {v:.0f}% of his runs vs pace (P{p:.0f}) — deep point saver." if v else "")
+
+    p, v = _sr(coarse, "Pull/Hook")                      # R5 pull/hook
+    fire("R5", p, v, ["Deep square leg", "Deep backward square leg"],
+         f"Pulls/hooks {v:.0f}% of his runs (P{p:.0f}) — deep square leg back." if v else "")
+
+    p, v = _sr(coarse, "Work/Nudge")                     # R7 leg-side nudge
+    fire("R7", p, v, ["Backward square leg", "Deep square leg"],
+         f"He works {v:.0f}% of his runs to leg (P{p:.0f}) — squarer leg-side saver." if v else "")
+
+    if phase == "early":                                 # R2 square early
+        t = _trigger_row(bid, coarse, "early")
+        p, v = _fnum(t.get("square_share_pctl")), _fnum(t.get("square_share"))
+        fire("R2", p, v, ["Deep point", "Backward point"],
+             f"{v:.0f}% of his early runs go square of the wicket (P{p:.0f}) — square saver early." if v else "")
+        if not is_spin:                                  # R6 edge-prone starter (cordon rule)
+            t6 = _trigger_row(bid, "all", "early")
+            p6, v6 = _fnum(t6.get("false_pct_pctl")), _fnum(t6.get("false_pct"))
+            fire("R6", p6, v6, ["Slip 3", "Slip 2", "Gully"],
+                 f"He plays a false shot at {v6:.0f}% over his first 30 (P{p6:.0f}) — extra catcher while he starts." if v6 else "",
+                 protect=False)
+    else:                                                # R3 down-ground (set)
+        t = _trigger_row(bid, coarse, "set")
+        p, v = _fnum(t.get("straight_share_pctl")), _fnum(t.get("straight_share"))
+        fire("R3", p, v, ["Long-on", "Long-off"],
+             f"{v:.0f}% of his runs go straight down the ground (P{p:.0f}) — straight boundary back." if v else "")
+
+    return fired
+
+
+def _least_valuable(names, flow, protect_cordon, exclude):
+    """The stock fielder whose run-flow sector the batter scores LEAST in (drop candidate)."""
+    worst, worst_share = None, 1e9
+    for nm in names:
+        if nm in exclude or (protect_cordon and nm in _CORDON):
+            continue
+        share = flow.get(_NAME_SECTOR.get(nm), {}).get("runs_share", 0.0)
+        if share < worst_share:
+            worst_share, worst = share, nm
+    return worst
+
+
+def _legal(names, phase):
+    from ludis_cricket import fields
+    if len(set(names)) != 9:
+        return False
+    lim = fields.OUT_LIMIT.get(_FMT, {}).get(phase, 9)
+    if sum(1 for n in names if fields._is_out(n)) > lim:
+        return False
+    if sum(1 for n in names if fields._behind_square_leg(n)) > 2:
+        return False
+    return True
+
+
 def build_field(P, group, phase):
-    """Return an ordered field for a phase ('early'|'set'). Each entry:
-    {position, angle, radius, role, kind: 'catch'|'save', why}."""
+    """Assembly v2 — the GPS-corrected stock field ± the top (<=3) evidenced deviations.
+    Returns {phase, group, group_label, n_catchers, false_rate, legal, field:[{position, angle,
+    radius, role, kind, tag: 'stock'|'change', why}], changes:[...], base_note, backtest}."""
+    from ludis_cricket import fields
     is_lhb = P["is_lhb"]
     is_spin = group in ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox", "spin")
     rows = [r for r in P["raw"] if (r["is_early"] if phase == "early" else not r["is_early"])]
     if sum(1 for r in rows if r["is_legal"]) < 80:
         return None
 
+    hand = "LHB" if is_lhb else "RHB"
+    btype = _GROUP_TO_TYPE.get(group, "Off Spin" if is_spin else "Right Fast")
+    stock_phase = "attack" if phase == "early" else "defend"
+    base_names, base_changes = fields.gps_corrected_field(_FMT, btype, hand, stock_phase, with_changes=True)
+    if not base_names:
+        return None
+
     flow, legal = run_flow(rows, is_lhb)
-    exp, dom, false_by_stroke = expected_catches(rows, group)
+    exp, _dom, _ = expected_catches(rows, group)
     observed = _batter_field(P["batter_id"], group)
     shotq = sum(1 for r in rows if r.get("has_shot_q"))
     false_rate = (sum(1 for r in rows if r.get("is_false_shot")) / shotq * 100) if shotq else None
 
-    field, used_pos, used_sector = [], set(), set()
-
-    def add(name, kind, why):
-        c = FIELD_POS.get(name) or field_coords(name)
-        if name in used_pos:
-            return
-        used_pos.add(name)
-        field.append({"position": name, "angle": c["angle"], "radius": c["radius"],
-                      "role": c["role"], "kind": kind, "why": why})
-
-    # keeper always
-    add("Keeper", "catch", "Standing to the stumps.")
-
-    # LAYER 2 — catchers, ranked by expected catches
-    n_catch = _n_catchers(phase, is_spin, false_rate)
-    ranked = sorted(exp.items(), key=lambda kv: -kv[1])
-    placed = 0
-    for pos, score in ranked:
-        if placed >= n_catch or pos in ("Keeper", "Bowler"):
-            continue
-        c = field_coords(pos)
-        if c["role"] != "catch":
-            continue     # only cordon/bat-pad positions act as dedicated catchers here
-        stroke = dom.get(pos)
-        obs = observed.get(pos, {}).get("catches", 0)
-        share = _cohort_catch_dist(group).get(stroke, {}).get(pos)
-        why = (f"His false {stroke.lower()}s carry here "
-               f"({share:.0f}% of {stroke.lower()} catches vs {_group_label(group)} across Tests)"
-               if stroke and share else "Catches his mishits in the cordon")
-        if obs:
-            why += f"; {obs} of his caught dismissals here already"
-        add(pos, "catch", why + ".")
-        placed += 1
-
-    # LAYER 1 — savers/riders on his biggest run sectors, one per sector
-    slots = 9 - (len(field) - 1)          # 9 outfielders; keeper doesn't count
-    sectors_ranked = sorted(flow.items(), key=lambda kv: -kv[1]["runs_share"])
-    for s, v in sectors_ranked:
-        if slots <= 0:
+    # apply the top <=3 fired rules, each swap re-validated for legality
+    names, changes = list(base_names), []
+    for rule in sorted(_rules(P, group, phase, is_spin), key=lambda r: -r["strength"]):
+        if len(changes) >= 3:
             break
-        if s in used_sector or s not in _SECTOR_POS or v["balls"] < 5:
+        add = next((a for a in rule["add"] if a not in names), None)
+        if add is None:
+            continue                                        # that saver is already in the stock
+        drop = _least_valuable(names, flow, rule["protect"], exclude={add})
+        if drop is None:
             continue
-        ring_name, deep_name = _SECTOR_POS[s]
-        deep = v["bdry_share"] >= 33 and phase == "set"
-        name = deep_name if deep else ring_name
-        if name in used_pos:
-            name = (ring_name if deep else deep_name)
-            if name in used_pos:
-                continue
-        kind = "save"
-        why = (f"{v['runs_share']:.0f}% of his runs vs {_group_label(group)} go {_sector_phrase(s)}"
-               f" ({v['bdry_share']:.0f}% in boundaries, n={v['balls']} scoring balls)"
-               + (" — held back on the rope." if deep else " — cuts off the single/two."))
-        add(name, kind, why)
-        used_sector.add(s)
-        slots -= 1
+        cand = [add if n == drop else n for n in names]
+        if _legal(cand, stock_phase):
+            names = cand
+            changes.append({**rule, "add_pos": add, "drop_pos": drop})
 
-    backtest = _backtest(field, observed, flow, exp)
+    base_set = set(base_names)
+    field = []
+    for nm in names:
+        c = FIELD_POS.get(nm) or field_coords(nm)
+        ch = next((x for x in changes if x["add_pos"] == nm), None)
+        field.append({"position": nm, "angle": c["angle"], "radius": c["radius"],
+                      "role": c["role"], "kind": "catch" if c["role"] == "catch" else "save",
+                      "tag": "change" if ch else "stock",
+                      "why": (ch["why"] if ch else _stock_why(nm, base_changes))})
+
+    n_catch = sum(1 for f in field if f["kind"] == "catch")
+    base_note = ("GPS-corrected stock field" if base_changes not in ("none", "", None)
+                 else "stock field")
     return {"phase": phase, "group": group, "group_label": _group_label(group),
-            "n_catchers": placed + 1, "false_rate": false_rate, "legal": legal,
-            "field": field, "backtest": backtest}
+            "n_catchers": n_catch, "false_rate": false_rate, "legal": legal,
+            "field": field, "changes": [c["why"] for c in changes],
+            "base_note": base_note, "base_changes": base_changes,
+            "backtest": _backtest(names, base_names, flow, exp, observed)}
 
 
-def _backtest(field, observed, flow, exp):
-    """Validation. Primary is cohort-based (always available): of where his mishits are
-    EXPECTED to carry, how much sits at the recommended catch positions. Observed catches
-    (thin — position coding is sparse) are a secondary note. Boundary coverage from run-flow."""
-    catch_pos = {f["position"] for f in field if f["kind"] == "catch"}
-    tot_exp = sum(exp.values()) or 1
-    exp_covered = sum(v for p, v in exp.items() if p in catch_pos) / tot_exp * 100
+def _stock_why(name, base_changes):
+    """Orthodoxy line for a stock fielder; flag if it came from the GPS correction."""
+    if base_changes and base_changes not in ("none", "") and name in base_changes:
+        return "Standard post — GPS shows AUS actually man this here."
+    return "Standard stock position."
+
+
+def _backtest(names, base_names, flow, exp, observed):
+    """Deviated field vs the untouched stock base (FIELD_PLAN §5). Catch cover = share of his
+    expected mishit-carry sitting at catch positions; boundary cover = share of his boundary runs
+    whose sector has a deep rider. Reports both the field's numbers and the delta vs stock."""
+    def _cover(field_names):
+        catch_pos = {n for n in field_names if (FIELD_POS.get(n) or field_coords(n))["role"] == "catch"}
+        tot_exp = sum(exp.values()) or 1
+        cc = sum(v for p, v in exp.items() if p in catch_pos) / tot_exp * 100
+        deep_secs = {_NAME_SECTOR.get(n) for n in field_names
+                     if (FIELD_POS.get(n) or field_coords(n))["role"] == "deep"}
+        tot_b = sum(v["bdry"] for v in flow.values()) or 1
+        bc = sum(v["bdry"] for s, v in flow.items() if s in deep_secs) / tot_b * 100
+        return cc, bc
+
+    cc, bc = _cover(names)
+    base_cc, base_bc = _cover(base_names)
     total_catches = sum(v["catches"] for v in observed.values())
+    catch_pos = {f for f in names if (FIELD_POS.get(f) or field_coords(f))["role"] == "catch"}
     covered_catches = sum(v["catches"] for p, v in observed.items() if p in catch_pos)
-    deep_sectors = {s for f in field if f["role"] == "deep"
-                    for s, (rn, dn) in _SECTOR_POS.items() if f["position"] in (rn, dn)}
-    tot_bdry = sum(v["bdry"] for v in flow.values()) or 1
-    covered_bdry = sum(v["bdry"] for s, v in flow.items() if s in deep_sectors)
-    return {"exp_catch_covered_pct": exp_covered,
-            "catches_covered": covered_catches, "catches_total": total_catches,
-            "bdry_covered_pct": covered_bdry / tot_bdry * 100}
+    return {"exp_catch_covered_pct": cc, "bdry_covered_pct": bc,
+            "exp_catch_gain": cc - base_cc, "bdry_gain": bc - base_bc,
+            "catches_covered": covered_catches, "catches_total": total_catches}
 
 
 _GROUP_LABELS = {

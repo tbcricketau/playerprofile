@@ -516,19 +516,21 @@ def _field_targets(P: dict) -> list:
 
 
 def _field_backtest_line(fs: dict, phase: str) -> str:
-    bt, lbl, n_catch = fs["backtest"], fs["group_label"], fs["n_catchers"] - 1
-    if phase == "early":
-        s = (f"This attacking field sits under <b>{bt['exp_catch_covered_pct']:.0f}%</b> of where "
-             f"his mishits vs {lbl} are expected to carry")
-        if bt["catches_total"]:
-            s += (f" — {bt['catches_covered']} of his {bt['catches_total']} recorded caught "
-                  f"dismissals vs {lbl} were at these positions")
-        return s + "."
-    s = (f"The riders cover <b>{bt['bdry_covered_pct']:.0f}%</b> of his boundary runs vs {lbl}, "
-         f"keeping {n_catch} catcher{'s' if n_catch != 1 else ''} back")
-    if bt["catches_total"]:
-        s += f"; {bt['catches_covered']}/{bt['catches_total']} of his caught dismissals sit in the retained cordon"
-    return s + "."
+    """Deviations-only read: the stock base + how many changes it earns, and what those changes
+    buy vs the untouched stock field (FIELD_PLAN §6)."""
+    bt, chg, base = fs["backtest"], fs["changes"], fs["base_note"]
+    if not chg:
+        return (f"<b>Pure {base}.</b> Nothing in his game clears the deviation bar (cohort P75) "
+                f"against {fs['group_label']}, so the orthodox field stands — that <i>is</i> the read.")
+    n = len(chg)
+    gains = []
+    if bt["bdry_gain"] >= 1:
+        gains.append(f"+{bt['bdry_gain']:.0f}% of his boundary runs")
+    if bt["exp_catch_gain"] >= 1:
+        gains.append(f"+{bt['exp_catch_gain']:.0f}% of his expected edges")
+    tail = (" — covering " + " and ".join(gains) + " vs the pure stock field") if gains else ""
+    return (f"<b>{base.capitalize()} + {n} change{'s' if n != 1 else ''}</b> "
+            f"(highlighted){tail}.")
 
 
 def _field_blocks(P: dict) -> list:
@@ -546,7 +548,8 @@ def _field_blocks(P: dict) -> list:
                 uri = _fig_uri(fe.field_diagram(fs["field"], P["is_lhb"], title=""), w=300, h=300)
             except Exception:
                 uri = ""
-            jrows = [(f["position"], _ROLE_LABEL[f["kind"]], f["why"], f["kind"]) for f in fs["field"]]
+            jrows = [(f["position"], "Change" if f["tag"] == "change" else "Stock",
+                      f["why"], f["tag"]) for f in fs["field"]]
             cols.append({"title": title, "fig": uri, "rows": jrows,
                          "backtest": _field_backtest_line(fs, phase), "legal": fs["legal"]})
         if cols:
@@ -836,8 +839,8 @@ _TEMPLATE = r"""
   </table>
 
   {% if field_blocks %}
-  <h2 class="pbreak">Suggested Fields <span class="sub" style="font-weight:400">(built from where his runs &amp; edges go — no fielder-position data)</span></h2>
-  <div class="cap" style="text-align:left;margin-bottom:6px">Every fielder is justified by what <b>he</b> does — catchers from his false-shot mix &times; where those mishits carry across Tests, run-savers from the sectors carrying most of his runs; the table gives each fielder's role and reason. Early field = wicket-biased (first 30 balls); Set field = run-biased. Drawn from behind the bowler (bowler at the bottom, striker at the top); off side is on the {% if P.is_lhb %}right{% else %}left{% endif %}.</div>
+  <h2 class="pbreak">Suggested Fields <span class="sub" style="font-weight:400">(the stock field &plusmn; his evidenced deviations)</span></h2>
+  <div class="cap" style="text-align:left;margin-bottom:6px">Each field starts from the <b>stock template</b> for that bowler type &amp; phase (orthodox because it works), then makes at most <b>three</b> changes — each one earned by a trigger in <b>his</b> game clearing the cohort P75 bar (does he lap, cut, pull, score square, edge early?). <b>Change</b> rows are highlighted with his stat; <b>Stock</b> rows carry the orthodoxy line. The read line backtests the changes against the pure stock field. Early = first 30 balls; Set = once in. Drawn from behind the bowler (bowler bottom, striker top); off side is on the {% if P.is_lhb %}right{% else %}left{% endif %}.</div>
   {% for blk in field_blocks %}
     <div style="font-weight:700;font-size:11.5px;margin:10px 0 4px;color:{{c.ACCENT}}">Field vs {{blk.label}}</div>
     {% for col in blk.cols %}
@@ -848,9 +851,9 @@ _TEMPLATE = r"""
         <div class="read" style="margin-top:4px">{{col.backtest|safe}}</div>
       </div>
       <table class="mtab">
-        <tr><th>Fielder</th><th>Role</th><th style="text-align:left">Why he's there</th></tr>
-        {% for pos, role, why, kind in col.rows %}
-        <tr class="{{ 'sig' if kind=='catch' else '' }}"><td class="lab">{{pos}}</td><td>{{role}}</td><td style="text-align:left">{{why}}</td></tr>
+        <tr><th>Fielder</th><th>Stock/Change</th><th style="text-align:left">Why he's there</th></tr>
+        {% for pos, role, why, tag in col.rows %}
+        <tr class="{{ 'sig' if tag=='change' else '' }}"><td class="lab">{{pos}}</td><td>{{role}}</td><td style="text-align:left">{{why}}</td></tr>
         {% endfor %}
       </table>
     </div>
