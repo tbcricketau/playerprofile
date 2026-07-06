@@ -1469,14 +1469,29 @@ def _html_to_pdf(html: str, out_path: str) -> None:
         f.write(html)
     user_dir = tempfile.mkdtemp(prefix="pp_chrome_")
     url = "file:///" + os.path.abspath(tmp_html).replace("\\", "/")
+    # NOTE: use Popen + DEVNULL, NOT subprocess.run(capture_output=True). With --headless=new
+    # Chrome spawns child renderer/gpu processes; on Windows a run(timeout, capture_output)
+    # call can't drain the stdout/stderr pipes those orphaned children still hold, so it hangs
+    # indefinitely instead of timing out (wedged a whole batch once — see git history).
+    # DEVNULL removes the pipe; on timeout we kill the entire Chrome process tree.
+    p = subprocess.Popen(
+        [exe, "--headless=new", "--disable-gpu", "--no-sandbox",
+         f"--user-data-dir={user_dir}", "--no-pdf-header-footer",
+         "--run-all-compositor-stages-before-draw", "--virtual-time-budget=10000",
+         f"--print-to-pdf={out_path}", url],
+        stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
-        subprocess.run(
-            [exe, "--headless=new", "--disable-gpu", "--no-sandbox",
-             f"--user-data-dir={user_dir}", "--no-pdf-header-footer",
-             "--run-all-compositor-stages-before-draw", "--virtual-time-budget=10000",
-             f"--print-to-pdf={out_path}", url],
-            check=True, timeout=180, capture_output=True,
-        )
+        p.wait(timeout=180)
+        if p.returncode not in (0, None):
+            raise RuntimeError(f"Chrome exit {p.returncode} rendering {os.path.basename(out_path)}")
+    except subprocess.TimeoutExpired:
+        subprocess.run(["taskkill", "/F", "/T", "/PID", str(p.pid)],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        try:
+            p.wait(timeout=15)
+        except subprocess.TimeoutExpired:
+            pass
+        raise RuntimeError(f"Chrome PDF render timed out (180s) for {os.path.basename(out_path)}")
     finally:
         try:
             os.remove(tmp_html)
