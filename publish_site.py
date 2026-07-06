@@ -297,6 +297,12 @@ def deploy_github(out_dir, repo_url, branch="main"):
     run("git", "-c", "user.name=scouting-bot", "-c", "user.email=bot@local",
         "commit", "-q", "-m", f"publish {datetime.datetime.now():%Y-%m-%d %H:%M}")
     run("git", "push", "-f", repo_url, branch)
+    # The force-push replaces history each deploy; GitHub Pages often does NOT rebuild off such a
+    # disconnected push (it keeps serving the old commit). A follow-up empty commit is a normal
+    # fast-forward that reliably triggers the Pages build. Without this, scheduled refreshes go stale.
+    run("git", "-c", "user.name=scouting-bot", "-c", "user.email=bot@local",
+        "commit", "-q", "--allow-empty", "-m", "trigger pages rebuild")
+    run("git", "push", repo_url, branch)
     print(f"Deployed to {repo_url} ({branch}). "
           f"If Pages isn't on: repo Settings > Pages > Deploy from branch > {branch} / root.")
 

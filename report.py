@@ -10,6 +10,7 @@ import datetime
 import glob
 import os
 import re
+import shutil
 import subprocess
 import tempfile
 
@@ -1485,8 +1486,11 @@ def _html_to_pdf(html: str, out_path: str) -> None:
         if p.returncode not in (0, None):
             raise RuntimeError(f"Chrome exit {p.returncode} rendering {os.path.basename(out_path)}")
     except subprocess.TimeoutExpired:
-        subprocess.run(["taskkill", "/F", "/T", "/PID", str(p.pid)],
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        try:                                    # bound taskkill too — it must not hang the batch
+            subprocess.run(["taskkill", "/F", "/T", "/PID", str(p.pid)],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+        except Exception:
+            pass
         try:
             p.wait(timeout=15)
         except subprocess.TimeoutExpired:
@@ -1497,6 +1501,9 @@ def _html_to_pdf(html: str, out_path: str) -> None:
             os.remove(tmp_html)
         except OSError:
             pass
+        # Delete the throwaway Chrome profile — otherwise these pile up in %TEMP% (hundreds
+        # over a batch) and eventually Chrome hangs on startup. This was the real batch-wedge.
+        shutil.rmtree(user_dir, ignore_errors=True)
 
 
 def _file_url(path: str) -> str:
@@ -1513,14 +1520,16 @@ def _build_player(P: dict, pdf_path: str, subtitle: str, target_country: str | N
         from ludis_cricket.video import build_player_html, write_playlists
         built = build_playlists(P, cap=8, target_country=target_country)
         pls, pl_meta = built["playlists"], built.get("meta")
+        # Always write the sidecar (with meta: bowler_id + name) — even with no clips — so
+        # publish_site can map + serve the report; no-clip bowlers otherwise vanish from the site.
+        write_playlists(pdf_path[:-4] + ".playlists.json", pls, meta=pl_meta)
         if not pls:
-            return {}
+            return {"lists": {}}          # no clips: keep `lists` so the template guards work
         player_path = pdf_path[:-4] + ".player.html"
         build_player_html(pls, player_path, title=P["name"], subtitle=subtitle)
-        write_playlists(pdf_path[:-4] + ".playlists.json", pls, meta=pl_meta)   # portable sidecar too
         return {"player": _file_url(player_path), "lists": {k: True for k in pls}, "playlists": pls}
     except Exception:
-        return {}
+        return {"lists": {}}
 
 
 def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
@@ -1565,8 +1574,10 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
         # Markers let the web app swap this baked-SAS player for a mint-on-demand one (webapp.py).
         snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(video["playlists"]) + "<!--PLAYER_SNIPPET_END-->"
         html = html.replace("</body>", snippet + "</body>")
-        with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
-            f.write(html)
+    # Always write the interactive .html (with the player snippet when there are clips) so the
+    # site serves every bowler, including no-clip ones.
+    with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
+        f.write(html)
     _html_to_pdf(html, out_path)
     return out_path
 
