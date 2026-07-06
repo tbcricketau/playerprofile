@@ -11,9 +11,72 @@
           "slug": "bowlers-vs-lhb",
           "name": "Opposition Bowlers to LHB",
           "reports": [
-            { "id": "2700039", "hand": "lhb" },
-            { "id": "3080087", "hand": "lhb" },
-            { "id": "5460155", "hand": "lhb" }
+            {
+              "id": "3110073",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Ebadot Hossain"
+            },
+            {
+              "id": "5180245",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Hasan Mahmud"
+            },
+            {
+              "id": "3080087",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Mehidy Hasan Miraz"
+            },
+            {
+              "id": "5460155",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Nahid Rana"
+            },
+            {
+              "id": "3630141",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Shoriful Islam"
+            },
+            {
+              "id": "2700039",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Taijul Islam"
+            },
+            {
+              "id": "2220028",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Taskin Ahmed"
+            },
+            {
+              "id": "3630144",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Hasan Murad"
+            },
+            {
+              "id": "2700013",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Mominul Haque"
+            },
+            {
+              "id": "4353535",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Nayeem Hasan"
+            },
+            {
+              "id": "5460063",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Tanzim Hasan Sakib"
+            }
           ]
         }
       ]
@@ -23,14 +86,306 @@
       "name": "South Africa Away Test Series 2026",
       "subtitle": "Australia v South Africa · in South Africa",
       "target_country": "South Africa",
-      "groups": []
+      "groups": [
+        {
+          "slug": "bowlers-vs-lhb",
+          "name": "Opposition Bowlers to LHB",
+          "reports": [
+            {
+              "id": "2540186",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Corbin Bosch"
+            },
+            {
+              "id": "2730017",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Kagiso Rabada"
+            },
+            {
+              "id": "3080070",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Keshav Maharaj"
+            },
+            {
+              "id": "4352128",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Marco Jansen"
+            },
+            {
+              "id": "2220038",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Prenelan Subrayen"
+            },
+            {
+              "id": "3550469",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Senuran Muthusamy"
+            },
+            {
+              "id": "1310113",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Simon Harmer"
+            },
+            {
+              "id": "3760008",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Aiden Markram"
+            },
+            {
+              "id": "4353946",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Codi Ethan Yusuf"
+            },
+            {
+              "id": "4352291",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Dewald Brevis"
+            },
+            {
+              "id": "4353399",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Kwena Maphaka"
+            },
+            {
+              "id": "3760009",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Lungi Ngidi"
+            },
+            {
+              "id": "3110056",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Pieter Willem Adriaan Mulder"
+            },
+            {
+              "id": "3200006",
+              "hand": "lhb",
+              "tier": "fringe",
+              "name": "Dane Paterson"
+            },
+            {
+              "id": "1310125",
+              "hand": "lhb",
+              "tier": "fringe",
+              "name": "Dane Piedt"
+            },
+            {
+              "id": "5460045",
+              "hand": "lhb",
+              "tier": "fringe",
+              "name": "Gerald Coetzee"
+            },
+            {
+              "id": "4353846",
+              "hand": "lhb",
+              "tier": "fringe",
+              "name": "Nandre Burger"
+            }
+          ]
+        }
+      ]
     },
     {
       "slug": "new-zealand-home-2026-27",
       "name": "New Zealand Home Test Series 2026/27",
       "subtitle": "Australia v New Zealand · in Australia",
       "target_country": "Australia",
-      "groups": []
+      "groups": [
+        {
+          "slug": "bowlers-vs-lhb",
+          "name": "Opposition Bowlers to LHB",
+          "reports": [
+            {
+              "id": "2700193",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Ben Sears"
+            },
+            {
+              "id": "3760057",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Blair Marshall Tickner"
+            },
+            {
+              "id": "4090006",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Glenn Phillips"
+            },
+            {
+              "id": "2540021",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Kyle Alex Jamieson"
+            },
+            {
+              "id": "2960001",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Matthew James Henry"
+            },
+            {
+              "id": "1940290",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Mitchell Santner"
+            },
+            {
+              "id": "2700194",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Nathan Smith"
+            },
+            {
+              "id": "6020006",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "William O'Rourke"
+            },
+            {
+              "id": "5460096",
+              "hand": "lhb",
+              "tier": "xi",
+              "name": "Zakary Glen Foulkes"
+            },
+            {
+              "id": "2793870",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Ajaz Patel"
+            },
+            {
+              "id": "3760056",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Daryl Joseph Mitchell"
+            },
+            {
+              "id": "1440317",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Jacob Andrew Duffy"
+            },
+            {
+              "id": "4390006",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Matthew John Fisher"
+            },
+            {
+              "id": "380800",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Michael Gordon Bracewell"
+            },
+            {
+              "id": "4353552",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Michael Rae"
+            },
+            {
+              "id": "2700191",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Rachin Ravindra"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "australia-reference",
+      "name": "Australia — Reference Bowlers",
+      "subtitle": "Our bowlers · a sense-check set we know well (LHB + RHB)",
+      "target_country": "Australia",
+      "groups": [
+        {
+          "slug": "our-bowlers-vs-lhb",
+          "name": "Our Bowlers to LHB",
+          "reports": [
+            {
+              "id": "1300007",
+              "hand": "lhb",
+              "tier": "reference",
+              "name": "Mitchell Starc"
+            },
+            {
+              "id": "1300076",
+              "hand": "lhb",
+              "tier": "reference",
+              "name": "Patrick Cummins"
+            },
+            {
+              "id": "880149",
+              "hand": "lhb",
+              "tier": "reference",
+              "name": "Josh Hazlewood"
+            },
+            {
+              "id": "2710059",
+              "hand": "lhb",
+              "tier": "reference",
+              "name": "Scott Boland"
+            },
+            {
+              "id": "1300071",
+              "hand": "lhb",
+              "tier": "reference",
+              "name": "Nathan Lyon"
+            }
+          ]
+        },
+        {
+          "slug": "our-bowlers-vs-rhb",
+          "name": "Our Bowlers to RHB",
+          "reports": [
+            {
+              "id": "1300007",
+              "hand": "rhb",
+              "tier": "reference",
+              "name": "Mitchell Starc"
+            },
+            {
+              "id": "1300076",
+              "hand": "rhb",
+              "tier": "reference",
+              "name": "Patrick Cummins"
+            },
+            {
+              "id": "880149",
+              "hand": "rhb",
+              "tier": "reference",
+              "name": "Josh Hazlewood"
+            },
+            {
+              "id": "2710059",
+              "hand": "rhb",
+              "tier": "reference",
+              "name": "Scott Boland"
+            },
+            {
+              "id": "1300071",
+              "hand": "rhb",
+              "tier": "reference",
+              "name": "Nathan Lyon"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
