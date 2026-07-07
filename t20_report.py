@@ -3,7 +3,7 @@ t20_report.py — T20 bowler scouting report (template v0.1).
 
 Reuses the shared report_style (identical cards/CSS to Test/ODI) and the ODI report's variation
 tables. T20-specific: phases (Powerplay 1–6 / Middle 7–15 / Death 16–20), league-strength ADJUSTED
-economy (the headline number is league-neutral; raw shown alongside), and a "where he's bowled"
+economy (the headline number is league-neutral; raw shown alongside), and a "where they've bowled"
 panel (balls by league + that league's run-environment effect). Fingerprint + video come next once
 T20 peer norms exist.
 """
@@ -30,7 +30,7 @@ def _phase_read(P):
         return ""
     top = max(P["phases"], key=lambda p: p["pct_balls"])
     who = P["name"].split(",")[-1].strip() if "," in P["name"] else P["name"]
-    bits = [f"<b>{who}</b> bowls most in the <b>{top['phase'].lower()}</b> ({top['pct_balls']:.0f}% of his overs)"]
+    bits = [f"<b>{who}</b> bowls most in the <b>{top['phase'].lower()}</b> ({top['pct_balls']:.0f}% of their overs)"]
     if "Death" in ph:
         bits.append(f"and goes at <b>{ph['Death']['econ_adj']:.2f}</b> at the death (league-adjusted)")
     return " ".join(bits) + "."
@@ -134,7 +134,7 @@ _TEMPLATE = r"""
   <div class="cards">
     {% for cd in cards %}<div class="card"><div class="lab">{{cd.lab}}</div><div class="val">{{cd.val}}</div>{% if cd.sub %}<div class="csub">{{cd.sub}}</div>{% endif %}</div>{% endfor %}
   </div>
-  <div class="cap" style="text-align:left">Economy &amp; strike-rate are pooled across every T20 league he's played, then put on a <b>league-neutral</b> baseline — each league's run environment (rated by how hard it is to bowl there, controlling for who bowls) is removed, so an IPL over and a Super Smash over count the same. His raw economy is shown alongside. His run-environment shift here is <b>{{ '%+.2f'|format(P.env) }}</b> rpo.</div>
+  <div class="cap" style="text-align:left">Economy &amp; strike-rate are pooled across every T20 league they've played, then put on a <b>league-neutral</b> baseline — each league's run environment (rated by how hard it is to bowl there, controlling for who bowls) is removed, so an IPL over and a Super Smash over count the same. Their raw economy is shown alongside. Their run-environment shift here is <b>{{ '%+.2f'|format(P.env) }}</b> rpo.</div>
 
   {% if fingerprint_cards %}
   <h2>Bowling Fingerprint <span class="sub" style="font-weight:400">(percentile vs T20 peers)</span></h2>
@@ -148,7 +148,7 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left">Percentile within same-type <b>T20</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. These are skill/physical traits, so — unlike economy — they carry across leagues without a strength adjustment. <b>Repeatability</b> = length consistency over his stock band (high = more metronomic).</div>
+  <div class="cap" style="text-align:left">Percentile within same-type <b>T20</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. These are skill/physical traits, so — unlike economy — they carry across leagues without a strength adjustment. <b>Repeatability</b> = length consistency over their stock band (high = more metronomic).</div>
   {% endif %}
 
   <h2>Phase Profile <span class="sub" style="font-weight:400">(Powerplay 1–6 · Middle 7–15 · Death 16–20)</span>{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ wickets</a>{% endif %}</h2>
@@ -166,7 +166,7 @@ _TEMPLATE = r"""
       {% if P.is_pace %}<td>{{ p.avg_speed|round|int if p.avg_speed else '—' }}</td>{% endif %}
     </tr>{% endfor %}
   </table>
-  <div class="cap" style="text-align:left">Blue <b>P##</b> = percentile vs T20 {{ 'pace' if P.is_pace else 'spin' }} peers in that phase, on the <b>league-adjusted</b> economy (higher = harder to score off) and wicket rate (grey = bottom third). So the badge answers "is his death economy good <em>for the death, across leagues</em>?", not just the raw figure.</div>
+  <div class="cap" style="text-align:left">Blue <b>P##</b> = percentile vs T20 {{ 'pace' if P.is_pace else 'spin' }} peers in that phase, on the <b>league-adjusted</b> economy (higher = harder to score off) and wicket rate (grey = bottom third). So the badge answers "is their death economy good <em>for the death, across leagues</em>?", not just the raw figure.</div>
 
   {% if P.deepdive and P.deepdive.overall %}
   {% set o = P.deepdive.overall %}
@@ -193,16 +193,6 @@ _TEMPLATE = r"""
   </div>
   {% endif %}
 
-  <h2>Where He Bowls <span class="sub" style="font-weight:400">(pitch map + beehive · over vs round · stock vs slower)</span></h2>
-  {% for plabel, pk in [("On pace (stock speed)", "on"), ("Off pace (slower balls)", "off")] %}
-  <div style="font-weight:700;font-size:10px;margin:8px 0 2px;color:{{c.ACCENT}}">{{plabel}}</div>
-  <div class="grid4">
-    {% for clabel, ck in [("Over — pitch", pk+"_over_pitch"), ("Over — stumps", pk+"_over_bee"), ("Round — pitch", pk+"_round_pitch"), ("Round — stumps", pk+"_round_bee")] %}
-    <div class="fig">{% if figs[ck] %}<img class="chart" src="{{figs[ck]}}"><div class="cap">{{clabel}}</div>{% else %}<div class="cap" style="padding:26px 4px;color:{{c.TEXT_SEC}}">{{clabel}}<br>— too few —</div>{% endif %}</div>
-    {% endfor %}
-  </div>
-  {% endfor %}
-
   {% if P.vs_hand %}
   <h2>Match-ups <span class="sub" style="font-weight:400">(each hand, split over vs round the wicket)</span></h2>
   <table class="mtab" style="max-width:680px">
@@ -216,10 +206,23 @@ _TEMPLATE = r"""
     {% endfor %}
     {% endfor %}
   </table>
-  <div class="cap" style="text-align:left">Round % = share of his balls to that hand bowled from round the wicket. Sub-rows split each hand over vs round (shown when ≥30 balls).</div>
+  <div class="cap" style="text-align:left">Round % = share of their balls to that hand bowled from round the wicket. Sub-rows split each hand over vs round (shown when ≥30 balls).</div>
   {% endif %}
 
-  <h2>Where He's Played <span class="sub" style="font-weight:400">(the body of work behind the adjusted numbers)</span></h2>
+  <h2>Where They Bowl <span class="sub" style="font-weight:400">(pitch map + beehive · over vs round · stock vs slower)</span></h2>
+  {% for plabel, pk in [("On pace (stock speed)", "on"), ("Off pace (slower balls)", "off")] %}
+  <div style="font-weight:700;font-size:10px;margin:8px 0 2px;color:{{c.ACCENT}}">{{plabel}}</div>
+  <div class="grid4">
+    {% for side, sk in [("Over", "over"), ("Round", "round")] %}
+    {% for kind, suf in [("pitch", "pitch"), ("at stumps", "bee")] %}
+    <div class="fig">{% if figs[pk~"_"~sk~"_"~suf] %}<img class="chart" src="{{figs[pk~"_"~sk~"_"~suf]}}"><div class="cap">{{side}} — {{kind}}{% if suf == "pitch" %} · {{figs[pk~"_"~sk~"_pct"]}}% of balls{% endif %}</div>{% else %}<div class="cap" style="padding:26px 4px;color:{{c.TEXT_SEC}}">{{side}} — {{kind}}<br>— too few —</div>{% endif %}</div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <div class="cap" style="text-align:left">The % on each pitch map is that slice's share of all legal balls (e.g. over the wicket, on pace). Off pace = slower-ball variations.</div>
+
+  <h2>Where They've Played <span class="sub" style="font-weight:400">(the body of work behind the adjusted numbers)</span></h2>
   <table class="mtab" style="max-width:620px">
     <tr><th>League</th><th>Balls</th><th>Overs</th><th>Raw econ</th><th>Wkts</th><th>League run-env</th></tr>
     {% for w in P.where_bowled %}
@@ -230,7 +233,7 @@ _TEMPLATE = r"""
   <div class="cap" style="text-align:left">League run-env = runs/over that league adds (+) or removes (−) vs the T20 mean, adjusting for who bowls (referencebuilder <code>t20_league_strength.csv</code>). A + league (e.g. IPL) is a tougher place to bowl, so economy there is worth more.</div>
 
   <div class="note">
-    All major men's T20 leagues pooled ({{P.n_leagues}} for him). Phase = Powerplay 1–6 / Middle 7–15 / Death 16–20.
+    All major men's T20 leagues pooled ({{P.n_leagues}} for them). Phase = Powerplay 1–6 / Middle 7–15 / Death 16–20.
     Economy charges wides + no-balls. Adjusted = raw − league run-environment. {{version}} · {{build_date}}.
   </div>
 

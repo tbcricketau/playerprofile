@@ -27,6 +27,7 @@ from flask import Flask, abort, redirect, request, send_from_directory, Response
 
 from ludis_cricket.video import resolve_clip, build_player_html
 from ludis_cricket.video import get_fairplay_sas, get_hawkeye_sas
+from site_render import page, report_card, group_heading, TYPE_RE
 
 REPORTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "reports")
 app = Flask(__name__)
@@ -81,8 +82,14 @@ def _reports():
         n = sum(len(v) for v in pls.values() if isinstance(v, list))
         meta = d.get("meta", {})
         sub = name.split("/")[0] if "/" in name else ("batting" if "_batting_" in name else "test")
+        btype = ""
+        try:                                    # bowler type from the report header (same as publish_site)
+            m = TYPE_RE.search(open(os.path.join(REPORTS_DIR, name + ".html"), encoding="utf-8").read(80000))
+            btype = m.group(1) if m else ""
+        except Exception:
+            pass
         out.append({"name": name, "title": meta.get("bowler") or name.split("/")[-1].replace("_", " ").title(),
-                    "fmt": _FMT_LABEL.get(sub, sub.title()),
+                    "fmt": _FMT_LABEL.get(sub, sub.title()), "btype": btype,
                     "has_pdf": os.path.exists(os.path.join(REPORTS_DIR, name + ".pdf")),
                     "has_html": os.path.exists(os.path.join(REPORTS_DIR, name + ".html")),
                     "n_clips": n})
@@ -115,23 +122,25 @@ def _webapp_playlists(name):
 
 @app.route("/")
 def index():
+    """Report index — same card layout as the built site (shared site_render), grouped by format;
+    the badge marks it as a test/audit report (no XI/squad tier in this environment)."""
     groups = {}
     for r in _reports():
         groups.setdefault(r["fmt"], []).append(r)
-
-    def _li(r):
-        return (f'<li><a href="/r/{r["name"]}">{r["title"]}</a> '
-                f'<span class="n">{r["n_clips"]} clips</span> '
-                f'<a class="pdf" href="/player/{r["name"]}">▶ clips</a> '
-                + (f'<a class="pdf" href="/pdf/{r["name"]}">PDF</a>' if r["has_pdf"] else "") + "</li>")
     blocks = []
     for fmt in ["Test", "ODI", "T20", "Batting"] + [g for g in sorted(groups) if g not in ("Test", "ODI", "T20", "Batting")]:
         if fmt not in groups:
             continue
-        rows = "".join(_li(r) for r in groups[fmt])
-        blocks.append(f'<h2>{fmt} <span class="c">{len(groups[fmt])}</span></h2><ul>{rows}</ul>')
-    return Response(_INDEX_HTML.replace("{{rows}}", "".join(blocks) or "<p>No reports yet.</p>"),
-                    mimetype="text/html")
+        cards = "".join(report_card(
+            r["title"], r["btype"], f'/r/{r["name"]}',
+            pdf_href=(f'/pdf/{r["name"]}' if r["has_pdf"] else None),
+            vision_href=(f'/player/{r["name"]}' if r["n_clips"] else None),
+            badge=fmt.upper(), badge_class="test") for r in groups[fmt])
+        blocks.append(group_heading(fmt, len(groups[fmt]), "test") + f'<ul class="reports">{cards}</ul>')
+    body = ('<h1>Bowler Scouting Reports</h1>'
+            '<p class="lead">Test / audit build · click <b>View report</b>, then <b>▶ Vision</b> to watch.</p>'
+            + ("".join(blocks) or '<p class="empty">No reports yet.</p>'))
+    return Response(page("Bowler Scouting Reports", body), mimetype="text/html")
 
 
 @app.route("/r/<path:name>")

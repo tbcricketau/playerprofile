@@ -30,7 +30,7 @@ def _phase_read(P):
         return ""
     top = max(P["phases"], key=lambda p: p["pct_balls"])
     bits = [f"<b>{P['name'].split(',')[-1].strip() if ',' in P['name'] else P['name']}</b> bowls most in the "
-            f"<b>{top['phase'].lower()}</b> ({top['pct_balls']:.0f}% of his overs)"]
+            f"<b>{top['phase'].lower()}</b> ({top['pct_balls']:.0f}% of their overs)"]
     if "Death" in ph:
         d = ph["Death"]
         bits.append(f"and goes at <b>{d['economy']:.2f}</b> at the death vs "
@@ -44,7 +44,7 @@ def _variation_read(P):
     if not v["rows"]:
         return ""
     lead = v["rows"][0]
-    return (f"Around <b>{v['slower_pct']:.0f}%</b> of his balls are slower-ball variations "
+    return (f"Around <b>{v['slower_pct']:.0f}%</b> of their balls are slower-ball variations "
             f"(most often the {lead['type'].lower()}). "
             f"<span style='color:{TEXT_SEC}'>{v['coded_pct']:.0f}% of balls carry a coded delivery type; "
             f"the rest are inferred from pace.</span>")
@@ -92,19 +92,23 @@ def _build_odi_player(P, pdf_path, subtitle, target_country=None):
 
 
 def _grid_figs(legal, off_pace):
-    """The 8 small Where-He-Bowls charts: over/round × on-pace/off-pace, each a pitch map + a beehive.
-    Off pace = a slower-ball variation (odi_profile._var_type); cells with < 25 balls are skipped."""
+    """The 8 small Where-They-Bowl charts: over/round × on-pace/off-pace, each a pitch map + a beehive
+    (fonts scaled down to match the thumbnail size). Off pace = a slower-ball variation
+    (odi_profile._var_type). Also returns `{pk}_{sk}_pct` = that subset's % of all legal balls; cells
+    with < 25 balls are skipped."""
     from odi_profile import _var_type
     lz = build_line_zones("All")
     figs = {}
+    tot = len(legal) or 1
     for pk, offp in (("on", False), ("off", True)):
         for sk, rnd in (("over", False), ("round", True)):
             rows = [r for r in legal if ((_var_type(r, off_pace) is not None) == offp) and (r.get("is_round") == rnd)]
+            figs[f"{pk}_{sk}_pct"] = round(len(rows) / tot * 100)
             if len(rows) < 25:
                 continue
             try:
-                figs[f"{pk}_{sk}_pitch"] = _fig_uri(pitch_heatmap(rows, value="count", title=""), w=224, h=240)
-                figs[f"{pk}_{sk}_bee"] = _fig_uri(beehive(rows, metric="count", title="", line_zones=lz), w=214, h=232)
+                figs[f"{pk}_{sk}_pitch"] = _fig_uri(pitch_heatmap(rows, value="count", title="", font_scale=0.62), w=224, h=240)
+                figs[f"{pk}_{sk}_bee"] = _fig_uri(beehive(rows, metric="count", title="", line_zones=lz, font_scale=0.62), w=214, h=232)
             except Exception:
                 pass
     return figs
@@ -196,10 +200,10 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left">Percentile within same-type <b>ODI</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. <b>Crease variation</b> = how much he shifts his release point sideways across the crease ball to ball (high = varies a lot, low = same spot every ball). <b>Repeatability</b> = length consistency over his stock-length band, so deliberate yorkers/bouncers don't count as poor control (high = tighter, more metronomic than peers). A marker at the very edge = beyond the typical peer range on that trait.</div>
+  <div class="cap" style="text-align:left">Percentile within same-type <b>ODI</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. <b>Crease variation</b> = how much they shift their release point sideways across the crease ball to ball (high = varies a lot, low = same spot every ball). <b>Repeatability</b> = length consistency over their stock-length band, so deliberate yorkers/bouncers don't count as poor control (high = tighter, more metronomic than peers). A marker at the very edge = beyond the typical peer range on that trait.</div>
   {% endif %}
 
-  <h2>Phase Profile <span class="sub" style="font-weight:400">(where he bowls &amp; how he goes there)</span>{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ wickets</a>{% endif %}</h2>
+  <h2>Phase Profile <span class="sub" style="font-weight:400">(where they bowl &amp; how they go there)</span>{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ wickets</a>{% endif %}</h2>
   {% if phase_read %}<div class="read">{{phase_read|safe}}</div>{% endif %}
   <table class="mtab">
     <tr><th>Phase</th><th>% of overs</th><th>Overs</th><th>Economy</th><th>Wkts</th><th>Average</th><th>SR</th><th>Boundary %</th><th>Dot %</th>{% if P.is_pace %}<th>Avg speed</th>{% endif %}</tr>
@@ -240,16 +244,6 @@ _TEMPLATE = r"""
   </div>
   {% endif %}
 
-  <h2>Where He Bowls <span class="sub" style="font-weight:400">(pitch map + beehive · over vs round · stock vs slower)</span></h2>
-  {% for plabel, pk in [("On pace (stock speed)", "on"), ("Off pace (slower balls)", "off")] %}
-  <div style="font-weight:700;font-size:10px;margin:8px 0 2px;color:{{c.ACCENT}}">{{plabel}}</div>
-  <div class="grid4">
-    {% for clabel, ck in [("Over — pitch", pk+"_over_pitch"), ("Over — stumps", pk+"_over_bee"), ("Round — pitch", pk+"_round_pitch"), ("Round — stumps", pk+"_round_bee")] %}
-    <div class="fig">{% if figs[ck] %}<img class="chart" src="{{figs[ck]}}"><div class="cap">{{clabel}}</div>{% else %}<div class="cap" style="padding:26px 4px;color:{{c.TEXT_SEC}}">{{clabel}}<br>— too few —</div>{% endif %}</div>
-    {% endfor %}
-  </div>
-  {% endfor %}
-
   {% if P.vs_hand %}
   <h2>Match-ups <span class="sub" style="font-weight:400">(each hand, split over vs round the wicket)</span></h2>
   <table class="mtab" style="max-width:680px">
@@ -263,8 +257,21 @@ _TEMPLATE = r"""
     {% endfor %}
     {% endfor %}
   </table>
-  <div class="cap" style="text-align:left">Round % = share of his balls to that hand bowled from round the wicket. Sub-rows split each hand over vs round (shown when ≥30 balls).</div>
+  <div class="cap" style="text-align:left">Round % = share of their balls to that hand bowled from round the wicket. Sub-rows split each hand over vs round (shown when ≥30 balls).</div>
   {% endif %}
+
+  <h2>Where They Bowl <span class="sub" style="font-weight:400">(pitch map + beehive · over vs round · stock vs slower)</span></h2>
+  {% for plabel, pk in [("On pace (stock speed)", "on"), ("Off pace (slower balls)", "off")] %}
+  <div style="font-weight:700;font-size:10px;margin:8px 0 2px;color:{{c.ACCENT}}">{{plabel}}</div>
+  <div class="grid4">
+    {% for side, sk in [("Over", "over"), ("Round", "round")] %}
+    {% for kind, suf in [("pitch", "pitch"), ("at stumps", "bee")] %}
+    <div class="fig">{% if figs[pk~"_"~sk~"_"~suf] %}<img class="chart" src="{{figs[pk~"_"~sk~"_"~suf]}}"><div class="cap">{{side}} — {{kind}}{% if suf == "pitch" %} · {{figs[pk~"_"~sk~"_pct"]}}% of balls{% endif %}</div>{% else %}<div class="cap" style="padding:26px 4px;color:{{c.TEXT_SEC}}">{{side}} — {{kind}}<br>— too few —</div>{% endif %}</div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <div class="cap" style="text-align:left">The % on each pitch map is that slice's share of all legal balls (e.g. over the wicket, on pace). Off pace = slower-ball variations.</div>
 
   <div class="note">
     ODI internationals only. Ball-change eras in this sample:
