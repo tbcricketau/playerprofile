@@ -64,11 +64,15 @@ def hawkeye():
 
 
 # ── Report index + serving ────────────────────────────────────────────────────────
+_FMT_LABEL = {"test": "Test", "odi": "ODI", "t20": "T20", "batting": "Batting"}
+
+
 def _reports():
-    """Discover rendered reports by their playlist sidecars → [{name, title, pdf, html, n_clips}]."""
+    """Discover rendered reports (recursively, so the odi/ & t20/ packs are found) by their playlist
+    sidecars → [{name (relpath, no ext), title, fmt, has_pdf/html, n_clips}]."""
     out = []
-    for sidecar in sorted(glob.glob(os.path.join(REPORTS_DIR, "*.playlists.json"))):
-        name = os.path.basename(sidecar)[: -len(".playlists.json")]
+    for sidecar in sorted(glob.glob(os.path.join(REPORTS_DIR, "**", "*.playlists.json"), recursive=True)):
+        name = os.path.relpath(sidecar, REPORTS_DIR)[: -len(".playlists.json")].replace(os.sep, "/")
         try:
             d = json.load(open(sidecar, encoding="utf-8"))
         except Exception:
@@ -76,7 +80,9 @@ def _reports():
         pls = d.get("playlists", d)
         n = sum(len(v) for v in pls.values() if isinstance(v, list))
         meta = d.get("meta", {})
-        out.append({"name": name, "title": meta.get("bowler") or name.replace("_", " ").title(),
+        sub = name.split("/")[0] if "/" in name else ("batting" if "_batting_" in name else "test")
+        out.append({"name": name, "title": meta.get("bowler") or name.split("/")[-1].replace("_", " ").title(),
+                    "fmt": _FMT_LABEL.get(sub, sub.title()),
                     "has_pdf": os.path.exists(os.path.join(REPORTS_DIR, name + ".pdf")),
                     "has_html": os.path.exists(os.path.join(REPORTS_DIR, name + ".html")),
                     "n_clips": n})
@@ -109,17 +115,26 @@ def _webapp_playlists(name):
 
 @app.route("/")
 def index():
-    rows = "".join(
-        f'<li><a href="/r/{r["name"]}">{r["title"]}</a> '
-        f'<span class="n">{r["n_clips"]} clips</span> '
-        + (f'<a class="pdf" href="/pdf/{r["name"]}">PDF</a>' if r["has_pdf"] else "")
-        + "</li>"
-        for r in _reports())
-    return Response(_INDEX_HTML.replace("{{rows}}", rows or "<li>No reports yet.</li>"),
+    groups = {}
+    for r in _reports():
+        groups.setdefault(r["fmt"], []).append(r)
+
+    def _li(r):
+        return (f'<li><a href="/r/{r["name"]}">{r["title"]}</a> '
+                f'<span class="n">{r["n_clips"]} clips</span> '
+                f'<a class="pdf" href="/player/{r["name"]}">▶ clips</a> '
+                + (f'<a class="pdf" href="/pdf/{r["name"]}">PDF</a>' if r["has_pdf"] else "") + "</li>")
+    blocks = []
+    for fmt in ["Test", "ODI", "T20", "Batting"] + [g for g in sorted(groups) if g not in ("Test", "ODI", "T20", "Batting")]:
+        if fmt not in groups:
+            continue
+        rows = "".join(_li(r) for r in groups[fmt])
+        blocks.append(f'<h2>{fmt} <span class="c">{len(groups[fmt])}</span></h2><ul>{rows}</ul>')
+    return Response(_INDEX_HTML.replace("{{rows}}", "".join(blocks) or "<p>No reports yet.</p>"),
                     mimetype="text/html")
 
 
-@app.route("/r/<name>")
+@app.route("/r/<path:name>")
 def report(name):
     """Serve the interactive report with video routed through the mint endpoints (durable video).
     Rebuilds the inline player from the sidecar so links keep the same ▶ behaviour."""
@@ -138,14 +153,14 @@ def report(name):
     return Response(html, mimetype="text/html")
 
 
-@app.route("/pdf/<name>")
+@app.route("/pdf/<path:name>")
 def pdf(name):
     if not os.path.exists(os.path.join(REPORTS_DIR, name + ".pdf")):
         abort(404)
     return send_from_directory(REPORTS_DIR, name + ".pdf")
 
 
-@app.route("/player/<name>")
+@app.route("/player/<path:name>")
 def player(name):
     """Standalone player page (all playlists) with mint-on-demand video — for quick clip review."""
     pls, meta = _webapp_playlists(name)
@@ -162,13 +177,14 @@ _INDEX_HTML = """<!doctype html><meta charset=utf8>
 <title>Bowler Scouting Reports</title>
 <style>
  body{font:15px/1.5 Inter,-apple-system,Segoe UI,sans-serif;max-width:720px;margin:40px auto;padding:0 16px;color:#1a1a2e}
- h1{color:#003087} ul{list-style:none;padding:0} li{padding:10px 12px;border:1px solid #e5e7eb;border-radius:8px;margin:6px 0;display:flex;align-items:center;gap:10px}
+ h1{color:#003087;margin-bottom:4px} h2{color:#003087;font-size:14px;margin:22px 0 6px;border-bottom:2px solid #003087;padding-bottom:3px}
+ ul{list-style:none;padding:0} li{padding:10px 12px;border:1px solid #e5e7eb;border-radius:8px;margin:6px 0;display:flex;align-items:center;gap:10px}
  a{color:#003087;text-decoration:none;font-weight:600} a:hover{text-decoration:underline}
  .n{color:#6b7280;font-size:12px;margin-left:auto} .pdf{font-size:12px;background:#eef1f6;padding:3px 8px;border-radius:5px}
- .note{color:#6b7280;font-size:12px;margin-top:20px}
+ .c{color:#6b7280;font-weight:400;font-size:12px} .note{color:#6b7280;font-size:12px;margin-top:20px}
 </style>
 <h1>Bowler Scouting Reports</h1>
-<ul>{{rows}}</ul>
+{{rows}}
 <p class="note">Video is minted on demand, so clips keep working. Open a report and click ▶ to watch.</p>
 """
 
