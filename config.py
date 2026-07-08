@@ -1,6 +1,6 @@
 import os
 
-from ludis_cricket.config import DATA_SCHEMA  # re-export — single source of truth
+from cricket_core.config import DATA_SCHEMA  # re-export — single source of truth
 
 # ── Player photos ───────────────────────────────────────────────────────────────
 # Backend: "local" reads from photos/ only; "sharepoint" also fetches from a

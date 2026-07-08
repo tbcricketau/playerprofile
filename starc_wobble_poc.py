@@ -16,7 +16,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from profile import build_profile
-from ludis_cricket.video import (
+from cricket_core.video import (
     playlist_item, resolve_playlist, build_player_html, get_fairplay_sas,
 )
 

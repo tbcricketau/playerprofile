@@ -6,12 +6,12 @@ playlists; end with auto-cut highlight reels and (later) AI video review. The pi
 bowler report, then back the data with vision so we get the full picture.**
 
 Status — **Phases 0–2 built (2026-07-03)**, all in the shared package so every project reuses them:
-- **Phase 0 DONE** — `ludis_cricket.video`: `clip_url`/`clip_stem`/`resolve_clip` + SSO/RBAC SAS.
+- **Phase 0 DONE** — `cricket_core.video`: `clip_url`/`clip_stem`/`resolve_clip` + SSO/RBAC SAS.
   playerprofile loader pulls `video_file_name`/season/gender/match_length; rows carry `clip_stem`.
 - **Phase 1 DONE** — `playerprofile/playlists.py` builds Stock ball / Wickets / New-ball
   out-swinger playlists; `render_report` writes `<pdf>.playlists.json`. Shared schema/writer
-  (`playlist_item`/`resolve_playlist`/`write_playlists`) in `ludis_cricket.video`.
-- **Phase 2 DONE (v1)** — reusable `ludis_cricket.video.playlist_widget` (Streamlit) + a
+  (`playlist_item`/`resolve_playlist`/`write_playlists`) in `cricket_core.video`.
+- **Phase 2 DONE (v1)** — reusable `cricket_core.video.playlist_widget` (Streamlit) + a
   playerprofile page `video_viewer.py` (`streamlit run video_viewer.py --server.port 8061`).
 - **Next:** more insight playlists (beaten bat, danger zone, in-swingers); live viewer inside the
   main app (build playlists for the selected bowler, cached) rather than only from sidecars; PDF
@@ -30,7 +30,7 @@ A delivery is identifiable by `delivery_id`; the clip is deterministic from `vid
 - Add `video_file_name` (and confirm `delivery_id`, `season`, `match_length_id`, `gender`) to
   `data_loaders.load_bowler_deliveries` — mirror the sequencer's corrected path logic.
 - Add `profile.clip_stem(row)` → the extension-less blob URL, and reuse
-  `blob_auth.resolve_clip` (lift `blob_auth`/`resolve_clip` into the shared `ludis_cricket`
+  `blob_auth.resolve_clip` (lift `blob_auth`/`resolve_clip` into the shared `cricket_core`
   package so both projects import one copy, rather than duplicating).
 - **Coverage reality:** many older deliveries have no clip. The resolver returns `None`; every
   builder below must filter to deliveries that actually have a clip and show an availability
@@ -52,7 +52,7 @@ A delivery is identifiable by `delivery_id`; the clip is deterministic from `vid
   denominator.
 
 ## Phase 2b — modal web player (DONE 2026-07-03)
-`ludis_cricket.video.build_player_html(playlists, out, title, subtitle)` writes a **self-contained
+`cricket_core.video.build_player_html(playlists, out, title, subtitle)` writes a **self-contained
 modal player** (one HTML file, baked SAS): clip cards per playlist tab; clicking opens a lightbox
 that **greys out the page** with the video, caption, counter, prev/next (arrow keys), Esc/backdrop
 to close. Reports write a `<pdf>.player.html` sidecar and the ▶ links open it at
@@ -76,13 +76,13 @@ store. Blockers to resolve before wiring:
 Once resolved: add `angles` to each playlist item (broadcast + front-on + side-on) — the modal
 already switches between them.
 
-## Phase 4b — footage analysis (STARTED 2026-07-03 — `c:\Ludis\footageanalysis`)
+## Phase 4b — footage analysis (STARTED 2026-07-03 — `c:\Projects\footageanalysis`)
 v0 pipeline **built & validated**: per-match camera→viewpoint maps from the Hawkeye clips.
 `pipeline.py --match <id> --date <YYYY-MM-DD>` samples ball folders, downloads each camera's
 clip (SSO SAS), extracts frames (bundled imageio-ffmpeg exe — runs under AppControl; no
 numpy/OpenCV, Pillow+stdlib only), classifies **end_on vs side_on** (primary cue: grass vs
 ad-boards at frame top — 6/6 cameras at two venues, 100% frame agreement), writes
-`data/camera_angles/<match_id>.json` + keeps frames for audit. `ludis_cricket.video` consumes
+`data/camera_angles/<match_id>.json` + keeps frames for audit. `cricket_core.video` consumes
 the maps: player angle buttons read **End-on N / Side-on N** (end-on first). Layout variance
 handled (some matches nest `1st INNINGS/2nd INNINGS` above the ball folders; ball folder =
 `HHMM_inn_over_ball` parsed at any depth). **Next (v1):** behind-bowler vs batter-end
@@ -120,7 +120,7 @@ location is known.
 ---
 
 ## Recommended MVP (smallest thing that delivers value)
-1. Phase 0 resolver + shared `blob_auth` in `ludis_cricket`.
+1. Phase 0 resolver + shared `blob_auth` in `cricket_core`.
 2. Playlist sidecar for **three** insights first: **Stock ball**, **Wickets**, **New-ball
    out-swingers** (the swing thread we just reworked).
 3. Generalise the sequencer to play a playlist file.

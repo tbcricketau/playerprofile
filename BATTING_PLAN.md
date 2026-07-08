@@ -39,7 +39,7 @@ weakness flag (high false%/dismissals, low avg vs the batter's own baseline).
 - **Shot type** (`stroke_family`) — runs %, false-shot %, dismissals → which strokes are risky.
 
 ## Batting fingerprint (vs peer batters)
-A `fingerprint_strip` per metric (reuse `ludis_cricket.charts.fingerprint_strip`), percentile vs a
+A `fingerprint_strip` per metric (reuse `cricket_core.charts.fingerprint_strip`), percentile vs a
 peer cohort (Test batters with ≥ N balls; later split by top-order / hand). Metrics (vulnerability
 framed — **higher percentile = more of a target**, invert the "good batter" ones):
 Average · Strike rate · False-shot % · Dismissals/100 vs pace · …vs spin · False% vs seam
@@ -65,7 +65,7 @@ pattern as the bowler references (CSV is source of truth; DB upload later).
 - **build_batting_reports.py** — flags: `--mode combined|focused`, `--group right_pace`, ids/CSV.
 - **referencebuilder/scripts/build_batter_vulnerability_profile.py** — per-batter metrics +
   cohort percentiles → `data/batter_vulnerability_profile.csv`.
-- **Video** (later): reuse `ludis_cricket.video` — playlists of the batter's false shots / dismissals
+- **Video** (later): reuse `cricket_core.video` — playlists of the batter's false shots / dismissals
   vs a bowler group, backing the plan.
 
 ## Order of implementation (starting now, pare back after)

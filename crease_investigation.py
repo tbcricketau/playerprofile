@@ -17,10 +17,10 @@ import statistics
 import plotly.graph_objects as go
 from jinja2 import Template
 
-from ludis_cricket.warehouse import set_conn_cursor, run_query
-from ludis_cricket.config import DATA_SCHEMA as S, international_series_sql
-from ludis_cricket.pdf import fig_uri, html_to_pdf
-from ludis_cricket.theme import (
+from cricket_core.warehouse import set_conn_cursor, run_query
+from cricket_core.config import DATA_SCHEMA as S, international_series_sql
+from cricket_core.pdf import fig_uri, html_to_pdf
+from cricket_core.theme import (
     BG_PAGE, BG_PANEL, TEXT_PRI, TEXT_SEC, ACCENT, DANGER, BORDER, GRID,
 )
 

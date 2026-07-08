@@ -5,7 +5,7 @@ plays the clips per insight (stock ball / wickets / new-ball out-swingers) with 
 Run:  .\\venv\\Scripts\\streamlit run video_viewer.py --server.port 8061
 
 The heavy lifting (clip resolution, the viewer widget) lives in the shared package
-`ludis_cricket.video`, so the same viewer works in any Ludis app.
+`cricket_core.video`, so the same viewer works in any of our apps.
 """
 import glob
 import json
@@ -13,8 +13,8 @@ import os
 
 import streamlit as st
 
-from ludis_cricket.theme import apply_theme
-from ludis_cricket.video import playlist_widget
+from cricket_core.theme import apply_theme
+from cricket_core.video import playlist_widget
 
 st.set_page_config(page_title="Bowler video", layout="wide")
 apply_theme()

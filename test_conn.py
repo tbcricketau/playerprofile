@@ -1,4 +1,4 @@
-from ludis_cricket.warehouse import set_conn_cursor, run_query
+from cricket_core.warehouse import set_conn_cursor, run_query
 from config import DATA_SCHEMA
 
 conn, cursor = set_conn_cursor()

@@ -18,7 +18,7 @@ import plotly.graph_objects as go
 from jinja2 import Template
 
 from version import REPORT_VERSION
-from ludis_cricket.warehouse import set_conn_cursor, run_query
+from cricket_core.warehouse import set_conn_cursor, run_query
 from config import DATA_SCHEMA as S
 from report import (
     _fig_uri, _html_to_pdf,

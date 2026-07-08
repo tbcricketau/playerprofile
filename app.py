@@ -7,14 +7,14 @@ so the dashboard and the PDF reports compute identically (single source of truth
 import streamlit as st
 
 from data_loaders import load_test_teams, load_team_bowlers, load_bowler_deliveries
-from ludis_cricket.charts import (
+from cricket_core.charts import (
     speed_violin, innings_violin, day_violin, pitch_scatter_map, beehive,
     zone_concentration, spell_summary_df, innings_summary_df, day_summary_df,
     wagon_wheel_zones,
 )
 from profile import build_profile, process_rows, team_flag as _team_flag, fmt as _fmt
 from photos import get_photo_bytes
-from ludis_cricket.theme import apply_theme
+from cricket_core.theme import apply_theme
 
 st.set_page_config(
     page_title="Bowler Profiles",

@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Glob(**)",
+      "Grep(**)",
+      "Edit(**)",
+      "Write(**)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git stash:*)",
+      "Bash(git restore:*)",
+      "Bash(py -3.12:*)",
+      "Bash(venv/Scripts/python.exe:*)",
+      "Bash(./venv/Scripts/python.exe:*)",
+      "Bash(.\\venv\\Scripts\\python.exe:*)",
+      "PowerShell(.\\venv\\Scripts\\python.exe:*)",
+      "PowerShell(git status:*)",
+      "PowerShell(git diff:*)",
+      "PowerShell(git log:*)",
+      "WebFetch(domain:crictoday.com)",
+      "WebFetch(domain:www.vantasports.ai)",
+      "WebFetch(domain:www.dangermouse.net)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "WebFetch(domain:www.cricketworld.com)",
+      "WebFetch(domain:cricketershub.com)",
+      "WebFetch(domain:web.archive.org)",
+      "WebFetch(domain:australiancricketinstitute.com)",
+      "WebFetch(domain:www.pitchvision.com)",
+      "WebFetch(domain:www.learn-cricket.com)",
+      "WebFetch(domain:r.jina.ai)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(**/.env)",
+      "Read(.streamlit/secrets.toml)",
+      "Read(**/secrets.toml)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git commit --no-verify:*)",
+      "Bash(git commit -n:*)"
+    ],
+    "additionalDirectories": [
+      "C:\\Projects\\presentationbuilder"
+    ]
+  }
+}

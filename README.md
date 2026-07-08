@@ -26,8 +26,8 @@ Optionally a SharePoint/Graph backend can fetch more, cached to `.photo_cache/`
 
 ## Data
 
-- **Live data** comes from the Azure SQL warehouse via `ludis_cricket.warehouse`
-  (non-interactive MSAL auth); schema is `ludis_cricket.config.DATA_SCHEMA`.
+- **Live data** comes from the Azure SQL warehouse via `cricket_core.warehouse`
+  (non-interactive MSAL auth); schema is `cricket_core.config.DATA_SCHEMA`.
 
 ### Reference-data dependency (important)
 
@@ -41,8 +41,8 @@ This app reads **pre-built bowler profiles** produced by the sibling project
 | `bowler_repeatability_profile.csv`   | `build_bowler_repeatability_profile.py`|
 | `bowler_crease_profile.csv`          | `build_bowler_crease_profile.py`       |
 
-`profile.py` references these by **absolute path** (`c:\Ludis\referencebuilder\data\…`),
-so the projects must live as **siblings under `c:\Ludis\`**. To (re)generate the
+`profile.py` references these by **absolute path** (`c:\Projects\referencebuilder\data\…`),
+so the projects must live as **siblings under `c:\Projects\`**. To (re)generate the
 profiles — and to see when they need refreshing (new data drop, `DATA_SCHEMA` change,
 new matches) — see **`referencebuilder/RUNBOOK.md`**.
 

@@ -1,7 +1,7 @@
 import streamlit as st
 from config import DATA_SCHEMA
-from ludis_cricket.config import international_series_sql
-from ludis_cricket.warehouse import set_conn_cursor, run_query
+from cricket_core.config import international_series_sql
+from cricket_core.warehouse import set_conn_cursor, run_query
 
 # Official international Tests only.  match_length_id does NOT separate internationals from
 # domestic (Tests and Sheffield Shield both sit under id 5), so we filter on the competition

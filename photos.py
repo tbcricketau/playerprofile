@@ -41,7 +41,7 @@ def _mime(data: bytes) -> str:
 
 # ── Microsoft Graph ─────────────────────────────────────────────────────────────
 def _graph_token() -> str | None:
-    from ludis_cricket.warehouse import get_params_data_warehouse, get_token
+    from cricket_core.warehouse import get_params_data_warehouse, get_token
     params, _ = get_params_data_warehouse()
     params = dict(params, scope=["https://graph.microsoft.com/.default"])
     tok = get_token(params) or {}

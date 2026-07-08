@@ -18,10 +18,10 @@ from data_loaders import load_bowler_deliveries, load_bowler_info
 import statistics
 from profile import (process_rows, _safe_float, _quantile, _SHORT_BUCKETS, _fingerprint,
                     _pctl_of, load_phase_profiles)
-from ludis_cricket.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
+from cricket_core.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE)
-from ludis_cricket.lookups import team_flag
-from ludis_cricket.charts import LENGTH_ZONES_PACE   # authoritative pace length bands
+from cricket_core.lookups import team_flag
+from cricket_core.charts import LENGTH_ZONES_PACE   # authoritative pace length bands
 
 _LENGTH_BANDS = [lab for _lo, _hi, lab in LENGTH_ZONES_PACE]   # Yorker/Full … Short (in order)
 

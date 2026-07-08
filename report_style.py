@@ -8,7 +8,7 @@ Usage in a report:
     html = Template(_TEMPLATE).render(css=REPORT_CSS, c=theme_ctx(), cards=[...], ...)
     # and in the template's <head>:  <style> @page {...} {{ css }} {...section-specific CSS...} </style>
 
-Colours mirror the Opta light theme (ludis_cricket.theme / CLAUDE.md).
+Colours mirror the Opta light theme (cricket_core.theme / CLAUDE.md).
 """
 
 import math

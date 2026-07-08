@@ -17,14 +17,14 @@ project; this project builds the batter-facing assembly + report. Tom has **sign
 GPS-corrected fields** — proceed to the engine.
 
 **What's already done (don't rebuild):**
-- **§2 stock dictionary** — `ludis_cricket.fields.STOCK`, `stock_field(fmt, bowler_type, hand, phase)`,
+- **§2 stock dictionary** — `cricket_core.fields.STOCK`, `stock_field(fmt, bowler_type, hand, phase)`,
   `validate_stock()` (all legal). 6 scenarios (pace_same/across, finger/wrist × in/away).
 - **§3b GPS corrections** — GPS now measures manning directly (what §3 said the warehouse couldn't).
-  **`ludis_cricket.fields.gps_corrected_field(fmt, bowler_type, hand, phase, with_changes=False)`**
+  **`cricket_core.fields.gps_corrected_field(fmt, bowler_type, hand, phase, with_changes=False)`**
   returns the stock with the ≤3 strongest GPS-evidenced, legality-checked swaps applied (falls back
   to raw stock for Test / unbuilt cells). Evidence CSVs in `catapultgps/data`
   (`field_corrections.csv`, `field_validation.csv`) read via
-  `ludis_cricket.gps.load_field_corrections()` / `load_field_validation()`. **This is the base to
+  `cricket_core.gps.load_field_corrections()` / `load_field_validation()`. **This is the base to
   start the assembly from — not raw `STOCK`.**
 - **field_engine.py** currently holds the **v1 data-derived** `build_field` (run_flow +
   expected_catches + `_backtest` + `field_diagram`). Keep those as the **value model + renderer**;
@@ -99,7 +99,7 @@ A field that is **STOCK ± at most 3 deviations**, rendered as:
 
 ## 2. Stock field library (investigation part A — codify, don't derive)
 
-**✅ BUILT 2026-07-05 → `ludis_cricket/fields.py`** (was a draft table; now the live dictionary).
+**✅ BUILT 2026-07-05 → `cricket_core/fields.py`** (was a draft table; now the live dictionary).
 A field follows how the ball behaves *relative to the batter*, so the 12 (bowler-type × hand)
 combinations collapse to **six scenarios** + a resolver; each carries a field per format × phase.
 `stock_field(fmt, bowler_type, batter_hand, phase)` returns the 9 names. `validate_stock()`
@@ -233,13 +233,13 @@ under-calls the deep sweepers + midwicket**, sharpest through the middle/death o
 defensive fields than the attacking stock defaults. Visual overlay:
 `https://claude.ai/code/artifact/263f1806-e49b-40a1-9a41-c26e00d455b0`.
 
-**How it feeds the engine — the corrected stock base.** `ludis_cricket.fields.gps_corrected_field()`
+**How it feeds the engine — the corrected stock base.** `cricket_core.fields.gps_corrected_field()`
 returns the stock with the **≤3 strongest GPS-evidenced, legality-checked swaps** applied (drop the
 least-manned stock position, add the most-manned position the stock omits; 9 fielders + out-of-circle
 limit + ≤2-behind-square-leg all re-validated — 24/24 corrected cells legal). It falls back to raw
 `stock_field` where there's no correction (Test attack/defend has no per-ball label yet; unbuilt
 cells). Evidence tables: `catapultgps/data/field_corrections.csv` (the swaps) + `field_validation.csv`
-(per-position manning), read via `ludis_cricket.gps.load_field_corrections()`.
+(per-position manning), read via `cricket_core.gps.load_field_corrections()`.
 
 So the assembly (§5) **starts from `gps_corrected_field` instead of raw `stock`**, then applies the
 per-batter deviations below on top. The base is now empirically grounded; the batter rules stay the
@@ -291,11 +291,11 @@ if backtest shows no gain → return pure stock, note "no deviation earned"
 - Table gains a **Stock/Change** column; changes highlighted.
 - The read line lists **only the deviations** ("Stock new-ball field, two changes: …").
 - Both backtest numbers printed: ours vs stock.
-- Diagram unchanged (orientation/colour conventions now in `c:\Ludis\CLAUDE.md`).
+- Diagram unchanged (orientation/colour conventions now in `c:\Projects\CLAUDE.md`).
 
 ## 7. Build order (after sign-off)
 
-1. ✅ `ludis_cricket/fields.py` — stock templates (§2) + legality checker. **DONE + GPS-corrected
+1. ✅ `cricket_core/fields.py` — stock templates (§2) + legality checker. **DONE + GPS-corrected
    base (§3b): `fields.gps_corrected_field()`. Signed off 2026-07-06.**
 2. `referencebuilder/build_field_trigger_norms.py` — cohort percentile distributions for the
    R1–R8 trigger stats (phase × group × format). *(DB, one query family)* — **NEXT.**

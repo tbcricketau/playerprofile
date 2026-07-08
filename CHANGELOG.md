@@ -55,10 +55,10 @@ the front page.
   bucket (AUS↔SA/NZ; ENG; subcontinent; Caribbean), then the rest — most recent within each
   tier. Falls back to pure recency when no like-conditions footage exists (the common case for
   opposition bowlers touring Australia). `--target-country` on `build_reports.py` (default
-  Australia); taxonomy in `ludis_cricket.lookups.conditions_tier`; loader now carries the venue
+  Australia); taxonomy in `cricket_core.lookups.conditions_tier`; loader now carries the venue
   country; clip captions show country + year. (Ordering is applied to the clips that actually
   resolve, so sparse-coverage tiers don't crowd out available clips.)
-- **Bowler-type override** (`ludis_cricket.lookups.BOWLER_TYPE_OVERRIDE`) for warehouse
+- **Bowler-type override** (`cricket_core.lookups.BOWLER_TYPE_OVERRIDE`) for warehouse
   mis-codes — e.g. Nahid Rana (express quick coded Medium) now reads Right Fast. Mirrors the
   batting-hand override pattern.
 - **Bowling report — player-facing upgrade (shippable to players).** Four new content
@@ -87,7 +87,7 @@ the front page.
   percentile; signature shot highlighted, ▼ = under-indexed) and a narrative read naming his
   most over/under-indexed scoring shots (e.g. Smith: ramp/scoop 7.3× the typical share, P98;
   cut only 5% vs 8% typical). Shares are within stroke-coded balls (coding coverage varies).
-- **Modal video player + playlists (replaces raw clip links).** `ludis_cricket.video.
+- **Modal video player + playlists (replaces raw clip links).** `cricket_core.video.
   build_player_html` writes a self-contained `<pdf>.player.html` beside each report: clip cards
   per playlist tab; clicking opens a **lightbox that greys out the page** (prev/next, arrow keys,
   Esc). The PDF ▶ links open it at `#<playlist>` — no more raw-mp4 download/click-back. Bowling:
@@ -111,11 +111,11 @@ the front page.
   left_orthodox/left_unorthodox) that filters to that group and adds a **bowling plan**. Loader
   gains swing/seam labels + bowler hand/style + video cols; `build_batting_reports.py` gets
   `--mode combined|focused|both --group`.
-- **Example-video links in the reports** (both batting and bowling). `ludis_cricket.video.
+- **Example-video links in the reports** (both batting and bowling). `cricket_core.video.
   first_example` resolves one playable clip per key insight; the PDF now carries clickable
   "▶ watch" links — bowling: stock ball + a wicket; batting: danger ball + his risky stroke +
   a dismissal. Links use a 72h SAS (baked, time-limited); best-effort (absent if no clip).
-- **Video: report insights are now backed by clips.** New shared module `ludis_cricket.video`
+- **Video: report insights are now backed by clips.** New shared module `cricket_core.video`
   (reusable by every project) resolves a delivery → a playable Fairplay URL via SSO/RBAC (SAS,
   no secret), handling the real blob layout + `.mp4`/`.MP4` case. `playerprofile.playlists`
   builds per-insight playlists — **Stock ball, Wickets, New-ball out-swingers** — with captions
@@ -165,16 +165,16 @@ the front page.
   with a footnote counting wickets that pitched too full to place on the map (negative/
   at-crease tracked length) — reconciles the earlier "24 of 134" vs 137-wicket header.
 - **Scope = official international Tests only** (via `Matches.series_id → Series.name`,
-  `ludis_cricket.config.international_series_sql`), not `match_length_id` — reproduces
+  `cricket_core.config.international_series_sql`), not `match_length_id` — reproduces
   official Test tallies; Sheffield Shield etc. excluded.
-- **Batting-hand corrections** (`ludis_cricket.lookups.BATTING_HAND_OVERRIDE`) for a few
+- **Batting-hand corrections** (`cricket_core.lookups.BATTING_HAND_OVERRIDE`) for a few
   mis-recorded players (e.g. Rizwan) — fixes vs-LHB/RHB splits.
 - **Release point & crease** expanded in Sequencing: release-height percentile (tall/low),
   crease-width percentile, variation percentile, and an over/round tight/standard/wide
   usage table — all benchmarked vs **hand × pace/spin** peers (release ref rebuilt
   Test-only, `bowler_crease_profile.csv` gains `peer_group`, `release_height_cm`,
   `height_pctl`). Release data is modern-era (2017+); shown with `n=`.
-- **Release-point map** (`ludis_cricket.charts.release_map`): a release-point cloud seen
+- **Release-point map** (`cricket_core.charts.release_map`): a release-point cloud seen
   from behind the bowler — lateral position × release height. Purple density (like the
   pitch map), **Over/Round labelled on the plot** (no legend), dotted tight/standard/wide
   + return-crease guides, and a mean-release-height line. **Over/round drawn as two
@@ -192,7 +192,7 @@ the front page.
   now precedes Over vs Round and Release Point. Pitch-map and over/round-map charts trimmed
   ~25% (denser, still legible) so each page fills to its section boundary.
 - **Bowling Fingerprint** panel (after the Scouting Summary): 7–8 StatsBomb-style
-  distribution cards (`ludis_cricket.charts.fingerprint_strip`) — pace, release height,
+  distribution cards (`cricket_core.charts.fingerprint_strip`) — pace, release height,
   crease width/variation, seam/turn, swing/drift, bounce, repeatability — each a mini peer
   distribution with the bowler marked by a **line** + `Pnn` percentile. Release/crease vs
   hand × pace/spin; movement/speed/repeatability vs pace/spin (labelled per card). Caption
@@ -202,7 +202,7 @@ the front page.
 - **Page numbers** on the PDF via CSS `@page` margin boxes (`n / total` bottom-right,
   "{name} · bowling scout" bottom-left) — Chromium print-to-pdf honours margin boxes.
 - Charts: `automargin=True` + axis-title `standoff` to stop axis titles overlapping ticks
-  (documented in `c:\Ludis\CLAUDE.md`).
+  (documented in `c:\Projects\CLAUDE.md`).
 
 ## Batting profile v0.1 (in progress) — 2026-07-02
 - New: `batting_loaders.py`, `batter_profile.py`, `batting_report.py`,

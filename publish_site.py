@@ -44,9 +44,8 @@ def _rmtree(path):
         except TypeError:
             shutil.rmtree(path, onerror=lambda f, p, e: (_onexc(f, p, e)))
 
-sys.path.insert(0, r"c:\Ludis\ludis-cricket\src")
 
-from ludis_cricket.video import (get_fairplay_sas, get_hawkeye_sas, resolve_clip,
+from cricket_core.video import (get_fairplay_sas, get_hawkeye_sas, resolve_clip,
                                   inline_player_snippet, build_player_html)
 
 HERE = os.path.dirname(os.path.abspath(__file__))

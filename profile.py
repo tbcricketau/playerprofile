@@ -20,12 +20,12 @@ from data_loaders import (
     load_bowler_deliveries, load_bowler_info,
     load_bowler_catch_positions, load_fielding_positions,
 )
-from ludis_cricket.charts import (
+from cricket_core.charts import (
     zone_concentration, danger_length, danger_line, danger_cell,
     LENGTH_ZONES_PACE, LENGTH_ZONES_SPIN, LENGTH_ZONES_1M, LENGTH_ZONES_05M, PITCH_HW,
 )
-from ludis_cricket.video import clip_stem as _clip_stem, resolve_clip as _resolve_clip
-from ludis_cricket.lookups import (
+from cricket_core.video import clip_stem as _clip_stem, resolve_clip as _resolve_clip
+from cricket_core.lookups import (
     SHOT_QUALITY_MAP as _SHOT_QUALITY_MAP,
     BEATEN_QUALITIES as _BEATEN_QUALITIES,
     FALSE_SHOT_QUALITIES as _FALSE_SHOT_QUALITIES,
@@ -39,7 +39,7 @@ from ludis_cricket.lookups import (
     team_flag,
 )
 
-_SPEED_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_speed_profile.csv"
+_SPEED_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_speed_profile.csv"
 
 _SHORT_BUCKETS = {"8-9m", "9-10m", "10-11m", "11-12m", "12-13m", "13-14m", "14m+"}
 
@@ -134,10 +134,10 @@ def load_speed_profiles(fmt: str = "Test") -> dict:
     return _load_profile_csv(_SPEED_PROFILE_CSV, fmt)
 
 
-_MOVEMENT_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_movement_profile.csv"
-_REPEAT_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_repeatability_profile.csv"
-_CREASE_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_crease_profile.csv"
-_DISMISSAL_BASELINE_CSV = r"c:\Ludis\referencebuilder\data\dismissal_baseline.csv"
+_MOVEMENT_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_movement_profile.csv"
+_REPEAT_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_repeatability_profile.csv"
+_CREASE_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_crease_profile.csv"
+_DISMISSAL_BASELINE_CSV = r"c:\Projects\referencebuilder\data\dismissal_baseline.csv"
 _DISMISSAL_BASELINE = None
 
 
@@ -158,7 +158,7 @@ def load_crease_profiles(fmt: str = "Test") -> dict:
     return _load_profile_csv(_CREASE_PROFILE_CSV, fmt)
 
 
-_PHASE_PROFILE_CSV = r"c:\Ludis\referencebuilder\data\bowler_phase_profile.csv"
+_PHASE_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_phase_profile.csv"
 _PHASE_PROFILES: dict = {}
 
 

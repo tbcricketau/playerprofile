@@ -18,8 +18,8 @@ from version import REPORT_VERSION
 from batter_profile import build_batter_profile, BOWLER_GROUPS
 import field_engine as fe
 from photos import get_photo_data_uri
-from ludis_cricket.charts import wagon_wheel_zones, fingerprint_strip
-from ludis_cricket.video import first_example, get_fairplay_sas
+from cricket_core.charts import wagon_wheel_zones, fingerprint_strip
+from cricket_core.video import first_example, get_fairplay_sas
 from report import (
     _fig_uri, _html_to_pdf, _country_code,
     BG_PAGE, BG_PANEL, TEXT_PRI, TEXT_SEC, ACCENT, DANGER, BORDER,
@@ -193,7 +193,7 @@ def _narrative(P: dict) -> dict:
 import csv as _csv
 import os as _os
 
-_BAT_REF_CSV = r"c:\Ludis\referencebuilder\data\batter_vulnerability_profile.csv"
+_BAT_REF_CSV = r"c:\Projects\referencebuilder\data\batter_vulnerability_profile.csv"
 _BAT_REF = None
 
 
@@ -211,8 +211,8 @@ def _bat_ref():
 # Built by referencebuilder/scripts/build_batter_stroke_norms.py, keyed by format ×
 # bowler group (all / pace / spin / right_pace / … — the report's group vocabulary).
 # Shares are within stroke-coded balls only.
-_STROKE_NORMS_CSV = r"c:\Ludis\referencebuilder\data\batter_stroke_norms.csv"
-_STROKE_COHORT_CSV = r"c:\Ludis\referencebuilder\data\stroke_norms_cohort.csv"
+_STROKE_NORMS_CSV = r"c:\Projects\referencebuilder\data\batter_stroke_norms.csv"
+_STROKE_COHORT_CSV = r"c:\Projects\referencebuilder\data\stroke_norms_cohort.csv"
 _STROKE_NORMS = None
 _NORM_FAMS = ("Drive", "Cut", "Pull/Hook", "Sweep", "Work/Nudge", "Slog", "Ramp/Scoop")
 _NORM_FORMAT = "test"
@@ -576,7 +576,7 @@ def _build_player(P: dict, pdf_path: str) -> dict:
     try:
         get_fairplay_sas(ttl_hours=72)
         from playlists import build_batting_playlists
-        from ludis_cricket.video import build_player_html, write_playlists
+        from cricket_core.video import build_player_html, write_playlists
         pls = build_batting_playlists(P, cap=8)
         if not pls:
             return {}
@@ -666,7 +666,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     if ctx["video"].get("playlists"):
         # Interactive HTML report: ▶ opens the playlist as a modal OVER the report in the same
         # tab (iOS Safari/Chrome friendly); the PDF keeps the standalone-player href fallback.
-        from ludis_cricket.video import inline_player_snippet
+        from cricket_core.video import inline_player_snippet
         html = html.replace("</body>", inline_player_snippet(ctx["video"]["playlists"]) + "</body>")
         with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
             f.write(html)

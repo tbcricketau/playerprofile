@@ -21,12 +21,11 @@ import os
 import sys
 import urllib.parse
 
-sys.path.insert(0, r"c:\Ludis\ludis-cricket\src")
 
 from flask import Flask, abort, redirect, request, send_from_directory, Response
 
-from ludis_cricket.video import resolve_clip, build_player_html
-from ludis_cricket.video import get_fairplay_sas, get_hawkeye_sas
+from cricket_core.video import resolve_clip, build_player_html
+from cricket_core.video import get_fairplay_sas, get_hawkeye_sas
 from site_render import page, report_card, group_heading, TYPE_RE
 
 REPORTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "reports")
@@ -153,7 +152,7 @@ def report(name):
     html = open(html_path, encoding="utf-8").read()
     pls, _ = _webapp_playlists(name)
     # Rebuild the in-page player with mint-endpoint URLs and swap it into the report HTML.
-    from ludis_cricket.video import inline_player_snippet
+    from cricket_core.video import inline_player_snippet
     snippet = inline_player_snippet(pls)
     # remove any previously-baked inline snippet, then inject the fresh one before </body>
     import re

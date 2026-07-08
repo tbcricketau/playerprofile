@@ -22,7 +22,7 @@ import json
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CSV = r"c:\Ludis\presentationbuilder\data\bowlers_for_reports.csv"
+CSV = r"c:\Projects\presentationbuilder\data\bowlers_for_reports.csv"
 SERIES_JSON = os.path.join(HERE, "series.json")
 TODAY = datetime.date(2026, 7, 6)
 RECENT_DAYS = 15 * 30            # ~15 months = "squad" window

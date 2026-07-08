@@ -25,7 +25,7 @@ with the link gets working video for months:
 1. Give the app a **managed identity** with **Storage Blob Data Reader** on
    `auscricketfairplayase` (Fairplay) and `amshawkeyeupload` (Hawkeye). *(Same class of RBAC
    grant as the Virtualeye ask — bundle them.)*
-2. Swap `_credential` so the shared `ludis_cricket.video` auth uses that managed identity when
+2. Swap `_credential` so the shared `cricket_core.video` auth uses that managed identity when
    running in Azure (env-detected) instead of device-code. **No other code changes.**
 3. Deploy (Dockerfile or App Service zip). The report links become e.g.
    `https://scouting.<...>.azurewebsites.net/r/nahid_rana_bowling_pace_test_lhb`.

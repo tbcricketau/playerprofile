@@ -8,8 +8,8 @@ Scope = official international Tests only, via Matches.series_id -> Series.name
 ("International Tests M"), same as the bowling loaders.  match_length_id is NOT used for
 scope (it mixes Tests with domestic first-class).
 """
-from ludis_cricket.warehouse import set_conn_cursor, run_query
-from ludis_cricket.config import international_series_sql
+from cricket_core.warehouse import set_conn_cursor, run_query
+from cricket_core.config import international_series_sql
 from config import DATA_SCHEMA
 
 # Official international Tests only (via Matches.series_id -> Series.name); match_length_id

@@ -1,31 +1,43 @@
 # playerprofile — Claude Guidelines
 
-> Parent guidelines at `C:\Ludis\CLAUDE.md` apply (no pandas/numpy, Python via `py -3.12`, Opta light theme, etc.).
+> Parent guidelines at `C:\Projects\CLAUDE.md` apply (no pandas/numpy, Python via `py -3.12`,
+> Opta light theme, progress board). Warehouse guide: `../cricket-core/DATAWAREHOUSE.md` —
+> read before any query. Shared code (charts/theme/lookups/warehouse/video) comes from the
+> **cricket-core** package — the old local `charts.py`/`theme.py`/`sql_functions.py` copies
+> are gone; import `cricket_core.*` instead.
 
 ## What this project is
 
-Opposition scouting app — player profiles for Test cricket. Currently covers **bowling only**; batting and fielding sections are planned as future additions. Named `playerprofile` (not `bowlerprofile`) deliberately to signal that intent.
+Opposition scouting — player profiles (Test bowling + batting reports, ODI/T20 profiles)
+and the published scouting-reports site. The main Streamlit app is bowling-profile centred;
+report builders (`report.py`, `t20_report.py`, `odi_report.py`, `batting_report.py`) and
+`publish_site.py` generate the hosted site (github.com/tbcricketau/scouting-reports,
+refreshed by the "Scouting Reports Refresh" scheduled task via `refresh_site.bat`).
+Other fronts have their own plan docs: `WEBAPP_PLAN.md`, `FIELD_PLAN.md`, `VIDEO_PLAN.md`,
+`BATTING_PLAN.md`, `CHANGELOG.md`.
 
+**Setup:** `.\setup.ps1` (venv + requirements incl. `-e ../cricket-core`).
 **Run:** `.\venv\Scripts\python.exe run.py` — starts Streamlit on port 8060.
 
-## File structure
+## File structure (core app)
 
 | File | Purpose |
 |------|---------|
 | `app.py` | Main Streamlit app — team → bowler selector, full profile layout |
-| `data_loaders.py` | Three `@st.cache_data(ttl=3600)` SQL queries (see below) |
-| `charts.py` | Plotly helpers: `pitch_scatter_map`, `beehive`, `speed_violin`, `spell_bar`, `danger_zone`, `spell_summary_df` |
-| `theme.py` | Opta light theme — call `apply_theme()` at top of app |
-| `config.py` | `DATA_SCHEMA = "GA20260618"` |
-| `sql_functions.py` | Copy of livematchdashboard's `sql_functions.py` |
-| `run.py` | Launch shim |
-| `photos/` | Drop `{bowler_id}.jpg` here for player photos; cricket emoji placeholder shown otherwise |
+| `data_loaders.py` | `@st.cache_data(ttl=3600)` SQL queries (see below) |
+| `config.py` | Project config (`DATA_SCHEMA` re-exported from `cricket_core.config`) |
+| `run.py` | Launch shim (local port 8060) |
+| `photos/` | Drop `{bowler_id}.jpg` here for player photos; placeholder shown otherwise |
+
+Charts come from `cricket_core.charts` (`pitch_scatter_map`, `beehive`, `speed_violin`,
+`spell_bar`, `danger_zone`, `spell_summary_df`, …) and the theme from
+`cricket_core.theme.apply_theme()`.
 
 ## Data loaders
 
 All use `@st.cache_data(ttl=3600)` and return `list[dict]` with **all values as strings** (including `None` → the string `"None"`).
 
-- **Scope = official international Tests only** — all loaders filter on `Matches.series_id → Series.name = "International Tests M"` (via `ludis_cricket.config.international_series_sql("Test")`), **not** `match_length_id` (which mixes Tests with Sheffield Shield and inflates tallies). Verified to reproduce official Test records.
+- **Scope = official international Tests only** — all loaders filter on `Matches.series_id → Series.name = "International Tests M"` (via `cricket_core.config.international_series_sql("Test")`), **not** `match_length_id` (which mixes Tests with Sheffield Shield and inflates tallies). Verified to reproduce official Test records.
 - **`load_test_teams()`** — teams that appear as bowling side in international Tests
 - **`load_team_bowlers(team_id)`** — bowlers with ≥60 legal balls in Tests for that team; returns `bowler_id`, `player_name`, `last_name`, `balls`
 - **`load_bowler_deliveries(bowler_id, dev_limit=0)`** — all Test deliveries for the bowler; `dev_limit` caps rows for fast local testing
@@ -112,13 +124,10 @@ is_spin = primary_type in _spin_types
 
 ## Relationship to livematchdashboard
 
-- Same DB schema (`GA20260618`), same `sql_functions.py`, same `config.py` structure
-- `livematchdashboard` is **match-centric** (one match at a time); `playerprofile` is **player-centric** (career Test data for one player)
-- Both sit under `C:\Ludis\` and share the Opta light theme
+- Same warehouse via `cricket_core.warehouse`; same shared theme/charts
+- `livematchdashboard` is **match-centric** (one match at a time); `playerprofile` is **player-centric** (career data for one player)
 
 ## Known gaps / pending work
 
-- Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER` in `charts.py`) uses assumed strings — verify against actual DB lookup values if cells appear out of order
-- Player photos not yet sourced — drop `{bowler_id}.jpg` in `photos/` when available
-- Batting and fielding profile sections not yet built
-- No `requirements.txt` (stack: streamlit, pyodbc, msal, plotly — same as livematchdashboard)
+- Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER`) uses assumed strings — verify against actual DB lookup values if cells appear out of order
+- Player photos: SharePoint/Graph backend in `photos.py` (env: `photo_backend`, `sp_*`); blocked on IT grants — see PROGRESS.md

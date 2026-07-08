@@ -14,16 +14,16 @@ Three evidence layers, each carrying the stat that justifies every fielder:
 Output: an ordered field (keeper + 9) where each fielder has a role (catch/save) and a
 one-line justification, plus a backtest ("under N of his M caught dismissals vs this group").
 
-Batter-relative angle convention (matches ludis_cricket.lookups.field_coords):
+Batter-relative angle convention (matches cricket_core.lookups.field_coords):
   br_angle = hit_to_angle if RHB else -hit_to_angle ;  +ve = OFF side, 0 = straight.
 """
 import csv
 import os
 from collections import defaultdict
 
-from ludis_cricket.lookups import FIELD_POS, field_coords
+from cricket_core.lookups import FIELD_POS, field_coords
 
-_REF = r"c:\Ludis\referencebuilder\data"
+_REF = r"c:\Projects\referencebuilder\data"
 _COHORT_CSV = os.path.join(_REF, "catch_position_norms.csv")
 _PROFILE_CSV = os.path.join(_REF, "batter_field_profile.csv")
 
@@ -296,7 +296,7 @@ def _least_valuable(names, flow, protect_cordon, exclude):
 
 
 def _legal(names, phase):
-    from ludis_cricket import fields
+    from cricket_core import fields
     if len(set(names)) != 9:
         return False
     lim = fields.OUT_LIMIT.get(_FMT, {}).get(phase, 9)
@@ -317,10 +317,10 @@ _SHORT_BALL_WHY = {
 
 
 def _short_ball_field(is_lhb, note):
-    """The named short-ball / bumper-plan field (ludis_cricket.fields.SHORT_BALL): one slip, a
+    """The named short-ball / bumper-plan field (cricket_core.fields.SHORT_BALL): one slip, a
     front-of-square catcher, and the two Law-max behind-square riders — shown as an alternative
     field for heavy pullers/hookers (R5)."""
-    from ludis_cricket import fields
+    from cricket_core import fields
     out = []
     for nm in fields.SHORT_BALL:
         c = FIELD_POS.get(nm) or field_coords(nm)
@@ -334,7 +334,7 @@ def build_field(P, group, phase):
     """Assembly v2 — the GPS-corrected stock field ± the top (<=3) evidenced deviations.
     Returns {phase, group, group_label, n_catchers, false_rate, legal, field:[{position, angle,
     radius, role, kind, tag: 'stock'|'change', why}], changes:[...], base_note, backtest}."""
-    from ludis_cricket import fields
+    from cricket_core import fields
     is_lhb = P["is_lhb"]
     is_spin = group in ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox", "spin")
     rows = [r for r in P["raw"] if (r["is_early"] if phase == "early" else not r["is_early"])]
@@ -476,7 +476,7 @@ def field_diagram(fieldset, is_lhb, title=""):
     fielders one uniform colour; roles live in the justification table. Returns a go.Figure."""
     import math
     import plotly.graph_objects as go
-    from ludis_cricket.theme import (BG_PANEL, BG_PITCH, ACCENT, DANGER, TEXT_PRI, TEXT_SEC)
+    from cricket_core.theme import (BG_PANEL, BG_PITCH, ACCENT, DANGER, TEXT_PRI, TEXT_SEC)
 
     R = 1.0
     fig = go.Figure()

@@ -10,7 +10,6 @@ venv/
 env/
 
 # ── Claude Code tooling (machine-specific) ─────────────
-.claude/
 
 # ── Secrets / env ──────────────────────────────────────
 .env
@@ -38,3 +37,7 @@ site/
 
 # ── Run logs (transient render / refresh output) ───────
 *.log
+
+# Standard hygiene (added by the 2026-07 migration)
+*.pyc
+.claude/settings.local.json

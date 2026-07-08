@@ -24,12 +24,12 @@ from version import REPORT_VERSION
 from profile import build_profile, fmt as _fmt
 from photos import get_photo_data_uri
 from report_style import REPORT_CSS, headline_cards
-from ludis_cricket.charts import (
+from cricket_core.charts import (
     pitch_scatter_map, pitch_heatmap, beehive, wagon_wheel_zones, release_map,
     fingerprint_strip, speed_violin, innings_violin, day_violin, zone_concentration,
     LENGTH_ZONES_1M, LENGTH_ZONES_05M,
 )
-from ludis_cricket.video import first_example as _first_example, get_fairplay_sas as _get_fairplay_sas
+from cricket_core.video import first_example as _first_example, get_fairplay_sas as _get_fairplay_sas
 
 # ── Opta light theme (mirrors theme.py / CLAUDE.md) ─────────────────────────────
 BG_PAGE, BG_PANEL = "#F5F7FA", "#FFFFFF"
@@ -1507,7 +1507,7 @@ def _build_player(P: dict, pdf_path: str, subtitle: str, target_country: str | N
     try:
         _get_fairplay_sas(ttl_hours=72)          # long-lived SAS baked into the player
         from playlists import build_playlists
-        from ludis_cricket.video import build_player_html, write_playlists
+        from cricket_core.video import build_player_html, write_playlists
         built = build_playlists(P, cap=8, target_country=target_country)
         pls, pl_meta = built["playlists"], built.get("meta")
         # Always write the sidecar (with meta: bowler_id + name) — even with no clips — so
@@ -1560,7 +1560,7 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
         # Interactive HTML report: same page + an in-page lightbox. ▶ opens the playlist as a
         # modal OVER the report (same tab — the iOS/Safari use case); the PDF keeps the href
         # fallback to the standalone player.html (the snippet is display:none in print).
-        from ludis_cricket.video import inline_player_snippet
+        from cricket_core.video import inline_player_snippet
         # Markers let the web app swap this baked-SAS player for a mint-on-demand one (webapp.py).
         snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(video["playlists"]) + "<!--PLAYER_SNIPPET_END-->"
         html = html.replace("</body>", snippet + "</body>")

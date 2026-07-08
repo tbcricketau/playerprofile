@@ -1,0 +1,8 @@
+#!/bin/sh
+# Secret scan on staged changes. Activated by: git config core.hooksPath .githooks
+# (each repo's setup.ps1 does this). Requires the Windows `py` launcher or python on PATH.
+if command -v py >/dev/null 2>&1; then
+    py -3.12 "$(dirname "$0")/secret_scan.py"
+else
+    python "$(dirname "$0")/secret_scan.py"
+fi

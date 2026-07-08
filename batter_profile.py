@@ -6,7 +6,7 @@ and returns a dict of every metric: the headline (runs / avg / SR), the novel
 share-of-runs metric (% of team & match runs), how they score (shot groups, areas),
 how they get out, and how they fare against each bowler type + where the weaknesses are.
 
-No pandas / numpy — stdlib only.  Reuses the shared cricket vocab from ludis_cricket.
+No pandas / numpy — stdlib only.  Reuses the shared cricket vocab from cricket_core.
 """
 import math
 import statistics
@@ -15,7 +15,7 @@ from collections import Counter, defaultdict
 from batting_loaders import (
     load_batter_deliveries, load_batter_innings, load_batter_info,
 )
-from ludis_cricket.lookups import (
+from cricket_core.lookups import (
     SHOT_QUALITY_MAP as _SHOT_QUALITY_MAP,
     BEATEN_QUALITIES as _BEATEN_QUALITIES,
     FALSE_SHOT_QUALITIES as _FALSE_SHOT_QUALITIES,
@@ -26,8 +26,8 @@ from ludis_cricket.lookups import (
     SPIN_TYPES as _SPIN_TYPES,
     team_flag,
 )
-from ludis_cricket.charts import LENGTH_ZONES_PACE as _LZ_PACE, LENGTH_ZONES_SPIN as _LZ_SPIN
-from ludis_cricket.video import clip_stem as _clip_stem
+from cricket_core.charts import LENGTH_ZONES_PACE as _LZ_PACE, LENGTH_ZONES_SPIN as _LZ_SPIN
+from cricket_core.video import clip_stem as _clip_stem
 # Shared zone vocabulary (length bands, line regions) lives with the bowling profile.
 from profile import build_line_zones as _build_line_zones, _LEN_BAND, _LINE_REGION, _zone_lbl
 

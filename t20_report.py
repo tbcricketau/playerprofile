@@ -19,7 +19,7 @@ from photos import get_photo_data_uri
 from report import _fig_uri, _html_to_pdf, _country_code, _fingerprint_cards, _file_url
 from report_style import REPORT_CSS, theme_ctx, card, headline_cards, f_econ, TEXT_SEC
 from odi_report import _variation_tables, _variation_read, _grid_figs
-from ludis_cricket.charts import pitch_heatmap, beehive
+from cricket_core.charts import pitch_heatmap, beehive
 
 REPORT_VERSION = "t20-1.0"
 
@@ -52,7 +52,7 @@ def _build_t20_player(P, pdf_path, subtitle, target_country=None):
     white-ball builder + clip resolver; writes a modal player + returns {player, lists, playlists}.
     Best-effort — never breaks the report if video/SSO is unavailable."""
     try:
-        from ludis_cricket.video import get_fairplay_sas, build_player_html, write_playlists
+        from cricket_core.video import get_fairplay_sas, build_player_html, write_playlists
         from playlists import build_odi_playlists          # white-ball generic (T20 phase names match)
         get_fairplay_sas(ttl_hours=72)
         built = build_odi_playlists(P, cap=8, target_country=target_country)
@@ -98,7 +98,7 @@ def render_t20_report(bowler_id: str, out_dir: str = "reports/t20",
     }
     html = Template(_TEMPLATE).render(**ctx)
     if video.get("playlists"):
-        from ludis_cricket.video import inline_player_snippet
+        from cricket_core.video import inline_player_snippet
         snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(video["playlists"]) + "<!--PLAYER_SNIPPET_END-->"
         html = html.replace("</body>", snippet + "</body>")
     with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:

@@ -17,7 +17,7 @@ from jinja2 import Template
 from odi_profile import build_odi_profile
 from profile import build_line_zones
 from photos import get_photo_data_uri
-from ludis_cricket.charts import pitch_heatmap, beehive
+from cricket_core.charts import pitch_heatmap, beehive
 from report import _fig_uri, _html_to_pdf, _country_code, _fingerprint_cards, _file_url
 from report_style import REPORT_CSS, theme_ctx, card, headline_cards, f_speed, f_econ, f_avg, f_int, TEXT_SEC
 
@@ -60,7 +60,7 @@ def _variation_tables(P):
     phase_tbl = [{"type": t, "all": next(r["pct"] for r in v["rows"] if r["type"] == t),
                   "cells": [(v["by_phase"].get(t, {}).get(p, 0) / pt[p] * 100) for p in phases]}
                  for t in types]
-    from ludis_cricket.charts import LENGTH_ZONES_PACE
+    from cricket_core.charts import LENGTH_ZONES_PACE
     bands = [lab for _lo, _hi, lab in LENGTH_ZONES_PACE]
     length_tbl = []
     for t in types:
@@ -76,7 +76,7 @@ def _build_odi_player(P, pdf_path, subtitle, target_country=None):
     modal player next to the PDF, and return {player, lists, playlists} for the report's ▶ links.
     Best-effort — never breaks the report if video/SSO is unavailable."""
     try:
-        from ludis_cricket.video import get_fairplay_sas, build_player_html, write_playlists
+        from cricket_core.video import get_fairplay_sas, build_player_html, write_playlists
         from playlists import build_odi_playlists
         get_fairplay_sas(ttl_hours=72)          # long-lived SAS baked into the player
         built = build_odi_playlists(P, cap=8, target_country=target_country)
@@ -151,7 +151,7 @@ def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
     if video.get("playlists"):
         # in-page lightbox: ▶ opens the playlist as a modal over the report (same tab); the PDF
         # keeps the href fallback to the standalone player.html (snippet is display:none in print).
-        from ludis_cricket.video import inline_player_snippet
+        from cricket_core.video import inline_player_snippet
         snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(video["playlists"]) + "<!--PLAYER_SNIPPET_END-->"
         html = html.replace("</body>", snippet + "</body>")
     with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:

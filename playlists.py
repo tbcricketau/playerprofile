@@ -2,11 +2,11 @@
 
 Turns the same ball-sets the report describes (stock ball, wickets, new-ball out-swingers,
 beaten bat) into ordered lists of playable clips, written as a JSON sidecar next to the PDF.
-Uses the shared `ludis_cricket.video` clip resolver, so the format/plumbing is reusable by
+Uses the shared `cricket_core.video` clip resolver, so the format/plumbing is reusable by
 other projects (livetrackingdashboard etc.).
 """
-from ludis_cricket.video import playlist_item, resolve_playlist, write_playlists, attach_hawkeye
-from ludis_cricket.lookups import conditions_tier, conditions_bucket
+from cricket_core.video import playlist_item, resolve_playlist, write_playlists, attach_hawkeye
+from cricket_core.lookups import conditions_tier, conditions_bucket
 
 # Over-select this many candidates per list, then keep the first `cap` whose clip exists
 # (coverage is patchy, so we need headroom). One HEAD probe per candidate (cached).
@@ -203,7 +203,7 @@ def build_playlists(P: dict, cap: int = 10, target_country: str | None = None) -
         "hand_filter": P.get("filters", {}).get("hand"),
         "target_country": target_country, "order": order_note,
         "counts": counts,
-        "note": "Clips resolved via ludis_cricket.video (SSO SAS). 'available' = clips found in "
+        "note": "Clips resolved via cricket_core.video (SSO SAS). 'available' = clips found in "
                 "storage; coverage is per-delivery so some balls have no clip. Order: " + order_note + ".",
     }
     return {"playlists": out, "meta": meta}
@@ -277,7 +277,7 @@ def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None
     meta = {
         "bowler": P.get("name"), "bowler_id": P.get("bowler_id"), "format": "ODI",
         "target_country": target_country, "counts": counts,
-        "note": "Clips via ludis_cricket.video (SSO SAS); coverage is per-delivery, concentrated "
+        "note": "Clips via cricket_core.video (SSO SAS); coverage is per-delivery, concentrated "
                 "on recent matches, so older balls may have no clip.",
     }
     return {"playlists": out, "meta": meta}

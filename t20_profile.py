@@ -19,11 +19,11 @@ from data_loaders import load_bowler_deliveries, load_bowler_info
 from profile import process_rows, _quantile, _fingerprint
 from odi_profile import (_phase_stats, _variations, _bowler_runs, _num, _mean,
                          _deepdive_all, _hand_over_round)
-from ludis_cricket.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
+from cricket_core.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE, team_flag)
 
 T20_PHASES = ("Powerplay", "Middle", "Death")
-_STRENGTH_CSV = r"c:\Ludis\referencebuilder\data\t20_league_strength.csv"
+_STRENGTH_CSV = r"c:\Projects\referencebuilder\data\t20_league_strength.csv"
 _STRENGTH = None
 
 
@@ -43,7 +43,7 @@ def _league_effects() -> dict:
     return _STRENGTH
 
 
-_PHASE_NORM_CSV = r"c:\Ludis\referencebuilder\data\bowler_t20_phase_profile.csv"
+_PHASE_NORM_CSV = r"c:\Projects\referencebuilder\data\bowler_t20_phase_profile.csv"
 _PHASE_NORM = None
 
 
