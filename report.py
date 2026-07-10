@@ -244,8 +244,10 @@ def _figures(P: dict) -> dict:
                      if r.get("pitch_length_m") is not None and -1.0 <= r["pitch_length_m"] <= 15.0)
         _bmax = max(9.0, min(13.5, _bl[int(len(_bl) * 0.98)] + 1.0)) if _bl else 12.0
         beaten_yrange = (_bmax, -0.6)
+        # pass the raster size: the figure sizes its text from the pixels it will occupy
         figs["beaten"] = _fig_uri(pitch_scatter_map(bdf, lz, fine_ez, value="count", title="",
-                                  min_balls=1, flip_x=is_lhb, y_range=beaten_yrange), w=pw, h=ph)
+                                  min_balls=1, flip_x=is_lhb, y_range=beaten_yrange,
+                                  width=pw, height=ph), w=pw, h=ph)
         figs["beaten_heat"] = _fig_uri(pitch_heatmap(bdf, value="count", title="",
                                        flip_x=is_lhb, y_range=beaten_yrange), w=pw, h=ph)
     orr = P.get("over_round")
