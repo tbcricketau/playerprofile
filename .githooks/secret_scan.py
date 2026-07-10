@@ -17,7 +17,11 @@ added = "\n".join(
 PATTERNS = [
     (r"sk-ant-[A-Za-z0-9\-_]{20,}", "Anthropic API key"),
     (r"AccountKey=[A-Za-z0-9+/=]{40,}", "Azure storage account key"),
-    (r"SharedAccessSignature=sv[=]", "Azure SAS token"),
+    (r"SharedAccessSignature=sv[=]", "Azure SAS token (connection string)"),
+    # A SAS on a blob URL — the form `video.py` bakes into report/player pages. `sig=` is the
+    # signature itself, so it is unmistakable, and matching it catches the query-string SAS
+    # that the connection-string pattern above misses entirely. Percent-encoding is normal.
+    (r"[?&]sig=[A-Za-z0-9%+/=]{30,}", "Azure SAS token (blob URL)"),
     (r"-----BEGIN [A-Z ]*PRIVATE KEY-----", "private key block"),
     (r"eyJ[A-Za-z0-9_\-]{20,}\.eyJ[A-Za-z0-9_\-]{20,}\.[A-Za-z0-9_\-]{10,}", "JWT"),
     (r"ghp_[A-Za-z0-9]{30,}", "GitHub token (classic)"),
