@@ -78,6 +78,79 @@
               "name": "Tanzim Hasan Sakib"
             }
           ]
+        },
+        {
+          "slug": "batters",
+          "name": "Opposition Batters",
+          "reports": [
+            {
+              "id": "2540159",
+              "hand": "rhb",
+              "tier": "squad",
+              "name": "Litton Das"
+            },
+            {
+              "id": "3630132",
+              "hand": "rhb",
+              "tier": "squad",
+              "name": "Mahmudul Hasan Joy"
+            },
+            {
+              "id": "2540166",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Shadman Islam"
+            },
+            {
+              "id": "2540168",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Zakir Hasan"
+            },
+            {
+              "id": "2700013",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Mominul Haque"
+            },
+            {
+              "id": "3110063",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Najmul Hussain Shanto"
+            },
+            {
+              "id": "300015",
+              "hand": "rhb",
+              "tier": "squad",
+              "name": "Mushfiqur Rahim"
+            },
+            {
+              "id": "520069",
+              "hand": "rhb",
+              "tier": "squad",
+              "name": "Shahadat Hossain"
+            },
+            {
+              "id": "290007",
+              "hand": "lhb",
+              "tier": "squad",
+              "name": "Shakib Al Hasan"
+            },
+            {
+              "id": "5460114",
+              "hand": "rhb",
+              "tier": "squad",
+              "name": "Jaker Ali"
+            },
+            {
+              "id": "3080087",
+              "hand": "rhb",
+              "tier": "squad",
+              "name": "Mehidy Hasan Miraz"
+            }
+          ],
+          "kind": "batting"
         }
       ]
     },

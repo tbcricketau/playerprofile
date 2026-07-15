@@ -102,9 +102,14 @@ webapp) so the two sites look like one system.
 
 ## 7. Status
 
-- ✅ Scoping decided (this doc); memories `profile-individualization`, `series-format-map-approved`.
-- 🟢 **Scaffold** — roster page + per-player pack shells for **bangladesh-home-2026**, structure only,
-  no report content yet (this is the current step).
-- ⏸ Populate packs from the scouting reports (assembly from parts) — after the scaffold is signed off.
-- ⏸ Vs-opponent playlist builder.
+- ✅ Scoping decided; scaffold built + approved (roster, pack shells, role split, photos).
+- ✅ Batting packs carry the **last-3-series attack card** (2-sentence read + plan table +
+  dismissal table with ▶ vision) — `attack_cards.py` + `build_player_site.py`.
+- ✅ **Vs-opponent vision LIVE** — `build_h2h.py` real meetings (Tests, ≤20 newest balls per
+  opponent) → per-opponent playlists in each pack; honest empty-states for no-meetings /
+  not-clipped. Smith v Taijul/Mehidy/Shakib resolve from the 2017 footage.
+- ✅ Scouting side rebuilt around the same stores — `SCOUTING_REBUILD.md` (matrix page, vs-our-squad
+  strip, batting report v0.3 with "Our Best Options").
+- ⏸ Bowling packs' content (how to bowl to their batters — assembled from the upgraded batting
+  reports once red-penned).
 - 🔴 Base-pack definition — awaits Tom's coach feedback.

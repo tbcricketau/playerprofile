@@ -43,11 +43,16 @@ warehouse head-to-head balls ─────────►  data/h2h_bangladesh
       shows it as a series-level card. Preview artifact: claude.ai/code/artifact/552f8d38….
 - [x] Player packs: "Your vision vs Bangladesh" live — real per-opponent playlists (Smith v Taijul/
       Mehidy/Shakib resolve from storage); honest empty-states for no-meetings / not-clipped
-- [ ] **"vs our squad" strip in the bowling report builder** — NEXT. Spec: read `we_bat` cells for
-      the report's bowler; list only cells with confidence ∈ {Med, High} AND rank_in_bowler_col
-      ≤0.2 (he threatens) or ≥0.8 (favourable); one structural sentence from `structural_threat`
-      grouped by hand; h2h counts + ▶ vision from the h2h store. Insert after the Match-ups section
-      in `report.py`; then re-render the BAN set. (+ batting-report mirror when those are rebuilt.)
+- [x] **"vs our squad" strip in the bowling report builder** — `report.py _vs_squad_ctx` + template
+      section after Match-ups. Gate: frontline batters only (role ≠ Bowler — "he beats our No.10"
+      is trivially true, not intel), confidence ∈ {Med, High}, and a MATERIAL deviation vs his
+      median against our frontline (≤0.75× = threat, ≥1.3× = target). Structural sentence covers
+      hand-classes; h2h shown as a ball/wicket count only. Verified: Rana → Smith the lone target;
+      Taijul → no individual exceptions, structural-RHB line carries it; Shoriful → silent.
+- [ ] Re-render the BAN bowling set so the strips appear in the shipped reports (mechanical;
+      report code unchanged otherwise). Batting mirror = "Our Best Options" (shipped in v0.3).
+- [ ] Site refresh (`publish_site.py`) — builds locally fine; **deploying to the live
+      scouting-reports repo stays a Tom decision.**
 
 ## Notes
 

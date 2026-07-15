@@ -584,7 +584,8 @@ def _build_player(P: dict, pdf_path: str) -> dict:
         player_path = pdf_path[:-4] + ".player.html"
         sub = f"{P['name']} — batting scout" + (f" vs {P['group_label']}" if P.get("group") else "")
         build_player_html(pls, player_path, title=P["name"], subtitle=sub)
-        write_playlists(pdf_path[:-4] + ".playlists.json", pls)
+        write_playlists(pdf_path[:-4] + ".playlists.json", pls,
+                        meta={"batter_id": str(P["batter_id"]), "batter": P["name"]})
         strokes = [d for d in (P.get("dims", {}).get("stroke") or []) if d["balls"] >= 30 and d.get("false_pct") is not None]
         stroke_name = max(strokes, key=lambda d: d["false_pct"])["bucket"] if strokes else None
         return {"player": _file_url(player_path), "lists": {k: True for k in pls},

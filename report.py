@@ -1369,6 +1369,66 @@ def _examples(P: dict) -> dict:
     return ex
 
 
+def _vs_squad_ctx(bowler_id):
+    """The 'vs our squad' strip (SCOUTING_REBUILD.md): exceptions only, from the series matchup
+    store. Threats/targets need confidence Med/High AND a column-rank extreme; the structural
+    spin line covers whole hand-classes; real head-to-head is a note, never an average."""
+    try:
+        import glob as _g
+        import json as _json
+        from cricket_core.config import project_path
+        mm = project_path("matchupmodel")
+        # frontline only — "he wins the matchup vs our No.10" is trivially true, not intel
+        roles_p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "players.json")
+        roles = ({pid: r.get("role") for pid, r in
+                  _json.load(open(roles_p, encoding="utf-8")).items()}
+                 if os.path.exists(roles_p) else {})
+        for p in _g.glob(os.path.join(mm, "data", "matchup_store_*.json")):
+            store = _json.load(open(p, encoding="utf-8"))
+            cells = [c for c in store.get("we_bat", [])
+                     if c["bowler_id"] == str(bowler_id) and c["sim_avg"] is not None
+                     and roles.get(c["batter_id"]) != "Bowler"]
+            if not cells:
+                continue
+            solid = [c for c in cells if c["confidence"] in ("Med", "High")]
+            med = sorted(c["sim_avg"] for c in cells)[len(cells) // 2] if cells else 0
+            # material deviation vs his norm against OUR frontline, not just rank order
+            threats = sorted([c for c in solid if c["sim_avg"] <= 0.75 * med],
+                             key=lambda c: c["sim_avg"])[:3]
+            targets = sorted([c for c in solid if c["sim_avg"] >= 1.3 * med],
+                             key=lambda c: -c["sim_avg"])[:3]
+            struct = [c for c in cells if c.get("structural_threat")]
+            sline = ""
+            if struct:
+                names = sorted({c["batter"].split()[-1] for c in struct})
+                hand = struct[0]["bat_hand"]
+                sline = (f"Structurally he takes the ball away from the {hand} — harder work for "
+                         f"{', '.join(names)} regardless of individual reads; a left/right pairing "
+                         f"at the crease blunts it.")
+            h2h_note = ""
+            opp = store["opp"].lower().replace(" ", "_")
+            hp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", f"h2h_{opp}.json")
+            if os.path.exists(hp):
+                h2h = _json.load(open(hp, encoding="utf-8"))
+                mine = [r for r in h2h.get("our_batting", []) if r["bowler_id"] == str(bowler_id)]
+                if mine:
+                    balls = sum(r["balls"] for r in mine)
+                    wkts = sum(r["wickets"] for r in mine)
+                    h2h_note = (f"Real meetings with this squad: {balls} balls across "
+                                f"{len(mine)} batters ({wkts} wicket{'s' if wkts != 1 else ''}) — "
+                                "too few to average; the footage is in each player's pack and on "
+                                "the Match-ups page.")
+            if not (threats or targets or sline):
+                return None                    # nothing clears the gate — the strip stays silent
+            return {"threats": [(c["batter"], c["bat_hand"], c["sim_avg"],
+                                 c.get("top_dismissal", "")) for c in threats],
+                    "targets": [(c["batter"], c["bat_hand"], c["sim_avg"]) for c in targets],
+                    "structural": sline, "h2h_note": h2h_note}
+    except Exception:
+        pass
+    return None
+
+
 def build_html(P: dict, video: dict = None) -> str:
     hand = P["filters"]["hand"]
     photo_uri = get_photo_data_uri(P["bowler_id"], fmt="test", name=P.get("name"))
@@ -1381,6 +1441,7 @@ def build_html(P: dict, video: dict = None) -> str:
         "video": video or {},
         "P": P, "hand_label": _HAND_LABEL.get(hand, hand), "code": _country_code(P["team"]),
         "photo_uri": photo_uri, "figs": _figures(P), "cards": _cards(P),
+        "vs_squad": _vs_squad_ctx(P["bowler_id"]),
         "threat_cards": _threat_cards(P), "danger_cards": _danger_cards(P),
         "dismissal_rows": _dismissal_rows(P), "dismissal_peer": _dismissal_peer_label(P),
         "unmapped_wkts": (P["n_wkts"] - int(P["wkt_zone"]["total"])) if P.get("wkt_zone") else 0,
@@ -1760,6 +1821,21 @@ _TEMPLATE = r"""
   </div>
   {% if matchup_insight %}<div class="read" style="margin-top:6px">{{matchup_insight}}</div>{% endif %}
   <div class="cap" style="text-align:left">Lower average / higher false-shot = the match-up that suits him; higher average = where batters have got on top. Med length = his median pitch length in that split.</div>
+  {% endif %}
+
+  {% if vs_squad %}
+  <h2>Vs Our Squad <span class="sub" style="font-weight:400">(simulated matchups)</span></h2>
+  <div class="cap" style="text-align:left;margin-bottom:5px">From the match simulation — each pairing played out thousands of times from full Test profiles. Only the matchups that sit clearly away from this bowler's norm are listed; everyone unlisted profiles as roughly average against him. The full grid for every pairing is on the series Match-ups page.</div>
+  {% if vs_squad.threats %}
+  <div class="read"><b>Best matchups for him:</b>
+    {% for nm, hand, avg, dis in vs_squad.threats %} {{nm}} ({{hand}}, exp avg {{avg}}{% if dis %}, {{dis}}{% endif %}){{ "," if not loop.last }}{% endfor %}.</div>
+  {% endif %}
+  {% if vs_squad.targets %}
+  <div class="read"><b>Batters who profile on top:</b>
+    {% for nm, hand, avg in vs_squad.targets %} {{nm}} ({{hand}}, exp avg {{avg}}){{ "," if not loop.last }}{% endfor %}.</div>
+  {% endif %}
+  {% if vs_squad.structural %}<div class="read">{{vs_squad.structural}}</div>{% endif %}
+  {% if vs_squad.h2h_note %}<div class="cap" style="text-align:left;margin-top:3px">{{vs_squad.h2h_note}}</div>{% endif %}
   {% endif %}
 
   {% if scoring_stats %}

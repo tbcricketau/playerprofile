@@ -87,7 +87,8 @@ def _refresh_playlists(pls, hk_sas):
 
 # ── Report → file resolution (manifest references bowlers by id + hand) ─────────
 def _sidecar_map():
-    """{(bowler_id, hand_tag): report_base_name} from the rendered sidecars."""
+    """{(player_id, hand_tag): report_base_name} from the rendered sidecars — bowling sidecars
+    carry meta.bowler_id, batting sidecars meta.batter_id."""
     out = {}
     for sc in glob.glob(os.path.join(REPORTS_DIR, "*.playlists.json")):
         name = os.path.basename(sc)[: -len(".playlists.json")]
@@ -95,10 +96,12 @@ def _sidecar_map():
         if not m:
             continue
         try:
-            bid = str(json.load(open(sc, encoding="utf-8")).get("meta", {}).get("bowler_id"))
+            meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
+            bid = str(meta.get("bowler_id") or meta.get("batter_id"))
         except Exception:
             continue
-        out[(bid, m.group(1))] = name
+        kind = "batting" if "_batting_" in name else "bowling"    # a player can have BOTH
+        out[(bid, m.group(1), kind)] = name
     return out
 
 
@@ -122,11 +125,12 @@ def _bake_report(name, dest_dir, hk_sas):
     open(os.path.join(dest_dir, name + ".html"), "w", encoding="utf-8").write(page)
 
     build_player_html(pls, os.path.join(dest_dir, name + ".player.html"),
-                      title=meta.get("bowler") or name, subtitle="bowling scout")
+                      title=meta.get("bowler") or meta.get("batter") or name,
+                      subtitle="bowling scout" if "_bowling_" in name else "batting scout")
     has_pdf = os.path.exists(os.path.join(REPORTS_DIR, name + ".pdf"))
     if has_pdf:
         shutil.copy(os.path.join(REPORTS_DIR, name + ".pdf"), os.path.join(dest_dir, name + ".pdf"))
-    return (_natural_name(meta.get("bowler") or name.replace("_", " ").title()), btype, has_pdf)
+    return (_natural_name(meta.get("bowler") or meta.get("batter") or name.replace("_", " ").title()), btype, has_pdf)
 
 
 # ── Site build (Series → Group → Reports) ───────────────────────────────────────
@@ -162,7 +166,8 @@ def build(out_dir, sas_hours):
             os.makedirs(g_dir, exist_ok=True)
             report_cards = []
             for r in g.get("reports", []):
-                name = smap.get((str(r["id"]), r.get("hand", "all")))
+                kind = g.get("kind", "bowling")
+                name = smap.get((str(r["id"]), r.get("hand", "all"), kind))
                 if not name:
                     print(f"  ! {s['slug']}/{g['slug']}: report id {r['id']} ({r.get('hand')}) "
                           f"not rendered — skipped"); continue
