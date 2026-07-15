@@ -1371,7 +1371,7 @@ def _examples(P: dict) -> dict:
 
 def build_html(P: dict, video: dict = None) -> str:
     hand = P["filters"]["hand"]
-    photo_uri = get_photo_data_uri(P["bowler_id"])
+    photo_uri = get_photo_data_uri(P["bowler_id"], fmt="test", name=P.get("name"))
 
     miss_zone = None
     if P["beaten_df"]:

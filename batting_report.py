@@ -627,7 +627,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
 
     ctx = {
         "P": P, "code": _country_code(P["team"]),
-        "photo_uri": get_photo_data_uri(P["batter_id"]),
+        "photo_uri": get_photo_data_uri(P["batter_id"], fmt="test", name=P.get("name")),
         "hand_label": "LHB" if P["is_lhb"] else "RHB",
         "cards": _cards(P), "impact_read": _impact_read(P),
         "vs_rows": _vs_rows(P), "vs_read": _vs_read(P),

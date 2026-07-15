@@ -140,7 +140,7 @@ def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
                                target_country=target_country) if with_playlists else {})
     ctx = {
         "P": P, "figs": figs, "cards": cards, "code": _country_code(P["team"]),
-        "photo_uri": get_photo_data_uri(P["bowler_id"]),
+        "photo_uri": get_photo_data_uri(P["bowler_id"], fmt="odi", name=P.get("name")),
         "phase_read": _phase_read(P), "variation_read": _variation_read(P),
         "var_tables": _variation_tables(P) if P["is_pace"] else None,
         "fingerprint_cards": _fingerprint_cards(P), "video": video,

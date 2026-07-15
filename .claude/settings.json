@@ -33,7 +33,9 @@
       "WebFetch(domain:australiancricketinstitute.com)",
       "WebFetch(domain:www.pitchvision.com)",
       "WebFetch(domain:www.learn-cricket.com)",
-      "WebFetch(domain:r.jina.ai)"
+      "WebFetch(domain:r.jina.ai)",
+      "Skill(artifact-design)",
+      "Skill(artifact-design:*)"
     ],
     "deny": [
       "Read(.env)",

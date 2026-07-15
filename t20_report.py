@@ -88,7 +88,7 @@ def render_t20_report(bowler_id: str, out_dir: str = "reports/t20",
                                target_country=target_country) if with_playlists else {})
     ctx = {
         "P": P, "figs": figs, "code": _country_code(P["team"]),
-        "photo_uri": get_photo_data_uri(P["bowler_id"]),
+        "photo_uri": get_photo_data_uri(P["bowler_id"], fmt="t20", name=P.get("name")),
         "cards": _cards(P), "phase_read": _phase_read(P),
         "fingerprint_cards": _fingerprint_cards(P), "video": video,
         "variation_read": _variation_read(P) if P["is_pace"] else None,

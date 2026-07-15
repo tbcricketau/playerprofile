@@ -130,4 +130,13 @@ is_spin = primary_type in _spin_types
 ## Known gaps / pending work
 
 - Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER`) uses assumed strings — verify against actual DB lookup values if cells appear out of order
-- Player photos: SharePoint/Graph backend in `photos.py` (env: `photo_backend`, `sp_*`); blocked on IT grants — see PROGRESS.md
+
+## Player photos (2026-07-15 — shared `cricket_core.headshots`)
+
+Headshots live in the **estate-wide store** `cricket-core/headshots/` via `cricket_core.headshots`
+(cricket.com.au source, format-aware kit variants, auto-resolve by name, page-scan for the newest
+ids — full pipeline in that module's docstring; the old SharePoint/Graph backend is retired).
+This project's `photos.py` wraps it, checking the local `photos/` folder FIRST (hand-collected
+opposition photos + per-player overrides). **Report builders pass `name=` so a brand-new player's
+headshot fetches itself at render time.** Bulk tooling for a new squad: `fetch_photos.py`
+(`--resolve` · `--scan-new` · `--force`).

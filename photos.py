@@ -1,35 +1,31 @@
 """
-photos.py — resolve player profile images from local disk or SharePoint.
+photos.py — player images for this project's reports and apps.
 
-`get_photo_bytes(bowler_id)` resolves in order:
-    local cache (.photo_cache/) -> photos/ folder -> SharePoint (Graph) -> None
+Headshots live in the ESTATE-WIDE store, `cricket_core.headshots` (cricket-core/headshots/,
+fed from cricket.com.au — see that module for the full pipeline). This wrapper adds one thing:
+a project-local override folder, `photos/`, checked FIRST — it holds the hand-collected
+opposition photos that predate the CA pipeline, and lets you drop a replacement file for
+anyone without touching the shared store.
 
-SharePoint access reuses the same MSAL client-credentials app as the SQL layer
-(app_id / app_secret), swapping the scope to Microsoft Graph.  Images live at
-{PHOTO_FOLDER}/{bowler_id}.{png|jpg} inside a document library on the configured
-site.  The app registration needs Graph **Sites.Selected** granted on that site.
-
-Everything degrades gracefully: if SharePoint is unconfigured, unreachable, or
-the permission isn't granted yet, callers just get None (emoji placeholder).
+    get_photo_bytes(player_id, fmt=None, name=None)
+        photos/{id}.{png|jpg}  (project override / legacy)
+     -> cricket_core.headshots (format-aware kit variants; auto-fetches from CA when `name`
+        is given and the player isn't stored yet)
+     -> None  (callers show the placeholder)
 """
 import base64
 import os
 
-import config
+from cricket_core import headshots
 
 _HERE = os.path.dirname(__file__)
 _LOCAL_DIR = os.path.join(_HERE, "photos")
-_CACHE_DIR = os.path.join(_HERE, ".photo_cache")
-
-_GRAPH = "https://graph.microsoft.com/v1.0"
-_EXTS = (".png", ".jpg", ".jpeg")   # accepted image types, in preference order
-_missing: set = set()   # per-process negative cache — avoid re-hitting 404s
-_ids: dict = {}         # cached site_id / drive_id
+_EXTS = (".png", ".jpg", ".jpeg")
 
 
-def _find(directory: str, bid: str) -> str | None:
+def _local(bid: str) -> str | None:
     for ext in _EXTS:
-        p = os.path.join(directory, f"{bid}{ext}")
+        p = os.path.join(_LOCAL_DIR, f"{bid}{ext}")
         if os.path.exists(p):
             return p
     return None
@@ -39,92 +35,26 @@ def _mime(data: bytes) -> str:
     return "image/png" if data[:8].startswith(b"\x89PNG") else "image/jpeg"
 
 
-# ── Microsoft Graph ─────────────────────────────────────────────────────────────
-def _graph_token() -> str | None:
-    from cricket_core.warehouse import get_params_data_warehouse, get_token
-    params, _ = get_params_data_warehouse()
-    params = dict(params, scope=["https://graph.microsoft.com/.default"])
-    tok = get_token(params) or {}
-    return tok.get("access_token")
-
-
-def _graph_get(url: str):
-    import requests
-    token = _graph_token()
-    if not token:
-        return None
-    resp = requests.get(url, headers={"Authorization": f"Bearer {token}"}, timeout=20)
-    return resp if resp.status_code == 200 else None
-
-
-def _site_id() -> str | None:
-    if "site" in _ids:
-        return _ids["site"]
-    host = config.SHAREPOINT_HOSTNAME
-    path = config.SHAREPOINT_SITE_PATH.strip("/")
-    url = f"{_GRAPH}/sites/{host}:/{path}" if path else f"{_GRAPH}/sites/{host}"
-    resp = _graph_get(url)
-    _ids["site"] = resp.json().get("id") if resp else None
-    return _ids["site"]
-
-
-def _drive_id() -> str | None:
-    if "drive" in _ids:
-        return _ids["drive"]
-    sid = _site_id()
-    did = None
-    if sid:
-        resp = _graph_get(f"{_GRAPH}/sites/{sid}/drives")
-        drives = resp.json().get("value", []) if resp else []
-        want = config.PHOTO_LIBRARY.strip().lower()
-        did = next((d["id"] for d in drives if d.get("name", "").lower() == want), None)
-        if not did and drives:      # fall back to the site's default library
-            did = drives[0]["id"]
-    _ids["drive"] = did
-    return did
-
-
-def _fetch_sharepoint(bid: str):
-    """Return (bytes, ext) for the first matching PNG/JPG, or None."""
-    did = _drive_id()
-    if not did:
-        return None
-    folder = config.PHOTO_FOLDER.strip("/")
-    for ext in _EXTS:
-        rel = f"{folder}/{bid}{ext}" if folder else f"{bid}{ext}"
-        resp = _graph_get(f"{_GRAPH}/drives/{did}/root:/{rel}:/content")
-        if resp:
-            return resp.content, ext
-    return None
-
-
-# ── Public API ──────────────────────────────────────────────────────────────────
-def get_photo_bytes(bowler_id) -> bytes | None:
+def get_photo_path(bowler_id, fmt=None, name=None) -> str | None:
+    """Path of the best available image (local override first, then the shared store,
+    fetching from CA by name if needed)."""
     bid = str(bowler_id)
+    hit = _local(bid) or headshots.find(bid, fmt)
+    if not hit and headshots.ensure(bid, name):
+        hit = headshots.find(bid, fmt)
+    return hit
 
-    hit = _find(_CACHE_DIR, bid) or _find(_LOCAL_DIR, bid)
+
+def get_photo_bytes(bowler_id, fmt=None, name=None) -> bytes | None:
+    hit = get_photo_path(bowler_id, fmt, name)
     if hit:
         with open(hit, "rb") as f:
             return f.read()
-
-    if config.PHOTO_BACKEND == "sharepoint" and bid not in _missing:
-        try:
-            result = _fetch_sharepoint(bid)
-        except Exception:
-            result = None
-        if result:
-            data, ext = result
-            os.makedirs(_CACHE_DIR, exist_ok=True)
-            with open(os.path.join(_CACHE_DIR, f"{bid}{ext}"), "wb") as f:
-                f.write(data)
-            return data
-        _missing.add(bid)
-
     return None
 
 
-def get_photo_data_uri(bowler_id) -> str | None:
-    data = get_photo_bytes(bowler_id)
+def get_photo_data_uri(bowler_id, fmt=None, name=None) -> str | None:
+    data = get_photo_bytes(bowler_id, fmt, name)
     if not data:
         return None
     return f"data:{_mime(data)};base64," + base64.b64encode(data).decode()

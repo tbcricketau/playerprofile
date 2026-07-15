@@ -107,7 +107,7 @@ len_spell1, len_spell2, len_spell3p = P["len_spell1"], P["len_spell2"], P["len_s
 col_photo, col_info = st.columns([1, 5])
 
 with col_photo:
-    _photo = get_photo_bytes(sel_bowler_id)
+    _photo = get_photo_bytes(sel_bowler_id, fmt="test", name=sel_bowler)
     if _photo:
         st.image(_photo, width="stretch")
     else:
