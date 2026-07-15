@@ -1,0 +1,139 @@
+{
+  "3080014": {
+    "name": "Travis Head",
+    "role": "Batter",
+    "packs": [
+      "batting"
+    ],
+    "prefs": "base"
+  },
+  "2580027": {
+    "name": "Jake Weatherald",
+    "role": "Batter",
+    "packs": [
+      "batting"
+    ],
+    "prefs": "base"
+  },
+  "2480058": {
+    "name": "Marnus Labuschagne",
+    "role": "Batter",
+    "packs": [
+      "batting"
+    ],
+    "prefs": "base"
+  },
+  "940135": {
+    "name": "Steve Smith",
+    "role": "Batter",
+    "packs": [
+      "batting"
+    ],
+    "prefs": "base"
+  },
+  "2950104": {
+    "name": "Cameron Green",
+    "role": "All-rounder",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "350104": {
+    "name": "Alex Carey",
+    "role": "Batter",
+    "packs": [
+      "batting"
+    ],
+    "prefs": "base"
+  },
+  "390157": {
+    "name": "Beau Webster",
+    "role": "All-rounder",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "1300076": {
+    "name": "Pat Cummins",
+    "role": "Bowler",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "1300007": {
+    "name": "Mitch Starc",
+    "role": "Bowler",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "1300071": {
+    "name": "Nathan Lyon",
+    "role": "Bowler",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "880149": {
+    "name": "Josh Hazlewood",
+    "role": "Bowler",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "2710059": {
+    "name": "Scott Boland",
+    "role": "Bowler",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "1940169": {
+    "name": "Josh Inglis",
+    "role": "Batter",
+    "packs": [
+      "batting"
+    ],
+    "prefs": "base"
+  },
+  "2480059": {
+    "name": "Matt Renshaw",
+    "role": "Batter",
+    "packs": [
+      "batting"
+    ],
+    "prefs": "base"
+  },
+  "2480067": {
+    "name": "Brendan Doggett",
+    "role": "Bowler",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  },
+  "2700257": {
+    "name": "Todd Murphy",
+    "role": "Bowler",
+    "packs": [
+      "batting",
+      "bowling"
+    ],
+    "prefs": "base"
+  }
+}

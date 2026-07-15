@@ -1,0 +1,334 @@
+"""
+build_player_site.py — build the PLAYER site: a roster of OUR squad, each name opening that player's
+own pack (batting always; bowling for bowlers + all-rounders) plus their vs-opponent vision.
+See INDIVIDUALIZATION_PLAN.md. Driven by squads.json + players.json (written by build_squad.py).
+
+This is the SCAFFOLD: structure, navigation and pack shells only — the sections carry "coming soon"
+placeholders until the assembly-from-scouting-report step lands.
+
+Usage:
+    .\\venv\\Scripts\\python.exe build_player_site.py                 # build player_site/
+    .\\venv\\Scripts\\python.exe build_player_site.py --out player_site
+"""
+import argparse
+import html
+import json
+import os
+import re
+
+from site_render import page as _page
+from photos import get_photo_data_uri, get_photo_path
+
+# "file": pages reference img/{pid}.png (copied at build, lazy-loaded — keeps the roster page
+# a few tens of KB instead of megabytes of inlined base64, which lagged on phone data).
+# "datauri": inline images — only for the single-file preview artifact.
+IMG_MODE = "file"
+_SITE_IMGS: set = set()      # pids whose photo was copied into the bundle's img/
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+SQUADS = os.path.join(HERE, "squads.json")
+PLAYERS = os.path.join(HERE, "players.json")
+CARDS = os.path.join(HERE, "data", "attack_cards.json")
+
+
+def _load_cards():
+    if os.path.exists(CARDS):
+        return json.load(open(CARDS, encoding="utf-8"))
+    return {}
+
+ROLE_ORDER = [("Batter", "Batters"), ("All-rounder", "All-rounders"),
+              ("Bowler", "Bowlers"), ("Unknown", "Unclassified")]
+ROLE_CLASS = {"Batter": "squad", "All-rounder": "xi", "Bowler": "reference", "Unknown": "fringe"}
+
+# Player-site-only styling, layered on top of the shared shell.
+EXTRA_CSS = """<style>
+ .roster{list-style:none;padding:0;margin:0}
+ .roster li{padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;margin:8px 0;background:#fff;
+   display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+ .roster a{color:#003087;text-decoration:none;font-weight:600;flex:1;display:flex;align-items:center;gap:12px}
+ .roster a:hover b{text-decoration:underline}
+ .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;
+   display:flex;align-items:center;justify-content:center;font-size:20px;color:#9aa4b2}
+ .roster b{display:block;font-size:15px;color:#1a1a2e} .roster .rr{color:#6b7280;font-size:12px;font-weight:400}
+ .packchips{margin-left:auto;display:flex;gap:6px;white-space:nowrap}
+ .pchip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+ .pchip.batting{background:#e0e7ff;color:#3730a3} .pchip.bowling{background:#fef3c7;color:#92400e}
+ .phead{display:flex;align-items:center;gap:16px;margin:4px 0 18px}
+ .phead .big{width:72px;height:72px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;
+   display:flex;align-items:center;justify-content:center;font-size:32px;color:#9aa4b2}
+ .phead h1{margin:0} .phead .role{color:#6b7280;font-size:14px;margin-top:2px}
+ .pack{border:1px solid #e5e7eb;border-radius:12px;background:#fff;padding:16px 18px;margin:14px 0;
+   box-shadow:0 1px 3px rgba(0,0,0,.04)}
+ .pack h2{font-size:16px;color:#003087;margin:0 0 4px} .pack .desc{color:#6b7280;font-size:13px;margin:0 0 10px}
+ .soon{color:#9aa4b2;font-style:italic;font-size:13px;border:1px dashed #d5dced;border-radius:8px;
+   padding:14px;text-align:center;background:#fafbfc}
+ .sblock{border-top:1px solid #eef1f6;padding:10px 0 4px;margin-top:8px}
+ .sblock .shead{font-size:14px;font-weight:700;color:#1a1a2e}
+ .sblock .smeta{color:#6b7280;font-size:12px;margin:1px 0 7px}
+ .sblock .ssum{font-size:13.5px;margin:0 0 10px;line-height:1.55}
+ .sgrid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:14px;align-items:start}
+ @media(max-width:560px){.sgrid{grid-template-columns:1fr}}
+ table.ct{border-collapse:collapse;width:100%;font-size:12px}
+ table.ct caption{text-align:left;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:.04em;text-transform:uppercase;padding-bottom:4px}
+ table.ct th{font-weight:600;color:#6b7280;text-align:left;padding:3px 8px 3px 0;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+ table.ct td{padding:4px 8px 4px 0;border-bottom:1px solid #f1f3f7;color:#1a1a2e;font-variant-numeric:tabular-nums}
+ table.ct td.num,table.ct th.num{text-align:right}
+ table.ct td.dir{font-weight:700;white-space:nowrap}
+ table.ct td.dir.more{color:#991b1b} table.ct td.dir.less{color:#075985}
+ table.ct td.dir.even{color:#c2c9d4;font-weight:400;font-size:11px}
+ table.ct tr:last-child td{border-bottom:0}
+ .vwatch{font-size:11px;font-weight:700;color:#003087;text-decoration:none;background:#eef1f6;
+   border:1px solid #d5dced;border-radius:6px;padding:2px 8px;margin-left:6px;letter-spacing:0;text-transform:none}
+ .vwatch.off{color:#9aa4b2;border-style:dashed;cursor:default}
+</style>"""
+
+
+def _dfmt(iso):
+    """ISO -> day-first dd-mm-yyyy."""
+    try:
+        y, m, d = iso.split("-")
+        return f"{d}-{m}-{y}"
+    except Exception:
+        return iso
+
+
+_FLAG = {"more": ("▲ more", "dir more"), "less": ("▼ less", "dir less"),
+         "even": ("· even", "dir even"), "thin": ("few balls", "dir even")}
+
+
+def _cells_table(cells):
+    rows = "".join(
+        f'<tr><td>{html.escape(c["label"].capitalize())}</td>'
+        f'<td class="num">{c["pct"]:.0f}%</td><td class="num">{c["ctrl_pct"]:.0f}%</td>'
+        f'<td class="{_FLAG[c["flag"]][1]}">{_FLAG[c["flag"]][0]}</td></tr>'
+        for c in cells)
+    return ('<table class="ct"><caption>Their pace plan vs your teammates</caption>'
+            '<tr><th>Ball</th><th class="num">You</th><th class="num">Others</th><th></th></tr>'
+            + rows + '</table>')
+
+
+def _dismissals_table(dismissals, vision_href=None):
+    rows = "".join(
+        f'<tr><td>{html.escape(str(o["bowler"] or "?"))}</td>'
+        f'<td>{html.escape(o["how"])}</td>'
+        f'<td>{html.escape(o["length"] or "—")}, {html.escape(o["line"] or "—")}</td>'
+        f'<td>{html.escape(o["stroke"] or "—")}</td></tr>'
+        for o in dismissals)
+    watch = (f' <a class="vwatch" href="{vision_href}">▶ Watch</a>' if vision_href else "")
+    return (f'<table class="ct"><caption>Dismissals{watch}</caption>'
+            '<tr><th>Bowler</th><th>How</th><th>Ball</th><th>Shot</th></tr>'
+            + rows + '</table>')
+
+
+def _attack_card_html(card, opp_label, vision=None):
+    """The 'how you've been attacked — last 3 series' block for a batting pack.
+    `vision` maps series index -> href of that series' dismissal playlist."""
+    if not card or not card.get("series"):
+        return ('<div class="soon">Coming soon — will be built from the scouting report.</div>')
+    vision = vision or {}
+    parts = ['<p class="desc" style="margin-top:8px">How the last '
+             f'{len(card["series"])} attack{"s" if len(card["series"]) != 1 else ""} bowled to you '
+             f'— the likely template for {html.escape(opp_label)}.</p>']
+    for i, s in enumerate(card["series"]):
+        meta = (f'{s["tests"]} Test{"s" if s["tests"] != 1 else ""} · {_dfmt(s["d0"])} → {_dfmt(s["d1"])} · '
+                f'{s["balls"]} balls · {s["runs"]} runs · '
+                + (f'avg {s["avg"]}' if s.get("avg") is not None else 'not dismissed'))
+        block = [f'<div class="sblock"><div class="shead">v {html.escape(s["opp"])}</div>'
+                 f'<div class="smeta">{meta}</div>']
+        if s.get("cells"):
+            block.append(f'<p class="ssum">{html.escape(s["summary"])}</p>')
+        else:
+            block.append(f'<p class="ssum" style="color:#6b7280">Too few balls in this series to '
+                         f'compare a plan ({s["pace_balls"]} pace balls tracked).</p>')
+        left = _cells_table(s["cells"]) if s.get("cells") else ""
+        right = _dismissals_table(s["dismissals"], vision.get(i)) if s.get("dismissals") else ""
+        if left and right:
+            block.append(f'<div class="sgrid"><div>{left}</div><div>{right}</div></div>')
+        elif left or right:
+            block.append(left or right)
+        block.append("</div>")
+        parts.append("".join(block))
+    return "".join(parts)
+
+
+def _slug(name):
+    return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+def _avatar(pid, cls, initials, fmt="test", name=None):
+    if pid and IMG_MODE == "file":
+        if str(pid) in _SITE_IMGS:
+            return f'<img class="{cls}" src="img/{pid}.png" alt="" loading="lazy">'
+    elif pid:
+        uri = get_photo_data_uri(pid, fmt=fmt, name=name)
+        if uri:
+            return f'<img class="{cls}" src="{uri}" alt="">'
+    return f'<span class="{cls}">{html.escape(initials)}</span>'
+
+
+def _initials(name):
+    parts = [p for p in name.split() if p]
+    return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (parts[0][:2].upper() if parts else "??")
+
+
+def _roster_body(meta, roster):
+    """roster: list of (pid, rec). Grouped by role."""
+    by_role = {}
+    for pid, rec in roster:
+        by_role.setdefault(rec.get("role", "Unknown"), []).append((pid, rec))
+    sections = []
+    for role, heading in ROLE_ORDER:
+        group = by_role.get(role)
+        if not group:
+            continue
+        items = []
+        for pid, rec in group:
+            name = rec.get("name", pid)
+            chips = "".join(f'<span class="pchip {p}">{p}</span>' for p in rec.get("packs", []))
+            items.append(
+                f'<li><a href="{_slug(name)}.html">{_avatar(pid, "avatar", _initials(name), name=name)}'
+                f'<span><b>{html.escape(name)}</b><span class="rr">{html.escape(role)}</span></span></a>'
+                f'<span class="packchips">{chips}</span></li>')
+        sections.append(f'<h2 class="tierhead {ROLE_CLASS.get(role,"squad")}">{heading}'
+                        f'<span>{len(group)}</span></h2><ul class="roster">{"".join(items)}</ul>')
+    lead = html.escape(meta.get("opposition") or meta.get("name", ""))
+    return (EXTRA_CSS + f'<h1>Player packs</h1><p class="lead">{lead} · tap your name</p>'
+            + "".join(sections)
+            + '<p class="note">Each pack opens with how the opposition will play you, plus vision of '
+              'you against them. Video links refresh periodically — the PDF always works offline.</p>')
+
+
+def _pack_section(title, desc, inner=None):
+    return (f'<div class="pack"><h2>{html.escape(title)}</h2>'
+            f'<p class="desc">{html.escape(desc)}</p>'
+            + (inner or '<div class="soon">Coming soon — will be built from the scouting report.</div>')
+            + '</div>')
+
+
+def _short_opp(meta):
+    """'Australia v Bangladesh · 2 Tests · in Australia' -> 'Bangladesh'."""
+    if meta.get("opponent"):
+        return meta["opponent"]
+    sub = meta.get("opposition") or meta.get("name", "the opposition")
+    if " v " in sub:
+        return sub.split(" v ", 1)[1].split("·", 1)[0].strip()
+    return sub
+
+
+def _build_vision(dest_dir, page_slug, name, card):
+    """One modal-player page per player: a 'Dismissals — v X' playlist per series (fresh SAS
+    minted at build time, like publish_site). Returns {series_index: href#key} for the series
+    whose clips resolved, or {} (older footage is often not in storage)."""
+    from cricket_core.video import playlist_item, resolve_playlist, build_player_html
+    playlists, titles, hrefs = {}, {}, {}
+    for i, s in enumerate(card.get("series", []) if card else []):
+        items = [playlist_item(o["delivery_id"], o["clip_stem"],
+                               caption=f'{o["how"]} — {o["bowler"] or "?"} · '
+                                       f'{o["length"] or "?"}, {o["line"] or "?"} · {_dfmt(o["date"])}')
+                 for o in s.get("dismissals", []) if o.get("clip_stem")]
+        if not items:
+            continue
+        resolved, avail, _tot = resolve_playlist(items)
+        if avail:
+            key = f"s{i}"
+            playlists[key] = resolved
+            titles[key] = f'Dismissals — v {s["opp"]}'
+            hrefs[i] = f"{page_slug}-vision.html#{key}"
+    if playlists:
+        build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
+                          title=f"{name} — dismissal vision", subtitle="how you were got out",
+                          titles=titles)
+    return hrefs
+
+
+def _player_body(meta, pid, rec, card=None, vision=None):
+    name = rec.get("name", pid)
+    role = rec.get("role", "")
+    opp = _short_opp(meta)
+    body = [EXTRA_CSS,
+            f'<div class="phead">{_avatar(pid, "big", _initials(name), name=name)}'
+            f'<div><h1>{html.escape(name)}</h1><div class="role">{html.escape(role)} · '
+            f'{html.escape(meta.get("name",""))}</div></div></div>']
+    body.append(_pack_section("Your batting pack", f"How {opp} will bowl to you.",
+                              inner=_attack_card_html(card, opp, vision)))
+    if "bowling" in rec.get("packs", []):
+        body.append(_pack_section("Your bowling pack", f"How to bowl to the {opp} batters."))
+    body.append(_pack_section(f"Your vision vs {opp}",
+                              "Your most recent balls against each opponent you have faced (this format)."))
+    return "".join(body)
+
+
+def build(out_dir, no_video=False):
+    squads = json.load(open(SQUADS, encoding="utf-8"))
+    players = json.load(open(PLAYERS, encoding="utf-8"))
+    cards = _load_cards()
+    os.makedirs(out_dir, exist_ok=True)
+    # clear (keep any .git)
+    for f in os.listdir(out_dir):
+        if f == ".git":
+            continue
+        p = os.path.join(out_dir, f)
+        if os.path.isdir(p):
+            import shutil
+            shutil.rmtree(p, ignore_errors=True)
+        else:
+            os.remove(p)
+
+    slugs = list(squads.keys())
+    single = len(slugs) == 1
+
+    for slug in slugs:
+        meta = squads[slug]
+        roster = [(pid, players.get(pid, {"name": pid, "role": "Unknown", "packs": ["batting"]}))
+                  for pid in meta.get("players", [])]
+        s_dir = out_dir if single else os.path.join(out_dir, slug)
+        os.makedirs(s_dir, exist_ok=True)
+        if IMG_MODE == "file":                       # copy each roster photo into the bundle once
+            img_dir = os.path.join(s_dir, "img")
+            os.makedirs(img_dir, exist_ok=True)
+            import shutil
+            for pid, rec in roster:
+                p = get_photo_path(pid, fmt="test", name=rec.get("name"))
+                if p:
+                    shutil.copy(p, os.path.join(img_dir, f"{pid}.png"))
+                    _SITE_IMGS.add(str(pid))
+        up = None if single else ("../index.html", "Series")
+        open(os.path.join(s_dir, "index.html"), "w", encoding="utf-8").write(
+            _page(f"{meta.get('name','')} — player packs", _roster_body(meta, roster), up=up))
+        for pid, rec in roster:
+            name = rec.get("name", pid)
+            pslug = _slug(name)
+            vision = {}
+            if not no_video and cards.get(pid):
+                try:
+                    vision = _build_vision(s_dir, pslug, name, cards[pid])
+                except Exception as e:
+                    print(f"  ! vision for {name}: {type(e).__name__}: {e}")
+            open(os.path.join(s_dir, pslug + ".html"), "w", encoding="utf-8").write(
+                _page(f"{name} — pack", _player_body(meta, pid, rec, cards.get(pid), vision),
+                      up=("index.html", "Squad")))
+        print(f"  {slug}: {len(roster)} players -> {s_dir}")
+
+    if not single:
+        items = "\n".join(
+            f'<li><a href="{s}/index.html"><b>{html.escape(squads[s].get("name", s))}</b>'
+            f'<span class="sub">{html.escape(squads[s].get("opposition",""))}</span></a>'
+            f'<span class="n">{len(squads[s].get("players",[]))} players</span></li>' for s in slugs)
+        open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(
+            _page("Player packs", f'<h1>Player packs</h1><p class="lead">Select a series.</p>'
+                                  f'<ul class="cards">{items}</ul>'))
+    open(os.path.join(out_dir, ".nojekyll"), "w").close()
+    print(f"Built player site -> {out_dir}")
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--out", default="player_site")
+    ap.add_argument("--no-video", action="store_true",
+                    help="skip minting SAS / resolving dismissal clips (fast offline build)")
+    args = ap.parse_args()
+    build(os.path.join(HERE, args.out), no_video=args.no_video)
+
+
+if __name__ == "__main__":
+    main()

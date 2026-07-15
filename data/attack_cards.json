@@ -1,0 +1,4717 @@
+{
+ "3080014": {
+  "name": "Travis Head",
+  "hand": "Left",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 5,
+    "balls": 714,
+    "pace_balls": 615,
+    "runs": 624,
+    "outs": 10,
+    "avg": 62.4,
+    "spin_share": 14,
+    "ctrl_balls": 836,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.6,
+      "ctrl_pct": 1.9,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 11.5,
+      "ctrl_pct": 10.2,
+      "z": 0.8,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 10.7,
+      "ctrl_pct": 9.3,
+      "z": 0.9,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 33.5,
+      "ctrl_pct": 36.4,
+      "z": -1.1,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 18.4,
+      "ctrl_pct": 18.3,
+      "z": 0.0,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 9.6,
+      "ctrl_pct": 11.5,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 14.6,
+      "ctrl_pct": 12.4,
+      "z": 1.2,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 46.8,
+      "ctrl_pct": 56.7,
+      "z": -3.7,
+      "flag": "less"
+     },
+     {
+      "label": "wide of off",
+      "pct": 11.4,
+      "ctrl_pct": 20.7,
+      "z": -4.7,
+      "flag": "less"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 18.4,
+      "ctrl_pct": 13.3,
+      "z": 2.7,
+      "flag": "more"
+     },
+     {
+      "label": "on leg",
+      "pct": 23.4,
+      "ctrl_pct": 9.3,
+      "z": 7.4,
+      "flag": "more"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 9.6,
+      "ctrl_pct": 19.6,
+      "z": -5.2,
+      "flag": "less"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 14.0,
+      "ctrl_pct": 9.2,
+      "z": 2.8,
+      "flag": "more"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Flick",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010103001",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A103001"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Slog",
+      "length": "back of a length",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010202705",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/2/5460928A202705"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Flick",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010101401",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A101401"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Atkinson",
+      "stroke": "Cut or dab",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010200605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/2/5460929A200605"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010101001",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A101001"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Pull",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010207406",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A207406"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Atkinson",
+      "stroke": "Cut or dab",
+      "length": "a good length",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010100701",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A100701"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Carse",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "on leg",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010202106",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A202106"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Bethell",
+      "stroke": "Sweep",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010106801",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A106801"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Pull",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010201103",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201103"
+     }
+    ],
+    "summary": "They bowled you more at your pads, full and straight and at the stumps, and less with the width to cut, wide of off and in the channel. 10 dismissals — 6 caught, 3 bowled and 1 LBW."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-12",
+    "tests": 3,
+    "balls": 352,
+    "pace_balls": 300,
+    "runs": 224,
+    "outs": 6,
+    "avg": 37.3,
+    "spin_share": 15,
+    "ctrl_balls": 452,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.7,
+      "ctrl_pct": 1.5,
+      "z": 0.1,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 18.3,
+      "ctrl_pct": 16.6,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 16.3,
+      "ctrl_pct": 13.3,
+      "z": 1.2,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 39.7,
+      "ctrl_pct": 43.1,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 13.7,
+      "ctrl_pct": 13.9,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 7.0,
+      "ctrl_pct": 6.6,
+      "z": 0.2,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 3.3,
+      "ctrl_pct": 4.9,
+      "z": -1.0,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 58.0,
+      "ctrl_pct": 58.2,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 33.3,
+      "ctrl_pct": 33.4,
+      "z": -0.0,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 6.3,
+      "ctrl_pct": 5.3,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 2.3,
+      "ctrl_pct": 3.1,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 9.7,
+      "ctrl_pct": 10.4,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 4.7,
+      "ctrl_pct": 4.2,
+      "z": 0.3,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Greaves",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020105002",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B105002"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Joseph",
+      "stroke": "Flick",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020205306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B205306"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Pushed",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020102703",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B102703"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020206303",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206303"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Greaves",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020106506",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106506"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Greaves",
+      "stroke": "Pushed",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020201704",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B201704"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 6 dismissals — 4 caught, 1 LBW and 1 bowled, playing the drive."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 31,
+    "pace_balls": 31,
+    "runs": 20,
+    "outs": 2,
+    "avg": 10.0,
+    "spin_share": 0,
+    "ctrl_balls": 108,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Jansen",
+      "stroke": "Glance",
+      "length": "fullish",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010102402",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A102402"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Mulder",
+      "stroke": "Pushed",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010202404",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A202404"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 bowled."
+   }
+  ]
+ },
+ "2580027": {
+  "name": "Jake Weatherald",
+  "hand": "Left",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 5,
+    "balls": 284,
+    "pace_balls": 268,
+    "runs": 201,
+    "outs": 9,
+    "avg": 22.3,
+    "spin_share": 6,
+    "ctrl_balls": 1183,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.5,
+      "ctrl_pct": 1.9,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 12.7,
+      "ctrl_pct": 10.3,
+      "z": 1.1,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 10.4,
+      "ctrl_pct": 9.8,
+      "z": 0.3,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 40.7,
+      "ctrl_pct": 33.9,
+      "z": 2.1,
+      "flag": "more"
+     },
+     {
+      "label": "back of a length",
+      "pct": 22.0,
+      "ctrl_pct": 17.5,
+      "z": 1.7,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 10.4,
+      "ctrl_pct": 10.7,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 2.2,
+      "ctrl_pct": 15.9,
+      "z": -5.9,
+      "flag": "less"
+     },
+     {
+      "label": "the channel",
+      "pct": 47.8,
+      "ctrl_pct": 53.6,
+      "z": -1.7,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 22.4,
+      "ctrl_pct": 15.5,
+      "z": 2.7,
+      "flag": "more"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 19.8,
+      "ctrl_pct": 14.5,
+      "z": 2.2,
+      "flag": "more"
+     },
+     {
+      "label": "on leg",
+      "pct": 10.1,
+      "ctrl_pct": 16.5,
+      "z": -2.6,
+      "flag": "less"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 9.7,
+      "ctrl_pct": 16.7,
+      "z": -2.8,
+      "flag": "less"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 13.1,
+      "ctrl_pct": 10.8,
+      "z": 1.0,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "LBW",
+      "bowler": "Archer",
+      "stroke": "Worked",
+      "length": "full",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010100102",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A100102"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Pull",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010201203",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/2/5460928A201203"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Archer",
+      "stroke": "Flick",
+      "length": "full",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010102605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A102605"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Archer",
+      "stroke": "Pull",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010100902",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A100902"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Carse",
+      "stroke": "Worked",
+      "length": "a good length",
+      "line": "on leg",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010200203",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A200203"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Flick",
+      "length": "full",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010101002",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A101002"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Stokes",
+      "stroke": "No Shot",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010201105",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A201105"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Stokes",
+      "stroke": "Flick",
+      "length": "full",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010101302",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A101302"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Leave",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010201504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201504"
+     }
+    ],
+    "summary": "They bowled you more wide of off, at the stumps and on a good length, and less short, with the width to cut and at your pads. 9 dismissals — 4 LBW, 4 caught and 1 bowled, the wicket ball most often full, at the stumps."
+   }
+  ]
+ },
+ "2480058": {
+  "name": "Marnus Labuschagne",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 5,
+    "balls": 399,
+    "pace_balls": 365,
+    "runs": 259,
+    "outs": 9,
+    "avg": 28.8,
+    "spin_share": 9,
+    "ctrl_balls": 697,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.5,
+      "ctrl_pct": 1.9,
+      "z": -1.7,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 11.0,
+      "ctrl_pct": 8.8,
+      "z": 1.2,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 7.9,
+      "ctrl_pct": 10.0,
+      "z": -1.1,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 42.7,
+      "ctrl_pct": 37.7,
+      "z": 1.6,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 20.3,
+      "ctrl_pct": 17.5,
+      "z": 1.1,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 8.8,
+      "ctrl_pct": 11.0,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 8.8,
+      "ctrl_pct": 13.1,
+      "z": -2.1,
+      "flag": "less"
+     },
+     {
+      "label": "the channel",
+      "pct": 64.9,
+      "ctrl_pct": 59.1,
+      "z": 1.8,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 32.1,
+      "ctrl_pct": 34.4,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 2.7,
+      "ctrl_pct": 4.6,
+      "z": -1.5,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 0.3,
+      "ctrl_pct": 1.9,
+      "z": -2.2,
+      "flag": "less"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 17.0,
+      "ctrl_pct": 22.2,
+      "z": -2.0,
+      "flag": "less"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 1.9,
+      "ctrl_pct": 3.3,
+      "z": -1.3,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Archer",
+      "stroke": "No Shot",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010101502",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A101502"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Cut or dab",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010103801",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A103801"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Atkinson",
+      "stroke": "Fended",
+      "length": "back of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010200803",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/2/5460929A200803"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Archer",
+      "stroke": "Pull",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010102501",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A102501"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Forward defence",
+      "length": "back of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010201703",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A201703"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010101205",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A101205"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010201801",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A201801"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Drive",
+      "length": "fullish",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010103106",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A103106"
+     },
+     {
+      "how": "Run Out",
+      "bowler": "Root",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "wide of off",
+      "pace_spin": "spin",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010202401",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202401"
+     }
+    ],
+    "summary": "They bowled you less at your pads, short and with the width to cut than your teammates. 9 dismissals — 7 caught, 1 bowled and 1 run out."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 115,
+    "pace_balls": 115,
+    "runs": 38,
+    "outs": 2,
+    "avg": 19.0,
+    "spin_share": 0,
+    "ctrl_balls": 205,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.9,
+      "ctrl_pct": 0.0,
+      "z": 1.3,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 9.6,
+      "ctrl_pct": 5.9,
+      "z": 1.2,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 18.3,
+      "ctrl_pct": 11.2,
+      "z": 1.8,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 47.0,
+      "ctrl_pct": 53.2,
+      "z": -1.1,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 17.4,
+      "ctrl_pct": 20.0,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 2.6,
+      "ctrl_pct": 6.3,
+      "z": -1.5,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 4.3,
+      "ctrl_pct": 3.4,
+      "z": 0.4,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 55.7,
+      "ctrl_pct": 51.7,
+      "z": 0.7,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 33.9,
+      "ctrl_pct": 44.4,
+      "z": -1.8,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 8.7,
+      "ctrl_pct": 3.9,
+      "z": 1.8,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 1.7,
+      "ctrl_pct": 0.0,
+      "z": 1.9,
+      "flag": "thin"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 7.0,
+      "ctrl_pct": 9.8,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 7.8,
+      "ctrl_pct": 3.9,
+      "z": 1.5,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Jansen",
+      "stroke": "Forward defence",
+      "length": "fullish",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010101806",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A101806"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Jansen",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010201805",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201805"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 caught."
+   },
+   {
+    "opp": "Sri Lanka",
+    "d0": "2025-01-29",
+    "d1": "2025-02-06",
+    "tests": 2,
+    "balls": 95,
+    "pace_balls": 0,
+    "runs": 50,
+    "outs": 2,
+    "avg": 25.0,
+    "spin_share": 100,
+    "ctrl_balls": 37,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Vandersay",
+      "stroke": "Forward defence",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2025-01-29",
+      "delivery_id": "5460514020103006",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460514/B/1/5460514B103006"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Jayasuriya",
+      "stroke": "Backward defence",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2025-02-06",
+      "delivery_id": "5460515020100805",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460515/B/1/5460515B100805"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 LBW."
+   }
+  ]
+ },
+ "940135": {
+  "name": "Steve Smith",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 4,
+    "balls": 446,
+    "pace_balls": 373,
+    "runs": 281,
+    "outs": 5,
+    "avg": 56.2,
+    "spin_share": 16,
+    "ctrl_balls": 574,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.3,
+      "ctrl_pct": 1.7,
+      "z": -0.5,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 8.3,
+      "ctrl_pct": 9.4,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 9.7,
+      "ctrl_pct": 9.2,
+      "z": 0.2,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 38.3,
+      "ctrl_pct": 40.1,
+      "z": -0.5,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 17.7,
+      "ctrl_pct": 17.9,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 12.9,
+      "ctrl_pct": 8.7,
+      "z": 2.1,
+      "flag": "more"
+     },
+     {
+      "label": "short",
+      "pct": 11.8,
+      "ctrl_pct": 12.9,
+      "z": -0.5,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 58.4,
+      "ctrl_pct": 62.2,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 33.8,
+      "ctrl_pct": 34.7,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 5.6,
+      "ctrl_pct": 2.1,
+      "z": 2.9,
+      "flag": "more"
+     },
+     {
+      "label": "on leg",
+      "pct": 2.1,
+      "ctrl_pct": 1.0,
+      "z": 1.4,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 22.0,
+      "ctrl_pct": 20.7,
+      "z": 0.5,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 3.5,
+      "ctrl_pct": 1.6,
+      "z": 1.9,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Backward defence",
+      "length": "short of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010101605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A101605"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Pull",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010105705",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A105705"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Tongue",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010102002",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A102002"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Backward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010112905",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A112905"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Jacks",
+      "stroke": "Forward defence",
+      "length": "full",
+      "line": "wide of off",
+      "pace_spin": "spin",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010201805",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201805"
+     }
+    ],
+    "summary": "They bowled you more at the stumps and short of a length than your teammates. 5 dismissals — 3 caught and 2 bowled, playing the backward defence."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-07-03",
+    "d1": "2025-07-12",
+    "tests": 2,
+    "balls": 203,
+    "pace_balls": 155,
+    "runs": 127,
+    "outs": 4,
+    "avg": 31.8,
+    "spin_share": 24,
+    "ctrl_balls": 550,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.6,
+      "ctrl_pct": 0.7,
+      "z": -0.1,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 10.3,
+      "ctrl_pct": 7.8,
+      "z": 1.0,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 13.5,
+      "ctrl_pct": 12.5,
+      "z": 0.3,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 35.5,
+      "ctrl_pct": 38.9,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 21.9,
+      "ctrl_pct": 19.8,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 7.1,
+      "ctrl_pct": 11.6,
+      "z": -1.6,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 11.0,
+      "ctrl_pct": 8.5,
+      "z": 0.9,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 62.6,
+      "ctrl_pct": 66.7,
+      "z": -1.0,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 26.5,
+      "ctrl_pct": 27.8,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 7.7,
+      "ctrl_pct": 4.4,
+      "z": 1.7,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 3.2,
+      "ctrl_pct": 1.1,
+      "z": 1.9,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 15.5,
+      "ctrl_pct": 20.0,
+      "z": -1.3,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 7.1,
+      "ctrl_pct": 3.6,
+      "z": 1.9,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Hook",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020101305",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B101305"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Greaves",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020205304",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B205304"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020105606",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B105606"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Forward defence",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020200906",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B200906"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 4 dismissals — 2 caught, 1 LBW and 1 bowled, playing the forward defence."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 134,
+    "pace_balls": 118,
+    "runs": 79,
+    "outs": 2,
+    "avg": 39.5,
+    "spin_share": 12,
+    "ctrl_balls": 202,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.0,
+      "ctrl_pct": 0.5,
+      "z": -0.8,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 7.6,
+      "ctrl_pct": 6.9,
+      "z": 0.2,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 7.6,
+      "ctrl_pct": 17.3,
+      "z": -2.4,
+      "flag": "less"
+     },
+     {
+      "label": "a good length",
+      "pct": 54.2,
+      "ctrl_pct": 49.0,
+      "z": 0.9,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 22.0,
+      "ctrl_pct": 17.3,
+      "z": 1.0,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 6.8,
+      "ctrl_pct": 4.0,
+      "z": 1.1,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 1.7,
+      "ctrl_pct": 5.0,
+      "z": -1.5,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 46.6,
+      "ctrl_pct": 56.9,
+      "z": -1.8,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 50.8,
+      "ctrl_pct": 34.7,
+      "z": 2.8,
+      "flag": "more"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 2.5,
+      "ctrl_pct": 7.4,
+      "z": -1.8,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 0.0,
+      "ctrl_pct": 1.0,
+      "z": -1.1,
+      "flag": "thin"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 8.5,
+      "ctrl_pct": 8.9,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 2.5,
+      "ctrl_pct": 6.9,
+      "z": -1.7,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Markram",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "wide of off",
+      "pace_spin": "spin",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010104206",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A104206"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Ngidi",
+      "stroke": "Backward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010201905",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201905"
+     }
+    ],
+    "summary": "They bowled you more wide of off, and less fullish. 2 dismissals — 1 caught and 1 LBW."
+   }
+  ]
+ },
+ "2950104": {
+  "name": "Cameron Green",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 5,
+    "balls": 268,
+    "pace_balls": 236,
+    "runs": 171,
+    "outs": 7,
+    "avg": 24.4,
+    "spin_share": 12,
+    "ctrl_balls": 905,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 2.1,
+      "ctrl_pct": 1.1,
+      "z": 1.2,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 8.5,
+      "ctrl_pct": 9.9,
+      "z": -0.7,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 9.3,
+      "ctrl_pct": 9.3,
+      "z": 0.0,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 30.9,
+      "ctrl_pct": 40.7,
+      "z": -2.7,
+      "flag": "less"
+     },
+     {
+      "label": "back of a length",
+      "pct": 22.0,
+      "ctrl_pct": 18.1,
+      "z": 1.4,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 12.3,
+      "ctrl_pct": 10.3,
+      "z": 0.9,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 14.8,
+      "ctrl_pct": 10.6,
+      "z": 1.8,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 58.1,
+      "ctrl_pct": 61.4,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 38.1,
+      "ctrl_pct": 33.0,
+      "z": 1.5,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 3.0,
+      "ctrl_pct": 4.2,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 0.8,
+      "ctrl_pct": 1.3,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 26.3,
+      "ctrl_pct": 19.4,
+      "z": 2.3,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 2.5,
+      "ctrl_pct": 3.0,
+      "z": -0.4,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010103201",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A103201"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Carse",
+      "stroke": "Cut or dab",
+      "length": "very full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010105702",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A105702"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Archer",
+      "stroke": "Flick",
+      "length": "a good length",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010102503",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A102503"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010203706",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A203706"
+     },
+     {
+      "how": "Run Out",
+      "bowler": "Carse",
+      "stroke": "Pushed",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010104301",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A104301"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Steer",
+      "length": "short",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010203105",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A203105"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Pull",
+      "length": "short of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010110703",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A110703"
+     }
+    ],
+    "summary": "They bowled you more with the width to cut, and less on a good length. 7 dismissals — 5 caught, 1 bowled and 1 run out."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-12",
+    "tests": 3,
+    "balls": 397,
+    "pace_balls": 350,
+    "runs": 182,
+    "outs": 6,
+    "avg": 30.3,
+    "spin_share": 12,
+    "ctrl_balls": 647,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.1,
+      "ctrl_pct": 0.6,
+      "z": 0.9,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 8.3,
+      "ctrl_pct": 8.7,
+      "z": -0.2,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 12.9,
+      "ctrl_pct": 11.6,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 37.4,
+      "ctrl_pct": 41.9,
+      "z": -1.4,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 21.1,
+      "ctrl_pct": 21.3,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 11.7,
+      "ctrl_pct": 8.7,
+      "z": 1.6,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 7.4,
+      "ctrl_pct": 7.3,
+      "z": 0.1,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 66.0,
+      "ctrl_pct": 67.7,
+      "z": -0.5,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 28.9,
+      "ctrl_pct": 24.1,
+      "z": 1.6,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 4.0,
+      "ctrl_pct": 6.0,
+      "z": -1.4,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 1.1,
+      "ctrl_pct": 2.2,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 18.9,
+      "ctrl_pct": 15.3,
+      "z": 1.4,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 3.7,
+      "ctrl_pct": 5.1,
+      "z": -1.0,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020101004",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B101004"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Greaves",
+      "stroke": "Drive",
+      "length": "back of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020202506",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B202506"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Drive",
+      "length": "fullish",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020102306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B102306"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Cut or dab",
+      "length": "short of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020204005",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B204005"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Seales",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020104906",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B104906"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Leave",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020203001",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203001"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 6 dismissals — 3 caught and 3 bowled, the wicket ball most often a good length, the channel."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 5,
+    "pace_balls": 5,
+    "runs": 4,
+    "outs": 2,
+    "avg": 2.0,
+    "spin_share": 0,
+    "ctrl_balls": 315,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Rabada",
+      "stroke": "Pushed",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010100706",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A100706"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Rabada",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010201104",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201104"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 caught."
+   }
+  ]
+ },
+ "350104": {
+  "name": "Alex Carey",
+  "hand": "Left",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 5,
+    "balls": 446,
+    "pace_balls": 360,
+    "runs": 323,
+    "outs": 7,
+    "avg": 46.1,
+    "spin_share": 19,
+    "ctrl_balls": 1091,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.1,
+      "ctrl_pct": 2.0,
+      "z": -1.1,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 7.5,
+      "ctrl_pct": 11.8,
+      "z": -2.3,
+      "flag": "less"
+     },
+     {
+      "label": "fullish",
+      "pct": 7.2,
+      "ctrl_pct": 10.8,
+      "z": -2.0,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 33.3,
+      "ctrl_pct": 35.7,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 17.5,
+      "ctrl_pct": 18.6,
+      "z": -0.5,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 13.1,
+      "ctrl_pct": 9.9,
+      "z": 1.7,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 20.3,
+      "ctrl_pct": 11.1,
+      "z": 4.4,
+      "flag": "more"
+     },
+     {
+      "label": "the channel",
+      "pct": 59.4,
+      "ctrl_pct": 50.2,
+      "z": 3.0,
+      "flag": "more"
+     },
+     {
+      "label": "wide of off",
+      "pct": 20.3,
+      "ctrl_pct": 15.6,
+      "z": 2.1,
+      "flag": "more"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 10.3,
+      "ctrl_pct": 17.1,
+      "z": -3.1,
+      "flag": "less"
+     },
+     {
+      "label": "on leg",
+      "pct": 10.0,
+      "ctrl_pct": 17.0,
+      "z": -3.2,
+      "flag": "less"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 27.5,
+      "ctrl_pct": 11.4,
+      "z": 7.4,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 6.9,
+      "ctrl_pct": 12.6,
+      "z": -3.0,
+      "flag": "less"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Ramp",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010103804",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A103804"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Atkinson",
+      "stroke": "Cut or dab",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010108306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A108306"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Jacks",
+      "stroke": "Sweep",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010107802",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A107802"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Glance",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010207902",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A207902"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Flick",
+      "length": "a good length",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010103202",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A103202"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Steer",
+      "length": "a good length",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010202305",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A202305"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Glance",
+      "length": "fullish",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010108901",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A108901"
+     }
+    ],
+    "summary": "They bowled you more with the width to cut, short and in the channel, and less at your pads, at the stumps and full and straight. 7 dismissals — 7 caught."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-12",
+    "tests": 3,
+    "balls": 223,
+    "pace_balls": 194,
+    "runs": 179,
+    "outs": 6,
+    "avg": 29.8,
+    "spin_share": 13,
+    "ctrl_balls": 593,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.5,
+      "ctrl_pct": 1.5,
+      "z": 0.0,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 11.3,
+      "ctrl_pct": 18.9,
+      "z": -2.4,
+      "flag": "less"
+     },
+     {
+      "label": "fullish",
+      "pct": 10.3,
+      "ctrl_pct": 15.5,
+      "z": -1.8,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 39.2,
+      "ctrl_pct": 41.8,
+      "z": -0.7,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 19.1,
+      "ctrl_pct": 12.8,
+      "z": 2.2,
+      "flag": "more"
+     },
+     {
+      "label": "short of a length",
+      "pct": 10.3,
+      "ctrl_pct": 6.4,
+      "z": 1.8,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 8.2,
+      "ctrl_pct": 3.0,
+      "z": 3.1,
+      "flag": "more"
+     },
+     {
+      "label": "the channel",
+      "pct": 59.3,
+      "ctrl_pct": 58.0,
+      "z": 0.3,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 29.4,
+      "ctrl_pct": 34.2,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 6.7,
+      "ctrl_pct": 5.6,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 4.6,
+      "ctrl_pct": 2.2,
+      "z": 1.8,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 16.5,
+      "ctrl_pct": 8.9,
+      "z": 2.9,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 4.6,
+      "ctrl_pct": 4.6,
+      "z": 0.0,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Cut or dab",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020104904",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B104904"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Chase",
+      "stroke": "Lofted",
+      "length": "full",
+      "line": "wide of off",
+      "pace_spin": "spin",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020207903",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B207903"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Greaves",
+      "stroke": "Pull",
+      "length": "short of a length",
+      "line": "on leg",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020105202",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B105202"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Joseph",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020206904",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206904"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Greaves",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020106704",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106704"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020202107",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B202107"
+     }
+    ],
+    "summary": "They bowled you more short, with the width to cut and back of a length, and less full. 6 dismissals — 5 caught and 1 LBW."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 78,
+    "pace_balls": 65,
+    "runs": 65,
+    "outs": 2,
+    "avg": 32.5,
+    "spin_share": 17,
+    "ctrl_balls": 74,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Maharaj",
+      "stroke": "Reverse sweep",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010105201",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A105201"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Rabada",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010203903",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A203903"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 bowled and 1 LBW."
+   }
+  ]
+ },
+ "390157": {
+  "name": "Beau Webster",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2026-01-04",
+    "d1": "2026-01-04",
+    "tests": 1,
+    "balls": 87,
+    "pace_balls": 47,
+    "runs": 71,
+    "outs": 0,
+    "avg": null,
+    "spin_share": 46,
+    "ctrl_balls": 349,
+    "cells": [],
+    "dismissals": [],
+    "summary": "They bowled to you as they bowled to your teammates. Not dismissed in the series."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-12",
+    "tests": 3,
+    "balls": 292,
+    "pace_balls": 265,
+    "runs": 150,
+    "outs": 6,
+    "avg": 25.0,
+    "spin_share": 9,
+    "ctrl_balls": 732,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.8,
+      "ctrl_pct": 0.8,
+      "z": -0.1,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 7.5,
+      "ctrl_pct": 8.9,
+      "z": -0.7,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 10.9,
+      "ctrl_pct": 12.4,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 38.1,
+      "ctrl_pct": 41.1,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 24.5,
+      "ctrl_pct": 20.1,
+      "z": 1.5,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 9.4,
+      "ctrl_pct": 9.8,
+      "z": -0.2,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 8.7,
+      "ctrl_pct": 6.8,
+      "z": 1.0,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 68.3,
+      "ctrl_pct": 66.7,
+      "z": 0.5,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 25.3,
+      "ctrl_pct": 26.0,
+      "z": -0.2,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 4.9,
+      "ctrl_pct": 5.5,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 1.5,
+      "ctrl_pct": 1.9,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 18.1,
+      "ctrl_pct": 16.0,
+      "z": 0.8,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 4.5,
+      "ctrl_pct": 4.6,
+      "z": -0.1,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020104406",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B104406"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Glance",
+      "length": "full",
+      "line": "on leg",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020206306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B206306"
+     },
+     {
+      "how": "Run Out",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020106501",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B106501"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Greaves",
+      "stroke": "Drive",
+      "length": "fullish",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020205504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B205504"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020106004",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106004"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020202104",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B202104"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 6 dismissals — 3 caught, 2 bowled and 1 run out, playing the drive."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 100,
+    "pace_balls": 82,
+    "runs": 81,
+    "outs": 2,
+    "avg": 40.5,
+    "spin_share": 18,
+    "ctrl_balls": 238,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.0,
+      "ctrl_pct": 0.4,
+      "z": -0.6,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 3.7,
+      "ctrl_pct": 8.4,
+      "z": -1.4,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 15.9,
+      "ctrl_pct": 13.0,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 51.2,
+      "ctrl_pct": 50.8,
+      "z": 0.1,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 17.1,
+      "ctrl_pct": 19.7,
+      "z": -0.5,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 6.1,
+      "ctrl_pct": 4.6,
+      "z": 0.5,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 6.1,
+      "ctrl_pct": 2.9,
+      "z": 1.3,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 57.3,
+      "ctrl_pct": 51.7,
+      "z": 0.9,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 37.8,
+      "ctrl_pct": 41.6,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 4.9,
+      "ctrl_pct": 5.9,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 0.0,
+      "ctrl_pct": 0.8,
+      "z": -0.8,
+      "flag": "thin"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 12.2,
+      "ctrl_pct": 7.6,
+      "z": 1.3,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 4.9,
+      "ctrl_pct": 5.5,
+      "z": -0.2,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Rabada",
+      "stroke": "Drive",
+      "length": "back of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010105504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A105504"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Ngidi",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010202306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A202306"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 LBW."
+   }
+  ]
+ },
+ "1300076": {
+  "name": "Pat Cummins",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-12-17",
+    "d1": "2025-12-17",
+    "tests": 1,
+    "balls": 37,
+    "pace_balls": 29,
+    "runs": 19,
+    "outs": 2,
+    "avg": 9.5,
+    "spin_share": 22,
+    "ctrl_balls": 115,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Worked",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010106605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A106605"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010208401",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A208401"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 caught."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-12",
+    "tests": 3,
+    "balls": 109,
+    "pace_balls": 104,
+    "runs": 87,
+    "outs": 6,
+    "avg": 14.5,
+    "spin_share": 5,
+    "ctrl_balls": 997,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 2.9,
+      "ctrl_pct": 0.8,
+      "z": 2.0,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 8.7,
+      "ctrl_pct": 8.5,
+      "z": 0.0,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 1.9,
+      "ctrl_pct": 12.0,
+      "z": -3.1,
+      "flag": "less"
+     },
+     {
+      "label": "a good length",
+      "pct": 26.9,
+      "ctrl_pct": 40.3,
+      "z": -2.7,
+      "flag": "less"
+     },
+     {
+      "label": "back of a length",
+      "pct": 26.0,
+      "ctrl_pct": 21.3,
+      "z": 1.1,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 13.5,
+      "ctrl_pct": 9.7,
+      "z": 1.2,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 20.2,
+      "ctrl_pct": 7.3,
+      "z": 4.5,
+      "flag": "more"
+     },
+     {
+      "label": "the channel",
+      "pct": 67.3,
+      "ctrl_pct": 67.1,
+      "z": 0.0,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 24.0,
+      "ctrl_pct": 25.8,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 7.7,
+      "ctrl_pct": 5.3,
+      "z": 1.0,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 1.0,
+      "ctrl_pct": 1.8,
+      "z": -0.6,
+      "flag": "thin"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 33.7,
+      "ctrl_pct": 16.5,
+      "z": 4.3,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 5.8,
+      "ctrl_pct": 4.6,
+      "z": 0.5,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Drive",
+      "length": "back of a length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020105504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B105504"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Pull",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020206802",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B206802"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Backward defence",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020105704",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B105704"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Forward defence",
+      "length": "back of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020206505",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206505"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Slog",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020107005",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B107005"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Backward defence",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020203301",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203301"
+     }
+    ],
+    "summary": "They bowled you more short and with the width to cut, and less fullish and on a good length. 6 dismissals — 5 caught and 1 bowled."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 11,
+    "pace_balls": 7,
+    "runs": 7,
+    "outs": 2,
+    "avg": 3.5,
+    "spin_share": 36,
+    "ctrl_balls": 320,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Rabada",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010105304",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A105304"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Ngidi",
+      "stroke": "Flick",
+      "length": "full",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010202505",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A202505"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 bowled."
+   }
+  ]
+ },
+ "1300007": {
+  "name": "Mitch Starc",
+  "hand": "Left",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 5,
+    "balls": 253,
+    "pace_balls": 213,
+    "runs": 146,
+    "outs": 6,
+    "avg": 24.3,
+    "spin_share": 16,
+    "ctrl_balls": 1451,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 2.8,
+      "ctrl_pct": 1.8,
+      "z": 1.0,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 7.0,
+      "ctrl_pct": 10.8,
+      "z": -1.7,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 8.0,
+      "ctrl_pct": 9.9,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 39.4,
+      "ctrl_pct": 35.1,
+      "z": 1.2,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 17.4,
+      "ctrl_pct": 18.3,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 7.0,
+      "ctrl_pct": 10.7,
+      "z": -1.6,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 18.3,
+      "ctrl_pct": 13.4,
+      "z": 1.9,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 58.7,
+      "ctrl_pct": 52.5,
+      "z": 1.7,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 16.9,
+      "ctrl_pct": 16.7,
+      "z": 0.1,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 8.0,
+      "ctrl_pct": 15.4,
+      "z": -2.9,
+      "flag": "less"
+     },
+     {
+      "label": "on leg",
+      "pct": 16.4,
+      "ctrl_pct": 15.3,
+      "z": 0.4,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 16.4,
+      "ctrl_pct": 15.4,
+      "z": 0.4,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 7.0,
+      "ctrl_pct": 11.2,
+      "z": -1.8,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Slog",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010103606",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A103606"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Cut or dab",
+      "length": "back of a length",
+      "line": "on leg",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010111102",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A111102"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Archer",
+      "stroke": "Pushed",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010108602",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108602"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Drive",
+      "length": "fullish",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010104505",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A104505"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Worked",
+      "length": "a good length",
+      "line": "on leg",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010203207",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A203207"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Tongue",
+      "stroke": "Pushed",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010113306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113306"
+     }
+    ],
+    "summary": "They bowled you less at the stumps than your teammates. 6 dismissals — 4 caught and 2 bowled."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-12",
+    "tests": 3,
+    "balls": 81,
+    "pace_balls": 81,
+    "runs": 45,
+    "outs": 4,
+    "avg": 11.2,
+    "spin_share": 0,
+    "ctrl_balls": 752,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.2,
+      "ctrl_pct": 1.6,
+      "z": -0.2,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 4.9,
+      "ctrl_pct": 17.3,
+      "z": -2.9,
+      "flag": "less"
+     },
+     {
+      "label": "fullish",
+      "pct": 7.4,
+      "ctrl_pct": 14.5,
+      "z": -1.8,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 33.3,
+      "ctrl_pct": 41.8,
+      "z": -1.5,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 17.3,
+      "ctrl_pct": 13.8,
+      "z": 0.8,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 19.8,
+      "ctrl_pct": 6.8,
+      "z": 4.1,
+      "flag": "more"
+     },
+     {
+      "label": "short",
+      "pct": 16.0,
+      "ctrl_pct": 4.3,
+      "z": 4.5,
+      "flag": "more"
+     },
+     {
+      "label": "the channel",
+      "pct": 76.5,
+      "ctrl_pct": 58.1,
+      "z": 3.2,
+      "flag": "more"
+     },
+     {
+      "label": "wide of off",
+      "pct": 18.5,
+      "ctrl_pct": 33.4,
+      "z": -2.7,
+      "flag": "less"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 4.9,
+      "ctrl_pct": 5.7,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 0.0,
+      "ctrl_pct": 2.8,
+      "z": -1.5,
+      "flag": "thin"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 35.8,
+      "ctrl_pct": 10.1,
+      "z": 6.6,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 3.7,
+      "ctrl_pct": 4.4,
+      "z": -0.3,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020105102",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B105102"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020207102",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B207102"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Drive",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020106001",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B106001"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Seales",
+      "stroke": "Drive",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020106806",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106806"
+     }
+    ],
+    "summary": "They bowled you more with the width to cut, short and short of a length, and less full and wide of off. 4 dismissals — 2 caught and 2 bowled, the wicket ball most often fullish, the channel, playing the drive."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 144,
+    "pace_balls": 117,
+    "runs": 57,
+    "outs": 1,
+    "avg": 57.0,
+    "spin_share": 19,
+    "ctrl_balls": 139,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.9,
+      "ctrl_pct": 0.7,
+      "z": 0.1,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 8.5,
+      "ctrl_pct": 7.2,
+      "z": 0.4,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 11.1,
+      "ctrl_pct": 17.3,
+      "z": -1.4,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 41.9,
+      "ctrl_pct": 51.8,
+      "z": -1.6,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 15.4,
+      "ctrl_pct": 17.3,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 2.6,
+      "ctrl_pct": 4.3,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 19.7,
+      "ctrl_pct": 1.4,
+      "z": 4.9,
+      "flag": "more"
+     },
+     {
+      "label": "the channel",
+      "pct": 61.5,
+      "ctrl_pct": 70.5,
+      "z": -1.5,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 26.5,
+      "ctrl_pct": 18.7,
+      "z": 1.5,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 5.1,
+      "ctrl_pct": 7.9,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 6.8,
+      "ctrl_pct": 2.9,
+      "z": 1.5,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 17.9,
+      "ctrl_pct": 5.0,
+      "z": 3.3,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 5.1,
+      "ctrl_pct": 7.2,
+      "z": -0.7,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Rabada",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010105705",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A105705"
+     }
+    ],
+    "summary": "They bowled you more short and with the width to cut than your teammates. 1 dismissal — 1 bowled."
+   }
+  ]
+ },
+ "1300071": {
+  "name": "Nathan Lyon",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2025-12-17",
+    "tests": 2,
+    "balls": 57,
+    "pace_balls": 53,
+    "runs": 13,
+    "outs": 3,
+    "avg": 4.3,
+    "spin_share": 7,
+    "ctrl_balls": 301,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Carse",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010104602",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A104602"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Archer",
+      "stroke": "Worked",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010109202",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A109202"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Carse",
+      "stroke": "Worked",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010208402",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A208402"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 3 dismissals — 2 LBW and 1 caught, playing the worked."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-03",
+    "tests": 2,
+    "balls": 93,
+    "pace_balls": 84,
+    "runs": 42,
+    "outs": 2,
+    "avg": 21.0,
+    "spin_share": 10,
+    "ctrl_balls": 710,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 2.4,
+      "ctrl_pct": 0.7,
+      "z": 1.6,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 2.4,
+      "ctrl_pct": 9.0,
+      "z": -2.1,
+      "flag": "less"
+     },
+     {
+      "label": "fullish",
+      "pct": 7.1,
+      "ctrl_pct": 12.1,
+      "z": -1.3,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 39.3,
+      "ctrl_pct": 40.0,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 22.6,
+      "ctrl_pct": 21.5,
+      "z": 0.2,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 13.1,
+      "ctrl_pct": 9.4,
+      "z": 1.1,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 13.1,
+      "ctrl_pct": 7.2,
+      "z": 1.9,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 67.9,
+      "ctrl_pct": 66.1,
+      "z": 0.3,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 26.2,
+      "ctrl_pct": 27.0,
+      "z": -0.2,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 3.6,
+      "ctrl_pct": 4.8,
+      "z": -0.5,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 2.4,
+      "ctrl_pct": 2.1,
+      "z": 0.2,
+      "flag": "thin"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 26.2,
+      "ctrl_pct": 15.9,
+      "z": 2.4,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 3.6,
+      "ctrl_pct": 4.1,
+      "z": -0.2,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Pull",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020106705",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B106705"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020201504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B201504"
+     }
+    ],
+    "summary": "They bowled you more with the width to cut, and less full. 2 dismissals — 2 caught."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 15,
+    "pace_balls": 15,
+    "runs": 2,
+    "outs": 2,
+    "avg": 1.0,
+    "spin_share": 0,
+    "ctrl_balls": 320,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Jansen",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010105605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A105605"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Rabada",
+      "stroke": "Worked",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010204304",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A204304"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 bowled and 1 LBW."
+   }
+  ]
+ },
+ "880149": {
+  "name": "Josh Hazlewood",
+  "hand": "Left",
+  "series": [
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-07-12",
+    "tests": 3,
+    "balls": 47,
+    "pace_balls": 43,
+    "runs": 38,
+    "outs": 5,
+    "avg": 7.6,
+    "spin_share": 9,
+    "ctrl_balls": 752,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Backward defence",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020105705",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B105705"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020208205",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B208205"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Backward defence",
+      "length": "full",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-07-03",
+      "delivery_id": "5460824020207203",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B207203"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Joseph",
+      "stroke": "Cut or dab",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020107103",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B107103"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Forward defence",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020203706",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203706"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 5 dismissals — 3 bowled and 2 caught, playing the backward defence."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2025-06-11",
+    "d1": "2025-06-11",
+    "tests": 1,
+    "balls": 54,
+    "pace_balls": 36,
+    "runs": 17,
+    "outs": 1,
+    "avg": 17.0,
+    "spin_share": 33,
+    "ctrl_balls": 139,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Markram",
+      "stroke": "Drive",
+      "length": "a good length",
+      "line": "wide of off",
+      "pace_spin": "spin",
+      "date": "2025-06-11",
+      "delivery_id": "5460770010206506",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A206506"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 1 dismissal — 1 caught."
+   },
+   {
+    "opp": "India",
+    "d0": "2024-11-22",
+    "d1": "2024-12-14",
+    "tests": 2,
+    "balls": 42,
+    "pace_balls": 28,
+    "runs": 11,
+    "outs": 0,
+    "avg": null,
+    "spin_share": 33,
+    "ctrl_balls": 407,
+    "cells": [],
+    "dismissals": [],
+    "summary": "They bowled to you as they bowled to your teammates. Not dismissed in the series."
+   }
+  ]
+ },
+ "2710059": {
+  "name": "Scott Boland",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2026-01-04",
+    "tests": 5,
+    "balls": 120,
+    "pace_balls": 96,
+    "runs": 42,
+    "outs": 5,
+    "avg": 8.4,
+    "spin_share": 20,
+    "ctrl_balls": 1045,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.0,
+      "ctrl_pct": 1.4,
+      "z": -1.2,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 5.2,
+      "ctrl_pct": 9.5,
+      "z": -1.4,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 14.6,
+      "ctrl_pct": 9.2,
+      "z": 1.7,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 42.7,
+      "ctrl_pct": 39.1,
+      "z": 0.7,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 10.4,
+      "ctrl_pct": 18.8,
+      "z": -2.0,
+      "flag": "less"
+     },
+     {
+      "label": "short of a length",
+      "pct": 9.4,
+      "ctrl_pct": 10.3,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 17.7,
+      "ctrl_pct": 11.7,
+      "z": 1.7,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 75.0,
+      "ctrl_pct": 61.0,
+      "z": 2.7,
+      "flag": "more"
+     },
+     {
+      "label": "wide of off",
+      "pct": 12.5,
+      "ctrl_pct": 34.1,
+      "z": -4.3,
+      "flag": "less"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 11.5,
+      "ctrl_pct": 3.6,
+      "z": 3.6,
+      "flag": "more"
+     },
+     {
+      "label": "on leg",
+      "pct": 1.0,
+      "ctrl_pct": 1.3,
+      "z": -0.2,
+      "flag": "thin"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 24.0,
+      "ctrl_pct": 20.6,
+      "z": 0.8,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 8.3,
+      "ctrl_pct": 2.5,
+      "z": 3.2,
+      "flag": "more"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Stokes",
+      "stroke": "Backward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-11-21",
+      "delivery_id": "5460928010103806",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460928/A/1/5460928A103806"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Archer",
+      "stroke": "Fended",
+      "length": "short",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010208504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A208504"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Forward defence",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010104602",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A104602"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Atkinson",
+      "stroke": "Backward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-26",
+      "delivery_id": "5460931010200701",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200701"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Jacks",
+      "stroke": "Backward defence",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2026-01-04",
+      "delivery_id": "5460932010113405",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113405"
+     }
+    ],
+    "summary": "They bowled you more at the stumps, full and straight and in the channel, and less wide of off and back of a length. 5 dismissals — 5 caught, the wicket ball most often a good length, the channel, playing the backward defence."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-07-12",
+    "d1": "2025-07-12",
+    "tests": 1,
+    "balls": 16,
+    "pace_balls": 16,
+    "runs": 6,
+    "outs": 1,
+    "avg": 6.0,
+    "spin_share": 0,
+    "ctrl_balls": 254,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Joseph",
+      "stroke": "Flick",
+      "length": "yorker length",
+      "line": "at the stumps",
+      "pace_spin": "pace",
+      "date": "2025-07-12",
+      "delivery_id": "5460825020203605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203605"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 1 dismissal — 1 bowled."
+   },
+   {
+    "opp": "India",
+    "d0": "2024-12-06",
+    "d1": "2025-01-03",
+    "tests": 3,
+    "balls": 127,
+    "pace_balls": 74,
+    "runs": 30,
+    "outs": 2,
+    "avg": 15.0,
+    "spin_share": 42,
+    "ctrl_balls": 985,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 4.1,
+      "ctrl_pct": 0.8,
+      "z": 2.7,
+      "flag": "even"
+     },
+     {
+      "label": "full",
+      "pct": 16.2,
+      "ctrl_pct": 6.0,
+      "z": 3.4,
+      "flag": "more"
+     },
+     {
+      "label": "fullish",
+      "pct": 17.6,
+      "ctrl_pct": 9.6,
+      "z": 2.2,
+      "flag": "more"
+     },
+     {
+      "label": "a good length",
+      "pct": 40.5,
+      "ctrl_pct": 50.4,
+      "z": -1.6,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 6.8,
+      "ctrl_pct": 23.0,
+      "z": -3.3,
+      "flag": "less"
+     },
+     {
+      "label": "short of a length",
+      "pct": 4.1,
+      "ctrl_pct": 6.6,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 10.8,
+      "ctrl_pct": 3.6,
+      "z": 3.1,
+      "flag": "more"
+     },
+     {
+      "label": "the channel",
+      "pct": 67.6,
+      "ctrl_pct": 63.0,
+      "z": 0.8,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 21.6,
+      "ctrl_pct": 32.6,
+      "z": -2.0,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 4.1,
+      "ctrl_pct": 3.6,
+      "z": 0.2,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 6.8,
+      "ctrl_pct": 0.8,
+      "z": 4.5,
+      "flag": "more"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 12.2,
+      "ctrl_pct": 10.2,
+      "z": 0.5,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 2.7,
+      "ctrl_pct": 2.5,
+      "z": 0.1,
+      "flag": "thin"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Siraj",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2024-12-06",
+      "delivery_id": "5460384010108803",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460384/A/1/5460384A108803"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Siraj",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-01-03",
+      "delivery_id": "5460387010105106",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/A/1/5460387A105106"
+     }
+    ],
+    "summary": "They bowled you more at your pads, full and short, and less back of a length. 2 dismissals — 2 bowled, the wicket ball most often a good length, the channel, playing the forward defence."
+   }
+  ]
+ },
+ "1940169": {
+  "name": "Josh Inglis",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-12-04",
+    "d1": "2025-12-17",
+    "tests": 2,
+    "balls": 83,
+    "pace_balls": 61,
+    "runs": 65,
+    "outs": 3,
+    "avg": 21.7,
+    "spin_share": 27,
+    "ctrl_balls": 309,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 1.6,
+      "ctrl_pct": 1.9,
+      "z": -0.2,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 13.1,
+      "ctrl_pct": 10.0,
+      "z": 0.7,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 8.2,
+      "ctrl_pct": 9.1,
+      "z": -0.2,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 39.3,
+      "ctrl_pct": 34.3,
+      "z": 0.8,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 18.0,
+      "ctrl_pct": 23.3,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 13.1,
+      "ctrl_pct": 9.7,
+      "z": 0.8,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 6.6,
+      "ctrl_pct": 11.7,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "the channel",
+      "pct": 65.6,
+      "ctrl_pct": 63.8,
+      "z": 0.3,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 24.6,
+      "ctrl_pct": 30.1,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 4.9,
+      "ctrl_pct": 6.1,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 4.9,
+      "ctrl_pct": 0.0,
+      "z": 3.9,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 18.0,
+      "ctrl_pct": 20.4,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 4.9,
+      "ctrl_pct": 4.2,
+      "z": 0.2,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Stokes",
+      "stroke": "Backward defence",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010106405",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A106405"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Tongue",
+      "stroke": "Backward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010106105",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A106105"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Tongue",
+      "stroke": "Backward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-12-17",
+      "delivery_id": "5460930010208005",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A208005"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 3 dismissals — 2 bowled and 1 caught, the wicket ball most often a good length, the channel, playing the backward defence."
+   },
+   {
+    "opp": "West Indies",
+    "d0": "2025-06-25",
+    "d1": "2025-06-25",
+    "tests": 1,
+    "balls": 48,
+    "pace_balls": 48,
+    "runs": 17,
+    "outs": 2,
+    "avg": 8.5,
+    "spin_share": 0,
+    "ctrl_balls": 244,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Seales",
+      "stroke": "Pull",
+      "length": "short of a length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020101601",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/1/5460823B101601"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Seales",
+      "stroke": "Leave",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2025-06-25",
+      "delivery_id": "5460823020202204",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B202204"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 bowled."
+   },
+   {
+    "opp": "Sri Lanka",
+    "d0": "2025-01-29",
+    "d1": "2025-02-06",
+    "tests": 2,
+    "balls": 96,
+    "pace_balls": 9,
+    "runs": 102,
+    "outs": 2,
+    "avg": 51.0,
+    "spin_share": 91,
+    "ctrl_balls": 28,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Jayasuriya",
+      "stroke": "Worked",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2025-01-29",
+      "delivery_id": "5460514020113306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460514/B/1/5460514B113306"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Jayasuriya",
+      "stroke": "Backward defence",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2025-02-06",
+      "delivery_id": "5460515020108505",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460515/B/1/5460515B108505"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 bowled, the wicket ball most often full, the channel."
+   }
+  ]
+ },
+ "2480059": {
+  "name": "Matt Renshaw",
+  "hand": "Left",
+  "series": [
+   {
+    "opp": "India",
+    "d0": "2023-02-09",
+    "d1": "2023-02-17",
+    "tests": 2,
+    "balls": 16,
+    "pace_balls": 0,
+    "runs": 4,
+    "outs": 3,
+    "avg": 1.3,
+    "spin_share": 100,
+    "ctrl_balls": 128,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "LBW",
+      "bowler": "Jadeja",
+      "stroke": "Forward defence",
+      "length": "fullish",
+      "line": "at the stumps",
+      "pace_spin": "spin",
+      "date": "2023-02-09",
+      "delivery_id": "5460060020103606",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460060/B/1/5460060B103606"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Ashwin",
+      "stroke": "Backward defence",
+      "length": "fullish",
+      "line": "at the stumps",
+      "pace_spin": "spin",
+      "date": "2023-02-09",
+      "delivery_id": "5460060020201602",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460060/B/2/5460060B201602"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Ashwin",
+      "stroke": "Sweep",
+      "length": "full",
+      "line": "at the stumps",
+      "pace_spin": "spin",
+      "date": "2023-02-17",
+      "delivery_id": "5460061020202306",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460061/B/2/5460061B202306"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 3 dismissals — 3 LBW, the wicket ball most often fullish, at the stumps."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2023-01-04",
+    "d1": "2023-01-04",
+    "tests": 1,
+    "balls": 11,
+    "pace_balls": 7,
+    "runs": 5,
+    "outs": 0,
+    "avg": null,
+    "spin_share": 36,
+    "ctrl_balls": 238,
+    "cells": [],
+    "dismissals": [],
+    "summary": "They bowled to you as they bowled to your teammates. Not dismissed in the series."
+   },
+   {
+    "opp": "South Africa",
+    "d0": "2018-03-30",
+    "d1": "2018-03-30",
+    "tests": 1,
+    "balls": 73,
+    "pace_balls": 73,
+    "runs": 13,
+    "outs": 2,
+    "avg": 6.5,
+    "spin_share": 0,
+    "ctrl_balls": 132,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 0.0,
+      "ctrl_pct": 0.0,
+      "z": 0.0,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 35.6,
+      "ctrl_pct": 23.5,
+      "z": 1.9,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 31.5,
+      "ctrl_pct": 34.1,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 30.1,
+      "ctrl_pct": 39.4,
+      "z": -1.3,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 1.4,
+      "ctrl_pct": 1.5,
+      "z": -0.1,
+      "flag": "thin"
+     },
+     {
+      "label": "short of a length",
+      "pct": 0.0,
+      "ctrl_pct": 0.0,
+      "z": 0.0,
+      "flag": "thin"
+     },
+     {
+      "label": "short",
+      "pct": 1.4,
+      "ctrl_pct": 1.5,
+      "z": -0.1,
+      "flag": "thin"
+     },
+     {
+      "label": "the channel",
+      "pct": 31.5,
+      "ctrl_pct": 37.1,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 5.5,
+      "ctrl_pct": 12.1,
+      "z": -1.5,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 52.1,
+      "ctrl_pct": 40.2,
+      "z": 1.6,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 11.0,
+      "ctrl_pct": 10.6,
+      "z": 0.1,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 0.0,
+      "ctrl_pct": 0.8,
+      "z": -0.7,
+      "flag": "thin"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 50.7,
+      "ctrl_pct": 40.2,
+      "z": 1.5,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Philander",
+      "stroke": null,
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2018-03-30",
+      "delivery_id": "3760019020101106",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/1/3760019B101106"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Morkel",
+      "stroke": null,
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2018-03-30",
+      "delivery_id": "3760019020201304",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B201304"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 LBW."
+   }
+  ]
+ },
+ "2480067": {
+  "name": "Brendan Doggett",
+  "hand": "Right",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2025-11-21",
+    "d1": "2025-12-04",
+    "tests": 2,
+    "balls": 51,
+    "pace_balls": 38,
+    "runs": 20,
+    "outs": 1,
+    "avg": 20.0,
+    "spin_share": 25,
+    "ctrl_balls": 441,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "Caught",
+      "bowler": "Jacks",
+      "stroke": "Forward defence",
+      "length": "fullish",
+      "line": "at the stumps",
+      "pace_spin": "spin",
+      "date": "2025-12-04",
+      "delivery_id": "5460929010111803",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A111803"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 1 dismissal — 1 caught."
+   }
+  ]
+ },
+ "2700257": {
+  "name": "Todd Murphy",
+  "hand": "Left",
+  "series": [
+   {
+    "opp": "England",
+    "d0": "2023-07-06",
+    "d1": "2023-07-27",
+    "tests": 2,
+    "balls": 100,
+    "pace_balls": 82,
+    "runs": 76,
+    "outs": 4,
+    "avg": 19.0,
+    "spin_share": 18,
+    "ctrl_balls": 734,
+    "cells": [
+     {
+      "label": "very full",
+      "pct": 2.4,
+      "ctrl_pct": 0.5,
+      "z": 1.9,
+      "flag": "thin"
+     },
+     {
+      "label": "full",
+      "pct": 11.0,
+      "ctrl_pct": 8.9,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "fullish",
+      "pct": 7.3,
+      "ctrl_pct": 15.3,
+      "z": -1.9,
+      "flag": "even"
+     },
+     {
+      "label": "a good length",
+      "pct": 40.2,
+      "ctrl_pct": 39.1,
+      "z": 0.2,
+      "flag": "even"
+     },
+     {
+      "label": "back of a length",
+      "pct": 6.1,
+      "ctrl_pct": 12.9,
+      "z": -1.8,
+      "flag": "even"
+     },
+     {
+      "label": "short of a length",
+      "pct": 3.7,
+      "ctrl_pct": 5.2,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 29.3,
+      "ctrl_pct": 18.1,
+      "z": 2.4,
+      "flag": "more"
+     },
+     {
+      "label": "the channel",
+      "pct": 48.8,
+      "ctrl_pct": 38.8,
+      "z": 1.7,
+      "flag": "even"
+     },
+     {
+      "label": "wide of off",
+      "pct": 11.0,
+      "ctrl_pct": 14.2,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "at the stumps",
+      "pct": 14.6,
+      "ctrl_pct": 17.3,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "on leg",
+      "pct": 25.6,
+      "ctrl_pct": 29.7,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "the cut ball (short + wide of off)",
+      "pct": 14.6,
+      "ctrl_pct": 6.1,
+      "z": 2.9,
+      "flag": "more"
+     },
+     {
+      "label": "full at the stumps",
+      "pct": 14.6,
+      "ctrl_pct": 15.1,
+      "z": -0.1,
+      "flag": "even"
+     }
+    ],
+    "dismissals": [
+     {
+      "how": "Bowled",
+      "bowler": "Wood",
+      "stroke": "Drive",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2023-07-06",
+      "delivery_id": "5460072020106104",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460072/B/1/5460072B106104"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Broad",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2023-07-06",
+      "delivery_id": "5460072020206605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460072/B/2/5460072B206605"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Woakes",
+      "stroke": "Flick",
+      "length": "fullish",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2023-07-27",
+      "delivery_id": "5460074020110202",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/1/5460074B110202"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Broad",
+      "stroke": "Backward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2023-07-27",
+      "delivery_id": "5460074020209106",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209106"
+     }
+    ],
+    "summary": "They bowled you more with the width to cut and short than your teammates. 4 dismissals — 2 LBW, 1 bowled and 1 caught, the wicket ball most often a good length, the channel."
+   },
+   {
+    "opp": "India",
+    "d0": "2023-02-09",
+    "d1": "2023-03-09",
+    "tests": 4,
+    "balls": 104,
+    "pace_balls": 10,
+    "runs": 46,
+    "outs": 5,
+    "avg": 9.2,
+    "spin_share": 90,
+    "ctrl_balls": 383,
+    "cells": [],
+    "dismissals": [
+     {
+      "how": "LBW",
+      "bowler": "Jadeja",
+      "stroke": "Forward defence",
+      "length": "fullish",
+      "line": "at the stumps",
+      "pace_spin": "spin",
+      "date": "2023-02-09",
+      "delivery_id": "5460060020105905",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460060/B/1/5460060B105905"
+     },
+     {
+      "how": "Caught",
+      "bowler": "Patel",
+      "stroke": "Forward defence",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2023-02-09",
+      "delivery_id": "5460060020202703",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460060/B/2/5460060B202703"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Jadeja",
+      "stroke": "Pushed",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2023-02-17",
+      "delivery_id": "5460061020106806",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460061/B/1/5460061B106806"
+     },
+     {
+      "how": "Bowled",
+      "bowler": "Yadav",
+      "stroke": "Forward defence",
+      "length": "a good length",
+      "line": "the channel",
+      "pace_spin": "pace",
+      "date": "2023-03-01",
+      "delivery_id": "5460062020107603",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460062/B/1/5460062B107603"
+     },
+     {
+      "how": "LBW",
+      "bowler": "Ashwin",
+      "stroke": "Forward defence",
+      "length": "full",
+      "line": "the channel",
+      "pace_spin": "spin",
+      "date": "2023-03-09",
+      "delivery_id": "5460063020116603",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460063/B/1/5460063B116603"
+     }
+    ],
+    "summary": "They bowled to you as they bowled to your teammates. 5 dismissals — 2 LBW, 2 bowled and 1 caught, the wicket ball most often full, the channel, playing the forward defence."
+   }
+  ]
+ }
+}
