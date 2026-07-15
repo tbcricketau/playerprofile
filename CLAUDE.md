@@ -14,7 +14,9 @@ report builders (`report.py`, `t20_report.py`, `odi_report.py`, `batting_report.
 `publish_site.py` generate the hosted site (github.com/tbcricketau/scouting-reports,
 refreshed by the "Scouting Reports Refresh" scheduled task via `refresh_site.bat`).
 Other fronts have their own plan docs: `WEBAPP_PLAN.md`, `FIELD_PLAN.md`, `VIDEO_PLAN.md`,
-`BATTING_PLAN.md`, `CHANGELOG.md`.
+`BATTING_PLAN.md`, `CHANGELOG.md`. Before a report leans on a player's FC/ODI/T20 numbers to
+say anything about Tests, read **`CROSSFORMAT_TRANSLATION.md`** — what translates (tempo/rates)
+and what must not be projected (averages, wicket rates), with the measured environment ratios.
 
 **Setup:** `.\setup.ps1` (venv + requirements incl. `-e ../cricket-core`).
 **Run:** `.\venv\Scripts\python.exe run.py` — starts Streamlit on port 8060.
