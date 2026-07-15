@@ -1,0 +1,3456 @@
+{
+ "opp": "bangladesh",
+ "cap": 20,
+ "our_batting": [
+  {
+   "striker_id": "2480059",
+   "bowler_id": "290007",
+   "balls": 20,
+   "runs": 16,
+   "wickets": 2,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020201104",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201104"
+    },
+    {
+     "delivery_id": "3080088020201103",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201103"
+    },
+    {
+     "delivery_id": "3080088020201102",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201102"
+    },
+    {
+     "delivery_id": "3080088020201101",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201101"
+    },
+    {
+     "delivery_id": "3080088020200606",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200606"
+    },
+    {
+     "delivery_id": "3080088020200605",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200605"
+    },
+    {
+     "delivery_id": "3080088020200604",
+     "date": "2017-09-04",
+     "runs": 6,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200604"
+    },
+    {
+     "delivery_id": "3080088020200603",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200603"
+    },
+    {
+     "delivery_id": "3080088020200602",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200602"
+    },
+    {
+     "delivery_id": "3080088020200601",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200601"
+    },
+    {
+     "delivery_id": "3080088020200406",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200406"
+    },
+    {
+     "delivery_id": "3080088020200405",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200405"
+    },
+    {
+     "delivery_id": "3080081020200801",
+     "date": "2017-08-27",
+     "runs": 3,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B200801"
+    },
+    {
+     "delivery_id": "3080081020103601",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103601"
+    },
+    {
+     "delivery_id": "3080081020102104",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102104"
+    },
+    {
+     "delivery_id": "3080081020102103",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102103"
+    },
+    {
+     "delivery_id": "3080081020102102",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102102"
+    },
+    {
+     "delivery_id": "3080081020102101",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102101"
+    },
+    {
+     "delivery_id": "3080081020101906",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B101906"
+    },
+    {
+     "delivery_id": "3080081020101905",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B101905"
+    }
+   ]
+  },
+  {
+   "striker_id": "2480059",
+   "bowler_id": "2700039",
+   "balls": 20,
+   "runs": 13,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020201006",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201006"
+    },
+    {
+     "delivery_id": "3080088020201005",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201005"
+    },
+    {
+     "delivery_id": "3080088020201003",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201003"
+    },
+    {
+     "delivery_id": "3080088020200806",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200806"
+    },
+    {
+     "delivery_id": "3080088020200805",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200805"
+    },
+    {
+     "delivery_id": "3080081020103502",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103502"
+    },
+    {
+     "delivery_id": "3080081020103501",
+     "date": "2017-08-27",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103501"
+    },
+    {
+     "delivery_id": "3080081020103306",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103306"
+    },
+    {
+     "delivery_id": "3080081020103302",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103302"
+    },
+    {
+     "delivery_id": "3080081020103301",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103301"
+    },
+    {
+     "delivery_id": "3080081020103105",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103105"
+    },
+    {
+     "delivery_id": "3080081020103104",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103104"
+    },
+    {
+     "delivery_id": "3080081020103103",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103103"
+    },
+    {
+     "delivery_id": "3080081020103102",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103102"
+    },
+    {
+     "delivery_id": "3080081020103101",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B103101"
+    },
+    {
+     "delivery_id": "3080081020102905",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102905"
+    },
+    {
+     "delivery_id": "3080081020102904",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102904"
+    },
+    {
+     "delivery_id": "3080081020102902",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102902"
+    },
+    {
+     "delivery_id": "3080081020102901",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102901"
+    },
+    {
+     "delivery_id": "3080081020102702",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102702"
+    }
+   ]
+  },
+  {
+   "striker_id": "940135",
+   "bowler_id": "2700039",
+   "balls": 20,
+   "runs": 16,
+   "wickets": 2,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020201001",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B201001"
+    },
+    {
+     "delivery_id": "3080088020200804",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200804"
+    },
+    {
+     "delivery_id": "3080088020200803",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200803"
+    },
+    {
+     "delivery_id": "3080088020200802",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200802"
+    },
+    {
+     "delivery_id": "3080088020200801",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/2/3080088B200801"
+    },
+    {
+     "delivery_id": "3080088020102901",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "Bowled",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102901"
+    },
+    {
+     "delivery_id": "3080081020204506",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B204506"
+    },
+    {
+     "delivery_id": "3080081020204505",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B204505"
+    },
+    {
+     "delivery_id": "3080081020204504",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B204504"
+    },
+    {
+     "delivery_id": "3080081020204503",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B204503"
+    },
+    {
+     "delivery_id": "3080081020204502",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B204502"
+    },
+    {
+     "delivery_id": "3080081020204501",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B204501"
+    },
+    {
+     "delivery_id": "3080081020204306",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B204306"
+    },
+    {
+     "delivery_id": "3080081020203504",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B203504"
+    },
+    {
+     "delivery_id": "3080081020203503",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B203503"
+    },
+    {
+     "delivery_id": "3080081020202301",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B202301"
+    },
+    {
+     "delivery_id": "3080081020202006",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B202006"
+    },
+    {
+     "delivery_id": "3080081020202003",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B202003"
+    },
+    {
+     "delivery_id": "3080081020202002",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B202002"
+    },
+    {
+     "delivery_id": "3080081020202001",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B202001"
+    }
+   ]
+  },
+  {
+   "striker_id": "1300071",
+   "bowler_id": "3080087",
+   "balls": 3,
+   "runs": 0,
+   "wickets": 1,
+   "clips": 3,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020111806",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B111806"
+    },
+    {
+     "delivery_id": "3080081020206702",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206702"
+    },
+    {
+     "delivery_id": "3080081020206701",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206701"
+    }
+   ]
+  },
+  {
+   "striker_id": "1300076",
+   "bowler_id": "3080087",
+   "balls": 20,
+   "runs": 19,
+   "wickets": 1,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020110906",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "LBW",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110906"
+    },
+    {
+     "delivery_id": "3080088020110905",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110905"
+    },
+    {
+     "delivery_id": "3080088020110904",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110904"
+    },
+    {
+     "delivery_id": "3080088020110903",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110903"
+    },
+    {
+     "delivery_id": "3080088020110902",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110902"
+    },
+    {
+     "delivery_id": "3080088020110706",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110706"
+    },
+    {
+     "delivery_id": "3080088020110705",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110705"
+    },
+    {
+     "delivery_id": "3080088020110704",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B110704"
+    },
+    {
+     "delivery_id": "3080081020206906",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206906"
+    },
+    {
+     "delivery_id": "3080081020206905",
+     "date": "2017-08-27",
+     "runs": 6,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206905"
+    },
+    {
+     "delivery_id": "3080081020206904",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206904"
+    },
+    {
+     "delivery_id": "3080081020206903",
+     "date": "2017-08-27",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206903"
+    },
+    {
+     "delivery_id": "3080081020206902",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206902"
+    },
+    {
+     "delivery_id": "3080081020206901",
+     "date": "2017-08-27",
+     "runs": 6,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206901"
+    },
+    {
+     "delivery_id": "3080081020106306",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106306"
+    },
+    {
+     "delivery_id": "3080081020106305",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106305"
+    },
+    {
+     "delivery_id": "3080081020106304",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106304"
+    },
+    {
+     "delivery_id": "3080081020106303",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106303"
+    },
+    {
+     "delivery_id": "3080081020106302",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106302"
+    },
+    {
+     "delivery_id": "3080081020106106",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106106"
+    }
+   ]
+  },
+  {
+   "striker_id": "940135",
+   "bowler_id": "3080087",
+   "balls": 20,
+   "runs": 6,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020102806",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102806"
+    },
+    {
+     "delivery_id": "3080088020102805",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102805"
+    },
+    {
+     "delivery_id": "3080088020102804",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102804"
+    },
+    {
+     "delivery_id": "3080088020102801",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102801"
+    },
+    {
+     "delivery_id": "3080088020102606",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102606"
+    },
+    {
+     "delivery_id": "3080088020102605",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102605"
+    },
+    {
+     "delivery_id": "3080088020102603",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102603"
+    },
+    {
+     "delivery_id": "3080088020102406",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102406"
+    },
+    {
+     "delivery_id": "3080088020102405",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102405"
+    },
+    {
+     "delivery_id": "3080088020102404",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102404"
+    },
+    {
+     "delivery_id": "3080088020102403",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102403"
+    },
+    {
+     "delivery_id": "3080088020102402",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102402"
+    },
+    {
+     "delivery_id": "3080088020102206",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102206"
+    },
+    {
+     "delivery_id": "3080088020102205",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102205"
+    },
+    {
+     "delivery_id": "3080088020102204",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102204"
+    },
+    {
+     "delivery_id": "3080088020102203",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102203"
+    },
+    {
+     "delivery_id": "3080088020102006",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102006"
+    },
+    {
+     "delivery_id": "3080088020102001",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102001"
+    },
+    {
+     "delivery_id": "3080088020101802",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B101802"
+    },
+    {
+     "delivery_id": "3080088020101801",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B101801"
+    }
+   ]
+  },
+  {
+   "striker_id": "940135",
+   "bowler_id": "290007",
+   "balls": 20,
+   "runs": 14,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020102706",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102706"
+    },
+    {
+     "delivery_id": "3080088020102705",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102705"
+    },
+    {
+     "delivery_id": "3080088020102704",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102704"
+    },
+    {
+     "delivery_id": "3080088020102703",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102703"
+    },
+    {
+     "delivery_id": "3080088020102702",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102702"
+    },
+    {
+     "delivery_id": "3080088020102701",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102701"
+    },
+    {
+     "delivery_id": "3080088020102506",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102506"
+    },
+    {
+     "delivery_id": "3080088020102505",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102505"
+    },
+    {
+     "delivery_id": "3080088020102504",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102504"
+    },
+    {
+     "delivery_id": "3080088020102503",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102503"
+    },
+    {
+     "delivery_id": "3080088020102502",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102502"
+    },
+    {
+     "delivery_id": "3080088020102306",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102306"
+    },
+    {
+     "delivery_id": "3080088020102305",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102305"
+    },
+    {
+     "delivery_id": "3080088020102303",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102303"
+    },
+    {
+     "delivery_id": "3080088020102302",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102302"
+    },
+    {
+     "delivery_id": "3080088020102106",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B102106"
+    },
+    {
+     "delivery_id": "3080088020101903",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B101903"
+    },
+    {
+     "delivery_id": "3080088020101902",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B101902"
+    },
+    {
+     "delivery_id": "3080088020101901",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B101901"
+    },
+    {
+     "delivery_id": "3080088020101705",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B101705"
+    }
+   ]
+  },
+  {
+   "striker_id": "2480059",
+   "bowler_id": "3080087",
+   "balls": 20,
+   "runs": 7,
+   "wickets": 1,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088020100106",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B100106"
+    },
+    {
+     "delivery_id": "3080088020100105",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B100105"
+    },
+    {
+     "delivery_id": "3080088020100104",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B100104"
+    },
+    {
+     "delivery_id": "3080088020100103",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B100103"
+    },
+    {
+     "delivery_id": "3080088020100102",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B100102"
+    },
+    {
+     "delivery_id": "3080088020100101",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/B/1/3080088B100101"
+    },
+    {
+     "delivery_id": "3080081020200902",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": "LBW",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B200902"
+    },
+    {
+     "delivery_id": "3080081020200901",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B200901"
+    },
+    {
+     "delivery_id": "3080081020200705",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B200705"
+    },
+    {
+     "delivery_id": "3080081020200704",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B200704"
+    },
+    {
+     "delivery_id": "3080081020102404",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102404"
+    },
+    {
+     "delivery_id": "3080081020102206",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102206"
+    },
+    {
+     "delivery_id": "3080081020102205",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102205"
+    },
+    {
+     "delivery_id": "3080081020102204",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102204"
+    },
+    {
+     "delivery_id": "3080081020102203",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102203"
+    },
+    {
+     "delivery_id": "3080081020102202",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102202"
+    },
+    {
+     "delivery_id": "3080081020102201",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B102201"
+    },
+    {
+     "delivery_id": "3080081020101604",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B101604"
+    },
+    {
+     "delivery_id": "3080081020101603",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B101603"
+    },
+    {
+     "delivery_id": "3080081020101602",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B101602"
+    }
+   ]
+  },
+  {
+   "striker_id": "880149",
+   "bowler_id": "2700039",
+   "balls": 5,
+   "runs": 0,
+   "wickets": 1,
+   "clips": 5,
+   "deliveries": [
+    {
+     "delivery_id": "3080081020207105",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": "LBW",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207105"
+    },
+    {
+     "delivery_id": "3080081020207104",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207104"
+    },
+    {
+     "delivery_id": "3080081020207103",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207103"
+    },
+    {
+     "delivery_id": "3080081020207102",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207102"
+    },
+    {
+     "delivery_id": "3080081020207101",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207101"
+    }
+   ]
+  },
+  {
+   "striker_id": "1300076",
+   "bowler_id": "290007",
+   "balls": 20,
+   "runs": 5,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080081020207006",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207006"
+    },
+    {
+     "delivery_id": "3080081020207005",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207005"
+    },
+    {
+     "delivery_id": "3080081020207004",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207004"
+    },
+    {
+     "delivery_id": "3080081020207003",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207003"
+    },
+    {
+     "delivery_id": "3080081020207002",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207002"
+    },
+    {
+     "delivery_id": "3080081020207001",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B207001"
+    },
+    {
+     "delivery_id": "3080081020206805",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206805"
+    },
+    {
+     "delivery_id": "3080081020206804",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206804"
+    },
+    {
+     "delivery_id": "3080081020206803",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206803"
+    },
+    {
+     "delivery_id": "3080081020206802",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206802"
+    },
+    {
+     "delivery_id": "3080081020206801",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206801"
+    },
+    {
+     "delivery_id": "3080081020206606",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206606"
+    },
+    {
+     "delivery_id": "3080081020206605",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206605"
+    },
+    {
+     "delivery_id": "3080081020206604",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206604"
+    },
+    {
+     "delivery_id": "3080081020206603",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206603"
+    },
+    {
+     "delivery_id": "3080081020206406",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206406"
+    },
+    {
+     "delivery_id": "3080081020206405",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206405"
+    },
+    {
+     "delivery_id": "3080081020206404",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206404"
+    },
+    {
+     "delivery_id": "3080081020206206",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206206"
+    },
+    {
+     "delivery_id": "3080081020206205",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206205"
+    }
+   ]
+  },
+  {
+   "striker_id": "880149",
+   "bowler_id": "290007",
+   "balls": 10,
+   "runs": 4,
+   "wickets": 1,
+   "clips": 10,
+   "deliveries": [
+    {
+     "delivery_id": "3080081020206806",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206806"
+    },
+    {
+     "delivery_id": "3080081020107505",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107505"
+    },
+    {
+     "delivery_id": "3080081020107305",
+     "date": "2017-08-27",
+     "runs": 3,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107305"
+    },
+    {
+     "delivery_id": "3080081020107304",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107304"
+    },
+    {
+     "delivery_id": "3080081020107302",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107302"
+    },
+    {
+     "delivery_id": "3080081020107106",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107106"
+    },
+    {
+     "delivery_id": "3080081020107105",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107105"
+    },
+    {
+     "delivery_id": "3080081020106906",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106906"
+    },
+    {
+     "delivery_id": "3080081020106905",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106905"
+    },
+    {
+     "delivery_id": "3080081020106904",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B106904"
+    }
+   ]
+  },
+  {
+   "striker_id": "880149",
+   "bowler_id": "3080087",
+   "balls": 10,
+   "runs": 1,
+   "wickets": 0,
+   "clips": 10,
+   "deliveries": [
+    {
+     "delivery_id": "3080081020206706",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206706"
+    },
+    {
+     "delivery_id": "3080081020206705",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206705"
+    },
+    {
+     "delivery_id": "3080081020206704",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206704"
+    },
+    {
+     "delivery_id": "3080081020206703",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206703"
+    },
+    {
+     "delivery_id": "3080081020107406",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107406"
+    },
+    {
+     "delivery_id": "3080081020107401",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107401"
+    },
+    {
+     "delivery_id": "3080081020107206",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107206"
+    },
+    {
+     "delivery_id": "3080081020107006",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107006"
+    },
+    {
+     "delivery_id": "3080081020107005",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107005"
+    },
+    {
+     "delivery_id": "3080081020107004",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B107004"
+    }
+   ]
+  },
+  {
+   "striker_id": "1300071",
+   "bowler_id": "290007",
+   "balls": 13,
+   "runs": 6,
+   "wickets": 1,
+   "clips": 13,
+   "deliveries": [
+    {
+     "delivery_id": "3080081020206602",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206602"
+    },
+    {
+     "delivery_id": "3080081020206601",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206601"
+    },
+    {
+     "delivery_id": "3080081020206403",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206403"
+    },
+    {
+     "delivery_id": "3080081020206402",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206402"
+    },
+    {
+     "delivery_id": "3080081020206401",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206401"
+    },
+    {
+     "delivery_id": "3080081020205804",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205804"
+    },
+    {
+     "delivery_id": "3080081020205803",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205803"
+    },
+    {
+     "delivery_id": "3080081020205802",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205802"
+    },
+    {
+     "delivery_id": "3080081020100706",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": "LBW",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B100706"
+    },
+    {
+     "delivery_id": "3080081020100705",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B100705"
+    },
+    {
+     "delivery_id": "3080081020100704",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B100704"
+    },
+    {
+     "delivery_id": "3080081020100703",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B100703"
+    },
+    {
+     "delivery_id": "3080081020100702",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B100702"
+    }
+   ]
+  },
+  {
+   "striker_id": "1300076",
+   "bowler_id": "2700039",
+   "balls": 20,
+   "runs": 5,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080081020206506",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206506"
+    },
+    {
+     "delivery_id": "3080081020206505",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206505"
+    },
+    {
+     "delivery_id": "3080081020206504",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206504"
+    },
+    {
+     "delivery_id": "3080081020206503",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206503"
+    },
+    {
+     "delivery_id": "3080081020206502",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206502"
+    },
+    {
+     "delivery_id": "3080081020206306",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206306"
+    },
+    {
+     "delivery_id": "3080081020206305",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206305"
+    },
+    {
+     "delivery_id": "3080081020206304",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206304"
+    },
+    {
+     "delivery_id": "3080081020205906",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205906"
+    },
+    {
+     "delivery_id": "3080081020205905",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205905"
+    },
+    {
+     "delivery_id": "3080081020205706",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205706"
+    },
+    {
+     "delivery_id": "3080081020205705",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205705"
+    },
+    {
+     "delivery_id": "3080081020205704",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205704"
+    },
+    {
+     "delivery_id": "3080081020105306",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B105306"
+    },
+    {
+     "delivery_id": "3080081020105305",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B105305"
+    },
+    {
+     "delivery_id": "3080081020105304",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B105304"
+    },
+    {
+     "delivery_id": "3080081020105303",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B105303"
+    },
+    {
+     "delivery_id": "3080081020105302",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B105302"
+    },
+    {
+     "delivery_id": "3080081020105301",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B105301"
+    },
+    {
+     "delivery_id": "3080081020105106",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/1/3080081B105106"
+    }
+   ]
+  },
+  {
+   "striker_id": "1300071",
+   "bowler_id": "2700039",
+   "balls": 14,
+   "runs": 6,
+   "wickets": 0,
+   "clips": 14,
+   "deliveries": [
+    {
+     "delivery_id": "3080081020206501",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206501"
+    },
+    {
+     "delivery_id": "3080081020206303",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206303"
+    },
+    {
+     "delivery_id": "3080081020206302",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206302"
+    },
+    {
+     "delivery_id": "3080081020206301",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206301"
+    },
+    {
+     "delivery_id": "3080081020206106",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206106"
+    },
+    {
+     "delivery_id": "3080081020206105",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206105"
+    },
+    {
+     "delivery_id": "3080081020206104",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206104"
+    },
+    {
+     "delivery_id": "3080081020206103",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206103"
+    },
+    {
+     "delivery_id": "3080081020206102",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206102"
+    },
+    {
+     "delivery_id": "3080081020206101",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B206101"
+    },
+    {
+     "delivery_id": "3080081020205904",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205904"
+    },
+    {
+     "delivery_id": "3080081020205903",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205903"
+    },
+    {
+     "delivery_id": "3080081020205902",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205902"
+    },
+    {
+     "delivery_id": "3080081020205901",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/B/2/3080081B205901"
+    }
+   ]
+  }
+ ],
+ "our_bowling": [
+  {
+   "striker_id": "3080087",
+   "bowler_id": "1300071",
+   "balls": 20,
+   "runs": 7,
+   "wickets": 1,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010207106",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A207106"
+    },
+    {
+     "delivery_id": "3080088010207105",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A207105"
+    },
+    {
+     "delivery_id": "3080088010207104",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A207104"
+    },
+    {
+     "delivery_id": "3080088010207103",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A207103"
+    },
+    {
+     "delivery_id": "3080088010207102",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A207102"
+    },
+    {
+     "delivery_id": "3080088010207101",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A207101"
+    },
+    {
+     "delivery_id": "3080088010206206",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206206"
+    },
+    {
+     "delivery_id": "3080088010206205",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206205"
+    },
+    {
+     "delivery_id": "3080088010206204",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206204"
+    },
+    {
+     "delivery_id": "3080088010206203",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206203"
+    },
+    {
+     "delivery_id": "3080088010206202",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206202"
+    },
+    {
+     "delivery_id": "3080088010206201",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206201"
+    },
+    {
+     "delivery_id": "3080088010205606",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205606"
+    },
+    {
+     "delivery_id": "3080088010205605",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205605"
+    },
+    {
+     "delivery_id": "3080088010205603",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205603"
+    },
+    {
+     "delivery_id": "3080088010205601",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205601"
+    },
+    {
+     "delivery_id": "3080088010111205",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": "Run Out",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111205"
+    },
+    {
+     "delivery_id": "3080088010111204",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111204"
+    },
+    {
+     "delivery_id": "3080088010111203",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111203"
+    },
+    {
+     "delivery_id": "3080088010111202",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111202"
+    }
+   ]
+  },
+  {
+   "striker_id": "2700039",
+   "bowler_id": "1300071",
+   "balls": 20,
+   "runs": 2,
+   "wickets": 1,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010206904",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "Bowled",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206904"
+    },
+    {
+     "delivery_id": "3080088010206903",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206903"
+    },
+    {
+     "delivery_id": "3080088010206902",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206902"
+    },
+    {
+     "delivery_id": "3080088010206901",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206901"
+    },
+    {
+     "delivery_id": "3080088010206706",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206706"
+    },
+    {
+     "delivery_id": "3080088010206705",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206705"
+    },
+    {
+     "delivery_id": "3080088010206704",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206704"
+    },
+    {
+     "delivery_id": "3080088010206703",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206703"
+    },
+    {
+     "delivery_id": "3080088010206702",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206702"
+    },
+    {
+     "delivery_id": "3080088010206701",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206701"
+    },
+    {
+     "delivery_id": "3080088010206506",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206506"
+    },
+    {
+     "delivery_id": "3080088010206505",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206505"
+    },
+    {
+     "delivery_id": "3080088010206504",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206504"
+    },
+    {
+     "delivery_id": "3080088010206503",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206503"
+    },
+    {
+     "delivery_id": "3080088010206502",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206502"
+    },
+    {
+     "delivery_id": "3080088010206501",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206501"
+    },
+    {
+     "delivery_id": "3080088010206006",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206006"
+    },
+    {
+     "delivery_id": "3080088010206005",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206005"
+    },
+    {
+     "delivery_id": "3080088010206004",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206004"
+    },
+    {
+     "delivery_id": "3080088010206003",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206003"
+    }
+   ]
+  },
+  {
+   "striker_id": "2700039",
+   "bowler_id": "1300076",
+   "balls": 11,
+   "runs": 2,
+   "wickets": 0,
+   "clips": 11,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010206306",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206306"
+    },
+    {
+     "delivery_id": "3080088010206305",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206305"
+    },
+    {
+     "delivery_id": "3080088010206304",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206304"
+    },
+    {
+     "delivery_id": "3080088010206303",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206303"
+    },
+    {
+     "delivery_id": "3080088010206302",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206302"
+    },
+    {
+     "delivery_id": "3080088010206301",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206301"
+    },
+    {
+     "delivery_id": "3080088010206106",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206106"
+    },
+    {
+     "delivery_id": "3080088010206105",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206105"
+    },
+    {
+     "delivery_id": "3080088010206104",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206104"
+    },
+    {
+     "delivery_id": "3080088010206103",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206103"
+    },
+    {
+     "delivery_id": "3080088010206102",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206102"
+    }
+   ]
+  },
+  {
+   "striker_id": "3080087",
+   "bowler_id": "1300076",
+   "balls": 20,
+   "runs": 15,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010206101",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206101"
+    },
+    {
+     "delivery_id": "3080088010205902",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205902"
+    },
+    {
+     "delivery_id": "3080088010205901",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205901"
+    },
+    {
+     "delivery_id": "3080088010205706",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205706"
+    },
+    {
+     "delivery_id": "3080088010205705",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205705"
+    },
+    {
+     "delivery_id": "3080088010205704",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205704"
+    },
+    {
+     "delivery_id": "3080088010205703",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205703"
+    },
+    {
+     "delivery_id": "3080088010205702",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205702"
+    },
+    {
+     "delivery_id": "3080088010205504",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205504"
+    },
+    {
+     "delivery_id": "3080088010205503",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205503"
+    },
+    {
+     "delivery_id": "3080088010205502",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205502"
+    },
+    {
+     "delivery_id": "3080088010205306",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205306"
+    },
+    {
+     "delivery_id": "3080088010205305",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205305"
+    },
+    {
+     "delivery_id": "3080088010205304",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205304"
+    },
+    {
+     "delivery_id": "3080081010106906",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A106906"
+    },
+    {
+     "delivery_id": "3080081010106905",
+     "date": "2017-08-27",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A106905"
+    },
+    {
+     "delivery_id": "3080081010106904",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A106904"
+    },
+    {
+     "delivery_id": "3080081010106903",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A106903"
+    },
+    {
+     "delivery_id": "3080081010106902",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A106902"
+    },
+    {
+     "delivery_id": "3080081010106901",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A106901"
+    }
+   ]
+  },
+  {
+   "striker_id": "2700013",
+   "bowler_id": "1300071",
+   "balls": 20,
+   "runs": 8,
+   "wickets": 1,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010206001",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206001"
+    },
+    {
+     "delivery_id": "3080088010205806",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205806"
+    },
+    {
+     "delivery_id": "3080088010205805",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205805"
+    },
+    {
+     "delivery_id": "3080088010205804",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205804"
+    },
+    {
+     "delivery_id": "3080088010205803",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205803"
+    },
+    {
+     "delivery_id": "3080088010205802",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205802"
+    },
+    {
+     "delivery_id": "3080088010205801",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205801"
+    },
+    {
+     "delivery_id": "3080088010205604",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205604"
+    },
+    {
+     "delivery_id": "3080088010205602",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205602"
+    },
+    {
+     "delivery_id": "3080088010205406",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205406"
+    },
+    {
+     "delivery_id": "3080088010205405",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205405"
+    },
+    {
+     "delivery_id": "3080088010205404",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205404"
+    },
+    {
+     "delivery_id": "3080088010205403",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205403"
+    },
+    {
+     "delivery_id": "3080088010205402",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205402"
+    },
+    {
+     "delivery_id": "3080088010205401",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205401"
+    },
+    {
+     "delivery_id": "3080088010205106",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205106"
+    },
+    {
+     "delivery_id": "3080088010204904",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204904"
+    },
+    {
+     "delivery_id": "3080088010204903",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204903"
+    },
+    {
+     "delivery_id": "3080088010204902",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204902"
+    },
+    {
+     "delivery_id": "3080088010204706",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204706"
+    }
+   ]
+  },
+  {
+   "striker_id": "2700013",
+   "bowler_id": "1300076",
+   "balls": 19,
+   "runs": 6,
+   "wickets": 0,
+   "clips": 19,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010205906",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205906"
+    },
+    {
+     "delivery_id": "3080088010205905",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205905"
+    },
+    {
+     "delivery_id": "3080088010205904",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205904"
+    },
+    {
+     "delivery_id": "3080088010205903",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205903"
+    },
+    {
+     "delivery_id": "3080088010205701",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205701"
+    },
+    {
+     "delivery_id": "3080088010205506",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205506"
+    },
+    {
+     "delivery_id": "3080088010205505",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205505"
+    },
+    {
+     "delivery_id": "3080088010205501",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205501"
+    },
+    {
+     "delivery_id": "3080088010103103",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103103"
+    },
+    {
+     "delivery_id": "3080088010103102",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103102"
+    },
+    {
+     "delivery_id": "3080088010103101",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103101"
+    },
+    {
+     "delivery_id": "3080088010102306",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102306"
+    },
+    {
+     "delivery_id": "3080088010102304",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102304"
+    },
+    {
+     "delivery_id": "3080088010102303",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102303"
+    },
+    {
+     "delivery_id": "3080088010102106",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102106"
+    },
+    {
+     "delivery_id": "3080088010102105",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102105"
+    },
+    {
+     "delivery_id": "3080088010102104",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102104"
+    },
+    {
+     "delivery_id": "3080088010102103",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102103"
+    },
+    {
+     "delivery_id": "3080088010102102",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A102102"
+    }
+   ]
+  },
+  {
+   "striker_id": "300015",
+   "bowler_id": "1300076",
+   "balls": 20,
+   "runs": 4,
+   "wickets": 1,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010205303",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205303"
+    },
+    {
+     "delivery_id": "3080088010205302",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205302"
+    },
+    {
+     "delivery_id": "3080088010205301",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205301"
+    },
+    {
+     "delivery_id": "3080088010109704",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A109704"
+    },
+    {
+     "delivery_id": "3080088010109703",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A109703"
+    },
+    {
+     "delivery_id": "3080088010109702",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A109702"
+    },
+    {
+     "delivery_id": "3080088010109701",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A109701"
+    },
+    {
+     "delivery_id": "3080088010109306",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A109306"
+    },
+    {
+     "delivery_id": "3080088010109305",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A109305"
+    },
+    {
+     "delivery_id": "3080088010109304",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A109304"
+    },
+    {
+     "delivery_id": "3080088010108503",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A108503"
+    },
+    {
+     "delivery_id": "3080088010108502",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A108502"
+    },
+    {
+     "delivery_id": "3080088010108501",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A108501"
+    },
+    {
+     "delivery_id": "3080088010108306",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A108306"
+    },
+    {
+     "delivery_id": "3080088010108301",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A108301"
+    },
+    {
+     "delivery_id": "3080088010108106",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A108106"
+    },
+    {
+     "delivery_id": "3080088010105906",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A105906"
+    },
+    {
+     "delivery_id": "3080088010105905",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A105905"
+    },
+    {
+     "delivery_id": "3080088010105904",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A105904"
+    },
+    {
+     "delivery_id": "3080088010105903",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A105903"
+    }
+   ]
+  },
+  {
+   "striker_id": "300015",
+   "bowler_id": "1300071",
+   "balls": 20,
+   "runs": 7,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010205105",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205105"
+    },
+    {
+     "delivery_id": "3080088010205104",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205104"
+    },
+    {
+     "delivery_id": "3080088010205103",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205103"
+    },
+    {
+     "delivery_id": "3080088010205102",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205102"
+    },
+    {
+     "delivery_id": "3080088010205101",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A205101"
+    },
+    {
+     "delivery_id": "3080088010204906",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204906"
+    },
+    {
+     "delivery_id": "3080088010204905",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204905"
+    },
+    {
+     "delivery_id": "3080088010204901",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204901"
+    },
+    {
+     "delivery_id": "3080088010204206",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204206"
+    },
+    {
+     "delivery_id": "3080088010204205",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204205"
+    },
+    {
+     "delivery_id": "3080088010204204",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A204204"
+    },
+    {
+     "delivery_id": "3080088010203805",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203805"
+    },
+    {
+     "delivery_id": "3080088010203804",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203804"
+    },
+    {
+     "delivery_id": "3080088010203803",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203803"
+    },
+    {
+     "delivery_id": "3080088010203802",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203802"
+    },
+    {
+     "delivery_id": "3080088010203801",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203801"
+    },
+    {
+     "delivery_id": "3080088010203603",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203603"
+    },
+    {
+     "delivery_id": "3080088010203601",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203601"
+    },
+    {
+     "delivery_id": "3080088010203203",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203203"
+    },
+    {
+     "delivery_id": "3080088010203202",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A203202"
+    }
+   ]
+  },
+  {
+   "striker_id": "290007",
+   "bowler_id": "1300071",
+   "balls": 20,
+   "runs": 5,
+   "wickets": 1,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010201903",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201903"
+    },
+    {
+     "delivery_id": "3080088010201902",
+     "date": "2017-09-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201902"
+    },
+    {
+     "delivery_id": "3080088010201901",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201901"
+    },
+    {
+     "delivery_id": "3080088010201706",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201706"
+    },
+    {
+     "delivery_id": "3080088010201705",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201705"
+    },
+    {
+     "delivery_id": "3080088010201704",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201704"
+    },
+    {
+     "delivery_id": "3080088010201703",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201703"
+    },
+    {
+     "delivery_id": "3080088010201702",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A201702"
+    },
+    {
+     "delivery_id": "3080088010104004",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A104004"
+    },
+    {
+     "delivery_id": "3080088010104003",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A104003"
+    },
+    {
+     "delivery_id": "3080088010104002",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A104002"
+    },
+    {
+     "delivery_id": "3080088010104001",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A104001"
+    },
+    {
+     "delivery_id": "3080088010103804",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103804"
+    },
+    {
+     "delivery_id": "3080088010103803",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103803"
+    },
+    {
+     "delivery_id": "3080088010103802",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103802"
+    },
+    {
+     "delivery_id": "3080088010103801",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103801"
+    },
+    {
+     "delivery_id": "3080088010103604",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103604"
+    },
+    {
+     "delivery_id": "3080088010103603",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103603"
+    },
+    {
+     "delivery_id": "3080088010103602",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103602"
+    },
+    {
+     "delivery_id": "3080088010103601",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103601"
+    }
+   ]
+  },
+  {
+   "striker_id": "290007",
+   "bowler_id": "1300076",
+   "balls": 20,
+   "runs": 11,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080088010103502",
+     "date": "2017-09-04",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103502"
+    },
+    {
+     "delivery_id": "3080088010103501",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103501"
+    },
+    {
+     "delivery_id": "3080088010103306",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103306"
+    },
+    {
+     "delivery_id": "3080088010103305",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103305"
+    },
+    {
+     "delivery_id": "3080088010103304",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103304"
+    },
+    {
+     "delivery_id": "3080088010103303",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103303"
+    },
+    {
+     "delivery_id": "3080088010103302",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103302"
+    },
+    {
+     "delivery_id": "3080088010103301",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103301"
+    },
+    {
+     "delivery_id": "3080088010103106",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103106"
+    },
+    {
+     "delivery_id": "3080088010103105",
+     "date": "2017-09-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103105"
+    },
+    {
+     "delivery_id": "3080088010103104",
+     "date": "2017-09-04",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A103104"
+    },
+    {
+     "delivery_id": "3080081010205501",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A205501"
+    },
+    {
+     "delivery_id": "3080081010205306",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A205306"
+    },
+    {
+     "delivery_id": "3080081010205305",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A205305"
+    },
+    {
+     "delivery_id": "3080081010205304",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A205304"
+    },
+    {
+     "delivery_id": "3080081010205303",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A205303"
+    },
+    {
+     "delivery_id": "3080081010205302",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A205302"
+    },
+    {
+     "delivery_id": "3080081010105302",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A105302"
+    },
+    {
+     "delivery_id": "3080081010105301",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A105301"
+    },
+    {
+     "delivery_id": "3080081010105106",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A105106"
+    }
+   ]
+  },
+  {
+   "striker_id": "300015",
+   "bowler_id": "880149",
+   "balls": 9,
+   "runs": 2,
+   "wickets": 0,
+   "clips": 9,
+   "deliveries": [
+    {
+     "delivery_id": "3080081010104906",
+     "date": "2017-08-27",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104906"
+    },
+    {
+     "delivery_id": "3080081010104905",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104905"
+    },
+    {
+     "delivery_id": "3080081010104904",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104904"
+    },
+    {
+     "delivery_id": "3080081010104706",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104706"
+    },
+    {
+     "delivery_id": "3080081010104705",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104705"
+    },
+    {
+     "delivery_id": "3080081010104704",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104704"
+    },
+    {
+     "delivery_id": "3080081010104703",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104703"
+    },
+    {
+     "delivery_id": "3080081010104702",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104702"
+    },
+    {
+     "delivery_id": "3080081010104701",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104701"
+    }
+   ]
+  },
+  {
+   "striker_id": "290007",
+   "bowler_id": "880149",
+   "balls": 20,
+   "runs": 21,
+   "wickets": 0,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "3080081010104903",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104903"
+    },
+    {
+     "delivery_id": "3080081010104902",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104902"
+    },
+    {
+     "delivery_id": "3080081010104901",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104901"
+    },
+    {
+     "delivery_id": "3080081010104506",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104506"
+    },
+    {
+     "delivery_id": "3080081010104505",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104505"
+    },
+    {
+     "delivery_id": "3080081010104504",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104504"
+    },
+    {
+     "delivery_id": "3080081010104306",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104306"
+    },
+    {
+     "delivery_id": "3080081010104106",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104106"
+    },
+    {
+     "delivery_id": "3080081010104104",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104104"
+    },
+    {
+     "delivery_id": "3080081010104103",
+     "date": "2017-08-27",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104103"
+    },
+    {
+     "delivery_id": "3080081010104102",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104102"
+    },
+    {
+     "delivery_id": "3080081010104101",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A104101"
+    },
+    {
+     "delivery_id": "3080081010103405",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A103405"
+    },
+    {
+     "delivery_id": "3080081010103404",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A103404"
+    },
+    {
+     "delivery_id": "3080081010103403",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A103403"
+    },
+    {
+     "delivery_id": "3080081010101804",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A101804"
+    },
+    {
+     "delivery_id": "3080081010101803",
+     "date": "2017-08-27",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A101803"
+    },
+    {
+     "delivery_id": "3080081010101802",
+     "date": "2017-08-27",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A101802"
+    },
+    {
+     "delivery_id": "3080081010101801",
+     "date": "2017-08-27",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A101801"
+    },
+    {
+     "delivery_id": "3080081010101601",
+     "date": "2017-08-27",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A101601"
+    }
+   ]
+  }
+ ]
+}

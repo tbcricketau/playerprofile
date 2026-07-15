@@ -251,6 +251,25 @@ def build_card(conn, cur, pid, name, LEN, LIN, STK):
     return {"name": name, "hand": hand, "series": cards}
 
 
+_LOOKUP_CACHE = None
+
+
+def card_for(pid, name=None):
+    """One-call attack card for ANY batter (ours or opposition) — used by batting_report to
+    render 'how attacks bowl to them, last 3 series'. Opens its own connection."""
+    global _LOOKUP_CACHE
+    conn, cur = set_conn_cursor()
+    if _LOOKUP_CACHE is None:
+        _LOOKUP_CACHE = (_lookup(conn, cur, 2819), _lookup(conn, cur, 2823), _lookup(conn, cur, 24))
+    if not name:
+        r = run_query(f"SELECT TOP 1 name, surname FROM [{DATA_SCHEMA}].[Players] "
+                      f"WHERE player_id='{pid}'", conn, cur)
+        name = f"{r[0]['name']} {r[0]['surname']}" if r else str(pid)
+    card = build_card(conn, cur, str(pid), name, *_LOOKUP_CACHE)
+    conn.close()
+    return card
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--ids", nargs="*", help="restrict to these player ids (testing)")

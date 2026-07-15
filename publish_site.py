@@ -151,6 +151,11 @@ def build(out_dir, sas_hours):
     for s in cfg.get("series", []):
         s_dir = os.path.join(out_dir, s["slug"])
         os.makedirs(s_dir, exist_ok=True)
+        # series-level Match-ups matrix (render_matchups.py) — the ONE full simulated grid
+        mx_src = os.path.join(REPORTS_DIR, f"matchups_{s['slug'].split('-')[0]}.html")
+        has_mx = os.path.exists(mx_src)
+        if has_mx:
+            shutil.copy(mx_src, os.path.join(s_dir, "matchups.html"))
         group_cards, s_total = [], 0
         for g in s.get("groups", []):
             g_dir = os.path.join(s_dir, g["slug"])
@@ -169,7 +174,7 @@ def build(out_dir, sas_hours):
                     print(f"  [ok] {s['slug']}/{g['slug']}/{title} ({btype})")
             _write_group_index(g_dir, cfg, s, g, report_cards)
             group_cards.append((g["slug"], g["name"], len(report_cards)))
-        _write_series_index(s_dir, cfg, s, group_cards)
+        _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx)
         series_cards.append((s["slug"], s["name"], s.get("subtitle", ""), s_total))
     _write_top_index(out_dir, cfg, series_cards)
     open(os.path.join(out_dir, ".nojekyll"), "w").close()
@@ -190,9 +195,12 @@ def _write_top_index(out_dir, cfg, series_cards):
     open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(_page(cfg.get("title", "Scouting"), body))
 
 
-def _write_series_index(s_dir, cfg, s, group_cards):
-    if group_cards:
-        items = "\n".join(
+def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False):
+    mx = ('<li><a href="matchups.html"><b>Match-ups</b>'
+          '<span class="sub">the full simulated grid — every pairing, both directions</span></a>'
+          '<span class="n">matrix</span></li>' if has_matchups else "")
+    if group_cards or mx:
+        items = mx + "\n".join(
             f'<li><a href="{gl}/index.html"><b>{html.escape(gn)}</b></a>'
             f'<span class="n">{c} report{"s" if c != 1 else ""}</span></li>'
             for gl, gn, c in group_cards)

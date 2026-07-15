@@ -1,5 +1,46 @@
 # Batting profile — plan (build on v0.1, add the vulnerability dimensions + fingerprint)
 
+> **Status (2026-07-15): v0.3 — the new estate machinery wired in.** Two sections added to the
+> combined report (verified on a Litton Das render): **"How Attacks Bowl To Them — last 3 series"**
+> (the attack-card machinery, in-series same-hand control, gated cells only) and **"Our Best
+> Options (simulated matchups)"** (the matchup store's `they_bat` direction — our bowlers ranked
+> by expected average vs this batter, fail-to-set %, stock wicket ball, structural spin line;
+> cohort-only reads labelled). All reader-facing prose is now gender-neutral. Opposition photos
+> arrive automatically via `cricket_core.headshots` (builders pass `name=`).
+
+## Uplift roadmap (2026-07-15) — how the batting packs use everything new
+
+1. **Render the Bangladesh batting set** and put it on the scouting site: an "Opposition Batters"
+   group in `series.json` beside the bowler groups (combined report per batter; focused
+   per-bowler-group reports for the top order once the combined set is red-penned).
+2. **Head-to-head vision** — `data/h2h_bangladesh.json` already holds our-bowlers-to-their-batters
+   meetings with clip stems (Lyon to Mehidy/Taijul etc. resolve from 2017). Add a "▶ our bowlers
+   to them" playlist into the batting report's existing sidecar, and passage playlists (dismissal
+   + preceding balls) when ATTACK_PLANS P3 lands.
+3. **The vs-our-squad strip mirror** — when the bowling reports get their strip
+   (SCOUTING_REBUILD.md), the batting report's "Our Best Options" is already its mirror; keep the
+   two visually consistent (same gloss line, same confidence labels).
+4. **Fields — the GPS work this needs** (Tom 2026-07-15: stock fields from the GPS project are the
+   real unlock). The Suggested Fields section currently assembles stock ± ≤3 evidenced deviations
+   (FIELD_PLAN v2), but its evidence base is event-coded positions (~45% coverage, recent-heavy).
+   Concrete asks on the catapultgps/referencebuilder side, in value order:
+   - **Deviation value in runs** — use the GPS corpus (fielder tracks + `fielder_runs_saved/cost`)
+     to price each candidate deviation: expected runs saved per innings by moving X from stock
+     position A to B against this batter's wagon distribution, instead of today's proxy
+     (boundary-share + expected-edge gains). This turns "3 allowed changes" into "changes worth
+     ≥N runs".
+   - **True stock templates by venue shape** — `gps_corrected_field` corrects the dictionary field
+     per bowler-type × phase; extend with boundary-rider placement conditioned on venue dimensions
+     (venue_geo/venue_norms hold the dims) so "deep square" lands on the actual rope.
+   - **Catch-carry depths by speed band** — cordon/keeper depth norms from GPS positions vs
+     bowler speed band (the corpus has both), replacing the flat cordon in the stock dictionary.
+   - **Coverage honesty** — where GPS/event coverage for this batter is thin, the field card
+     should say "stock field stands (n=…)" rather than force deviations; the trigger-norm gate
+     (`build_field_trigger_norms.py`) already exists — wire its cohort-P75 bar into the ask above.
+5. **Base-pack trimming** — once Tom's coach feedback lands, the combined report is the "base";
+   the per-player packs pull sections from it (INDIVIDUALIZATION_PLAN §2). Keep section ids
+   stable so the assembler can lift them.
+
 > **Status (2026-07-03): v0.2 built & verified.** Loader/profile/analytics/reference/fingerprint
 > done; **combined** + **focused (right_pace)** reports render (verified on Smith); example-video
 > links added to both batting & bowling reports; `build_batting_reports.py --mode --group` wired.

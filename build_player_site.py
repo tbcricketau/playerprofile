@@ -215,12 +215,68 @@ def _short_opp(meta):
     return sub
 
 
-def _build_vision(dest_dir, page_slug, name, card):
-    """One modal-player page per player: a 'Dismissals — v X' playlist per series (fresh SAS
-    minted at build time, like publish_site). Returns {series_index: href#key} for the series
-    whose clips resolved, or {} (older footage is often not in storage)."""
+def _load_h2h(slug):
+    """h2h_{opp}.json for this series, indexed both ways, or None."""
+    opp = slug.split("-")[0]
+    p = os.path.join(HERE, "data", f"h2h_{opp}.json")
+    if not os.path.exists(p):
+        return None
+    d = json.load(open(p, encoding="utf-8"))
+    return d
+
+
+def _opp_names(slug):
+    """id -> display name for the opposition, from the matchup store (matchupmodel)."""
+    try:
+        from cricket_core.config import project_path
+        opp = slug.split("-")[0]
+        p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
+        store = json.load(open(p, encoding="utf-8"))
+        names = {}
+        for blk in ("we_bat", "they_bat"):
+            for c in store.get(blk, []):
+                names[c["batter_id"]] = c["batter"]
+                names[c["bowler_id"]] = c["bowler"]
+        return names
+    except Exception:
+        return {}
+
+
+def _h2h_playlists(h2h, pid, players, opp_names=None):
+    """This player's real meetings, one playlist per opponent: batting rows where they struck,
+    bowling rows where they bowled. Returns (playlists, titles) with unresolved stems."""
+    from cricket_core.video import playlist_item
+    playlists, titles = {}, {}
+    name_of = {p: r.get("name", p) for p, r in players.items()}
+    name_of.update(opp_names or {})
+
+    def add(rows, me_key, them_key, label):
+        mine = [r for r in rows if r[me_key] == pid]
+        mine.sort(key=lambda r: -r["balls"])
+        for r in mine:
+            if not r["clips"]:
+                continue
+            them = r[them_key]
+            key = f"h2h_{them}"
+            items = [playlist_item(d["delivery_id"], d["clip_stem"],
+                                   caption=f'{d["date"][8:10]}-{d["date"][5:7]}-{d["date"][:4]} · '
+                                           + (f'OUT {d["wicket"]}' if d["wicket"] else f'{d["runs"]} run{"s" if d["runs"] != 1 else ""}'))
+                     for d in r["deliveries"] if d["clip_stem"]]
+            if items:
+                playlists[key] = items
+                titles[key] = f'{label} {name_of.get(them, them)} · {r["balls"]} balls, {r["runs"]} runs, {r["wickets"]} wkt'
+    add(h2h.get("our_batting", []), "striker_id", "bowler_id", "You v")
+    add(h2h.get("our_bowling", []), "bowler_id", "striker_id", "You to")
+    return playlists, titles
+
+
+def _build_vision(dest_dir, page_slug, name, card, extra=None):
+    """One modal-player page per player: a 'Dismissals — v X' playlist per attack-card series,
+    plus any `extra` (playlists, titles) — the real head-to-head meetings. Fresh SAS minted at
+    build time, like publish_site. Returns (dismissal_hrefs, h2h_links): {series_index: href#key}
+    and [(href, title)] for the h2h playlists whose clips resolved."""
     from cricket_core.video import playlist_item, resolve_playlist, build_player_html
-    playlists, titles, hrefs = {}, {}, {}
+    playlists, titles, hrefs, h2h_links = {}, {}, {}, []
     for i, s in enumerate(card.get("series", []) if card else []):
         items = [playlist_item(o["delivery_id"], o["clip_stem"],
                                caption=f'{o["how"]} — {o["bowler"] or "?"} · '
@@ -234,14 +290,20 @@ def _build_vision(dest_dir, page_slug, name, card):
             playlists[key] = resolved
             titles[key] = f'Dismissals — v {s["opp"]}'
             hrefs[i] = f"{page_slug}-vision.html#{key}"
+    for key, items in (extra[0] if extra else {}).items():
+        resolved, avail, _tot = resolve_playlist(items)
+        if avail:
+            playlists[key] = resolved
+            titles[key] = extra[1][key]
+            h2h_links.append((f"{page_slug}-vision.html#{key}", extra[1][key]))
     if playlists:
         build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
-                          title=f"{name} — dismissal vision", subtitle="how you were got out",
+                          title=f"{name} — vision", subtitle="dismissals + head-to-head",
                           titles=titles)
-    return hrefs
+    return hrefs, h2h_links
 
 
-def _player_body(meta, pid, rec, card=None, vision=None):
+def _player_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False):
     name = rec.get("name", pid)
     role = rec.get("role", "")
     opp = _short_opp(meta)
@@ -253,8 +315,20 @@ def _player_body(meta, pid, rec, card=None, vision=None):
                               inner=_attack_card_html(card, opp, vision)))
     if "bowling" in rec.get("packs", []):
         body.append(_pack_section("Your bowling pack", f"How to bowl to the {opp} batters."))
+    if h2h_links:
+        items = "".join(f'<li style="margin:6px 0"><a class="vwatch" href="{href}">▶ Watch</a> '
+                        f'<span style="font-size:13px">{html.escape(title)}</span></li>'
+                        for href, title in h2h_links)
+        inner = ('<ul style="list-style:none;padding:0;margin:0">' + items + '</ul>')
+    elif had_meetings:
+        inner = ('<p class="ssum" style="color:#6b7280">You have faced them in Tests, but that '
+                 'footage is not in the clip library (older matches are not clipped).</p>')
+    else:
+        inner = ('<p class="ssum" style="color:#6b7280">No Test meetings with this opposition '
+                 'yet — nothing to show.</p>')
     body.append(_pack_section(f"Your vision vs {opp}",
-                              "Your most recent balls against each opponent you have faced (this format)."))
+                              "Your most recent balls against each opponent you have faced (Tests only, "
+                              "capped at the 20 most recent per opponent).", inner=inner))
     return "".join(body)
 
 
@@ -295,17 +369,24 @@ def build(out_dir, no_video=False):
         up = None if single else ("../index.html", "Series")
         open(os.path.join(s_dir, "index.html"), "w", encoding="utf-8").write(
             _page(f"{meta.get('name','')} — player packs", _roster_body(meta, roster), up=up))
+        h2h = _load_h2h(slug)
+        opp_names = _opp_names(slug)
         for pid, rec in roster:
             name = rec.get("name", pid)
             pslug = _slug(name)
-            vision = {}
-            if not no_video and cards.get(pid):
+            vision, h2h_links, had = {}, [], False
+            extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
+            had = bool(extra[0]) or (h2h and any(
+                r["striker_id"] == pid for r in h2h.get("our_batting", [])) or (h2h and any(
+                r["bowler_id"] == pid for r in h2h.get("our_bowling", []))))
+            if not no_video and (cards.get(pid) or extra[0]):
                 try:
-                    vision = _build_vision(s_dir, pslug, name, cards[pid])
+                    vision, h2h_links = _build_vision(s_dir, pslug, name, cards.get(pid), extra)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             open(os.path.join(s_dir, pslug + ".html"), "w", encoding="utf-8").write(
-                _page(f"{name} — pack", _player_body(meta, pid, rec, cards.get(pid), vision),
+                _page(f"{name} — pack",
+                      _player_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had),
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 

@@ -11,6 +11,7 @@ and how they get out.  Reuses report.py's Chromium PDF machinery and the Opta th
 import datetime
 import os
 import re
+import json
 
 from jinja2 import Template
 
@@ -51,8 +52,8 @@ def _impact_read(P: dict) -> str:
     if not s:
         return ""
     tc, tm = s["team_share_career"], s["team_share_median"]
-    lead = (f"Makes <b>{tc:.1f}%</b> of his team's runs over a career (typical innings "
-            f"{tm:.1f}%), and <b>{_fmt(s['match_share_career'], '.1f', '%')}</b> of all runs in his matches")
+    lead = (f"Makes <b>{tc:.1f}%</b> of their team's runs over a career (typical innings "
+            f"{tm:.1f}%), and <b>{_fmt(s['match_share_career'], '.1f', '%')}</b> of all runs in their matches")
     carry = (f"; carries the innings (≥25% of the team's runs) {s['carried_rate']:.0f}% of the time"
              + (f", and dominates (≥40%) {s['big_rate']:.0f}%" if s["big_rate"] >= 3 else ""))
     return lead + carry + "."
@@ -84,7 +85,7 @@ def _vs_read(P: dict) -> str:
         return ""
     if P["weakness"] == "spin":
         return (f"Noticeably weaker against spin (averages {s['avg']:.0f} vs {p['avg']:.0f} against pace; "
-                f"falser shot {s['false_pct']:.0f}% vs {p['false_pct']:.0f}%) — attack him with spin.")
+                f"falser shot {s['false_pct']:.0f}% vs {p['false_pct']:.0f}%) — attack them with spin.")
     if P["weakness"] == "pace":
         return (f"Stronger against spin ({s['avg']:.0f}) than pace ({p['avg']:.0f}); "
                 f"pace — especially the quicks — is the more productive line of attack.")
@@ -102,7 +103,7 @@ def _dir_read(P: dict) -> str:
         return ""
     top = max(d, key=d.get)
     side = {"off": "the off side", "leg": "the leg side", "straight": "straight down the ground"}[top]
-    return f"Scores most of his runs through {side} ({d[top]:.0f}%; off {d['off']:.0f}% · leg {d['leg']:.0f}% · straight {d['straight']:.0f}%)."
+    return f"Scores most of their runs through {side} ({d[top]:.0f}%; off {d['off']:.0f}% · leg {d['leg']:.0f}% · straight {d['straight']:.0f}%)."
 
 
 def _phase_rows(P: dict) -> list:
@@ -130,15 +131,15 @@ def _phase_read(P: dict) -> str:
         return ""
     ratio = e["dismissal_per100"] / s["dismissal_per100"] if s["dismissal_per100"] else None
     if ratio and ratio >= 1.4:
-        txt = (f"<b>Get him early</b> — he's {ratio:.1f}× more likely to fall in his first 30 balls "
+        txt = (f"<b>Get them early</b> — they're {ratio:.1f}× more likely to fall in their first 30 balls "
                f"({e['dismissal_per100']:.1f} vs {s['dismissal_per100']:.1f} dismissals/100 once set")
         if e["false_pct"] and s["false_pct"]:
             txt += f"; false shot {e['false_pct']:.0f}% vs {s['false_pct']:.0f}%"
         txt += ")."
     elif ratio and ratio <= 1.1:
-        txt = (f"Starts securely — his dismissal rate barely drops once set "
+        txt = (f"Starts securely — their dismissal rate barely drops once set "
                f"({e['dismissal_per100']:.1f} early vs {s['dismissal_per100']:.1f}/100); "
-               f"early pressure alone won't buy his wicket.")
+               f"early pressure alone won't buy their wicket.")
     else:
         txt = (f"Somewhat more vulnerable early ({e['dismissal_per100']:.1f} vs "
                f"{s['dismissal_per100']:.1f} dismissals/100 once set).")
@@ -296,7 +297,7 @@ def _stroke_norm_caption(P: dict) -> str:
         return ""
     grp, label, n = grain
     scope = f"vs {label}" if label else "all bowling"
-    return (f"Share of stroke-coded runs {scope}; index = his share ÷ cohort median "
+    return (f"Share of stroke-coded runs {scope}; index = their share ÷ cohort median "
             f"({n} Test batters). Highlight = signature shot; ▼ = scores unusually little there.")
 
 
@@ -325,7 +326,7 @@ def _stroke_norm_read(P: dict) -> str:
     parts = []
     if over:
         idx, fam, his = max(over)
-        parts.append(f"The <b>{fam.lower()}</b> brings him {his:.0f}% of his runs{scope} — "
+        parts.append(f"The <b>{fam.lower()}</b> brings them {his:.0f}% of their runs{scope} — "
                      f"{idx:.1f}× the typical Test batter's share.")
     if under:
         idx, fam, his, norm = min(under)
@@ -396,7 +397,7 @@ def _dim_weakness_reads(P: dict) -> list:
             worst = min(mv, key=lambda d: d["avg"])
             if worst["avg"] < straight["avg"] * 0.75:
                 dirw = _blabel(worst["bucket"], dk + "_dir", is_spin)
-                out.append(f"The ball that {dirw} hurts him (avg {worst['avg']:.0f} vs {straight['avg']:.0f} when it holds its line).")
+                out.append(f"The ball that {dirw} hurts them (avg {worst['avg']:.0f} vs {straight['avg']:.0f} when it holds its line).")
     # danger cell
     g = P.get("grid_danger")
     if g:
@@ -478,7 +479,7 @@ def _plan_read(P: dict) -> str:
         plan += f". Danger ball: the <b>{g['length_band'].lower()} {g['line_region']}</b> ({g['dismissal_per100']:.1f} outs/100, avg {g['avg']:.0f})"
     if P["dismissals"]:
         top = P["dismissals"].most_common(1)[0]
-        plan += f"; he's most often out <b>{top[0].lower()}</b> to this attack"
+        plan += f"; they're most often out <b>{top[0].lower()}</b> to this attack"
     return plan + "."
 
 
@@ -522,14 +523,14 @@ def _field_backtest_line(fs: dict, phase: str) -> str:
     buy vs the untouched stock field (FIELD_PLAN §6)."""
     bt, chg, base = fs["backtest"], fs["changes"], fs["base_note"]
     if not chg:
-        return (f"<b>Pure {base}.</b> Nothing in his game clears the deviation bar (cohort P75) "
+        return (f"<b>Pure {base}.</b> Nothing in their game clears the deviation bar (cohort P75) "
                 f"against {fs['group_label']}, so the orthodox field stands — that <i>is</i> the read.")
     n = len(chg)
     gains = []
     if bt["bdry_gain"] >= 1:
-        gains.append(f"+{bt['bdry_gain']:.0f}% of his boundary runs")
+        gains.append(f"+{bt['bdry_gain']:.0f}% of their boundary runs")
     if bt["exp_catch_gain"] >= 1:
-        gains.append(f"+{bt['exp_catch_gain']:.0f}% of his expected edges")
+        gains.append(f"+{bt['exp_catch_gain']:.0f}% of their expected edges")
     tail = (" — covering " + " and ".join(gains) + " vs the pure stock field") if gains else ""
     return (f"<b>{base.capitalize()} + {n} change{'s' if n != 1 else ''}</b> "
             f"(highlighted){tail}.")
@@ -625,9 +626,47 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "stroke": _dim_rows(dims["stroke"], "stroke_family"),
     }
 
+    def _attacked_ctx():
+        """'How attacks bowl to them — last 3 series' (attack_cards machinery, any batter)."""
+        try:
+            from attack_cards import card_for
+            card = card_for(batter_id, P.get("name"))
+            return card if card and card.get("series") else None
+        except Exception:
+            return None
+
+    def _sim_options_ctx():
+        """Our best simulated options vs this batter, from the series matchup store."""
+        try:
+            import glob as _g
+            from cricket_core.config import project_path
+            for p in _g.glob(os.path.join(project_path("matchupmodel"), "data",
+                                          "matchup_store_*.json")):
+                store = json.load(open(p, encoding="utf-8"))
+                cells = [c for c in store.get("they_bat", [])
+                         if c["batter_id"] == str(batter_id) and c["sim_avg"] is not None]
+                if not cells:
+                    continue
+                ranked = sorted(cells, key=lambda c: c["sim_avg"])
+                struct = [c for c in cells if c.get("structural_threat")]
+                sline = ""
+                if struct:
+                    b = struct[0]
+                    sline = (f"Structurally, {b['bowler_type'].lower()} turning the ball away from "
+                             f"the {b['bat_hand']} is the matchup class that persists — favour that "
+                             f"angle when the individual reads are thin.")
+                return {"rows": [(c["bowler"], c["bowler_type"], c["sim_avg"], c["sim_sr"],
+                                  c.get("fail_to_set_pct"), c["danger"], c["top_dismissal"],
+                                  c["confidence"]) for c in ranked[:5]],
+                        "structural": sline, "built": store.get("built")}
+        except Exception:
+            pass
+        return None
+
     ctx = {
         "P": P, "code": _country_code(P["team"]),
         "photo_uri": get_photo_data_uri(P["batter_id"], fmt="test", name=P.get("name")),
+        "attacked": _attacked_ctx(), "sim_options": _sim_options_ctx(),
         "hand_label": "LHB" if P["is_lhb"] else "RHB",
         "cards": _cards(P), "impact_read": _impact_read(P),
         "vs_rows": _vs_rows(P), "vs_read": _vs_read(P),
@@ -776,8 +815,38 @@ _TEMPLATE = r"""
   </table>
   {% endif %}
 
-  <h2 class="pbreak">Where He's Vulnerable <span class="sub" style="font-weight:400">({% if P.group %}{{P.group_label}}{% else %}vs pace{% endif %})</span></h2>
-  <div class="cap" style="text-align:left;margin-bottom:6px">Per bucket: batting average, strike rate, false-shot %, dismissals per 100 balls, boundary %. Pink row = his lowest-average (softest) bucket in that dimension.</div>
+  {% if attacked %}
+  <h2 class="pbreak">How Attacks Bowl To Them <span class="sub" style="font-weight:400">(last {{attacked.series|length}} series)</span></h2>
+  {% for s in attacked.series %}
+  <div style="margin-bottom:10px">
+    <div style="font-weight:700;font-size:11.5px">v {{s.opp}} <span class="sub" style="font-weight:400">· {{s.tests}} Test{{'s' if s.tests != 1 else ''}} · {{s.balls}} balls · {{s.runs}} runs{% if s.avg is not none %} · avg {{s.avg}}{% endif %}</span></div>
+    {% if s.cells %}<div class="read" style="margin:3px 0 5px">{{s.summary}}</div>
+    <table class="mtab" style="width:auto">
+      <tr><th>Ball</th><th>Them</th><th>Teammates</th><th></th></tr>
+      {% for c in s.cells if c.flag in ('more','less') %}
+      <tr><td class="lab">{{c.label|capitalize}}</td><td>{{'%.0f'|format(c.pct)}}%</td><td>{{'%.0f'|format(c.ctrl_pct)}}%</td><td style="font-weight:700;color:{{'#991b1b' if c.flag=='more' else '#075985'}}">{{'▲ more' if c.flag=='more' else '▼ less'}}</td></tr>
+      {% endfor %}
+    </table>
+    {% else %}<div class="cap" style="text-align:left">Too few balls in this series to compare a plan.</div>{% endif %}
+  </div>
+  {% endfor %}
+  <div class="cap" style="text-align:left">Only the balls of each attack's pace plan that differed from what the same bowlers gave that side's other {{hand_label}} top-order batters. The full dismissal detail sits in the vision playlists.</div>
+  {% endif %}
+
+  {% if sim_options %}
+  <h2 class="pbreak">Our Best Options <span class="sub" style="font-weight:400">(simulated matchups)</span></h2>
+  <div class="cap" style="text-align:left;margin-bottom:5px">From the match simulation — a tool that plays each batter-v-bowler pairing out thousands of times from their full Test profiles. Low expected average = the bowler wins the matchup. "Cohort" confidence = they have not faced enough of that type for a personal read.</div>
+  <table class="mtab">
+    <tr><th>Bowler</th><th>Type</th><th>Exp avg</th><th>Exp SR</th><th>Out in first 30 %</th><th>Stock wicket ball</th><th>Top dismissal</th><th>Confidence</th></tr>
+    {% for bow, btype, avg, sr, fts, danger, dis, conf in sim_options.rows %}
+    <tr><td class="lab">{{bow}}</td><td>{{btype}}</td><td>{{avg}}</td><td>{{sr}}</td><td>{{fts if fts is not none else '—'}}</td><td>{{danger}}</td><td>{{dis}}</td><td>{{'Cohort' if conf=='None' else conf}}</td></tr>
+    {% endfor %}
+  </table>
+  {% if sim_options.structural %}<div class="read" style="margin-top:4px">{{sim_options.structural}}</div>{% endif %}
+  {% endif %}
+
+  <h2 class="pbreak">Where They're Vulnerable <span class="sub" style="font-weight:400">({% if P.group %}{{P.group_label}}{% else %}vs pace{% endif %})</span></h2>
+  <div class="cap" style="text-align:left;margin-bottom:6px">Per bucket: batting average, strike rate, false-shot %, dismissals per 100 balls, boundary %. Pink row = their lowest-average (softest) bucket in that dimension.</div>
   {% macro dimtable(title, rows) %}
     {% if rows %}
     <div>
@@ -807,18 +876,18 @@ _TEMPLATE = r"""
 
   {% if P.grid_danger %}
   <div class="dcard">
-    <div class="dh">Danger ball — where he's most likely out {% if video.lists.danger %}<a class="vlink" data-pl="danger" href="{{video.player}}#danger">▶ watch danger balls</a>{% endif %}</div>
+    <div class="dh">Danger ball — where they're most likely out {% if video.lists.danger %}<a class="vlink" data-pl="danger" href="{{video.player}}#danger">▶ watch danger balls</a>{% endif %}</div>
     <div class="db">{{P.grid_danger.length_band}} / {{P.grid_danger.line_region}}</div>
     <div class="ds">{{ '%.1f'|format(P.grid_danger.dismissal_per100) }} dismissals per 100 · averages {{ '%.0f'|format(P.grid_danger.avg) }} here · {{P.grid_danger.balls}} balls · false shot {{ '%.0f'|format(P.grid_danger.false_pct) }}%</div>
   </div>
   {% endif %}
 
-  <h2 class="pbreak">How He Scores &amp; Gets Out</h2>
+  <h2 class="pbreak">How They Score &amp; Get Out</h2>
   <div class="grid2">
     <div>
       {% if dir_read %}<div class="read">{{dir_read|safe}}</div>{% endif %}
       <div style="font-weight:700;font-size:10.5px;margin:2px 0 3px">Shot types (risk)
-        {% if video.lists.risky_stroke %}<a class="vlink" data-pl="risky_stroke" href="{{video.player}}#risky_stroke">▶ his {{video.stroke_name|lower}}</a>{% endif %}</div>
+        {% if video.lists.risky_stroke %}<a class="vlink" data-pl="risky_stroke" href="{{video.player}}#risky_stroke">▶ their {{video.stroke_name|lower}}</a>{% endif %}</div>
       <table class="mtab">
         <tr><th>Shot</th><th>Avg</th><th>SR</th><th>False%</th><th>Outs/100</th><th>Bdry%</th><th>Balls</th></tr>
         {% for lab, avg, sr, fs, dis, bd, balls, weak in dim.stroke %}
@@ -829,7 +898,7 @@ _TEMPLATE = r"""
       <div style="font-weight:700;font-size:10.5px;margin:8px 0 3px">Scoring mix vs the typical Test batter <span style="font-weight:400;color:{{c.TEXT_SEC}}">({{norm_scope}})</span></div>
       {% if norm_read %}<div class="read">{{norm_read|safe}}</div>{% endif %}
       <table class="mtab">
-        <tr><th>Shot</th><th>% of his runs</th><th>Typical</th><th>Index</th><th>Pctl</th></tr>
+        <tr><th>Shot</th><th>% of their runs</th><th>Typical</th><th>Index</th><th>Pctl</th></tr>
         {% for fam, his, norm, idx, pctl, flag in norm_rows %}
         <tr class="{{ 'sig' if flag == 'over' else '' }}"><td class="lab">{{fam}}</td><td>{{his}}</td><td>{{norm}}</td><td>{{idx}}{% if flag == 'under' %} ▼{% endif %}</td><td>{{pctl}}</td></tr>
         {% endfor %}
@@ -838,7 +907,7 @@ _TEMPLATE = r"""
       {% endif %}
     </div>
     <div>
-      {% if figs.wagon %}<img class="wag" src="{{figs.wagon}}"><div class="cap">Where he scores — runs by area{% if P.group %} vs {{P.group_label}}{% endif %} (mirrored for a left-hander).</div>{% endif %}
+      {% if figs.wagon %}<img class="wag" src="{{figs.wagon}}"><div class="cap">Where they score — runs by area{% if P.group %} vs {{P.group_label}}{% endif %} (mirrored for a left-hander).</div>{% endif %}
     </div>
   </div>
 
@@ -852,8 +921,8 @@ _TEMPLATE = r"""
   </table>
 
   {% if field_blocks %}
-  <h2 class="pbreak">Suggested Fields <span class="sub" style="font-weight:400">(the stock field &plusmn; his evidenced deviations)</span></h2>
-  <div class="cap" style="text-align:left;margin-bottom:6px">Each field starts from the <b>stock template</b> for that bowler type &amp; phase (orthodox because it works), then makes at most <b>three</b> changes — each one earned by a trigger in <b>his</b> game clearing the cohort P75 bar (does he lap, cut, pull, score square, edge early?). <b>Change</b> rows are highlighted with his stat; <b>Stock</b> rows carry the orthodoxy line. The read line backtests the changes against the pure stock field. Early = first 30 balls; Set = once in. Drawn from behind the bowler (bowler bottom, striker top); off side is on the {% if P.is_lhb %}right{% else %}left{% endif %}.</div>
+  <h2 class="pbreak">Suggested Fields <span class="sub" style="font-weight:400">(the stock field &plusmn; their evidenced deviations)</span></h2>
+  <div class="cap" style="text-align:left;margin-bottom:6px">Each field starts from the <b>stock template</b> for that bowler type &amp; phase (orthodox because it works), then makes at most <b>three</b> changes — each one earned by a trigger in <b>their</b> game clearing the cohort P75 bar (do they lap, cut, pull, score square, edge early?). <b>Change</b> rows are highlighted with their stat; <b>Stock</b> rows carry the orthodoxy line. The read line backtests the changes against the pure stock field. Early = first 30 balls; Set = once in. Drawn from behind the bowler (bowler bottom, striker top); off side is on the {% if P.is_lhb %}right{% else %}left{% endif %}.</div>
   {% for blk in field_blocks %}
     <div style="font-weight:700;font-size:11.5px;margin:10px 0 4px;color:{{c.ACCENT}}">Field vs {{blk.label}}</div>
     {% for col in blk.cols %}
@@ -864,7 +933,7 @@ _TEMPLATE = r"""
         <div class="read" style="margin-top:4px">{{col.backtest|safe}}</div>
       </div>
       <table class="mtab">
-        <tr><th>Fielder</th><th>Stock/Change</th><th style="text-align:left">Why he's there</th></tr>
+        <tr><th>Fielder</th><th>Stock/Change</th><th style="text-align:left">Why they're there</th></tr>
         {% for pos, role, why, tag in col.rows %}
         <tr class="{{ 'sig' if tag=='change' else '' }}"><td class="lab">{{pos}}</td><td>{{role}}</td><td style="text-align:left">{{why}}</td></tr>
         {% endfor %}
