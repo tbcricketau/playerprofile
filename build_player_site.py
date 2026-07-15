@@ -80,6 +80,27 @@ EXTRA_CSS = """<style>
  .vwatch{font-size:11px;font-weight:700;color:#003087;text-decoration:none;background:#eef1f6;
    border:1px solid #d5dced;border-radius:6px;padding:2px 8px;margin-left:6px;letter-spacing:0;text-transform:none}
  .vwatch.off{color:#9aa4b2;border-style:dashed;cursor:default}
+ /* collapsible sections */
+ details.pack{border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow:hidden}
+ details.pack>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:baseline;gap:8px}
+ details.pack>summary::-webkit-details-marker{display:none}
+ details.pack>summary::before{content:"▸";color:#9aa4b2;font-size:13px;transition:transform .15s;flex:0 0 auto}
+ details.pack[open]>summary::before{transform:rotate(90deg)}
+ details.pack>summary h2{font-size:16px;color:#003087;margin:0;display:inline}
+ details.pack>summary .desc{color:#6b7280;font-size:12.5px;font-weight:400;margin:0}
+ details.pack>.body{padding:0 16px 14px}
+ /* per-bowler cards */
+ details.bwl{border:1px solid #e5e7eb;border-radius:10px;background:#fff;margin:7px 0}
+ details.bwl>summary{list-style:none;cursor:pointer;padding:9px 12px;display:flex;align-items:center;gap:10px}
+ details.bwl>summary::-webkit-details-marker{display:none}
+ details.bwl .bav{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#9aa4b2}
+ details.bwl .bn{flex:1;min-width:0} details.bwl .bn b{font-size:14px;color:#1a1a2e;display:block}
+ details.bwl .bn .bt{color:#6b7280;font-size:12px}
+ details.bwl .bhead{font-size:12px;font-weight:700;white-space:nowrap;padding:2px 9px;border-radius:999px}
+ details.bwl .bhead.hard{background:#fee2e2;color:#991b1b} details.bwl .bhead.ok{background:#dcfce7;color:#15803d} details.bwl .bhead.mid{background:#eef1f6;color:#475569}
+ details.bwl>.bbody{padding:2px 12px 11px 12px;font-size:13px;line-height:1.5}
+ details.bwl>.bbody p{margin:5px 0} details.bwl .k{color:#6b7280}
+ .cohort{color:#9aa4b2;font-size:11.5px;font-style:italic}
 </style>"""
 
 
@@ -121,14 +142,15 @@ def _dismissals_table(dismissals, vision_href=None):
 
 
 def _attack_card_html(card, opp_label, vision=None):
-    """The 'how you've been attacked — last 3 series' block for a batting pack.
+    """The 'how previous attacks bowled to you' block for a batting pack.
     `vision` maps series index -> href of that series' dismissal playlist."""
     if not card or not card.get("series"):
         return ('<div class="soon">Coming soon — will be built from the scouting report.</div>')
     vision = vision or {}
-    parts = ['<p class="desc" style="margin-top:8px">How the last '
-             f'{len(card["series"])} attack{"s" if len(card["series"]) != 1 else ""} bowled to you '
-             f'— the likely template for {html.escape(opp_label)}.</p>']
+    n = len(card["series"])
+    lead = ("How the last attack bowled to you." if n == 1
+            else f"How the last {n} attacks bowled to you.")
+    parts = [f'<p class="desc" style="margin-top:8px">{lead}</p>']
     for i, s in enumerate(card["series"]):
         meta = (f'{s["tests"]} Test{"s" if s["tests"] != 1 else ""} · {_dfmt(s["d0"])} → {_dfmt(s["d1"])} · '
                 f'{s["balls"]} balls · {s["runs"]} runs · '
@@ -198,11 +220,77 @@ def _roster_body(meta, roster):
               'you against them. Video links refresh periodically — the PDF always works offline.</p>')
 
 
-def _pack_section(title, desc, inner=None):
-    return (f'<div class="pack"><h2>{html.escape(title)}</h2>'
-            f'<p class="desc">{html.escape(desc)}</p>'
-            + (inner or '<div class="soon">Coming soon — will be built from the scouting report.</div>')
-            + '</div>')
+def _pack_section(title, desc, inner=None, open=True):
+    """A collapsible pack section (details/summary)."""
+    body = inner or '<div class="soon">Coming soon — will be built from the scouting report.</div>'
+    return (f'<details class="pack"{" open" if open else ""}>'
+            f'<summary><h2>{html.escape(title)}</h2>'
+            f'<span class="desc">{html.escape(desc)}</span></summary>'
+            f'<div class="body">{body}</div></details>')
+
+
+# ── Per-opposition-bowler matchup (SCOUTING_REBUILD.md we_bat direction) ──────────
+def _matchups(slug):
+    """{our_batter_id: [we_bat cells]} sorted most-dangerous first, from the matchup store."""
+    try:
+        from cricket_core.config import project_path
+        opp = slug.split("-")[0]
+        p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
+        store = json.load(open(p, encoding="utf-8"))
+        by_bat = {}
+        for c in store.get("we_bat", []):
+            if c.get("sim_avg") is not None:
+                by_bat.setdefault(c["batter_id"], []).append(c)
+        for cells in by_bat.values():
+            cells.sort(key=lambda c: c["sim_avg"])         # lowest exp avg = most dangerous
+        return by_bat
+    except Exception:
+        return {}
+
+
+def _bowler_block(cell, vision_href=None, h2h_row=None):
+    """One collapsible per-opposition-bowler card in a batter's pack."""
+    bid, name = cell["bowler_id"], cell["bowler"]
+    avg = cell["sim_avg"]
+    # headline band by expected average (hedged — this is a projection, not a record)
+    if avg <= 25:
+        band, cls = "tough matchup", "hard"
+    elif avg >= 45:
+        band, cls = "you project on top", "ok"
+    else:
+        band, cls = "even", "mid"
+    av = _avatar(bid, "bav", _initials(name), name=name)
+    summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)}</b>'
+            f'<span class="bt">{html.escape(cell.get("bowler_type",""))}</span></span>'
+            f'<span class="bhead {cls}">{band}</span></summary>')
+    lines = []
+    cohort = cell.get("confidence") == "None"
+    lines.append(f'<p><span class="k">Projected matchup:</span> you average about '
+                 f'<b>{avg:.0f}</b> against them in the simulation (strike rate ~{cell["sim_sr"]:.0f})'
+                 + ('. <span class="cohort">Based on how batters like you fare — too few personal '
+                    'balls for an individual read.</span>' if cohort else '.') + '</p>')
+    if cell.get("top_dismissal"):
+        lines.append(f'<p><span class="k">Most likely to get you:</span> '
+                     f'{html.escape(cell["top_dismissal"])}'
+                     + (f', targeting {html.escape(cell["danger"])}' if cell.get("danger") else '') + '.</p>')
+    fts = cell.get("fail_to_set_pct")
+    if fts not in (None, "", "None"):
+        try:
+            if float(fts) >= 35:
+                lines.append(f'<p><span class="k">Watch early:</span> in the sim you fall inside the '
+                             f'first 30 balls about {float(fts):.0f}% of the time against them.</p>')
+        except (TypeError, ValueError):
+            pass
+    if cell.get("structural_threat"):
+        lines.append('<p><span class="k">Structural:</span> they take the ball away from your bat — '
+                     'a genuine matchup, not just form. Rotating strike to keep the angle changing helps.</p>')
+    if h2h_row:
+        met = (f'You have faced them <b>{h2h_row["balls"]}</b> balls in Tests '
+               f'({h2h_row["runs"]} runs, {h2h_row["wickets"]} wkt).')
+        if vision_href:
+            met += f' <a class="vwatch" href="{vision_href}">▶ Watch</a>'
+        lines.append(f'<p>{met}</p>')
+    return f'<details class="bwl">{summ}<div class="bbody">{"".join(lines)}</div></details>'
 
 
 def _short_opp(meta):
@@ -290,31 +378,54 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None):
             playlists[key] = resolved
             titles[key] = f'Dismissals — v {s["opp"]}'
             hrefs[i] = f"{page_slug}-vision.html#{key}"
+    h2h_by_id = {}
     for key, items in (extra[0] if extra else {}).items():
         resolved, avail, _tot = resolve_playlist(items)
         if avail:
             playlists[key] = resolved
             titles[key] = extra[1][key]
-            h2h_links.append((f"{page_slug}-vision.html#{key}", extra[1][key]))
+            href = f"{page_slug}-vision.html#{key}"
+            h2h_links.append((href, extra[1][key]))
+            if key.startswith("h2h_"):
+                h2h_by_id[key[len("h2h_"):]] = href
     if playlists:
         build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
                           title=f"{name} — vision", subtitle="dismissals + head-to-head",
                           titles=titles)
-    return hrefs, h2h_links
+    return hrefs, h2h_links, h2h_by_id
 
 
-def _player_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False):
+def _player_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False,
+                 mcells=None, h2h_by_id=None, h2h_rows=None):
     name = rec.get("name", pid)
     role = rec.get("role", "")
     opp = _short_opp(meta)
+    h2h_by_id = h2h_by_id or {}
+    h2h_rows = h2h_rows or {}
     body = [EXTRA_CSS,
             f'<div class="phead">{_avatar(pid, "big", _initials(name), name=name)}'
             f'<div><h1>{html.escape(name)}</h1><div class="role">{html.escape(role)} · '
             f'{html.escape(meta.get("name",""))}</div></div></div>']
-    body.append(_pack_section("Your batting pack", f"How {opp} will bowl to you.",
-                              inner=_attack_card_html(card, opp, vision)))
+
+    # 1) how previous attacks have bowled to you (aggregate)
+    body.append(_pack_section("How previous attacks have bowled to you",
+                              "Their plans against you over your last few series — not a forecast, "
+                              "what actually happened.", inner=_attack_card_html(card, opp, vision)))
+
+    # 2) a collapsible section PER opposition bowler (option 1: pick the player, then the bowler)
+    if mcells:
+        blocks = []
+        for c in mcells:
+            bid = c["bowler_id"]
+            blocks.append(_bowler_block(c, h2h_by_id.get(bid), h2h_rows.get((pid, bid))))
+        body.append(_pack_section(f"Vs each {opp} bowler",
+                                  f"Tap a bowler for the matchup and any footage of you against them. "
+                                  f"Ordered by how tough they project.", inner="".join(blocks)))
+
     if "bowling" in rec.get("packs", []):
         body.append(_pack_section("Your bowling pack", f"How to bowl to the {opp} batters."))
+
+    # 3) all your head-to-head footage in one place
     if h2h_links:
         items = "".join(f'<li style="margin:6px 0"><a class="vwatch" href="{href}">▶ Watch</a> '
                         f'<span style="font-size:13px">{html.escape(title)}</span></li>'
@@ -328,7 +439,7 @@ def _player_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_mee
                  'yet — nothing to show.</p>')
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls against each opponent you have faced (Tests only, "
-                              "capped at the 20 most recent per opponent).", inner=inner))
+                              "capped at the 20 most recent per opponent).", inner=inner, open=False))
     return "".join(body)
 
 
@@ -371,22 +482,40 @@ def build(out_dir, no_video=False):
             _page(f"{meta.get('name','')} — player packs", _roster_body(meta, roster), up=up))
         h2h = _load_h2h(slug)
         opp_names = _opp_names(slug)
+        matchups = _matchups(slug)
+        # h2h counts per (our batter, opp bowler) for the per-bowler cards
+        h2h_rows = {}
+        for r in (h2h or {}).get("our_batting", []):
+            h2h_rows[(r["striker_id"], r["bowler_id"])] = r
+        # copy opposition bowler photos into the bundle too (per-bowler avatars)
+        if IMG_MODE == "file":
+            import shutil
+            for cells in matchups.values():
+                for c in cells:
+                    bid = c["bowler_id"]
+                    if str(bid) in _SITE_IMGS:
+                        continue
+                    p = get_photo_path(bid, fmt="test", name=c.get("bowler"))
+                    if p:
+                        shutil.copy(p, os.path.join(s_dir, "img", f"{bid}.png"))
+                        _SITE_IMGS.add(str(bid))
         for pid, rec in roster:
             name = rec.get("name", pid)
             pslug = _slug(name)
-            vision, h2h_links, had = {}, [], False
+            vision, h2h_links, h2h_by_id, had = {}, [], {}, False
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had = bool(extra[0]) or (h2h and any(
                 r["striker_id"] == pid for r in h2h.get("our_batting", [])) or (h2h and any(
                 r["bowler_id"] == pid for r in h2h.get("our_bowling", []))))
             if not no_video and (cards.get(pid) or extra[0]):
                 try:
-                    vision, h2h_links = _build_vision(s_dir, pslug, name, cards.get(pid), extra)
+                    vision, h2h_links, h2h_by_id = _build_vision(s_dir, pslug, name, cards.get(pid), extra)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             open(os.path.join(s_dir, pslug + ".html"), "w", encoding="utf-8").write(
                 _page(f"{name} — pack",
-                      _player_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had),
+                      _player_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had,
+                                   mcells=matchups.get(pid), h2h_by_id=h2h_by_id, h2h_rows=h2h_rows),
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 
