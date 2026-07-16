@@ -75,3 +75,10 @@ for matchupmodel — that line is closed, `LEAGUE_ADJUSTMENT_PLAN.md`). The reop
 external: a demonstrated per-player *outcome* translation with same-period form control and
 external validation. Tempo/rate features (league-adjusted economy, scoring-shape comparisons)
 remain fair game.
+
+**The one sanctioned projection (built 2026-07-15): within-T20 rate profiles.**
+`referencebuilder/scripts/predict_t20_profile.py` predicts a batter's dot% / boundary rates /
+singles / strike rate in another men's T20 league — gate-validated
+(`referencebuilder/docs/T20_PROFILE_TRANSLATION.md`), rates only, every number carrying its
+holdout error. A "projected profile in {league}" panel in the T20 pack may consume it, with the
+gate context shown inline. It still never outputs an average or wicket rate.
