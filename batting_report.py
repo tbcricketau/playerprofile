@@ -25,6 +25,7 @@ from report import (
     _fig_uri, _html_to_pdf, _country_code,
     BG_PAGE, BG_PANEL, TEXT_PRI, TEXT_SEC, ACCENT, DANGER, BORDER,
 )
+from report_style import REPORT_CSS
 
 
 def _fmt(v, spec=".0f", suffix=""):
@@ -683,6 +684,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "field_blocks": _field_blocks(P),
         "mv_label": ("Turn" if isg else "Seam"), "sw_label": ("Drift" if isg else "Swing"),
         "version": REPORT_VERSION, "build_date": datetime.date.today().strftime("%d %b %Y"),
+        "css": REPORT_CSS,                     # base stylesheet ({{ css }} was rendering empty)
         "c": dict(BG_PAGE=BG_PAGE, BG_PANEL=BG_PANEL, TEXT_PRI=TEXT_PRI, TEXT_SEC=TEXT_SEC,
                   ACCENT=ACCENT, DANGER=DANGER, BORDER=BORDER),
     }
