@@ -104,6 +104,7 @@ EXTRA_CSS = """<style>
  details.bwl .bhead.hard{background:#fee2e2;color:#991b1b} details.bwl .bhead.ok{background:#dcfce7;color:#15803d} details.bwl .bhead.mid{background:#eef1f6;color:#475569}
  details.bwl>.bbody{padding:2px 12px 11px 12px;font-size:13px;line-height:1.5}
  details.bwl>.bbody p{margin:5px 0} details.bwl .k{color:#6b7280}
+ ul.afacts{margin:4px 0 8px;padding-left:18px} ul.afacts li{margin:3px 0}
  .cohort{color:#9aa4b2;font-size:11.5px;font-style:italic}
 </style>"""
 
@@ -258,111 +259,83 @@ def _matchups(slug):
         return {}
 
 
-def _matchups_they_bat(slug):
-    """{our_bowler_id: [they_bat cells]} sorted most-exploitable first (lowest their sim avg)."""
+def _opp_roster(slug):
+    """({bowler_id: (name, type)}, {batter_id: (name, hand)}) for the opposition, from the store.
+    Used only as a roster + labels — no matchup numbers reach the player packs."""
     try:
         from cricket_core.config import project_path
         opp = slug.split("-")[0]
         p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
         store = json.load(open(p, encoding="utf-8"))
-        by_bowl = {}
+        bowlers, batters = {}, {}
+        for c in store.get("we_bat", []):
+            bowlers.setdefault(c["bowler_id"], (c["bowler"], c.get("bowler_type", "")))
         for c in store.get("they_bat", []):
-            if c.get("sim_avg") is not None:
-                by_bowl.setdefault(c["bowler_id"], []).append(c)
-        for cells in by_bowl.values():
-            cells.sort(key=lambda c: -c["sim_avg"])    # highest = their danger men, plan first
-        return by_bowl
+            batters.setdefault(c["batter_id"], (c["batter"], c.get("bat_hand", "")))
+        return bowlers, batters
+    except Exception:
+        return {}, {}
+
+
+def _scouting_urls(series_slug):
+    """({bowler_id: {hand: url}}, {batter_id: url}) — the scouting reports in the assembled
+    bundle. A bowler's report is HAND-SPECIFIC (how they bowl to LHB vs RHB), so it's keyed by
+    the batter's hand; the batter reports are not hand-split. Only rendered reports map."""
+    import glob
+    bowl, bat = {}, {}
+    for sc in glob.glob(os.path.join(HERE, "reports", "*.playlists.json")):
+        base = os.path.basename(sc)[: -len(".playlists.json")]
+        try:
+            meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
+        except Exception:
+            continue
+        if "_bowling_" in base and meta.get("bowler_id"):
+            hand = "lhb" if base.endswith("_lhb") else "rhb"
+            grp = f"bowlers-vs-{hand}"
+            bowl.setdefault(str(meta["bowler_id"]), {})[hand] = \
+                f"../scouting/{series_slug}/{grp}/{base}.html"
+        elif "_batting_" in base and meta.get("batter_id"):
+            bat[str(meta["batter_id"])] = f"../scouting/{series_slug}/batters/{base}.html"
+    return bowl, bat
+
+
+def _our_hands(slug):
+    """{our_batter_id: 'lhb'/'rhb'} from the matchup store's we_bat rows."""
+    try:
+        from cricket_core.config import project_path
+        opp = slug.split("-")[0]
+        p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
+        store = json.load(open(p, encoding="utf-8"))
+        out = {}
+        for c in store.get("we_bat", []):
+            h = str(c.get("bat_hand", "")).strip().upper()
+            out[c["batter_id"]] = "lhb" if (h.startswith("L") or "LEFT" in h) else "rhb"
+        return out
     except Exception:
         return {}
 
 
-def _batter_block(cell, vision_href=None, h2h_row=None):
-    """One collapsible per-opposition-BATTER card in OUR bowler's bowling report.
-    cell is a they_bat matchup: sim_avg is the opposition batter's expected average vs this bowler
-    (low = the bowler is on top)."""
-    bid, name = cell["batter_id"], cell["batter"]
-    avg = cell["sim_avg"]
-    if avg <= 25:
-        band, cls = "you're on top", "ok"
-    elif avg >= 45:
-        band, cls = "tough to shift", "hard"
-    else:
-        band, cls = "even", "mid"
+def _opp_card(bid, name, sub, about, report_url, report_label, vision_href, h2h_row, h2h_verb):
+    """A per-opponent card showing BOTH approaches for review: the distilled 'what they're about'
+    facts inline, AND a link into the full scouting report; plus real footage against them."""
     av = _avatar(bid, "bav", _initials(name), name=name)
     summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)}</b>'
-            f'<span class="bt">{html.escape(cell.get("bat_hand",""))}</span></span>'
-            f'<span class="bhead {cls}">{band}</span></summary>')
+            f'<span class="bt">{html.escape(sub or "")}</span></span></summary>')
     lines = []
-    cohort = cell.get("confidence") == "None"
-    lines.append(f'<p><span class="k">Projected matchup:</span> they average about '
-                 f'<b>{avg:.0f}</b> against you in the simulation (strike rate ~{cell["sim_sr"]:.0f})'
-                 + ('. <span class="cohort">Based on how batters like them fare — too few personal '
-                    'balls for an individual read.</span>' if cohort else '.') + '</p>')
-    if cell.get("top_dismissal"):
-        lines.append(f'<p><span class="k">How you\'re most likely to get them:</span> '
-                     f'{html.escape(cell["top_dismissal"])}'
-                     + (f', at {html.escape(cell["danger"])}' if cell.get("danger") else '') + '.</p>')
-    fts = cell.get("fail_to_set_pct")
-    if fts not in (None, "", "None"):
-        try:
-            if float(fts) >= 35:
-                lines.append(f'<p><span class="k">Get them early:</span> in the sim they fall inside '
-                             f'the first 30 balls about {float(fts):.0f}% of the time against you.</p>')
-        except (TypeError, ValueError):
-            pass
-    if cell.get("structural_threat"):
-        lines.append('<p><span class="k">Structural:</span> you take the ball away from them — a '
-                     'genuine edge; keep the angle when they stay on strike.</p>')
+    facts = (about or {}).get("facts") or []
+    if facts:
+        lines.append('<ul class="afacts">' + "".join(f'<li>{html.escape(f)}</li>' for f in facts) + '</ul>')
+    if report_url:
+        lines.append(f'<p><a class="vwatch" href="{report_url}">Full scouting report &#9656;</a> '
+                     f'&mdash; {report_label}</p>')
+    elif not facts:
+        lines.append('<p class="cohort">Detailed scouting report not built for this opponent yet.</p>')
     if h2h_row:
-        met = (f'You have bowled to them <b>{h2h_row["balls"]}</b> balls in Tests '
-               f'({h2h_row["runs"]} conceded, {h2h_row["wickets"]} wkt).')
+        rr = (f'{h2h_row["runs"]} conceded' if h2h_verb == "bowled to" else f'{h2h_row["runs"]} runs')
+        met = (f'You have {h2h_verb} them <b>{h2h_row["balls"]}</b> balls in Tests '
+               f'({rr}, {h2h_row["wickets"]} wkt).')
         if vision_href:
-            met += f' <a class="vwatch" href="{vision_href}">▶ Watch</a>'
-        lines.append(f'<p>{met}</p>')
-    return f'<details class="bwl">{summ}<div class="bbody">{"".join(lines)}</div></details>'
-
-
-def _bowler_block(cell, vision_href=None, h2h_row=None):
-    """One collapsible per-opposition-bowler card in a batter's pack."""
-    bid, name = cell["bowler_id"], cell["bowler"]
-    avg = cell["sim_avg"]
-    # headline band by expected average (hedged — this is a projection, not a record)
-    if avg <= 25:
-        band, cls = "tough matchup", "hard"
-    elif avg >= 45:
-        band, cls = "you project on top", "ok"
-    else:
-        band, cls = "even", "mid"
-    av = _avatar(bid, "bav", _initials(name), name=name)
-    summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)}</b>'
-            f'<span class="bt">{html.escape(cell.get("bowler_type",""))}</span></span>'
-            f'<span class="bhead {cls}">{band}</span></summary>')
-    lines = []
-    cohort = cell.get("confidence") == "None"
-    lines.append(f'<p><span class="k">Projected matchup:</span> you average about '
-                 f'<b>{avg:.0f}</b> against them in the simulation (strike rate ~{cell["sim_sr"]:.0f})'
-                 + ('. <span class="cohort">Based on how batters like you fare — too few personal '
-                    'balls for an individual read.</span>' if cohort else '.') + '</p>')
-    if cell.get("top_dismissal"):
-        lines.append(f'<p><span class="k">Most likely to get you:</span> '
-                     f'{html.escape(cell["top_dismissal"])}'
-                     + (f', targeting {html.escape(cell["danger"])}' if cell.get("danger") else '') + '.</p>')
-    fts = cell.get("fail_to_set_pct")
-    if fts not in (None, "", "None"):
-        try:
-            if float(fts) >= 35:
-                lines.append(f'<p><span class="k">Watch early:</span> in the sim you fall inside the '
-                             f'first 30 balls about {float(fts):.0f}% of the time against them.</p>')
-        except (TypeError, ValueError):
-            pass
-    if cell.get("structural_threat"):
-        lines.append('<p><span class="k">Structural:</span> they take the ball away from your bat — '
-                     'a genuine matchup, not just form. Rotating strike to keep the angle changing helps.</p>')
-    if h2h_row:
-        met = (f'You have faced them <b>{h2h_row["balls"]}</b> balls in Tests '
-               f'({h2h_row["runs"]} runs, {h2h_row["wickets"]} wkt).')
-        if vision_href:
-            met += f' <a class="vwatch" href="{vision_href}">▶ Watch</a>'
+            met += f' <a class="vwatch" href="{vision_href}">&#9654; Watch</a>'
         lines.append(f'<p>{met}</p>')
     return f'<details class="bwl">{summ}<div class="bbody">{"".join(lines)}</div></details>'
 
@@ -496,9 +469,14 @@ def _vision_list(h2h_links, prefix, had_meetings, verb):
 
 
 def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False,
-                  mcells=None, h2h_map=None, h2h_rows=None, other_href=None):
+                  opp_bowlers=None, about=None, report_urls=None, h2h_map=None, h2h_rows=None,
+                  other_href=None):
+    """Batting pack: (1) how previous attacks bowled to you, (2) the opposition attack — one card
+    per bowler with the distilled facts + a link to the full scouting report + your footage."""
     name, role = rec.get("name", pid), rec.get("role", "")
     opp = _short_opp(meta)
+    about = about or {}
+    report_urls = report_urls or {}
     h2h_map = h2h_map or {}
     h2h_rows = h2h_rows or {}
     body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), "batting", other_href)]
@@ -506,12 +484,16 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     body.append(_pack_section("How previous attacks have bowled to you",
                               "Their plans against you over your last few series — not a forecast, "
                               "what actually happened.", inner=_attack_card_html(card, opp, vision)))
-    if mcells:
-        blocks = [_bowler_block(c, h2h_map.get(f'hbat_{c["bowler_id"]}'),
-                                h2h_rows.get((pid, c["bowler_id"]))) for c in mcells]
-        body.append(_pack_section(f"Vs each {opp} bowler",
-                                  "Tap a bowler for the matchup and any footage of you against them. "
-                                  "Ordered by how tough they project.", inner="".join(blocks)))
+    if opp_bowlers:
+        ordered = sorted(opp_bowlers.items(),
+                         key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))
+        blocks = [_opp_card(bid, nm, ty, about.get(bid), report_urls.get(bid),
+                            "how they bowl to left-handers, in detail.",
+                            h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "faced")
+                  for bid, (nm, ty) in ordered]
+        body.append(_pack_section(f"The {opp} attack",
+                                  "Tap a bowler for what they're about, the full scouting report, "
+                                  "and any footage of you against them.", inner="".join(blocks)))
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls facing each of their bowlers (Tests only, "
                               "capped at the 20 most recent per bowler).",
@@ -520,24 +502,28 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     return "".join(body)
 
 
-def _bowling_body(meta, pid, rec, bcells=None, h2h_links=None, had_meetings=False,
-                  h2h_map=None, h2h_rows=None, other_href=None):
+def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None, h2h_links=None,
+                  had_meetings=False, h2h_map=None, h2h_rows=None, other_href=None):
+    """Bowling pack: one card per opposition batter — what they're about + the full scouting
+    report + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
     opp = _short_opp(meta)
+    about = about or {}
+    report_urls = report_urls or {}
     h2h_map = h2h_map or {}
     h2h_rows = h2h_rows or {}
     body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), "bowling", other_href)]
 
-    if bcells:
-        blocks = [_batter_block(c, h2h_map.get(f'hbowl_{c["batter_id"]}'),
-                                h2h_rows.get((pid, c["batter_id"]))) for c in bcells]
-        body.append(_pack_section(f"How to bowl to each {opp} batter",
-                                  "Tap a batter for the matchup and any footage of you bowling to "
-                                  "them. Their danger batters first.",
-                                  inner="".join(blocks)))
-    else:
-        body.append(_pack_section(f"How to bowl to each {opp} batter",
-                                  "Matchups load from the simulation once built.", inner=None))
+    if opp_batters:
+        ordered = sorted(opp_batters.items(),
+                         key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))
+        blocks = [_opp_card(bid, nm, hand, about.get(bid), report_urls.get(bid),
+                            "how they score and get out, in detail.",
+                            h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowled to")
+                  for bid, (nm, hand) in ordered]
+        body.append(_pack_section(f"The {opp} batters",
+                                  "Tap a batter for what they're about, the full scouting report, "
+                                  "and any footage of you bowling to them.", inner="".join(blocks)))
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls bowling to each of their batters (Tests only, "
                               "capped at the 20 most recent per batter).",
@@ -546,7 +532,16 @@ def _bowling_body(meta, pid, rec, bcells=None, h2h_links=None, had_meetings=Fals
     return "".join(body)
 
 
-def build(out_dir, no_video=False):
+def _load_about(slug):
+    opp = slug.split("-")[0]
+    p = os.path.join(HERE, "data", f"opponent_about_{opp}.json")
+    if not os.path.exists(p):
+        return {}
+    d = json.load(open(p, encoding="utf-8"))
+    return {**d.get("bowlers", {}), **d.get("batters", {})}   # keyed by opponent id
+
+
+def build(out_dir, no_video=False, only=None):
     squads = json.load(open(SQUADS, encoding="utf-8"))
     players = json.load(open(PLAYERS, encoding="utf-8"))
     cards = _load_cards()
@@ -568,7 +563,7 @@ def build(out_dir, no_video=False):
     for slug in slugs:
         meta = squads[slug]
         roster = [(pid, players.get(pid, {"name": pid, "role": "Unknown", "packs": ["batting"]}))
-                  for pid in meta.get("players", [])]
+                  for pid in meta.get("players", []) if not only or pid in only]
         s_dir = out_dir if single else os.path.join(out_dir, slug)
         os.makedirs(s_dir, exist_ok=True)
         if IMG_MODE == "file":                       # copy each roster photo into the bundle once
@@ -585,18 +580,18 @@ def build(out_dir, no_video=False):
             _page(f"{meta.get('name','')} — player packs", _roster_body(meta, roster), up=up))
         h2h = _load_h2h(slug)
         opp_names = _opp_names(slug)
-        matchups = _matchups(slug)                    # we_bat: our batter -> opp bowler cells
-        bmatchups = _matchups_they_bat(slug)          # they_bat: our bowler -> opp batter cells
+        opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
+        about = _load_about(slug)                      # distilled facts, keyed by opponent id
+        bowl_urls, bat_urls = _scouting_urls(slug)     # {bowler:{hand:url}}, {batter:url}
+        our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb
         # h2h counts kept per DIRECTION — an all-rounder can both face and bowl to the same
         # opponent, so a single (me, them) dict would collide (wrong count vs a correct video).
         bat_rows = {(r["striker_id"], r["bowler_id"]): r for r in (h2h or {}).get("our_batting", [])}
         bowl_rows = {(r["bowler_id"], r["striker_id"]): r for r in (h2h or {}).get("our_bowling", [])}
-        # copy opposition photos (bowlers for batting reports, batters for bowling reports)
+        # copy opposition photos (bowlers + batters)
         if IMG_MODE == "file":
             import shutil
-            pairs = ([(c["bowler_id"], c.get("bowler")) for cs in matchups.values() for c in cs]
-                     + [(c["batter_id"], c.get("batter")) for cs in bmatchups.values() for c in cs])
-            for oid, onm in pairs:
+            for oid, (onm, _t) in list(opp_bowlers.items()) + list(opp_batters.items()):
                 if str(oid) in _SITE_IMGS:
                     continue
                 p = get_photo_path(oid, fmt="test", name=onm)
@@ -605,6 +600,8 @@ def build(out_dir, no_video=False):
                     _SITE_IMGS.add(str(oid))
         for pid, rec in roster:
             name = rec.get("name", pid)
+            if only and pid not in only:               # prototype: build a chosen few
+                continue
             pslug = _slug(name)
             has_bowling = "bowling" in rec.get("packs", [])
             vision, h2h_links, h2h_map = {}, [], {}
@@ -617,16 +614,20 @@ def build(out_dir, no_video=False):
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             bat_href, bowl_href = f"{pslug}-batting.html", f"{pslug}-bowling.html"
+            hand = our_hands.get(pid, "rhb")           # link the bowler report for THIS hand
+            bowl_urls_h = {bid: hmap.get(hand) for bid, hmap in bowl_urls.items() if hmap.get(hand)}
             open(os.path.join(s_dir, bat_href), "w", encoding="utf-8").write(
                 _page(f"{name} — batting",
                       _batting_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had_bat,
-                                    mcells=matchups.get(pid), h2h_map=h2h_map, h2h_rows=bat_rows,
+                                    opp_bowlers=opp_bowlers, about=about, report_urls=bowl_urls_h,
+                                    h2h_map=h2h_map, h2h_rows=bat_rows,
                                     other_href=bowl_href if has_bowling else None),
                       up=("index.html", "Squad")))
             if has_bowling:
                 open(os.path.join(s_dir, bowl_href), "w", encoding="utf-8").write(
                     _page(f"{name} — bowling",
-                          _bowling_body(meta, pid, rec, bcells=bmatchups.get(pid), h2h_links=h2h_links,
+                          _bowling_body(meta, pid, rec, opp_batters=opp_batters, about=about,
+                                        report_urls=bat_urls, h2h_links=h2h_links,
                                         had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
                                         other_href=bat_href),
                           up=("index.html", "Squad")))
@@ -649,8 +650,10 @@ def main():
     ap.add_argument("--out", default="player_site")
     ap.add_argument("--no-video", action="store_true",
                     help="skip minting SAS / resolving dismissal clips (fast offline build)")
+    ap.add_argument("--only", nargs="*", help="build only these player ids (prototype)")
     args = ap.parse_args()
-    build(os.path.join(HERE, args.out), no_video=args.no_video)
+    build(os.path.join(HERE, args.out), no_video=args.no_video,
+          only=set(args.only) if args.only else None)
 
 
 if __name__ == "__main__":

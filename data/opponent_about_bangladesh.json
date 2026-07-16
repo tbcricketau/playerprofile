@@ -1,0 +1,273 @@
+{
+ "opp": "bangladesh",
+ "bowlers": {
+  "290007": {
+   "name": "Shakib Al Hasan",
+   "type": "Left-arm orthodox",
+   "is_pace": false,
+   "facts": [
+    "Left-arm orthodox.",
+    "Stock ball: full on the stumps (23% of what they bowl).",
+    "Takes most of their wickets good length, around wide of 6th."
+   ],
+   "order": 3164
+  },
+  "2220028": {
+   "name": "Taskin Ahmed",
+   "type": "Right pace",
+   "is_pace": true,
+   "facts": [
+    "Right pace — averages 134 km/h, tops 142.",
+    "Stock ball: a good length wide outside off (26% of what they bowl).",
+    "Takes most of their wickets good length, around 5th stump.",
+    "Gets the ball to swing — watch the ball in the air."
+   ],
+   "order": 2744
+  },
+  "2700039": {
+   "name": "Taijul Islam",
+   "type": "Left-arm orthodox",
+   "is_pace": false,
+   "facts": [
+    "Left-arm orthodox.",
+    "Stock ball: full on the stumps (25% of what they bowl).",
+    "Takes most of their wickets full, around 6th stump."
+   ],
+   "order": 12841
+  },
+  "3080087": {
+   "name": "Mehidy Hasan Miraz",
+   "type": "Off-spin",
+   "is_pace": false,
+   "facts": [
+    "Off-spin.",
+    "Stock ball: full outside off (24% of what they bowl).",
+    "Takes most of their wickets good length, around wide of 6th."
+   ],
+   "order": 11754
+  },
+  "3110073": {
+   "name": "Ebadot Hossain",
+   "type": "Right pace",
+   "is_pace": true,
+   "facts": [
+    "Right pace — averages 135 km/h, tops 143.",
+    "Stock ball: a good length wide outside off (26% of what they bowl).",
+    "Takes most of their wickets back of length, around 5th stump."
+   ],
+   "order": 3743
+  },
+  "3630141": {
+   "name": "Shoriful Islam",
+   "type": "Left pace",
+   "is_pace": true,
+   "facts": [
+    "Left pace — averages 129 km/h, tops 138.",
+    "Stock ball: a good length wide outside off (21% of what they bowl).",
+    "Takes most of their wickets full, around 6th stump.",
+    "Gets the ball to swing — watch the ball in the air."
+   ],
+   "order": 1884
+  },
+  "3630144": {
+   "name": "Hasan Murad",
+   "type": "Left-arm orthodox",
+   "is_pace": false,
+   "facts": [
+    "Left-arm orthodox.",
+    "Stock ball: full in the channel (24% of what they bowl).",
+    "Takes most of their wickets full, around stumps."
+   ],
+   "order": 464
+  },
+  "4352598": {
+   "name": "Khaled Ahmed",
+   "type": "Right pace",
+   "is_pace": true,
+   "facts": [
+    "Right pace — averages 131 km/h, tops 140.",
+    "Stock ball: a good length outside off (24% of what they bowl).",
+    "Takes most of their wickets yorker/full, around wide of 6th.",
+    "Gets the ball to swing — watch the ball in the air."
+   ],
+   "order": 2724
+  },
+  "4353535": {
+   "name": "Nayeem Hasan",
+   "type": "Off-spin",
+   "is_pace": false,
+   "facts": [
+    "Off-spin.",
+    "Stock ball: full outside off (22% of what they bowl).",
+    "Takes most of their wickets full, around 5th stump."
+   ],
+   "order": 2656
+  },
+  "5180245": {
+   "name": "Hasan Mahmud",
+   "type": "Right pace",
+   "is_pace": true,
+   "facts": [
+    "Right pace — averages 132 km/h, tops 139.",
+    "Stock ball: a good length outside off (24% of what they bowl).",
+    "Takes most of their wickets yorker/full, around 5th stump.",
+    "Gets the ball to swing — watch the ball in the air."
+   ],
+   "order": 2006
+  },
+  "5460155": {
+   "name": "Nahid Rana",
+   "type": "Right pace",
+   "is_pace": true,
+   "facts": [
+    "Right pace — averages 142 km/h, tops 149.",
+    "Stock ball: a good length wide outside off (19% of what they bowl).",
+    "Takes most of their wickets yorker/full, around 4th stump.",
+    "Gets the ball to swing — watch the ball in the air."
+   ],
+   "order": 1833
+  }
+ },
+ "batters": {
+  "3630132": {
+   "name": "Mahmudul Hasan Joy",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly through the off side; go-to shot is the drive.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (76% of dismissals).",
+    "Vulnerable early — worth attacking in their first 30 balls."
+   ],
+   "order": 1129
+  },
+  "2540166": {
+   "name": "Shadman Islam",
+   "hand": "LHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the work/nudge.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (65% of dismissals)."
+   ],
+   "order": 1452
+  },
+  "2540168": {
+   "name": "Zakir Hasan",
+   "hand": "LHB",
+   "facts": [
+    "Scores mainly down the ground; go-to shot is the work/nudge.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (58% of dismissals)."
+   ],
+   "order": 593
+  },
+  "2700013": {
+   "name": "Mominul Haque",
+   "hand": "LHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the work/nudge.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (68% of dismissals).",
+    "Vulnerable early — worth attacking in their first 30 balls."
+   ],
+   "order": 3443
+  },
+  "3110063": {
+   "name": "Najmul Hussain Shanto",
+   "hand": "LHB",
+   "facts": [
+    "Scores mainly through the off side; go-to shot is the work/nudge.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (56% of dismissals)."
+   ],
+   "order": 1296
+  },
+  "300015": {
+   "name": "Mushfiqur Rahim",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly through the off side; go-to shot is the work/nudge.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (51% of dismissals)."
+   ],
+   "order": 3541
+  },
+  "520069": {
+   "name": "Shahadat Hossain",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly down the ground; go-to shot is the drive.",
+    "Most often out caught (69% of dismissals)."
+   ],
+   "order": 197
+  },
+  "290007": {
+   "name": "Shakib Al Hasan",
+   "hand": "LHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the drive.",
+    "Most often out caught (78% of dismissals)."
+   ],
+   "order": 794
+  },
+  "2540159": {
+   "name": "Litton Das",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the work/nudge.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (66% of dismissals)."
+   ],
+   "order": 3219
+  },
+  "5460114": {
+   "name": "Jaker Ali",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the work/nudge.",
+    "Weaker against spin than pace.",
+    "Most often out caught (55% of dismissals)."
+   ],
+   "order": 337
+  },
+  "3080087": {
+   "name": "Mehidy Hasan Miraz",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly through the off side; go-to shot is the drive.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (72% of dismissals)."
+   ],
+   "order": 2042
+  },
+  "2700039": {
+   "name": "Taijul Islam",
+   "hand": "LHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the work/nudge.",
+    "Weaker against spin than pace.",
+    "Most often out caught (48% of dismissals)."
+   ],
+   "order": 738
+  },
+  "4353535": {
+   "name": "Nayeem Hasan",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the sweep.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (59% of dismissals)."
+   ],
+   "order": 235
+  },
+  "5180245": {
+   "name": "Hasan Mahmud",
+   "hand": "RHB",
+   "facts": [
+    "Scores mainly down the ground; go-to shot is the drive.",
+    "Handles spin well — pace is the more likely way through.",
+    "Most often out caught (64% of dismissals)."
+   ],
+   "order": 173
+  }
+ }
+}
