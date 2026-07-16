@@ -587,12 +587,10 @@ def build(out_dir, no_video=False):
         opp_names = _opp_names(slug)
         matchups = _matchups(slug)                    # we_bat: our batter -> opp bowler cells
         bmatchups = _matchups_they_bat(slug)          # they_bat: our bowler -> opp batter cells
-        # h2h counts, both directions, keyed by (me, them)
-        h2h_rows = {}
-        for r in (h2h or {}).get("our_batting", []):
-            h2h_rows[(r["striker_id"], r["bowler_id"])] = r
-        for r in (h2h or {}).get("our_bowling", []):
-            h2h_rows[(r["bowler_id"], r["striker_id"])] = r
+        # h2h counts kept per DIRECTION — an all-rounder can both face and bowl to the same
+        # opponent, so a single (me, them) dict would collide (wrong count vs a correct video).
+        bat_rows = {(r["striker_id"], r["bowler_id"]): r for r in (h2h or {}).get("our_batting", [])}
+        bowl_rows = {(r["bowler_id"], r["striker_id"]): r for r in (h2h or {}).get("our_bowling", [])}
         # copy opposition photos (bowlers for batting reports, batters for bowling reports)
         if IMG_MODE == "file":
             import shutil
@@ -611,9 +609,8 @@ def build(out_dir, no_video=False):
             has_bowling = "bowling" in rec.get("packs", [])
             vision, h2h_links, h2h_map = {}, [], {}
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
-            had = bool(extra[0]) or (h2h and (
-                any(r["striker_id"] == pid for r in h2h.get("our_batting", []))
-                or any(r["bowler_id"] == pid for r in h2h.get("our_bowling", []))))
+            had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
+            had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
             if not no_video and (cards.get(pid) or extra[0]):
                 try:
                     vision, h2h_links, h2h_map = _build_vision(s_dir, pslug, name, cards.get(pid), extra)
@@ -622,15 +619,15 @@ def build(out_dir, no_video=False):
             bat_href, bowl_href = f"{pslug}-batting.html", f"{pslug}-bowling.html"
             open(os.path.join(s_dir, bat_href), "w", encoding="utf-8").write(
                 _page(f"{name} — batting",
-                      _batting_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had,
-                                    mcells=matchups.get(pid), h2h_map=h2h_map, h2h_rows=h2h_rows,
+                      _batting_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had_bat,
+                                    mcells=matchups.get(pid), h2h_map=h2h_map, h2h_rows=bat_rows,
                                     other_href=bowl_href if has_bowling else None),
                       up=("index.html", "Squad")))
             if has_bowling:
                 open(os.path.join(s_dir, bowl_href), "w", encoding="utf-8").write(
                     _page(f"{name} — bowling",
                           _bowling_body(meta, pid, rec, bcells=bmatchups.get(pid), h2h_links=h2h_links,
-                                        had_meetings=had, h2h_map=h2h_map, h2h_rows=h2h_rows,
+                                        had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
                                         other_href=bat_href),
                           up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
