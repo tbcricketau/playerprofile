@@ -821,12 +821,16 @@ def _pctl_of(value, pop) -> float | None:
     return sum(1 for p in pop if p <= value) / len(pop) * 100
 
 
-def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test") -> list:
+def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test",
+                 recent_vals: dict = None) -> list:
     """Percentile 'fingerprint' — release/crease + movement + speed metrics, each with the
     peer distribution (its correctly-scoped group) and where this bowler sits.  Returns a
     list of card dicts: label, value (for the strip), values (peer distribution), pctl,
-    invert (True -> lower value plots to the right), disp (formatted), peer (human label)."""
+    invert (True -> lower value plots to the right), disp (formatted), peer (human label).
+    `recent_vals` {label: last-3yr value} adds a `recent` value + `pctl_recent` to matching
+    cards for the recency overlay."""
     bid = str(bowler_id)
+    recent_vals = recent_vals or {}
     cards = []
 
     def _num(r, k):
@@ -899,6 +903,13 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test"
             cards.append({"label": "Repeatability", "value": v, "values": vals,
                           "pctl": (100 - pc) if pc is not None else None, "invert": True,
                           "disp": f"±{v:.1f} m", "peer": f"{ps} bowlers"})
+
+    # recency overlay: attach a recent value + its percentile (vs the same peer field)
+    for c in cards:
+        rv = recent_vals.get(c["label"])
+        if rv is not None:
+            c["recent"] = rv
+            c["pctl_recent"] = _pctl_of(rv, c["values"])
     return cards
 
 
@@ -1236,6 +1247,16 @@ def build_profile(
     avg_spd = _mean(speeds)
     max_spd_99 = _quantile(speeds, 0.99)
 
+    # recent (last 3 years) mean speed — the recency overlay on the fingerprint. Needs a floor of
+    # tracked balls so a thin recent window isn't read as a real change.
+    import datetime as _dt
+    _recent_cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
+    # over ALL deliveries (raw, not the hand-filtered set) so it matches the career CSV's scope
+    _recent_spd = [r["ball_speed_n"] for r in raw
+                   if r.get("is_legal") and r.get("ball_speed_n") is not None
+                   and (r.get("match_date") or "") >= _recent_cut]
+    avg_spd_recent = _mean(_recent_spd) if len(_recent_spd) >= 60 else None
+
     def _speeds(pred):
         return [r["ball_speed_n"] for r in raw if r["is_legal"] and pred(r) and r["ball_speed_n"] is not None]
 
@@ -1445,7 +1466,8 @@ def build_profile(
         "repeatability": _repeat,
         "crease": _crease_usage(raw),
         "crease_ref": load_crease_profiles().get(str(bowler_id)),
-        "fingerprint": _fingerprint(bowler_id, is_pace, is_spin),
+        "fingerprint": _fingerprint(bowler_id, is_pace, is_spin,
+                                    recent_vals={"Pace": avg_spd_recent}),
         # threat
         "beaten_pct": beaten_pct, "false_pct": false_pct, "n_tracked": n_tracked,
         "dismissal_counts": dismissal_counts, "n_dismissals": n_dismissals, "top_dismissal": top_dismissal,

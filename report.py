@@ -1016,22 +1016,42 @@ def _crease_read(P: dict) -> str:
 
 def _fingerprint_cards(P: dict) -> list:
     """(label, pct, pct_txt, colour, disp, peer, img) cards for the fingerprint panel —
-    each a mini peer distribution with this bowler marked."""
+    each a mini peer distribution with this bowler marked (career line + last-3yr overlay)."""
     out = []
     for m in P.get("fingerprint", []):
         p = m.get("pctl")
         colour = (ACCENT if (p is not None and p >= 60)
                   else "#9aa3b2" if (p is not None and p <= 33) else TEXT_SEC)
+        rp = m.get("pctl_recent")
         out.append({
             "label": m["label"],
             "pct_txt": f"P{p:.0f}" if p is not None else "—",
+            "recent_txt": (f"P{rp:.0f}" if (m.get("recent") is not None and rp is not None) else None),
             "colour": colour,
             "disp": m["disp"],
             "peer": f"vs {m['peer']}",
-            "img": _fig_uri(fingerprint_strip(m["values"], m["value"], invert=m["invert"]),
-                            w=250, h=84),
+            "img": _fig_uri(fingerprint_strip(m["values"], m["value"], invert=m["invert"],
+                                              recent_value=m.get("recent")), w=250, h=84),
         })
     return out
+
+
+def _fingerprint_headline(P: dict) -> str | None:
+    """One line naming the fingerprint traits that have shifted in the last 3 years — the
+    'how they're changing' read. Noise-gated on the percentile move (the recent window is already
+    ball-floored where the value is computed); leads with declines."""
+    ups, downs = [], []
+    for m in P.get("fingerprint", []):
+        cv, rv, cp, rp = m.get("value"), m.get("recent"), m.get("pctl"), m.get("pctl_recent")
+        if None in (cv, rv, cp, rp) or abs(rp - cp) < 12:
+            continue
+        if m["label"] == "Pace":
+            txt = f"pace {'down' if rv < cv else 'up'} ~{abs(rv - cv):.0f} km/h (now {rv:.0f})"
+        else:
+            txt = f"{m['label'].lower()} {'up' if rp > cp else 'down'}"
+        (downs if rp < cp else ups).append(txt)
+    moves = downs + ups
+    return ("Changing (last 3 years vs career): " + "; ".join(moves) + ".") if moves else None
 
 
 def _crease_band_rows(P: dict) -> list:
@@ -1477,6 +1497,7 @@ def build_html(P: dict, video: dict = None) -> str:
         "crease_usage_rows": _crease_usage_rows(P),
         "crease_band_rows": _crease_band_rows(P),
         "fingerprint_cards": _fingerprint_cards(P),
+        "fingerprint_headline": _fingerprint_headline(P),
         "sequencing_rows": _sequencing_rows(P),
         "version": REPORT_VERSION,
         "build_date": datetime.date.today().strftime("%d %b %Y"),
@@ -1676,17 +1697,18 @@ _TEMPLATE = r"""
 
   {% if fingerprint_cards %}
   <h2>Bowling Fingerprint</h2>
+  {% if fingerprint_headline %}<div class="read" style="margin-bottom:6px">{{fingerprint_headline}}</div>{% endif %}
   <div class="fpgrid">
     {% for f in fingerprint_cards %}
     <div class="fpcard">
       <div class="lab">{{f.label}}</div>
-      <div class="pct" style="color:{{f.colour}}">{{f.pct_txt}}</div>
+      <div class="pct" style="color:{{f.colour}}">{{f.pct_txt}}{% if f.recent_txt %} <span style="color:#d9822b;font-size:12px">→ {{f.recent_txt}}</span>{% endif %}</div>
       <img src="{{f.img}}">
       <div class="sub">{{f.disp}} · {{f.peer}}</div>
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left">Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much he moves his release point sideways across the crease from ball to ball (within his main angle): a high percentile = he varies where he lets the ball go a lot, a low percentile = he releases from the same spot every ball. <b>Repeatability</b> = length consistency over his stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers; a low percentile = he varies his length more. A marker at the very edge = he sits beyond the typical peer range on that trait.</div>
+  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (where enough recent balls). Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much he moves his release point sideways across the crease from ball to ball (within his main angle): a high percentile = he varies where he lets the ball go a lot, a low percentile = he releases from the same spot every ball. <b>Repeatability</b> = length consistency over his stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers; a low percentile = he varies his length more. A marker at the very edge = he sits beyond the typical peer range on that trait.</div>
   {% endif %}
 
   {% if recent_form %}
