@@ -1,70 +1,87 @@
 """
-build_h2h.py — real head-to-head meetings between our squad and the opposition, for VISION
-(SCOUTING_REBUILD.md: head-to-head is evidence, not statistics — these balls power playlists
-and one-line context; the numbers in reports come from the simulation).
+build_h2h.py — real head-to-head footage between our squad and the opposition, for VISION
+(SCOUTING_REBUILD.md: head-to-head is evidence, not statistics — these balls power playlists).
 
-For every (our player × opposition player) pairing in the matchup store, pulls their actual
-Test deliveries (same format only), most recent first, capped at MAX_BALLS, with clip stems
-for the video player. Consumed by the player packs ("Your vision vs Bangladesh"), the series
-match-up matrix page, and the opposition reports' "vs our squad" strips.
+Format fallback (Tom, 2026-07-17): a Test series pack prefers Test footage, but if there's none
+of a pairing in Tests we fall back to ODI, then T20I, then domestic T20 (BBL, …) — whatever
+exists — and LABEL the format so a player opening the clip knows it's e.g. "T20I", not an error.
+"Footage exists" = the delivery has a resolvable clip stem. Newest `MAX_BALLS` of the chosen
+format per pairing.
 
 Run:  .\\venv\\Scripts\\python.exe build_h2h.py --opp bangladesh
-Out:  data/h2h_{opp}.json   {"our_batting": [...], "our_bowling": [...]}  (one row per ball)
+Out:  data/h2h_{opp}.json   {"our_batting": [...], "our_bowling": [...]}
 """
 import argparse
 import json
 import os
+from collections import defaultdict
 
 from config import DATA_SCHEMA
 from cricket_core.warehouse import set_conn_cursor, run_query
-from cricket_core.config import international_series_sql, project_path
+from cricket_core.config import project_path
 from cricket_core.video import clip_stem
+from cricket_core.formats import match_format
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-MAX_BALLS = 20          # house rule: 10-20 most recent balls per pairing
+MAX_BALLS = 20                                          # house rule: 10-20 most recent per pairing
 
-_TEST = (f"M.series_id IN (SELECT series_id FROM [{DATA_SCHEMA}].[Series] "
-         f"WHERE name IN {international_series_sql('Test')})")
+# format preference: a Test pack wants Test footage first, then the closest available.
+_FMT_PRIORITY = ["Test", "ODI", "T20I", "T20", "List A", "The Hundred", "FC", "T10"]
+_FMT_LABEL = {"Test": "Test", "ODI": "ODI", "T20I": "T20I", "T20": "domestic T20",
+              "List A": "List A", "The Hundred": "The Hundred", "FC": "first-class", "T10": "T10"}
+HOW = {"4": "Bowled", "5": "Caught", "6": "LBW", "7": "Hit Wicket", "8": "Stumped", "9": "Run Out"}
 
 
 def _pull(conn, cur, striker_ids, bowler_ids):
-    """All Test balls striker∈A vs bowler∈B, newest first, with the caption + clip fields."""
+    """All balls (any format) striker∈A vs bowler∈B, newest first, with the fields to build a
+    clip stem and classify the format."""
     sl = ",".join(f"'{i}'" for i in striker_ids)
     bl = ",".join(f"'{i}'" for i in bowler_ids)
     q = f"""SELECT D.striker_id, D.bowler_id, D.delivery_id, D.match_id,
         CONVERT(varchar(10), M.match_date, 120) d,
         D.bat_score, D.striker_dismissed, D.how_out_id, D.legal_ball,
-        D.video_file_name, M.match_length_id, S.name season, SR.gender_id
+        D.video_file_name, M.match_length_id, S.name season, SR.gender_id, SR.name series_name
     FROM [{DATA_SCHEMA}].[Deliveries] D
     JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id
     LEFT JOIN [{DATA_SCHEMA}].[Seasons] S ON M.season_id=S.season_id
     LEFT JOIN [{DATA_SCHEMA}].[Series] SR ON M.series_id=SR.series_id
-    WHERE {_TEST} AND D.striker_id IN ({sl}) AND D.bowler_id IN ({bl})
+    WHERE D.striker_id IN ({sl}) AND D.bowler_id IN ({bl})
     ORDER BY M.match_date DESC, D.match_innings DESC,
              TRY_CONVERT(int, D.[over]) DESC, TRY_CONVERT(int, D.ball_in_over) DESC"""
     return run_query(q, conn, cur)
 
 
-HOW = {"4": "Bowled", "5": "Caught", "6": "LBW", "7": "Hit Wicket", "8": "Stumped", "9": "Run Out"}
+def _fmt(r):
+    try:
+        return match_format(r.get("series_name"), r.get("match_length_id"))
+    except Exception:
+        return None
 
 
 def _rowify(raw, cap=MAX_BALLS):
-    """Group by pairing, keep the newest `cap` balls each, attach clip stems."""
-    from collections import defaultdict
-    pairs = defaultdict(list)
+    """Per (striker, bowler): group by format, keep only balls with a clip stem, pick the highest
+    -priority format present, and take the newest `cap` of it. Returns {pair: (fmt, [balls])}."""
+    by_pair = defaultdict(lambda: defaultdict(list))    # (s,b) -> fmt -> [ball]
     for r in raw:
-        key = (r["striker_id"], r["bowler_id"])
-        if len(pairs[key]) >= cap:
+        stem = clip_stem(r["season"], r["gender_id"], r["match_length_id"],
+                         r.get("match_id"), r["video_file_name"])
+        if not stem:
+            continue                                    # no footage -> not useful for vision
+        fmt = _fmt(r)
+        if fmt not in _FMT_PRIORITY:
             continue
         out = r["striker_dismissed"] in ("1", "True", "true")
-        pairs[key].append({
+        by_pair[(r["striker_id"], r["bowler_id"])][fmt].append({
             "delivery_id": r["delivery_id"], "date": r["d"],
             "runs": int(float(r["bat_score"] or 0)),
-            "wicket": HOW.get(r["how_out_id"]) if out else None,
-            "clip_stem": clip_stem(r["season"], r["gender_id"], r["match_length_id"],
-                                   r.get("match_id"), r["video_file_name"]),
-        })
-    return pairs
+            "wicket": HOW.get(r["how_out_id"]) if out else None, "clip_stem": stem})
+    chosen = {}
+    for pair, byfmt in by_pair.items():
+        for fmt in _FMT_PRIORITY:
+            if byfmt.get(fmt):
+                chosen[pair] = (fmt, byfmt[fmt][:cap])   # rows already newest-first
+                break
+    return chosen
 
 
 def main():
@@ -80,24 +97,28 @@ def main():
     our_bowl = sorted({c["bowler_id"] for c in store["they_bat"]})
 
     conn, cur = set_conn_cursor()
-    a = _pull(conn, cur, our_bat, opp_bowl)      # our batters facing their bowlers
-    b = _pull(conn, cur, opp_bat, our_bowl)      # their batters facing our bowlers
+    a = _rowify(_pull(conn, cur, our_bat, opp_bowl))     # our batters facing their bowlers
+    b = _rowify(_pull(conn, cur, opp_bat, our_bowl))     # their batters facing our bowlers
     conn.close()
 
-    def pack(pairs):
-        return [{"striker_id": k[0], "bowler_id": k[1], "balls": len(v),
-                 "runs": sum(x["runs"] for x in v),
-                 "wickets": sum(1 for x in v if x["wicket"]),
-                 "clips": sum(1 for x in v if x["clip_stem"]),
-                 "deliveries": v} for k, v in pairs.items()]
+    def pack(chosen):
+        rows = []
+        for (s, bo), (fmt, v) in chosen.items():
+            rows.append({"striker_id": s, "bowler_id": bo, "format": fmt,
+                         "format_label": _FMT_LABEL.get(fmt, fmt), "balls": len(v),
+                         "clips": len(v), "deliveries": v})
+        return rows
 
     out = {"opp": args.opp, "cap": MAX_BALLS,
-           "our_batting": pack(_rowify(a)), "our_bowling": pack(_rowify(b))}
+           "our_batting": pack(a), "our_bowling": pack(b)}
     p = os.path.join(HERE, "data", f"h2h_{args.opp}.json")
     json.dump(out, open(p, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
-    n_a, n_b = len(out["our_batting"]), len(out["our_bowling"])
-    print(f"our batters × their bowlers: {n_a} pairings with meetings; "
-          f"their batters × our bowlers: {n_b}")
+
+    def summ(rows):
+        from collections import Counter
+        return dict(Counter(r["format"] for r in rows))
+    print(f"our batters × their bowlers: {len(out['our_batting'])} pairings {summ(out['our_batting'])}")
+    print(f"their batters × our bowlers: {len(out['our_bowling'])} pairings {summ(out['our_bowling'])}")
     print(f"wrote {p}")
 
 

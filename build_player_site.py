@@ -329,7 +329,9 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb):
     else:
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
-        met = f'{h2h_row["balls"]} balls of you {h2h_verb} them in Tests.'   # as a matchup verdict)
+        fl = h2h_row.get("format_label", "Test")       # as a matchup verdict). Label the format so
+        note = "" if fl == "Test" else f' <span class="cohort">({fl}, not Test)</span>'  # non-Test is clear
+        met = f'{h2h_row["balls"]} balls of you {h2h_verb} them.{note}'
         if vision_href:
             met += f' <a class="vwatch" href="{vision_href}">&#9654; Watch</a>'
         lines.append(f'<p>{met}</p>')
@@ -385,7 +387,7 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
         mine = [r for r in rows if r[me_key] == pid]
         mine.sort(key=lambda r: -r["balls"])
         for r in mine:
-            if not r["clips"]:
+            if not r.get("clips"):
                 continue
             them = r[them_key]
             key = f"{prefix}_{them}"                 # hbat_/hbowl_ so both directions coexist
@@ -395,7 +397,8 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
                      for d in r["deliveries"] if d["clip_stem"]]
             if items:
                 playlists[key] = items
-                titles[key] = f'{label} {name_of.get(them, them)} · {r["balls"]} balls, {r["runs"]} runs, {r["wickets"]} wkt'
+                titles[key] = (f'{label} {name_of.get(them, them)} · {r["balls"]} balls '
+                               f'({r.get("format_label", "Test")})')
     add(h2h.get("our_batting", []), "striker_id", "bowler_id", "hbat", "You v")
     add(h2h.get("our_bowling", []), "bowler_id", "striker_id", "hbowl", "You to")
     return playlists, titles
@@ -493,8 +496,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                                   "Tap a bowler for what they're about, the fuller report, and any "
                                   "footage of you facing them.", inner="".join(blocks)))
     body.append(_pack_section(f"Your vision vs {opp}",
-                              "Your most recent balls facing each of their bowlers (Tests only, "
-                              "capped at the 20 most recent per bowler).",
+                              "Your most recent balls facing each of their bowlers — Test where you've "
+                              "met, otherwise your ODI / T20 footage (the format is labelled).",
                               inner=_vision_list(h2h_links, "hbat", had_meetings, "facing"),
                               open=False))
     return "".join(body)
@@ -524,9 +527,9 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                                   f"How each of them plays {tw}, plus any footage of you bowling to "
                                   "them. Tap a batter.", inner="".join(blocks)))
     body.append(_pack_section(f"Your vision vs {opp}",
-                              "Your most recent balls bowling to each of their batters (Tests only, "
-                              "capped at the 20 most recent per batter).",
-                              inner=_vision_list(h2h_links, "hbowl", had_meetings, "bowled to"),
+                              "Your most recent balls bowling to each of their batters — Test where "
+                              "you've met, otherwise your ODI / T20 footage (the format is labelled).",
+                              inner=_vision_list(h2h_links, "hbowl", had_meetings, "bowling to"),
                               open=False))
     return "".join(body)
 
