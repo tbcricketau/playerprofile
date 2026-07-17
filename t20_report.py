@@ -16,7 +16,7 @@ from jinja2 import Template
 from t20_profile import build_t20_profile
 from profile import build_line_zones
 from photos import get_photo_data_uri
-from report import _fig_uri, _html_to_pdf, _country_code, _fingerprint_cards, _file_url
+from report import _fig_uri, _html_to_pdf, _country_code, _fingerprint_cards, _fingerprint_headline, _file_url
 from report_style import REPORT_CSS, theme_ctx, card, headline_cards, f_econ, TEXT_SEC
 from odi_report import _variation_tables, _variation_read, _grid_figs
 from cricket_core.charts import pitch_heatmap, beehive
@@ -90,7 +90,7 @@ def render_t20_report(bowler_id: str, out_dir: str = "reports/t20",
         "P": P, "figs": figs, "code": _country_code(P["team"]),
         "photo_uri": get_photo_data_uri(P["bowler_id"], fmt="t20", name=P.get("name")),
         "cards": _cards(P), "phase_read": _phase_read(P),
-        "fingerprint_cards": _fingerprint_cards(P), "video": video,
+        "fingerprint_cards": _fingerprint_cards(P), "fingerprint_headline": _fingerprint_headline(P), "video": video,
         "variation_read": _variation_read(P) if P["is_pace"] else None,
         "var_tables": _variation_tables(P) if P["is_pace"] else None,
         "version": REPORT_VERSION, "build_date": datetime.date.today().strftime("%d %b %Y"),
@@ -138,17 +138,18 @@ _TEMPLATE = r"""
 
   {% if fingerprint_cards %}
   <h2>Bowling Fingerprint <span class="sub" style="font-weight:400">(percentile vs T20 peers)</span></h2>
+  {% if fingerprint_headline %}<div class="read" style="margin-bottom:6px">{{fingerprint_headline}}</div>{% endif %}
   <div class="fpgrid">
     {% for f in fingerprint_cards %}
     <div class="fpcard">
       <div class="lab">{{f.label}}</div>
-      <div class="pct" style="color:{{f.colour}}">{{f.pct_txt}}</div>
+      <div class="pct" style="color:{{f.colour}}">{{f.pct_txt}}{% if f.recent_txt %} <span style="color:#d9822b;font-size:12px">&rarr; {{f.recent_txt}}</span>{% endif %}</div>
       <img src="{{f.img}}">
       <div class="sub">{{f.disp}} · {{f.peer}}</div>
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left">Percentile within same-type <b>T20</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. These are skill/physical traits, so — unlike economy — they carry across leagues without a strength adjustment. <b>Repeatability</b> = length consistency over their stock band (high = more metronomic).</div>
+  <div class="cap" style="text-align:left"><b style="color:#003087">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b>. Percentile within same-type <b>T20</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. These are skill/physical traits, so — unlike economy — they carry across leagues without a strength adjustment. <b>Repeatability</b> = length consistency over their stock band (high = more metronomic).</div>
   {% endif %}
 
   <h2>Phase Profile <span class="sub" style="font-weight:400">(Powerplay 1–6 · Middle 7–15 · Death 16–20)</span>{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ wickets</a>{% endif %}</h2>

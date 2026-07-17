@@ -267,6 +267,7 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
         L_bm.[description]                           AS ball_movement,
         D.[release_line_unmirrored],
         D.[release_height],
+        D.[bounce_angle_delta],
         D.[striker_hand_id],
         L_sh.[description]                           AS striker_hand,
         CASE

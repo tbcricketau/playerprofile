@@ -306,6 +306,7 @@ def process_rows(rows: list) -> list:
         r["release_line_n"] = _safe_float(r.get("release_line_unmirrored"))  # mm, absolute (over/round flip sign)
         _rh = _safe_float(r.get("release_height"))                            # mm above ground; clip garbage
         r["release_height_n"] = _rh if (_rh is not None and 1500 <= _rh <= 2400) else None
+        r["bounce_n"] = _safe_float(r.get("bounce_angle_delta"))              # bounce angle change
         r["how_out"] = _HOW_OUT_MAP.get(str(r.get("how_out_id", "")).strip()) if r.get("bowler_dismissal") in ("1", "True", "true") else None
         # Fairplay video: extension-less blob stem for this delivery (cheap, pure string).
         # Resolve to a playable URL lazily (HEAD probe) only when a playlist is built.
@@ -915,6 +916,34 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test"
     return cards
 
 
+def recent_fingerprint_vals(raw: list, is_spin: bool, years: int = 3) -> dict:
+    """{fingerprint-card-label: last-`years`-year value} computed over ALL deliveries with the SAME
+    rule referencebuilder uses for the career column, so career vs recent compare on one axis. Keys
+    match `_fingerprint` card labels. Crease width/variation are deliberately excluded — their
+    `release_line_unmirrored` source flips sign for round-the-wicket, so an over/round mix change
+    fakes a shift; bounce/movement/speed/length/height are angle-safe."""
+    import datetime as _dt
+    import statistics as _st
+    cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * years))).isoformat()
+    rec = [r for r in raw if r.get("is_legal") and (r.get("match_date") or "") >= cut]
+
+    def rmean(vals, floor):
+        vals = [v for v in vals if v is not None]
+        return _mean(vals) if len(vals) >= floor else None
+
+    length = [r["pitch_length_m"] for r in rec
+              if r.get("pitch_length_m") is not None and 2.0 <= r["pitch_length_m"] <= 11.0]
+    height = [r["release_height_n"] for r in rec if r.get("release_height_n") is not None]
+    return {
+        "Pace": rmean([r.get("ball_speed_n") for r in rec], 60),
+        ("Turn" if is_spin else "Seam"): rmean([abs(r["turn_n"]) for r in rec if r.get("turn_n") is not None], 40),
+        ("Drift" if is_spin else "Swing"): rmean([abs(r["drift_n"]) for r in rec if r.get("drift_n") is not None], 40),
+        "Bounce": rmean([r["bounce_n"] for r in rec if r.get("bounce_n") is not None], 40),
+        "Repeatability": (_st.pstdev(length) if len(length) >= 40 else None),
+        "Release height": (_mean(height) / 10.0) if len(height) >= 40 else None,
+    }
+
+
 def _build_overs(rows: list) -> list:
     """Group legal deliveries into overs (match × innings × over), each sorted by
     ball-in-over, so consecutive balls in a sequence are genuinely consecutive."""
@@ -1251,23 +1280,7 @@ def build_profile(
 
     # recent (last 3 years) mean speed — the recency overlay on the fingerprint. Needs a floor of
     # tracked balls so a thin recent window isn't read as a real change.
-    import datetime as _dt
-    import statistics as _st
-    _recent_cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
-    # recent fingerprint values, computed over ALL deliveries (raw, not the hand-filtered set) with
-    # the SAME rule referencebuilder uses for the career column, so career vs recent compare cleanly.
-    _rec = [r for r in raw if r.get("is_legal") and (r.get("match_date") or "") >= _recent_cut]
-
-    def _rmean(vals, floor):
-        vals = [v for v in vals if v is not None]
-        return _mean(vals) if len(vals) >= floor else None
-
-    avg_spd_recent = _rmean([r.get("ball_speed_n") for r in _rec], 60)
-    avg_seam_recent = _rmean([abs(r["turn_n"]) for r in _rec if r.get("turn_n") is not None], 40)
-    avg_swing_recent = _rmean([abs(r["drift_n"]) for r in _rec if r.get("drift_n") is not None], 40)
-    _rlen = [r.get("pitch_length_m") for r in _rec
-             if r.get("pitch_length_m") is not None and 2.0 <= r["pitch_length_m"] <= 11.0]
-    length_sd_recent = _st.pstdev(_rlen) if len(_rlen) >= 40 else None    # STDEVP, matches builder
+    _recent_fp = recent_fingerprint_vals(raw, is_spin)   # last-3yr values for the fingerprint overlay
 
     def _speeds(pred):
         return [r["ball_speed_n"] for r in raw if r["is_legal"] and pred(r) and r["ball_speed_n"] is not None]
@@ -1478,11 +1491,7 @@ def build_profile(
         "repeatability": _repeat,
         "crease": _crease_usage(raw),
         "crease_ref": load_crease_profiles().get(str(bowler_id)),
-        "fingerprint": _fingerprint(bowler_id, is_pace, is_spin, recent_vals={
-            "Pace": avg_spd_recent,
-            ("Turn" if is_spin else "Seam"): avg_seam_recent,
-            ("Drift" if is_spin else "Swing"): avg_swing_recent,
-            "Repeatability": length_sd_recent}),
+        "fingerprint": _fingerprint(bowler_id, is_pace, is_spin, recent_vals=_recent_fp),
         # threat
         "beaten_pct": beaten_pct, "false_pct": false_pct, "n_tracked": n_tracked,
         "dismissal_counts": dismissal_counts, "n_dismissals": n_dismissals, "top_dismissal": top_dismissal,

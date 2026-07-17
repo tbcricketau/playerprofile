@@ -16,7 +16,7 @@ import os
 from collections import Counter, defaultdict
 
 from data_loaders import load_bowler_deliveries, load_bowler_info
-from profile import process_rows, _quantile, _fingerprint
+from profile import process_rows, _quantile, _fingerprint, recent_fingerprint_vals
 from odi_profile import (_phase_stats, _variations, _bowler_runs, _num, _mean,
                          _deepdive_all, _hand_over_round)
 from cricket_core.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
@@ -172,7 +172,7 @@ def build_t20_profile(bowler_id: str) -> dict:
         "n_balls": nb, "n_wkts": wkts, "bowl_avg": runs / wkts if wkts else None,
         "avg_spd": _mean(speeds), "max_spd_99": _quantile(speeds, 0.99) if speeds else None,
         # sections
-        "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="T20"),
+        "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="T20", recent_vals=recent_fingerprint_vals(raw, is_spin)),
         "phases": phases,
         "variations": _variations(raw, off_pace),
         "deepdive": _deepdive_all(raw, off_pace, T20_PHASES) if is_pace else None,

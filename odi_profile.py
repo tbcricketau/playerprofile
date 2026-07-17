@@ -16,7 +16,7 @@ from collections import Counter, defaultdict
 
 from data_loaders import load_bowler_deliveries, load_bowler_info
 import statistics
-from profile import (process_rows, _safe_float, _quantile, _SHORT_BUCKETS, _fingerprint,
+from profile import (process_rows, _safe_float, _quantile, _SHORT_BUCKETS, _fingerprint, recent_fingerprint_vals,
                     _pctl_of, load_phase_profiles)
 from cricket_core.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE)
@@ -425,7 +425,7 @@ def build_odi_profile(bowler_id: str) -> dict:
         "avg_len_m": avg_len_m, "short_pct": short_pct,
         "round_pct": round_pct, "round_lhb": round_lhb, "round_rhb": round_rhb,
         # sections
-        "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="ODI"),
+        "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="ODI", recent_vals=recent_fingerprint_vals(raw, is_spin)),
         "phases": phases,
         "variations": _variations(raw, off_pace),
         "deepdive": _deepdive_all(raw, off_pace, PHASES) if is_pace else None,
