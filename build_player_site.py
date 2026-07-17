@@ -18,6 +18,7 @@ import re
 
 from site_render import page as _page
 from photos import get_photo_data_uri, get_photo_path
+from cricket_core.lookups import team_flag
 
 # "file": pages reference img/{pid}.png (copied at build, lazy-loaded — keeps the roster page
 # a few tens of KB instead of megabytes of inlined base64, which lagged on phone data).
@@ -68,6 +69,7 @@ EXTRA_CSS = """<style>
    padding:14px;text-align:center;background:#fafbfc}
  .sblock{border-top:1px solid #eef1f6;padding:10px 0 4px;margin-top:8px}
  .sblock .shead{font-size:14px;font-weight:700;color:#1a1a2e}
+ .sblock .shead .flag{font-size:16px;vertical-align:-1px}
  .sblock .smeta{color:#6b7280;font-size:12px;margin:1px 0 7px}
  .sblock .ssum{font-size:13.5px;margin:0 0 10px;line-height:1.55}
  .sgrid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:14px;align-items:start}
@@ -160,7 +162,10 @@ def _attack_card_html(card, opp_label, vision=None):
         meta = (f'{s["tests"]} Test{"s" if s["tests"] != 1 else ""} · {_dfmt(s["d0"])} → {_dfmt(s["d1"])} · '
                 f'{s["balls"]} balls · {s["runs"]} runs · '
                 + (f'avg {s["avg"]}' if s.get("avg") is not None else 'not dismissed'))
-        block = [f'<div class="sblock"><div class="shead">v {html.escape(s["opp"])}</div>'
+        _flag = (team_flag(s["opp"])[0] or "")
+        block = [f'<div class="sblock"><div class="shead">'
+                 f'{("<span class=\"flag\">" + _flag + "</span> ") if _flag else ""}'
+                 f'v {html.escape(s["opp"])}</div>'
                  f'<div class="smeta">{meta}</div>']
         if s.get("cells"):
             block.append(f'<p class="ssum">{html.escape(s["summary"])}</p>')
@@ -485,8 +490,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current)]
 
     body.append(_pack_section("How previous attacks have bowled to you",
-                              "Their plans against you over your last few series — not a forecast, "
-                              "what actually happened.", inner=_attack_card_html(card, opp, vision)))
+                              "The opposition's trends to you over your last few series.",
+                              inner=_attack_card_html(card, opp, vision)))
     if opp_bowlers:
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
