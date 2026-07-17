@@ -69,9 +69,17 @@ EXTRA_CSS = """<style>
    padding:14px;text-align:center;background:#fafbfc}
  .sblock{border-top:1px solid #eef1f6;padding:10px 0 4px;margin-top:8px}
  .sblock .shead{font-size:14px;font-weight:700;color:#1a1a2e}
- .sblock .shead .flag{font-size:16px;vertical-align:-1px}
  .sblock .smeta{color:#6b7280;font-size:12px;margin:1px 0 7px}
- .sblock .ssum{font-size:13.5px;margin:0 0 10px;line-height:1.55}
+ .ssum{font-size:13.5px;margin:0 0 10px;line-height:1.55}
+ details.sblock2{border-top:1px solid #eef1f6;margin-top:8px}
+ details.sblock2>summary{list-style:none;cursor:pointer;padding:9px 0 7px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px}
+ details.sblock2>summary::-webkit-details-marker{display:none}
+ details.sblock2>summary::before{content:"▸";color:#9aa4b2;font-size:12px;flex:0 0 auto}
+ details.sblock2[open]>summary::before{content:"▾"}
+ details.sblock2 .sh{font-size:14px;font-weight:700;color:#1a1a2e}
+ details.sblock2 .sh .flag{font-size:16px;vertical-align:-1px}
+ details.sblock2 .smeta{color:#6b7280;font-size:12px}
+ .cwatch{color:#003087;text-decoration:none;font-size:11px;margin-left:3px;white-space:nowrap}
  .sgrid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:14px;align-items:start}
  @media(max-width:560px){.sgrid{grid-template-columns:1fr}}
  table.ct{border-collapse:collapse;width:100%;font-size:12px}
@@ -124,15 +132,21 @@ _FLAG = {"more": ("▲ more", "dir more"), "less": ("▼ less", "dir less"),
          "even": ("· even", "dir even"), "thin": ("few balls", "dir even")}
 
 
-def _cells_table(cells):
-    rows = "".join(
-        f'<tr><td>{html.escape(c["label"].capitalize())}</td>'
-        f'<td class="num">{c["pct"]:.0f}%</td><td class="num">{c["ctrl_pct"]:.0f}%</td>'
-        f'<td class="{_FLAG[c["flag"]][1]}">{_FLAG[c["flag"]][0]}</td></tr>'
-        for c in cells)
-    return ('<table class="ct"><caption>Their pace plan vs your teammates</caption>'
+def _cells_table(cells, caption, href_for=None):
+    rows = []
+    for idx, c in enumerate(cells):
+        watch = ""
+        if c["flag"] == "more" and href_for:
+            h = href_for(idx)
+            if h:
+                watch = f' <a class="cwatch" href="{h}" title="watch">▶</a>'
+        rows.append(
+            f'<tr><td>{html.escape(c["label"].capitalize())}{watch}</td>'
+            f'<td class="num">{c["pct"]:.0f}%</td><td class="num">{c["ctrl_pct"]:.0f}%</td>'
+            f'<td class="{_FLAG[c["flag"]][1]}">{_FLAG[c["flag"]][0]}</td></tr>')
+    return (f'<table class="ct"><caption>{html.escape(caption)}</caption>'
             '<tr><th>Ball</th><th class="num">You</th><th class="num">Others</th><th></th></tr>'
-            + rows + '</table>')
+            + "".join(rows) + '</table>')
 
 
 def _dismissals_table(dismissals, vision_href=None):
@@ -148,12 +162,13 @@ def _dismissals_table(dismissals, vision_href=None):
             + rows + '</table>')
 
 
-def _attack_card_html(card, opp_label, vision=None):
-    """The 'how previous attacks bowled to you' block for a batting pack.
-    `vision` maps series index -> href of that series' dismissal playlist."""
+def _attack_card_html(card, opp_label, vision=None, cell_vision=None):
+    """The 'how previous attacks bowled to you' block — one collapsible series each, with the
+    pace plan (left) and spin plan (right) side by side, ▶ on the cells they went at you more,
+    and the dismissals. `vision` = {series_i: dismissal href}; `cell_vision` = {(i,fam,idx): href}."""
     if not card or not card.get("series"):
         return ('<div class="soon">Coming soon — will be built from the scouting report.</div>')
-    vision = vision or {}
+    vision, cell_vision = vision or {}, cell_vision or {}
     n = len(card["series"])
     lead = ("How the last attack bowled to you." if n == 1
             else f"How the last {n} attacks bowled to you.")
@@ -162,24 +177,32 @@ def _attack_card_html(card, opp_label, vision=None):
         meta = (f'{s["tests"]} Test{"s" if s["tests"] != 1 else ""} · {_dfmt(s["d0"])} → {_dfmt(s["d1"])} · '
                 f'{s["balls"]} balls · {s["runs"]} runs · '
                 + (f'avg {s["avg"]}' if s.get("avg") is not None else 'not dismissed'))
-        _flag = (team_flag(s["opp"])[0] or "")
-        block = [f'<div class="sblock"><div class="shead">'
-                 f'{("<span class=\"flag\">" + _flag + "</span> ") if _flag else ""}'
-                 f'v {html.escape(s["opp"])}</div>'
-                 f'<div class="smeta">{meta}</div>']
+        flag = (team_flag(s["opp"])[0] or "")
+        flag_html = (f'<span class="flag">{flag}</span> ' if flag else "")
+        summ = (f'<summary><span class="sh">{flag_html}v {html.escape(s["opp"])}</span>'
+                f'<span class="smeta">{meta}</span></summary>')
+        # pace column (left)
         if s.get("cells"):
-            block.append(f'<p class="ssum">{html.escape(s["summary"])}</p>')
+            pace_col = (f'<p class="ssum">{html.escape(s["summary"])}</p>'
+                        + _cells_table(s["cells"], "Their pace plan vs your teammates",
+                                       lambda idx: cell_vision.get((i, "cells", idx))))
         else:
-            block.append(f'<p class="ssum" style="color:#6b7280">Too few balls in this series to '
-                         f'compare a plan ({s["pace_balls"]} pace balls tracked).</p>')
-        left = _cells_table(s["cells"]) if s.get("cells") else ""
-        right = _dismissals_table(s["dismissals"], vision.get(i)) if s.get("dismissals") else ""
-        if left and right:
-            block.append(f'<div class="sgrid"><div>{left}</div><div>{right}</div></div>')
-        elif left or right:
-            block.append(left or right)
-        block.append("</div>")
-        parts.append("".join(block))
+            pace_col = (f'<p class="ssum" style="color:#6b7280">Too few balls to compare a pace '
+                        f'plan ({s["pace_balls"]} balls tracked).</p>')
+        # spin column (right) — only where they faced enough spin
+        spin_col = ""
+        if s.get("spin_cells"):
+            spin_col = ((f'<p class="ssum">{html.escape(s["spin_summary"])}</p>' if s.get("spin_summary") else "")
+                        + _cells_table(s["spin_cells"], "Their spin plan vs your teammates",
+                                       lambda idx: cell_vision.get((i, "spin_cells", idx))))
+        elif s.get("spin_balls", 0) >= 40:
+            spin_col = '<p class="ssum" style="color:#6b7280">Spin plan matched your teammates\'.</p>'
+        body = [f'<div class="sgrid"><div>{pace_col}</div><div>{spin_col}</div></div>' if spin_col
+                else pace_col]
+        if s.get("dismissals"):
+            body.append(_dismissals_table(s["dismissals"], vision.get(i)))
+        op = " open" if i == 0 else ""
+        parts.append(f'<details class="sblock2"{op}>{summ}<div class="sbody">{"".join(body)}</div></details>')
     return "".join(parts)
 
 
@@ -430,6 +453,24 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None):
             playlists[key] = resolved
             titles[key] = f'Dismissals — v {s["opp"]}'
             hrefs[i] = f"{page_slug}-vision.html#{key}"
+    # per-cell "where they went at you more" example playlists (pace + spin)
+    cell_vision = {}
+    for i, s in enumerate(card.get("series", []) if card else []):
+        for fam, key_fam in (("cells", "p"), ("spin_cells", "s")):
+            for idx, c in enumerate(s.get(fam, []) or []):
+                if c.get("flag") != "more" or not c.get("examples"):
+                    continue
+                items = [playlist_item(e["delivery_id"], e["clip_stem"],
+                                       caption=f'{c["label"]} — {s["opp"]}')
+                         for e in c["examples"] if e.get("clip_stem")]
+                if not items:
+                    continue
+                resolved, avail, _tot = resolve_playlist(items)
+                if avail:
+                    key = f"c{i}{key_fam}{idx}"
+                    playlists[key] = resolved
+                    titles[key] = f'{c["label"].capitalize()} — v {s["opp"]}'
+                    cell_vision[(i, fam, idx)] = f"{page_slug}-vision.html#{key}"
     h2h_map = {}                                     # full key (hbat_/hbowl_) -> href
     for key, items in (extra[0] if extra else {}).items():
         resolved, avail, _tot = resolve_playlist(items)
@@ -443,7 +484,7 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None):
         build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
                           title=f"{name} — vision", subtitle="dismissals + head-to-head",
                           titles=titles)
-    return hrefs, h2h_links, h2h_map
+    return hrefs, h2h_links, h2h_map, cell_vision
 
 
 def _report_top(pid, name, role, sname, pages=None, current=None):
@@ -477,7 +518,7 @@ def _vision_list(h2h_links, prefix, had_meetings, verb):
 
 def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False,
                   opp_bowlers=None, about=None, report_urls=None, h2h_map=None, h2h_rows=None,
-                  pages=None, current=None, hand="rhb"):
+                  pages=None, current=None, hand="rhb", cell_vision=None):
     """Batting pack: (1) how previous attacks bowled to you, (2) the opposition attack — one card
     per bowler with the distilled facts + a link to the hand-correct report + your footage."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -491,7 +532,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 
     body.append(_pack_section("How previous attacks have bowled to you",
                               "The opposition's trends to you over your last few series.",
-                              inner=_attack_card_html(card, opp, vision)))
+                              inner=_attack_card_html(card, opp, vision, cell_vision)))
     if opp_bowlers:
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
@@ -619,13 +660,14 @@ def build(out_dir, no_video=False, only=None):
                 continue
             pslug = _slug(name)
             bts = rec.get("bowl_types", [])            # [] for a batter, [pace]/[spin]/[pace,spin]
-            vision, h2h_links, h2h_map = {}, [], {}
+            vision, h2h_links, h2h_map, cell_vision = {}, [], {}, {}
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
             had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
             if not no_video and (cards.get(pid) or extra[0]):
                 try:
-                    vision, h2h_links, h2h_map = _build_vision(s_dir, pslug, name, cards.get(pid), extra)
+                    vision, h2h_links, h2h_map, cell_vision = _build_vision(
+                        s_dir, pslug, name, cards.get(pid), extra)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             # tab list: Batting + one page per bowling type
@@ -641,7 +683,7 @@ def build(out_dir, no_video=False, only=None):
                       _batting_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had_bat,
                                     opp_bowlers=opp_bowlers, about=about, report_urls=bat_report,
                                     h2h_map=h2h_map, h2h_rows=bat_rows,
-                                    pages=pages, current=bat_href, hand=hand),
+                                    pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision),
                       up=("index.html", "Squad")))
             for bt in bts:
                 bowl_href = f"{pslug}-bowling-{bt}.html"
