@@ -110,6 +110,8 @@ EXTRA_CSS = """<style>
  details.bwl .bav{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#9aa4b2}
  details.bwl .bn{flex:1;min-width:0} details.bwl .bn b{font-size:14px;color:#1a1a2e;display:block}
  details.bwl .bn .bt{color:#6b7280;font-size:12px}
+ details.bwl .rlink{font-size:11px;font-weight:700;color:#003087;text-decoration:none;background:#eef1f6;padding:3px 9px;border-radius:999px;white-space:nowrap;flex:0 0 auto}
+ details.bwl .rlink:hover{background:#003087;color:#fff}
  details.bwl .bhead{font-size:12px;font-weight:700;white-space:nowrap;padding:2px 9px;border-radius:999px}
  details.bwl .bhead.hard{background:#fee2e2;color:#991b1b} details.bwl .bhead.ok{background:#dcfce7;color:#15803d} details.bwl .bhead.mid{background:#eef1f6;color:#475569}
  details.bwl>.bbody{padding:2px 12px 11px 12px;font-size:13px;line-height:1.5}
@@ -322,8 +324,11 @@ def _scouting_urls(series_slug):
         if "_bowling_" in base and meta.get("bowler_id"):
             hand = "lhb" if base.endswith("_lhb") else "rhb"
             grp = f"bowlers-vs-{hand}"
+            # link the reduced PLAYER-MODE report (matchup verdicts stripped), not the coach cut
+            variant = ".pmode.html" if os.path.exists(
+                os.path.join(HERE, "reports", f"{base}.pmode.html")) else ".html"
             bowl.setdefault(str(meta["bowler_id"]), {})[hand] = \
-                f"../scouting/{series_slug}/{grp}/{base}.html"
+                f"../scouting/{series_slug}/{grp}/{base}{variant}"
         elif "_batting_" in base and meta.get("batter_id"):
             bat[str(meta["batter_id"])] = f"../scouting/{series_slug}/batters/{base}.html"
     return bowl, bat
@@ -345,14 +350,16 @@ def _our_hands(slug):
         return {}
 
 
-def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None):
+def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None, report_url=None):
     """A per-opponent card in a PLAYER report: the distilled 'what they're about' facts (type-scoped
-    by the caller), video of their stock ball + wicket balls, and neutral footage against them.
-    Self-contained — no link to the coach scouting report, and NO good/poor matchup verdict."""
+    by the caller), a link to the reduced PLAYER-MODE report on this opponent, video of their stock
+    ball + wicket balls, and neutral footage against them. NO good/poor matchup verdict."""
     opp_vision = opp_vision or {}
+    rl = (f'<a class="rlink" href="{report_url}" onclick="event.stopPropagation()" '
+          f'title="full report on {html.escape(name)}">report &rarr;</a>') if report_url else ""
     av = _avatar(bid, "bav", _initials(name), name=name)
     summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)}</b>'
-            f'<span class="bt">{html.escape(sub or "")}</span></span></summary>')
+            f'<span class="bt">{html.escape(sub or "")}</span></span>{rl}</summary>')
     lines = []
     if facts:
         lines.append('<ul class="afacts">' + "".join(f'<li>{html.escape(f)}</li>' for f in facts) + '</ul>')
@@ -561,7 +568,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
                             h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
-                            opp_vision=opp_vision)
+                            opp_vision=opp_vision, report_url=report_urls.get(bid))
                   for bid, (nm, ty) in ordered]
         body.append(_pack_section(f"The {opp} attack",
                                   "Tap a bowler for what they're about, the fuller report, and any "

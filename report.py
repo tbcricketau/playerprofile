@@ -1450,7 +1450,10 @@ def _vs_squad_ctx(bowler_id):
     return None
 
 
-def build_html(P: dict, video: dict = None) -> str:
+def build_html(P: dict, video: dict = None, player_mode: bool = False) -> str:
+    """`player_mode=True` produces the reduced player-facing cut: identical bowling detail
+    (fingerprint, pitch maps, danger zones, sequencing) but with the coach-only 'Vs Our Squad'
+    matchup verdicts stripped — a player never sees how they personally match up to an opponent."""
     hand = P["filters"]["hand"]
     photo_uri = get_photo_data_uri(P["bowler_id"], fmt="test", name=P.get("name"))
 
@@ -1462,7 +1465,8 @@ def build_html(P: dict, video: dict = None) -> str:
         "video": video or {},
         "P": P, "hand_label": _HAND_LABEL.get(hand, hand), "code": _country_code(P["team"]),
         "photo_uri": photo_uri, "figs": _figures(P), "cards": _cards(P),
-        "vs_squad": _vs_squad_ctx(P["bowler_id"]),
+        "vs_squad": None if player_mode else _vs_squad_ctx(P["bowler_id"]),
+        "player_mode": player_mode,
         "threat_cards": _threat_cards(P), "danger_cards": _danger_cards(P),
         "dismissal_rows": _dismissal_rows(P), "dismissal_peer": _dismissal_peer_label(P),
         "unmapped_wkts": (P["n_wkts"] - int(P["wkt_zone"]["total"])) if P.get("wkt_zone") else 0,
@@ -1641,6 +1645,9 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
     video = (_build_player(P, out_path, subtitle=f"{P['name']} — bowling scout",
                            target_country=target_country) if with_playlists else {})
     html = build_html(P, video=video)
+    # reduced player-facing cut: same bowling detail, coach-only 'Vs Our Squad' verdicts stripped
+    pm_html = build_html(P, video=video, player_mode=True)
+    snippet = ""
     if video.get("playlists"):
         # Interactive HTML report: same page + an in-page lightbox. ▶ opens the playlist as a
         # modal OVER the report (same tab — the iOS/Safari use case); the PDF keeps the href
@@ -1649,10 +1656,13 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
         # Markers let the web app swap this baked-SAS player for a mint-on-demand one (webapp.py).
         snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(video["playlists"]) + "<!--PLAYER_SNIPPET_END-->"
         html = html.replace("</body>", snippet + "</body>")
+        pm_html = pm_html.replace("</body>", snippet + "</body>")
     # Always write the interactive .html (with the player snippet when there are clips) so the
     # site serves every bowler, including no-clip ones.
     with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
         f.write(html)
+    with open(out_path[:-4] + ".pmode.html", "w", encoding="utf-8") as f:
+        f.write(pm_html)
     _html_to_pdf(html, out_path)
     return out_path
 

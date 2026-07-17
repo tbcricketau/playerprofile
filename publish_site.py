@@ -124,6 +124,15 @@ def _bake_report(name, dest_dir, hk_sas):
     page = _FILE_URL_RE.sub(lambda m: m.group(1), page)      # player href → relative (same folder)
     open(os.path.join(dest_dir, name + ".html"), "w", encoding="utf-8").write(page)
 
+    # reduced PLAYER-MODE cut (Vs Our Squad stripped) — same video refresh, linked from player packs
+    pm_path = os.path.join(REPORTS_DIR, name + ".pmode.html")
+    if os.path.exists(pm_path):
+        pm = open(pm_path, encoding="utf-8").read()
+        pm = _SNIPPET_RE.sub(lambda m: snippet, pm) if _SNIPPET_RE.search(pm) \
+            else pm.replace("</body>", snippet + "</body>")
+        pm = _FILE_URL_RE.sub(lambda m: m.group(1), pm)
+        open(os.path.join(dest_dir, name + ".pmode.html"), "w", encoding="utf-8").write(pm)
+
     build_player_html(pls, os.path.join(dest_dir, name + ".player.html"),
                       title=meta.get("bowler") or meta.get("batter") or name,
                       subtitle="bowling scout" if "_bowling_" in name else "batting scout")
