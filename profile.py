@@ -904,12 +904,14 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test"
                           "pctl": (100 - pc) if pc is not None else None, "invert": True,
                           "disp": f"±{v:.1f} m", "peer": f"{ps} bowlers"})
 
-    # recency overlay: attach a recent value + its percentile (vs the same peer field)
+    # recency overlay: attach a recent value + its percentile, on the SAME convention as the card's
+    # career pctl (invert cards read lower raw value = higher percentile, e.g. repeatability).
     for c in cards:
         rv = recent_vals.get(c["label"])
         if rv is not None:
+            raw_p = _pctl_of(rv, c["values"])
             c["recent"] = rv
-            c["pctl_recent"] = _pctl_of(rv, c["values"])
+            c["pctl_recent"] = (100 - raw_p) if c.get("invert") and raw_p is not None else raw_p
     return cards
 
 
@@ -1250,12 +1252,22 @@ def build_profile(
     # recent (last 3 years) mean speed — the recency overlay on the fingerprint. Needs a floor of
     # tracked balls so a thin recent window isn't read as a real change.
     import datetime as _dt
+    import statistics as _st
     _recent_cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
-    # over ALL deliveries (raw, not the hand-filtered set) so it matches the career CSV's scope
-    _recent_spd = [r["ball_speed_n"] for r in raw
-                   if r.get("is_legal") and r.get("ball_speed_n") is not None
-                   and (r.get("match_date") or "") >= _recent_cut]
-    avg_spd_recent = _mean(_recent_spd) if len(_recent_spd) >= 60 else None
+    # recent fingerprint values, computed over ALL deliveries (raw, not the hand-filtered set) with
+    # the SAME rule referencebuilder uses for the career column, so career vs recent compare cleanly.
+    _rec = [r for r in raw if r.get("is_legal") and (r.get("match_date") or "") >= _recent_cut]
+
+    def _rmean(vals, floor):
+        vals = [v for v in vals if v is not None]
+        return _mean(vals) if len(vals) >= floor else None
+
+    avg_spd_recent = _rmean([r.get("ball_speed_n") for r in _rec], 60)
+    avg_seam_recent = _rmean([abs(r["turn_n"]) for r in _rec if r.get("turn_n") is not None], 40)
+    avg_swing_recent = _rmean([abs(r["drift_n"]) for r in _rec if r.get("drift_n") is not None], 40)
+    _rlen = [r.get("pitch_length_m") for r in _rec
+             if r.get("pitch_length_m") is not None and 2.0 <= r["pitch_length_m"] <= 11.0]
+    length_sd_recent = _st.pstdev(_rlen) if len(_rlen) >= 40 else None    # STDEVP, matches builder
 
     def _speeds(pred):
         return [r["ball_speed_n"] for r in raw if r["is_legal"] and pred(r) and r["ball_speed_n"] is not None]
@@ -1466,8 +1478,11 @@ def build_profile(
         "repeatability": _repeat,
         "crease": _crease_usage(raw),
         "crease_ref": load_crease_profiles().get(str(bowler_id)),
-        "fingerprint": _fingerprint(bowler_id, is_pace, is_spin,
-                                    recent_vals={"Pace": avg_spd_recent}),
+        "fingerprint": _fingerprint(bowler_id, is_pace, is_spin, recent_vals={
+            "Pace": avg_spd_recent,
+            ("Turn" if is_spin else "Seam"): avg_seam_recent,
+            ("Drift" if is_spin else "Swing"): avg_swing_recent,
+            "Repeatability": length_sd_recent}),
         # threat
         "beaten_pct": beaten_pct, "false_pct": false_pct, "n_tracked": n_tracked,
         "dismissal_counts": dismissal_counts, "n_dismissals": n_dismissals, "top_dismissal": top_dismissal,

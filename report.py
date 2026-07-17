@@ -1040,18 +1040,19 @@ def _fingerprint_headline(P: dict) -> str | None:
     """One line naming the fingerprint traits that have shifted in the last 3 years — the
     'how they're changing' read. Noise-gated on the percentile move (the recent window is already
     ball-floored where the value is computed); leads with declines."""
-    ups, downs = [], []
+    pace_txt, others = None, []
     for m in P.get("fingerprint", []):
         cv, rv, cp, rp = m.get("value"), m.get("recent"), m.get("pctl"), m.get("pctl_recent")
         if None in (cv, rv, cp, rp) or abs(rp - cp) < 12:
             continue
-        if m["label"] == "Pace":
-            txt = f"pace {'down' if rv < cv else 'up'} ~{abs(rv - cv):.0f} km/h (now {rv:.0f})"
+        if m["label"] == "Pace":                         # the headline metric for a quick — lead with it
+            pace_txt = f"pace {'down' if rv < cv else 'up'} ~{abs(rv - cv):.0f} km/h (now {rv:.0f})"
         else:
-            txt = f"{m['label'].lower()} {'up' if rp > cp else 'down'}"
-        (downs if rp < cp else ups).append(txt)
-    moves = downs + ups
-    return ("Changing (last 3 years vs career): " + "; ".join(moves) + ".") if moves else None
+            others.append((abs(rp - cp), f"{m['label'].lower()} {'up' if rp > cp else 'down'}"))
+    others.sort(reverse=True)                             # biggest shifts first
+    parts = ([pace_txt] if pace_txt else []) + [t for _s, t in others]
+    parts = parts[:3]
+    return ("Changing (last 3 years vs career): " + "; ".join(parts) + ".") if parts else None
 
 
 def _crease_band_rows(P: dict) -> list:
