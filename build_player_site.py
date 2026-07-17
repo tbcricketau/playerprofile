@@ -81,6 +81,7 @@ EXTRA_CSS = """<style>
  details.sblock2 .sh .flag{font-size:16px;vertical-align:-1px}
  details.sblock2 .smeta{color:#6b7280;font-size:12px}
  .cwatch{color:#003087;text-decoration:none;font-size:11px;margin-left:3px;white-space:nowrap}
+ .dsect{margin-top:18px;padding-top:12px;border-top:1px solid #eef1f6}
  .sgrid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:14px;align-items:start}
  @media(max-width:560px){.sgrid{grid-template-columns:1fr}}
  table.ct{border-collapse:collapse;width:100%;font-size:12px}
@@ -222,7 +223,7 @@ def _attack_card_html(card, opp_label, vision=None, cell_vision=None):
         body = [f'<div class="sgrid"><div>{pace_col}</div><div>{spin_col}</div></div>' if spin_col
                 else pace_col]
         if s.get("dismissals"):
-            body.append(_dismissals_table(s["dismissals"], vision.get(i)))
+            body.append('<div class="dsect">' + _dismissals_table(s["dismissals"], vision.get(i)) + '</div>')
         op = " open" if i == 0 else ""
         parts.append(f'<details class="sblock2"{op}>{summ}<div class="sbody">{"".join(body)}</div></details>')
     return "".join(parts)
@@ -330,11 +331,11 @@ def _opp_roster(slug):
 
 
 def _scouting_urls(series_slug):
-    """({bowler_id: {hand: url}}, {batter_id: url}) — the scouting reports in the assembled
-    bundle. A bowler's report is HAND-SPECIFIC (how they bowl to LHB vs RHB), so it's keyed by
-    the batter's hand; the batter reports are not hand-split. Only rendered reports map."""
+    """({bowler_id: {hand: url}}, {batter_id: url}, {batter_id: {group: url}}) — the player-mode
+    scouting reports in the assembled bundle. Bowler reports are hand-specific; batter reports have
+    a combined overview plus per-bowler-type ('_vs_{group}') variants a bowler links type-scoped."""
     import glob
-    bowl, bat = {}, {}
+    bowl, bat, bat_groups = {}, {}, {}
     for sc in glob.glob(os.path.join(HERE, "reports", "*.playlists.json")):
         base = os.path.basename(sc)[: -len(".playlists.json")]
         try:
@@ -351,14 +352,43 @@ def _scouting_urls(series_slug):
                 f"../scouting/{series_slug}/{grp}/{base}{variant}"
         elif "_batting_" in base and meta.get("batter_id"):
             bid = str(meta["batter_id"])
-            is_group = "_vs_" in base            # a group-specific exploit report, not the overview
-            if bid in bat and (is_group or not bat[bid][1]):
-                continue                          # already have a combined overview — keep it
+            m = re.search(r"_vs_([a-z_]+)$", base)     # a per-bowler-type player report
             variant = ".pmode.html" if os.path.exists(
                 os.path.join(HERE, "reports", f"{base}.pmode.html")) else ".html"
-            bat[bid] = (f"../scouting/{series_slug}/batters/{base}{variant}", not is_group)
-    bat = {bid: url for bid, (url, _combined) in bat.items()}
-    return bowl, bat
+            url = f"../scouting/{series_slug}/batters/{base}{variant}"
+            if m:
+                bat_groups.setdefault(bid, {})[m.group(1)] = url
+            elif bid not in bat:
+                bat[bid] = url                         # the combined overview (fallback link)
+    return bowl, bat, bat_groups
+
+
+_TYPESTR_TO_GROUP = {
+    "right pace": "right_pace", "left pace": "left_pace",
+    "off-spin": "off_spin", "off spin": "off_spin",
+    "leg-spin": "leg_spin", "leg spin": "leg_spin", "leg break": "leg_spin",
+    "left-arm orthodox": "left_orthodox", "left orthodox": "left_orthodox", "slow left-arm orthodox": "left_orthodox",
+    "left-arm wrist": "left_unorthodox", "left unorthodox": "left_unorthodox", "left-arm unorthodox": "left_unorthodox",
+}
+_PACE_GROUPS = {"right_pace", "left_pace"}
+
+
+def _our_bowl_groups(slug):
+    """{our_bowler_id: {'pace': group, 'spin': group}} — the exact batter-report group to link for
+    each of our bowlers' pace / spin, from their type in the matchup store's they_bat rows."""
+    out = {}
+    try:
+        from cricket_core.config import project_path
+        opp = slug.split("-")[0]
+        store = json.load(open(os.path.join(project_path("matchupmodel"), "data",
+                                             f"matchup_store_{opp}.json"), encoding="utf-8"))
+        for c in store.get("they_bat", []):
+            g = _TYPESTR_TO_GROUP.get(str(c.get("bowler_type", "")).strip().lower())
+            if g:
+                out.setdefault(str(c["bowler_id"]), {})["pace" if g in _PACE_GROUPS else "spin"] = g
+    except Exception:
+        pass
+    return out
 
 
 def _our_hands(slug):
@@ -713,7 +743,8 @@ def build(out_dir, no_video=False, only=None):
         opp_clips.update({bid: {"scoring": (about.get(bid) or {}).get("scoring_clips") or [],
                                 "dismissal": (about.get(bid) or {}).get("dismissal_clips") or []}
                           for bid, _ in _ord(opp_batters)})
-        bowl_urls, bat_urls = _scouting_urls(slug)     # {bowler:{hand:url}}, {batter:url}
+        bowl_urls, bat_urls, bat_group_urls = _scouting_urls(slug)   # +{batter:{group:url}}
+        our_groups = _our_bowl_groups(slug)            # our_bowler -> {pace/spin: batter group}
         our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb
         # h2h counts kept per DIRECTION — an all-rounder can both face and bowl to the same
         # opponent, so a single (me, them) dict would collide (wrong count vs a correct video).
@@ -765,10 +796,16 @@ def build(out_dir, no_video=False, only=None):
                       up=("index.html", "Squad")))
             for bt in bts:
                 bowl_href = f"{pslug}-bowling-{bt}.html"
+                # link the opposition-batter report SCOPED to this bowler's exact type (Green→
+                # right_pace, Lyon→off_spin); fall back to the combined overview if not rendered.
+                grp = (our_groups.get(pid) or {}).get(bt)
+                bt_report = {bid: ((bat_group_urls.get(bid, {}).get(grp) if grp else None)
+                                   or bat_urls.get(bid))
+                             for bid in opp_batters} if opp_batters else {}
                 open(os.path.join(s_dir, bowl_href), "w", encoding="utf-8").write(
                     _page(f"{name} — bowling ({bt})",
                           _bowling_body(meta, pid, rec, opp_batters=opp_batters, about=about,
-                                        report_urls=bat_urls, h2h_links=h2h_links,
+                                        report_urls=bt_report, h2h_links=h2h_links,
                                         had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
                                         pages=pages, current=bowl_href, btype=bt,
                                         opp_vision=opp_vision) + vsnip,

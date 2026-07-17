@@ -149,7 +149,7 @@ def _pace_defs(LEN, LIN):
         defs.append((LEN_NAME.get(band, band), lambda r, b=band: LEN.get(r["len"]) == b))
     for grp in ("Channel", "Wide Outside Off", "In Line", "Outside Leg"):
         defs.append((LINE_NAME.get(grp, grp), lambda r, g=grp: LIN.get(r["lin"]) == g))
-    defs.append(("the cut ball (short + wide of off)",
+    defs.append(("cut ball (short, wide off)",
                  lambda r: LEN.get(r["len"]) in ("9-10 m", "10+ m")
                  and LIN.get(r["lin"]) in ("Channel", "Wide Outside Off")))
     defs.append(("full at the stumps",
@@ -208,7 +208,7 @@ _PROSE = {
     "back of a length": "back of a length", "short of a length": "short of a length",
     "short": "short", "the channel": "in the channel", "wide of off": "wide of off",
     "at the stumps": "at the stumps", "on leg": "at {poss} pads",
-    "the cut ball (short + wide of off)": "with the width to cut",
+    "cut ball (short, wide off)": "with the width to cut",
     "full at the stumps": "full and straight",
 }
 

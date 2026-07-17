@@ -430,6 +430,13 @@ _FP = [
     ("bdry_pct", "Boundary %", False),
 ]
 
+# a type-scoped player report only shows the traits that matter to the bowler viewing it —
+# a pace bowler doesn't need the batter's vs-spin trait, and vice versa.
+_FP_FOCUS = {
+    "pace": {"avg", "sr", "false_pct", "pace_false", "seam_false", "swing_false", "short_false", "bdry_pct"},
+    "spin": {"avg", "sr", "false_pct", "spin_false", "bdry_pct"},
+}
+
 
 def _bpctl_of(v, peers):
     """Percentile of value v within peers (% at or below)."""
@@ -438,14 +445,17 @@ def _bpctl_of(v, peers):
     return 100.0 * sum(1 for x in peers if x <= v) / len(peers)
 
 
-def _fingerprint_cards(P: dict, recent_vals: dict = None) -> list:
+def _fingerprint_cards(P: dict, recent_vals: dict = None, focus: str = None) -> list:
     ref = _bat_ref()
     me = ref.get(P["batter_id"])
     if not me:
         return []
     recent_vals = recent_vals or {}
+    keep = _FP_FOCUS.get(focus)                         # type-scoped report → only relevant traits
     cards = []
     for key, label, vuln in _FP:
+        if keep is not None and key not in keep:
+            continue
         try:
             pctl = float(me.get(key + "_pctl"))
             val = float(me.get(key))
@@ -644,32 +654,35 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     raw_all = process_batting_rows(load_batter_deliveries(batter_id))
     P = build_batter_profile(batter_id, raw=raw_all, group=group)
 
-    # recency: last-3yr batting fingerprint values (avg / SR / false% vs pace / false% vs spin),
-    # computed by the SAME builder on the date-filtered deliveries — matches the career CSV exactly.
+    # a type-scoped player report (group set) keeps the fingerprint/impact but shows only the
+    # traits + numbers for that bowling type. focus = pace/spin picks which fingerprint cards stay.
+    focus = ("spin" if P.get("is_spin_group") else "pace") if group else None
+
+    # recency: last-3yr values. The fingerprint is vs ALL Test batters, so its recency is the
+    # OVERALL 3yr (Pr); the top cards' avg/SR are vs-this-type, so their recency is the type 3yr (Pg).
     fp_recent = {}
-    card_recent = {}                                   # last-3-yr values shown under the top cards
-    if group is None:
-        import datetime as _dt
-        _cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
-        _rec = [r for r in raw_all if (r.get("match_date") or "") >= _cut]
-        _rlegal = [r for r in _rec if r.get("is_legal")]
-        if len(_rlegal) >= 300:                        # floor — a thin window isn't a real change
-            Pr = build_batter_profile(batter_id, raw=_rec)
-            vp, vs = (Pr.get("vs") or {}).get("pace") or {}, (Pr.get("vs") or {}).get("spin") or {}
-            _sr = Pr.get("share") or {}
-            if (Pr.get("n_out") or 0) >= 6:
-                fp_recent["Average"] = Pr.get("average")
-                fp_recent["Strike rate"] = Pr.get("strike_rate")
-                if Pr.get("average") is not None:
-                    card_recent["Average"] = _fmt(Pr["average"], ".1f")
-                card_recent["Carries the innings"] = _fmt(_sr.get("carried_rate"), ".0f", "%")
-            if Pr.get("strike_rate") is not None:
-                card_recent["Strike rate"] = _fmt(Pr["strike_rate"], ".1f")
-            card_recent["Median % of runs"] = _fmt(_sr.get("team_share_median"), ".1f", "%")
-            fp_recent["False % vs pace"] = vp.get("false_pct")
-            fp_recent["False % vs spin"] = vs.get("false_pct")
-            fp_recent = {k: v for k, v in fp_recent.items() if v is not None}
-            card_recent = {k: v for k, v in card_recent.items() if v not in (None, "—")}
+    card_recent = {}
+    import datetime as _dt
+    _cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
+    _rec = [r for r in raw_all if (r.get("match_date") or "") >= _cut]
+    if sum(1 for r in _rec if r.get("is_legal")) >= 300:    # floor — a thin window isn't a real change
+        Pr = build_batter_profile(batter_id, raw=_rec)
+        Pg = build_batter_profile(batter_id, raw=_rec, group=group) if group else Pr
+        vp, vs = (Pr.get("vs") or {}).get("pace") or {}, (Pr.get("vs") or {}).get("spin") or {}
+        _sr = Pr.get("share") or {}                    # share is innings-based → overall, not type
+        if (Pr.get("n_out") or 0) >= 6:
+            fp_recent["Average"] = Pr.get("average")
+            fp_recent["Strike rate"] = Pr.get("strike_rate")
+            card_recent["Carries the innings"] = _fmt(_sr.get("carried_rate"), ".0f", "%")
+        if (Pg.get("n_out") or 0) >= 6 and Pg.get("average") is not None:
+            card_recent["Average"] = _fmt(Pg["average"], ".1f")
+        if Pg.get("strike_rate") is not None:
+            card_recent["Strike rate"] = _fmt(Pg["strike_rate"], ".1f")
+        card_recent["Median % of runs"] = _fmt(_sr.get("team_share_median"), ".1f", "%")
+        fp_recent["False % vs pace"] = vp.get("false_pct")
+        fp_recent["False % vs spin"] = vs.get("false_pct")
+        fp_recent = {k: v for k, v in fp_recent.items() if v is not None}
+        card_recent = {k: v for k, v in card_recent.items() if v not in (None, "—")}
 
     figs = {}
     try:
@@ -679,17 +692,16 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     except Exception:
         figs["wagon"] = ""
 
-    fp_cards = []
-    if group is None:                         # fingerprint is vs all batters — combined report only
-        for c in _fingerprint_cards(P, recent_vals=fp_recent):
-            try:
-                img = _fig_uri(fingerprint_strip(c["values"], c["value"], invert=False,
-                                                 recent_value=c.get("recent")), w=250, h=84)
-            except Exception:
-                img = ""
-            rp = c.get("pctl_recent")
-            fp_cards.append({**c, "img": img, "pct_txt": f"P{c['pctl']:.0f}",
-                             "recent_txt": (f"P{rp:.0f}" if (c.get("recent") is not None and rp is not None) else None)})
+    fp_cards = []                              # fingerprint from the vs-all reference; focus trims traits
+    for c in _fingerprint_cards(P, recent_vals=fp_recent, focus=focus):
+        try:
+            img = _fig_uri(fingerprint_strip(c["values"], c["value"], invert=False,
+                                             recent_value=c.get("recent")), w=250, h=84)
+        except Exception:
+            img = ""
+        rp = c.get("pctl_recent")
+        fp_cards.append({**c, "img": img, "pct_txt": f"P{c['pctl']:.0f}",
+                         "recent_txt": (f"P{rp:.0f}" if (c.get("recent") is not None and rp is not None) else None)})
     fp_headline = _fingerprint_headline(fp_cards)
 
     dims = P["dims"]
@@ -783,8 +795,12 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
 
     def _render(player_mode):
         """Full coach report, or the reduced player-facing cut (the coach-only 'Our Best Options'
-        simulated-matchup table — how OUR bowlers match up to this batter — stripped)."""
+        simulated-matchup table — how OUR bowlers match up to this batter — stripped). A type-scoped
+        player report (group set) keeps the fingerprint + impact; the coach exploit cut stays lean."""
         c2 = dict(ctx, player_mode=player_mode)
+        # fingerprint + impact show on the combined report and on any PLAYER-mode report (incl. the
+        # type-scoped one); the coach exploit cut (group set, not player-mode) stays lean.
+        c2["show_fp"] = (group is None) or player_mode
         if player_mode:
             c2["sim_options"] = None
         h = Template(_TEMPLATE).render(**c2)
@@ -868,8 +884,8 @@ _TEMPLATE = r"""
       {% for t in narrative.weak %}<li>{{t|safe}}</li>{% endfor %}</ul></div>
   </div>
 
-  {% if fp_cards %}
-  <h2>Batting Fingerprint <span class="sub" style="font-weight:400">(percentile vs Test batters)</span></h2>
+  {% if fp_cards and show_fp %}
+  <h2>Batting Fingerprint <span class="sub" style="font-weight:400">(percentile vs Test batters{% if P.group %} · {{P.group_label}} traits{% endif %})</span></h2>
   {% if fp_headline %}<div class="read" style="margin-bottom:6px">{{fp_headline}}</div>{% endif %}
   <div class="fpgrid">
     {% for f in fp_cards %}
@@ -884,7 +900,7 @@ _TEMPLATE = r"""
   <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (avg / SR / false% vs pace &amp; spin). Percentile among Test batters (&ge;1500 balls). Red = a target (high vulnerability); green = a strength.</div>
   {% endif %}
 
-  {% if impact_read and not P.group %}
+  {% if impact_read and show_fp %}
   <h2>Match Impact <span class="sub" style="font-weight:400">(share of runs)</span></h2>
   <div class="read impact">{{impact_read|safe}}</div>
   {% endif %}
