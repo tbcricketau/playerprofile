@@ -40,10 +40,10 @@ def _cards(P):
     """The shared 8-card row, but the Economy card shows the league-ADJUSTED economy (raw as sub)."""
     hp = {**P, "economy": P["economy_adj"]}          # headline economy = league-neutral
     out = []
-    for lab, val, sub in headline_cards(hp):
-        if lab == "Economy" and P["economy"] is not None:
-            sub = f"raw {P['economy']:.2f} · lg-adj"
-        out.append(card(lab, val, sub))
+    for cd in headline_cards(hp):
+        if cd["lab"] == "Economy" and P["economy"] is not None:
+            cd["sub"] = f"raw {P['economy']:.2f} · lg-adj"
+        out.append(cd)
     return out
 
 
@@ -132,7 +132,7 @@ _TEMPLATE = r"""
   </div>
 
   <div class="cards">
-    {% for cd in cards %}<div class="card"><div class="lab">{{cd.lab}}</div><div class="val">{{cd.val}}</div>{% if cd.sub %}<div class="csub">{{cd.sub}}</div>{% endif %}</div>{% endfor %}
+    {% for cd in cards %}<div class="card"><div class="lab">{{cd.lab}}</div><div class="val">{{cd.val}}</div>{% if cd.sub %}<div class="csub">{{cd.sub}}</div>{% endif %}{% if cd.recent %}<div class="crec"><span class="rl">3-yr</span> {{cd.recent}}</div>{% endif %}</div>{% endfor %}
   </div>
   <div class="cap" style="text-align:left">Economy &amp; strike-rate are pooled across every T20 league they've played, then put on a <b>league-neutral</b> baseline — each league's run environment (rated by how hard it is to bowl there, controlling for who bowls) is removed, so an IPL over and a Super Smash over count the same. Their raw economy is shown alongside. Their run-environment shift here is <b>{{ '%+.2f'|format(P.env) }}</b> rpo.</div>
 

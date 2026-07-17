@@ -207,7 +207,7 @@ _PROSE = {
     "fullish": "fullish", "a good length": "on a good length",
     "back of a length": "back of a length", "short of a length": "short of a length",
     "short": "short", "the channel": "in the channel", "wide of off": "wide of off",
-    "at the stumps": "at the stumps", "on leg": "at your pads",
+    "at the stumps": "at the stumps", "on leg": "at {poss} pads",
     "the cut ball (short + wide of off)": "with the width to cut",
     "full at the stumps": "full and straight",
 }
@@ -221,30 +221,37 @@ SPIN_PROSE = {"tossed up": "tossed up", "on a good length": "on a good length",
               "dragged short": "dragged short", "outside off": "outside off",
               "middle and off": "at middle and off", "middle and leg": "at middle and leg",
               "outside leg": "outside leg", "tossed up outside off": "tossed up outside off",
-              "into the pads": "into your pads"}
+              "into the pads": "into {poss} pads"}
 
 
-def _diet_sentence(cells, prose):
-    """One sentence: the more/less cells that cleared the gate. The table carries the numbers."""
+# person-relative pronouns: OUR squad packs read "you/your", opposition reports read "them/their"
+_PRON = {"you": ("you", "your", "your teammates"),
+         "them": ("them", "their", "the other top-order batters")}
+
+
+def _diet_sentence(cells, prose, person="you"):
+    """One sentence: the more/less cells that cleared the gate. The table carries the numbers.
+    `person` = "you" (our squad packs) or "them" (opposition reports)."""
+    subj, poss, peers = _PRON.get(person, _PRON["you"])
     ranked = sorted([c for c in cells if c["flag"] in ("more", "less")], key=lambda c: -abs(c["z"]))
-    pos = [prose.get(c["label"], c["label"]) for c in ranked if c["flag"] == "more"][:3]
-    neg = [prose.get(c["label"], c["label"]) for c in ranked if c["flag"] == "less"][:3]
+    pos = [prose.get(c["label"], c["label"]).format(poss=poss) for c in ranked if c["flag"] == "more"][:3]
+    neg = [prose.get(c["label"], c["label"]).format(poss=poss) for c in ranked if c["flag"] == "less"][:3]
     if pos and neg:
-        return f"They bowled you more {_join(pos)}, and less {_join(neg)}."
+        return f"They bowled {subj} more {_join(pos)}, and less {_join(neg)}."
     if pos:
-        return f"They bowled you more {_join(pos)} than your teammates."
+        return f"They bowled {subj} more {_join(pos)} than {peers}."
     if neg:
-        return f"They bowled you less {_join(neg)} than your teammates."
-    return "They bowled to you as they bowled to your teammates."
+        return f"They bowled {subj} less {_join(neg)} than {peers}."
+    return f"They bowled to {subj} as they bowled to {peers}."
 
 
-def _spin_summary(spin_cells):
-    return _diet_sentence(spin_cells, SPIN_PROSE) if spin_cells else None
+def _spin_summary(spin_cells, person="you"):
+    return _diet_sentence(spin_cells, SPIN_PROSE, person) if spin_cells else None
 
 
-def _summary(cells, outs_detail):
+def _summary(cells, outs_detail, person="you"):
     """Two readable sentences: the (pace) diet, then the dismissals. The table carries the numbers."""
-    s1 = _diet_sentence(cells, _PROSE)
+    s1 = _diet_sentence(cells, _PROSE, person)
     if not outs_detail:
         return s1 + " Not dismissed in the series."
     modes = Counter(o["how"] for o in outs_detail)
@@ -264,7 +271,7 @@ def _summary(cells, outs_detail):
     return s1 + " " + s2 + "."
 
 
-def build_card(conn, cur, pid, name, LEN, LIN, STK, SLEN, SLIN):
+def build_card(conn, cur, pid, name, LEN, LIN, STK, SLEN, SLIN, person="you"):
     balls = _player_balls(conn, cur, pid)
     if not balls:
         return None
@@ -301,7 +308,8 @@ def build_card(conn, cur, pid, name, LEN, LIN, STK, SLEN, SLIN):
             "spin_share": round(100 * len(spin) / len(sb)) if sb else 0,
             "ctrl_balls": len(ctrl), "cells": cells, "spin_cells": spin_cells,
             "dismissals": outs_detail,
-            "summary": _summary(cells, outs_detail), "spin_summary": _spin_summary(spin_cells),
+            "summary": _summary(cells, outs_detail, person),
+            "spin_summary": _spin_summary(spin_cells, person),
         })
     return {"name": name, "hand": hand, "series": cards}
 
@@ -309,9 +317,10 @@ def build_card(conn, cur, pid, name, LEN, LIN, STK, SLEN, SLIN):
 _LOOKUP_CACHE = None
 
 
-def card_for(pid, name=None):
+def card_for(pid, name=None, person="them"):
     """One-call attack card for ANY batter (ours or opposition) — used by batting_report to
-    render 'how attacks bowl to them, last 3 series'. Opens its own connection."""
+    render 'how attacks bowl to them, last 3 series'. Opens its own connection.
+    `person` defaults to "them": these are opposition batters in a scouting/player-mode report."""
     global _LOOKUP_CACHE
     conn, cur = set_conn_cursor()
     if _LOOKUP_CACHE is None:
@@ -321,7 +330,7 @@ def card_for(pid, name=None):
         r = run_query(f"SELECT TOP 1 name, surname FROM [{DATA_SCHEMA}].[Players] "
                       f"WHERE player_id='{pid}'", conn, cur)
         name = f"{r[0]['name']} {r[0]['surname']}" if r else str(pid)
-    card = build_card(conn, cur, str(pid), name, *_LOOKUP_CACHE)
+    card = build_card(conn, cur, str(pid), name, *_LOOKUP_CACHE, person=person)
     conn.close()
     return card
 

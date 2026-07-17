@@ -125,7 +125,7 @@ def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
 
     # Identical 8-card headline row to the Test pack — one canonical builder in report_style,
     # so Avg speed (with P99), length, round-the-wicket etc. match Test exactly.
-    cards = [card(lab, val, sub) for (lab, val, sub) in headline_cards(P)]
+    cards = headline_cards(P)
 
     nm = P["name"]
     surname, first = ([x.strip() for x in nm.split(",", 1)] if "," in nm
@@ -185,7 +185,7 @@ _TEMPLATE = r"""
   </div>
 
   <div class="cards">
-    {% for cd in cards %}<div class="card"><div class="lab">{{cd.lab}}</div><div class="val">{{cd.val}}</div>{% if cd.sub %}<div class="csub">{{cd.sub}}</div>{% endif %}</div>{% endfor %}
+    {% for cd in cards %}<div class="card"><div class="lab">{{cd.lab}}</div><div class="val">{{cd.val}}</div>{% if cd.sub %}<div class="csub">{{cd.sub}}</div>{% endif %}{% if cd.recent %}<div class="crec"><span class="rl">3-yr</span> {{cd.recent}}</div>{% endif %}</div>{% endfor %}
   </div>
 
   {% if fingerprint_cards %}

@@ -26,7 +26,7 @@ from report import (
     _fig_uri, _html_to_pdf, _country_code,
     BG_PAGE, BG_PANEL, TEXT_PRI, TEXT_SEC, ACCENT, DANGER, BORDER,
 )
-from report_style import REPORT_CSS
+from report_style import REPORT_CSS, card
 
 
 def _fmt(v, spec=".0f", suffix=""):
@@ -38,14 +38,20 @@ def _fmt(v, spec=".0f", suffix=""):
         return "—"
 
 
-def _cards(P: dict) -> list:
+def _cards(P: dict, recent: dict = None) -> list:
+    """Headline cards — one metric each, career value with the last-3-yr value under it. `recent`
+    = {label: last-3-yr value str}. 'Median % of runs' = the typical innings' share of the team
+    total (median, not the career aggregate, which a couple of big scores skew)."""
     s = P.get("share") or {}
+    rec = recent or {}
     return [
-        ("Runs", _fmt(P["runs"]), f"{P['n_out']} dismissals"),
-        ("Average", _fmt(P["average"], ".1f"), f"SR {_fmt(P['strike_rate'], '.1f')}"),
-        ("Innings", _fmt(s.get("innings")), "batted"),
-        ("Share of team runs", _fmt(s.get("team_share_career"), ".1f", "%"), "career, off the bat"),
-        ("Carries the innings", _fmt(s.get("carried_rate"), ".0f", "%"), "innings with ≥25% of team"),
+        card("Runs", _fmt(P["runs"]), f"{P['n_out']} dismissals · {_fmt(s.get('innings'))} inns"),
+        card("Average", _fmt(P["average"], ".1f"), recent=rec.get("Average", "")),
+        card("Strike rate", _fmt(P["strike_rate"], ".1f"), recent=rec.get("Strike rate", "")),
+        card("Median % of runs", _fmt(s.get("team_share_median"), ".1f", "%"), "of team, per innings",
+             recent=rec.get("Median % of runs", "")),
+        card("Carries the innings", _fmt(s.get("carried_rate"), ".0f", "%"), "innings with ≥25% of team",
+             recent=rec.get("Carries the innings", "")),
     ]
 
 
@@ -630,15 +636,18 @@ def _build_player(P: dict, pdf_path: str) -> dict:
         return {}
 
 
-def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None) -> str:
+def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None,
+                          render_pdf: bool = True) -> str:
     """Combined overview (group=None) or a focused per-bowler-type exploit report (e.g.
-    group='right_pace'). Same engine; the focused one filters to that bowler group + adds a plan."""
+    group='right_pace'). Same engine; the focused one filters to that bowler group + adds a plan.
+    `render_pdf=False` writes the .html + .pmode.html only (fast web iteration, skips the slow print)."""
     raw_all = process_batting_rows(load_batter_deliveries(batter_id))
     P = build_batter_profile(batter_id, raw=raw_all, group=group)
 
     # recency: last-3yr batting fingerprint values (avg / SR / false% vs pace / false% vs spin),
     # computed by the SAME builder on the date-filtered deliveries — matches the career CSV exactly.
     fp_recent = {}
+    card_recent = {}                                   # last-3-yr values shown under the top cards
     if group is None:
         import datetime as _dt
         _cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
@@ -647,12 +656,20 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         if len(_rlegal) >= 300:                        # floor — a thin window isn't a real change
             Pr = build_batter_profile(batter_id, raw=_rec)
             vp, vs = (Pr.get("vs") or {}).get("pace") or {}, (Pr.get("vs") or {}).get("spin") or {}
+            _sr = Pr.get("share") or {}
             if (Pr.get("n_out") or 0) >= 6:
                 fp_recent["Average"] = Pr.get("average")
                 fp_recent["Strike rate"] = Pr.get("strike_rate")
+                if Pr.get("average") is not None:
+                    card_recent["Average"] = _fmt(Pr["average"], ".1f")
+                card_recent["Carries the innings"] = _fmt(_sr.get("carried_rate"), ".0f", "%")
+            if Pr.get("strike_rate") is not None:
+                card_recent["Strike rate"] = _fmt(Pr["strike_rate"], ".1f")
+            card_recent["Median % of runs"] = _fmt(_sr.get("team_share_median"), ".1f", "%")
             fp_recent["False % vs pace"] = vp.get("false_pct")
             fp_recent["False % vs spin"] = vs.get("false_pct")
             fp_recent = {k: v for k, v in fp_recent.items() if v is not None}
+            card_recent = {k: v for k, v in card_recent.items() if v not in (None, "—")}
 
     figs = {}
     try:
@@ -729,7 +746,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "photo_uri": get_photo_data_uri(P["batter_id"], fmt="test", name=P.get("name")),
         "attacked": _attacked_ctx(), "sim_options": _sim_options_ctx(),
         "hand_label": "LHB" if P["is_lhb"] else "RHB",
-        "cards": _cards(P), "impact_read": _impact_read(P),
+        "cards": _cards(P, card_recent), "impact_read": _impact_read(P),
         "vs_rows": _vs_rows(P), "vs_read": _vs_read(P),
         "shot_rows": _shot_rows(P), "dir_read": _dir_read(P),
         "norm_rows": _stroke_norm_rows(P), "norm_read": _stroke_norm_read(P),
@@ -785,7 +802,8 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         f.write(html)
     with open(out_path[:-4] + ".pmode.html", "w", encoding="utf-8") as f:
         f.write(_render(True))
-    _html_to_pdf(html, out_path)
+    if render_pdf:
+        _html_to_pdf(html, out_path)
     return out_path
 
 
@@ -832,9 +850,10 @@ _TEMPLATE = r"""
   </div>
 
   <div class="cards">
-    {% for lab, val, sub in cards %}
-      <div class="card"><div class="lab">{{lab}}</div><div class="val">{{val}}</div>
-      {% if sub %}<div class="csub">{{sub}}</div>{% endif %}</div>
+    {% for cd in cards %}
+      <div class="card"><div class="lab">{{cd.lab}}</div><div class="val">{{cd.val}}</div>
+      {% if cd.sub %}<div class="csub">{{cd.sub}}</div>{% endif %}
+      {% if cd.recent %}<div class="crec"><span class="rl">3-yr</span> {{cd.recent}}</div>{% endif %}</div>
     {% endfor %}
   </div>
 

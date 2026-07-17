@@ -93,7 +93,8 @@ EXTRA_CSS = """<style>
  table.ct td.dir.even{color:#c2c9d4;font-weight:400;font-size:11px}
  table.ct tr:last-child td{border-bottom:0}
  .vwatch{font-size:11px;font-weight:700;color:#003087;text-decoration:none;background:#eef1f6;
-   border:1px solid #d5dced;border-radius:6px;padding:2px 8px;margin-left:6px;letter-spacing:0;text-transform:none}
+   border:1px solid #d5dced;border-radius:6px;padding:2px 8px;margin-left:6px;letter-spacing:0;text-transform:none;
+   white-space:nowrap;display:inline-block}
  .vwatch.off{color:#9aa4b2;border-style:dashed;cursor:default}
  /* collapsible sections */
  details.pack{border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow:hidden}

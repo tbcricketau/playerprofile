@@ -269,10 +269,35 @@ def _figures(P: dict) -> dict:
     return figs
 
 
+def _recent_card_vals(P: dict) -> dict:
+    """Last-3-year values for the headline cards, from a recency-filtered re-profile (same 300-ball
+    floor as the fingerprint overlay — a thin window isn't a real change). {card-label: value str}."""
+    import datetime as _dt
+    cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
+    rec = [r for r in P.get("raw", []) if (r.get("match_date") or "") >= cut]
+    if sum(1 for r in rec if r.get("is_legal")) < 300:
+        return {}
+    Pr = build_profile(P["bowler_id"], hand=P["filters"]["hand"], raw=rec)
+    out = {}
+    if Pr.get("economy") is not None:
+        out["Economy"] = _fmt(Pr["economy"])
+    if Pr.get("bowl_avg") is not None:
+        out["Bowling Avg"] = _fmt(Pr["bowl_avg"])
+    if Pr.get("strike_rate") is not None:
+        out["Strike Rate"] = _fmt(Pr["strike_rate"])
+    if Pr.get("avg_spd") is not None:
+        out["Avg speed"] = f"{_fmt(Pr['avg_spd'])} kph"
+    if Pr.get("avg_len_m") is not None:
+        out["Avg length"] = f"{_fmt(Pr['avg_len_m'], '.2f')} m"
+    if Pr.get("round_pct") is not None:
+        out["Round the wkt"] = _pct(Pr["round_pct"])
+    return out
+
+
 def _cards(P: dict) -> list:
-    """Headline metric cards (label, value, sub). Canonical builder lives in report_style so
-    the Test / ODI / T20 reports share one identical top-card row."""
-    return headline_cards(P)
+    """Headline metric cards (career value + last-3-yr under each). Canonical builder lives in
+    report_style so the Test / ODI / T20 reports share one identical top-card row."""
+    return headline_cards(P, P.get("_recent_cards") or {})
 
 
 def _threat_cards(P: dict) -> list:
@@ -1614,7 +1639,7 @@ def _build_player(P: dict, pdf_path: str, subtitle: str, target_country: str | N
 def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
                   position: str = "All positions", spell: str = "All",
                   length_mode: str = "Zones", with_playlists: bool = True,
-                  target_country: str | None = "Australia") -> str:
+                  target_country: str | None = "Australia", render_pdf: bool = True) -> str:
     """Build the profile, render HTML, print to PDF. Returns the PDF path. When
     `with_playlists`, also builds video playlists + a `<pdf>.player.html` modal player and links
     the report's ▶ buttons to it (best-effort — never breaks the report if video is unavailable).
@@ -1623,6 +1648,7 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
     (that country's conditions first, then similar, then the rest). Defaults to Australia (home
     series). Pass None for pure recency."""
     P = build_profile(bowler_id, hand=hand, position=position, spell=spell, length_mode=length_mode)
+    P["_recent_cards"] = _recent_card_vals(P)          # last-3-yr values for the top cards (once)
 
     os.makedirs(out_dir, exist_ok=True)
     # firstname_surname_bowling_{pace|spin}_{format}_{hand}.pdf
@@ -1663,7 +1689,8 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
         f.write(html)
     with open(out_path[:-4] + ".pmode.html", "w", encoding="utf-8") as f:
         f.write(pm_html)
-    _html_to_pdf(html, out_path)
+    if render_pdf:
+        _html_to_pdf(html, out_path)
     return out_path
 
 
@@ -1690,9 +1717,10 @@ _TEMPLATE = r"""
   </div>
 
   <div class="cards">
-    {% for lab, val, csub in cards %}
-      <div class="card"><div class="lab">{{lab}}</div><div class="val">{{val}}</div>
-      {% if csub %}<div class="csub">{{csub}}</div>{% endif %}</div>
+    {% for cd in cards %}
+      <div class="card"><div class="lab">{{cd.lab}}</div><div class="val">{{cd.val}}</div>
+      {% if cd.sub %}<div class="csub">{{cd.sub}}</div>{% endif %}
+      {% if cd.recent %}<div class="crec"><span class="rl">3-yr</span> {{cd.recent}}</div>{% endif %}</div>
     {% endfor %}
   </div>
 

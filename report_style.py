@@ -35,10 +35,11 @@ def f_int(v):    return f"{int(v):,}" if isinstance(v, (int, float)) else "—"
 def f_pct(v):    return f"{v:.0f}%" if isinstance(v, (int, float)) else "—"
 
 
-def card(label, value, sub=""):
-    """One metric card. Matches the .card .lab/.val/.csub markup in REPORT_CSS, so every report's
-    cards are structurally + visually identical."""
-    return {"lab": label, "val": value, "sub": sub}
+def card(label, value, sub="", recent=""):
+    """One metric card. Matches the .card .lab/.val/.csub/.crec markup in REPORT_CSS, so every
+    report's cards are structurally + visually identical. `recent` = the last-3-year value shown
+    under the career value (empty = career-only card)."""
+    return {"lab": label, "val": value, "sub": sub, "recent": recent}
 
 
 # ── The canonical headline metric-card row (identical across Test / ODI / T20, bowling) ──
@@ -53,25 +54,28 @@ def _pct(v, dp=0):
     return _fmt(v, f".{dp}f", "%")
 
 
-def headline_cards(P: dict) -> list:
-    """The 8 top metric cards every BOWLING report shows, as (label, value, sub) tuples —
-    the convention the report templates already iterate. Reads these profile keys (any may be
-    None): n_balls, n_wkts, economy, bowl_avg, strike_rate, avg_spd, max_spd_99, avg_len_m,
-    short_pct, round_pct, round_lhb, round_rhb.  Change the top-card look/labels HERE and every
-    bowling report (Test / ODI / T20) updates together."""
+def headline_cards(P: dict, recent: dict = None) -> list:
+    """The 8 top metric cards every BOWLING report shows, as card() dicts. Reads these profile keys
+    (any may be None): n_balls, n_wkts, economy, bowl_avg, strike_rate, avg_spd, max_spd_99,
+    avg_len_m, short_pct, round_pct, round_lhb, round_rhb. `recent` = {label: last-3-year value
+    string} to show under the career value (one metric per card, so each can carry its own change).
+    Change the top-card look/labels HERE and every bowling report (Test / ODI / T20) updates together."""
     rl, rr = P.get("round_lhb"), P.get("round_rhb")
     split = (f"LHB {_pct(rl)} · RHB {_pct(rr)}"
              if (rl is not None or rr is not None) else "no data")
     nb, nw = P.get("n_balls"), P.get("n_wkts")
+    rec = recent or {}
     return [
-        ("Balls",         f"{nb:,}" if nb is not None else "—", ""),
-        ("Wickets",       f"{nw}" if nw is not None else "—", ""),
-        ("Economy",       _fmt(P.get("economy")), ""),
-        ("Bowling Avg",   _fmt(P.get("bowl_avg")), ""),
-        ("Strike Rate",   _fmt(P.get("strike_rate")), ""),
-        ("Avg speed",     f"{_fmt(P.get('avg_spd'))} kph", f"P99 {_fmt(P.get('max_spd_99'))}"),
-        ("Avg length",    f"{_fmt(P.get('avg_len_m'), '.2f')} m", f"Short {_pct(P.get('short_pct'))}"),
-        ("Round the wkt", _pct(P.get("round_pct")), split),
+        card("Balls",         f"{nb:,}" if nb is not None else "—"),
+        card("Wickets",       f"{nw}" if nw is not None else "—"),
+        card("Economy",       _fmt(P.get("economy")), recent=rec.get("Economy", "")),
+        card("Bowling Avg",   _fmt(P.get("bowl_avg")), recent=rec.get("Bowling Avg", "")),
+        card("Strike Rate",   _fmt(P.get("strike_rate")), recent=rec.get("Strike Rate", "")),
+        card("Avg speed",     f"{_fmt(P.get('avg_spd'))} kph", f"P99 {_fmt(P.get('max_spd_99'))}",
+             recent=rec.get("Avg speed", "")),
+        card("Avg length",    f"{_fmt(P.get('avg_len_m'), '.2f')} m", f"Short {_pct(P.get('short_pct'))}",
+             recent=rec.get("Avg length", "")),
+        card("Round the wkt", _pct(P.get("round_pct")), split, recent=rec.get("Round the wkt", "")),
     ]
 
 
@@ -105,6 +109,9 @@ REPORT_CSS = f"""
   .card .lab {{ color: {TEXT_SEC}; font-size: 9px; text-transform: uppercase; letter-spacing:.04em; }}
   .card .val {{ font-size: 18px; font-weight: 700; margin-top: 2px; }}
   .card .csub {{ color: {TEXT_SEC}; font-size: 9px; margin-top: 2px; }}
+  .card .crec {{ color: {ACCENT}; font-size: 9px; margin-top: 3px; font-weight: 600;
+                border-top: 1px dotted {BORDER}; padding-top: 3px; }}
+  .card .crec .rl {{ color: {TEXT_SEC}; font-weight: 400; text-transform: uppercase; letter-spacing: .04em; }}
   /* narrative + layout */
   .read {{ font-size: 10px; color: {TEXT_PRI}; margin: 0 0 7px; line-height: 1.35; }}
   .grid2 {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }}
