@@ -45,8 +45,7 @@ EXTRA_CSS = """<style>
  .roster{list-style:none;padding:0;margin:0}
  .roster li{padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;margin:8px 0;background:#fff;
    display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
- .roster a.rmain{color:#003087;text-decoration:none;font-weight:600;flex:1;display:flex;align-items:center;gap:12px;min-width:0}
- .roster a.rmain:hover b{text-decoration:underline}
+ .roster .rmain{color:#1a1a2e;font-weight:600;flex:1;display:flex;align-items:center;gap:12px;min-width:0}
  .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;
    display:flex;align-items:center;justify-content:center;font-size:20px;color:#9aa4b2}
  .roster b{display:block;font-size:15px;color:#1a1a2e} .roster .rr{color:#6b7280;font-size:12px;font-weight:400}
@@ -218,9 +217,9 @@ def _roster_body(meta, roster):
                 lbl = "Bowling" if len(bts) == 1 else f"Bowling: {bt.capitalize()}"
                 chips.append(f'<a class="pchip bowling" href="{sl}-bowling-{bt}.html">{lbl}</a>')
             items.append(
-                f'<li><a class="rmain" href="{sl}-batting.html">'
+                f'<li><span class="rmain">'
                 f'{_avatar(pid, "avatar", _initials(name), name=name)}'
-                f'<span><b>{html.escape(name)}</b><span class="rr">{html.escape(role)}</span></span></a>'
+                f'<span><b>{html.escape(name)}</b><span class="rr">{html.escape(role)}</span></span></span>'
                 f'<span class="packchips">{"".join(chips)}</span></li>')
         sections.append(f'<h2 class="tierhead {ROLE_CLASS.get(role,"squad")}">{heading}'
                         f'<span>{len(group)}</span></h2><ul class="roster">{"".join(items)}</ul>')
@@ -317,21 +316,18 @@ def _our_hands(slug):
         return {}
 
 
-def _opp_card(bid, name, sub, facts, report_url, report_label, vision_href, h2h_row, h2h_verb):
-    """A per-opponent card: the distilled 'what they're about' facts (type-scoped by the caller),
-    a link into the fuller report, and neutral footage against them. NO good/poor matchup verdict —
-    that stays coach-side. `facts` is the list to show; `h2h_row` gives only the ball count."""
+def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb):
+    """A per-opponent card in a PLAYER report: the distilled 'what they're about' facts (type-scoped
+    by the caller) and neutral footage against them. Self-contained — no link to the coach scouting
+    report, and NO good/poor matchup verdict. `h2h_row` gives only the ball count."""
     av = _avatar(bid, "bav", _initials(name), name=name)
     summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)}</b>'
             f'<span class="bt">{html.escape(sub or "")}</span></span></summary>')
     lines = []
     if facts:
         lines.append('<ul class="afacts">' + "".join(f'<li>{html.escape(f)}</li>' for f in facts) + '</ul>')
-    if report_url:
-        lines.append(f'<p><a class="vwatch" href="{report_url}">Full scouting report &#9656;</a> '
-                     f'&mdash; {report_label}</p>')
-    elif not facts:
-        lines.append('<p class="cohort">Detailed scouting report not built for this opponent yet.</p>')
+    else:
+        lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
         met = f'{h2h_row["balls"]} balls of you {h2h_verb} them in Tests.'   # as a matchup verdict)
         if vision_href:
@@ -490,8 +486,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     if opp_bowlers:
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))
-        blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"), report_urls.get(bid),
-                            f"how they bowl to {handword}, in detail.",
+        blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
                             h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing")
                   for bid, (nm, ty) in ordered]
         body.append(_pack_section(f"The {opp} attack",
@@ -523,7 +518,6 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
         ordered = sorted(opp_batters.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))
         blocks = [_opp_card(bid, nm, hand, (about.get(bid) or {}).get(f"facts_{tw}"),
-                            report_urls.get(bid), f"how they play {tw}, in detail.",
                             h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to")
                   for bid, (nm, hand) in ordered]
         body.append(_pack_section(f"The {opp} batters — bowling {tw}",
