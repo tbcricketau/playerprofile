@@ -46,16 +46,17 @@ ROLE_CLASS = {"Batter": "squad", "All-rounder": "xi", "Bowler": "reference", "Un
 EXTRA_CSS = """<style>
  .roster{list-style:none;padding:0;margin:0}
  .roster li{padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;margin:8px 0;background:#fff;
-   display:flex;align-items:center;gap:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
- .roster .rmain{color:#1a1a2e;font-weight:600;flex:1;display:flex;align-items:center;gap:12px;min-width:0}
+   display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+ .roster .rmain{color:#1a1a2e;font-weight:600;flex:1 1 auto;display:flex;align-items:center;gap:12px;min-width:0}
  .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;
    display:flex;align-items:center;justify-content:center;font-size:20px;color:#9aa4b2}
  .roster b{display:block;font-size:15px;color:#1a1a2e} .roster .rr{color:#6b7280;font-size:12px;font-weight:400}
- .packchips{margin-left:auto;display:flex;gap:6px;white-space:nowrap;flex:0 0 auto}
+ .packchips{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;flex:0 0 auto}
+ @media(max-width:560px){.packchips{margin-left:56px;flex-basis:100%;justify-content:flex-start}}
  .pchip{font-size:12px;font-weight:700;padding:7px 13px;border-radius:8px;text-decoration:none;display:inline-block}
  .pchip.batting{background:#e0e7ff;color:#3730a3} .pchip.batting:hover{background:#c7d2fe}
  .pchip.bowling{background:#fef3c7;color:#92400e} .pchip.bowling:hover{background:#fde68a}
- .rtabs{display:flex;gap:8px;margin:-4px 0 16px}
+ .rtabs{display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 16px}
  .rtab{font-size:13px;font-weight:700;padding:6px 15px;border-radius:8px;text-decoration:none;border:1px solid #d5dced;color:#003087;background:#fff}
  .rtab.on{background:#003087;color:#fff;border-color:#003087}
  .phead{display:flex;align-items:center;gap:16px;margin:4px 0 18px}
@@ -134,6 +135,24 @@ _FLAG = {"more": ("▲ more", "dir more"), "less": ("▼ less", "dir less"),
          "even": ("· even", "dir even"), "thin": ("few balls", "dir even")}
 
 
+def _plkey(href):
+    """The playlist key from a '…-vision.html#key' href (for the in-page modal trigger)."""
+    m = re.search(r"#([\w]+)$", href or "")
+    return m.group(1) if m else ""
+
+
+def _vwatch(href, label, cls="vwatch"):
+    """A ▶ link that plays IN-PAGE — inline_player_snippet intercepts a.vlink[data-pl] and opens a
+    modal over the current page, so closing it returns you to the same report. The '…-vision.html#key'
+    href stays as the no-JS fallback."""
+    if not href:
+        return ""
+    k = _plkey(href)
+    cls_full = f"{cls} vlink" if k else cls
+    dp = f' data-pl="{k}"' if k else ""
+    return f'<a class="{cls_full}"{dp} href="{href}">{label}</a>'
+
+
 def _cells_table(cells, caption, href_for=None):
     rows = []
     for idx, c in enumerate(cells):
@@ -141,7 +160,7 @@ def _cells_table(cells, caption, href_for=None):
         if c["flag"] == "more" and href_for:
             h = href_for(idx)
             if h:
-                watch = f' <a class="cwatch" href="{h}" title="watch">▶</a>'
+                watch = " " + _vwatch(h, "▶", cls="cwatch")
         rows.append(
             f'<tr><td>{html.escape(c["label"].capitalize())}{watch}</td>'
             f'<td class="num">{c["pct"]:.0f}%</td><td class="num">{c["ctrl_pct"]:.0f}%</td>'
@@ -158,7 +177,7 @@ def _dismissals_table(dismissals, vision_href=None):
         f'<td>{html.escape(o["length"] or "—")}, {html.escape(o["line"] or "—")}</td>'
         f'<td>{html.escape(o["stroke"] or "—")}</td></tr>'
         for o in dismissals)
-    watch = (f' <a class="vwatch" href="{vision_href}">▶ Watch</a>' if vision_href else "")
+    watch = (" " + _vwatch(vision_href, "▶ Watch")) if vision_href else ""
     return (f'<table class="ct"><caption>Dismissals{watch}</caption>'
             '<tr><th>Bowler</th><th>How</th><th>Ball</th><th>Shot</th></tr>'
             + rows + '</table>')
@@ -376,7 +395,7 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     for kind, label in (("stock", "Stock ball"), ("wicket", "Wicket balls"),
                         ("scoring", "Scoring shots"), ("dismissal", "Dismissals")):
         if opp_vision.get((bid, kind)):
-            watch.append(f'<a class="vwatch" href="{opp_vision[(bid, kind)]}">&#9654; {label}</a>')
+            watch.append(_vwatch(opp_vision[(bid, kind)], f"&#9654; {label}"))
     if watch:
         lines.append('<p>' + " ".join(watch) + '</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
@@ -384,7 +403,7 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
         note = "" if fl == "Test" else f' <span class="cohort">({fl}, not Test)</span>'  # non-Test is clear
         met = f'{h2h_row["balls"]} balls of you {h2h_verb} them.{note}'
         if vision_href:
-            met += f' <a class="vwatch" href="{vision_href}">&#9654; Watch</a>'
+            met += " " + _vwatch(vision_href, "&#9654; Watch")
         lines.append(f'<p>{met}</p>')
     return f'<details class="bwl">{summ}<div class="bbody">{"".join(lines)}</div></details>'
 
@@ -460,7 +479,8 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
     plus any `extra` (playlists, titles) — the real head-to-head meetings. Fresh SAS minted at
     build time, like publish_site. Returns (dismissal_hrefs, h2h_links): {series_index: href#key}
     and [(href, title)] for the h2h playlists whose clips resolved."""
-    from cricket_core.video import playlist_item, resolve_playlist, build_player_html
+    from cricket_core.video import (playlist_item, resolve_playlist, build_player_html,
+                                     inline_player_snippet)
     playlists, titles, hrefs, h2h_links = {}, {}, {}, []
     for i, s in enumerate(card.get("series", []) if card else []):
         items = [playlist_item(o["delivery_id"], o["clip_stem"],
@@ -519,11 +539,14 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
                 playlists[key] = resolved
                 titles[key] = tit
                 opp_vision[(bid, kind)] = f"{page_slug}-vision.html#{key}"
+    snippet = ""
     if playlists:
         build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
                           title=f"{name} — vision", subtitle="dismissals + head-to-head",
                           titles=titles)
-    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision
+        # in-page modal: injected into each of this player's pack pages so ▶ plays over the report
+        snippet = inline_player_snippet(playlists, titles)
+    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet
 
 
 def _report_top(pid, name, role, sname, pages=None, current=None):
@@ -544,7 +567,7 @@ def _vision_list(h2h_links, prefix, had_meetings, verb):
     """The 'all footage' section body, filtered to one direction (#hbat_ / #hbowl_)."""
     links = [(h, t) for h, t in (h2h_links or []) if f"#{prefix}_" in h]
     if links:
-        items = "".join(f'<li style="margin:6px 0"><a class="vwatch" href="{href}">▶ Watch</a> '
+        items = "".join(f'<li style="margin:6px 0">{_vwatch(href, "▶ Watch")} '
                         f'<span style="font-size:13px">{html.escape(title)}</span></li>'
                         for href, title in links)
         return '<ul style="list-style:none;padding:0;margin:0">' + items + '</ul>'
@@ -711,7 +734,7 @@ def build(out_dir, no_video=False, only=None):
                 continue
             pslug = _slug(name)
             bts = rec.get("bowl_types", [])            # [] for a batter, [pace]/[spin]/[pace,spin]
-            vision, h2h_links, h2h_map, cell_vision, opp_vision = {}, [], {}, {}, {}
+            vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip = {}, [], {}, {}, {}, ""
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
             had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
@@ -719,7 +742,7 @@ def build(out_dir, no_video=False, only=None):
             # even with no h2h footage, so build the vision page whenever there are opp clips
             if not no_video and (cards.get(pid) or extra[0] or opp_clips):
                 try:
-                    vision, h2h_links, h2h_map, cell_vision, opp_vision = _build_vision(
+                    vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip = _build_vision(
                         s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
@@ -737,7 +760,7 @@ def build(out_dir, no_video=False, only=None):
                                     opp_bowlers=opp_bowlers, about=about, report_urls=bat_report,
                                     h2h_map=h2h_map, h2h_rows=bat_rows,
                                     pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision,
-                                    opp_vision=opp_vision),
+                                    opp_vision=opp_vision) + vsnip,
                       up=("index.html", "Squad")))
             for bt in bts:
                 bowl_href = f"{pslug}-bowling-{bt}.html"
@@ -747,8 +770,8 @@ def build(out_dir, no_video=False, only=None):
                                         report_urls=bat_urls, h2h_links=h2h_links,
                                         had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
                                         pages=pages, current=bowl_href, btype=bt,
-                                        opp_vision=opp_vision),
-                          up=("index.html", "Squad")))
+                                        opp_vision=opp_vision) + vsnip,
+                      up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 
     if not single:
