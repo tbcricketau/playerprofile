@@ -16,7 +16,8 @@ import json
 from jinja2 import Template
 
 from version import REPORT_VERSION
-from batter_profile import build_batter_profile, BOWLER_GROUPS
+from batter_profile import (build_batter_profile, BOWLER_GROUPS,
+                            process_batting_rows, load_batter_deliveries)
 import field_engine as fe
 from photos import get_photo_data_uri
 from cricket_core.charts import wagon_wheel_zones, fingerprint_strip
@@ -424,11 +425,19 @@ _FP = [
 ]
 
 
-def _fingerprint_cards(P: dict) -> list:
+def _bpctl_of(v, peers):
+    """Percentile of value v within peers (% at or below)."""
+    if v is None or not peers:
+        return None
+    return 100.0 * sum(1 for x in peers if x <= v) / len(peers)
+
+
+def _fingerprint_cards(P: dict, recent_vals: dict = None) -> list:
     ref = _bat_ref()
     me = ref.get(P["batter_id"])
     if not me:
         return []
+    recent_vals = recent_vals or {}
     cards = []
     for key, label, vuln in _FP:
         try:
@@ -452,9 +461,35 @@ def _fingerprint_cards(P: dict) -> list:
         else:
             colour = "#15803d" if hi else (DANGER if pctl <= 20 else TEXT_SEC)
         disp = f"{val:.1f}" + ("%" if key not in ("avg", "sr") else "")
-        cards.append({"label": label, "pctl": pctl, "value": val, "values": peers,
-                      "vuln": vuln, "colour": colour, "disp": disp})
+        card = {"label": label, "pctl": pctl, "value": val, "values": peers,
+                "vuln": vuln, "colour": colour, "disp": disp}
+        rv = recent_vals.get(label)
+        if rv is not None:
+            card["recent"] = rv
+            card["pctl_recent"] = _bpctl_of(rv, peers)
+        cards.append(card)
     return cards
+
+
+def _fingerprint_headline(cards: list) -> str | None:
+    """How the batter's fingerprint has shifted in the last 3 years — leads with the biggest
+    percentile move (noise-gated at 12 points). Vulnerability metrics are phrased as more/less
+    vulnerable, scoring metrics as up/down."""
+    moves = []
+    for m in cards:
+        cp, rp = m.get("pctl"), m.get("pctl_recent")
+        if cp is None or rp is None or abs(rp - cp) < 12:
+            continue
+        lab = m["label"].lower()
+        if m.get("vuln"):
+            txt = f"{lab} {'up' if rp > cp else 'down'}"
+        else:
+            txt = f"{lab} {'up' if rp > cp else 'down'}"
+        moves.append((abs(rp - cp), txt))
+    if not moves:
+        return None
+    moves.sort(reverse=True)
+    return "Changing (last 3 years vs career): " + "; ".join(t for _s, t in moves[:3]) + "."
 
 
 def _plan_read(P: dict) -> str:
@@ -598,7 +633,27 @@ def _build_player(P: dict, pdf_path: str) -> dict:
 def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None) -> str:
     """Combined overview (group=None) or a focused per-bowler-type exploit report (e.g.
     group='right_pace'). Same engine; the focused one filters to that bowler group + adds a plan."""
-    P = build_batter_profile(batter_id, group=group)
+    raw_all = process_batting_rows(load_batter_deliveries(batter_id))
+    P = build_batter_profile(batter_id, raw=raw_all, group=group)
+
+    # recency: last-3yr batting fingerprint values (avg / SR / false% vs pace / false% vs spin),
+    # computed by the SAME builder on the date-filtered deliveries — matches the career CSV exactly.
+    fp_recent = {}
+    if group is None:
+        import datetime as _dt
+        _cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
+        _rec = [r for r in raw_all if (r.get("match_date") or "") >= _cut]
+        _rlegal = [r for r in _rec if r.get("is_legal")]
+        if len(_rlegal) >= 300:                        # floor — a thin window isn't a real change
+            Pr = build_batter_profile(batter_id, raw=_rec)
+            vp, vs = (Pr.get("vs") or {}).get("pace") or {}, (Pr.get("vs") or {}).get("spin") or {}
+            if (Pr.get("n_out") or 0) >= 6:
+                fp_recent["Average"] = Pr.get("average")
+                fp_recent["Strike rate"] = Pr.get("strike_rate")
+            fp_recent["False % vs pace"] = vp.get("false_pct")
+            fp_recent["False % vs spin"] = vs.get("false_pct")
+            fp_recent = {k: v for k, v in fp_recent.items() if v is not None}
+
     figs = {}
     try:
         figs["wagon"] = _fig_uri(
@@ -609,12 +664,16 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
 
     fp_cards = []
     if group is None:                         # fingerprint is vs all batters — combined report only
-        for c in _fingerprint_cards(P):
+        for c in _fingerprint_cards(P, recent_vals=fp_recent):
             try:
-                img = _fig_uri(fingerprint_strip(c["values"], c["value"], invert=False), w=250, h=84)
+                img = _fig_uri(fingerprint_strip(c["values"], c["value"], invert=False,
+                                                 recent_value=c.get("recent")), w=250, h=84)
             except Exception:
                 img = ""
-            fp_cards.append({**c, "img": img, "pct_txt": f"P{c['pctl']:.0f}"})
+            rp = c.get("pctl_recent")
+            fp_cards.append({**c, "img": img, "pct_txt": f"P{c['pctl']:.0f}",
+                             "recent_txt": (f"P{rp:.0f}" if (c.get("recent") is not None and rp is not None) else None)})
+    fp_headline = _fingerprint_headline(fp_cards)
 
     dims = P["dims"]
     isg = P["is_spin_group"]
@@ -680,7 +739,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "dismissal_read": _dismissal_read(P),
         "dismissals": P["dismissals"].most_common(6),
         "narrative": _narrative(P), "figs": figs,
-        "fp_cards": fp_cards, "dim": dim_tables, "plan_read": _plan_read(P),
+        "fp_cards": fp_cards, "fp_headline": fp_headline, "dim": dim_tables, "plan_read": _plan_read(P),
         "field_blocks": _field_blocks(P),
         "mv_label": ("Turn" if isg else "Seam"), "sw_label": ("Drift" if isg else "Swing"),
         "version": REPORT_VERSION, "build_date": datetime.date.today().strftime("%d %b %Y"),
@@ -778,17 +837,18 @@ _TEMPLATE = r"""
 
   {% if fp_cards %}
   <h2>Batting Fingerprint <span class="sub" style="font-weight:400">(percentile vs Test batters)</span></h2>
+  {% if fp_headline %}<div class="read" style="margin-bottom:6px">{{fp_headline}}</div>{% endif %}
   <div class="fpgrid">
     {% for f in fp_cards %}
     <div class="fpcard">
       <div class="lab">{{f.label}}</div>
-      <div class="pct" style="color:{{f.colour}}">{{f.pct_txt}}</div>
+      <div class="pct" style="color:{{f.colour}}">{{f.pct_txt}}{% if f.recent_txt %} <span style="color:#d9822b;font-size:12px">&rarr; {{f.recent_txt}}</span>{% endif %}</div>
       <img src="{{f.img}}">
       <div class="sub">{{f.disp}}{% if f.vuln %} · higher = weaker{% else %} · higher = better{% endif %}</div>
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left">Percentile among Test batters (&ge;1500 balls). Red = a target (high vulnerability); green = a strength. Grey line = this batter in the peer spread.</div>
+  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (avg / SR / false% vs pace &amp; spin). Percentile among Test batters (&ge;1500 balls). Red = a target (high vulnerability); green = a strength.</div>
   {% endif %}
 
   {% if impact_read and not P.group %}
