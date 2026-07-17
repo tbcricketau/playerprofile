@@ -894,6 +894,74 @@
    "facts_spin": [
     "Vs spin: averages 39 at a strike rate of 50, false-shot 11%.",
     "Main scoring shot is the drive."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020200102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B200102"
+    },
+    {
+     "delivery_id": "5461960020200705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B200705"
+    },
+    {
+     "delivery_id": "5461785010200102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A200102"
+    },
+    {
+     "delivery_id": "5461785010200303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A200303"
+    },
+    {
+     "delivery_id": "5461785010200603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A200603"
+    },
+    {
+     "delivery_id": "5461785010200702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A200702"
+    },
+    {
+     "delivery_id": "5461785010200806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A200806"
+    },
+    {
+     "delivery_id": "5461785010200904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A200904"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020100702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B100702"
+    },
+    {
+     "delivery_id": "5461960020201103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B201103"
+    },
+    {
+     "delivery_id": "5461785010100102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A100102"
+    },
+    {
+     "delivery_id": "5461785010201902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A201902"
+    },
+    {
+     "delivery_id": "5461773010100701",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A100701"
+    },
+    {
+     "delivery_id": "5461773010200601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A200601"
+    },
+    {
+     "delivery_id": "5461363010102601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A102601"
+    },
+    {
+     "delivery_id": "5461363010203201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/2/5461363A203201"
+    }
    ]
   },
   "2540166": {
@@ -912,6 +980,74 @@
    "facts_spin": [
     "Vs spin: averages 36 at a strike rate of 49, false-shot 8%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020100103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B100103"
+    },
+    {
+     "delivery_id": "5461960020101003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B101003"
+    },
+    {
+     "delivery_id": "5461960020101004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B101004"
+    },
+    {
+     "delivery_id": "5461960020200303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B200303"
+    },
+    {
+     "delivery_id": "5461773010100402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A100402"
+    },
+    {
+     "delivery_id": "5461773010100902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A100902"
+    },
+    {
+     "delivery_id": "5461773010200301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A200301"
+    },
+    {
+     "delivery_id": "5461773010200702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A200702"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020101206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B101206"
+    },
+    {
+     "delivery_id": "5461960020200502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B200502"
+    },
+    {
+     "delivery_id": "5461773010101101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A101101"
+    },
+    {
+     "delivery_id": "5461773010201105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A201105"
+    },
+    {
+     "delivery_id": "5461363010101404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A101404"
+    },
+    {
+     "delivery_id": "5461363010204102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/2/5461363A204102"
+    },
+    {
+     "delivery_id": "5461355010104201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/A/1/5461355A104201"
+    },
+    {
+     "delivery_id": "5460859020102906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B102906"
+    }
    ]
   },
   "2540168": {
@@ -930,6 +1066,74 @@
    "facts_spin": [
     "Vs spin: averages 37 at a strike rate of 52, false-shot 11%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5460531020100802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B100802"
+    },
+    {
+     "delivery_id": "5460531020101002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B101002"
+    },
+    {
+     "delivery_id": "5460531020101004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B101004"
+    },
+    {
+     "delivery_id": "5460482020200606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/2/5460482B200606"
+    },
+    {
+     "delivery_id": "5460481020200102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/2/5460481B200102"
+    },
+    {
+     "delivery_id": "5460481020200105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/2/5460481B200105"
+    },
+    {
+     "delivery_id": "5460481020200603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/2/5460481B200603"
+    },
+    {
+     "delivery_id": "5460481020200605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/2/5460481B200605"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5460531020101006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B101006"
+    },
+    {
+     "delivery_id": "5460531020200105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/2/5460531B200105"
+    },
+    {
+     "delivery_id": "5460500010100502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A100502"
+    },
+    {
+     "delivery_id": "5460500010201506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/2/5460500A201506"
+    },
+    {
+     "delivery_id": "5460482020100903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B100903"
+    },
+    {
+     "delivery_id": "5460482020200801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/2/5460482B200801"
+    },
+    {
+     "delivery_id": "5460481020100901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/1/5460481B100901"
+    },
+    {
+     "delivery_id": "5460481020201702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/2/5460481B201702"
+    }
    ]
   },
   "2700013": {
@@ -949,6 +1153,74 @@
    "facts_spin": [
     "Vs spin: averages 42 at a strike rate of 63, false-shot 9%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020100704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B100704"
+    },
+    {
+     "delivery_id": "5461960020100901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B100901"
+    },
+    {
+     "delivery_id": "5461960020100905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B100905"
+    },
+    {
+     "delivery_id": "5461960020101301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B101301"
+    },
+    {
+     "delivery_id": "5461960020101503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B101503"
+    },
+    {
+     "delivery_id": "5461960020102001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B102001"
+    },
+    {
+     "delivery_id": "5461960020102003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B102003"
+    },
+    {
+     "delivery_id": "5461960020102006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B102006"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020103404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B103404"
+    },
+    {
+     "delivery_id": "5461960020201305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B201305"
+    },
+    {
+     "delivery_id": "5461785010101606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A101606"
+    },
+    {
+     "delivery_id": "5461785010202704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A202704"
+    },
+    {
+     "delivery_id": "5461773010107404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A107404"
+    },
+    {
+     "delivery_id": "5461773010204305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A204305"
+    },
+    {
+     "delivery_id": "5461363010106402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A106402"
+    },
+    {
+     "delivery_id": "5461363010206906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/2/5461363A206906"
+    }
    ]
   },
   "3110063": {
@@ -967,6 +1239,74 @@
    "facts_spin": [
     "Vs spin: averages 52 at a strike rate of 60, false-shot 11%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020101605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B101605"
+    },
+    {
+     "delivery_id": "5461960020103004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B103004"
+    },
+    {
+     "delivery_id": "5461960020201404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B201404"
+    },
+    {
+     "delivery_id": "5461960020201602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B201602"
+    },
+    {
+     "delivery_id": "5461960020201705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B201705"
+    },
+    {
+     "delivery_id": "5461960020202802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B202802"
+    },
+    {
+     "delivery_id": "5461785010101502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A101502"
+    },
+    {
+     "delivery_id": "5461785010101805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A101805"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020103703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B103703"
+    },
+    {
+     "delivery_id": "5461960020202805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B202805"
+    },
+    {
+     "delivery_id": "5461785010103302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A103302"
+    },
+    {
+     "delivery_id": "5461785010203104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A203104"
+    },
+    {
+     "delivery_id": "5461773010105302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A105302"
+    },
+    {
+     "delivery_id": "5461773010206801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A206801"
+    },
+    {
+     "delivery_id": "5461363010102804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A102804"
+    },
+    {
+     "delivery_id": "5461363010204201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/2/5461363A204201"
+    }
    ]
   },
   "300015": {
@@ -985,6 +1325,74 @@
    "facts_spin": [
     "Vs spin: averages 57 at a strike rate of 57, false-shot 7%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020103605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B103605"
+    },
+    {
+     "delivery_id": "5461960020104002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104002"
+    },
+    {
+     "delivery_id": "5461960020201504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B201504"
+    },
+    {
+     "delivery_id": "5461960020201802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B201802"
+    },
+    {
+     "delivery_id": "5461960020202104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B202104"
+    },
+    {
+     "delivery_id": "5461960020203103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B203103"
+    },
+    {
+     "delivery_id": "5461785010102301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A102301"
+    },
+    {
+     "delivery_id": "5461785010102402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A102402"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020104004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104004"
+    },
+    {
+     "delivery_id": "5461960020203104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B203104"
+    },
+    {
+     "delivery_id": "5461785010103704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A103704"
+    },
+    {
+     "delivery_id": "5461785010210302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A210302"
+    },
+    {
+     "delivery_id": "5461773010111003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A111003"
+    },
+    {
+     "delivery_id": "5461773010205302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A205302"
+    },
+    {
+     "delivery_id": "5461363010109901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A109901"
+    },
+    {
+     "delivery_id": "5461355010110602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/A/1/5461355A110602"
+    }
    ]
   },
   "520069": {
@@ -1002,6 +1410,74 @@
    "facts_spin": [
     "Vs spin: averages 14 at a strike rate of 35, false-shot 6%.",
     "Main scoring shot is the drive."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5460532020100902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B100902"
+    },
+    {
+     "delivery_id": "5460532020103503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B103503"
+    },
+    {
+     "delivery_id": "5460532020200405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B200405"
+    },
+    {
+     "delivery_id": "5460532020200406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B200406"
+    },
+    {
+     "delivery_id": "5460532020200902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B200902"
+    },
+    {
+     "delivery_id": "5460531020101603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B101603"
+    },
+    {
+     "delivery_id": "5460190010105001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A105001"
+    },
+    {
+     "delivery_id": "5460190010205501",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A205501"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5460532020103904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B103904"
+    },
+    {
+     "delivery_id": "5460532020201102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B201102"
+    },
+    {
+     "delivery_id": "5460531020103302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B103302"
+    },
+    {
+     "delivery_id": "5460531020201105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/2/5460531B201105"
+    },
+    {
+     "delivery_id": "5460190010105306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A105306"
+    },
+    {
+     "delivery_id": "5460190010206203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A206203"
+    },
+    {
+     "delivery_id": "5460189010102206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A102206"
+    },
+    {
+     "delivery_id": "5460189010200903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/2/5460189A200903"
+    }
    ]
   },
   "290007": {
@@ -1019,6 +1495,74 @@
    "facts_spin": [
     "Vs spin: averages 28 at a strike rate of 56, false-shot 12%.",
     "Main scoring shot is the drive."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5460482020105404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B105404"
+    },
+    {
+     "delivery_id": "5460482020105605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B105605"
+    },
+    {
+     "delivery_id": "5460481020101401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/1/5460481B101401"
+    },
+    {
+     "delivery_id": "5460481020101503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/1/5460481B101503"
+    },
+    {
+     "delivery_id": "5460481020102103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/1/5460481B102103"
+    },
+    {
+     "delivery_id": "5460481020102604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/1/5460481B102604"
+    },
+    {
+     "delivery_id": "5460481020102705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/1/5460481B102705"
+    },
+    {
+     "delivery_id": "5460481020204205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/2/5460481B204205"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5460482020105606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B105606"
+    },
+    {
+     "delivery_id": "5460482020203202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/2/5460482B203202"
+    },
+    {
+     "delivery_id": "5460481020103103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/1/5460481B103103"
+    },
+    {
+     "delivery_id": "5460481020205204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460481/B/2/5460481B205204"
+    },
+    {
+     "delivery_id": "5460327020101203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460327/B/1/5460327B101203"
+    },
+    {
+     "delivery_id": "5460323020107304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460323/B/1/5460323B107304"
+    },
+    {
+     "delivery_id": "5460190010104502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A104502"
+    },
+    {
+     "delivery_id": "5460190010205004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A205004"
+    }
    ]
   },
   "2540159": {
@@ -1037,6 +1581,74 @@
    "facts_spin": [
     "Vs spin: averages 46 at a strike rate of 57, false-shot 7%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461785010104101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A104101"
+    },
+    {
+     "delivery_id": "5461785010104504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A104504"
+    },
+    {
+     "delivery_id": "5461785010104703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A104703"
+    },
+    {
+     "delivery_id": "5461785010105906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105906"
+    },
+    {
+     "delivery_id": "5461785010106203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A106203"
+    },
+    {
+     "delivery_id": "5461785010106303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A106303"
+    },
+    {
+     "delivery_id": "5461785010106304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A106304"
+    },
+    {
+     "delivery_id": "5461785010106401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A106401"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461785010107702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A107702"
+    },
+    {
+     "delivery_id": "5461785010206204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A206204"
+    },
+    {
+     "delivery_id": "5461773010109704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A109704"
+    },
+    {
+     "delivery_id": "5461773010206102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A206102"
+    },
+    {
+     "delivery_id": "5461363010113101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A113101"
+    },
+    {
+     "delivery_id": "5461355010112401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/A/1/5461355A112401"
+    },
+    {
+     "delivery_id": "5460859020104805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B104805"
+    },
+    {
+     "delivery_id": "5460859020204003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/2/5460859B204003"
+    }
    ]
   },
   "5460114": {
@@ -1055,6 +1667,74 @@
    "facts_spin": [
     "Vs spin: averages 16 at a strike rate of 38, false-shot 15%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5460852020114701",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114701"
+    },
+    {
+     "delivery_id": "5460766010107105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A107105"
+    },
+    {
+     "delivery_id": "5460750010104601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A104601"
+    },
+    {
+     "delivery_id": "5460750010105003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A105003"
+    },
+    {
+     "delivery_id": "5460750010105201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A105201"
+    },
+    {
+     "delivery_id": "5460750010105405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A105405"
+    },
+    {
+     "delivery_id": "5460750010105605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A105605"
+    },
+    {
+     "delivery_id": "5460750010105606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A105606"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5460852020114706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114706"
+    },
+    {
+     "delivery_id": "5460852020207906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/2/5460852B207906"
+    },
+    {
+     "delivery_id": "5460766010107502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A107502"
+    },
+    {
+     "delivery_id": "5460750010106102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A106102"
+    },
+    {
+     "delivery_id": "5460750010208002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/2/5460750A208002"
+    },
+    {
+     "delivery_id": "5460532020104305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B104305"
+    },
+    {
+     "delivery_id": "5460532020206005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B206005"
+    },
+    {
+     "delivery_id": "5460531020109205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B109205"
+    }
    ]
   },
   "3080087": {
@@ -1073,6 +1753,74 @@
    "facts_spin": [
     "Vs spin: averages 31 at a strike rate of 49, false-shot 11%.",
     "Main scoring shot is the drive."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461785010207004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A207004"
+    },
+    {
+     "delivery_id": "5461773010109903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A109903"
+    },
+    {
+     "delivery_id": "5461773010110103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110103"
+    },
+    {
+     "delivery_id": "5461773010206306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A206306"
+    },
+    {
+     "delivery_id": "5461773010206505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A206505"
+    },
+    {
+     "delivery_id": "5461773010206602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A206602"
+    },
+    {
+     "delivery_id": "5461773010206903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A206903"
+    },
+    {
+     "delivery_id": "5461363010109903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A109903"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461785010103902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A103902"
+    },
+    {
+     "delivery_id": "5461785010207202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A207202"
+    },
+    {
+     "delivery_id": "5461773010110104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110104"
+    },
+    {
+     "delivery_id": "5461773010207001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A207001"
+    },
+    {
+     "delivery_id": "5461363010113004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A113004"
+    },
+    {
+     "delivery_id": "5461355010113402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/A/1/5461355A113402"
+    },
+    {
+     "delivery_id": "5460859020106402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B106402"
+    },
+    {
+     "delivery_id": "5460859020203904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/2/5460859B203904"
+    }
    ]
   },
   "2700039": {
@@ -1091,6 +1839,74 @@
    "facts_spin": [
     "Vs spin: averages 8 at a strike rate of 31, false-shot 14%.",
     "Main scoring shot is the work/nudge."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020104601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104601"
+    },
+    {
+     "delivery_id": "5461960020104603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104603"
+    },
+    {
+     "delivery_id": "5461960020204003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204003"
+    },
+    {
+     "delivery_id": "5461785010104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A104605"
+    },
+    {
+     "delivery_id": "5461785010105506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105506"
+    },
+    {
+     "delivery_id": "5461785010208603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A208603"
+    },
+    {
+     "delivery_id": "5461773010110601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110601"
+    },
+    {
+     "delivery_id": "5461773010110602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110602"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104605"
+    },
+    {
+     "delivery_id": "5461960020204005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204005"
+    },
+    {
+     "delivery_id": "5461785010105801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105801"
+    },
+    {
+     "delivery_id": "5461785010209301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A209301"
+    },
+    {
+     "delivery_id": "5461773010110705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110705"
+    },
+    {
+     "delivery_id": "5461773010207004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A207004"
+    },
+    {
+     "delivery_id": "5461363010113401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A113401"
+    },
+    {
+     "delivery_id": "5460859020108003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B108003"
+    }
    ]
   },
   "4353535": {
@@ -1109,6 +1925,74 @@
    "facts_spin": [
     "Vs spin: averages 17 at a strike rate of 43, false-shot 9%.",
     "Main scoring shot is the sweep."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5460859020105902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B105902"
+    },
+    {
+     "delivery_id": "5460859020106002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B106002"
+    },
+    {
+     "delivery_id": "5460852020114301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114301"
+    },
+    {
+     "delivery_id": "5460499010103501",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103501"
+    },
+    {
+     "delivery_id": "5460499010207803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A207803"
+    },
+    {
+     "delivery_id": "5460264010202704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/2/5460264A202704"
+    },
+    {
+     "delivery_id": "5460263010107901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/1/5460263A107901"
+    },
+    {
+     "delivery_id": "5460263010108102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/1/5460263A108102"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5460859020107005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107005"
+    },
+    {
+     "delivery_id": "5460859020204203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/2/5460859B204203"
+    },
+    {
+     "delivery_id": "5460852020115101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B115101"
+    },
+    {
+     "delivery_id": "5460766010108306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A108306"
+    },
+    {
+     "delivery_id": "5460499010103805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103805"
+    },
+    {
+     "delivery_id": "5460499010208603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A208603"
+    },
+    {
+     "delivery_id": "5460264010203001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/2/5460264A203001"
+    },
+    {
+     "delivery_id": "5460263010108205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/1/5460263A108205"
+    }
    ]
   },
   "5180245": {
@@ -1127,6 +2011,74 @@
    "facts_spin": [
     "Vs spin: averages 26 at a strike rate of 46, false-shot 22%.",
     "Main scoring shot is the drive."
+   ],
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020204006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204006"
+    },
+    {
+     "delivery_id": "5461960020204205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204205"
+    },
+    {
+     "delivery_id": "5461960020204406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204406"
+    },
+    {
+     "delivery_id": "5461355010113802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/A/1/5461355A113802"
+    },
+    {
+     "delivery_id": "5461355010113806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/A/1/5461355A113806"
+    },
+    {
+     "delivery_id": "5460852020115202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B115202"
+    },
+    {
+     "delivery_id": "5460750010104903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A104903"
+    },
+    {
+     "delivery_id": "5460750010105106",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A105106"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020104702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104702"
+    },
+    {
+     "delivery_id": "5461960020204506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204506"
+    },
+    {
+     "delivery_id": "5460750010106003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A106003"
+    },
+    {
+     "delivery_id": "5460750010207804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/2/5460750A207804"
+    },
+    {
+     "delivery_id": "5460532020205506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B205506"
+    },
+    {
+     "delivery_id": "5460531020109603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B109603"
+    },
+    {
+     "delivery_id": "5460531020203306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/2/5460531B203306"
+    },
+    {
+     "delivery_id": "5460500010100706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A100706"
+    }
    ]
   }
  }
