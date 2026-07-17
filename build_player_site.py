@@ -345,10 +345,11 @@ def _our_hands(slug):
         return {}
 
 
-def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb):
+def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None):
     """A per-opponent card in a PLAYER report: the distilled 'what they're about' facts (type-scoped
-    by the caller) and neutral footage against them. Self-contained — no link to the coach scouting
-    report, and NO good/poor matchup verdict. `h2h_row` gives only the ball count."""
+    by the caller), video of their stock ball + wicket balls, and neutral footage against them.
+    Self-contained — no link to the coach scouting report, and NO good/poor matchup verdict."""
+    opp_vision = opp_vision or {}
     av = _avatar(bid, "bav", _initials(name), name=name)
     summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)}</b>'
             f'<span class="bt">{html.escape(sub or "")}</span></span></summary>')
@@ -357,6 +358,13 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb):
         lines.append('<ul class="afacts">' + "".join(f'<li>{html.escape(f)}</li>' for f in facts) + '</ul>')
     else:
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
+    watch = []
+    if opp_vision.get((bid, "stock")):
+        watch.append(f'<a class="vwatch" href="{opp_vision[(bid, "stock")]}">&#9654; Stock ball</a>')
+    if opp_vision.get((bid, "wicket")):
+        watch.append(f'<a class="vwatch" href="{opp_vision[(bid, "wicket")]}">&#9654; Wicket balls</a>')
+    if watch:
+        lines.append('<p>' + " ".join(watch) + '</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
         fl = h2h_row.get("format_label", "Test")       # as a matchup verdict). Label the format so
         note = "" if fl == "Test" else f' <span class="cohort">({fl}, not Test)</span>'  # non-Test is clear
@@ -433,7 +441,7 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
     return playlists, titles
 
 
-def _build_vision(dest_dir, page_slug, name, card, extra=None):
+def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
     """One modal-player page per player: a 'Dismissals — v X' playlist per attack-card series,
     plus any `extra` (playlists, titles) — the real head-to-head meetings. Fresh SAS minted at
     build time, like publish_site. Returns (dismissal_hrefs, h2h_links): {series_index: href#key}
@@ -480,11 +488,26 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None):
             href = f"{page_slug}-vision.html#{key}"
             h2h_links.append((href, extra[1][key]))
             h2h_map[key] = href
+    # each opposition bowler's own stock ball + wicket balls (their deliveries, not the h2h)
+    opp_vision = {}
+    for bid, clips in (opp_clips or {}).items():
+        for kind, kk, tit in (("stock", "stock", "Stock ball"), ("wicket", "wkt", "Wicket balls")):
+            stems = clips.get(kind) or []
+            items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=tit)
+                     for e in stems if e.get("clip_stem")]
+            if not items:
+                continue
+            resolved, avail, _tot = resolve_playlist(items)
+            if avail:
+                key = f"{kk}_{bid}"
+                playlists[key] = resolved
+                titles[key] = tit
+                opp_vision[(bid, kind)] = f"{page_slug}-vision.html#{key}"
     if playlists:
         build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
                           title=f"{name} — vision", subtitle="dismissals + head-to-head",
                           titles=titles)
-    return hrefs, h2h_links, h2h_map, cell_vision
+    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision
 
 
 def _report_top(pid, name, role, sname, pages=None, current=None):
@@ -518,7 +541,7 @@ def _vision_list(h2h_links, prefix, had_meetings, verb):
 
 def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False,
                   opp_bowlers=None, about=None, report_urls=None, h2h_map=None, h2h_rows=None,
-                  pages=None, current=None, hand="rhb", cell_vision=None):
+                  pages=None, current=None, hand="rhb", cell_vision=None, opp_vision=None):
     """Batting pack: (1) how previous attacks bowled to you, (2) the opposition attack — one card
     per bowler with the distilled facts + a link to the hand-correct report + your footage."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -537,7 +560,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
-                            h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing")
+                            h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
+                            opp_vision=opp_vision)
                   for bid, (nm, ty) in ordered]
         body.append(_pack_section(f"The {opp} attack",
                                   "Tap a bowler for what they're about, the fuller report, and any "
@@ -638,6 +662,12 @@ def build(out_dir, no_video=False, only=None):
         opp_names = _opp_names(slug)
         opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
         about = _load_about(slug)                      # distilled facts, keyed by opponent id
+        # stock-ball + wicket-ball example clips for the bowlers shown in the batting packs (N_OPP)
+        _bord = sorted((opp_bowlers or {}).items(),
+                       key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
+        opp_clips = {bid: {"stock": (about.get(bid) or {}).get("stock_clips") or [],
+                           "wicket": (about.get(bid) or {}).get("wicket_clips") or []}
+                     for bid, _ in _bord}
         bowl_urls, bat_urls = _scouting_urls(slug)     # {bowler:{hand:url}}, {batter:url}
         our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb
         # h2h counts kept per DIRECTION — an all-rounder can both face and bowl to the same
@@ -660,14 +690,17 @@ def build(out_dir, no_video=False, only=None):
                 continue
             pslug = _slug(name)
             bts = rec.get("bowl_types", [])            # [] for a batter, [pace]/[spin]/[pace,spin]
-            vision, h2h_links, h2h_map, cell_vision = {}, [], {}, {}
+            vision, h2h_links, h2h_map, cell_vision, opp_vision = {}, [], {}, {}, {}
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
             had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
-            if not no_video and (cards.get(pid) or extra[0]):
+            # a batter's page shows the opposition-bowler stock/wicket clips even with no h2h footage
+            is_batter = not rec.get("bowl_types")
+            if not no_video and (cards.get(pid) or extra[0] or (is_batter and opp_clips)):
                 try:
-                    vision, h2h_links, h2h_map, cell_vision = _build_vision(
-                        s_dir, pslug, name, cards.get(pid), extra)
+                    vision, h2h_links, h2h_map, cell_vision, opp_vision = _build_vision(
+                        s_dir, pslug, name, cards.get(pid), extra,
+                        opp_clips=opp_clips if is_batter else None)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             # tab list: Batting + one page per bowling type
@@ -683,7 +716,8 @@ def build(out_dir, no_video=False, only=None):
                       _batting_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had_bat,
                                     opp_bowlers=opp_bowlers, about=about, report_urls=bat_report,
                                     h2h_map=h2h_map, h2h_rows=bat_rows,
-                                    pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision),
+                                    pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision,
+                                    opp_vision=opp_vision),
                       up=("index.html", "Squad")))
             for bt in bts:
                 bowl_href = f"{pslug}-bowling-{bt}.html"

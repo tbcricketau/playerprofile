@@ -21,6 +21,7 @@ warnings.filterwarnings("ignore")
 
 from cricket_core.config import project_path, international_series_sql
 from cricket_core.warehouse import set_conn_cursor, run_query
+from cricket_core.video import clip_stem
 from config import DATA_SCHEMA
 from report import build_profile
 from batter_profile import build_batter_profile
@@ -109,6 +110,42 @@ def _q(conn, cur, sql):
     return run_query(sql, conn, cur)
 
 
+_CLIP_COLS = ("D.delivery_id, D.video_file_name, D.match_id, M.match_length_id, "
+              "S.name season, SR.gender_id")
+_CLIP_JOINS = (f"JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id "
+               f"LEFT JOIN [{DATA_SCHEMA}].[Seasons] S ON M.season_id=S.season_id "
+               f"LEFT JOIN [{DATA_SCHEMA}].[Series] SR ON M.series_id=SR.series_id")
+
+
+def _stems(rows):
+    out = [{"delivery_id": r["delivery_id"],
+            "clip_stem": clip_stem(r.get("season"), r.get("gender_id"), r.get("match_length_id"),
+                                   r.get("match_id"), r.get("video_file_name"))} for r in rows]
+    return [x for x in out if x["clip_stem"]]
+
+
+def bowler_clips(conn, cur, bid, cap=8):
+    """(stock_clips, wicket_clips) — example Test deliveries with video for the bowler's most-common
+    length×line zone (their stock ball) and for their wickets. Newest first."""
+    z = _q(conn, cur, f"""SELECT TOP 1 D.pitch_length_group_pace_1_id len, D.pitch_line_group_pace_id lin
+        FROM [{DATA_SCHEMA}].[Deliveries] D JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id
+        WHERE D.bowler_id='{bid}' AND D.legal_ball=1 AND {_TEST}
+          AND D.pitch_length_group_pace_1_id IS NOT NULL AND D.pitch_line_group_pace_id IS NOT NULL
+        GROUP BY D.pitch_length_group_pace_1_id, D.pitch_line_group_pace_id ORDER BY COUNT(*) DESC""")
+    stock = []
+    if z and z[0]["len"] and z[0]["lin"]:
+        stock = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
+            FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
+            WHERE D.bowler_id='{bid}' AND D.legal_ball=1 AND {_TEST} AND D.video_file_name IS NOT NULL
+              AND D.pitch_length_group_pace_1_id='{z[0]['len']}' AND D.pitch_line_group_pace_id='{z[0]['lin']}'
+            ORDER BY M.match_date DESC"""))
+    wicket = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
+        FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
+        WHERE D.bowler_id='{bid}' AND D.bowler_dismissal='1' AND {_TEST} AND D.video_file_name IS NOT NULL
+        ORDER BY M.match_date DESC"""))
+    return stock, wicket
+
+
 def _test_balls(conn, cur, bid, role):
     """Legal Test balls the player has bowled ('bowl') or faced ('bat')."""
     col = "bowler_id" if role == "bowl" else "striker_id"
@@ -185,7 +222,22 @@ def allfmt_batter_facts(conn, cur, bid, hand, STK, SQ):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--opp", default="bangladesh")
+    ap.add_argument("--clips-only", action="store_true",
+                    help="only add stock/wicket example clips to the existing json (fast, no re-profile)")
     args = ap.parse_args()
+
+    dst = os.path.join(HERE, "data", f"opponent_about_{args.opp}.json")
+    if args.clips_only:
+        out = json.load(open(dst, encoding="utf-8"))
+        conn, cur = set_conn_cursor()
+        for bid, entry in out.get("bowlers", {}).items():
+            st, wk = bowler_clips(conn, cur, bid)
+            entry["stock_clips"], entry["wicket_clips"] = st, wk
+            print(f"  {entry.get('name', bid):<22} stock {len(st)} · wicket {len(wk)}")
+        conn.close()
+        json.dump(out, open(dst, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+        print(f"updated {dst} with example clips")
+        return
 
     p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{args.opp}.json")
     store = json.load(open(p, encoding="utf-8"))

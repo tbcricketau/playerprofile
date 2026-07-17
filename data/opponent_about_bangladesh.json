@@ -10,7 +10,75 @@
     "Stock ball: full on the stumps (23% of what they bowl).",
     "Takes most of their wickets good length, around wide of 6th."
    ],
-   "order": 3164
+   "order": 3164,
+   "stock_clips": [
+    {
+     "delivery_id": "5460482010101406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A101406"
+    },
+    {
+     "delivery_id": "5460482010101606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A101606"
+    },
+    {
+     "delivery_id": "5460482010101801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A101801"
+    },
+    {
+     "delivery_id": "5460482010101804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A101804"
+    },
+    {
+     "delivery_id": "5460482010101806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A101806"
+    },
+    {
+     "delivery_id": "5460482010102002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A102002"
+    },
+    {
+     "delivery_id": "5460482010102003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A102003"
+    },
+    {
+     "delivery_id": "5460482010102201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A102201"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5460482010101801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A101801"
+    },
+    {
+     "delivery_id": "5460482010102002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A102002"
+    },
+    {
+     "delivery_id": "5460482010103001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A103001"
+    },
+    {
+     "delivery_id": "5460482010103403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/A/1/5460482A103403"
+    },
+    {
+     "delivery_id": "5460327010105402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460327/A/1/5460327A105402"
+    },
+    {
+     "delivery_id": "5460323010110702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460323/A/1/5460323A110702"
+    },
+    {
+     "delivery_id": "5460323010202706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460323/A/2/5460323A202706"
+    },
+    {
+     "delivery_id": "5460323010203306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460323/A/2/5460323A203306"
+    }
+   ]
   },
   "2220028": {
    "name": "Taskin Ahmed",
@@ -22,7 +90,75 @@
     "Takes most of their wickets good length, around 5th stump.",
     "Gets the ball to swing — watch the ball in the air."
    ],
-   "order": 2744
+   "order": 2744,
+   "stock_clips": [
+    {
+     "delivery_id": "5461785020100806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100806"
+    },
+    {
+     "delivery_id": "5461785020101001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101001"
+    },
+    {
+     "delivery_id": "5461785020101006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101006"
+    },
+    {
+     "delivery_id": "5461785020101201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101201"
+    },
+    {
+     "delivery_id": "5461785020101203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101203"
+    },
+    {
+     "delivery_id": "5461785020102602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B102602"
+    },
+    {
+     "delivery_id": "5461785020102604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B102604"
+    },
+    {
+     "delivery_id": "5461785020102605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B102605"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461785020100803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100803"
+    },
+    {
+     "delivery_id": "5461785020101006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101006"
+    },
+    {
+     "delivery_id": "5461773020105504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B105504"
+    },
+    {
+     "delivery_id": "5461773020105906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B105906"
+    },
+    {
+     "delivery_id": "5461773020200106",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/2/5461773B200106"
+    },
+    {
+     "delivery_id": "5461773020203304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/2/5461773B203304"
+    },
+    {
+     "delivery_id": "5460532010104805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/A/1/5460532A104805"
+    },
+    {
+     "delivery_id": "5460532010201505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/A/2/5460532A201505"
+    }
+   ]
   },
   "2700039": {
    "name": "Taijul Islam",
@@ -33,7 +169,75 @@
     "Stock ball: full on the stumps (25% of what they bowl).",
     "Takes most of their wickets full, around 6th stump."
    ],
-   "order": 12841
+   "order": 12841,
+   "stock_clips": [
+    {
+     "delivery_id": "5461960010102401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A102401"
+    },
+    {
+     "delivery_id": "5461960010104604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A104604"
+    },
+    {
+     "delivery_id": "5461960010105603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A105603"
+    },
+    {
+     "delivery_id": "5461960010105606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A105606"
+    },
+    {
+     "delivery_id": "5461960010106001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A106001"
+    },
+    {
+     "delivery_id": "5461960010108004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A108004"
+    },
+    {
+     "delivery_id": "5461960010109003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A109003"
+    },
+    {
+     "delivery_id": "5461960010109206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A109206"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461960010106206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A106206"
+    },
+    {
+     "delivery_id": "5461960010107201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A107201"
+    },
+    {
+     "delivery_id": "5461960010109806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A109806"
+    },
+    {
+     "delivery_id": "5461960010110202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A110202"
+    },
+    {
+     "delivery_id": "5461960010110403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A110403"
+    },
+    {
+     "delivery_id": "5461960010110606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A110606"
+    },
+    {
+     "delivery_id": "5461960010110802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A110802"
+    },
+    {
+     "delivery_id": "5461785020104302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B104302"
+    }
+   ]
   },
   "3080087": {
    "name": "Mehidy Hasan Miraz",
@@ -44,7 +248,75 @@
     "Stock ball: full outside off (24% of what they bowl).",
     "Takes most of their wickets good length, around wide of 6th."
    ],
-   "order": 11754
+   "order": 11754,
+   "stock_clips": [
+    {
+     "delivery_id": "5461785020100501",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100501"
+    },
+    {
+     "delivery_id": "5461785020100505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100505"
+    },
+    {
+     "delivery_id": "5461785020101703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101703"
+    },
+    {
+     "delivery_id": "5461785020101706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101706"
+    },
+    {
+     "delivery_id": "5461785020101904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101904"
+    },
+    {
+     "delivery_id": "5461785020101905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101905"
+    },
+    {
+     "delivery_id": "5461785020102102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B102102"
+    },
+    {
+     "delivery_id": "5461785020102104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B102104"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461785020101702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101702"
+    },
+    {
+     "delivery_id": "5461785020102505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B102505"
+    },
+    {
+     "delivery_id": "5461785020201606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/2/5461785B201606"
+    },
+    {
+     "delivery_id": "5461773020102206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B102206"
+    },
+    {
+     "delivery_id": "5461773020106006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106006"
+    },
+    {
+     "delivery_id": "5461773020106404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106404"
+    },
+    {
+     "delivery_id": "5461773020109804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B109804"
+    },
+    {
+     "delivery_id": "5461773020110001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B110001"
+    }
+   ]
   },
   "3110073": {
    "name": "Ebadot Hossain",
@@ -55,7 +327,75 @@
     "Stock ball: a good length wide outside off (26% of what they bowl).",
     "Takes most of their wickets back of length, around 5th stump."
    ],
-   "order": 3743
+   "order": 3743,
+   "stock_clips": [
+    {
+     "delivery_id": "5461773020107305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B107305"
+    },
+    {
+     "delivery_id": "5461773020107306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B107306"
+    },
+    {
+     "delivery_id": "5181487020100801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181487/B/1/5181487B100801"
+    },
+    {
+     "delivery_id": "5181272020105706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/B/1/5181272B105706"
+    },
+    {
+     "delivery_id": "5181272020108805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/B/1/5181272B108805"
+    },
+    {
+     "delivery_id": "5181272020109404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/B/1/5181272B109404"
+    },
+    {
+     "delivery_id": "5180608010200101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5180608/A/2/5180608A200101"
+    },
+    {
+     "delivery_id": "5180608010200102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5180608/A/2/5180608A200102"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461363020108304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B108304"
+    },
+    {
+     "delivery_id": "5181771020100705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/B/1/5181771B100705"
+    },
+    {
+     "delivery_id": "5181771020101104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/B/1/5181771B101104"
+    },
+    {
+     "delivery_id": "5181771020102602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/B/1/5181771B102602"
+    },
+    {
+     "delivery_id": "5181771020103005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/B/1/5181771B103005"
+    },
+    {
+     "delivery_id": "5181771020201403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/B/2/5181771B201403"
+    },
+    {
+     "delivery_id": "5181487020101006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181487/B/1/5181487B101006"
+    },
+    {
+     "delivery_id": "5181487020106004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181487/B/1/5181487B106004"
+    }
+   ]
   },
   "3630141": {
    "name": "Shoriful Islam",
@@ -67,7 +407,75 @@
     "Takes most of their wickets full, around 6th stump.",
     "Gets the ball to swing — watch the ball in the air."
    ],
-   "order": 1884
+   "order": 1884,
+   "stock_clips": [
+    {
+     "delivery_id": "5461785020100203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100203"
+    },
+    {
+     "delivery_id": "5461785020100206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100206"
+    },
+    {
+     "delivery_id": "5461785020100402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100402"
+    },
+    {
+     "delivery_id": "5461785020100403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100403"
+    },
+    {
+     "delivery_id": "5461785020100405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100405"
+    },
+    {
+     "delivery_id": "5461785020100701",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100701"
+    },
+    {
+     "delivery_id": "5461785020100704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100704"
+    },
+    {
+     "delivery_id": "5461785020100901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100901"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461785020209701",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/2/5461785B209701"
+    },
+    {
+     "delivery_id": "5460531010201202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/A/2/5460531A201202"
+    },
+    {
+     "delivery_id": "5460323010100705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460323/A/1/5460323A100705"
+    },
+    {
+     "delivery_id": "5460323010100902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460323/A/1/5460323A100902"
+    },
+    {
+     "delivery_id": "5460323010200302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460323/A/2/5460323A200302"
+    },
+    {
+     "delivery_id": "5460189020101702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/B/1/5460189B101702"
+    },
+    {
+     "delivery_id": "5460189020203204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/B/2/5460189B203204"
+    },
+    {
+     "delivery_id": "5460264020103302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/B/1/5460264B103302"
+    }
+   ]
   },
   "3630144": {
    "name": "Hasan Murad",
@@ -78,7 +486,75 @@
     "Stock ball: full in the channel (24% of what they bowl).",
     "Takes most of their wickets full, around stumps."
    ],
-   "order": 464
+   "order": 464,
+   "stock_clips": [
+    {
+     "delivery_id": "5461363020101905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B101905"
+    },
+    {
+     "delivery_id": "5461363020102102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102102"
+    },
+    {
+     "delivery_id": "5461363020102103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102103"
+    },
+    {
+     "delivery_id": "5461363020102104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102104"
+    },
+    {
+     "delivery_id": "5461363020102105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102105"
+    },
+    {
+     "delivery_id": "5461363020102106",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102106"
+    },
+    {
+     "delivery_id": "5461363020102301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102301"
+    },
+    {
+     "delivery_id": "5461363020102501",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102501"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461363020101903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B101903"
+    },
+    {
+     "delivery_id": "5461363020102705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B102705"
+    },
+    {
+     "delivery_id": "5461363020202001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/2/5461363B202001"
+    },
+    {
+     "delivery_id": "5461363020203402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/2/5461363B203402"
+    },
+    {
+     "delivery_id": "5461363020211402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/2/5461363B211402"
+    },
+    {
+     "delivery_id": "5461363020211403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/2/5461363B211403"
+    },
+    {
+     "delivery_id": "5461355020106403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/B/1/5461355B106403"
+    },
+    {
+     "delivery_id": "5461355020106804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/B/1/5461355B106804"
+    }
+   ]
   },
   "4352598": {
    "name": "Khaled Ahmed",
@@ -90,7 +566,75 @@
     "Takes most of their wickets yorker/full, around wide of 6th.",
     "Gets the ball to swing — watch the ball in the air."
    ],
-   "order": 2724
+   "order": 2724,
+   "stock_clips": [
+    {
+     "delivery_id": "5461960010100203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100203"
+    },
+    {
+     "delivery_id": "5461960010100204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100204"
+    },
+    {
+     "delivery_id": "5461960010100205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100205"
+    },
+    {
+     "delivery_id": "5461960010100401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100401"
+    },
+    {
+     "delivery_id": "5461960010100402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100402"
+    },
+    {
+     "delivery_id": "5461960010100403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100403"
+    },
+    {
+     "delivery_id": "5461960010100404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100404"
+    },
+    {
+     "delivery_id": "5461960010100405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100405"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461960010101702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101702"
+    },
+    {
+     "delivery_id": "5461960010103901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A103901"
+    },
+    {
+     "delivery_id": "5461363020101103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B101103"
+    },
+    {
+     "delivery_id": "5461363020108603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/1/5461363B108603"
+    },
+    {
+     "delivery_id": "5461363020203703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/B/2/5461363B203703"
+    },
+    {
+     "delivery_id": "5460750020105003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/B/1/5460750B105003"
+    },
+    {
+     "delivery_id": "5460190020111903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/B/1/5460190B111903"
+    },
+    {
+     "delivery_id": "5460190020200305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/B/2/5460190B200305"
+    }
+   ]
   },
   "4353535": {
    "name": "Nayeem Hasan",
@@ -101,7 +645,75 @@
     "Stock ball: full outside off (22% of what they bowl).",
     "Takes most of their wickets full, around 5th stump."
    ],
-   "order": 2656
+   "order": 2656,
+   "stock_clips": [
+    {
+     "delivery_id": "5460859010102704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A102704"
+    },
+    {
+     "delivery_id": "5460859010102706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A102706"
+    },
+    {
+     "delivery_id": "5460859010102903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A102903"
+    },
+    {
+     "delivery_id": "5460859010102904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A102904"
+    },
+    {
+     "delivery_id": "5460859010103103",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A103103"
+    },
+    {
+     "delivery_id": "5460859010104904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A104904"
+    },
+    {
+     "delivery_id": "5460859010104906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A104906"
+    },
+    {
+     "delivery_id": "5460859010107203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A107203"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5460859010107601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A107601"
+    },
+    {
+     "delivery_id": "5460859010109905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A109905"
+    },
+    {
+     "delivery_id": "5460859010110504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/A/1/5460859A110504"
+    },
+    {
+     "delivery_id": "5460852010105205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A105205"
+    },
+    {
+     "delivery_id": "5460852010109606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A109606"
+    },
+    {
+     "delivery_id": "5460852010112801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A112801"
+    },
+    {
+     "delivery_id": "5460852010112806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A112806"
+    },
+    {
+     "delivery_id": "5460852010113202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A113202"
+    }
+   ]
   },
   "5180245": {
    "name": "Hasan Mahmud",
@@ -113,7 +725,75 @@
     "Takes most of their wickets yorker/full, around 5th stump.",
     "Gets the ball to swing — watch the ball in the air."
    ],
-   "order": 2006
+   "order": 2006,
+   "stock_clips": [
+    {
+     "delivery_id": "5461960010100101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100101"
+    },
+    {
+     "delivery_id": "5461960010100102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100102"
+    },
+    {
+     "delivery_id": "5461960010100301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100301"
+    },
+    {
+     "delivery_id": "5461960010100302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100302"
+    },
+    {
+     "delivery_id": "5461960010100303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100303"
+    },
+    {
+     "delivery_id": "5461960010100304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100304"
+    },
+    {
+     "delivery_id": "5461960010100505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100505"
+    },
+    {
+     "delivery_id": "5461960010100703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100703"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461355020100104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/B/1/5461355B100104"
+    },
+    {
+     "delivery_id": "5461355020109302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461355/B/1/5461355B109302"
+    },
+    {
+     "delivery_id": "5460852010108603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A108603"
+    },
+    {
+     "delivery_id": "5460852010110106",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A110106"
+    },
+    {
+     "delivery_id": "5460852010112703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/A/1/5460852A112703"
+    },
+    {
+     "delivery_id": "5460750020102203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/B/1/5460750B102203"
+    },
+    {
+     "delivery_id": "5460532010105405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/A/1/5460532A105405"
+    },
+    {
+     "delivery_id": "5460532010105601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/A/1/5460532A105601"
+    }
+   ]
   },
   "5460155": {
    "name": "Nahid Rana",
@@ -125,7 +805,75 @@
     "Takes most of their wickets yorker/full, around 4th stump.",
     "Gets the ball to swing — watch the ball in the air."
    ],
-   "order": 1833
+   "order": 1833,
+   "stock_clips": [
+    {
+     "delivery_id": "5461785020100604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B100604"
+    },
+    {
+     "delivery_id": "5461785020101403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101403"
+    },
+    {
+     "delivery_id": "5461785020101404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101404"
+    },
+    {
+     "delivery_id": "5461785020101601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101601"
+    },
+    {
+     "delivery_id": "5461785020101603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101603"
+    },
+    {
+     "delivery_id": "5461785020101803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101803"
+    },
+    {
+     "delivery_id": "5461785020101804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B101804"
+    },
+    {
+     "delivery_id": "5461785020102005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B102005"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5461785020104004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B104004"
+    },
+    {
+     "delivery_id": "5461785020105603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B105603"
+    },
+    {
+     "delivery_id": "5461785020105804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/1/5461785B105804"
+    },
+    {
+     "delivery_id": "5461785020201102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/2/5461785B201102"
+    },
+    {
+     "delivery_id": "5461785020204404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/B/2/5461785B204404"
+    },
+    {
+     "delivery_id": "5461773020109301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B109301"
+    },
+    {
+     "delivery_id": "5461773020201602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/2/5461773B201602"
+    },
+    {
+     "delivery_id": "5461773020204503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/2/5461773B204503"
+    }
+   ]
   }
  },
  "batters": {
