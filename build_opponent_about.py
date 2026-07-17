@@ -146,6 +146,21 @@ def bowler_clips(conn, cur, bid, cap=8):
     return stock, wicket
 
 
+def batter_clips(conn, cur, bid, cap=8):
+    """(scoring_clips, dismissal_clips) — example Test deliveries with video where the batter scores
+    a boundary (how they score) and where they were dismissed (how they get out). Newest first."""
+    scoring = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
+        FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
+        WHERE D.striker_id='{bid}' AND D.legal_ball=1 AND {_TEST} AND D.video_file_name IS NOT NULL
+          AND D.bat_score IN ('4','6')
+        ORDER BY M.match_date DESC"""))
+    dismissal = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
+        FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
+        WHERE D.striker_id='{bid}' AND D.striker_dismissed='1' AND {_TEST} AND D.video_file_name IS NOT NULL
+        ORDER BY M.match_date DESC"""))
+    return scoring, dismissal
+
+
 def _test_balls(conn, cur, bid, role):
     """Legal Test balls the player has bowled ('bowl') or faced ('bat')."""
     col = "bowler_id" if role == "bowl" else "striker_id"
@@ -233,7 +248,11 @@ def main():
         for bid, entry in out.get("bowlers", {}).items():
             st, wk = bowler_clips(conn, cur, bid)
             entry["stock_clips"], entry["wicket_clips"] = st, wk
-            print(f"  {entry.get('name', bid):<22} stock {len(st)} · wicket {len(wk)}")
+            print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)}")
+        for bid, entry in out.get("batters", {}).items():
+            sc, ds = batter_clips(conn, cur, bid)
+            entry["scoring_clips"], entry["dismissal_clips"] = sc, ds
+            print(f"  batter {entry.get('name', bid):<20} scoring {len(sc)} · dismissal {len(ds)}")
         conn.close()
         json.dump(out, open(dst, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
         print(f"updated {dst} with example clips")

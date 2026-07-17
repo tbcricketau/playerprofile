@@ -763,14 +763,28 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     os.makedirs(out_dir, exist_ok=True)
 
     ctx["video"] = _build_player(P, out_path)
-    html = Template(_TEMPLATE).render(**ctx)
-    if ctx["video"].get("playlists"):
-        # Interactive HTML report: ▶ opens the playlist as a modal OVER the report in the same
-        # tab (iOS Safari/Chrome friendly); the PDF keeps the standalone-player href fallback.
-        from cricket_core.video import inline_player_snippet
-        html = html.replace("</body>", inline_player_snippet(ctx["video"]["playlists"]) + "</body>")
-        with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
-            f.write(html)
+
+    def _render(player_mode):
+        """Full coach report, or the reduced player-facing cut (the coach-only 'Our Best Options'
+        simulated-matchup table — how OUR bowlers match up to this batter — stripped)."""
+        c2 = dict(ctx, player_mode=player_mode)
+        if player_mode:
+            c2["sim_options"] = None
+        h = Template(_TEMPLATE).render(**c2)
+        if ctx["video"].get("playlists"):
+            # Interactive HTML report: ▶ opens the playlist as a modal OVER the report in the same
+            # tab (iOS Safari/Chrome friendly); the PDF keeps the standalone-player href fallback.
+            from cricket_core.video import inline_player_snippet
+            snippet = ("<!--PLAYER_SNIPPET_START-->"
+                       + inline_player_snippet(ctx["video"]["playlists"]) + "<!--PLAYER_SNIPPET_END-->")
+            h = h.replace("</body>", snippet + "</body>")
+        return h
+
+    html = _render(False)
+    with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
+        f.write(html)
+    with open(out_path[:-4] + ".pmode.html", "w", encoding="utf-8") as f:
+        f.write(_render(True))
     _html_to_pdf(html, out_path)
     return out_path
 

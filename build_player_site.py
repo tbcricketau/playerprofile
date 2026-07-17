@@ -330,7 +330,14 @@ def _scouting_urls(series_slug):
             bowl.setdefault(str(meta["bowler_id"]), {})[hand] = \
                 f"../scouting/{series_slug}/{grp}/{base}{variant}"
         elif "_batting_" in base and meta.get("batter_id"):
-            bat[str(meta["batter_id"])] = f"../scouting/{series_slug}/batters/{base}.html"
+            bid = str(meta["batter_id"])
+            is_group = "_vs_" in base            # a group-specific exploit report, not the overview
+            if bid in bat and (is_group or not bat[bid][1]):
+                continue                          # already have a combined overview — keep it
+            variant = ".pmode.html" if os.path.exists(
+                os.path.join(HERE, "reports", f"{base}.pmode.html")) else ".html"
+            bat[bid] = (f"../scouting/{series_slug}/batters/{base}{variant}", not is_group)
+    bat = {bid: url for bid, (url, _combined) in bat.items()}
     return bowl, bat
 
 
@@ -366,10 +373,10 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     else:
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     watch = []
-    if opp_vision.get((bid, "stock")):
-        watch.append(f'<a class="vwatch" href="{opp_vision[(bid, "stock")]}">&#9654; Stock ball</a>')
-    if opp_vision.get((bid, "wicket")):
-        watch.append(f'<a class="vwatch" href="{opp_vision[(bid, "wicket")]}">&#9654; Wicket balls</a>')
+    for kind, label in (("stock", "Stock ball"), ("wicket", "Wicket balls"),
+                        ("scoring", "Scoring shots"), ("dismissal", "Dismissals")):
+        if opp_vision.get((bid, kind)):
+            watch.append(f'<a class="vwatch" href="{opp_vision[(bid, kind)]}">&#9654; {label}</a>')
     if watch:
         lines.append('<p>' + " ".join(watch) + '</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
@@ -495,10 +502,12 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
             href = f"{page_slug}-vision.html#{key}"
             h2h_links.append((href, extra[1][key]))
             h2h_map[key] = href
-    # each opposition bowler's own stock ball + wicket balls (their deliveries, not the h2h)
+    # each opponent's own signature footage — bowlers: stock ball + wicket balls; batters: their
+    # scoring shots + dismissals (their deliveries, not the h2h)
     opp_vision = {}
     for bid, clips in (opp_clips or {}).items():
-        for kind, kk, tit in (("stock", "stock", "Stock ball"), ("wicket", "wkt", "Wicket balls")):
+        for kind, kk, tit in (("stock", "stock", "Stock ball"), ("wicket", "wkt", "Wicket balls"),
+                              ("scoring", "sco", "Scoring shots"), ("dismissal", "dsm", "Dismissals")):
             stems = clips.get(kind) or []
             items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=tit)
                      for e in stems if e.get("clip_stem")]
@@ -583,7 +592,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 
 def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None, h2h_links=None,
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
-                  btype="pace"):
+                  btype="pace", opp_vision=None):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -599,7 +608,8 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
         ordered = sorted(opp_batters.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         blocks = [_opp_card(bid, nm, hand, (about.get(bid) or {}).get(f"facts_{tw}"),
-                            h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to")
+                            h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
+                            opp_vision=opp_vision, report_url=report_urls.get(bid))
                   for bid, (nm, hand) in ordered]
         body.append(_pack_section(f"The {opp} batters — bowling {tw}",
                                   f"How each of them plays {tw}, plus any footage of you bowling to "
@@ -669,12 +679,16 @@ def build(out_dir, no_video=False, only=None):
         opp_names = _opp_names(slug)
         opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
         about = _load_about(slug)                      # distilled facts, keyed by opponent id
-        # stock-ball + wicket-ball example clips for the bowlers shown in the batting packs (N_OPP)
-        _bord = sorted((opp_bowlers or {}).items(),
-                       key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
+        # signature footage for the opponents shown (N_OPP each) — bowlers get stock/wicket balls
+        # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs)
+        _ord = lambda d: sorted((d or {}).items(),
+                                key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         opp_clips = {bid: {"stock": (about.get(bid) or {}).get("stock_clips") or [],
                            "wicket": (about.get(bid) or {}).get("wicket_clips") or []}
-                     for bid, _ in _bord}
+                     for bid, _ in _ord(opp_bowlers)}
+        opp_clips.update({bid: {"scoring": (about.get(bid) or {}).get("scoring_clips") or [],
+                                "dismissal": (about.get(bid) or {}).get("dismissal_clips") or []}
+                          for bid, _ in _ord(opp_batters)})
         bowl_urls, bat_urls = _scouting_urls(slug)     # {bowler:{hand:url}}, {batter:url}
         our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb
         # h2h counts kept per DIRECTION — an all-rounder can both face and bowl to the same
@@ -701,13 +715,12 @@ def build(out_dir, no_video=False, only=None):
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
             had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
-            # a batter's page shows the opposition-bowler stock/wicket clips even with no h2h footage
-            is_batter = not rec.get("bowl_types")
-            if not no_video and (cards.get(pid) or extra[0] or (is_batter and opp_clips)):
+            # opponent signature footage (bowler stock/wicket, batter scoring/dismissal) shows
+            # even with no h2h footage, so build the vision page whenever there are opp clips
+            if not no_video and (cards.get(pid) or extra[0] or opp_clips):
                 try:
                     vision, h2h_links, h2h_map, cell_vision, opp_vision = _build_vision(
-                        s_dir, pslug, name, cards.get(pid), extra,
-                        opp_clips=opp_clips if is_batter else None)
+                        s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             # tab list: Batting + one page per bowling type
@@ -733,7 +746,8 @@ def build(out_dir, no_video=False, only=None):
                           _bowling_body(meta, pid, rec, opp_batters=opp_batters, about=about,
                                         report_urls=bat_urls, h2h_links=h2h_links,
                                         had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
-                                        pages=pages, current=bowl_href, btype=bt),
+                                        pages=pages, current=bowl_href, btype=bt,
+                                        opp_vision=opp_vision),
                           up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 
