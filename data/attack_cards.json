@@ -18,103 +18,56 @@
     "ctrl_balls": 1023,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.6,
-      "ctrl_pct": 1.9,
-      "z": -0.4,
-      "flag": "even"
+      "label": "round the wicket",
+      "pct": 62.0,
+      "ctrl_pct": 80.4,
+      "z": -7.8,
+      "flag": "less"
      },
      {
-      "label": "full",
-      "pct": 11.5,
-      "ctrl_pct": 10.2,
-      "z": 0.8,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 10.7,
-      "ctrl_pct": 9.3,
-      "z": 0.9,
+      "label": "pitched up",
+      "pct": 13.2,
+      "ctrl_pct": 12.1,
+      "z": 0.6,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 33.5,
-      "ctrl_pct": 36.4,
-      "z": -1.1,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 18.4,
-      "ctrl_pct": 18.3,
-      "z": 0.0,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 9.6,
-      "ctrl_pct": 11.5,
-      "z": -1.2,
+      "pct": 62.6,
+      "ctrl_pct": 64.0,
+      "z": -0.5,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 14.6,
-      "ctrl_pct": 12.4,
-      "z": 1.2,
+      "pct": 24.2,
+      "ctrl_pct": 23.9,
+      "z": 0.1,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 46.8,
       "ctrl_pct": 56.7,
       "z": -3.7,
       "flag": "less"
      },
      {
-      "label": "wide of off",
+      "label": "pitched at the stumps",
+      "pct": 18.4,
+      "ctrl_pct": 13.3,
+      "z": 2.7,
+      "flag": "even"
+     },
+     {
+      "label": "pitched wide of off",
       "pct": 11.4,
       "ctrl_pct": 20.7,
       "z": -4.7,
       "flag": "less"
      },
      {
-      "label": "at the stumps",
-      "pct": 18.4,
-      "ctrl_pct": 13.3,
-      "z": 2.7,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460932010200305",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200305"
-       },
-       {
-        "delivery_id": "5460932010200304",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200304"
-       },
-       {
-        "delivery_id": "5460932010200301",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200301"
-       },
-       {
-        "delivery_id": "5460932010200106",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200106"
-       },
-       {
-        "delivery_id": "5460932010200104",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200104"
-       },
-       {
-        "delivery_id": "5460932010200101",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200101"
-       }
-      ]
-     },
-     {
-      "label": "on leg",
+      "label": "pitched at your pads",
       "pct": 23.4,
       "ctrl_pct": 9.3,
       "z": 7.4,
@@ -155,36 +108,10 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 14.0,
-      "ctrl_pct": 9.2,
+      "pct": 14.8,
+      "ctrl_pct": 9.9,
       "z": 2.8,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460932010200304",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200304"
-       },
-       {
-        "delivery_id": "5460932010200301",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200301"
-       },
-       {
-        "delivery_id": "5460932010200106",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200106"
-       },
-       {
-        "delivery_id": "5460932010200104",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200104"
-       },
-       {
-        "delivery_id": "5460932010106705",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A106705"
-       },
-       {
-        "delivery_id": "5460932010104106",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A104106"
-       }
-      ]
+      "flag": "even"
      }
     ],
     "spin_cells": [
@@ -200,7 +127,33 @@
       "pct": 39.4,
       "ctrl_pct": 29.4,
       "z": 1.7,
-      "flag": "even"
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460932010201006",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201006"
+       },
+       {
+        "delivery_id": "5460932010200804",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200804"
+       },
+       {
+        "delivery_id": "5460932010106801",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A106801"
+       },
+       {
+        "delivery_id": "5460932010106504",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A106504"
+       },
+       {
+        "delivery_id": "5460930010206605",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A206605"
+       },
+       {
+        "delivery_id": "5460930010206604",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A206604"
+       }
+      ]
      },
      {
       "label": "dragged short",
@@ -335,7 +288,7 @@
       "bowler": "Carse",
       "stroke": "Forward defence",
       "length": "a good length",
-      "line": "on leg",
+      "line": "at the pads",
       "pace_spin": "pace",
       "date": "2025-12-26",
       "delivery_id": "5460931010202106",
@@ -364,8 +317,8 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201103"
      }
     ],
-    "summary": "They bowled you more at your pads, full and straight and at the stumps, and less with the width to cut, wide of off and in the channel. 10 dismissals — 6 caught, 3 bowled and 1 LBW.",
-    "spin_summary": "They bowled to you as they bowled to your teammates."
+    "summary": "They came round the wicket and stuck to a good length at your pads. 10 dismissals — 6 caught, 3 bowled and 1 LBW.",
+    "spin_summary": "They bowled you more on a good length than your teammates."
    },
    {
     "opp": "West Indies",
@@ -382,77 +335,56 @@
     "ctrl_balls": 488,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.7,
-      "ctrl_pct": 1.5,
-      "z": 0.1,
+      "label": "round the wicket",
+      "pct": 94.0,
+      "ctrl_pct": 90.9,
+      "z": 1.5,
       "flag": "even"
      },
      {
-      "label": "full",
-      "pct": 18.3,
-      "ctrl_pct": 16.6,
+      "label": "pitched up",
+      "pct": 20.0,
+      "ctrl_pct": 18.1,
       "z": 0.6,
       "flag": "even"
      },
      {
-      "label": "fullish",
-      "pct": 16.3,
-      "ctrl_pct": 13.3,
-      "z": 1.2,
-      "flag": "even"
-     },
-     {
       "label": "a good length",
-      "pct": 39.7,
-      "ctrl_pct": 43.1,
-      "z": -0.9,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 13.7,
-      "ctrl_pct": 13.9,
-      "z": -0.1,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 7.0,
-      "ctrl_pct": 6.6,
-      "z": 0.2,
+      "pct": 69.7,
+      "ctrl_pct": 70.4,
+      "z": -0.2,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 3.3,
-      "ctrl_pct": 4.9,
-      "z": -1.0,
+      "pct": 10.3,
+      "ctrl_pct": 11.5,
+      "z": -0.5,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 58.0,
       "ctrl_pct": 58.2,
       "z": -0.1,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 33.3,
-      "ctrl_pct": 33.4,
-      "z": -0.0,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 6.3,
       "ctrl_pct": 5.3,
       "z": 0.6,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 33.3,
+      "ctrl_pct": 33.4,
+      "z": -0.0,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 2.3,
       "ctrl_pct": 3.1,
       "z": -0.6,
@@ -467,9 +399,9 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 4.7,
+      "pct": 5.0,
       "ctrl_pct": 4.2,
-      "z": 0.3,
+      "z": 0.5,
       "flag": "even"
      }
     ],
@@ -542,7 +474,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B201704"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 6 dismissals — 4 caught, 1 LBW and 1 bowled, playing the drive.",
+    "summary": "They came round the wicket and stuck to a good length in the channel. 6 dismissals — 4 caught, 1 LBW and 1 bowled, playing the drive.",
     "spin_summary": null
    },
    {
@@ -584,7 +516,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A202404"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 bowled.",
+    "summary": "2 dismissals — 1 caught and 1 bowled.",
     "spin_summary": null
    }
   ]
@@ -608,31 +540,24 @@
     "ctrl_balls": 1453,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.5,
-      "ctrl_pct": 1.9,
-      "z": -0.4,
+      "label": "round the wicket",
+      "pct": 66.4,
+      "ctrl_pct": 74.0,
+      "z": -2.5,
       "flag": "even"
      },
      {
-      "label": "full",
-      "pct": 12.7,
-      "ctrl_pct": 10.3,
-      "z": 1.1,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 10.4,
-      "ctrl_pct": 9.8,
-      "z": 0.3,
+      "label": "pitched up",
+      "pct": 14.2,
+      "ctrl_pct": 12.2,
+      "z": 0.9,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 40.7,
-      "ctrl_pct": 33.9,
-      "z": 2.1,
+      "pct": 73.1,
+      "ctrl_pct": 61.2,
+      "z": 3.7,
       "flag": "more",
       "examples": [
        {
@@ -640,140 +565,74 @@
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201503"
        },
        {
+        "delivery_id": "5460932010201502",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201502"
+       },
+       {
         "delivery_id": "5460932010201501",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201501"
        },
        {
+        "delivery_id": "5460932010201101",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201101"
+       },
+       {
+        "delivery_id": "5460932010200706",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200706"
+       },
+       {
         "delivery_id": "5460932010200705",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200705"
-       },
-       {
-        "delivery_id": "5460932010200704",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200704"
-       },
-       {
-        "delivery_id": "5460932010200603",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200603"
-       },
-       {
-        "delivery_id": "5460932010200303",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200303"
        }
       ]
      },
      {
-      "label": "back of a length",
-      "pct": 22.0,
-      "ctrl_pct": 17.5,
-      "z": 1.7,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 10.4,
-      "ctrl_pct": 10.7,
-      "z": -0.1,
-      "flag": "even"
-     },
-     {
       "label": "short",
-      "pct": 2.2,
-      "ctrl_pct": 15.9,
-      "z": -5.9,
+      "pct": 12.7,
+      "ctrl_pct": 26.6,
+      "z": -4.8,
       "flag": "less"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 47.8,
       "ctrl_pct": 53.6,
       "z": -1.7,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 22.4,
-      "ctrl_pct": 15.5,
-      "z": 2.7,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460932010201502",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201502"
-       },
-       {
-        "delivery_id": "5460932010200705",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200705"
-       },
-       {
-        "delivery_id": "5460932010200704",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200704"
-       },
-       {
-        "delivery_id": "5460932010200703",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200703"
-       },
-       {
-        "delivery_id": "5460932010200502",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200502"
-       },
-       {
-        "delivery_id": "5460932010200205",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200205"
-       }
-      ]
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 19.8,
       "ctrl_pct": 14.5,
       "z": 2.2,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460932010200303",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200303"
-       },
-       {
-        "delivery_id": "5460932010200204",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200204"
-       },
-       {
-        "delivery_id": "5460932010200103",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A200103"
-       },
-       {
-        "delivery_id": "5460932010101302",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A101302"
-       },
-       {
-        "delivery_id": "5460932010101103",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A101103"
-       },
-       {
-        "delivery_id": "5460932010101001",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A101001"
-       }
-      ]
+      "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 22.4,
+      "ctrl_pct": 15.5,
+      "z": 2.7,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 10.1,
       "ctrl_pct": 16.5,
       "z": -2.6,
-      "flag": "less"
+      "flag": "even"
      },
      {
       "label": "cut ball (short, wide off)",
       "pct": 9.7,
       "ctrl_pct": 16.7,
       "z": -2.8,
-      "flag": "less"
+      "flag": "even"
      },
      {
       "label": "full at the stumps",
-      "pct": 13.1,
-      "ctrl_pct": 10.8,
-      "z": 1.0,
+      "pct": 13.4,
+      "ctrl_pct": 11.7,
+      "z": 0.8,
       "flag": "even"
      }
     ],
@@ -828,7 +687,7 @@
       "bowler": "Carse",
       "stroke": "Worked",
       "length": "a good length",
-      "line": "on leg",
+      "line": "at the pads",
       "pace_spin": "pace",
       "date": "2025-12-17",
       "delivery_id": "5460930010200203",
@@ -879,7 +738,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201504"
      }
     ],
-    "summary": "They bowled you more wide of off, at the stumps and on a good length, and less short, with the width to cut and at your pads. 9 dismissals — 4 LBW, 4 caught and 1 bowled, the wicket ball most often full, at the stumps.",
+    "summary": "They came round the wicket and hit a good length in the channel. 9 dismissals — 4 LBW, 4 caught and 1 bowled, the wicket ball most often full, at the stumps.",
     "spin_summary": null
    }
   ]
@@ -903,94 +762,73 @@
     "ctrl_balls": 812,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.5,
-      "ctrl_pct": 1.9,
-      "z": -1.7,
+      "label": "round the wicket",
+      "pct": 0.0,
+      "ctrl_pct": 2.0,
+      "z": -2.7,
       "flag": "even"
      },
      {
-      "label": "full",
-      "pct": 11.0,
-      "ctrl_pct": 8.8,
-      "z": 1.2,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 7.9,
-      "ctrl_pct": 10.0,
-      "z": -1.1,
+      "label": "pitched up",
+      "pct": 11.5,
+      "ctrl_pct": 10.6,
+      "z": 0.4,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 42.7,
-      "ctrl_pct": 37.7,
-      "z": 1.6,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 20.3,
-      "ctrl_pct": 17.5,
-      "z": 1.1,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 8.8,
-      "ctrl_pct": 11.0,
-      "z": -1.2,
+      "pct": 71.0,
+      "ctrl_pct": 65.3,
+      "z": 1.9,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 8.8,
-      "ctrl_pct": 13.1,
-      "z": -2.1,
-      "flag": "less"
+      "pct": 17.5,
+      "ctrl_pct": 24.1,
+      "z": -2.5,
+      "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 64.9,
       "ctrl_pct": 59.1,
       "z": 1.8,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 32.1,
-      "ctrl_pct": 34.4,
-      "z": -0.8,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 2.7,
       "ctrl_pct": 4.6,
       "z": -1.5,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 32.1,
+      "ctrl_pct": 34.4,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 0.3,
       "ctrl_pct": 1.9,
       "z": -2.2,
-      "flag": "less"
+      "flag": "even"
      },
      {
       "label": "cut ball (short, wide off)",
       "pct": 17.0,
       "ctrl_pct": 22.2,
       "z": -2.0,
-      "flag": "less"
+      "flag": "even"
      },
      {
       "label": "full at the stumps",
       "pct": 1.9,
-      "ctrl_pct": 3.3,
-      "z": -1.3,
+      "ctrl_pct": 3.7,
+      "z": -1.6,
       "flag": "even"
      }
     ],
@@ -1096,7 +934,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202401"
      }
     ],
-    "summary": "They bowled you less at your pads, short and with the width to cut than your teammates. 9 dismissals — 7 caught, 1 bowled and 1 run out.",
+    "summary": "They stuck to a good length in the channel. 9 dismissals — 7 caught, 1 bowled and 1 run out.",
     "spin_summary": null
    },
    {
@@ -1114,77 +952,56 @@
     "ctrl_balls": 239,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.9,
-      "ctrl_pct": 0.0,
-      "z": 1.3,
-      "flag": "thin"
-     },
-     {
-      "label": "full",
-      "pct": 9.6,
-      "ctrl_pct": 5.9,
-      "z": 1.2,
+      "label": "round the wicket",
+      "pct": 23.5,
+      "ctrl_pct": 20.5,
+      "z": 0.6,
       "flag": "even"
      },
      {
-      "label": "fullish",
-      "pct": 18.3,
-      "ctrl_pct": 11.2,
-      "z": 1.8,
+      "label": "pitched up",
+      "pct": 10.4,
+      "ctrl_pct": 5.9,
+      "z": 1.5,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 47.0,
-      "ctrl_pct": 53.2,
-      "z": -1.1,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 17.4,
-      "ctrl_pct": 20.0,
-      "z": -0.6,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 2.6,
-      "ctrl_pct": 6.3,
-      "z": -1.5,
+      "pct": 82.6,
+      "ctrl_pct": 84.4,
+      "z": -0.4,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 4.3,
-      "ctrl_pct": 3.4,
-      "z": 0.4,
+      "pct": 7.0,
+      "ctrl_pct": 9.8,
+      "z": -0.9,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 55.7,
       "ctrl_pct": 51.7,
       "z": 0.7,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 33.9,
-      "ctrl_pct": 44.4,
-      "z": -1.8,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 8.7,
       "ctrl_pct": 3.9,
       "z": 1.8,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 33.9,
+      "ctrl_pct": 44.4,
+      "z": -1.8,
+      "flag": "less"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 1.7,
       "ctrl_pct": 0.0,
       "z": 1.9,
@@ -1230,7 +1047,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201805"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 caught.",
+    "summary": "They stuck to a good length in the channel. 2 dismissals — 2 caught.",
     "spin_summary": null
    },
    {
@@ -1414,7 +1231,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460515/B/1/5460515B100805"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 LBW.",
+    "summary": "2 dismissals — 1 caught and 1 LBW.",
     "spin_summary": "They bowled you more at middle and leg, into your pads and outside leg, and less outside off."
    }
   ]
@@ -1438,129 +1255,56 @@
     "ctrl_balls": 614,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.3,
-      "ctrl_pct": 1.7,
-      "z": -0.5,
+      "label": "round the wicket",
+      "pct": 2.1,
+      "ctrl_pct": 1.0,
+      "z": 1.4,
       "flag": "even"
      },
      {
-      "label": "full",
-      "pct": 8.3,
-      "ctrl_pct": 9.4,
-      "z": -0.6,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
+      "label": "pitched up",
       "pct": 9.7,
-      "ctrl_pct": 9.2,
-      "z": 0.2,
+      "ctrl_pct": 11.1,
+      "z": -0.7,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 38.3,
-      "ctrl_pct": 40.1,
+      "pct": 65.7,
+      "ctrl_pct": 67.2,
       "z": -0.5,
       "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 17.7,
-      "ctrl_pct": 17.9,
-      "z": -0.1,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 12.9,
-      "ctrl_pct": 8.7,
-      "z": 2.1,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460932010112901",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A112901"
-       },
-       {
-        "delivery_id": "5460932010112502",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A112502"
-       },
-       {
-        "delivery_id": "5460932010112305",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A112305"
-       },
-       {
-        "delivery_id": "5460932010111301",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A111301"
-       },
-       {
-        "delivery_id": "5460932010110706",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A110706"
-       },
-       {
-        "delivery_id": "5460932010109703",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A109703"
-       }
-      ]
      },
      {
       "label": "short",
-      "pct": 11.8,
-      "ctrl_pct": 12.9,
-      "z": -0.5,
+      "pct": 24.7,
+      "ctrl_pct": 21.6,
+      "z": 1.1,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 58.4,
       "ctrl_pct": 62.2,
       "z": -1.2,
       "flag": "even"
      },
      {
-      "label": "wide of off",
+      "label": "pitched at the stumps",
+      "pct": 5.6,
+      "ctrl_pct": 2.1,
+      "z": 2.9,
+      "flag": "even"
+     },
+     {
+      "label": "pitched wide of off",
       "pct": 33.8,
       "ctrl_pct": 34.7,
       "z": -0.3,
       "flag": "even"
      },
      {
-      "label": "at the stumps",
-      "pct": 5.6,
-      "ctrl_pct": 2.1,
-      "z": 2.9,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460931010203401",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A203401"
-       },
-       {
-        "delivery_id": "5460931010202705",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A202705"
-       },
-       {
-        "delivery_id": "5460931010202702",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A202702"
-       },
-       {
-        "delivery_id": "5460931010202701",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A202701"
-       },
-       {
-        "delivery_id": "5460931010202101",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A202101"
-       },
-       {
-        "delivery_id": "5460931010201805",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A201805"
-       }
-      ]
-     },
-     {
-      "label": "on leg",
+      "label": "pitched at your pads",
       "pct": 2.1,
       "ctrl_pct": 1.0,
       "z": 1.4,
@@ -1575,9 +1319,9 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 3.5,
-      "ctrl_pct": 1.6,
-      "z": 1.9,
+      "pct": 4.0,
+      "ctrl_pct": 1.7,
+      "z": 2.1,
       "flag": "even"
      }
     ],
@@ -1639,7 +1383,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A201805"
      }
     ],
-    "summary": "They bowled you more at the stumps and short of a length than your teammates. 5 dismissals — 3 caught and 2 bowled, playing the backward defence.",
+    "summary": "They stayed over the wicket, stuck to a good length in the channel. 5 dismissals — 3 caught and 2 bowled, playing the backward defence.",
     "spin_summary": null
    },
    {
@@ -1657,77 +1401,56 @@
     "ctrl_balls": 606,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.6,
-      "ctrl_pct": 0.7,
-      "z": -0.1,
-      "flag": "thin"
-     },
-     {
-      "label": "full",
-      "pct": 10.3,
-      "ctrl_pct": 7.8,
-      "z": 1.0,
+      "label": "round the wicket",
+      "pct": 3.2,
+      "ctrl_pct": 0.2,
+      "z": 3.6,
       "flag": "even"
      },
      {
-      "label": "fullish",
-      "pct": 13.5,
-      "ctrl_pct": 12.5,
-      "z": 0.3,
-      "flag": "even"
-     },
-     {
-      "label": "a good length",
-      "pct": 35.5,
-      "ctrl_pct": 38.9,
-      "z": -0.8,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 21.9,
-      "ctrl_pct": 19.8,
-      "z": 0.6,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 7.1,
-      "ctrl_pct": 11.6,
-      "z": -1.6,
-      "flag": "even"
-     },
-     {
-      "label": "short",
+      "label": "pitched up",
       "pct": 11.0,
       "ctrl_pct": 8.5,
       "z": 0.9,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "a good length",
+      "pct": 71.0,
+      "ctrl_pct": 71.3,
+      "z": -0.1,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 18.1,
+      "ctrl_pct": 20.2,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "pitched in the channel",
       "pct": 62.6,
       "ctrl_pct": 66.7,
       "z": -1.0,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 26.5,
-      "ctrl_pct": 27.8,
-      "z": -0.3,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 7.7,
       "ctrl_pct": 4.4,
       "z": 1.7,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 26.5,
+      "ctrl_pct": 27.8,
+      "z": -0.3,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 3.2,
       "ctrl_pct": 1.1,
       "z": 1.9,
@@ -1795,7 +1518,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B200906"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 4 dismissals — 2 caught, 1 LBW and 1 bowled, playing the forward defence.",
+    "summary": "They stayed over the wicket, stuck to a good length in the channel. 4 dismissals — 2 caught, 1 LBW and 1 bowled, playing the forward defence.",
     "spin_summary": null
    },
    {
@@ -1813,63 +1536,75 @@
     "ctrl_balls": 220,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.0,
-      "ctrl_pct": 0.5,
-      "z": -0.8,
-      "flag": "thin"
+      "label": "round the wicket",
+      "pct": 28.0,
+      "ctrl_pct": 17.8,
+      "z": 2.1,
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460770010201804",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201804"
+       },
+       {
+        "delivery_id": "5460770010201803",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201803"
+       },
+       {
+        "delivery_id": "5460770010201802",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201802"
+       },
+       {
+        "delivery_id": "5460770010201801",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201801"
+       },
+       {
+        "delivery_id": "5460770010201606",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201606"
+       },
+       {
+        "delivery_id": "5460770010201403",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201403"
+       }
+      ]
      },
      {
-      "label": "full",
+      "label": "pitched up",
       "pct": 7.6,
-      "ctrl_pct": 6.9,
-      "z": 0.2,
+      "ctrl_pct": 7.4,
+      "z": 0.1,
       "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 7.6,
-      "ctrl_pct": 17.3,
-      "z": -2.4,
-      "flag": "less"
      },
      {
       "label": "a good length",
-      "pct": 54.2,
-      "ctrl_pct": 49.0,
-      "z": 0.9,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 22.0,
-      "ctrl_pct": 17.3,
-      "z": 1.0,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 6.8,
-      "ctrl_pct": 4.0,
-      "z": 1.1,
+      "pct": 83.9,
+      "ctrl_pct": 83.7,
+      "z": 0.1,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 1.7,
-      "ctrl_pct": 5.0,
-      "z": -1.5,
+      "pct": 8.5,
+      "ctrl_pct": 8.9,
+      "z": -0.1,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 46.6,
       "ctrl_pct": 56.9,
+      "z": -1.8,
+      "flag": "less"
+     },
+     {
+      "label": "pitched at the stumps",
+      "pct": 2.5,
+      "ctrl_pct": 7.4,
       "z": -1.8,
       "flag": "even"
      },
      {
-      "label": "wide of off",
+      "label": "pitched wide of off",
       "pct": 50.8,
       "ctrl_pct": 34.7,
       "z": 2.8,
@@ -1902,14 +1637,7 @@
       ]
      },
      {
-      "label": "at the stumps",
-      "pct": 2.5,
-      "ctrl_pct": 7.4,
-      "z": -1.8,
-      "flag": "even"
-     },
-     {
-      "label": "on leg",
+      "label": "pitched at your pads",
       "pct": 0.0,
       "ctrl_pct": 1.0,
       "z": -1.1,
@@ -1955,7 +1683,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201905"
      }
     ],
-    "summary": "They bowled you more wide of off, and less fullish. 2 dismissals — 1 caught and 1 LBW.",
+    "summary": "They came round the wicket and stuck to a good length wide of off. 2 dismissals — 1 caught and 1 LBW.",
     "spin_summary": null
    }
   ]
@@ -1979,77 +1707,56 @@
     "ctrl_balls": 1034,
     "cells": [
      {
-      "label": "very full",
-      "pct": 2.1,
-      "ctrl_pct": 1.1,
-      "z": 1.2,
+      "label": "round the wicket",
+      "pct": 0.8,
+      "ctrl_pct": 1.3,
+      "z": -0.6,
       "flag": "even"
      },
      {
-      "label": "full",
-      "pct": 8.5,
-      "ctrl_pct": 9.9,
-      "z": -0.7,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 9.3,
-      "ctrl_pct": 9.3,
-      "z": 0.0,
+      "label": "pitched up",
+      "pct": 10.6,
+      "ctrl_pct": 11.0,
+      "z": -0.2,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 30.9,
-      "ctrl_pct": 40.7,
-      "z": -2.7,
-      "flag": "less"
-     },
-     {
-      "label": "back of a length",
-      "pct": 22.0,
-      "ctrl_pct": 18.1,
-      "z": 1.4,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 12.3,
-      "ctrl_pct": 10.3,
-      "z": 0.9,
+      "pct": 62.3,
+      "ctrl_pct": 68.1,
+      "z": -1.7,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 14.8,
-      "ctrl_pct": 10.6,
-      "z": 1.8,
+      "pct": 27.1,
+      "ctrl_pct": 20.9,
+      "z": 2.1,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 58.1,
       "ctrl_pct": 61.4,
       "z": -0.9,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 38.1,
-      "ctrl_pct": 33.0,
-      "z": 1.5,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 3.0,
       "ctrl_pct": 4.2,
       "z": -0.9,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 38.1,
+      "ctrl_pct": 33.0,
+      "z": 1.5,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 0.8,
       "ctrl_pct": 1.3,
       "z": -0.6,
@@ -2060,39 +1767,13 @@
       "pct": 26.3,
       "ctrl_pct": 19.4,
       "z": 2.3,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460932010203104",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A203104"
-       },
-       {
-        "delivery_id": "5460932010203101",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A203101"
-       },
-       {
-        "delivery_id": "5460932010202907",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202907"
-       },
-       {
-        "delivery_id": "5460932010202902",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202902"
-       },
-       {
-        "delivery_id": "5460932010202706",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202706"
-       },
-       {
-        "delivery_id": "5460932010202703",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202703"
-       }
-      ]
+      "flag": "even"
      },
      {
       "label": "full at the stumps",
-      "pct": 2.5,
-      "ctrl_pct": 3.0,
-      "z": -0.4,
+      "pct": 3.0,
+      "ctrl_pct": 3.2,
+      "z": -0.2,
       "flag": "even"
      }
     ],
@@ -2176,7 +1857,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A110703"
      }
     ],
-    "summary": "They bowled you more with the width to cut, and less on a good length. 7 dismissals — 5 caught, 1 bowled and 1 run out.",
+    "summary": "They stayed over the wicket, stuck to a good length in the channel. 7 dismissals — 5 caught, 1 bowled and 1 run out.",
     "spin_summary": null
    },
    {
@@ -2194,77 +1875,56 @@
     "ctrl_balls": 722,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.1,
-      "ctrl_pct": 0.6,
-      "z": 0.9,
-      "flag": "even"
+      "label": "round the wicket",
+      "pct": 0.6,
+      "ctrl_pct": 0.8,
+      "z": -0.4,
+      "flag": "thin"
      },
      {
-      "label": "full",
-      "pct": 8.3,
-      "ctrl_pct": 8.7,
-      "z": -0.2,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 12.9,
-      "ctrl_pct": 11.6,
-      "z": 0.6,
-      "flag": "even"
-     },
-     {
-      "label": "a good length",
-      "pct": 37.4,
-      "ctrl_pct": 41.9,
-      "z": -1.4,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 21.1,
-      "ctrl_pct": 21.3,
-      "z": -0.1,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 11.7,
-      "ctrl_pct": 8.7,
-      "z": 1.6,
-      "flag": "even"
-     },
-     {
-      "label": "short",
-      "pct": 7.4,
-      "ctrl_pct": 7.3,
+      "label": "pitched up",
+      "pct": 9.4,
+      "ctrl_pct": 9.3,
       "z": 0.1,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "a good length",
+      "pct": 71.4,
+      "ctrl_pct": 74.8,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "short",
+      "pct": 19.1,
+      "ctrl_pct": 15.9,
+      "z": 1.3,
+      "flag": "even"
+     },
+     {
+      "label": "pitched in the channel",
       "pct": 66.0,
       "ctrl_pct": 67.7,
       "z": -0.5,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 28.9,
-      "ctrl_pct": 24.1,
-      "z": 1.6,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 4.0,
       "ctrl_pct": 6.0,
       "z": -1.4,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 28.9,
+      "ctrl_pct": 24.1,
+      "z": 1.6,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 1.1,
       "ctrl_pct": 2.2,
       "z": -1.2,
@@ -2280,8 +1940,8 @@
      {
       "label": "full at the stumps",
       "pct": 3.7,
-      "ctrl_pct": 5.1,
-      "z": -1.0,
+      "ctrl_pct": 5.3,
+      "z": -1.1,
       "flag": "even"
      }
     ],
@@ -2354,7 +2014,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203001"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 6 dismissals — 3 caught and 3 bowled, the wicket ball most often a good length, the channel.",
+    "summary": "They stayed over the wicket, stuck to a good length in the channel. 6 dismissals — 3 caught and 3 bowled, the wicket ball most often a good length, the channel.",
     "spin_summary": null
    },
    {
@@ -2396,7 +2056,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A201104"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 caught.",
+    "summary": "2 dismissals — 2 caught.",
     "spin_summary": null
    }
   ]
@@ -2420,57 +2080,66 @@
     "ctrl_balls": 1291,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.1,
-      "ctrl_pct": 2.0,
-      "z": -1.1,
-      "flag": "even"
+      "label": "round the wicket",
+      "pct": 85.6,
+      "ctrl_pct": 68.3,
+      "z": 6.4,
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460932010202904",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202904"
+       },
+       {
+        "delivery_id": "5460932010202903",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202903"
+       },
+       {
+        "delivery_id": "5460932010202704",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202704"
+       },
+       {
+        "delivery_id": "5460932010202702",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202702"
+       },
+       {
+        "delivery_id": "5460932010202701",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202701"
+       },
+       {
+        "delivery_id": "5460932010202506",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202506"
+       }
+      ]
      },
      {
-      "label": "full",
-      "pct": 7.5,
-      "ctrl_pct": 11.8,
-      "z": -2.3,
-      "flag": "less"
-     },
-     {
-      "label": "fullish",
-      "pct": 7.2,
-      "ctrl_pct": 10.8,
-      "z": -2.0,
+      "label": "pitched up",
+      "pct": 8.6,
+      "ctrl_pct": 13.8,
+      "z": -2.6,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 33.3,
-      "ctrl_pct": 35.7,
-      "z": -0.8,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 17.5,
-      "ctrl_pct": 18.6,
-      "z": -0.5,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 13.1,
-      "ctrl_pct": 9.9,
-      "z": 1.7,
+      "pct": 58.1,
+      "ctrl_pct": 65.2,
+      "z": -2.4,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 20.3,
-      "ctrl_pct": 11.1,
-      "z": 4.4,
+      "pct": 33.3,
+      "ctrl_pct": 21.0,
+      "z": 4.8,
       "flag": "more",
       "examples": [
        {
         "delivery_id": "5460932010203103",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A203103"
+       },
+       {
+        "delivery_id": "5460932010202906",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202906"
        },
        {
         "delivery_id": "5460932010202905",
@@ -2481,21 +2150,17 @@
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202903"
        },
        {
+        "delivery_id": "5460932010202704",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202704"
+       },
+       {
         "delivery_id": "5460932010202506",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202506"
-       },
-       {
-        "delivery_id": "5460932010202501",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202501"
-       },
-       {
-        "delivery_id": "5460932010202302",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/2/5460932A202302"
        }
       ]
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 59.4,
       "ctrl_pct": 50.2,
       "z": 3.0,
@@ -2528,51 +2193,25 @@
       ]
      },
      {
-      "label": "wide of off",
-      "pct": 20.3,
-      "ctrl_pct": 15.6,
-      "z": 2.1,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460931010103101",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A103101"
-       },
-       {
-        "delivery_id": "5460931010102703",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A102703"
-       },
-       {
-        "delivery_id": "5460931010102506",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A102506"
-       },
-       {
-        "delivery_id": "5460931010102503",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A102503"
-       },
-       {
-        "delivery_id": "5460931010102306",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A102306"
-       },
-       {
-        "delivery_id": "5460931010102305",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/1/5460931A102305"
-       }
-      ]
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 10.3,
       "ctrl_pct": 17.1,
       "z": -3.1,
-      "flag": "less"
+      "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 20.3,
+      "ctrl_pct": 15.6,
+      "z": 2.1,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 10.0,
       "ctrl_pct": 17.0,
       "z": -3.2,
-      "flag": "less"
+      "flag": "even"
      },
      {
       "label": "cut ball (short, wide off)",
@@ -2609,10 +2248,10 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 6.9,
-      "ctrl_pct": 12.6,
+      "pct": 7.5,
+      "ctrl_pct": 13.5,
       "z": -3.0,
-      "flag": "less"
+      "flag": "even"
      }
     ],
     "spin_cells": [
@@ -2785,7 +2424,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A108901"
      }
     ],
-    "summary": "They bowled you more with the width to cut, short and in the channel, and less at your pads, at the stumps and full and straight. 7 dismissals — 7 caught.",
+    "summary": "They came round the wicket and banged it in short in the channel. 7 dismissals — 7 caught.",
     "spin_summary": "They bowled you more at middle and leg than your teammates."
    },
    {
@@ -2803,139 +2442,31 @@
     "ctrl_balls": 652,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.5,
-      "ctrl_pct": 1.5,
-      "z": 0.0,
+      "label": "round the wicket",
+      "pct": 88.7,
+      "ctrl_pct": 93.8,
+      "z": -2.3,
       "flag": "even"
      },
      {
-      "label": "full",
-      "pct": 11.3,
-      "ctrl_pct": 18.9,
-      "z": -2.4,
-      "flag": "less"
-     },
-     {
-      "label": "fullish",
-      "pct": 10.3,
-      "ctrl_pct": 15.5,
-      "z": -1.8,
+      "label": "pitched up",
+      "pct": 12.9,
+      "ctrl_pct": 20.4,
+      "z": -2.3,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 39.2,
-      "ctrl_pct": 41.8,
-      "z": -0.7,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 19.1,
-      "ctrl_pct": 12.8,
-      "z": 2.2,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460825020106205",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106205"
-       },
-       {
-        "delivery_id": "5460825020106201",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106201"
-       },
-       {
-        "delivery_id": "5460825020106103",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106103"
-       },
-       {
-        "delivery_id": "5460824020206801",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206801"
-       },
-       {
-        "delivery_id": "5460824020206503",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206503"
-       },
-       {
-        "delivery_id": "5460824020206502",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206502"
-       }
-      ]
-     },
-     {
-      "label": "short of a length",
-      "pct": 10.3,
-      "ctrl_pct": 6.4,
-      "z": 1.8,
+      "pct": 68.6,
+      "ctrl_pct": 70.2,
+      "z": -0.4,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 8.2,
-      "ctrl_pct": 3.0,
-      "z": 3.1,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460825020202105",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B202105"
-       },
-       {
-        "delivery_id": "5460825020106203",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106203"
-       },
-       {
-        "delivery_id": "5460825020106202",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106202"
-       },
-       {
-        "delivery_id": "5460824020206402",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206402"
-       },
-       {
-        "delivery_id": "5460824020206006",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B206006"
-       },
-       {
-        "delivery_id": "5460824020104606",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/1/5460824B104606"
-       }
-      ]
-     },
-     {
-      "label": "the channel",
-      "pct": 59.3,
-      "ctrl_pct": 58.0,
-      "z": 0.3,
-      "flag": "even"
-     },
-     {
-      "label": "wide of off",
-      "pct": 29.4,
-      "ctrl_pct": 34.2,
-      "z": -1.2,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
-      "pct": 6.7,
-      "ctrl_pct": 5.6,
-      "z": 0.6,
-      "flag": "even"
-     },
-     {
-      "label": "on leg",
-      "pct": 4.6,
-      "ctrl_pct": 2.2,
-      "z": 1.8,
-      "flag": "even"
-     },
-     {
-      "label": "cut ball (short, wide off)",
-      "pct": 16.5,
-      "ctrl_pct": 8.9,
-      "z": 2.9,
+      "pct": 18.6,
+      "ctrl_pct": 9.4,
+      "z": 3.4,
       "flag": "more",
       "examples": [
        {
@@ -2965,10 +2496,45 @@
       ]
      },
      {
+      "label": "pitched in the channel",
+      "pct": 59.3,
+      "ctrl_pct": 58.0,
+      "z": 0.3,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at the stumps",
+      "pct": 6.7,
+      "ctrl_pct": 5.6,
+      "z": 0.6,
+      "flag": "even"
+     },
+     {
+      "label": "pitched wide of off",
+      "pct": 29.4,
+      "ctrl_pct": 34.2,
+      "z": -1.2,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
+      "pct": 4.6,
+      "ctrl_pct": 2.2,
+      "z": 1.8,
+      "flag": "even"
+     },
+     {
+      "label": "cut ball (short, wide off)",
+      "pct": 16.5,
+      "ctrl_pct": 8.9,
+      "z": 2.9,
+      "flag": "even"
+     },
+     {
       "label": "full at the stumps",
       "pct": 4.6,
-      "ctrl_pct": 4.6,
-      "z": 0.0,
+      "ctrl_pct": 4.7,
+      "z": -0.0,
       "flag": "even"
      }
     ],
@@ -3001,7 +2567,7 @@
       "bowler": "Greaves",
       "stroke": "Pull",
       "length": "short of a length",
-      "line": "on leg",
+      "line": "at the pads",
       "pace_spin": "pace",
       "date": "2025-07-03",
       "delivery_id": "5460824020105202",
@@ -3041,7 +2607,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B202107"
      }
     ],
-    "summary": "They bowled you more short, with the width to cut and back of a length, and less full. 6 dismissals — 5 caught and 1 LBW.",
+    "summary": "They came round the wicket and banged it in short in the channel. 6 dismissals — 5 caught and 1 LBW.",
     "spin_summary": null
    },
    {
@@ -3083,7 +2649,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A203903"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 bowled and 1 LBW.",
+    "summary": "2 dismissals — 1 bowled and 1 LBW.",
     "spin_summary": null
    }
   ]
@@ -3126,7 +2692,33 @@
       "pct": 50.0,
       "ctrl_pct": 38.1,
       "z": 1.3,
-      "flag": "even"
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460932010113403",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113403"
+       },
+       {
+        "delivery_id": "5460932010113402",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113402"
+       },
+       {
+        "delivery_id": "5460932010113401",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113401"
+       },
+       {
+        "delivery_id": "5460932010112706",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A112706"
+       },
+       {
+        "delivery_id": "5460932010112405",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A112405"
+       },
+       {
+        "delivery_id": "5460932010112403",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A112403"
+       }
+      ]
      },
      {
       "label": "outside off",
@@ -3172,8 +2764,8 @@
      }
     ],
     "dismissals": [],
-    "summary": "They bowled to you as they bowled to your teammates. Not dismissed in the series.",
-    "spin_summary": "They bowled you less tossed up and tossed up outside off than your teammates."
+    "summary": "Not dismissed in the series.",
+    "spin_summary": "They bowled you more dragged short, and less tossed up and tossed up outside off."
    },
    {
     "opp": "West Indies",
@@ -3190,77 +2782,56 @@
     "ctrl_balls": 827,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.8,
-      "ctrl_pct": 0.8,
-      "z": -0.1,
+      "label": "round the wicket",
+      "pct": 0.0,
+      "ctrl_pct": 1.0,
+      "z": -1.6,
       "flag": "thin"
      },
      {
-      "label": "full",
-      "pct": 7.5,
-      "ctrl_pct": 8.9,
+      "label": "pitched up",
+      "pct": 8.3,
+      "ctrl_pct": 9.7,
       "z": -0.7,
       "flag": "even"
      },
      {
-      "label": "fullish",
-      "pct": 10.9,
-      "ctrl_pct": 12.4,
-      "z": -0.6,
-      "flag": "even"
-     },
-     {
       "label": "a good length",
-      "pct": 38.1,
-      "ctrl_pct": 41.1,
-      "z": -0.9,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 24.5,
-      "ctrl_pct": 20.1,
-      "z": 1.5,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 9.4,
-      "ctrl_pct": 9.8,
-      "z": -0.2,
+      "pct": 73.6,
+      "ctrl_pct": 73.6,
+      "z": -0.0,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 8.7,
-      "ctrl_pct": 6.8,
-      "z": 1.0,
+      "pct": 18.1,
+      "ctrl_pct": 16.7,
+      "z": 0.5,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 68.3,
       "ctrl_pct": 66.7,
       "z": 0.5,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 25.3,
-      "ctrl_pct": 26.0,
-      "z": -0.2,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 4.9,
       "ctrl_pct": 5.5,
       "z": -0.3,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 25.3,
+      "ctrl_pct": 26.0,
+      "z": -0.2,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 1.5,
       "ctrl_pct": 1.9,
       "z": -0.4,
@@ -3275,9 +2846,9 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 4.5,
+      "pct": 4.9,
       "ctrl_pct": 4.6,
-      "z": -0.1,
+      "z": 0.2,
       "flag": "even"
      }
     ],
@@ -3299,7 +2870,7 @@
       "bowler": "Joseph",
       "stroke": "Glance",
       "length": "full",
-      "line": "on leg",
+      "line": "at the pads",
       "pace_spin": "pace",
       "date": "2025-06-25",
       "delivery_id": "5460823020206306",
@@ -3350,7 +2921,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B202104"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 6 dismissals — 3 caught, 2 bowled and 1 run out, playing the drive.",
+    "summary": "They stuck to a good length in the channel. 6 dismissals — 3 caught, 2 bowled and 1 run out, playing the drive.",
     "spin_summary": null
    },
    {
@@ -3368,77 +2939,56 @@
     "ctrl_balls": 254,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.0,
-      "ctrl_pct": 0.4,
-      "z": -0.6,
-      "flag": "thin"
+      "label": "round the wicket",
+      "pct": 11.0,
+      "ctrl_pct": 25.2,
+      "z": -2.7,
+      "flag": "less"
      },
      {
-      "label": "full",
+      "label": "pitched up",
       "pct": 3.7,
-      "ctrl_pct": 8.4,
-      "z": -1.4,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 15.9,
-      "ctrl_pct": 13.0,
-      "z": 0.6,
+      "ctrl_pct": 8.8,
+      "z": -1.5,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 51.2,
-      "ctrl_pct": 50.8,
+      "pct": 84.1,
+      "ctrl_pct": 83.6,
       "z": 0.1,
       "flag": "even"
      },
      {
-      "label": "back of a length",
-      "pct": 17.1,
-      "ctrl_pct": 19.7,
-      "z": -0.5,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 6.1,
-      "ctrl_pct": 4.6,
-      "z": 0.5,
-      "flag": "even"
-     },
-     {
       "label": "short",
-      "pct": 6.1,
-      "ctrl_pct": 2.9,
+      "pct": 12.2,
+      "ctrl_pct": 7.6,
       "z": 1.3,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 57.3,
       "ctrl_pct": 51.7,
       "z": 0.9,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 37.8,
-      "ctrl_pct": 41.6,
-      "z": -0.6,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 4.9,
       "ctrl_pct": 5.9,
       "z": -0.3,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 37.8,
+      "ctrl_pct": 41.6,
+      "z": -0.6,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 0.0,
       "ctrl_pct": 0.8,
       "z": -0.8,
@@ -3484,7 +3034,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A202306"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 LBW.",
+    "summary": "They stuck to a good length in the channel. 2 dismissals — 1 caught and 1 LBW.",
     "spin_summary": null
    }
   ]
@@ -3532,7 +3082,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A208401"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 caught.",
+    "summary": "2 dismissals — 2 caught.",
     "spin_summary": null
    },
    {
@@ -3550,52 +3100,31 @@
     "ctrl_balls": 1119,
     "cells": [
      {
-      "label": "very full",
-      "pct": 2.9,
-      "ctrl_pct": 0.8,
-      "z": 2.0,
-      "flag": "even"
+      "label": "round the wicket",
+      "pct": 0.0,
+      "ctrl_pct": 0.7,
+      "z": -0.9,
+      "flag": "thin"
      },
      {
-      "label": "full",
-      "pct": 8.7,
-      "ctrl_pct": 8.5,
-      "z": 0.0,
+      "label": "pitched up",
+      "pct": 11.5,
+      "ctrl_pct": 9.3,
+      "z": 0.7,
       "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 1.9,
-      "ctrl_pct": 12.0,
-      "z": -3.1,
-      "flag": "less"
      },
      {
       "label": "a good length",
-      "pct": 26.9,
-      "ctrl_pct": 40.3,
-      "z": -2.7,
+      "pct": 54.8,
+      "ctrl_pct": 73.6,
+      "z": -4.1,
       "flag": "less"
      },
      {
-      "label": "back of a length",
-      "pct": 26.0,
-      "ctrl_pct": 21.3,
-      "z": 1.1,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 13.5,
-      "ctrl_pct": 9.7,
-      "z": 1.2,
-      "flag": "even"
-     },
-     {
       "label": "short",
-      "pct": 20.2,
-      "ctrl_pct": 7.3,
-      "z": 4.5,
+      "pct": 33.7,
+      "ctrl_pct": 17.1,
+      "z": 4.1,
       "flag": "more",
       "examples": [
        {
@@ -3625,28 +3154,28 @@
       ]
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 67.3,
       "ctrl_pct": 67.1,
       "z": 0.0,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 24.0,
-      "ctrl_pct": 25.8,
-      "z": -0.4,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 7.7,
       "ctrl_pct": 5.3,
       "z": 1.0,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 24.0,
+      "ctrl_pct": 25.8,
+      "z": -0.4,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 1.0,
       "ctrl_pct": 1.8,
       "z": -0.6,
@@ -3687,9 +3216,9 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 5.8,
-      "ctrl_pct": 4.6,
-      "z": 0.5,
+      "pct": 6.7,
+      "ctrl_pct": 4.7,
+      "z": 0.9,
       "flag": "even"
      }
     ],
@@ -3762,7 +3291,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203301"
      }
     ],
-    "summary": "They bowled you more short and with the width to cut, and less fullish and on a good length. 6 dismissals — 5 caught and 1 bowled.",
+    "summary": "They banged it in short in the channel. 6 dismissals — 5 caught and 1 bowled.",
     "spin_summary": null
    },
    {
@@ -3804,7 +3333,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A202505"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 2 bowled.",
+    "summary": "2 dismissals — 2 bowled.",
     "spin_summary": null
    }
   ]
@@ -3828,77 +3357,82 @@
     "ctrl_balls": 1737,
     "cells": [
      {
-      "label": "very full",
-      "pct": 2.8,
-      "ctrl_pct": 1.8,
-      "z": 1.0,
-      "flag": "even"
+      "label": "round the wicket",
+      "pct": 82.2,
+      "ctrl_pct": 72.6,
+      "z": 3.0,
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460932010113306",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113306"
+       },
+       {
+        "delivery_id": "5460932010113305",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113305"
+       },
+       {
+        "delivery_id": "5460932010113303",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113303"
+       },
+       {
+        "delivery_id": "5460932010113302",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113302"
+       },
+       {
+        "delivery_id": "5460932010113301",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113301"
+       },
+       {
+        "delivery_id": "5460932010113106",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113106"
+       }
+      ]
      },
      {
-      "label": "full",
-      "pct": 7.0,
-      "ctrl_pct": 10.8,
-      "z": -1.7,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 8.0,
-      "ctrl_pct": 9.9,
-      "z": -0.9,
+      "label": "pitched up",
+      "pct": 9.9,
+      "ctrl_pct": 12.5,
+      "z": -1.1,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 39.4,
-      "ctrl_pct": 35.1,
-      "z": 1.2,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 17.4,
-      "ctrl_pct": 18.3,
-      "z": -0.3,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 7.0,
-      "ctrl_pct": 10.7,
-      "z": -1.6,
+      "pct": 64.8,
+      "ctrl_pct": 63.4,
+      "z": 0.4,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 18.3,
-      "ctrl_pct": 13.4,
-      "z": 1.9,
+      "pct": 25.4,
+      "ctrl_pct": 24.1,
+      "z": 0.4,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 58.7,
       "ctrl_pct": 52.5,
       "z": 1.7,
       "flag": "even"
      },
      {
-      "label": "wide of off",
+      "label": "pitched at the stumps",
+      "pct": 8.0,
+      "ctrl_pct": 15.4,
+      "z": -2.9,
+      "flag": "even"
+     },
+     {
+      "label": "pitched wide of off",
       "pct": 16.9,
       "ctrl_pct": 16.7,
       "z": 0.1,
       "flag": "even"
      },
      {
-      "label": "at the stumps",
-      "pct": 8.0,
-      "ctrl_pct": 15.4,
-      "z": -2.9,
-      "flag": "less"
-     },
-     {
-      "label": "on leg",
+      "label": "pitched at your pads",
       "pct": 16.4,
       "ctrl_pct": 15.3,
       "z": 0.4,
@@ -3913,9 +3447,9 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 7.0,
-      "ctrl_pct": 11.2,
-      "z": -1.8,
+      "pct": 7.5,
+      "ctrl_pct": 12.0,
+      "z": -1.9,
       "flag": "even"
      }
     ],
@@ -3939,7 +3473,33 @@
       "pct": 52.5,
       "ctrl_pct": 39.9,
       "z": 1.5,
-      "flag": "even"
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460930010108004",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108004"
+       },
+       {
+        "delivery_id": "5460930010108002",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108002"
+       },
+       {
+        "delivery_id": "5460930010107604",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A107604"
+       },
+       {
+        "delivery_id": "5460930010107405",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A107405"
+       },
+       {
+        "delivery_id": "5460930010107403",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A107403"
+       },
+       {
+        "delivery_id": "5460929010111004",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A111004"
+       }
+      ]
      },
      {
       "label": "outside off",
@@ -3967,7 +3527,33 @@
       "pct": 20.0,
       "ctrl_pct": 11.5,
       "z": 1.5,
-      "flag": "even"
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460930010108006",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108006"
+       },
+       {
+        "delivery_id": "5460930010108001",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108001"
+       },
+       {
+        "delivery_id": "5460930010107603",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A107603"
+       },
+       {
+        "delivery_id": "5460929010110403",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A110403"
+       },
+       {
+        "delivery_id": "5460929010110402",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A110402"
+       },
+       {
+        "delivery_id": "5460929010110201",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A110201"
+       }
+      ]
      },
      {
       "label": "tossed up outside off",
@@ -4001,7 +3587,7 @@
       "bowler": "Carse",
       "stroke": "Cut or dab",
       "length": "back of a length",
-      "line": "on leg",
+      "line": "at the pads",
       "pace_spin": "pace",
       "date": "2025-12-04",
       "delivery_id": "5460929010111102",
@@ -4034,7 +3620,7 @@
       "bowler": "Carse",
       "stroke": "Worked",
       "length": "a good length",
-      "line": "on leg",
+      "line": "at the pads",
       "pace_spin": "pace",
       "date": "2025-12-26",
       "delivery_id": "5460931010203207",
@@ -4052,8 +3638,8 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113306"
      }
     ],
-    "summary": "They bowled you less at the stumps than your teammates. 6 dismissals — 4 caught and 2 bowled.",
-    "spin_summary": "They bowled you less tossed up than your teammates."
+    "summary": "They came round the wicket and stuck to a good length in the channel. 6 dismissals — 4 caught and 2 bowled.",
+    "spin_summary": "They bowled you more dragged short and outside leg, and less tossed up."
    },
    {
     "opp": "West Indies",
@@ -4070,50 +3656,44 @@
     "ctrl_balls": 840,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.2,
-      "ctrl_pct": 1.6,
-      "z": -0.2,
-      "flag": "thin"
+      "label": "round the wicket",
+      "pct": 100.0,
+      "ctrl_pct": 92.2,
+      "z": 2.6,
+      "flag": "even"
      },
      {
-      "label": "full",
-      "pct": 4.9,
-      "ctrl_pct": 17.3,
+      "label": "pitched up",
+      "pct": 6.2,
+      "ctrl_pct": 18.9,
       "z": -2.9,
       "flag": "less"
      },
      {
-      "label": "fullish",
-      "pct": 7.4,
-      "ctrl_pct": 14.5,
-      "z": -1.8,
-      "flag": "even"
-     },
-     {
       "label": "a good length",
-      "pct": 33.3,
-      "ctrl_pct": 41.8,
-      "z": -1.5,
-      "flag": "even"
+      "pct": 58.0,
+      "ctrl_pct": 70.1,
+      "z": -2.2,
+      "flag": "less"
      },
      {
-      "label": "back of a length",
-      "pct": 17.3,
-      "ctrl_pct": 13.8,
-      "z": 0.8,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 19.8,
-      "ctrl_pct": 6.8,
-      "z": 4.1,
+      "label": "short",
+      "pct": 35.8,
+      "ctrl_pct": 11.0,
+      "z": 6.2,
       "flag": "more",
       "examples": [
        {
+        "delivery_id": "5460825020203704",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203704"
+       },
+       {
         "delivery_id": "5460825020203701",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203701"
+       },
+       {
+        "delivery_id": "5460825020203603",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203603"
        },
        {
         "delivery_id": "5460825020203602",
@@ -4126,52 +3706,11 @@
        {
         "delivery_id": "5460825020203503",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203503"
-       },
-       {
-        "delivery_id": "5460825020203502",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203502"
-       },
-       {
-        "delivery_id": "5460825020203103",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203103"
        }
       ]
      },
      {
-      "label": "short",
-      "pct": 16.0,
-      "ctrl_pct": 4.3,
-      "z": 4.5,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460825020203704",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203704"
-       },
-       {
-        "delivery_id": "5460825020203603",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203603"
-       },
-       {
-        "delivery_id": "5460825020203402",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203402"
-       },
-       {
-        "delivery_id": "5460825020203105",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203105"
-       },
-       {
-        "delivery_id": "5460825020203102",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203102"
-       },
-       {
-        "delivery_id": "5460824020207201",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B207201"
-       }
-      ]
-     },
-     {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 76.5,
       "ctrl_pct": 58.1,
       "z": 3.2,
@@ -4204,21 +3743,21 @@
       ]
      },
      {
-      "label": "wide of off",
-      "pct": 18.5,
-      "ctrl_pct": 33.4,
-      "z": -2.7,
-      "flag": "less"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 4.9,
       "ctrl_pct": 5.7,
       "z": -0.3,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 18.5,
+      "ctrl_pct": 33.4,
+      "z": -2.7,
+      "flag": "less"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 0.0,
       "ctrl_pct": 2.8,
       "z": -1.5,
@@ -4260,7 +3799,7 @@
      {
       "label": "full at the stumps",
       "pct": 3.7,
-      "ctrl_pct": 4.4,
+      "ctrl_pct": 4.5,
       "z": -0.3,
       "flag": "even"
      }
@@ -4312,7 +3851,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/1/5460825B106806"
      }
     ],
-    "summary": "They bowled you more with the width to cut, short and short of a length, and less full and wide of off. 4 dismissals — 2 caught and 2 bowled, the wicket ball most often fullish, the channel, playing the drive.",
+    "summary": "They came round the wicket and banged it in short in the channel. 4 dismissals — 2 caught and 2 bowled, the wicket ball most often fullish, the channel, playing the drive.",
     "spin_summary": null
    },
    {
@@ -4330,52 +3869,57 @@
     "ctrl_balls": 152,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.9,
-      "ctrl_pct": 0.7,
-      "z": 0.1,
-      "flag": "thin"
+      "label": "round the wicket",
+      "pct": 71.8,
+      "ctrl_pct": 61.2,
+      "z": 1.8,
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460770010206104",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A206104"
+       },
+       {
+        "delivery_id": "5460770010206103",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A206103"
+       },
+       {
+        "delivery_id": "5460770010206102",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A206102"
+       },
+       {
+        "delivery_id": "5460770010206101",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A206101"
+       },
+       {
+        "delivery_id": "5460770010205904",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205904"
+       },
+       {
+        "delivery_id": "5460770010205903",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205903"
+       }
+      ]
      },
      {
-      "label": "full",
-      "pct": 8.5,
-      "ctrl_pct": 7.2,
+      "label": "pitched up",
+      "pct": 9.4,
+      "ctrl_pct": 7.9,
       "z": 0.4,
       "flag": "even"
      },
      {
-      "label": "fullish",
-      "pct": 11.1,
-      "ctrl_pct": 17.3,
-      "z": -1.4,
-      "flag": "even"
-     },
-     {
       "label": "a good length",
-      "pct": 41.9,
-      "ctrl_pct": 51.8,
-      "z": -1.6,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 15.4,
-      "ctrl_pct": 17.3,
-      "z": -0.4,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 2.6,
-      "ctrl_pct": 4.3,
-      "z": -0.8,
-      "flag": "even"
+      "pct": 68.4,
+      "ctrl_pct": 86.3,
+      "z": -3.5,
+      "flag": "less"
      },
      {
       "label": "short",
-      "pct": 19.7,
-      "ctrl_pct": 1.4,
-      "z": 4.9,
+      "pct": 22.2,
+      "ctrl_pct": 5.8,
+      "z": 3.9,
       "flag": "more",
       "examples": [
        {
@@ -4391,42 +3935,42 @@
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205904"
        },
        {
+        "delivery_id": "5460770010205502",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205502"
+       },
+       {
+        "delivery_id": "5460770010205501",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205501"
+       },
+       {
         "delivery_id": "5460770010205205",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205205"
-       },
-       {
-        "delivery_id": "5460770010205203",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205203"
-       },
-       {
-        "delivery_id": "5460770010205202",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A205202"
        }
       ]
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 61.5,
       "ctrl_pct": 70.5,
       "z": -1.5,
-      "flag": "even"
+      "flag": "less"
      },
      {
-      "label": "wide of off",
-      "pct": 26.5,
-      "ctrl_pct": 18.7,
-      "z": 1.5,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 5.1,
       "ctrl_pct": 7.9,
       "z": -0.9,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 26.5,
+      "ctrl_pct": 18.7,
+      "z": 1.5,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 6.8,
       "ctrl_pct": 2.9,
       "z": 1.5,
@@ -4487,7 +4031,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/1/5460770A105705"
      }
     ],
-    "summary": "They bowled you more short and with the width to cut than your teammates. 1 dismissal — 1 bowled.",
+    "summary": "They came round the wicket and banged it in short in the channel. 1 dismissal — 1 bowled.",
     "spin_summary": null
    }
   ]
@@ -4546,7 +4090,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A208402"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 3 dismissals — 2 LBW and 1 caught, playing the worked.",
+    "summary": "3 dismissals — 2 LBW and 1 caught, playing the worked.",
     "spin_summary": null
    },
    {
@@ -4564,77 +4108,82 @@
     "ctrl_balls": 754,
     "cells": [
      {
-      "label": "very full",
-      "pct": 2.4,
-      "ctrl_pct": 0.7,
-      "z": 1.6,
+      "label": "round the wicket",
+      "pct": 1.2,
+      "ctrl_pct": 1.0,
+      "z": 0.2,
       "flag": "thin"
      },
      {
-      "label": "full",
-      "pct": 2.4,
-      "ctrl_pct": 9.0,
-      "z": -2.1,
-      "flag": "less"
-     },
-     {
-      "label": "fullish",
-      "pct": 7.1,
-      "ctrl_pct": 12.1,
-      "z": -1.3,
+      "label": "pitched up",
+      "pct": 4.8,
+      "ctrl_pct": 9.7,
+      "z": -1.5,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 39.3,
-      "ctrl_pct": 40.0,
-      "z": -0.1,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 22.6,
-      "ctrl_pct": 21.5,
-      "z": 0.2,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 13.1,
-      "ctrl_pct": 9.4,
-      "z": 1.1,
+      "pct": 69.0,
+      "ctrl_pct": 73.7,
+      "z": -0.9,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 13.1,
-      "ctrl_pct": 7.2,
-      "z": 1.9,
-      "flag": "even"
+      "pct": 26.2,
+      "ctrl_pct": 16.6,
+      "z": 2.2,
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460824020201402",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B201402"
+       },
+       {
+        "delivery_id": "5460824020201102",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B201102"
+       },
+       {
+        "delivery_id": "5460824020201001",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B201001"
+       },
+       {
+        "delivery_id": "5460824020200806",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B200806"
+       },
+       {
+        "delivery_id": "5460824020200804",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B200804"
+       },
+       {
+        "delivery_id": "5460824020200803",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B200803"
+       }
+      ]
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 67.9,
       "ctrl_pct": 66.1,
       "z": 0.3,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 26.2,
-      "ctrl_pct": 27.0,
-      "z": -0.2,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 3.6,
       "ctrl_pct": 4.8,
       "z": -0.5,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 26.2,
+      "ctrl_pct": 27.0,
+      "z": -0.2,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 2.4,
       "ctrl_pct": 2.1,
       "z": 0.2,
@@ -4676,8 +4225,8 @@
      {
       "label": "full at the stumps",
       "pct": 3.6,
-      "ctrl_pct": 4.1,
-      "z": -0.2,
+      "ctrl_pct": 4.2,
+      "z": -0.3,
       "flag": "even"
      }
     ],
@@ -4706,7 +4255,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/B/2/5460824B201504"
      }
     ],
-    "summary": "They bowled you more with the width to cut, and less full. 2 dismissals — 2 caught.",
+    "summary": "They stayed over the wicket, banged it in short in the channel. 2 dismissals — 2 caught.",
     "spin_summary": null
    },
    {
@@ -4748,7 +4297,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A204304"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 bowled and 1 LBW.",
+    "summary": "2 dismissals — 1 bowled and 1 LBW.",
     "spin_summary": null
    }
   ]
@@ -4829,7 +4378,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203706"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 5 dismissals — 3 bowled and 2 caught, playing the backward defence.",
+    "summary": "5 dismissals — 3 bowled and 2 caught, playing the backward defence.",
     "spin_summary": null
    },
    {
@@ -4860,7 +4409,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/A/2/5460770A206506"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 1 dismissal — 1 caught.",
+    "summary": "1 dismissal — 1 caught.",
     "spin_summary": null
    },
    {
@@ -4879,7 +4428,7 @@
     "cells": [],
     "spin_cells": [],
     "dismissals": [],
-    "summary": "They bowled to you as they bowled to your teammates. Not dismissed in the series.",
+    "summary": "Not dismissed in the series.",
     "spin_summary": null
    }
   ]
@@ -4903,56 +4452,35 @@
     "ctrl_balls": 1194,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.0,
-      "ctrl_pct": 1.4,
-      "z": -1.2,
+      "label": "round the wicket",
+      "pct": 2.1,
+      "ctrl_pct": 1.3,
+      "z": 0.6,
       "flag": "thin"
      },
      {
-      "label": "full",
+      "label": "pitched up",
       "pct": 5.2,
-      "ctrl_pct": 9.5,
-      "z": -1.4,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 14.6,
-      "ctrl_pct": 9.2,
-      "z": 1.7,
+      "ctrl_pct": 10.9,
+      "z": -1.7,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 42.7,
-      "ctrl_pct": 39.1,
-      "z": 0.7,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 10.4,
-      "ctrl_pct": 18.8,
-      "z": -2.0,
-      "flag": "less"
-     },
-     {
-      "label": "short of a length",
-      "pct": 9.4,
-      "ctrl_pct": 10.3,
-      "z": -0.3,
+      "pct": 67.7,
+      "ctrl_pct": 67.1,
+      "z": 0.1,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 17.7,
-      "ctrl_pct": 11.7,
-      "z": 1.7,
+      "pct": 27.1,
+      "ctrl_pct": 22.0,
+      "z": 1.1,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 75.0,
       "ctrl_pct": 61.0,
       "z": 2.7,
@@ -4985,47 +4513,21 @@
       ]
      },
      {
-      "label": "wide of off",
+      "label": "pitched at the stumps",
+      "pct": 11.5,
+      "ctrl_pct": 3.6,
+      "z": 3.6,
+      "flag": "even"
+     },
+     {
+      "label": "pitched wide of off",
       "pct": 12.5,
       "ctrl_pct": 34.1,
       "z": -4.3,
       "flag": "less"
      },
      {
-      "label": "at the stumps",
-      "pct": 11.5,
-      "ctrl_pct": 3.6,
-      "z": 3.6,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460931010200205",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200205"
-       },
-       {
-        "delivery_id": "5460931010200106",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200106"
-       },
-       {
-        "delivery_id": "5460931010200105",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200105"
-       },
-       {
-        "delivery_id": "5460931010200102",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200102"
-       },
-       {
-        "delivery_id": "5460930010108804",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108804"
-       },
-       {
-        "delivery_id": "5460930010108801",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108801"
-       }
-      ]
-     },
-     {
-      "label": "on leg",
+      "label": "pitched at your pads",
       "pct": 1.0,
       "ctrl_pct": 1.3,
       "z": -0.2,
@@ -5041,35 +4543,9 @@
      {
       "label": "full at the stumps",
       "pct": 8.3,
-      "ctrl_pct": 2.5,
-      "z": 3.2,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460931010200205",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200205"
-       },
-       {
-        "delivery_id": "5460931010200106",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200106"
-       },
-       {
-        "delivery_id": "5460931010200105",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200105"
-       },
-       {
-        "delivery_id": "5460931010200102",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460931/A/2/5460931A200102"
-       },
-       {
-        "delivery_id": "5460930010108804",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108804"
-       },
-       {
-        "delivery_id": "5460930010108605",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/1/5460930A108605"
-       }
-      ]
+      "ctrl_pct": 2.8,
+      "z": 2.9,
+      "flag": "even"
      }
     ],
     "spin_cells": [],
@@ -5130,7 +4606,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460932/A/1/5460932A113405"
      }
     ],
-    "summary": "They bowled you more at the stumps, full and straight and in the channel, and less wide of off and back of a length. 5 dismissals — 5 caught, the wicket ball most often a good length, the channel, playing the backward defence.",
+    "summary": "They stayed over the wicket, stuck to a good length in the channel. 5 dismissals — 5 caught, the wicket ball most often a good length, the channel, playing the backward defence.",
     "spin_summary": null
    },
    {
@@ -5161,7 +4637,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/B/2/5460825B203605"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 1 dismissal — 1 bowled.",
+    "summary": "1 dismissal — 1 bowled.",
     "spin_summary": null
    },
    {
@@ -5179,17 +4655,17 @@
     "ctrl_balls": 1182,
     "cells": [
      {
-      "label": "very full",
-      "pct": 4.1,
-      "ctrl_pct": 0.8,
-      "z": 2.7,
-      "flag": "even"
+      "label": "round the wicket",
+      "pct": 2.7,
+      "ctrl_pct": 0.0,
+      "z": 5.2,
+      "flag": "thin"
      },
      {
-      "label": "full",
-      "pct": 16.2,
-      "ctrl_pct": 6.0,
-      "z": 3.4,
+      "label": "pitched up",
+      "pct": 20.3,
+      "ctrl_pct": 6.8,
+      "z": 4.2,
       "flag": "more",
       "examples": [
        {
@@ -5205,155 +4681,60 @@
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207205"
        },
        {
+        "delivery_id": "5460386010207204",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207204"
+       },
+       {
         "delivery_id": "5460386010207006",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207006"
        },
        {
         "delivery_id": "5460386010207004",
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207004"
-       },
-       {
-        "delivery_id": "5460386010206806",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A206806"
-       }
-      ]
-     },
-     {
-      "label": "fullish",
-      "pct": 17.6,
-      "ctrl_pct": 9.6,
-      "z": 2.2,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460387010104906",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/A/1/5460387A104906"
-       },
-       {
-        "delivery_id": "5460387010104806",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/A/1/5460387A104806"
-       },
-       {
-        "delivery_id": "5460387010104805",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/A/1/5460387A104805"
-       },
-       {
-        "delivery_id": "5460386010208305",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A208305"
-       },
-       {
-        "delivery_id": "5460386010208302",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A208302"
-       },
-       {
-        "delivery_id": "5460386010207905",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207905"
        }
       ]
      },
      {
       "label": "a good length",
-      "pct": 40.5,
-      "ctrl_pct": 50.4,
-      "z": -1.6,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 6.8,
-      "ctrl_pct": 23.0,
-      "z": -3.3,
+      "pct": 64.9,
+      "ctrl_pct": 83.0,
+      "z": -3.9,
       "flag": "less"
      },
      {
-      "label": "short of a length",
-      "pct": 4.1,
-      "ctrl_pct": 6.6,
-      "z": -0.9,
+      "label": "short",
+      "pct": 14.9,
+      "ctrl_pct": 10.2,
+      "z": 1.3,
       "flag": "even"
      },
      {
-      "label": "short",
-      "pct": 10.8,
-      "ctrl_pct": 3.6,
-      "z": 3.1,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460386010207306",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207306"
-       },
-       {
-        "delivery_id": "5460386010207305",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207305"
-       },
-       {
-        "delivery_id": "5460386010207303",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207303"
-       },
-       {
-        "delivery_id": "5460386010207203",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207203"
-       },
-       {
-        "delivery_id": "5460386010207104",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207104"
-       },
-       {
-        "delivery_id": "5460386010112105",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/1/5460386A112105"
-       }
-      ]
-     },
-     {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 67.6,
       "ctrl_pct": 63.0,
       "z": 0.8,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 21.6,
-      "ctrl_pct": 32.6,
-      "z": -2.0,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 4.1,
       "ctrl_pct": 3.6,
       "z": 0.2,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 21.6,
+      "ctrl_pct": 32.6,
+      "z": -2.0,
+      "flag": "less"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 6.8,
       "ctrl_pct": 0.8,
       "z": 4.5,
-      "flag": "more",
-      "examples": [
-       {
-        "delivery_id": "5460387010104803",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/A/1/5460387A104803"
-       },
-       {
-        "delivery_id": "5460386010207306",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207306"
-       },
-       {
-        "delivery_id": "5460386010207305",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A207305"
-       },
-       {
-        "delivery_id": "5460386010206803",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/A/2/5460386A206803"
-       },
-       {
-        "delivery_id": "5460384010108707",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460384/A/1/5460384A108707"
-       }
-      ]
+      "flag": "even"
      },
      {
       "label": "cut ball (short, wide off)",
@@ -5364,10 +4745,10 @@
      },
      {
       "label": "full at the stumps",
-      "pct": 2.7,
-      "ctrl_pct": 2.5,
-      "z": 0.1,
-      "flag": "thin"
+      "pct": 4.1,
+      "ctrl_pct": 2.9,
+      "z": 0.5,
+      "flag": "even"
      }
     ],
     "spin_cells": [
@@ -5418,7 +4799,7 @@
       "pct": 3.8,
       "ctrl_pct": 12.7,
       "z": -1.9,
-      "flag": "even"
+      "flag": "less"
      },
      {
       "label": "tossed up outside off",
@@ -5459,8 +4840,8 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/A/1/5460387A105106"
      }
     ],
-    "summary": "They bowled you more at your pads, full and short, and less back of a length. 2 dismissals — 2 bowled, the wicket ball most often a good length, the channel, playing the forward defence.",
-    "spin_summary": "They bowled to you as they bowled to your teammates."
+    "summary": "They stayed over the wicket, pitched it up in the channel. 2 dismissals — 2 bowled, the wicket ball most often a good length, the channel, playing the forward defence.",
+    "spin_summary": "They bowled you less outside leg than your teammates."
    }
   ]
  },
@@ -5483,77 +4864,56 @@
     "ctrl_balls": 325,
     "cells": [
      {
-      "label": "very full",
-      "pct": 1.6,
-      "ctrl_pct": 1.9,
-      "z": -0.2,
-      "flag": "thin"
-     },
-     {
-      "label": "full",
-      "pct": 13.1,
-      "ctrl_pct": 10.0,
-      "z": 0.7,
+      "label": "round the wicket",
+      "pct": 6.6,
+      "ctrl_pct": 0.0,
+      "z": 4.5,
       "flag": "even"
      },
      {
-      "label": "fullish",
-      "pct": 8.2,
-      "ctrl_pct": 9.1,
-      "z": -0.2,
+      "label": "pitched up",
+      "pct": 14.8,
+      "ctrl_pct": 12.0,
+      "z": 0.6,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 39.3,
-      "ctrl_pct": 34.3,
-      "z": 0.8,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 18.0,
-      "ctrl_pct": 23.3,
-      "z": -0.9,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 13.1,
-      "ctrl_pct": 9.7,
-      "z": 0.8,
+      "pct": 65.6,
+      "ctrl_pct": 66.7,
+      "z": -0.2,
       "flag": "even"
      },
      {
       "label": "short",
-      "pct": 6.6,
-      "ctrl_pct": 11.7,
-      "z": -1.2,
+      "pct": 19.7,
+      "ctrl_pct": 21.4,
+      "z": -0.3,
       "flag": "even"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 65.6,
       "ctrl_pct": 63.8,
       "z": 0.3,
       "flag": "even"
      },
      {
-      "label": "wide of off",
-      "pct": 24.6,
-      "ctrl_pct": 30.1,
-      "z": -0.9,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 4.9,
       "ctrl_pct": 6.1,
       "z": -0.4,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 24.6,
+      "ctrl_pct": 30.1,
+      "z": -0.9,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 4.9,
       "ctrl_pct": 0.0,
       "z": 3.9,
@@ -5610,7 +4970,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/A/2/5460930A208005"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 3 dismissals — 2 bowled and 1 caught, the wicket ball most often a good length, the channel, playing the backward defence.",
+    "summary": "They stayed over the wicket, stuck to a good length in the channel. 3 dismissals — 2 bowled and 1 caught, the wicket ball most often a good length, the channel, playing the backward defence.",
     "spin_summary": null
    },
    {
@@ -5652,7 +5012,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460823/B/2/5460823B202204"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 bowled.",
+    "summary": "2 dismissals — 1 caught and 1 bowled.",
     "spin_summary": null
    },
    {
@@ -5743,7 +5103,7 @@
       "pct": 12.6,
       "ctrl_pct": 20.9,
       "z": -1.8,
-      "flag": "even"
+      "flag": "less"
      },
      {
       "label": "tossed up outside off",
@@ -5784,8 +5144,8 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460515/B/1/5460515B108505"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 bowled, the wicket ball most often full, the channel.",
-    "spin_summary": "They bowled you more at middle and off than your teammates."
+    "summary": "2 dismissals — 1 caught and 1 bowled, the wicket ball most often full, the channel.",
+    "spin_summary": "They bowled you more at middle and off, and less outside leg."
    }
   ]
  },
@@ -5843,7 +5203,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460061/B/2/5460061B202306"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 3 dismissals — 3 LBW, the wicket ball most often fullish, at the stumps.",
+    "summary": "3 dismissals — 3 LBW, the wicket ball most often fullish, at the stumps.",
     "spin_summary": null
    },
    {
@@ -5862,7 +5222,7 @@
     "cells": [],
     "spin_cells": [],
     "dismissals": [],
-    "summary": "They bowled to you as they bowled to your teammates. Not dismissed in the series.",
+    "summary": "Not dismissed in the series.",
     "spin_summary": null
    },
    {
@@ -5880,46 +5240,51 @@
     "ctrl_balls": 188,
     "cells": [
      {
-      "label": "very full",
-      "pct": 0.0,
-      "ctrl_pct": 0.0,
-      "z": 0.0,
-      "flag": "thin"
+      "label": "round the wicket",
+      "pct": 23.3,
+      "ctrl_pct": 42.4,
+      "z": -2.7,
+      "flag": "less"
      },
      {
-      "label": "full",
+      "label": "pitched up",
       "pct": 35.6,
       "ctrl_pct": 23.5,
       "z": 1.9,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 31.5,
-      "ctrl_pct": 34.1,
-      "z": -0.4,
-      "flag": "even"
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "3760019020201106",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B201106"
+       },
+       {
+        "delivery_id": "3760019020201104",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B201104"
+       },
+       {
+        "delivery_id": "3760019020201102",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B201102"
+       },
+       {
+        "delivery_id": "3760019020200906",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200906"
+       },
+       {
+        "delivery_id": "3760019020200803",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200803"
+       },
+       {
+        "delivery_id": "3760019020200802",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200802"
+       }
+      ]
      },
      {
       "label": "a good length",
-      "pct": 30.1,
-      "ctrl_pct": 39.4,
-      "z": -1.3,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 1.4,
-      "ctrl_pct": 1.5,
-      "z": -0.1,
-      "flag": "thin"
-     },
-     {
-      "label": "short of a length",
-      "pct": 0.0,
-      "ctrl_pct": 0.0,
-      "z": 0.0,
-      "flag": "thin"
+      "pct": 63.0,
+      "ctrl_pct": 75.0,
+      "z": -1.8,
+      "flag": "less"
      },
      {
       "label": "short",
@@ -5929,28 +5294,54 @@
       "flag": "thin"
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 31.5,
       "ctrl_pct": 37.1,
       "z": -0.8,
       "flag": "even"
      },
      {
-      "label": "wide of off",
+      "label": "pitched at the stumps",
+      "pct": 52.1,
+      "ctrl_pct": 40.2,
+      "z": 1.6,
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "3760019020200906",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200906"
+       },
+       {
+        "delivery_id": "3760019020200802",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200802"
+       },
+       {
+        "delivery_id": "3760019020200801",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200801"
+       },
+       {
+        "delivery_id": "3760019020200604",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200604"
+       },
+       {
+        "delivery_id": "3760019020200603",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200603"
+       },
+       {
+        "delivery_id": "3760019020200602",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200602"
+       }
+      ]
+     },
+     {
+      "label": "pitched wide of off",
       "pct": 5.5,
       "ctrl_pct": 12.1,
       "z": -1.5,
       "flag": "even"
      },
      {
-      "label": "at the stumps",
-      "pct": 52.1,
-      "ctrl_pct": 40.2,
-      "z": 1.6,
-      "flag": "even"
-     },
-     {
-      "label": "on leg",
+      "label": "pitched at your pads",
       "pct": 11.0,
       "ctrl_pct": 10.6,
       "z": 0.1,
@@ -5968,7 +5359,33 @@
       "pct": 50.7,
       "ctrl_pct": 40.2,
       "z": 1.5,
-      "flag": "even"
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "3760019020200906",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200906"
+       },
+       {
+        "delivery_id": "3760019020200802",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200802"
+       },
+       {
+        "delivery_id": "3760019020200801",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200801"
+       },
+       {
+        "delivery_id": "3760019020200604",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200604"
+       },
+       {
+        "delivery_id": "3760019020200603",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200603"
+       },
+       {
+        "delivery_id": "3760019020200602",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B200602"
+       }
+      ]
      }
     ],
     "spin_cells": [],
@@ -5996,7 +5413,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/Multi%20Day/3760019/B/2/3760019B201304"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 2 dismissals — 1 caught and 1 LBW.",
+    "summary": "They pitched it up at your stumps. 2 dismissals — 1 caught and 1 LBW.",
     "spin_summary": null
    }
   ]
@@ -6033,7 +5450,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460929/A/1/5460929A111803"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 1 dismissal — 1 caught.",
+    "summary": "1 dismissal — 1 caught.",
     "spin_summary": null
    }
   ]
@@ -6057,52 +5474,57 @@
     "ctrl_balls": 965,
     "cells": [
      {
-      "label": "very full",
-      "pct": 2.4,
-      "ctrl_pct": 0.5,
-      "z": 1.9,
-      "flag": "thin"
+      "label": "round the wicket",
+      "pct": 63.4,
+      "ctrl_pct": 52.0,
+      "z": 2.0,
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460074020209106",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209106"
+       },
+       {
+        "delivery_id": "5460074020209105",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209105"
+       },
+       {
+        "delivery_id": "5460074020209104",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209104"
+       },
+       {
+        "delivery_id": "5460074020209103",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209103"
+       },
+       {
+        "delivery_id": "5460074020209101",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209101"
+       },
+       {
+        "delivery_id": "5460074020208906",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B208906"
+       }
+      ]
      },
      {
-      "label": "full",
-      "pct": 11.0,
-      "ctrl_pct": 8.9,
-      "z": 0.6,
-      "flag": "even"
-     },
-     {
-      "label": "fullish",
-      "pct": 7.3,
-      "ctrl_pct": 15.3,
-      "z": -1.9,
+      "label": "pitched up",
+      "pct": 13.4,
+      "ctrl_pct": 9.4,
+      "z": 1.2,
       "flag": "even"
      },
      {
       "label": "a good length",
-      "pct": 40.2,
-      "ctrl_pct": 39.1,
-      "z": 0.2,
-      "flag": "even"
-     },
-     {
-      "label": "back of a length",
-      "pct": 6.1,
-      "ctrl_pct": 12.9,
-      "z": -1.8,
-      "flag": "even"
-     },
-     {
-      "label": "short of a length",
-      "pct": 3.7,
-      "ctrl_pct": 5.2,
-      "z": -0.6,
-      "flag": "even"
+      "pct": 53.7,
+      "ctrl_pct": 67.3,
+      "z": -2.5,
+      "flag": "less"
      },
      {
       "label": "short",
-      "pct": 29.3,
-      "ctrl_pct": 18.1,
-      "z": 2.4,
+      "pct": 32.9,
+      "ctrl_pct": 23.3,
+      "z": 1.9,
       "flag": "more",
       "examples": [
        {
@@ -6122,38 +5544,64 @@
         "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/1/5460074B110001"
        },
        {
-        "delivery_id": "5460074020109506",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/1/5460074B109506"
+        "delivery_id": "5460074020109605",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/1/5460074B109605"
        },
        {
-        "delivery_id": "5460074020109505",
-        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/1/5460074B109505"
+        "delivery_id": "5460074020109507",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/1/5460074B109507"
        }
       ]
      },
      {
-      "label": "the channel",
+      "label": "pitched in the channel",
       "pct": 48.8,
       "ctrl_pct": 38.8,
       "z": 1.7,
-      "flag": "even"
+      "flag": "more",
+      "examples": [
+       {
+        "delivery_id": "5460074020209106",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209106"
+       },
+       {
+        "delivery_id": "5460074020209105",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209105"
+       },
+       {
+        "delivery_id": "5460074020209104",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209104"
+       },
+       {
+        "delivery_id": "5460074020209103",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209103"
+       },
+       {
+        "delivery_id": "5460074020209101",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209101"
+       },
+       {
+        "delivery_id": "5460074020208905",
+        "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B208905"
+       }
+      ]
      },
      {
-      "label": "wide of off",
-      "pct": 11.0,
-      "ctrl_pct": 14.2,
-      "z": -0.8,
-      "flag": "even"
-     },
-     {
-      "label": "at the stumps",
+      "label": "pitched at the stumps",
       "pct": 14.6,
       "ctrl_pct": 17.3,
       "z": -0.6,
       "flag": "even"
      },
      {
-      "label": "on leg",
+      "label": "pitched wide of off",
+      "pct": 11.0,
+      "ctrl_pct": 14.2,
+      "z": -0.8,
+      "flag": "even"
+     },
+     {
+      "label": "pitched at your pads",
       "pct": 25.6,
       "ctrl_pct": 29.7,
       "z": -0.8,
@@ -6195,8 +5643,8 @@
      {
       "label": "full at the stumps",
       "pct": 14.6,
-      "ctrl_pct": 15.1,
-      "z": -0.1,
+      "ctrl_pct": 15.4,
+      "z": -0.2,
       "flag": "even"
      }
     ],
@@ -6247,7 +5695,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460074/B/2/5460074B209106"
      }
     ],
-    "summary": "They bowled you more with the width to cut and short than your teammates. 4 dismissals — 2 LBW, 1 bowled and 1 caught, the wicket ball most often a good length, the channel.",
+    "summary": "They came round the wicket and banged it in short in the channel. 4 dismissals — 2 LBW, 1 bowled and 1 caught, the wicket ball most often a good length, the channel.",
     "spin_summary": null
    },
    {
@@ -6386,7 +5834,7 @@
       "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460063/B/1/5460063B116603"
      }
     ],
-    "summary": "They bowled to you as they bowled to your teammates. 5 dismissals — 2 LBW, 2 bowled and 1 caught, the wicket ball most often full, the channel, playing the forward defence.",
+    "summary": "5 dismissals — 2 LBW, 2 bowled and 1 caught, the wicket ball most often full, the channel, playing the forward defence.",
     "spin_summary": "They bowled to you as they bowled to your teammates."
    }
   ]

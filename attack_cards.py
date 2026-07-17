@@ -30,8 +30,19 @@ OUT = os.path.join(HERE, "data", "attack_cards.json")
 
 SERIES_GAP_DAYS = 75          # consecutive Tests vs the same opposition within this gap = one series
 N_SERIES = 3
-Z_GATE = 2.0                  # |z| to flag a diet cell
+# Flag = magnitude-first (consistent pace vs spin): a cell reads more/less only when the raw gap vs
+# the control is at least MIN_PP percentage points AND not pure noise (|z| >= Z_SOFT). A pure z-gate
+# flagged tiny pace gaps (huge n) but never a real spin gap (small n) — see ATTACK_CARDS_REDESIGN.md.
+MIN_PP = 8.0                  # min percentage-point gap (you vs others) to flag a cell
+Z_SOFT = 1.3                  # light reliability guard so a big gap on thin data doesn't over-claim
 MIN_CELL = 5                  # min balls (player side) for a cell to be quotable
+
+# Length collapsed to 3 reader bands (from lookup 2819): pitched up / good length / short.
+LEN_UP = {"<1 m", "1-2 m", "2-5 m"}
+LEN_GOOD = {"5-6 m", "6-8 m", "8-9 m"}
+LEN_SHORT = {"9-10 m", "10+ m"}
+# over_the_wicket: "1"/"True" = over, "0"/"False" = round the wicket (mirrors profile.is_round).
+_ROUND_VALS = {"0", "False", "false"}
 
 _TEST = (f"M.series_id IN (SELECT series_id FROM [{DATA_SCHEMA}].[Series] "
          f"WHERE name IN {international_series_sql('Test')})")
@@ -41,7 +52,7 @@ LEN_NAME = {"<1 m": "yorker length", "1-2 m": "very full", "2-5 m": "full", "5-6
             "6-8 m": "a good length", "8-9 m": "back of a length", "9-10 m": "short of a length",
             "10+ m": "short"}
 LINE_NAME = {"Channel": "the channel", "Wide Outside Off": "wide of off",
-             "In Line": "at the stumps", "Outside Leg": "on leg"}
+             "In Line": "at the stumps", "Outside Leg": "at the pads"}
 # Spin bands (lookup 2821 length / 2824 line)
 SLEN_NAME = {"<4 m": "tossed up", "4-5 m": "on a good length", "5+ m": "dragged short"}
 SLIN_NAME = {"Outside Off": "outside off", "Mid and Off": "middle and off",
@@ -84,6 +95,7 @@ def _player_balls(conn, cur, pid):
             D.stroke_id, D.shot_quality_id,
             D.pitch_line_group_pace_id lin, D.pitch_length_group_pace_1_id len,
             D.pitch_line_group_spin_id slin, D.pitch_length_group_spin_1_id slen,
+            D.over_the_wicket ow,
             D.bowler_pace_spin_id ps, P.surname bowler, LH.description hand,
             D.video_file_name, M.match_length_id, S.name season, SR.gender_id
         FROM [{DATA_SCHEMA}].[Deliveries] D
@@ -106,6 +118,7 @@ def _control_balls(conn, cur, pid, match_ids, hand_like):
         SELECT D.match_id, D.bowler_pace_spin_id ps,
                D.pitch_line_group_pace_id lin, D.pitch_length_group_pace_1_id len,
                D.pitch_line_group_spin_id slin, D.pitch_length_group_spin_1_id slen,
+               D.over_the_wicket ow,
                T.team_name opp
         FROM [{DATA_SCHEMA}].[Deliveries] D
         JOIN [{DATA_SCHEMA}].[Teams] T ON D.team_bowling_id = T.team_id
@@ -144,16 +157,28 @@ def _derive_series(balls):
 
 
 def _pace_defs(LEN, LIN):
-    defs = [("very full", lambda r: LEN.get(r["len"]) in ("<1 m", "1-2 m"))]
-    for band in ("2-5 m", "5-6 m", "6-8 m", "8-9 m", "9-10 m", "10+ m"):
-        defs.append((LEN_NAME.get(band, band), lambda r, b=band: LEN.get(r["len"]) == b))
-    for grp in ("Channel", "Wide Outside Off", "In Line", "Outside Leg"):
-        defs.append((LINE_NAME.get(grp, grp), lambda r, g=grp: LIN.get(r["lin"]) == g))
+    """Pace plan cells across three orthogonal axes — angle (over/round the wicket), length (3
+    reader bands) and pitching line (disambiguated from the stump line) — plus two composite danger
+    balls. Redesigned per ATTACK_CARDS_REDESIGN.md so the card answers 'how did they bowl to you'."""
+    defs = [
+        # angle
+        ("round the wicket", lambda r: str(r.get("ow")) in _ROUND_VALS),
+        # length — 3 bands
+        ("pitched up", lambda r: LEN.get(r["len"]) in LEN_UP),
+        ("a good length", lambda r: LEN.get(r["len"]) in LEN_GOOD),
+        ("short", lambda r: LEN.get(r["len"]) in LEN_SHORT),
+        # pitching line (where it bounced — NOT the stump line)
+        ("pitched in the channel", lambda r: LIN.get(r["lin"]) == "Channel"),
+        ("pitched at the stumps", lambda r: LIN.get(r["lin"]) == "In Line"),
+        ("pitched wide of off", lambda r: LIN.get(r["lin"]) == "Wide Outside Off"),
+        ("pitched at your pads", lambda r: LIN.get(r["lin"]) == "Outside Leg"),
+    ]
+    # composite danger balls (kept — Tom likes the specificity)
     defs.append(("cut ball (short, wide off)",
-                 lambda r: LEN.get(r["len"]) in ("9-10 m", "10+ m")
+                 lambda r: LEN.get(r["len"]) in LEN_SHORT
                  and LIN.get(r["lin"]) in ("Channel", "Wide Outside Off")))
     defs.append(("full at the stumps",
-                 lambda r: LEN.get(r["len"]) in ("2-5 m", "5-6 m", "6-8 m") and LIN.get(r["lin"]) == "In Line"))
+                 lambda r: LEN.get(r["len"]) in (LEN_UP | {"5-6 m", "6-8 m"}) and LIN.get(r["lin"]) == "In Line"))
     return defs
 
 
@@ -184,10 +209,11 @@ def _diet_cells(w_balls, c_balls, defs, floor_w=60, floor_c=120):
         p1, p2 = cw / nw, cc / nc
         z = _z(p1, nw, p2, nc)
         expected = cc * nw / nc
+        diff_pp = abs(p1 - p2) * 100                  # magnitude-first: the raw gap, in points
         if cw < 3 and expected < 3:
             flag = "thin"
-        elif abs(z) >= Z_GATE and max(cw, expected) >= MIN_CELL:
-            flag = "more" if z > 0 else "less"
+        elif diff_pp >= MIN_PP and abs(z) >= Z_SOFT and max(cw, expected) >= MIN_CELL:
+            flag = "more" if p1 > p2 else "less"
         else:
             flag = "even"
         cell = {"label": label, "pct": round(100 * p1, 1), "ctrl_pct": round(100 * p2, 1),
@@ -249,11 +275,56 @@ def _spin_summary(spin_cells, person="you"):
     return _diet_sentence(spin_cells, SPIN_PROSE, person) if spin_cells else None
 
 
+# length band -> verb when it's the dominant band vs when they went there MORE than the cohort
+_LEN_DOM = {"pitched up": "pitched it up", "a good length": "stuck to a good length", "short": "went short"}
+_LEN_MORE = {"pitched up": "pitched it up", "a good length": "hit a good length", "short": "banged it in short"}
+# pitching-line label -> the natural "target" phrase (the {poss} is person-swapped)
+_LINE_PHRASE = {"pitched at the stumps": "at {poss} stumps", "pitched in the channel": "in the channel",
+                "pitched wide of off": "wide of off", "pitched at your pads": "at {poss} pads"}
+
+
+def _pace_read(cells, person="you"):
+    """The 'how did they bowl to you' sentence — angle → length → target. Leads with the axes the
+    opposition leaned on against this batter (a flagged 'more'), else describes the dominant pattern.
+    Returns None if there's nothing to say (no length data)."""
+    _s, poss, _p = _PRON.get(person, _PRON["you"])
+    by = {c["label"]: c for c in cells}
+    pct = lambda l: by.get(l, {}).get("pct", 0)
+    flag = lambda l: by.get(l, {}).get("flag", "even")
+
+    # angle — only mention it when it's a feature (leaned on, or clearly the stock angle)
+    round_pct = pct("round the wicket")
+    if flag("round the wicket") == "more" or round_pct >= 45:
+        angle = "came round the wicket and "
+    elif round_pct and round_pct <= 8:
+        angle = "stayed over the wicket, "
+    else:
+        angle = ""
+
+    # length — a flagged 'more' band wins, else the modal band
+    len_labels = ["pitched up", "a good length", "short"]
+    if not any(pct(l) for l in len_labels):
+        return None
+    more_len = [l for l in len_labels if flag(l) == "more"]
+    if more_len:
+        length = _LEN_MORE[more_len[0]]
+    else:
+        modal = max(len_labels, key=pct)
+        length = _LEN_DOM[modal]
+
+    # line target — a flagged 'more' line wins, else the modal line
+    line_labels = ["pitched at the stumps", "pitched in the channel", "pitched wide of off", "pitched at your pads"]
+    more_line = [l for l in line_labels if flag(l) == "more"]
+    tgt = (more_line[0] if more_line else max(line_labels, key=pct))
+    line = _LINE_PHRASE[tgt].format(poss=poss)
+    return f"They {angle}{length} {line}."
+
+
 def _summary(cells, outs_detail, person="you"):
-    """Two readable sentences: the (pace) diet, then the dismissals. The table carries the numbers."""
-    s1 = _diet_sentence(cells, _PROSE, person)
+    """The pace read ('how did they bowl to you'), then the dismissals. The table carries the numbers."""
+    s1 = _pace_read(cells, person) if cells else ""     # thin pace → no read, just the dismissals
     if not outs_detail:
-        return s1 + " Not dismissed in the series."
+        return (s1 + " Not dismissed in the series.").strip()
     modes = Counter(o["how"] for o in outs_detail)
     mode_str = _join([f"{n} {m if m == 'LBW' else m.lower()}" for m, n in modes.most_common()])
     n = len(outs_detail)
@@ -268,7 +339,7 @@ def _summary(cells, outs_detail, person="you"):
         stk, c = strokes.most_common(1)[0]
         if c >= 2 and c / n >= 0.4:
             s2 += f", playing the {stk.lower()}"
-    return s1 + " " + s2 + "."
+    return (s1 + " " + s2).strip() + "."
 
 
 def build_card(conn, cur, pid, name, LEN, LIN, STK, SLEN, SLIN, person="you"):
