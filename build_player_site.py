@@ -36,6 +36,7 @@ def _load_cards():
         return json.load(open(CARDS, encoding="utf-8"))
     return {}
 
+N_OPP = 3               # opposition cards per pack (kept small while iterating; raise for the full pack)
 ROLE_ORDER = [("Batter", "Batters"), ("All-rounder", "All-rounders"),
               ("Bowler", "Bowlers"), ("Unknown", "Unclassified")]
 ROLE_CLASS = {"Batter": "squad", "All-rounder": "xi", "Bowler": "reference", "Unknown": "fringe"}
@@ -488,7 +489,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                               "what actually happened.", inner=_attack_card_html(card, opp, vision)))
     if opp_bowlers:
         ordered = sorted(opp_bowlers.items(),
-                         key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))
+                         key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
                             h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing")
                   for bid, (nm, ty) in ordered]
@@ -519,7 +520,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
 
     if opp_batters:
         ordered = sorted(opp_batters.items(),
-                         key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))
+                         key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         blocks = [_opp_card(bid, nm, hand, (about.get(bid) or {}).get(f"facts_{tw}"),
                             h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to")
                   for bid, (nm, hand) in ordered]
@@ -558,6 +559,13 @@ def build(out_dir, no_video=False, only=None):
             shutil.rmtree(p, ignore_errors=True)
         else:
             os.remove(p)
+
+    if not no_video:                                   # prime a long read SAS so vision links don't
+        try:                                           # die after the default 6 h (was the bug)
+            from cricket_core.video import get_fairplay_sas
+            get_fairplay_sas(ttl_hours=156)
+        except Exception as e:
+            print(f"  ! SAS prime failed ({e}) — vision links may be short-lived")
 
     slugs = list(squads.keys())
     single = len(slugs) == 1
