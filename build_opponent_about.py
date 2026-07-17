@@ -73,7 +73,25 @@ def distil_batter(P, hand):
     if e and s and e.get("dismissal_per100") and s.get("dismissal_per100"):
         if e["dismissal_per100"] >= 1.4 * s["dismissal_per100"]:
             facts.append("Vulnerable early — worth attacking in their first 30 balls.")
-    return {"hand": hand, "facts": facts, "order": int(P.get("runs") or 0)}
+
+    # type-scoped facts (a pace bowler's pack shows only pace; a spinner's only spin)
+    vs = P.get("vs") or {}
+
+    def type_facts(t):
+        v = vs.get(t)
+        if not v or not v.get("avg"):
+            return []
+        line = f"Vs {t}: averages {v['avg']:.0f} at a strike rate of {v['sr']:.0f}"
+        if v.get("false_pct"):
+            line += f", false-shot {v['false_pct']:.0f}%"
+        out = [line + "."]
+        sg = P.get("shot_groups") or []
+        if sg:
+            out.append(f"Main scoring shot is the {sg[0]['name'].lower()}.")
+        return out
+
+    return {"hand": hand, "facts": facts, "order": int(P.get("runs") or 0),
+            "facts_pace": type_facts("pace"), "facts_spin": type_facts("spin")}
 
 
 def main():

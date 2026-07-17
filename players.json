@@ -38,7 +38,10 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "pace"
+    ]
   },
   "350104": {
     "name": "Alex Carey",
@@ -55,7 +58,11 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "pace",
+      "spin"
+    ]
   },
   "1300076": {
     "name": "Pat Cummins",
@@ -64,7 +71,10 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "pace"
+    ]
   },
   "1300007": {
     "name": "Mitch Starc",
@@ -73,7 +83,10 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "pace"
+    ]
   },
   "1300071": {
     "name": "Nathan Lyon",
@@ -82,7 +95,10 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "spin"
+    ]
   },
   "880149": {
     "name": "Josh Hazlewood",
@@ -91,7 +107,10 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "pace"
+    ]
   },
   "2710059": {
     "name": "Scott Boland",
@@ -100,7 +119,10 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "pace"
+    ]
   },
   "1940169": {
     "name": "Josh Inglis",
@@ -125,7 +147,10 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "pace"
+    ]
   },
   "2700257": {
     "name": "Todd Murphy",
@@ -134,6 +159,9 @@
       "batting",
       "bowling"
     ],
-    "prefs": "base"
+    "prefs": "base",
+    "bowl_types": [
+      "spin"
+    ]
   }
 }

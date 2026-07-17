@@ -138,7 +138,15 @@
     "Most often out caught (76% of dismissals).",
     "Vulnerable early — worth attacking in their first 30 balls."
    ],
-   "order": 1129
+   "order": 1129,
+   "facts_pace": [
+    "Vs pace: averages 21 at a strike rate of 42, false-shot 15%.",
+    "Main scoring shot is the drive."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 39 at a strike rate of 50, false-shot 11%.",
+    "Main scoring shot is the drive."
+   ]
   },
   "2540166": {
    "name": "Shadman Islam",
@@ -148,7 +156,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (65% of dismissals)."
    ],
-   "order": 1452
+   "order": 1452,
+   "facts_pace": [
+    "Vs pace: averages 26 at a strike rate of 50, false-shot 18%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 36 at a strike rate of 49, false-shot 8%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "2540168": {
    "name": "Zakir Hasan",
@@ -158,7 +174,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (58% of dismissals)."
    ],
-   "order": 593
+   "order": 593,
+   "facts_pace": [
+    "Vs pace: averages 20 at a strike rate of 47, false-shot 19%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 37 at a strike rate of 52, false-shot 11%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "2700013": {
    "name": "Mominul Haque",
@@ -169,7 +193,15 @@
     "Most often out caught (68% of dismissals).",
     "Vulnerable early — worth attacking in their first 30 balls."
    ],
-   "order": 3443
+   "order": 3443,
+   "facts_pace": [
+    "Vs pace: averages 30 at a strike rate of 48, false-shot 14%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 42 at a strike rate of 63, false-shot 9%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "3110063": {
    "name": "Najmul Hussain Shanto",
@@ -179,7 +211,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (56% of dismissals)."
    ],
-   "order": 1296
+   "order": 1296,
+   "facts_pace": [
+    "Vs pace: averages 28 at a strike rate of 53, false-shot 19%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 52 at a strike rate of 60, false-shot 11%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "300015": {
    "name": "Mushfiqur Rahim",
@@ -189,7 +229,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (51% of dismissals)."
    ],
-   "order": 3541
+   "order": 3541,
+   "facts_pace": [
+    "Vs pace: averages 32 at a strike rate of 42, false-shot 13%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 57 at a strike rate of 57, false-shot 7%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "520069": {
    "name": "Shahadat Hossain",
@@ -198,7 +246,15 @@
     "Scores mainly down the ground; go-to shot is the drive.",
     "Most often out caught (69% of dismissals)."
    ],
-   "order": 197
+   "order": 197,
+   "facts_pace": [
+    "Vs pace: averages 16 at a strike rate of 39, false-shot 15%.",
+    "Main scoring shot is the drive."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 14 at a strike rate of 35, false-shot 6%.",
+    "Main scoring shot is the drive."
+   ]
   },
   "290007": {
    "name": "Shakib Al Hasan",
@@ -207,7 +263,15 @@
     "Scores mainly through the leg side; go-to shot is the drive.",
     "Most often out caught (78% of dismissals)."
    ],
-   "order": 794
+   "order": 794,
+   "facts_pace": [
+    "Vs pace: averages 32 at a strike rate of 68, false-shot 16%.",
+    "Main scoring shot is the drive."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 28 at a strike rate of 56, false-shot 12%.",
+    "Main scoring shot is the drive."
+   ]
   },
   "2540159": {
    "name": "Litton Das",
@@ -217,7 +281,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (66% of dismissals)."
    ],
-   "order": 3219
+   "order": 3219,
+   "facts_pace": [
+    "Vs pace: averages 31 at a strike rate of 65, false-shot 11%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 46 at a strike rate of 57, false-shot 7%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "5460114": {
    "name": "Jaker Ali",
@@ -227,7 +299,15 @@
     "Weaker against spin than pace.",
     "Most often out caught (55% of dismissals)."
    ],
-   "order": 337
+   "order": 337,
+   "facts_pace": [
+    "Vs pace: averages 43 at a strike rate of 68, false-shot 18%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 16 at a strike rate of 38, false-shot 15%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "3080087": {
    "name": "Mehidy Hasan Miraz",
@@ -237,7 +317,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (72% of dismissals)."
    ],
-   "order": 2042
+   "order": 2042,
+   "facts_pace": [
+    "Vs pace: averages 21 at a strike rate of 57, false-shot 18%.",
+    "Main scoring shot is the drive."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 31 at a strike rate of 49, false-shot 11%.",
+    "Main scoring shot is the drive."
+   ]
   },
   "2700039": {
    "name": "Taijul Islam",
@@ -247,7 +335,15 @@
     "Weaker against spin than pace.",
     "Most often out caught (48% of dismissals)."
    ],
-   "order": 738
+   "order": 738,
+   "facts_pace": [
+    "Vs pace: averages 12 at a strike rate of 45, false-shot 28%.",
+    "Main scoring shot is the work/nudge."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 8 at a strike rate of 31, false-shot 14%.",
+    "Main scoring shot is the work/nudge."
+   ]
   },
   "4353535": {
    "name": "Nayeem Hasan",
@@ -257,7 +353,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (59% of dismissals)."
    ],
-   "order": 235
+   "order": 235,
+   "facts_pace": [
+    "Vs pace: averages 7 at a strike rate of 32, false-shot 22%.",
+    "Main scoring shot is the sweep."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 17 at a strike rate of 43, false-shot 9%.",
+    "Main scoring shot is the sweep."
+   ]
   },
   "5180245": {
    "name": "Hasan Mahmud",
@@ -267,7 +371,15 @@
     "Handles spin well — pace is the more likely way through.",
     "Most often out caught (64% of dismissals)."
    ],
-   "order": 173
+   "order": 173,
+   "facts_pace": [
+    "Vs pace: averages 7 at a strike rate of 36, false-shot 32%.",
+    "Main scoring shot is the drive."
+   ],
+   "facts_spin": [
+    "Vs spin: averages 26 at a strike rate of 46, false-shot 22%.",
+    "Main scoring shot is the drive."
+   ]
   }
  }
 }
