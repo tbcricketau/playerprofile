@@ -18,7 +18,8 @@ import re
 
 from site_render import page as _page
 from photos import get_photo_data_uri, get_photo_path
-from cricket_core.lookups import team_flag
+from cricket_core.lookups import team_flag, country_code
+from cricket_core.flags import flag_img_tag
 
 # "file": pages reference img/{pid}.png (copied at build, lazy-loaded — keeps the roster page
 # a few tens of KB instead of megabytes of inlined base64, which lagged on phone data).
@@ -79,6 +80,7 @@ EXTRA_CSS = """<style>
  details.sblock2[open]>summary::before{content:"▾"}
  details.sblock2 .sh{font-size:14px;font-weight:700;color:#1a1a2e}
  details.sblock2 .sh .flag{font-size:16px;vertical-align:-1px}
+ details.sblock2 .sh .flagcode{font-size:11px;font-weight:700;color:#6b7280;background:#eef1f6;border-radius:4px;padding:1px 5px;vertical-align:1px}
  details.sblock2 .smeta{color:#6b7280;font-size:12px}
  .cwatch{color:#003087;text-decoration:none;font-size:11px;margin-left:3px;white-space:nowrap}
  .dsect{margin-top:18px;padding-top:12px;border-top:1px solid #eef1f6}
@@ -200,8 +202,10 @@ def _attack_card_html(card, opp_label, vision=None, cell_vision=None):
         meta = (f'{s["tests"]} Test{"s" if s["tests"] != 1 else ""} · {_dfmt(s["d0"])} → {_dfmt(s["d1"])} · '
                 f'{s["balls"]} balls · {s["runs"]} runs · '
                 + (f'avg {s["avg"]}' if s.get("avg") is not None else 'not dismissed'))
-        flag = (team_flag(s["opp"])[0] or "")
-        flag_html = (f'<span class="flag">{flag}</span> ' if flag else "")
+        # small flag IMAGE (emoji flags render inconsistently across OS); fall back to the code chip
+        img = flag_img_tag(s["opp"], height=13)
+        flag_html = (f'{img} ' if img
+                     else f'<span class="flagcode">{html.escape(country_code(s["opp"]) or "")}</span> ')
         summ = (f'<summary><span class="sh">{flag_html}v {html.escape(s["opp"])}</span>'
                 f'<span class="smeta">{meta}</span></summary>')
         # pace column (left)

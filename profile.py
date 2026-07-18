@@ -1375,6 +1375,26 @@ def build_profile(
     n_caught = sum(1 for r in wkts if r["how_out"] == "Caught")
     caught_behind = sum(1 for r in wkts if r.get("catch_group") == "behind")
     caught_field  = sum(1 for r in wkts if r.get("catch_group") == "field")
+    # Threat dismissal = the type he OVER-INDEXES on (his signature), not the raw mode — caught is
+    # the mode for nearly everyone, so we lead with where he beats the base rate. Caught is refined
+    # to behind / in the field for the read; falls back to the detailed mode when no baseline.
+    threat_dismissal = None
+    _cand = [d for d in dismissal_index if d["count"] >= 2]
+    _over = [d for d in _cand if d.get("index") and d["index"] >= 1.15 and d["share"] >= 12]
+    if _over:                                    # a genuine over-indexed signature
+        _best, _sig = max(_over, key=lambda d: d["index"]), True
+    elif _cand:                                  # else the dominant type (still refined, not "caught")
+        _best, _sig = max(_cand, key=lambda d: d["share"]), False
+    else:
+        _best = None
+    if _best:
+        _lab = _best["type"]
+        if _lab == "Caught":
+            _lab = "caught behind" if caught_behind >= caught_field else "caught in the field"
+        elif _lab != "LBW":
+            _lab = _lab.lower()
+        threat_dismissal = {"label": _lab, "share": _best["share"], "signature": _sig,
+                            "index": _best.get("index"), "count": _best["count"]}
 
     turn_vals  = [abs(r["turn_n"])  for r in legal if r.get("turn_n")  is not None]
     drift_vals = [abs(r["drift_n"]) for r in legal if r.get("drift_n") is not None]
@@ -1495,7 +1515,7 @@ def build_profile(
         # threat
         "beaten_pct": beaten_pct, "false_pct": false_pct, "n_tracked": n_tracked,
         "dismissal_counts": dismissal_counts, "n_dismissals": n_dismissals, "top_dismissal": top_dismissal,
-        "dismissal_index": dismissal_index,
+        "dismissal_index": dismissal_index, "threat_dismissal": threat_dismissal,
         "catch_pos_counts": catch_pos_counts, "n_caught": n_caught,
         "caught_behind": caught_behind, "caught_field": caught_field,
         "avg_turn": avg_turn, "avg_drift": avg_drift, "big_turn_pct": big_turn_pct,

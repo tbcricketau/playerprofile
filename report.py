@@ -161,6 +161,27 @@ def _narrative(P: dict) -> dict:
             themes.append(f"<b>Round the wicket</b> he {' and '.join(seg)}.")
     if is_spin and P["avg_turn"] is not None:
         themes.append(f"Turns it {_fmt(P['avg_turn'])}° on average; {_pct(P['big_turn_pct'])} of balls turn ≥5°.")
+    # sequencing — a condensed line (full detail in the Sequencing section)
+    sq = P.get("sequencing")
+    if sq and sq.get("length_sd") is not None:
+        sd = sq["length_sd"]
+        if is_spin:
+            rep = ("repeats his length ball after ball" if sd < 1.05
+                   else "mixes his flight and length" if sd > 1.45 else "holds a fairly consistent length")
+        else:
+            rep = ("hammers a repeatable length" if sd < 1.85
+                   else "varies his length a lot" if sd > 2.25 else "holds a fairly consistent length")
+        os_ = [o for o in sq["over_shape"] if o["med_len"] is not None]
+        early, late = [o for o in os_ if o["pos"] <= 2], [o for o in os_ if o["pos"] >= 5]
+        trend = ""
+        if early and late:
+            es = statistics.mean(o["short_pct"] for o in early)
+            ls = statistics.mean(o["short_pct"] for o in late)
+            if ls - es >= 3:
+                trend = ", banging it in more as the over goes on"
+            elif es - ls >= 3:
+                trend = ", starting shorter then pitching up through the over"
+        themes.append(f"Across an over he <b>{rep}</b>{trend}.")
 
     # Biggest threats
     if P["danger_length"]:
@@ -181,10 +202,15 @@ def _narrative(P: dict) -> dict:
     if P["beaten_pct"] is not None:
         threats.append(f"Beats the bat {_pct(P['beaten_pct'], 1)} of tracked balls "
                        f"(false-shot {_pct(P['false_pct'], 1)}).")
-    if P["top_dismissal"]:
-        md = P["top_dismissal"][1] / P["n_dismissals"] * 100
-        threats.append(f"Most likely to dismiss you <b>{P['top_dismissal'][0].lower()}</b> "
-                       f"({_pct(md)} of wickets).")
+    td = P.get("threat_dismissal")
+    if td:
+        # lead with the SIGNATURE (over-indexed) type, not the caught-for-everyone raw mode; when
+        # there's no standout, state the dominant type REFINED (caught behind / in the field, not "caught")
+        if td.get("signature"):
+            threats.append(f"Gets you <b>{td['label']}</b> more than most — {_pct(td['share'])} of "
+                           f"his wickets ({td['index']:.1f}× the typical rate for this type).")
+        else:
+            threats.append(f"Wickets come mostly <b>{td['label']}</b> ({_pct(td['share'])}).")
     if P["n_caught"]:
         cb = P["caught_behind"] / P["n_caught"] * 100
         tops = ", ".join(k.lower() for k, _ in P["catch_pos_counts"].most_common(3))
@@ -281,10 +307,11 @@ def _recent_card_vals(P: dict) -> dict:
     out = {}
     if Pr.get("economy") is not None:
         out["Economy"] = _fmt(Pr["economy"])
-    if Pr.get("bowl_avg") is not None:
-        out["Bowling Avg"] = _fmt(Pr["bowl_avg"])
-    if Pr.get("strike_rate") is not None:
-        out["Strike Rate"] = _fmt(Pr["strike_rate"])
+    # avg / SR always shown when the window qualifies — "—" when there are no recent wickets, so the
+    # 3-yr line is present and honest rather than blank (a blank reads as a bug).
+    nw_rec = Pr.get("n_wkts") or 0
+    out["Bowling Avg"] = _fmt(Pr.get("bowl_avg")) if nw_rec else "— (no wkts)"
+    out["Bowl strike rate"] = _fmt(Pr.get("strike_rate")) if nw_rec else "— (no wkts)"
     if Pr.get("avg_spd") is not None:
         out["Avg speed"] = f"{_fmt(Pr['avg_spd'])} kph"
     if Pr.get("avg_len_m") is not None:

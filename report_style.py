@@ -70,7 +70,7 @@ def headline_cards(P: dict, recent: dict = None) -> list:
         card("Wickets",       f"{nw}" if nw is not None else "—"),
         card("Economy",       _fmt(P.get("economy")), recent=rec.get("Economy", "")),
         card("Bowling Avg",   _fmt(P.get("bowl_avg")), recent=rec.get("Bowling Avg", "")),
-        card("Strike Rate",   _fmt(P.get("strike_rate")), recent=rec.get("Strike Rate", "")),
+        card("Bowl strike rate", _fmt(P.get("strike_rate")), recent=rec.get("Bowl strike rate", "")),
         card("Avg speed",     f"{_fmt(P.get('avg_spd'))} kph", f"P99 {_fmt(P.get('max_spd_99'))}",
              recent=rec.get("Avg speed", "")),
         card("Avg length",    f"{_fmt(P.get('avg_len_m'), '.2f')} m", f"Short {_pct(P.get('short_pct'))}",
