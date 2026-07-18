@@ -831,7 +831,7 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test"
     `recent_vals` {label: last-3yr value} adds a `recent` value + `pctl_recent` to matching
     cards for the recency overlay."""
     bid = str(bowler_id)
-    recent_vals = recent_vals or {}
+    recent_vals = dict(recent_vals or {})          # local copy — we add the crease recents below
     cards = []
 
     def _num(r, k):
@@ -856,6 +856,12 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test"
     # ── crease / release (hand × pace/spin peer group) ──
     cr = load_crease_profiles(fmt); crow = cr.get(bid)
     if crow:
+        # crease recency comes from the reference CSV (referencebuilder computes it in the career
+        # dominant angle, confound-free + on the same cm scale) — not from recent_fingerprint_vals.
+        for _lbl, _c3 in (("Crease width", "width_cm_3y"), ("Crease variation", "var_cm_3y")):
+            _rv = _num(crow, _c3)
+            if _rv is not None:
+                recent_vals[_lbl] = _rv
         pg = crow.get("peer_group")
         peers_rows = [r for r in cr.values() if r.get("peer_group") == pg]
         plabel = _FP_PEER.get(pg, pg or "")
