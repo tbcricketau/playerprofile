@@ -43,3 +43,4 @@ photos/*.zip
 # Standard hygiene (added by the 2026-07 migration)
 *.pyc
 .claude/settings.local.json
+test_site/
