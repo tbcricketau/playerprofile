@@ -38,7 +38,7 @@ def _load_cards():
         return json.load(open(CARDS, encoding="utf-8"))
     return {}
 
-N_OPP = 3               # opposition cards per pack (kept small while iterating; raise for the full pack)
+N_OPP = 99              # opposition cards per pack — show ALL of them for the full/live build
 ROLE_ORDER = [("Batter", "Batters"), ("All-rounder", "All-rounders"),
               ("Bowler", "Bowlers"), ("Unknown", "Unclassified")]
 ROLE_CLASS = {"Batter": "squad", "All-rounder": "xi", "Bowler": "reference", "Unknown": "fringe"}
