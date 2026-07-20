@@ -330,6 +330,61 @@ def _short_ball_field(is_lhb, note):
     return {"field": out, "note": note}
 
 
+# ── Part 1: stock-field VARIANTS + best-fit selection (FIELD logic v3 §1) ─────────────
+# A small library of orthodox stock alternatives per (scenario, phase): each a legal 9-fielder
+# field a real captain sets, differing in run-side emphasis. We pick the one whose fielders best
+# cover where THIS batter scores (run_flow); the <=3 evidenced deviations then act on that base.
+# First entry per cell = the balanced default (== the stock). Test run-saving only for now — the
+# new-ball cordon is standard, and white-ball keeps the single GPS-corrected stock.
+_STOCK_VARIANTS = {
+    "pace_same": {
+        "defend": [
+            ("balanced", ["Slip 1", "Slip 2", "Gully", "Point", "Cover", "Mid-off", "Mid-on", "Midwicket", "Fine leg"]),
+            ("off-side / square", ["Slip 1", "Slip 2", "Gully", "Backward point", "Point", "Cover", "Mid-off", "Mid-on", "Midwicket"]),
+            ("leg-side", ["Slip 1", "Gully", "Point", "Cover", "Mid-off", "Mid-on", "Midwicket", "Square leg", "Fine leg"]),
+        ],
+    },
+    "pace_across": {
+        "defend": [
+            ("balanced", ["Slip 1", "Gully", "Backward point", "Cover", "Mid-off", "Mid-on", "Midwicket", "Fine leg", "Third man"]),
+            ("off-side / square", ["Slip 1", "Gully", "Backward point", "Point", "Cover", "Mid-off", "Mid-on", "Midwicket", "Third man"]),
+            ("leg-side", ["Slip 1", "Gully", "Backward point", "Cover", "Mid-off", "Mid-on", "Midwicket", "Square leg", "Fine leg"]),
+        ],
+    },
+}
+
+
+# run-flow sectors that make up each scoring axis (batter-relative: +off, straight, −leg)
+_AXIS_OFF = ("point", "cover", "mid-off")
+_AXIS_LEG = ("midwicket", "square leg", "fine leg")
+_AXIS_STRAIGHT = ("straight", "mid-on")
+_SKEW = 7.0    # one axis must lead the others by this many run-share points to leave balanced
+
+
+def _run_axes(flow):
+    f = lambda secs: sum(flow.get(s, {}).get("runs_share", 0.0) for s in secs)
+    return f(_AXIS_OFF), f(_AXIS_LEG), f(_AXIS_STRAIGHT)
+
+
+def _select_variant(scenario, phase, flow, base_names):
+    """Pick the orthodox stock variant matching the batter's dominant scoring axis. Only leaves the
+    balanced stock when one side CLEARLY leads (>= _SKEW run-share points) — an even scorer keeps the
+    balanced field (we don't shift fielders without a real skew). Returns {name, field, why} or None."""
+    variants = dict(_STOCK_VARIANTS.get(scenario, {}).get(phase) or [])
+    if not variants or not flow:
+        return None
+    off, leg, straight = _run_axes(flow)
+    if leg - max(off, straight) >= _SKEW and "leg-side" in variants:
+        return {"name": "leg-side", "field": variants["leg-side"], "axes": (off, leg, straight),
+                "why": f"Strong through the leg side ({leg:.0f}% of their runs vs {off:.0f}% off) "
+                       f"— a squarer leg-side ring, one slip out."}
+    if off - max(leg, straight) >= _SKEW and "off-side / square" in variants:
+        return {"name": "off-side / square", "field": variants["off-side / square"], "axes": (off, leg, straight),
+                "why": f"Scores square and through the off ({off:.0f}% vs {leg:.0f}% leg) "
+                       f"— an extra fielder square on the off, one leg-sider out."}
+    return None                           # even scorer → balanced stock
+
+
 def build_field(P, group, phase):
     """Assembly v2 — the GPS-corrected stock field ± the top (<=3) evidenced deviations.
     Returns {phase, group, group_label, n_catchers, false_rate, legal, field:[{position, angle,
@@ -349,6 +404,14 @@ def build_field(P, group, phase):
         return None
 
     flow, legal = run_flow(rows, is_lhb)
+    # Part 1: pick the best-fit orthodox stock variant for this batter's run flow, then deviate
+    # from THAT base (not a fixed template). Test only; balanced/no-variant keeps the stock base.
+    scenario = fields.scenario(btype, hand)
+    stock_fit = _select_variant(scenario, stock_phase, flow, base_names) if _FMT == "test" else None
+    if stock_fit and _legal(stock_fit["field"], stock_phase):
+        base_names = stock_fit["field"]
+    else:
+        stock_fit = None
     exp, _dom, _ = expected_catches(rows, group)
     observed = _batter_field(P["batter_id"], group)
     shotq = sum(1 for r in rows if r.get("has_shot_q"))
@@ -382,8 +445,11 @@ def build_field(P, group, phase):
                       "why": (ch["why"] if ch else _stock_why(nm, base_changes))})
 
     n_catch = sum(1 for f in field if f["kind"] == "catch")
-    base_note = ("GPS-corrected stock field" if base_changes not in ("none", "", None)
-                 else "stock field")
+    if stock_fit:
+        base_note = f"{stock_fit['name']} stock field — {stock_fit['why']}"
+    else:
+        base_note = ("GPS-corrected stock field" if base_changes not in ("none", "", None)
+                     else "stock field")
     # strong puller (pace) → surface the named short-ball / bumper plan as an alternative field
     r5 = next((r for r in fired if r["id"] == "R5" and r["pctl"] >= 80), None)
     short_ball = None
@@ -396,7 +462,7 @@ def build_field(P, group, phase):
             "n_catchers": n_catch, "false_rate": false_rate, "legal": legal,
             "field": field, "changes": [c["why"] for c in changes],
             "base_note": base_note, "base_changes": base_changes, "short_ball": short_ball,
-            "backtest": _backtest(names, base_names, flow, exp, observed)}
+            "stock_fit": stock_fit, "backtest": _backtest(names, base_names, flow, exp, observed)}
 
 
 def _stock_why(name, base_changes):
