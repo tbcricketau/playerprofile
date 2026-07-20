@@ -216,16 +216,21 @@ def _attack_card_html(card, opp_label, vision=None, cell_vision=None):
         else:
             pace_col = (f'<p class="ssum" style="color:#6b7280">Too few balls to compare a pace '
                         f'plan ({s["pace_balls"]} balls tracked).</p>')
-        # spin column (right) — only where they faced enough spin
-        spin_col = ""
+        # spin gets a side-by-side column ONLY when there's a distinctive spin plan (cells). A modest
+        # spin sample with nothing to flag becomes a one-line note under the pace plan (not a lopsided
+        # half-empty column); negligible spin shows nothing at all.
+        spin_col, spin_note = "", ""
         if s.get("spin_cells"):
             spin_col = ((f'<p class="ssum">{html.escape(s["spin_summary"])}</p>' if s.get("spin_summary") else "")
                         + _cells_table(s["spin_cells"], "Their spin plan vs your teammates",
                                        lambda idx: cell_vision.get((i, "spin_cells", idx))))
-        elif s.get("spin_balls", 0) >= 40:
-            spin_col = '<p class="ssum" style="color:#6b7280">Spin plan matched your teammates\'.</p>'
+        elif s.get("spin_balls", 0) >= 120:
+            spin_note = (f'<p class="ssum" style="color:#6b7280;margin-top:8px">Spin: nothing distinctive — '
+                         f'they bowled you {s["spin_balls"]} balls of spin, in line with your teammates.</p>')
         body = [f'<div class="sgrid"><div>{pace_col}</div><div>{spin_col}</div></div>' if spin_col
                 else pace_col]
+        if spin_note:
+            body.append(spin_note)
         if s.get("dismissals"):
             body.append('<div class="dsect">' + _dismissals_table(s["dismissals"], vision.get(i)) + '</div>')
         op = " open" if i == 0 else ""
