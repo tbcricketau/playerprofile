@@ -616,9 +616,14 @@ def _field_blocks(P: dict) -> list:
             cols.append({"title": title, "fig": _diagram(fs["field"]), "rows": _jrows(fs["field"]),
                          "backtest": _field_backtest_line(fs, phase), "legal": fs["legal"],
                          "floating": fs.get("floating", [])})
+            # Part 4: a second option only on a genuine fork
+            if fs.get("alt"):
+                cols.append({"title": f"{title} — alternative", "fig": _diagram(fs["alt"]["field"]),
+                             "rows": _jrows(fs["alt"]["field"]), "backtest": fs["alt"]["why"],
+                             "legal": None, "floating": []})
         # heavy puller → the named short-ball / bumper plan as an extra alternative field
         if short_ball:
-            cols.append({"title": "Short-ball plan", "fig": _diagram(short_ball["field"]),
+            cols.append({"title": "Bouncer plan", "fig": _diagram(short_ball["field"]),
                          "rows": _jrows(short_ball["field"]), "backtest": short_ball["note"], "legal": None})
         if cols:
             blocks.append({"label": fe._group_label(group), "cols": cols})

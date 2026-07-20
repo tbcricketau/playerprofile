@@ -397,6 +397,46 @@ def _pick_drop(names, flow, floating, protect, add):
     return _least_valuable(names, flow, protect, exclude={add})
 
 
+def _field_dicts(names, changes, base_changes):
+    """Turn a list of fielder names into the render dicts (position, angle, radius, role, kind,
+    tag, why), tagging the ones that came from a deviation."""
+    out = []
+    for nm in names:
+        c = FIELD_POS.get(nm) or field_coords(nm)
+        ch = next((x for x in changes if x["add_pos"] == nm), None)
+        out.append({"position": nm, "angle": c["angle"], "radius": c["radius"], "role": c["role"],
+                    "kind": "catch" if c["role"] == "catch" else "save",
+                    "tag": "change" if ch else "stock",
+                    "why": (ch["why"] if ch else _stock_why(nm, base_changes))})
+    return out
+
+
+def _fork_alt(fired, changes, names, base_names, flow, base_floating, phase, base_changes):
+    """Part 4 — a SECOND option only on a genuine fork: a strong (P80+) evidenced move the primary
+    couldn't fit. Build the alternative by reverting the weakest applied change and applying it.
+    Returns {field, why} or None (the usual case — one field per phase)."""
+    applied = {c["id"] for c in changes}
+    leftover = [r for r in sorted(fired, key=lambda r: -r["strength"])
+                if r["pctl"] >= 80 and r["id"] not in applied]
+    if not leftover:
+        return None
+    rule = leftover[0]
+    add = next((a for a in rule["add"] if a not in base_names), None)
+    if add is None:
+        return None
+    weakest = min(changes, key=lambda c: c["strength"])
+    alt_names = [weakest["drop_pos"] if n == weakest["add_pos"] else n for n in names]   # revert weakest
+    drop = _pick_drop(alt_names, flow, base_floating, rule["protect"], add)
+    if drop is None or drop == add:
+        return None
+    cand = [add if n == drop else n for n in alt_names]
+    if not _legal(cand, phase) or set(cand) == set(names):
+        return None
+    alt_changes = [c for c in changes if c["id"] != weakest["id"]] + [{**rule, "add_pos": add, "drop_pos": drop}]
+    return {"field": _field_dicts(cand, alt_changes, base_changes),
+            "why": f"Alternative — {rule['why']}"}
+
+
 def _legal(names, phase):
     from cricket_core import fields
     if len(set(names)) != 9:
@@ -558,20 +598,35 @@ def build_field(P, group, phase):
     else:
         base_note = ("GPS-corrected stock field" if base_changes not in ("none", "", None)
                      else "stock field")
-    # strong puller (pace) → surface the named short-ball / bumper plan as an alternative field
-    r5 = next((r for r in fired if r["id"] == "R5" and r["pctl"] >= 80), None)
+    # Part 4: the bouncer plan is a STANDARD Test-pace option now, not only for heavy pullers —
+    # the note says honestly whether it's a genuine wicket-taking plan for THIS batter or a holding
+    # field (Tom's hunch: for most batters the bumper field is standard, not a wicket-taker).
     short_ball = None
-    if r5 and not is_spin:
-        sb_note = (f"He's a heavy puller/hooker (P{r5['pctl']:.0f} of his runs vs pace) — the bumper "
-                   f"plan: one slip kept, a catcher in front of square, and both riders behind square "
-                   f"(deep backward square + deep fine leg, the two the leg-side Law allows).")
+    if not is_spin and _FMT == "test":
+        pull_p = _fnum((_stroke_row(P["batter_id"], "pace", "Pull/Hook") or {}).get("runs_pct_pctl"))
+        common = ("One slip, a catcher in front of square, and the two legal leg-side riders "
+                  "(deep backward square + deep fine leg).")
+        if pull_p is not None and pull_p >= 80:
+            sb_note = f"A genuine plan — heavy puller/hooker (P{pull_p:.0f} vs pace). " + common
+        elif pull_p is not None and pull_p >= 60:
+            sb_note = f"He pulls a fair amount (P{pull_p:.0f}) — the bumper can buy a top-edge. " + common
+        else:
+            sb_note = ("A standard bumper field — he isn't a heavy puller"
+                       + (f" (P{pull_p:.0f})" if pull_p is not None else "")
+                       + ", so this is a holding / surprise option, not a wicket-taking plan. " + common)
         short_ball = _short_ball_field(is_lhb, sb_note)
+
+    # Part 4: a SECOND field only on a genuine FORK — a strong (P80+) evidenced move the primary
+    # couldn't fit (3-change budget / a clash). Swap the weakest applied change back for it.
+    alt = _fork_alt(fired, changes, names, base_names, flow, base_floating, stock_phase, base_changes) \
+        if (changes and not is_spin) else None
+
     floating = _floating(names, flow, exp)          # Part 2: the spare / low-value fielder(s)
     return {"phase": phase, "group": group, "group_label": _group_label(group),
             "n_catchers": n_catch, "false_rate": false_rate, "legal": legal,
             "field": field, "changes": [c["why"] for c in changes],
             "base_note": base_note, "base_changes": base_changes, "short_ball": short_ball,
-            "stock_fit": stock_fit, "floating": floating,
+            "stock_fit": stock_fit, "floating": floating, "alt": alt,
             "backtest": _backtest(names, base_names, flow, exp, observed)}
 
 
