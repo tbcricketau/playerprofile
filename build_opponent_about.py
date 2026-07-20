@@ -43,8 +43,13 @@ _FALSE_SQ = {"2", "3", "4", "6", "10", "14", "17", "21", "25", "26", "28"}
 
 def distil_bowler(P, type_label):
     facts = []
-    if P.get("is_pace") and P.get("avg_spd"):
-        facts.append(f"{type_label} — averages {P['avg_spd']:.0f} km/h, tops {P['max_spd_99']:.0f}.")
+    if P.get("avg_spd"):
+        if P.get("is_pace"):
+            facts.append(f"{type_label} — averages {P['avg_spd']:.0f} km/h, tops {P['max_spd_99']:.0f}.")
+        else:                                            # spin: average + the pace range they work in
+            p05, p95 = P.get("speed_p05"), P.get("speed_p95")
+            rng = f", ranges {p05:.0f}–{p95:.0f}" if (p05 and p95) else ""
+            facts.append(f"{type_label} — averages {P['avg_spd']:.0f} km/h{rng}.")
     else:
         facts.append(f"{type_label}.")
     bt = P.get("ball_types") or {}
