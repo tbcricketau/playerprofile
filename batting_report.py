@@ -508,6 +508,36 @@ def _fingerprint_headline(cards: list) -> str | None:
     return "Changing (last 3 years vs career): " + "; ".join(t for _s, t in moves[:3]) + "."
 
 
+def _fingerprint_type(cards: list) -> str | None:
+    """One sentence on what TYPE of batter they are, from the fingerprint percentiles — quality +
+    tempo, plus their standout strength/weakness. Sits alongside the 'how they're changing' line."""
+    by = {c["label"]: c for c in cards}
+    pv = lambda l: (by[l]["pctl"] if l in by else None)
+    avg, sr, fs = pv("Average"), pv("Strike rate"), pv("False-shot %")
+    if avg is None or sr is None:
+        return None
+    q = "high-class" if avg >= 70 else ("modest" if avg <= 30 else "solid")
+    t = "aggressive" if sr >= 70 else ("patient" if sr <= 35 else "steady")
+    vulns = [("short", pv("False % vs short")), ("seam", pv("False % vs seam")),
+             ("swing", pv("False % vs swing")), ("spin", pv("False % vs spin")), ("pace", pv("False % vs pace"))]
+    known = [v for v in vulns if v[1] is not None]
+    tr = []
+    if known:
+        worst = max(known, key=lambda x: x[1])
+        best = min(known, key=lambda x: x[1])
+        if worst[1] >= 65:
+            tr.append(f"vulnerable to {worst[0]}")
+        if best[1] <= 20 and best[0] != (worst[0] if worst[1] >= 65 else None):
+            tr.append(f"strong vs {best[0]}")
+    if fs is not None and fs <= 20:
+        tr.append("tight technique")
+    elif fs is not None and fs >= 70:
+        tr.append("offers chances")
+    if not tr:
+        tr.append("no glaring weakness")
+    return f"A {q}, {t} batter — {', '.join(tr)}."
+
+
 def _plan_read(P: dict) -> str:
     """Focused report: a concise 'how to bowl to him' plan for the bowler group."""
     if not P.get("group"):
@@ -528,7 +558,7 @@ def _plan_read(P: dict) -> str:
     plan = f"Plan for {gl}: " + ("; ".join(bits) if bits else "few clear structural weaknesses")
     g = P.get("grid_danger")
     if g:
-        plan += f". Danger ball: the <b>{g['length_band'].lower()} {g['line_region']}</b> ({g['dismissal_per100']:.1f} outs/100, avg {g['avg']:.0f})"
+        plan += f". Danger ball: <b>{g['length_band'].lower()} {g['line_region']}</b> ({g['dismissal_per100']:.1f} outs/100, avg {g['avg']:.0f})"
     if P["dismissals"]:
         top = P["dismissals"].most_common(1)[0]
         plan += f"; they're most often out <b>{top[0].lower()}</b> to this attack"
@@ -710,6 +740,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         fp_cards.append({**c, "img": img, "pct_txt": f"P{c['pctl']:.0f}",
                          "recent_txt": (f"P{rp:.0f}" if (c.get("recent") is not None and rp is not None) else None)})
     fp_headline = _fingerprint_headline(fp_cards)
+    fp_type = _fingerprint_type(fp_cards)
 
     dims = P["dims"]
     isg = P["is_spin_group"]
@@ -775,7 +806,8 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "dismissal_read": _dismissal_read(P),
         "dismissals": P["dismissals"].most_common(6),
         "narrative": _narrative(P), "figs": figs,
-        "fp_cards": fp_cards, "fp_headline": fp_headline, "dim": dim_tables, "plan_read": _plan_read(P),
+        "fp_cards": fp_cards, "fp_headline": fp_headline, "fp_type": fp_type,
+        "dim": dim_tables, "plan_read": _plan_read(P),
         "field_blocks": _field_blocks(P),
         "mv_label": ("Turn" if isg else "Seam"), "sw_label": ("Drift" if isg else "Swing"),
         "version": REPORT_VERSION, "build_date": datetime.date.today().strftime("%d %b %Y"),
@@ -880,7 +912,7 @@ _TEMPLATE = r"""
     {% endfor %}
   </div>
 
-  {% if plan_read %}<div class="plan" style="margin-top:10px">{{plan_read|safe}}</div>{% endif %}
+  {% if plan_read %}<div class="plan" style="margin:10px 0 16px">{{plan_read|safe}}</div>{% endif %}
 
   <div class="summary">
     <div class="sbox"><h3 style="color:{{c.ACCENT}}">Common themes</h3><ul>
@@ -893,6 +925,7 @@ _TEMPLATE = r"""
 
   {% if fp_cards and show_fp %}
   <h2>Batting Fingerprint <span class="sub" style="font-weight:400">(percentile vs Test batters{% if P.group %} · {{P.group_label}} traits{% endif %})</span></h2>
+  {% if fp_type %}<div class="read" style="font-weight:700;margin-bottom:3px">{{fp_type}}</div>{% endif %}
   {% if fp_headline %}<div class="read" style="margin-bottom:6px">{{fp_headline}}</div>{% endif %}
   <div class="fpgrid">
     {% for f in fp_cards %}

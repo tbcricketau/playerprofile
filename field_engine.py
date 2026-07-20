@@ -388,9 +388,15 @@ def _dismissal_evidence(by_pos, current_names):
 
 
 def _pick_drop(names, flow, floating, protect, add):
-    """Which fielder the deviation moves. Prefer a designated FLOATING fielder (Part 2's spare) — the
-    principled 'from where' — even a cordon one (that's the point of floating); else the least-used
-    run-saver."""
+    """Which fielder the deviation moves. A DEEP rider pushes ITS OWN ring fielder back — you never
+    have two on the same line (adding long-on drops mid-on, keeping mid-off up). Otherwise prefer a
+    designated FLOATING fielder (Part 2's spare) — even a cordon one — else the least-used run-saver."""
+    if (FIELD_POS.get(add) or field_coords(add))["role"] == "deep":
+        sec = _NAME_SECTOR.get(add)
+        for n in names:                              # the same-sector RING fielder (mid-on for long-on)
+            if n != add and _NAME_SECTOR.get(n) == sec \
+                    and (FIELD_POS.get(n) or field_coords(n))["role"] != "deep":
+                return n
     for fn in floating:
         if fn in names and fn != add:
             return fn
@@ -574,6 +580,11 @@ def build_field(P, group, phase):
         add = next((a for a in rule["add"] if a not in names), None)
         if add is None:
             continue                                        # that saver is already in the stock
+        # Tests: a NON-stock boundary rider (long-on etc.) needs VERY strong evidence — you only
+        # post one against a genuinely aggressive boundary hitter (caveat #1). Stock riders are free.
+        is_deep = (FIELD_POS.get(add) or field_coords(add))["role"] == "deep"
+        if _FMT == "test" and is_deep and add not in base_names and rule["pctl"] < 85:
+            continue
         drop = _pick_drop(names, flow, base_floating, rule["protect"], add)
         if drop is None:
             continue

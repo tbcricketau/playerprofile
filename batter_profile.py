@@ -209,10 +209,13 @@ def _split_stats(rows: list) -> dict:
 
 
 def _bdry_pct(rows: list):
-    """Boundary runs as a share of runs scored (4s+6s ÷ runs)."""
-    runs = sum(r["runs"] for r in rows)
-    bdry = sum(r["runs"] for r in rows if r["runs"] in (4.0, 6.0))
-    return bdry / runs * 100 if runs else None
+    """Boundary frequency — boundary balls as a share of legal balls faced (how often a ball is put
+    to the fence), consistent with the fingerprint's Boundary %."""
+    legal = [r for r in rows if r.get("is_legal")]
+    if not legal:
+        return None
+    bdry = sum(1 for r in legal if r["runs"] in (4.0, 6.0))
+    return bdry / len(legal) * 100
 
 
 # Display order for the categorical dimensions.
