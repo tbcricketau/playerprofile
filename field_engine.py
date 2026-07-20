@@ -295,6 +295,58 @@ def _least_valuable(names, flow, protect_cordon, exclude):
     return worst
 
 
+# ── Part 2: fielder value + the 'floating' fielder (FIELD logic v3 §2) ─────────────────
+# Every fielder's importance = what his presence prevents: a run-SAVER by the runs flowing through
+# his sector (run_flow), a CATCHER by the batter's expected edges to his position (expected_catches).
+# The lowest-value fielder(s) — clearly below their role's average — are the FLOATING fielders: worth
+# knowing even when we don't move them, since they're the spares to shift as the game asks.
+# field position name -> the key the cohort catch-norms use (expected_catches / exp)
+_NORM_KEY = {
+    "Slip 1": "Slip: 1st", "Slip 2": "Slip: 2nd", "Slip 3": "Slip: 3rd", "Slip 4": "Slip: 4th",
+    "Leg slip": "Fine leg: leg slip", "Leg gully": "Fine leg: leg gully", "Fly slip": "Slip: fly slip",
+    "Silly point": "Point: silly", "Short leg": "Square leg: short leg",
+}
+# the cordon we NEVER float (they hold their spot for the edge); situational catchers we may.
+_CORE_CORDON = {"Keeper", "Slip 1", "Slip 2", "Gully"}
+_SITU_CATCH = {"Slip 3", "Slip 4", "Leg slip", "Leg gully", "Short leg", "Silly point", "Fly slip"}
+_FLOAT_SUGGEST = {           # a situational catcher that sees little → its natural re-use
+    "Leg slip": "short leg / bat-pad", "Slip 3": "gully or a run-saver", "Slip 4": "gully or a run-saver",
+    "Short leg": "square of the wicket", "Silly point": "backward point", "Fly slip": "a run-saver",
+    "Leg gully": "finer or squarer",
+}
+
+
+def _floating(names, flow, exp):
+    """The 'floating' fielder(s): a RING saver in a sector the batter barely scores in, and/or a
+    SITUATIONAL catcher seeing far fewer edges than the cordon. Core cordon + deep riders are never
+    floated (they hold their spot for the edge / the boundary). Returns [{position, kind, value, why}]."""
+    def role(n):
+        return (FIELD_POS.get(n) or field_coords(n)).get("role")
+    out = []
+    ring = [(n, flow.get(_NAME_SECTOR.get(n), {}).get("runs_share", 0.0))
+            for n in names if n not in _CORDON and n != "Keeper" and role(n) == "ring"]
+    if len(ring) >= 2:
+        ring.sort(key=lambda t: t[1])
+        n, v = ring[0]
+        mean = sum(s for _, s in ring) / len(ring)
+        if mean > 0 and v <= 0.6 * mean:            # scores clearly little where he stands
+            out.append({"position": n, "kind": "save", "value": round(v, 1),
+                        "why": f"They score only {v:.0f}% of their runs where {n.lower()} stands — the "
+                               f"spare run-saver to move as the game asks."})
+    situ = [(n, float(exp.get(_NORM_KEY.get(n, n), 0.0))) for n in names if n in _SITU_CATCH]
+    if situ:
+        cordon = [float(exp.get(_NORM_KEY.get(n, n), 0.0)) for n in names if n in _CORE_CORDON and n != "Keeper"]
+        cmean = sum(cordon) / len(cordon) if cordon else 0
+        situ.sort(key=lambda t: t[1])
+        n, v = situ[0]
+        if cmean > 0 and v <= 0.5 * cmean:          # sees far fewer edges than the slips/gully
+            sug = _FLOAT_SUGGEST.get(n)
+            tail = f" — float to {sug} as needed" if sug else ""
+            out.append({"position": n, "kind": "catch", "value": round(v, 1),
+                        "why": f"{n} sees few of their edges ({v:.1f} vs {cmean:.1f} for the cordon){tail}."})
+    return out
+
+
 def _legal(names, phase):
     from cricket_core import fields
     if len(set(names)) != 9:
@@ -458,11 +510,13 @@ def build_field(P, group, phase):
                    f"plan: one slip kept, a catcher in front of square, and both riders behind square "
                    f"(deep backward square + deep fine leg, the two the leg-side Law allows).")
         short_ball = _short_ball_field(is_lhb, sb_note)
+    floating = _floating(names, flow, exp)          # Part 2: the spare / low-value fielder(s)
     return {"phase": phase, "group": group, "group_label": _group_label(group),
             "n_catchers": n_catch, "false_rate": false_rate, "legal": legal,
             "field": field, "changes": [c["why"] for c in changes],
             "base_note": base_note, "base_changes": base_changes, "short_ball": short_ball,
-            "stock_fit": stock_fit, "backtest": _backtest(names, base_names, flow, exp, observed)}
+            "stock_fit": stock_fit, "floating": floating,
+            "backtest": _backtest(names, base_names, flow, exp, observed)}
 
 
 def _stock_why(name, base_changes):

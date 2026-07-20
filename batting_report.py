@@ -613,7 +613,8 @@ def _field_blocks(P: dict) -> list:
                 continue
             short_ball = short_ball or fs.get("short_ball")
             cols.append({"title": title, "fig": _diagram(fs["field"]), "rows": _jrows(fs["field"]),
-                         "backtest": _field_backtest_line(fs, phase), "legal": fs["legal"]})
+                         "backtest": _field_backtest_line(fs, phase), "legal": fs["legal"],
+                         "floating": fs.get("floating", [])})
         # heavy puller → the named short-ball / bumper plan as an extra alternative field
         if short_ball:
             cols.append({"title": "Short-ball plan", "fig": _diagram(short_ball["field"]),
@@ -1043,6 +1044,10 @@ _TEMPLATE = r"""
       <div>
         {% if col.fig %}<img class="fieldmap" src="{{col.fig}}">{% endif %}
         <div class="read" style="margin-top:4px">{{col.backtest|safe}}</div>
+        {% for fl in col.floating %}
+        <div class="read" style="margin-top:3px;color:{{c.TEXT_SEC}};border-left:3px solid #c2a25a;padding-left:8px">
+          <b>Floating fielder:</b> {{fl.why}}</div>
+        {% endfor %}
       </div>
       <table class="mtab">
         <tr><th>Fielder</th><th>Stock/Change</th><th style="text-align:left">Why they're there</th></tr>
