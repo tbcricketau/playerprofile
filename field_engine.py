@@ -19,7 +19,7 @@ Batter-relative angle convention (matches cricket_core.lookups.field_coords):
 """
 import csv
 import os
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 from cricket_core.lookups import FIELD_POS, field_coords
 
@@ -347,6 +347,56 @@ def _floating(names, flow, exp):
     return out
 
 
+# ── Part 3: 'better suited elsewhere' — dismissal-evidence rule + floating-aware drop ──
+# The R1–R8 rules (below) fire evidenced MOVES from cohort norms; R9 adds a rule from the batter's
+# ACTUAL dismissals — where his caught mishits have really carried (Carey's leg slip in the Ashes).
+# Small-n, so gated at >= 2 caught dismissals and only when it points to a non-stock catcher.
+_DIS_SITU = {           # norm catch-key -> the situational catcher to post there
+    "Fine leg: leg slip": "Leg slip", "Square leg: short leg": "Short leg", "Point: silly": "Silly point",
+    "Slip: 3rd": "Slip 3", "Slip: 4th": "Slip 4", "Fine leg: leg gully": "Leg gully",
+}
+_DIS_FRIENDLY = {"Slip 3": "third slip", "Slip 4": "fourth slip", "Leg slip": "leg slip",
+                 "Short leg": "short leg", "Silly point": "silly point", "Leg gully": "leg gully"}
+# min actual catches to post a catcher: a leg-side close catch is rare enough that 2 is a plan;
+# an extra slip is more routine, so needs 3.
+_DIS_MIN = {"Leg slip": 2, "Short leg": 2, "Leg gully": 2, "Silly point": 2, "Slip 3": 3, "Slip 4": 3}
+
+
+def _dismissal_evidence(by_pos, current_names):
+    """R9 — from where his CAUGHT dismissals were ACTUALLY taken (Counter of catch positions, coarse
+    pace/spin): if a situational catcher he isn't already given has claimed him >= 2 times AND a clear
+    share of his located catches, post it. This is the Carey-leg-slip signal — the outcome, not a model."""
+    total = sum(by_pos.values())
+    if total < 3:                                  # too few located catches to read a pattern
+        return None
+    best = None                                     # a situational catcher: >= 2 catches AND >= 10%
+    for normkey, fieldname in _DIS_SITU.items():
+        if fieldname in current_names:
+            continue
+        n = by_pos.get(normkey, 0)
+        share = n / total
+        # per-position minimum (rare leg-side spot = 2, extra slip = 3), plus a small share floor so
+        # a fluke in a huge sample doesn't trigger it.
+        if n >= _DIS_MIN.get(fieldname, 3) and share >= 0.05 and (best is None or n > best[1]):
+            best = (fieldname, n, share)
+    if not best:
+        return None
+    fieldname, n, share = best
+    friendly = _DIS_FRIENDLY.get(fieldname, fieldname.lower())
+    return {"id": "R9", "pctl": 90.0, "value": share, "add": [fieldname], "protect": False, "strength": 90.0,
+            "why": f"Actually caught at {friendly} {n}× vs this type — real evidence to post that catcher."}
+
+
+def _pick_drop(names, flow, floating, protect, add):
+    """Which fielder the deviation moves. Prefer a designated FLOATING fielder (Part 2's spare) — the
+    principled 'from where' — even a cordon one (that's the point of floating); else the least-used
+    run-saver."""
+    for fn in floating:
+        if fn in names and fn != add:
+            return fn
+    return _least_valuable(names, flow, protect, exclude={add})
+
+
 def _legal(names, phase):
     from cricket_core import fields
     if len(set(names)) != 9:
@@ -469,8 +519,14 @@ def build_field(P, group, phase):
     shotq = sum(1 for r in rows if r.get("has_shot_q"))
     false_rate = (sum(1 for r in rows if r.get("is_false_shot")) / shotq * 100) if shotq else None
 
-    # apply the top <=3 fired rules, each swap re-validated for legality
+    # apply the top <=3 fired rules, each swap re-validated for legality. R9 (actual-dismissal
+    # evidence) joins the cohort-norm rules; each move drops the FLOATING fielder where there is one.
     fired = _rules(P, group, phase, is_spin)
+    cpos = (P.get("caught_positions") or {}).get("spin" if is_spin else "pace", Counter())
+    r9 = _dismissal_evidence(cpos, base_names)      # coarse caught record (a whole-innings plan)
+    if r9:
+        fired.append(r9)
+    base_floating = [f["position"] for f in _floating(base_names, flow, exp)]
     names, changes = list(base_names), []
     for rule in sorted(fired, key=lambda r: -r["strength"]):
         if len(changes) >= 3:
@@ -478,7 +534,7 @@ def build_field(P, group, phase):
         add = next((a for a in rule["add"] if a not in names), None)
         if add is None:
             continue                                        # that saver is already in the stock
-        drop = _least_valuable(names, flow, rule["protect"], exclude={add})
+        drop = _pick_drop(names, flow, base_floating, rule["protect"], add)
         if drop is None:
             continue
         cand = [add if n == drop else n for n in names]

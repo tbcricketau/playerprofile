@@ -271,6 +271,27 @@ def grid_danger(rows: list, min_balls: int = 25) -> dict | None:
     return best
 
 
+_BAT_FIELD_POS = None
+
+
+def _annotate_batter_catches(batter_id, raw):
+    """Attach r['catch_position'] (fielding-position description, e.g. 'Fine leg: leg slip') to his
+    caught dismissals, from the DeliveryFielders catcher. Best-effort — silent if the query fails."""
+    global _BAT_FIELD_POS
+    try:
+        from batting_loaders import load_batter_catch_positions
+        from data_loaders import load_fielding_positions
+        if _BAT_FIELD_POS is None:
+            _BAT_FIELD_POS = load_fielding_positions()
+        cmap = load_batter_catch_positions(str(batter_id))
+    except Exception:
+        return
+    for r in raw:
+        if r.get("is_out") and r.get("how_out") == "Caught":
+            pid = cmap.get(r.get("delivery_id"))
+            r["catch_position"] = _BAT_FIELD_POS.get(pid) if pid else None
+
+
 def build_batter_profile(batter_id: str, raw: list | None = None, group: str | None = None) -> dict:
     if raw is None:
         raw = process_batting_rows(load_batter_deliveries(batter_id))
@@ -279,6 +300,9 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
     if _hov:
         for r in raw:
             r["is_lhb"] = (_hov == "Left")
+    # where his caught dismissals were actually taken (fielding position) — for the field engine's
+    # dismissal-evidence rule (was he caught at a specific catcher, e.g. Carey's leg slip?).
+    _catch_pos = _annotate_batter_catches(batter_id, raw)
     innings = load_batter_innings(batter_id)
     info = load_batter_info(batter_id)
 
@@ -382,6 +406,14 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
 
     # dismissals
     dis = Counter(r["how_out"] for r in raw if r["is_out"] and r["how_out"])
+    # where his caught dismissals were taken, by coarse type (pace/spin) — the field engine's
+    # dismissal-evidence rule reads this (a whole-innings plan, so coarse to keep the sample usable).
+    caught_positions = {"pace": Counter(), "spin": Counter()}
+    for r in raw_all:
+        if r.get("is_out") and r.get("how_out") == "Caught" and r.get("catch_position"):
+            k = "pace" if r.get("vs_pace") else ("spin" if r.get("vs_spin") else None)
+            if k:
+                caught_positions[k][r["catch_position"]] += 1
     dismissal_bowler_type = Counter(r["bowler_type_simple"] for r in raw
                                     if r["is_out"] and r.get("bowler_type_simple") not in (None, "Other"))
 
@@ -430,6 +462,7 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
         "vs": vs, "vs_detail": detail, "weakness": weakness, "phase": phase,
         "shot_groups": shot_groups, "dir_pct": dir_pct,
         "dismissals": dis, "n_dismissals": sum(dis.values()),
+        "caught_positions": caught_positions,
         "dismissal_bowler_type": dismissal_bowler_type,
         "dims": dims, "dims_spin": dims_spin, "grid_danger": grid, "n_faced_dims": len(arows),
     }

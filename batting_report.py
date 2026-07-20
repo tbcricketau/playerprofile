@@ -593,7 +593,8 @@ def _field_blocks(P: dict) -> list:
     (field diagram data-URI, justification rows, backtest line)."""
     blocks = []
     for group, rows in _field_targets(P):
-        subP = {"is_lhb": P["is_lhb"], "batter_id": P["batter_id"], "raw": rows}
+        subP = {"is_lhb": P["is_lhb"], "batter_id": P["batter_id"], "raw": rows,
+                "caught_positions": P.get("caught_positions")}
         cols = []
         short_ball = None
 

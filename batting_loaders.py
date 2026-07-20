@@ -171,3 +171,23 @@ def load_batter_innings(batter_id: str) -> list:
     rows = run_query(q, conn, cur)
     conn.close()
     return rows
+
+
+def load_batter_catch_positions(batter_id: str) -> dict:
+    """Where THIS batter's caught Test dismissals were taken: {delivery_id: fielding_position_id}.
+    The catcher is the DeliveryFielders row with fielder_catch = 1; unrecorded (0/28/NULL) -> None.
+    Mirror of data_loaders.load_bowler_catch_positions, keyed on the striker being out caught."""
+    conn, cur = set_conn_cursor()
+    q = f"""
+    SELECT D.[delivery_id] AS delivery_id, DF.[fielder_event_position_id] AS pos_id
+    FROM [{DATA_SCHEMA}].[Deliveries] AS D
+    JOIN [{DATA_SCHEMA}].[Matches] AS M ON D.match_id = M.match_id
+    JOIN [{DATA_SCHEMA}].[DeliveryFielders] AS DF
+        ON DF.delivery_id = D.delivery_id AND DF.fielder_catch = 1
+    WHERE D.[striker_id] = '{batter_id}' AND {_intl_test('M')}
+      AND D.[striker_dismissed] = '1' AND D.[how_out_id] = '5'
+    """
+    rows = run_query(q, conn, cur)
+    conn.close()
+    return {r["delivery_id"]: (None if r["pos_id"] in (None, "None", "0", "28") else r["pos_id"])
+            for r in rows}
