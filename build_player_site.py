@@ -216,17 +216,18 @@ def _attack_card_html(card, opp_label, vision=None, cell_vision=None):
         else:
             pace_col = (f'<p class="ssum" style="color:#6b7280">Too few balls to compare a pace '
                         f'plan ({s["pace_balls"]} balls tracked).</p>')
-        # spin gets a side-by-side column ONLY when there's a distinctive spin plan (cells). A modest
-        # spin sample with nothing to flag becomes a one-line note under the pace plan (not a lopsided
-        # half-empty column); negligible spin shows nothing at all.
+        # spin gets a side-by-side column ONLY when there's a distinctive spin plan (cells). Otherwise
+        # a single CENTRED line under the pace plan states the spin situation plainly (nothing to flag,
+        # or not enough spin) — no lopsided half-empty column.
         spin_col, spin_note = "", ""
         if s.get("spin_cells"):
             spin_col = ((f'<p class="ssum">{html.escape(s["spin_summary"])}</p>' if s.get("spin_summary") else "")
                         + _cells_table(s["spin_cells"], "Their spin plan vs your teammates",
                                        lambda idx: cell_vision.get((i, "spin_cells", idx))))
-        elif s.get("spin_balls", 0) >= 120:
-            spin_note = (f'<p class="ssum" style="color:#6b7280;margin-top:8px">Spin: nothing distinctive — '
-                         f'they bowled you {s["spin_balls"]} balls of spin, in line with your teammates.</p>')
+        else:
+            msg = (f'Spin: nothing distinctive — {s["spin_balls"]} balls, in line with your teammates.'
+                   if s.get("spin_balls", 0) >= 120 else "Not enough spin data to read a spin plan.")
+            spin_note = (f'<p class="ssum" style="text-align:center;color:#6b7280;margin-top:12px">{msg}</p>')
         body = [f'<div class="sgrid"><div>{pace_col}</div><div>{spin_col}</div></div>' if spin_col
                 else pace_col]
         if spin_note:
