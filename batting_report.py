@@ -565,6 +565,55 @@ def _plan_read(P: dict) -> str:
     return plan + "."
 
 
+def _summary_points(P: dict, fp_type: str = None) -> list:
+    """A TL;DR for a bowler who won't read the whole report: what kind of batter they are,
+    how they get out, where to bowl, and their soft spot — 4-6 short lines. For a type-scoped
+    report the plan is that type's ('plan for right-arm pace'); the combined report gives the
+    pace-vs-spin route instead."""
+    pts = []
+    if fp_type:
+        pts.append(fp_type)
+    # pace vs spin route — only the combined report (a type-scoped report already IS that type)
+    if not P.get("group"):
+        vs = _vs_read(P)
+        if vs and P.get("weakness") in ("pace", "spin"):
+            pts.append(vs)
+    # where to bowl — the plan target
+    plan_txt = None
+    if P.get("group"):
+        dims, is_spin = P["dims"], P["is_spin_group"]
+        wl, ln = _worst(dims.get("length", [])), _worst(dims.get("line", []))
+        moves = []
+        for dk in ("seam", "swing"):
+            mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
+                  and d["balls"] >= 60 and d["avg"] is not None]
+            straight = next((d for d in dims.get(dk, []) if d["bucket"] == "straight"), None)
+            if mv and straight and straight["avg"]:
+                worst = min(mv, key=lambda d: d["avg"])
+                if worst["avg"] < straight["avg"] * 0.8:
+                    moves.append(_blabel(worst["bucket"], dk + "_dir", is_spin))
+        if wl and ln:
+            plan_txt = (f"Plan for {P['group_label']}: bowl <b>{wl['bucket'].lower()} {ln['bucket']}</b>"
+                        + (f", get it to <b>{' / '.join(moves)}</b>" if moves else "") + ".")
+            pts.append(plan_txt)
+    # their danger ball (the length×line that dismisses them most) — the ball to hunt
+    g = P.get("grid_danger")
+    if g and not (plan_txt and g["line_region"] in plan_txt and g["length_band"].lower() in plan_txt):
+        pts.append(f"They get out most to the <b>{g['length_band'].lower()} {g['line_region']}</b> "
+                   f"({g['dismissal_per100']:.1f} dismissals/100).")
+    # how they get out (mode)
+    d = _dismissal_read(P)
+    if d:
+        pts.append(d)
+    # vulnerable early
+    ph = P.get("phase") or {}
+    e, s = ph.get("early"), ph.get("set")
+    if (e and s and e.get("dismissal_per100") and s.get("dismissal_per100")
+            and e["dismissal_per100"] >= 1.4 * s["dismissal_per100"]):
+        pts.append("Vulnerable early — get at them hard in their first 30 balls.")
+    return pts[:6]
+
+
 def _file_url(path: str) -> str:
     return "file:///" + os.path.abspath(path).replace("\\", "/").replace(" ", "%20")
 
@@ -808,6 +857,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "narrative": _narrative(P), "figs": figs,
         "fp_cards": fp_cards, "fp_headline": fp_headline, "fp_type": fp_type,
         "dim": dim_tables, "plan_read": _plan_read(P),
+        "summary_points": _summary_points(P, fp_type),
         "field_blocks": _field_blocks(P),
         "mv_label": ("Turn" if isg else "Seam"), "sw_label": ("Drift" if isg else "Swing"),
         "version": REPORT_VERSION, "build_date": datetime.date.today().strftime("%d %b %Y"),
@@ -880,6 +930,9 @@ _TEMPLATE = r"""
   .read { font-size: 10.5px; line-height: 1.4; }
   .impact { font-weight: 700; border-left: 3px solid {{c.ACCENT}}; padding: 6px 10px; background: {{c.BG_PANEL}}; border-radius: 0 8px 8px 0; }
   .plan { font-weight: 700; border-left: 3px solid {{c.DANGER}}; padding: 7px 11px; background: #fdf1f1; border-radius: 0 8px 8px 0; font-size: 11.5px; }
+  .tldr { border: 1px solid #d5dced; border-left: 3px solid {{c.ACCENT}}; background: #f6f8fc; border-radius: 0 8px 8px 0; padding: 8px 13px 9px; margin: 10px 0 16px; }
+  .tldr h3 { margin: 0 0 4px; font-size: 12px; color: {{c.ACCENT}}; text-transform: uppercase; letter-spacing: .05em; }
+  .tldr ul { margin: 0; padding-left: 18px; } .tldr li { font-size: 12px; line-height: 1.5; margin: 2px 0; }
   .grid2 { grid-template-columns: 1.2fr 1fr; }
   .grid2b { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
   .mtab tr.weak td { background: #fdf1f1; } .mtab tr.weak td.lab { color: {{c.DANGER}}; }
@@ -912,7 +965,12 @@ _TEMPLATE = r"""
     {% endfor %}
   </div>
 
-  {% if plan_read %}<div class="plan" style="margin:10px 0 16px">{{plan_read|safe}}</div>{% endif %}
+  {% if summary_points %}
+  <div class="tldr">
+    <h3>Summary</h3>
+    <ul>{% for p in summary_points %}<li>{{p|safe}}</li>{% endfor %}</ul>
+  </div>
+  {% endif %}
 
   <div class="summary">
     <div class="sbox"><h3 style="color:{{c.ACCENT}}">Common themes</h3><ul>

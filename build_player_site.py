@@ -575,6 +575,7 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
             if not items:
                 continue
             resolved, avail, _tot = resolve_playlist(items)
+            resolved = resolved[:12]                 # candidates are generous + newest-first; cap the shown playlist
             if avail:
                 key = f"{kk}_{bid}"
                 playlists[key] = resolved
@@ -687,12 +688,15 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
 
 
 def _load_about(slug):
+    """(bowlers, batters) — each id-keyed. Kept SEPARATE: an all-rounder (Shakib, Taijul,
+    Mehidy) is in both, and a flat id→facts merge let the batter entry clobber the bowler
+    entry, so their bowler card served batting (scoring) clips."""
     opp = slug.split("-")[0]
     p = os.path.join(HERE, "data", f"opponent_about_{opp}.json")
     if not os.path.exists(p):
-        return {}
+        return {}, {}
     d = json.load(open(p, encoding="utf-8"))
-    return {**d.get("bowlers", {}), **d.get("batters", {})}   # keyed by opponent id
+    return d.get("bowlers", {}), d.get("batters", {})
 
 
 def build(out_dir, no_video=False, only=None):
@@ -742,17 +746,22 @@ def build(out_dir, no_video=False, only=None):
         h2h = _load_h2h(slug)
         opp_names = _opp_names(slug)
         opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
-        about = _load_about(slug)                      # distilled facts, keyed by opponent id
+        about_bowl, about_bat = _load_about(slug)      # distilled facts, per role, id-keyed
         # signature footage for the opponents shown (N_OPP each) — bowlers get stock/wicket balls
-        # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs)
-        _ord = lambda d: sorted((d or {}).items(),
-                                key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
-        opp_clips = {bid: {"stock": (about.get(bid) or {}).get("stock_clips") or [],
-                           "wicket": (about.get(bid) or {}).get("wicket_clips") or []}
-                     for bid, _ in _ord(opp_bowlers)}
-        opp_clips.update({bid: {"scoring": (about.get(bid) or {}).get("scoring_clips") or [],
-                                "dismissal": (about.get(bid) or {}).get("dismissal_clips") or []}
-                          for bid, _ in _ord(opp_batters)})
+        # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs).
+        # An all-rounder gets ALL four kinds (distinct keys → no collision), so their bowler card
+        # keeps stock/wicket while their batter card keeps scoring/dismissal.
+        _ord = lambda d, ab: sorted((d or {}).items(),
+                                    key=lambda kv: -(ab.get(kv[0], {}).get("order", 0)))[:N_OPP]
+        opp_clips = {}
+        for bid, _ in _ord(opp_bowlers, about_bowl):
+            a = about_bowl.get(bid) or {}
+            opp_clips.setdefault(bid, {}).update(
+                {"stock": a.get("stock_clips") or [], "wicket": a.get("wicket_clips") or []})
+        for bid, _ in _ord(opp_batters, about_bat):
+            a = about_bat.get(bid) or {}
+            opp_clips.setdefault(bid, {}).update(
+                {"scoring": a.get("scoring_clips") or [], "dismissal": a.get("dismissal_clips") or []})
         bowl_urls, bat_urls, bat_group_urls = _scouting_urls(slug)   # +{batter:{group:url}}
         our_groups = _our_bowl_groups(slug)            # our_bowler -> {pace/spin: batter group}
         our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb
@@ -799,7 +808,7 @@ def build(out_dir, no_video=False, only=None):
             open(os.path.join(s_dir, bat_href), "w", encoding="utf-8").write(
                 _page(f"{name} — batting",
                       _batting_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had_bat,
-                                    opp_bowlers=opp_bowlers, about=about, report_urls=bat_report,
+                                    opp_bowlers=opp_bowlers, about=about_bowl, report_urls=bat_report,
                                     h2h_map=h2h_map, h2h_rows=bat_rows,
                                     pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision,
                                     opp_vision=opp_vision) + vsnip,
@@ -814,7 +823,7 @@ def build(out_dir, no_video=False, only=None):
                              for bid in opp_batters} if opp_batters else {}
                 open(os.path.join(s_dir, bowl_href), "w", encoding="utf-8").write(
                     _page(f"{name} — bowling ({bt})",
-                          _bowling_body(meta, pid, rec, opp_batters=opp_batters, about=about,
+                          _bowling_body(meta, pid, rec, opp_batters=opp_batters, about=about_bat,
                                         report_urls=bt_report, h2h_links=h2h_links,
                                         had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
                                         pages=pages, current=bowl_href, btype=bt,

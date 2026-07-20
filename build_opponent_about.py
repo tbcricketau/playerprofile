@@ -16,6 +16,7 @@ import argparse
 import json
 import os
 import warnings
+from collections import Counter
 
 warnings.filterwarnings("ignore")
 
@@ -25,6 +26,7 @@ from cricket_core.video import clip_stem
 from config import DATA_SCHEMA
 from report import build_profile
 from batter_profile import build_batter_profile
+from profile import _LEN_ADJ, _LINE_REGION, _LEN_BAND, _zone_lbl, LENGTH_ZONES_PACE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 _AREA = {"off": "through the off side", "leg": "through the leg side", "straight": "down the ground"}
@@ -49,6 +51,16 @@ def distil_bowler(P, type_label):
     st = bt.get("stock")
     if st and st.get("phrase"):
         facts.append(f"Stock ball: {st['phrase']} ({st['pct']:.0f}% of what they bowl).")
+    # over vs round-the-wicket stock, for pace — noted only when they bowl round enough to matter
+    orr = P.get("over_round")
+    if P.get("is_pace") and orr:
+        over_p = _angle_phrase(orr.get("over")) if orr.get("over_enough") else None
+        round_p = (_angle_phrase(orr.get("round"))
+                   if orr.get("round_enough") and (orr.get("round_share") or 0) >= 12 else None)
+        if over_p and round_p and over_p != round_p:   # only note it when the angles differ
+            facts.append(f"By angle — over the wicket, {over_p}; round the wicket, {round_p}.")
+        elif round_p and round_p != (st.get("phrase") if st else None):
+            facts.append(f"Round the wicket, their stock ball is {round_p}.")
     dlen, dline = P.get("danger_length"), P.get("danger_line")
     if dlen and dlen.get("length"):
         where = f", around {dline['line'].lower()}" if dline and dline.get("line") else ""
@@ -124,29 +136,62 @@ def _stems(rows):
     return [x for x in out if x["clip_stem"]]
 
 
-def bowler_clips(conn, cur, bid, cap=8):
-    """(stock_clips, wicket_clips) — example Test deliveries with video for the bowler's most-common
-    length×line zone (their stock ball) and for their wickets. Newest first."""
-    z = _q(conn, cur, f"""SELECT TOP 1 D.pitch_length_group_pace_1_id len, D.pitch_line_group_pace_id lin
-        FROM [{DATA_SCHEMA}].[Deliveries] D JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id
-        WHERE D.bowler_id='{bid}' AND D.legal_ball=1 AND {_TEST}
-          AND D.pitch_length_group_pace_1_id IS NOT NULL AND D.pitch_line_group_pace_id IS NOT NULL
-        GROUP BY D.pitch_length_group_pace_1_id, D.pitch_line_group_pace_id ORDER BY COUNT(*) DESC""")
-    stock = []
-    if z and z[0]["len"] and z[0]["lin"]:
-        stock = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
-            FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
-            WHERE D.bowler_id='{bid}' AND D.legal_ball=1 AND {_TEST} AND D.video_file_name IS NOT NULL
-              AND D.pitch_length_group_pace_1_id='{z[0]['len']}' AND D.pitch_line_group_pace_id='{z[0]['lin']}'
-            ORDER BY M.match_date DESC"""))
-    wicket = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
-        FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
-        WHERE D.bowler_id='{bid}' AND D.bowler_dismissal='1' AND {_TEST} AND D.video_file_name IS NOT NULL
-        ORDER BY M.match_date DESC"""))
+def _has_vid(r):
+    return r.get("video_file_name") not in (None, "None", "none", "", "nan")
+
+
+def _clips_from_rows(rows, cap):
+    """Newest-first clip stems for a set of profile delivery rows (they already carry
+    season / gender / match / video for clip_stem). Capped at `cap`."""
+    rows = sorted(rows, key=lambda r: r.get("match_date") or "", reverse=True)
+    out = []
+    for r in rows:
+        cs = clip_stem(r.get("season"), r.get("gender_id"), r.get("match_length_id"),
+                       r.get("match_id"), r.get("video_file_name"))
+        if cs:
+            out.append({"delivery_id": r.get("delivery_id"), "clip_stem": cs})
+        if len(out) >= cap:
+            break
+    return out
+
+
+def bowler_clips_from_profile(P, cap_each=10, wcap=40):
+    """(stock_clips, wicket_clips) built from the profile's coordinate-tagged rows, so the
+    example clips match the card's 'Stock ball' phrase. Pace stock samples BOTH angles (the
+    over-modal ball type + the round-modal ball type when they bowl round enough), combined
+    into one playlist. Wickets pull a generous pool (wcap) so more survive the storage filter."""
+    df = P.get("df") or []
+    wicket = _clips_from_rows([r for r in df if r.get("is_wicket") and _has_vid(r)], wcap)
+    legal = [r for r in df if r.get("is_legal") and r.get("ball_type") and _has_vid(r)]
+    if P.get("is_pace"):
+        over = [r for r in legal if r.get("is_round") is False]
+        rnd = [r for r in legal if r.get("is_round") is True]
+        ot = Counter(r["ball_type"] for r in over).most_common(1)
+        rt = Counter(r["ball_type"] for r in rnd).most_common(1)
+        stock = _clips_from_rows([r for r in over if ot and r["ball_type"] == ot[0][0]], cap_each)
+        if rt and len(rnd) >= 30:                    # a genuine round-the-wicket tactic
+            stock += _clips_from_rows([r for r in rnd if r["ball_type"] == rt[0][0]], cap_each)
+    else:
+        st = (P.get("ball_types") or {}).get("stock")
+        key = (st["band"], st["region"]) if st else None
+        stock = _clips_from_rows([r for r in legal if key and r["ball_type"] == key], cap_each * 2)
     return stock, wicket
 
 
-def batter_clips(conn, cur, bid, cap=8):
+def _angle_phrase(ms):
+    """Natural 'a good length in the channel' phrase for one angle's modal ball (over/round),
+    from _mode_stats output — matches the coordinate stock phrasing, not the raw group ids."""
+    if not ms:
+        return None
+    region = _LINE_REGION.get(ms.get("modal_zone") or "")
+    L = ms.get("med_len")
+    band = _LEN_BAND.get(_zone_lbl(L, LENGTH_ZONES_PACE) or "") if L is not None else None
+    if not region or not band:
+        return None
+    return f"{_LEN_ADJ.get(band, band.lower())} {region}"
+
+
+def batter_clips(conn, cur, bid, cap=40):
     """(scoring_clips, dismissal_clips) — example Test deliveries with video where the batter scores
     a boundary (how they score) and where they were dismissed (how they get out). Newest first."""
     scoring = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
@@ -246,9 +291,12 @@ def main():
         out = json.load(open(dst, encoding="utf-8"))
         conn, cur = set_conn_cursor()
         for bid, entry in out.get("bowlers", {}).items():
-            st, wk = bowler_clips(conn, cur, bid)
-            entry["stock_clips"], entry["wicket_clips"] = st, wk
-            print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)}")
+            try:                                          # re-profile so clips match the stock phrase
+                st, wk = bowler_clips_from_profile(build_profile(bid, hand="All"))
+                entry["stock_clips"], entry["wicket_clips"] = st, wk
+                print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)}")
+            except Exception as e:
+                print(f"  ! bowler {entry.get('name', bid)}: {type(e).__name__}: {e}")
         for bid, entry in out.get("batters", {}).items():
             sc, ds = batter_clips(conn, cur, bid)
             entry["scoring_clips"], entry["dismissal_clips"] = sc, ds
@@ -273,8 +321,11 @@ def main():
     for bid, (nm, ty) in bowlers.items():
         try:
             if _test_balls(conn, cur, bid, "bowl") >= TEST_FLOOR:
-                out["bowlers"][bid] = {"name": nm, **distil_bowler(build_profile(bid, hand="All"), ty or "Bowler")}
-                tag = ""
+                P = build_profile(bid, hand="All")
+                entry = {"name": nm, **distil_bowler(P, ty or "Bowler")}
+                entry["stock_clips"], entry["wicket_clips"] = bowler_clips_from_profile(P)
+                out["bowlers"][bid] = entry
+                tag = f" · stock {len(entry['stock_clips'])} wkt {len(entry['wicket_clips'])}"
             else:                                        # thin Test record -> all-format fallback
                 fb = allfmt_bowler_facts(conn, cur, bid, ty or "Bowler", LEN, LIN)
                 if not fb:
@@ -288,7 +339,9 @@ def main():
         try:
             if _test_balls(conn, cur, bid, "bat") >= TEST_FLOOR:
                 out["batters"][bid] = {"name": nm, **distil_batter(build_batter_profile(bid), hand)}
-                tag = ""
+                sc, ds = batter_clips(conn, cur, bid)
+                out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
+                tag = f" · sco {len(sc)} dsm {len(ds)}"
             else:
                 fb = allfmt_batter_facts(conn, cur, bid, hand, STK, SQ)
                 if not fb:
