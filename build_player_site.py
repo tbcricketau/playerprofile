@@ -417,10 +417,13 @@ def _our_hands(slug):
         return {}
 
 
-def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None, report_url=None):
+def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None, report_url=None,
+              kinds=None):
     """A per-opponent card in a PLAYER report: the distilled 'what they're about' facts (type-scoped
     by the caller), a link to the reduced PLAYER-MODE report on this opponent, video of their stock
-    ball + wicket balls, and neutral footage against them. NO good/poor matchup verdict."""
+    ball + wicket balls, and neutral footage against them. NO good/poor matchup verdict. `kinds`
+    scopes which vision buttons show — an all-rounder carries both bowler (stock/wicket) and batter
+    (scoring/dismissal) clips, but a bowler card must only offer the bowling ones (and vice versa)."""
     opp_vision = opp_vision or {}
     rl = (f'<a class="rlink" href="{report_url}" onclick="event.stopPropagation()" '
           f'title="full report on {html.escape(name)}">report &rarr;</a>') if report_url else ""
@@ -433,8 +436,10 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     else:
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     watch = []
-    for kind, label in (("stock", "Stock ball"), ("wicket", "Wicket balls"),
-                        ("scoring", "Scoring shots"), ("dismissal", "Dismissals")):
+    all_kinds = (("stock", "Stock ball"), ("wicket", "Wicket balls"),
+                 ("scoring", "Scoring shots"), ("dismissal", "Dismissals"))
+    show = [(k, l) for k, l in all_kinds if kinds is None or k in kinds]
+    for kind, label in show:
         if opp_vision.get((bid, kind)):
             watch.append(_vwatch(opp_vision[(bid, kind)], f"&#9654; {label}"))
     if watch:
@@ -642,7 +647,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
                             h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
-                            opp_vision=opp_vision, report_url=report_urls.get(bid))
+                            opp_vision=opp_vision, report_url=report_urls.get(bid),
+                            kinds=("stock", "wicket"))       # bowler card: bowling vision only
                   for bid, (nm, ty) in ordered]
         body.append(_pack_section(f"The {opp} attack",
                                   "Tap a bowler for what they're about, the fuller report, and any "
@@ -674,7 +680,8 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         blocks = [_opp_card(bid, nm, hand, (about.get(bid) or {}).get(f"facts_{tw}"),
                             h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
-                            opp_vision=opp_vision, report_url=report_urls.get(bid))
+                            opp_vision=opp_vision, report_url=report_urls.get(bid),
+                            kinds=("scoring", "dismissal"))  # batter card: batting vision only
                   for bid, (nm, hand) in ordered]
         body.append(_pack_section(f"The {opp} batters — bowling {tw}",
                                   f"How each of them plays {tw}, plus any footage of you bowling to "
