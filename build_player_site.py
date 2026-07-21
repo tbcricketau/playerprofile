@@ -16,7 +16,7 @@ import json
 import os
 import re
 
-from site_render import page as _page, TIER_CHIP
+from site_render import page as _page, TIER_CHIP, TIER_META
 from photos import get_photo_data_uri, get_photo_path
 from cricket_core.lookups import team_flag, country_code
 from cricket_core.flags import flag_img_tag
@@ -130,8 +130,11 @@ EXTRA_CSS = """<style>
  details.bwl .bav{width:38px;height:38px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#9aa4b2}
  details.bwl .bn{flex:1;min-width:0} details.bwl .bn b{font-size:14px;color:#1a1a2e;display:block}
  details.bwl .bn .bt{color:#6b7280;font-size:12px}
- details.bwl .rlink{font-size:11px;font-weight:700;color:#003087;text-decoration:none;background:#eef1f6;padding:3px 9px;border-radius:999px;white-space:nowrap;flex:0 0 auto}
- details.bwl .rlink:hover{background:#003087;color:#fff}
+ details.bwl .rlink{font-size:13px;font-weight:600;color:#fff;text-decoration:none;background:#003087;padding:7px 14px;border-radius:7px;white-space:nowrap;flex:0 0 auto}
+ details.bwl .rlink:hover{background:#00246b}
+ .opptier{font-size:14px;font-weight:700;color:#1a1a2e;margin:14px 0 6px;display:flex;align-items:center;gap:8px;padding-left:8px;border-left:3px solid #cbd5e1}
+ .opptier:first-child{margin-top:2px} .opptier.xi{border-left-color:#15803d} .opptier.squad{border-left-color:#3730a3} .opptier.fringe{border-left-color:#94a3b8}
+ .opptier span{font-size:12px;font-weight:600;color:#6b7280;background:#eef1f6;border-radius:999px;padding:1px 8px}
  details.bwl .bhead{font-size:12px;font-weight:700;white-space:nowrap;padding:2px 9px;border-radius:999px}
  details.bwl .bhead.hard{background:#fee2e2;color:#991b1b} details.bwl .bhead.ok{background:#dcfce7;color:#15803d} details.bwl .bhead.mid{background:#eef1f6;color:#475569}
  details.bwl>.bbody{padding:2px 12px 11px 12px;font-size:13px;line-height:1.5}
@@ -444,7 +447,7 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     `tier` = the opposition player's squad status (Most likely XI / In the squad / Fringe)."""
     opp_vision = opp_vision or {}
     rl = (f'<a class="rlink" href="{report_url}" onclick="event.stopPropagation()" '
-          f'title="full report on {html.escape(name)}">report &rarr;</a>') if report_url else ""
+          f'title="full report on {html.escape(name)}">View report</a>') if report_url else ""
     av = _avatar(bid, "bav", _initials(name), name=name)
     summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)} {_tier_chip(tier)}</b>'
             f'<span class="bt">{html.escape(sub or "")}</span></span>{rl}</summary>')
@@ -470,6 +473,26 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
             met += " " + _vwatch(vision_href, "&#9654; Watch")
         lines.append(f'<p>{met}</p>')
     return f'<details class="bwl">{summ}<div class="bbody">{"".join(lines)}</div></details>'
+
+
+def _tiered_inner(ordered, opp_tiers, card_fn):
+    """Group opponent cards into Most likely XI / In the squad / Fringe sections (mirrors the
+    scouting index). `ordered` = [(bid, meta), …]; `card_fn(bid, meta)` renders one card. With no
+    tier spread (all one tier), the headings are skipped and it's a plain list."""
+    opp_tiers = opp_tiers or {}
+    by_tier = {}
+    for bid, m in ordered:
+        by_tier.setdefault((opp_tiers.get(bid) or "squad"), []).append((bid, m))
+    if len(by_tier) <= 1:
+        return "".join(card_fn(bid, m) for bid, m in ordered)
+    parts = []
+    for tier, heading, _chip in TIER_META:
+        grp = by_tier.get(tier)
+        if not grp:
+            continue
+        parts.append(f'<div class="opptier {tier}">{html.escape(heading)}<span>{len(grp)}</span></div>')
+        parts.extend(card_fn(bid, m) for bid, m in grp)
+    return "".join(parts)
 
 
 def _short_opp(meta):
@@ -664,15 +687,18 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     if opp_bowlers:
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
-        blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
-                            h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
-                            opp_vision=opp_vision, report_url=report_urls.get(bid),
-                            kinds=("stock", "wicket"),       # bowler card: bowling vision only
-                            tier=(opp_tiers or {}).get(bid))
-                  for bid, (nm, ty) in ordered]
+
+        def _card(bid, meta_):
+            nm, ty = meta_
+            return _opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
+                             h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
+                             opp_vision=opp_vision, report_url=report_urls.get(bid),
+                             kinds=("stock", "wicket"),       # bowler card: bowling vision only
+                             tier=(opp_tiers or {}).get(bid))
         body.append(_pack_section(f"The {opp} attack",
-                                  "Tap a bowler for what they're about, the fuller report, and any "
-                                  "footage of you facing them.", inner="".join(blocks)))
+                                  "Grouped by how likely they are to play. Tap a bowler for what "
+                                  "they're about, the fuller report, and any footage of you facing them.",
+                                  inner=_tiered_inner(ordered, opp_tiers, _card)))
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls facing each of their bowlers — Test where you've "
                               "met, otherwise your ODI / T20 footage (the format is labelled).",
@@ -698,18 +724,20 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     if opp_batters:
         ordered = sorted(opp_batters.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
-        blocks = [_opp_card(bid, nm,
-                            (f"{hand} · {(about.get(bid) or {}).get('role')}"     # e.g. "LHB · Top order"
-                             if (about.get(bid) or {}).get("role") else hand),
-                            (about.get(bid) or {}).get(f"facts_{tw}"),
-                            h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
-                            opp_vision=opp_vision, report_url=report_urls.get(bid),
-                            kinds=("scoring", "dismissal"),  # batter card: batting vision only
-                            tier=(opp_tiers or {}).get(bid))
-                  for bid, (nm, hand) in ordered]
+
+        def _card(bid, meta_):
+            nm, hnd = meta_
+            role = (about.get(bid) or {}).get("role")
+            return _opp_card(bid, nm, (f"{hnd} · {role}" if role else hnd),
+                             (about.get(bid) or {}).get(f"facts_{tw}"),
+                             h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
+                             opp_vision=opp_vision, report_url=report_urls.get(bid),
+                             kinds=("scoring", "dismissal"),  # batter card: batting vision only
+                             tier=(opp_tiers or {}).get(bid))
         body.append(_pack_section(f"The {opp} batters — bowling {tw}",
-                                  f"How each of them plays {tw}, plus any footage of you bowling to "
-                                  "them. Tap a batter.", inner="".join(blocks)))
+                                  f"Grouped by how likely they are to play. How each plays {tw}, plus "
+                                  "any footage of you bowling to them. Tap a batter.",
+                                  inner=_tiered_inner(ordered, opp_tiers, _card)))
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls bowling to each of their batters — Test where "
                               "you've met, otherwise your ODI / T20 footage (the format is labelled).",
