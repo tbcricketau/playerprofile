@@ -16,10 +16,25 @@ import json
 import os
 import re
 
-from site_render import page as _page
+from site_render import page as _page, TIER_CHIP
 from photos import get_photo_data_uri, get_photo_path
 from cricket_core.lookups import team_flag, country_code
 from cricket_core.flags import flag_img_tag
+
+# When the squad is locked in, set DROP_FRINGE=True (or CRICKET_DROP_FRINGE=1) to retire the
+# provisional 'Fringe' marker — those players then read as plain squad, no chip.
+DROP_FRINGE = os.environ.get("CRICKET_DROP_FRINGE", "") in ("1", "true", "True")
+
+
+def _tier_chip(tier):
+    """Squad-status chip (Most likely XI / In the squad / Fringe) for a pack. Fringe is hidden
+    once DROP_FRINGE is set; an unknown/absent tier shows nothing."""
+    tier = (tier or "").lower()
+    if tier == "fringe" and DROP_FRINGE:
+        return ""
+    if tier not in TIER_CHIP or tier in ("reference", "test"):
+        return ""
+    return f'<span class="tier {tier}">{html.escape(TIER_CHIP[tier])}</span>'
 
 # "file": pages reference img/{pid}.png (copied at build, lazy-loaded — keeps the roster page
 # a few tens of KB instead of megabytes of inlined base64, which lagged on phone data).
@@ -282,7 +297,8 @@ def _roster_body(meta, roster):
             items.append(
                 f'<li><span class="rmain">'
                 f'{_avatar(pid, "avatar", _initials(name), name=name)}'
-                f'<span><b>{html.escape(name)}</b><span class="rr">{html.escape(role)}</span></span></span>'
+                f'<span><b>{html.escape(name)} {_tier_chip(rec.get("tier"))}</b>'
+                f'<span class="rr">{html.escape(role)}</span></span></span>'
                 f'<span class="packchips">{"".join(chips)}</span></li>')
         sections.append(f'<h2 class="tierhead {ROLE_CLASS.get(role,"squad")}">{heading}'
                         f'<span>{len(group)}</span></h2><ul class="roster">{"".join(items)}</ul>')
@@ -597,17 +613,18 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
     return hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet
 
 
-def _report_top(pid, name, role, sname, pages=None, current=None):
-    """Shared header: avatar, name, role, and a tab per report page (Batting, Bowling: Pace, …).
-    `pages` = [(label, href), …]; `current` = the active href."""
+def _report_top(pid, name, role, sname, pages=None, current=None, tier=None):
+    """Shared header: avatar, name (+ squad-status chip), role, and a tab per report page
+    (Batting, Bowling: Pace, …). `pages` = [(label, href), …]; `current` = the active href."""
     tabs = ""
     if pages and len(pages) > 1:
         parts = [(f'<span class="rtab on">{html.escape(lbl)}</span>' if href == current
                   else f'<a class="rtab" href="{href}">{html.escape(lbl)}</a>')
                  for lbl, href in pages]
         tabs = f'<div class="rtabs">{"".join(parts)}</div>'
+    chip = _tier_chip(tier)
     return (f'<div class="phead">{_avatar(pid, "big", _initials(name), name=name)}'
-            f'<div><h1>{html.escape(name)}</h1><div class="role">{html.escape(role)} · '
+            f'<div><h1>{html.escape(name)} {chip}</h1><div class="role">{html.escape(role)} · '
             f'{html.escape(sname)}</div></div></div>{tabs}')
 
 
@@ -638,7 +655,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     h2h_map = h2h_map or {}
     h2h_rows = h2h_rows or {}
     handword = "left-handers" if hand == "lhb" else "right-handers"
-    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current)]
+    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current,
+                                   tier=rec.get("tier"))]
 
     # "How previous attacks have bowled to you" moved to the coach scouting side (2026-07-21) —
     # removed from the player packs; the pack now opens straight into the opposition attack.
@@ -673,7 +691,8 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     h2h_map = h2h_map or {}
     h2h_rows = h2h_rows or {}
     tw = "spin" if btype == "spin" else "pace"
-    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current)]
+    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current,
+                                   tier=rec.get("tier"))]
 
     if opp_batters:
         ordered = sorted(opp_batters.items(),
@@ -749,7 +768,7 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
                 print(f"  ! attack vision {name}: {type(e).__name__}: {e}")
         first = html.escape(name.split()[0])
         body = (EXTRA_CSS
-                + _report_top(pid, name, role, meta.get("name", ""))
+                + _report_top(pid, name, role, meta.get("name", ""), tier=rec.get("tier"))
                 + _pack_section(f"How the last attacks bowled to {html.escape(name)}",
                                 f"The opposition's trends to {first} over their last few series.",
                                 inner=_attack_card_html(card, opp, vision, cell_vision, subject=first)))

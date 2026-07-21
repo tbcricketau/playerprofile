@@ -1,167 +1,183 @@
 {
-  "3080014": {
-    "name": "Travis Head",
-    "role": "Batter",
-    "packs": [
-      "batting"
-    ],
-    "prefs": "base"
-  },
-  "2580027": {
-    "name": "Jake Weatherald",
-    "role": "Batter",
-    "packs": [
-      "batting"
-    ],
-    "prefs": "base"
-  },
-  "2480058": {
-    "name": "Marnus Labuschagne",
-    "role": "Batter",
-    "packs": [
-      "batting"
-    ],
-    "prefs": "base"
-  },
-  "940135": {
-    "name": "Steve Smith",
-    "role": "Batter",
-    "packs": [
-      "batting"
-    ],
-    "prefs": "base"
-  },
-  "2950104": {
-    "name": "Cameron Green",
-    "role": "All-rounder",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "pace"
-    ]
-  },
-  "350104": {
-    "name": "Alex Carey",
-    "role": "Batter",
-    "packs": [
-      "batting"
-    ],
-    "prefs": "base"
-  },
-  "390157": {
-    "name": "Beau Webster",
-    "role": "All-rounder",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "pace",
-      "spin"
-    ]
-  },
-  "1300076": {
-    "name": "Pat Cummins",
-    "role": "Bowler",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "pace"
-    ]
-  },
-  "1300007": {
-    "name": "Mitch Starc",
-    "role": "Bowler",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "pace"
-    ]
-  },
-  "1300071": {
-    "name": "Nathan Lyon",
-    "role": "Bowler",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "spin"
-    ]
-  },
-  "880149": {
-    "name": "Josh Hazlewood",
-    "role": "Bowler",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "pace"
-    ]
-  },
-  "2710059": {
-    "name": "Scott Boland",
-    "role": "Bowler",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "pace"
-    ]
-  },
-  "1940169": {
-    "name": "Josh Inglis",
-    "role": "Batter",
-    "packs": [
-      "batting"
-    ],
-    "prefs": "base"
-  },
-  "2480059": {
-    "name": "Matt Renshaw",
-    "role": "Batter",
-    "packs": [
-      "batting"
-    ],
-    "prefs": "base"
-  },
-  "2480067": {
-    "name": "Brendan Doggett",
-    "role": "Bowler",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "pace"
-    ]
-  },
-  "2700257": {
-    "name": "Todd Murphy",
-    "role": "Bowler",
-    "packs": [
-      "batting",
-      "bowling"
-    ],
-    "prefs": "base",
-    "bowl_types": [
-      "spin"
-    ]
-  }
+ "3080014": {
+  "name": "Travis Head",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "2580027": {
+  "name": "Jake Weatherald",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "2480058": {
+  "name": "Marnus Labuschagne",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "940135": {
+  "name": "Steve Smith",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "2950104": {
+  "name": "Cameron Green",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace"
+  ],
+  "tier": "squad"
+ },
+ "350104": {
+  "name": "Alex Carey",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "390157": {
+  "name": "Beau Webster",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace",
+   "spin"
+  ],
+  "tier": "squad"
+ },
+ "1300076": {
+  "name": "Pat Cummins",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace"
+  ],
+  "tier": "squad"
+ },
+ "1300007": {
+  "name": "Mitch Starc",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace"
+  ],
+  "tier": "squad"
+ },
+ "1300071": {
+  "name": "Nathan Lyon",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "spin"
+  ],
+  "tier": "squad"
+ },
+ "880149": {
+  "name": "Josh Hazlewood",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace"
+  ],
+  "tier": "squad"
+ },
+ "2710059": {
+  "name": "Scott Boland",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace"
+  ],
+  "tier": "squad"
+ },
+ "1940169": {
+  "name": "Josh Inglis",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "2480059": {
+  "name": "Matt Renshaw",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "2480067": {
+  "name": "Brendan Doggett",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace"
+  ],
+  "tier": "squad"
+ },
+ "2700257": {
+  "name": "Todd Murphy",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "spin"
+  ],
+  "tier": "squad"
+ }
 }
