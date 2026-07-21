@@ -57,6 +57,28 @@ _FILE_URL_RE = re.compile(r"file:///[^\"#]*?([A-Za-z0-9_.\-]+\.player\.html)")
 # Card + page shell are shared with the local audit app (webapp) so the two stay identical.
 from site_render import (page as _page, report_card, TIER_META as _TIER_META,
                          TIER_CHIP as _TIER_CHIP, TYPE_RE as _TYPE_RE)
+from photos import get_photo_path
+
+
+def _initials(name):
+    parts = [p for p in re.split(r"\s+", (name or "").strip()) if p]
+    return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (parts[0][:2].upper() if parts else "?")
+
+
+def _row_photo(pid, name, g_dir):
+    """Copy the player's headshot into <group>/img/<pid>.png and return the relative href
+    (or None). Keeps the index page light — no inlined base64, matching the player packs."""
+    if not pid:
+        return None
+    p = get_photo_path(pid, fmt="test", name=name)
+    if not p:
+        return None
+    img_dir = os.path.join(g_dir, "img")
+    os.makedirs(img_dir, exist_ok=True)
+    dst = os.path.join(img_dir, f"{pid}.png")
+    if not os.path.exists(dst):
+        shutil.copy(p, dst)
+    return f"img/{pid}.png"
 
 
 def _natural_name(nm):
@@ -139,7 +161,8 @@ def _bake_report(name, dest_dir, hk_sas):
     has_pdf = os.path.exists(os.path.join(REPORTS_DIR, name + ".pdf"))
     if has_pdf:
         shutil.copy(os.path.join(REPORTS_DIR, name + ".pdf"), os.path.join(dest_dir, name + ".pdf"))
-    return (_natural_name(meta.get("bowler") or meta.get("batter") or name.replace("_", " ").title()), btype, has_pdf)
+    pid = str(meta.get("bowler_id") or meta.get("batter_id") or "")
+    return (_natural_name(meta.get("bowler") or meta.get("batter") or name.replace("_", " ").title()), btype, has_pdf, pid)
 
 
 # ── Site build (Series → Group → Reports) ───────────────────────────────────────
@@ -182,8 +205,8 @@ def build(out_dir, sas_hours):
                           f"not rendered — skipped"); continue
                 res = _bake_report(name, g_dir, hk_sas)
                 if res:
-                    title, btype, has_pdf = res
-                    report_cards.append((name, title, btype, has_pdf, r.get("tier", "squad")))
+                    title, btype, has_pdf, pid = res
+                    report_cards.append((name, title, btype, has_pdf, r.get("tier", "squad"), pid))
                     s_total += 1
                     print(f"  [ok] {s['slug']}/{g['slug']}/{title} ({btype})")
             _write_group_index(g_dir, cfg, s, g, report_cards)
@@ -227,10 +250,11 @@ def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False):
         _page(s["name"], body, up=("../index.html", cfg.get("title", "Series"))))
 
 
-def _report_li(card):
-    n, t, bt, pdf, tier = card
+def _report_li(card, g_dir):
+    n, t, bt, pdf, tier, pid = card
     return report_card(t, bt, f"{n}.html", pdf_href=(f"{n}.pdf" if pdf else None),
-                       vision_href=f"{n}.player.html", badge=_TIER_CHIP.get(tier), badge_class=tier)
+                       vision_href=f"{n}.player.html", badge=_TIER_CHIP.get(tier), badge_class=tier,
+                       photo=_row_photo(pid, t, g_dir), initials=_initials(t))
 
 
 def _write_group_index(g_dir, cfg, s, g, report_cards):
@@ -240,7 +264,7 @@ def _write_group_index(g_dir, cfg, s, g, report_cards):
         for card in report_cards:
             by_tier.setdefault(card[4], []).append(card)
         if len(by_tier) <= 1:                       # single tier (e.g. reference) → flat list
-            inner = f'<ul class="reports">{chr(10).join(_report_li(c) for c in report_cards)}</ul>'
+            inner = f'<ul class="reports">{chr(10).join(_report_li(c, g_dir) for c in report_cards)}</ul>'
         else:                                        # opposition → XI / Squad / Fringe sections
             tiered = True
             sections = []
@@ -248,7 +272,7 @@ def _write_group_index(g_dir, cfg, s, g, report_cards):
                 cards = by_tier.get(tier)
                 if not cards:
                     continue
-                items = "\n".join(_report_li(c) for c in cards)
+                items = "\n".join(_report_li(c, g_dir) for c in cards)
                 sections.append(f'<h2 class="tierhead {tier}">{heading}'
                                 f'<span>{len(cards)}</span></h2><ul class="reports">{items}</ul>')
             inner = "".join(sections)
