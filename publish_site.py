@@ -211,7 +211,17 @@ def build(out_dir, sas_hours):
                     print(f"  [ok] {s['slug']}/{g['slug']}/{title} ({btype})")
             _write_group_index(g_dir, cfg, s, g, report_cards)
             group_cards.append((g["slug"], g["name"], len(report_cards)))
-        _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx)
+        # 'How bowlers have attacked our squad' — coach-side section (attack_cards + squads.json)
+        has_attacks = False
+        try:
+            import build_player_site as bps
+            if s["slug"] in json.load(open(bps.SQUADS, encoding="utf-8")):
+                nap = bps.render_attack_section(os.path.join(s_dir, "attacked-our-squad"), slug=s["slug"])
+                has_attacks = nap > 0
+                print(f"  [ok] {s['slug']}/attacked-our-squad ({nap} players)")
+        except Exception as e:
+            print(f"  ! attack section {s['slug']}: {type(e).__name__}: {e}")
+        _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx, has_attacks=has_attacks)
         series_cards.append((s["slug"], s["name"], s.get("subtitle", ""), s_total))
     _write_top_index(out_dir, cfg, series_cards)
     open(os.path.join(out_dir, ".nojekyll"), "w").close()
@@ -232,12 +242,15 @@ def _write_top_index(out_dir, cfg, series_cards):
     open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(_page(cfg.get("title", "Scouting"), body))
 
 
-def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False):
+def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False, has_attacks=False):
     mx = ('<li><a href="matchups.html"><b>Match-ups</b>'
           '<span class="sub">the full simulated grid — every pairing, both directions</span></a>'
           '<span class="n">matrix</span></li>' if has_matchups else "")
-    if group_cards or mx:
-        items = mx + "\n".join(
+    at = ('<li><a href="attacked-our-squad/index.html"><b>How bowlers have attacked our squad</b>'
+          '<span class="sub">our squad · how the last few attacks came at each of them (last 3 series)</span></a>'
+          '<span class="n">squad</span></li>' if has_attacks else "")
+    if group_cards or mx or at:
+        items = mx + at + "\n".join(
             f'<li><a href="{gl}/index.html"><b>{html.escape(gn)}</b></a>'
             f'<span class="n">{c} report{"s" if c != 1 else ""}</span></li>'
             for gl, gn, c in group_cards)

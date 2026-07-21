@@ -187,16 +187,17 @@ def _dismissals_table(dismissals, vision_href=None):
             + rows + '</table>')
 
 
-def _attack_card_html(card, opp_label, vision=None, cell_vision=None):
+def _attack_card_html(card, opp_label, vision=None, cell_vision=None, subject="you"):
     """The 'how previous attacks bowled to you' block — one collapsible series each, with the
     pace plan (left) and spin plan (right) side by side, ▶ on the cells they went at you more,
-    and the dismissals. `vision` = {series_i: dismissal href}; `cell_vision` = {(i,fam,idx): href}."""
+    and the dismissals. `vision` = {series_i: dismissal href}; `cell_vision` = {(i,fam,idx): href}.
+    `subject` = 'you' in the player packs, the player's name on the coach scouting page."""
     if not card or not card.get("series"):
         return ('<div class="soon">Coming soon — will be built from the scouting report.</div>')
     vision, cell_vision = vision or {}, cell_vision or {}
     n = len(card["series"])
-    lead = ("How the last attack bowled to you." if n == 1
-            else f"How the last {n} attacks bowled to you.")
+    lead = (f"How the last attack bowled to {subject}." if n == 1
+            else f"How the last {n} attacks bowled to {subject}.")
     parts = [f'<p class="desc" style="margin-top:8px">{lead}</p>']
     for i, s in enumerate(card["series"]):
         meta = (f'{s["tests"]} Test{"s" if s["tests"] != 1 else ""} · {_dfmt(s["d0"])} → {_dfmt(s["d1"])} · '
@@ -706,6 +707,81 @@ def _load_about(slug):
         return {}, {}
     d = json.load(open(p, encoding="utf-8"))
     return d.get("bowlers", {}), d.get("batters", {})
+
+
+def render_attack_section(dest_dir, slug=None, no_video=False):
+    """Coach-side scouting section: 'How bowlers in the last 3 series have attacked our squad'.
+    An index of the whole squad, each opening a page with the EXACT attack-card block from the
+    player packs (pace + spin plans, cell vision, dismissals + video). Writes index.html +
+    <player>.html + <player>-vision.html + img/ into dest_dir. Returns the player count."""
+    import shutil
+    squads = json.load(open(SQUADS, encoding="utf-8"))
+    players = json.load(open(PLAYERS, encoding="utf-8"))
+    cards = _load_cards()
+    slug = slug or next(iter(squads))
+    meta = squads.get(slug, {})
+    os.makedirs(os.path.join(dest_dir, "img"), exist_ok=True)
+    if not no_video:
+        try:
+            from cricket_core.video import get_fairplay_sas
+            get_fairplay_sas(ttl_hours=156)
+        except Exception as e:
+            print(f"  ! attack-section SAS prime failed ({e})")
+    opp = _short_opp(meta)
+    built = []
+    for pid in meta.get("players", []):
+        rec = players.get(pid, {"name": pid, "role": "Unknown"})
+        name, role = rec.get("name", pid), rec.get("role", "Unknown")
+        pslug = _slug(name)
+        photo = None
+        p = get_photo_path(pid, fmt="test", name=name)
+        if p:
+            shutil.copy(p, os.path.join(dest_dir, "img", f"{pid}.png"))
+            _SITE_IMGS.add(str(pid))
+            photo = f"img/{pid}.png"
+        card = cards.get(pid)
+        vision, cell_vision, snippet = {}, {}, ""
+        if not no_video and card and card.get("series"):
+            try:
+                vision, _hl, _hm, cell_vision, _ov, snippet = _build_vision(
+                    dest_dir, pslug, name, card, ({}, {}), opp_clips=None)
+            except Exception as e:
+                print(f"  ! attack vision {name}: {type(e).__name__}: {e}")
+        first = html.escape(name.split()[0])
+        body = (EXTRA_CSS
+                + _report_top(pid, name, role, meta.get("name", ""))
+                + _pack_section(f"How the last attacks bowled to {html.escape(name)}",
+                                f"The opposition's trends to {first} over their last few series.",
+                                inner=_attack_card_html(card, opp, vision, cell_vision, subject=first)))
+        open(os.path.join(dest_dir, f"{pslug}.html"), "w", encoding="utf-8").write(
+            _page(f"{name} — how attacks bowled to them", body + snippet,
+                  up=("index.html", "Our squad")))
+        built.append((pid, name, role, photo, pslug))
+
+    # index — the squad, grouped by role, each row opening that player's attack page
+    by_role = {}
+    for pid, name, role, photo, pslug in built:
+        by_role.setdefault(role, []).append((pid, name, photo, pslug))
+    sections = []
+    for role, heading in ROLE_ORDER:
+        grp = by_role.get(role)
+        if not grp:
+            continue
+        items = []
+        for pid, name, photo, pslug in grp:
+            av = (f'<img class="avatar" src="{photo}" alt="" loading="lazy">' if photo
+                  else f'<span class="avatar">{html.escape(_initials(name))}</span>')
+            items.append(f'<li><a href="{pslug}.html" class="rmain" style="text-decoration:none">'
+                         f'{av}<span><b>{html.escape(name)}</b>'
+                         f'<span class="rr">{html.escape(role)}</span></span></a></li>')
+        sections.append(f'<h2 class="tierhead {ROLE_CLASS.get(role,"squad")}">{heading}'
+                        f'<span>{len(grp)}</span></h2><ul class="roster">{"".join(items)}</ul>')
+    idx = (EXTRA_CSS + '<h1>How attacks have bowled to our squad</h1>'
+           f'<p class="lead">{html.escape(meta.get("name",""))} · each squad player\'s last few '
+           'series — how the opposition attacks came at them. Tap a player.</p>' + "".join(sections))
+    open(os.path.join(dest_dir, "index.html"), "w", encoding="utf-8").write(
+        _page("How attacks bowled to our squad", idx, up=("../index.html", meta.get("name", ""))))
+    return len(built)
 
 
 def build(out_dir, no_video=False, only=None):
