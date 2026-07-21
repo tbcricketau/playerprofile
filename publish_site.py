@@ -109,12 +109,14 @@ def _refresh_playlists(pls, hk_sas):
 
 # ── Report → file resolution (manifest references bowlers by id + hand) ─────────
 def _sidecar_map():
-    """{(player_id, hand_tag): report_base_name} from the rendered sidecars — bowling sidecars
-    carry meta.bowler_id, batting sidecars meta.batter_id."""
+    """{(player_id, hand_tag, kind, bowl_group): report_base_name} from the rendered sidecars —
+    bowling sidecars carry meta.bowler_id, batting sidecars meta.batter_id. `bowl_group` is the
+    ''`_vs_<group>`'' suffix ('' for the combined report; 'pace'/'spin' for the macro batter
+    reports; 'right_pace'/… for atomic ones)."""
     out = {}
     for sc in glob.glob(os.path.join(REPORTS_DIR, "*.playlists.json")):
         name = os.path.basename(sc)[: -len(".playlists.json")]
-        m = re.search(r"_(all|lhb|rhb)$", name)
+        m = re.search(r"_(all|lhb|rhb)(?:_vs_(\w+))?$", name)
         if not m:
             continue
         try:
@@ -123,7 +125,7 @@ def _sidecar_map():
         except Exception:
             continue
         kind = "batting" if "_batting_" in name else "bowling"    # a player can have BOTH
-        out[(bid, m.group(1), kind)] = name
+        out[(bid, m.group(1), kind, m.group(2) or "")] = name
     return out
 
 
@@ -199,7 +201,7 @@ def build(out_dir, sas_hours):
             report_cards = []
             for r in g.get("reports", []):
                 kind = g.get("kind", "bowling")
-                name = smap.get((str(r["id"]), r.get("hand", "all"), kind))
+                name = smap.get((str(r["id"]), r.get("hand", "all"), kind, g.get("bowl_group", "")))
                 if not name:
                     print(f"  ! {s['slug']}/{g['slug']}: report id {r['id']} ({r.get('hand')}) "
                           f"not rendered — skipped"); continue

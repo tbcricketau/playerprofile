@@ -49,6 +49,16 @@ BOWLER_GROUPS = {
     "left_unorthodox": ({"Left Unorthodox"},            "left-arm wrist spin"),
 }
 
+# Macro groups: one report each for ALL pace / ALL spin, with the atomic sub-types broken down
+# inside. Kept SEPARATE from BOWLER_GROUPS so the atomic type→group map isn't polluted (a type
+# would otherwise map to both its atomic group and the macro group).
+_PACE_SUBS = ("right_pace", "left_pace")
+_SPIN_SUBS = ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox")
+MACRO_GROUPS = {
+    "pace": (set().union(*(BOWLER_GROUPS[g][0] for g in _PACE_SUBS)), "pace", _PACE_SUBS),
+    "spin": (set().union(*(BOWLER_GROUPS[g][0] for g in _SPIN_SUBS)), "spin", _SPIN_SUBS),
+}
+
 
 def _speed_band(v):
     """Pace speed bands (km/h). Spin speeds all fall in the slow bucket, so only use for pace."""
@@ -310,11 +320,15 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
     info = load_batter_info(batter_id)
 
     # Optional bowler-group filter (focused report). Headline + dimensions then reflect only
-    # deliveries from that group; hand + share-of-runs stay on the full career.
+    # deliveries from that group; hand + share-of-runs stay on the full career. Groups can be an
+    # atomic type (right_pace, off_spin, …) or a MACRO group ("pace"/"spin") that unions its types.
     raw_all = raw
     group_label = None
-    is_spin_group = group in ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox")
-    if group and group in BOWLER_GROUPS:
+    is_spin_group = group in ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox", "spin")
+    if group in MACRO_GROUPS:
+        types, group_label, _subs = MACRO_GROUPS[group]
+        raw = [r for r in raw_all if r.get("bowler_type_simple") in types]
+    elif group and group in BOWLER_GROUPS:
         types, group_label = BOWLER_GROUPS[group]
         raw = [r for r in raw_all if r.get("bowler_type_simple") in types]
 

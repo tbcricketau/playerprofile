@@ -16,7 +16,7 @@ import json
 from jinja2 import Template
 
 from version import REPORT_VERSION
-from batter_profile import (build_batter_profile, BOWLER_GROUPS,
+from batter_profile import (build_batter_profile, BOWLER_GROUPS, MACRO_GROUPS,
                             process_batting_rows, load_batter_deliveries)
 import field_engine as fe
 from photos import get_photo_data_uri
@@ -627,11 +627,22 @@ _FIELD_MIN_BALLS = 120           # a group needs this many career balls to earn 
 
 
 def _field_targets(P: dict) -> list:
-    """[(group, rows)] to draw a field for. Focused report → the report's group; combined →
-    the batter's most-faced pace group + most-faced spin group (each on its own filtered rows)."""
-    if P.get("group"):
-        return [(P["group"], P["raw"])]
+    """[(group, rows)] to draw a field for. A MACRO report ('pace'/'spin') → one field per
+    sub-type the batter faces enough (right/left pace, or off/leg/orthodox — their fields
+    differ). An atomic focused report → its group. Combined → most-faced pace + spin group."""
     from collections import Counter
+    group = P.get("group")
+    if group in MACRO_GROUPS:
+        subs = MACRO_GROUPS[group][2]
+        cnt = Counter(r.get("bowler_type_simple") for r in P["raw"] if r["is_legal"])
+        out = []
+        for sg in subs:
+            types = BOWLER_GROUPS[sg][0]
+            if sum(cnt.get(t, 0) for t in types) >= _FIELD_MIN_BALLS:
+                out.append((sg, [r for r in P["raw"] if r.get("bowler_type_simple") in types]))
+        return out or [(group, P["raw"])]        # fallback: one field over the whole macro group
+    if group:
+        return [(group, P["raw"])]
     cnt = Counter()
     for r in P["raw_all"]:
         if r["is_legal"]:
@@ -841,7 +852,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         return None
 
     ctx = {
-        "P": P, "code": _country_code(P["team"]),
+        "P": P, "code": _country_code(P["team"]), "is_macro": group in MACRO_GROUPS,
         "photo_uri": get_photo_data_uri(P["batter_id"], fmt="test", name=P.get("name")),
         "attacked": _attacked_ctx(), "sim_options": _sim_options_ctx(),
         "hand_label": "LHB" if P["is_lhb"] else "RHB",
@@ -887,9 +898,9 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         simulated-matchup table — how OUR bowlers match up to this batter — stripped). A type-scoped
         player report (group set) keeps the fingerprint + impact; the coach exploit cut stays lean."""
         c2 = dict(ctx, player_mode=player_mode)
-        # fingerprint + impact show on the combined report and on any PLAYER-mode report (incl. the
-        # type-scoped one); the coach exploit cut (group set, not player-mode) stays lean.
-        c2["show_fp"] = (group is None) or player_mode
+        # fingerprint + impact show on the combined report, the MACRO (vs Pace / vs Spin) coach
+        # reports, and any PLAYER-mode report; only the lean atomic exploit cut hides them.
+        c2["show_fp"] = (group is None) or (group in MACRO_GROUPS) or player_mode
         if player_mode:
             c2["sim_options"] = None
             c2["attacked"] = None          # 'How Attacks Bowl To Them' is coach-only (kept in the full report)
@@ -1004,8 +1015,8 @@ _TEMPLATE = r"""
   <div class="read impact">{{impact_read|safe}}</div>
   {% endif %}
 
-  {% if not P.group %}
-  <h2>Against Each Bowler Type</h2>
+  {% if (not P.group or is_macro) and vs_rows %}
+  <h2>{% if is_macro %}Breakdown by Type <span class="sub" style="font-weight:400">(within {{P.group_label}})</span>{% else %}Against Each Bowler Type{% endif %}</h2>
   {% if vs_read %}<div class="read impact">{{vs_read|safe}}</div>{% endif %}
   <table class="mtab">
     <tr><th>Bowler type</th><th>Average</th><th>Strike rate</th><th>False-shot %</th><th>Dismissals / 100</th><th>Balls</th></tr>
