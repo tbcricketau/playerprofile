@@ -1656,9 +1656,11 @@ def _build_player(P: dict, pdf_path: str, subtitle: str, target_country: str | N
         write_playlists(pdf_path[:-4] + ".playlists.json", pls, meta=pl_meta)
         if not pls:
             return {"lists": {}}          # no clips: keep `lists` so the template guards work
+        _titles = (pl_meta or {}).get("titles")   # per-bowler ball-type names for bt_0.. playlists
         player_path = pdf_path[:-4] + ".player.html"
-        build_player_html(pls, player_path, title=P["name"], subtitle=subtitle)
-        return {"player": _file_url(player_path), "lists": {k: True for k in pls}, "playlists": pls}
+        build_player_html(pls, player_path, title=P["name"], subtitle=subtitle, titles=_titles)
+        return {"player": _file_url(player_path), "lists": {k: True for k in pls},
+                "playlists": pls, "titles": _titles}
     except Exception:
         return {"lists": {}}
 
@@ -1707,7 +1709,9 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
         # fallback to the standalone player.html (the snippet is display:none in print).
         from cricket_core.video import inline_player_snippet
         # Markers let the web app swap this baked-SAS player for a mint-on-demand one (webapp.py).
-        snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(video["playlists"]) + "<!--PLAYER_SNIPPET_END-->"
+        snippet = ("<!--PLAYER_SNIPPET_START-->"
+                   + inline_player_snippet(video["playlists"], titles=video.get("titles"))
+                   + "<!--PLAYER_SNIPPET_END-->")
         html = html.replace("</body>", snippet + "</body>")
         pm_html = pm_html.replace("</body>", snippet + "</body>")
     # Always write the interactive .html (with the player snippet when there are clips) so the

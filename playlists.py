@@ -198,11 +198,18 @@ def build_playlists(P: dict, cap: int = 10, target_country: str | None = None) -
     order_note = ("most recent first" if not target_country else
                   f"like-for-like conditions first ({target_country} → similar conditions "
                   f"[{conditions_bucket(target_country) or 'n/a'}] → rest), most recent within each")
+    # Proper titles for the dynamic ball-type playlists (bt_0..) — otherwise the viewer shows
+    # "Bt 0". Stored in meta so publish_site's re-bake names them the same as the render did.
+    titles = {}
+    for i, t in enumerate(((P.get("ball_types") or {}).get("types") or [])[:6]):
+        ph = (t.get("phrase") or "").strip()
+        if ph:
+            titles[f"bt_{i}"] = ph[:1].upper() + ph[1:]
     meta = {
         "bowler": P.get("name"), "bowler_id": P.get("bowler_id"),
         "hand_filter": P.get("filters", {}).get("hand"),
         "target_country": target_country, "order": order_note,
-        "counts": counts,
+        "counts": counts, "titles": titles,
         "note": "Clips resolved via cricket_core.video (SSO SAS). 'available' = clips found in "
                 "storage; coverage is per-delivery so some balls have no clip. Order: " + order_note + ".",
     }

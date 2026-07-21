@@ -140,9 +140,11 @@ def _bake_report(name, dest_dir, hk_sas):
     pls = _refresh_playlists(d.get("playlists", d), hk_sas)
     meta = d.get("meta", {})
 
+    ptitles = meta.get("titles")            # per-bowler ball-type playlist names (bt_0..)
     page = open(html_path, encoding="utf-8").read()
     btype = (_TYPE_RE.search(page).group(1) if _TYPE_RE.search(page) else "")
-    snippet = "<!--PLAYER_SNIPPET_START-->" + inline_player_snippet(pls) + "<!--PLAYER_SNIPPET_END-->"
+    snippet = ("<!--PLAYER_SNIPPET_START-->"
+               + inline_player_snippet(pls, titles=ptitles) + "<!--PLAYER_SNIPPET_END-->")
     page = _SNIPPET_RE.sub(lambda m: snippet, page) if _SNIPPET_RE.search(page) \
         else page.replace("</body>", snippet + "</body>")
     page = _FILE_URL_RE.sub(lambda m: m.group(1), page)      # player href → relative (same folder)
@@ -159,7 +161,8 @@ def _bake_report(name, dest_dir, hk_sas):
 
     build_player_html(pls, os.path.join(dest_dir, name + ".player.html"),
                       title=meta.get("bowler") or meta.get("batter") or name,
-                      subtitle="bowling scout" if "_bowling_" in name else "batting scout")
+                      subtitle="bowling scout" if "_bowling_" in name else "batting scout",
+                      titles=ptitles)
     has_pdf = os.path.exists(os.path.join(REPORTS_DIR, name + ".pdf"))
     if has_pdf:
         shutil.copy(os.path.join(REPORTS_DIR, name + ".pdf"), os.path.join(dest_dir, name + ".pdf"))
