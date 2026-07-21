@@ -2944,7 +2944,8 @@
      "delivery_id": "4353053020107007",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353053/B/1/4353053B107007"
     }
-   ]
+   ],
+   "role": "Opener"
   },
   "2540166": {
    "name": "Shadman Islam",
@@ -3286,7 +3287,8 @@
      "delivery_id": "4355902010201501",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355902/A/2/4355902A201501"
     }
-   ]
+   ],
+   "role": "Opener"
   },
   "2540168": {
    "name": "Zakir Hasan",
@@ -3564,7 +3566,8 @@
      "delivery_id": "5181272010207902",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/A/2/5181272A207902"
     }
-   ]
+   ],
+   "role": "Opener"
   },
   "2700013": {
    "name": "Mominul Haque",
@@ -3907,7 +3910,8 @@
      "delivery_id": "5181273010107403",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181273/A/1/5181273A107403"
     }
-   ]
+   ],
+   "role": "Top order"
   },
   "3110063": {
    "name": "Najmul Hussain Shanto",
@@ -4225,7 +4229,8 @@
      "delivery_id": "5460263010207002",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/2/5460263A207002"
     }
-   ]
+   ],
+   "role": "Top order"
   },
   "300015": {
    "name": "Mushfiqur Rahim",
@@ -4567,7 +4572,8 @@
      "delivery_id": "4353148020201104",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353148/B/2/4353148B201104"
     }
-   ]
+   ],
+   "role": "Middle order"
   },
   "520069": {
    "name": "Shahadat Hossain",
@@ -4728,7 +4734,8 @@
      "delivery_id": "690016020106202",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2006/Men/Multi%20Day/690016/B/1/690016B106202"
     }
-   ]
+   ],
+   "role": "Middle order"
   },
   "290007": {
    "name": "Shakib Al Hasan",
@@ -5017,7 +5024,8 @@
      "delivery_id": "3080081010205605",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A205605"
     }
-   ]
+   ],
+   "role": "Middle order"
   },
   "2540159": {
    "name": "Litton Das",
@@ -5359,7 +5367,8 @@
      "delivery_id": "4353735010113501",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A113501"
     }
-   ]
+   ],
+   "role": "Middle order"
   },
   "5460114": {
    "name": "Jaker Ali",
@@ -5585,7 +5594,8 @@
      "delivery_id": "5460499010207601",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A207601"
     }
-   ]
+   ],
+   "role": "Middle order"
   },
   "3080087": {
    "name": "Mehidy Hasan Miraz",
@@ -5927,7 +5937,8 @@
      "delivery_id": "5180607020201204",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5180607/B/2/5180607B201204"
     }
-   ]
+   ],
+   "role": "Lower order"
   },
   "2700039": {
    "name": "Taijul Islam",
@@ -6269,7 +6280,8 @@
      "delivery_id": "4353175010102806",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/1/4353175A102806"
     }
-   ]
+   ],
+   "role": "Lower order"
   },
   "4353535": {
    "name": "Nayeem Hasan",
@@ -6443,7 +6455,8 @@
      "delivery_id": "4356183010203502",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/2/4356183A203502"
     }
-   ]
+   ],
+   "role": "Lower order"
   },
   "5180245": {
    "name": "Hasan Mahmud",
@@ -6617,7 +6630,8 @@
      "delivery_id": "5460190010208304",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A208304"
     }
-   ]
+   ],
+   "role": "Lower order"
   }
  }
 }

@@ -677,7 +677,10 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     if opp_batters:
         ordered = sorted(opp_batters.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
-        blocks = [_opp_card(bid, nm, hand, (about.get(bid) or {}).get(f"facts_{tw}"),
+        blocks = [_opp_card(bid, nm,
+                            (f"{hand} · {(about.get(bid) or {}).get('role')}"     # e.g. "LHB · Top order"
+                             if (about.get(bid) or {}).get("role") else hand),
+                            (about.get(bid) or {}).get(f"facts_{tw}"),
                             h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
                             opp_vision=opp_vision, report_url=report_urls.get(bid),
                             kinds=("scoring", "dismissal"))  # batter card: batting vision only

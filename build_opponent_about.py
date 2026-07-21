@@ -284,6 +284,24 @@ def allfmt_batter_facts(conn, cur, bid, hand, STK, SQ):
             "facts_pace": facts, "facts_spin": facts}
 
 
+# batting-order role from the batter's most common Test position (counted by innings, not balls, so
+# a top-order batter who faces more balls doesn't skew it). 1–2 opener · 3–4 top · 5–7 middle · 8+ tail.
+_ROLE_BANDS = ((2, "Opener"), (4, "Top order"), (7, "Middle order"), (99, "Lower order"))
+
+
+def batter_role(conn, cur, bid):
+    r = _q(conn, cur, f"""SELECT TOP 1 pos, COUNT(*) n FROM (
+            SELECT TRY_CONVERT(int, D.striker_batting_position) pos, D.match_id, D.match_innings
+            FROM [{DATA_SCHEMA}].[Deliveries] D JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id
+            WHERE D.striker_id='{bid}' AND {_TEST} AND TRY_CONVERT(int, D.striker_batting_position) BETWEEN 1 AND 11
+            GROUP BY TRY_CONVERT(int, D.striker_batting_position), D.match_id, D.match_innings) t
+        GROUP BY pos ORDER BY COUNT(*) DESC""")
+    if not r or r[0].get("pos") in (None, "None"):
+        return None
+    pos = int(r[0]["pos"])
+    return next((lbl for hi, lbl in _ROLE_BANDS if pos <= hi), None)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--opp", default="bangladesh")
@@ -353,6 +371,7 @@ def main():
                     continue
                 out["batters"][bid] = {"name": nm, **fb}
                 tag = " [all-formats fallback]"
+            out["batters"][bid]["role"] = batter_role(conn, cur, bid)   # opener/top/middle/lower
             print(f"  batter {nm}: {len(out['batters'][bid]['facts'])} facts{tag}")
         except Exception as e:
             print(f"  ! batter {nm}: {type(e).__name__}: {e}")
