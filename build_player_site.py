@@ -297,7 +297,7 @@ def _roster_body(meta, roster):
             items.append(
                 f'<li><span class="rmain">'
                 f'{_avatar(pid, "avatar", _initials(name), name=name)}'
-                f'<span><b>{html.escape(name)} {_tier_chip(rec.get("tier"))}</b>'
+                f'<span><b>{html.escape(name)}</b>'
                 f'<span class="rr">{html.escape(role)}</span></span></span>'
                 f'<span class="packchips">{"".join(chips)}</span></li>')
         sections.append(f'<h2 class="tierhead {ROLE_CLASS.get(role,"squad")}">{heading}'
@@ -435,17 +435,18 @@ def _our_hands(slug):
 
 
 def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None, report_url=None,
-              kinds=None):
+              kinds=None, tier=None):
     """A per-opponent card in a PLAYER report: the distilled 'what they're about' facts (type-scoped
     by the caller), a link to the reduced PLAYER-MODE report on this opponent, video of their stock
     ball + wicket balls, and neutral footage against them. NO good/poor matchup verdict. `kinds`
     scopes which vision buttons show — an all-rounder carries both bowler (stock/wicket) and batter
-    (scoring/dismissal) clips, but a bowler card must only offer the bowling ones (and vice versa)."""
+    (scoring/dismissal) clips, but a bowler card must only offer the bowling ones (and vice versa).
+    `tier` = the opposition player's squad status (Most likely XI / In the squad / Fringe)."""
     opp_vision = opp_vision or {}
     rl = (f'<a class="rlink" href="{report_url}" onclick="event.stopPropagation()" '
           f'title="full report on {html.escape(name)}">report &rarr;</a>') if report_url else ""
     av = _avatar(bid, "bav", _initials(name), name=name)
-    summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)}</b>'
+    summ = (f'<summary>{av}<span class="bn"><b>{html.escape(name)} {_tier_chip(tier)}</b>'
             f'<span class="bt">{html.escape(sub or "")}</span></span>{rl}</summary>')
     lines = []
     if facts:
@@ -645,7 +646,8 @@ def _vision_list(h2h_links, prefix, had_meetings, verb):
 
 def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False,
                   opp_bowlers=None, about=None, report_urls=None, h2h_map=None, h2h_rows=None,
-                  pages=None, current=None, hand="rhb", cell_vision=None, opp_vision=None):
+                  pages=None, current=None, hand="rhb", cell_vision=None, opp_vision=None,
+                  opp_tiers=None):
     """Batting pack: (1) how previous attacks bowled to you, (2) the opposition attack — one card
     per bowler with the distilled facts + a link to the hand-correct report + your footage."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -655,8 +657,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     h2h_map = h2h_map or {}
     h2h_rows = h2h_rows or {}
     handword = "left-handers" if hand == "lhb" else "right-handers"
-    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current,
-                                   tier=rec.get("tier"))]
+    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current)]
 
     # "How previous attacks have bowled to you" moved to the coach scouting side (2026-07-21) —
     # removed from the player packs; the pack now opens straight into the opposition attack.
@@ -666,7 +667,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
         blocks = [_opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
                             h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
                             opp_vision=opp_vision, report_url=report_urls.get(bid),
-                            kinds=("stock", "wicket"))       # bowler card: bowling vision only
+                            kinds=("stock", "wicket"),       # bowler card: bowling vision only
+                            tier=(opp_tiers or {}).get(bid))
                   for bid, (nm, ty) in ordered]
         body.append(_pack_section(f"The {opp} attack",
                                   "Tap a bowler for what they're about, the fuller report, and any "
@@ -681,7 +683,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 
 def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None, h2h_links=None,
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
-                  btype="pace", opp_vision=None):
+                  btype="pace", opp_vision=None, opp_tiers=None):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -691,8 +693,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     h2h_map = h2h_map or {}
     h2h_rows = h2h_rows or {}
     tw = "spin" if btype == "spin" else "pace"
-    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current,
-                                   tier=rec.get("tier"))]
+    body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current)]
 
     if opp_batters:
         ordered = sorted(opp_batters.items(),
@@ -703,7 +704,8 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                             (about.get(bid) or {}).get(f"facts_{tw}"),
                             h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
                             opp_vision=opp_vision, report_url=report_urls.get(bid),
-                            kinds=("scoring", "dismissal"))  # batter card: batting vision only
+                            kinds=("scoring", "dismissal"),  # batter card: batting vision only
+                            tier=(opp_tiers or {}).get(bid))
                   for bid, (nm, hand) in ordered]
         body.append(_pack_section(f"The {opp} batters — bowling {tw}",
                                   f"How each of them plays {tw}, plus any footage of you bowling to "
@@ -726,6 +728,23 @@ def _load_about(slug):
         return {}, {}
     d = json.load(open(p, encoding="utf-8"))
     return d.get("bowlers", {}), d.get("batters", {})
+
+
+def _opp_tiers(slug):
+    """{opposition_player_id: tier} from series.json — the squad-status (Most likely XI / In the
+    squad / Fringe) coaches assigned per opposition report. Shown on the opponent cards."""
+    cfg_path = os.path.join(HERE, "series.json")
+    if not os.path.exists(cfg_path):
+        return {}
+    cfg = json.load(open(cfg_path, encoding="utf-8"))
+    for s in cfg.get("series", []):
+        if s.get("slug") == slug:
+            out = {}
+            for g in s.get("groups", []):
+                for r in g.get("reports", []):
+                    out.setdefault(str(r["id"]), r.get("tier", "squad"))
+            return out
+    return {}
 
 
 def render_attack_section(dest_dir, slug=None, no_video=False):
@@ -768,7 +787,7 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
                 print(f"  ! attack vision {name}: {type(e).__name__}: {e}")
         first = html.escape(name.split()[0])
         body = (EXTRA_CSS
-                + _report_top(pid, name, role, meta.get("name", ""), tier=rec.get("tier"))
+                + _report_top(pid, name, role, meta.get("name", ""))
                 + _pack_section(f"How the last attacks bowled to {html.escape(name)}",
                                 f"The opposition's trends to {first} over their last few series.",
                                 inner=_attack_card_html(card, opp, vision, cell_vision, subject=first)))
@@ -851,6 +870,7 @@ def build(out_dir, no_video=False, only=None):
         opp_names = _opp_names(slug)
         opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
         about_bowl, about_bat = _load_about(slug)      # distilled facts, per role, id-keyed
+        opp_tiers = _opp_tiers(slug)                    # opposition squad status (XI/squad/fringe)
         # signature footage for the opponents shown (N_OPP each) — bowlers get stock/wicket balls
         # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs).
         # An all-rounder gets ALL four kinds (distinct keys → no collision), so their bowler card
@@ -915,7 +935,7 @@ def build(out_dir, no_video=False, only=None):
                                     opp_bowlers=opp_bowlers, about=about_bowl, report_urls=bat_report,
                                     h2h_map=h2h_map, h2h_rows=bat_rows,
                                     pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision,
-                                    opp_vision=opp_vision) + vsnip,
+                                    opp_vision=opp_vision, opp_tiers=opp_tiers) + vsnip,
                       up=("index.html", "Squad")))
             for bt in bts:
                 bowl_href = f"{pslug}-bowling-{bt}.html"
@@ -931,7 +951,7 @@ def build(out_dir, no_video=False, only=None):
                                         report_urls=bt_report, h2h_links=h2h_links,
                                         had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
                                         pages=pages, current=bowl_href, btype=bt,
-                                        opp_vision=opp_vision) + vsnip,
+                                        opp_vision=opp_vision, opp_tiers=opp_tiers) + vsnip,
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 
