@@ -639,9 +639,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     handword = "left-handers" if hand == "lhb" else "right-handers"
     body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current)]
 
-    body.append(_pack_section("How previous attacks have bowled to you",
-                              "The opposition's trends to you over your last few series.",
-                              inner=_attack_card_html(card, opp, vision, cell_vision)))
+    # "How previous attacks have bowled to you" moved to the coach scouting side (2026-07-21) —
+    # removed from the player packs; the pack now opens straight into the opposition attack.
     if opp_bowlers:
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]

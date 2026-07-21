@@ -892,6 +892,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         c2["show_fp"] = (group is None) or player_mode
         if player_mode:
             c2["sim_options"] = None
+            c2["attacked"] = None          # 'How Attacks Bowl To Them' is coach-only (kept in the full report)
         h = Template(_TEMPLATE).render(**c2)
         if ctx["video"].get("playlists"):
             # Interactive HTML report: ▶ opens the playlist as a modal OVER the report in the same
