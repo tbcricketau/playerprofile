@@ -362,7 +362,7 @@ _DIS_FRIENDLY = {"Slip 3": "third slip", "Slip 4": "fourth slip", "Leg slip": "l
 _DIS_MIN = {"Leg slip": 2, "Short leg": 2, "Leg gully": 2, "Silly point": 2, "Slip 3": 3, "Slip 4": 3}
 
 
-def _dismissal_evidence(by_pos, current_names):
+def _dismissal_evidence(by_pos, current_names, type_label="this type"):
     """R9 — from where his CAUGHT dismissals were ACTUALLY taken (Counter of catch positions, coarse
     pace/spin): if a situational catcher he isn't already given has claimed him >= 2 times AND a clear
     share of his located catches, post it. This is the Carey-leg-slip signal — the outcome, not a model."""
@@ -384,7 +384,7 @@ def _dismissal_evidence(by_pos, current_names):
     fieldname, n, share = best
     friendly = _DIS_FRIENDLY.get(fieldname, fieldname.lower())
     return {"id": "R9", "pctl": 90.0, "value": share, "add": [fieldname], "protect": False, "strength": 90.0,
-            "why": f"Actually caught at {friendly} {n}× vs this type — real evidence to post that catcher."}
+            "why": f"Caught at {friendly} {n}× vs {type_label}."}
 
 
 def _pick_drop(names, flow, floating, protect, add):
@@ -459,8 +459,8 @@ _SHORT_BALL_WHY = {
     "Slip 1": "One slip kept for the top / outside edge.",
     "Short leg": "Catcher in front of square for the fend or glove off the hip.",
     "Gully": "The steer or fend that flies squarer of the wicket.",
-    "Deep backward square": "Deep behind square for the top-edged pull (1 of the 2 the Law allows).",
-    "Deep fine leg": "Deep behind square for the hook (2 of 2 — the leg-side limit).",
+    "Deep backward square": "Deep behind square for the top-edged pull.",
+    "Deep fine leg": "Deep behind square for the hook.",
 }
 
 
@@ -569,7 +569,7 @@ def build_field(P, group, phase):
     # evidence) joins the cohort-norm rules; each move drops the FLOATING fielder where there is one.
     fired = _rules(P, group, phase, is_spin)
     cpos = (P.get("caught_positions") or {}).get("spin" if is_spin else "pace", Counter())
-    r9 = _dismissal_evidence(cpos, base_names)      # coarse caught record (a whole-innings plan)
+    r9 = _dismissal_evidence(cpos, base_names, _group_label(group))   # coarse caught record
     if r9:
         fired.append(r9)
     base_floating = [f["position"] for f in _floating(base_names, flow, exp)]

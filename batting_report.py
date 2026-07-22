@@ -1170,10 +1170,6 @@ _TEMPLATE = r"""
       <div>
         {% if col.fig %}<img class="fieldmap" src="{{col.fig}}">{% endif %}
         <div class="read" style="margin-top:4px">{{col.backtest|safe}}</div>
-        {% for fl in col.floating %}
-        <div class="read" style="margin-top:3px;color:{{c.TEXT_SEC}};border-left:3px solid #c2a25a;padding-left:8px">
-          <b>Floating fielder:</b> {{fl.why}}</div>
-        {% endfor %}
       </div>
       <table class="mtab">
         <tr><th>Fielder</th><th>Stock/Change</th><th style="text-align:left">Why they're there</th></tr>
@@ -1182,6 +1178,10 @@ _TEMPLATE = r"""
         {% endfor %}
       </table>
     </div>
+    {% for fl in col.floating %}
+    <div class="read" style="margin:2px 0 6px;color:{{c.TEXT_SEC}};border-left:3px solid #c2a25a;padding-left:8px">
+      <b>Floating fielder:</b> {{fl.why}}</div>
+    {% endfor %}
     {% endfor %}
   {% endfor %}
   {% endif %}
