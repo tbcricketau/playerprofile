@@ -5,6 +5,10 @@
    "name": "Shakib Al Hasan",
    "type": "Left-arm orthodox",
    "is_pace": false,
+   "arm": "left",
+   "round_lhb": 12.624113475177303,
+   "round_rhb": 94.10329402196015,
+   "new_ball": 10.344827586206897,
    "facts": [
     "Left-arm orthodox — averages 82 km/h, ranges 73–89.",
     "Stock ball: full on the stumps (23% of what they bowl).",
@@ -260,11 +264,16 @@
    "name": "Taskin Ahmed",
    "type": "Right pace",
    "is_pace": true,
+   "arm": "right",
+   "round_lhb": 36.98884758364313,
+   "round_rhb": 1.1390887290167866,
+   "new_ball": 57.14285714285714,
    "facts": [
     "Right pace — averages 134 km/h, tops 142.",
     "Stock ball: a good length wide outside off (26% of what they bowl).",
     "Takes most of their wickets good length, around 5th stump.",
-    "Gets the ball to swing — watch the ball in the air."
+    "Gets the ball to swing — watch the ball in the air.",
+    "Usually takes the new ball."
    ],
    "order": 2744,
    "stock_clips": [
@@ -516,10 +525,14 @@
    "name": "Taijul Islam",
    "type": "Left-arm orthodox",
    "is_pace": false,
+   "arm": "left",
+   "round_lhb": 19.384389886405277,
+   "round_rhb": 95.93552215189874,
+   "new_ball": 7.228915662650602,
    "facts": [
     "Left-arm orthodox — averages 84 km/h, ranges 76–90.",
-    "Stock ball: full on the stumps (25% of what they bowl).",
-    "Takes most of their wickets full, around 6th stump."
+    "Stock ball: full on the stumps (24% of what they bowl).",
+    "Takes most of their wickets full, around 4th stump."
    ],
    "order": 12841,
    "stock_clips": [
@@ -771,9 +784,13 @@
    "name": "Mehidy Hasan Miraz",
    "type": "Off-spin",
    "is_pace": false,
+   "arm": "right",
+   "round_lhb": 95.01965923984272,
+   "round_rhb": 14.855072463768115,
+   "new_ball": 6.8181818181818175,
    "facts": [
     "Off-spin — averages 84 km/h, ranges 78–90.",
-    "Stock ball: full outside off (24% of what they bowl).",
+    "Stock ball: full outside off (23% of what they bowl).",
     "Takes most of their wickets good length, around wide of 6th."
    ],
    "order": 11754,
@@ -1026,52 +1043,58 @@
    "name": "Ebadot Hossain",
    "type": "Right pace",
    "is_pace": true,
+   "arm": "right",
+   "round_lhb": 45.25436598329537,
+   "round_rhb": 1.772464962901896,
+   "new_ball": 27.027027027027028,
    "facts": [
     "Right pace — averages 135 km/h, tops 143.",
-    "Stock ball: a good length wide outside off (26% of what they bowl).",
-    "Takes most of their wickets back of length, around 5th stump."
+    "Stock ball: a good length outside off (25% of what they bowl).",
+    "Round the wicket, their stock ball is a good length wide outside off.",
+    "Takes most of their wickets back of length, around 5th stump.",
+    "Often takes the new ball."
    ],
    "order": 3743,
    "stock_clips": [
     {
-     "delivery_id": "5461773020106701",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106701"
+     "delivery_id": "5461960010100801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100801"
     },
     {
-     "delivery_id": "5461773020106704",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106704"
+     "delivery_id": "5461960010100802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100802"
     },
     {
-     "delivery_id": "5461773020106705",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106705"
+     "delivery_id": "5461960010100804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A100804"
     },
     {
-     "delivery_id": "5461773020106706",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106706"
+     "delivery_id": "5461960010101005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101005"
     },
     {
-     "delivery_id": "5461773020106901",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106901"
+     "delivery_id": "5461960010101205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101205"
     },
     {
-     "delivery_id": "5461773020106904",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106904"
+     "delivery_id": "5461960010101206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101206"
     },
     {
-     "delivery_id": "5461773020106906",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B106906"
+     "delivery_id": "5461960010101401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101401"
     },
     {
-     "delivery_id": "5461773020107102",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B107102"
+     "delivery_id": "5461960010101402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101402"
     },
     {
-     "delivery_id": "5461773020107104",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B107104"
+     "delivery_id": "5461960010101403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101403"
     },
     {
-     "delivery_id": "5461773020107106",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/B/1/5461773B107106"
+     "delivery_id": "5461960010101404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/A/1/5461960A101404"
     },
     {
      "delivery_id": "5461773020100601",
@@ -1281,11 +1304,16 @@
    "name": "Shoriful Islam",
    "type": "Left pace",
    "is_pace": true,
+   "arm": "left",
+   "round_lhb": 0.34762456546929316,
+   "round_rhb": 40.45053868756121,
+   "new_ball": 52.17391304347826,
    "facts": [
     "Left pace — averages 129 km/h, tops 138.",
     "Stock ball: a good length wide outside off (21% of what they bowl).",
     "Takes most of their wickets full, around 6th stump.",
-    "Gets the ball to swing — watch the ball in the air."
+    "Gets the ball to swing — watch the ball in the air.",
+    "Usually takes the new ball."
    ],
    "order": 1884,
    "stock_clips": [
@@ -1485,6 +1513,10 @@
    "name": "Hasan Murad",
    "type": "Left-arm orthodox",
    "is_pace": false,
+   "arm": "left",
+   "round_lhb": 0.0,
+   "round_rhb": 97.48283752860412,
+   "new_ball": 0.0,
    "facts": [
     "Left-arm orthodox — averages 80 km/h, ranges 75–83.",
     "Stock ball: full in the channel (24% of what they bowl).",
@@ -1628,9 +1660,13 @@
    "name": "Khaled Ahmed",
    "type": "Right pace",
    "is_pace": true,
+   "arm": "right",
+   "round_lhb": 46.172539489671934,
+   "round_rhb": 3.577064702788006,
+   "new_ball": 19.35483870967742,
    "facts": [
-    "Right pace — averages 131 km/h, tops 140.",
-    "Stock ball: a good length outside off (24% of what they bowl).",
+    "Right pace — averages 131 km/h, tops 139.",
+    "Stock ball: a good length outside off (25% of what they bowl).",
     "By angle — over the wicket, a good length outside off; round the wicket, a good length wide outside off.",
     "Takes most of their wickets yorker/full, around wide of 6th.",
     "Gets the ball to swing — watch the ball in the air."
@@ -1861,9 +1897,13 @@
    "name": "Nayeem Hasan",
    "type": "Off-spin",
    "is_pace": false,
+   "arm": "right",
+   "round_lhb": 96.91289966923925,
+   "round_rhb": 19.554030874785592,
+   "new_ball": 8.0,
    "facts": [
     "Off-spin — averages 85 km/h, ranges 77–92.",
-    "Stock ball: full outside off (22% of what they bowl).",
+    "Stock ball: full outside off (19% of what they bowl).",
     "Takes most of their wickets full, around 5th stump."
    ],
    "order": 2656,
@@ -2068,39 +2108,39 @@
     },
     {
      "delivery_id": "4355915020104901",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/1/4355915B104901"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/1/4355915B104901"
     },
     {
      "delivery_id": "4355915020105104",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/1/4355915B105104"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/1/4355915B105104"
     },
     {
      "delivery_id": "4355915020107101",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/1/4355915B107101"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/1/4355915B107101"
     },
     {
      "delivery_id": "4355915020108902",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/1/4355915B108902"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/1/4355915B108902"
     },
     {
      "delivery_id": "4355915020200102",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/2/4355915B200102"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/2/4355915B200102"
     },
     {
      "delivery_id": "4355915020200103",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/2/4355915B200103"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/2/4355915B200103"
     },
     {
      "delivery_id": "4355915020201705",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/2/4355915B201705"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/2/4355915B201705"
     },
     {
      "delivery_id": "4355915020204903",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/2/4355915B204903"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/2/4355915B204903"
     },
     {
      "delivery_id": "4355915020205102",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355915/B/2/4355915B205102"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/B/2/4355915B205102"
     },
     {
      "delivery_id": "4355985020107003",
@@ -2116,12 +2156,17 @@
    "name": "Hasan Mahmud",
    "type": "Right pace",
    "is_pace": true,
+   "arm": "right",
+   "round_lhb": 45.391061452513966,
+   "round_rhb": 0.9302325581395349,
+   "new_ball": 56.00000000000001,
    "facts": [
     "Right pace — averages 132 km/h, tops 139.",
     "Stock ball: a good length outside off (24% of what they bowl).",
     "Round the wicket, their stock ball is a good length wide outside off.",
     "Takes most of their wickets yorker/full, around 5th stump.",
-    "Gets the ball to swing — watch the ball in the air."
+    "Gets the ball to swing — watch the ball in the air.",
+    "Usually takes the new ball."
    ],
    "order": 2006,
    "stock_clips": [
@@ -2357,6 +2402,10 @@
    "name": "Nahid Rana",
    "type": "Right pace",
    "is_pace": true,
+   "arm": "right",
+   "round_lhb": 42.565597667638485,
+   "round_rhb": 1.8308631211857016,
+   "new_ball": 4.761904761904762,
    "facts": [
     "Right pace — averages 142 km/h, tops 149.",
     "Stock ball: a good length wide outside off (19% of what they bowl).",
@@ -2954,21 +3003,21 @@
    "name": "Shadman Islam",
    "hand": "LHB",
    "facts": [
-    "Scores mainly through the leg side; go-to shot is the work/nudge.",
+    "Scores mainly through the leg side; go-to shot is the drive.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught behind (49% of dismissals)."
+    "Most often out caught behind (51% of dismissals)."
    ],
    "order": 1452,
    "facts_pace": [
     "A modest, steady batter — vulnerable to swing.",
     "Plan for pace: bowl <b>full outside off</b>, gets it to <b>seam away</b>.",
     "They get out most often to balls that are <b>full and in the channel</b> (3.7 dismissals/100).",
-    "Most often out <b>caught behind</b> (57% of dismissals)."
+    "Most often out <b>caught behind</b> (59% of dismissals)."
    ],
    "facts_spin": [
     "A modest, steady batter — strong vs spin.",
     "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>drift in</b>.",
-    "They get out most often to balls that are <b>good length and on the stumps</b> (3.3 dismissals/100).",
+    "They get out most often to balls that are <b>good length and on the stumps</b> (3.1 dismissals/100).",
     "Most often out <b>lbw</b> (43% of dismissals).",
     "Vulnerable early — get at them hard in their first 30 balls."
    ],
@@ -3586,21 +3635,21 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught behind (43% of dismissals).",
+    "Most often out caught behind (44% of dismissals).",
     "Vulnerable early — worth attacking in their first 30 balls."
    ],
    "order": 3443,
    "facts_pace": [
     "A solid, steady batter — strong vs pace, tight technique.",
-    "Plan for pace: bowl <b>good length in the channel</b>, gets it to <b>seam away / swing in</b>.",
-    "They get out most often to balls that are <b>full and in the channel</b> (5.8 dismissals/100).",
-    "Most often out <b>caught behind</b> (54% of dismissals).",
+    "Plan for pace: bowl <b>good length on the stumps</b>, gets it to <b>seam away / swing in</b>.",
+    "They get out most often to balls that are <b>full and in the channel</b> (5.0 dismissals/100).",
+    "Most often out <b>caught behind</b> (56% of dismissals).",
     "Vulnerable early — get at them hard in their first 30 balls."
    ],
    "facts_spin": [
     "A solid, steady batter — strong vs spin, tight technique.",
-    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>turn in / drift away</b>.",
-    "They get out most often to balls that are <b>good length and down the leg side</b> (2.4 dismissals/100).",
+    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>turn in / drift in</b>.",
+    "They get out most often to balls that are <b>good length and outside off</b> (2.4 dismissals/100).",
     "Most often out <b>caught in the field</b> (32% of dismissals)."
    ],
    "scoring_clips": [
@@ -3935,19 +3984,18 @@
    "facts": [
     "Scores mainly through the off side; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught in the field (29% of dismissals)."
+    "Most often out caught behind (30% of dismissals)."
    ],
-   "order": 1296,
+   "order": 1449,
    "facts_pace": [
     "A solid, aggressive batter — vulnerable to swing.",
     "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in</b>.",
-    "They get out most often to balls that are <b>full and outside off</b> (4.8 dismissals/100).",
-    "Most often out <b>caught behind</b> (40% of dismissals)."
+    "They get out most often to balls that are <b>full and outside off</b> (4.7 dismissals/100).",
+    "Most often out <b>caught behind</b> (43% of dismissals)."
    ],
    "facts_spin": [
     "A solid, aggressive batter — no glaring weakness.",
     "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>drift in</b>.",
-    "They get out most often to balls that are <b>good length and down the leg side</b> (2.9 dismissals/100).",
     "Most often out <b>lbw</b> (43% of dismissals)."
    ],
    "scoring_clips": [
@@ -4248,6 +4296,18 @@
     {
      "delivery_id": "5460263010207002",
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/2/5460263A207002"
+    },
+    {
+     "delivery_id": "4355915010105004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/A/1/4355915A105004"
+    },
+    {
+     "delivery_id": "4355937020103406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B103406"
+    },
+    {
+     "delivery_id": "4355937020204104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/2/4355937B204104"
     }
    ],
    "role": "Top order"
@@ -4263,8 +4323,8 @@
    "order": 3541,
    "facts_pace": [
     "A high-class, steady batter — strong vs pace, tight technique.",
-    "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in</b>.",
-    "They get out most often to balls that are <b>full and on the stumps</b> (3.4 dismissals/100).",
+    "Plan for pace: bowl <b>good length on the stumps</b>, gets it to <b>seam in</b>.",
+    "They get out most often to balls that are <b>full and on the stumps</b> (3.1 dismissals/100).",
     "Most often out <b>bowled</b> (40% of dismissals)."
    ],
    "facts_spin": [
@@ -5067,7 +5127,7 @@
    "facts_pace": [
     "A solid, aggressive batter — strong vs pace, tight technique.",
     "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in</b>.",
-    "They get out most often to balls that are <b>full and outside off</b> (3.7 dismissals/100).",
+    "They get out most often to balls that are <b>back of a length and outside off</b> (3.8 dismissals/100).",
     "Most often out <b>caught behind</b> (31% of dismissals)."
    ],
    "facts_spin": [
@@ -5987,14 +6047,14 @@
    "order": 738,
    "facts_pace": [
     "A modest, patient batter — vulnerable to swing.",
-    "Plan for pace: bowl <b>back of a length outside off</b>, gets it to <b>seam in / swing in</b>.",
-    "They get out most often to balls that are <b>full and on the stumps</b> (8.1 dismissals/100).",
+    "Plan for pace: bowl <b>back of a length down the leg side</b>, gets it to <b>seam in / swing in</b>.",
+    "They get out most often to balls that are <b>full and on the stumps</b> (10.5 dismissals/100).",
     "Most often out <b>caught behind</b> (45% of dismissals)."
    ],
    "facts_spin": [
     "A modest, patient batter — no glaring weakness.",
-    "Plan for spin: bowl <b>good length on the stumps</b>, gets it to <b>drift in</b>.",
-    "They get out most often to balls that are <b>good length and in the channel</b> (7.9 dismissals/100).",
+    "Plan for spin: bowl <b>good length on the stumps</b>.",
+    "They get out most often to balls that are <b>good length and in the channel</b> (8.1 dismissals/100).",
     "Most often out <b>bowled</b> (28% of dismissals)."
    ],
    "scoring_clips": [
