@@ -2609,17 +2609,20 @@
    "facts": [
     "Scores mainly through the off side; go-to shot is the drive.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (76% of dismissals).",
+    "Most often out caught behind (69% of dismissals).",
     "Vulnerable early — worth attacking in their first 30 balls."
    ],
    "order": 1129,
    "facts_pace": [
-    "Vs pace: averages 21 at a strike rate of 42, false-shot 15%.",
-    "Main scoring shot is the drive."
+    "A modest, patient batter — strong vs short.",
+    "Plan for pace: bowl <b>good length in the channel</b>, gets it to <b>seam away</b>.",
+    "Most often out <b>caught behind</b> (76% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 39 at a strike rate of 50, false-shot 11%.",
-    "Main scoring shot is the drive."
+    "A modest, patient batter — no glaring weakness.",
+    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>drift in</b>.",
+    "They get out most often to balls that are <b>good length and in the channel</b> (3.7 dismissals/100).",
+    "Most often out <b>caught behind</b> (54% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -2953,16 +2956,21 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (65% of dismissals)."
+    "Most often out caught behind (49% of dismissals)."
    ],
    "order": 1452,
    "facts_pace": [
-    "Vs pace: averages 26 at a strike rate of 50, false-shot 18%.",
-    "Main scoring shot is the work/nudge."
+    "A modest, steady batter — vulnerable to swing.",
+    "Plan for pace: bowl <b>full outside off</b>, gets it to <b>seam away</b>.",
+    "They get out most often to balls that are <b>full and in the channel</b> (3.7 dismissals/100).",
+    "Most often out <b>caught behind</b> (57% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 36 at a strike rate of 49, false-shot 8%.",
-    "Main scoring shot is the work/nudge."
+    "A modest, steady batter — strong vs spin.",
+    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>drift in</b>.",
+    "They get out most often to balls that are <b>good length and on the stumps</b> (3.3 dismissals/100).",
+    "Most often out <b>lbw</b> (43% of dismissals).",
+    "Vulnerable early — get at them hard in their first 30 balls."
    ],
    "scoring_clips": [
     {
@@ -3296,16 +3304,19 @@
    "facts": [
     "Scores mainly down the ground; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (58% of dismissals)."
+    "Most often out caught behind (46% of dismissals)."
    ],
    "order": 593,
    "facts_pace": [
-    "Vs pace: averages 20 at a strike rate of 47, false-shot 19%.",
-    "Main scoring shot is the work/nudge."
+    "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in</b>.",
+    "They get out most often to balls that are <b>full and outside off</b> (4.5 dismissals/100).",
+    "Most often out <b>caught behind</b> (53% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 37 at a strike rate of 52, false-shot 11%.",
-    "Main scoring shot is the work/nudge."
+    "Plan for spin: bowl <b>full in the channel</b>.",
+    "They get out most often to balls that are <b>full and wide outside off</b> (6.7 dismissals/100).",
+    "Most often out <b>caught behind</b> (29% of dismissals).",
+    "Vulnerable early — get at them hard in their first 30 balls."
    ],
    "scoring_clips": [
     {
@@ -3575,17 +3586,22 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (68% of dismissals).",
+    "Most often out caught behind (43% of dismissals).",
     "Vulnerable early — worth attacking in their first 30 balls."
    ],
    "order": 3443,
    "facts_pace": [
-    "Vs pace: averages 30 at a strike rate of 48, false-shot 14%.",
-    "Main scoring shot is the work/nudge."
+    "A solid, steady batter — strong vs pace, tight technique.",
+    "Plan for pace: bowl <b>good length in the channel</b>, gets it to <b>seam away / swing in</b>.",
+    "They get out most often to balls that are <b>full and in the channel</b> (5.8 dismissals/100).",
+    "Most often out <b>caught behind</b> (54% of dismissals).",
+    "Vulnerable early — get at them hard in their first 30 balls."
    ],
    "facts_spin": [
-    "Vs spin: averages 42 at a strike rate of 63, false-shot 9%.",
-    "Main scoring shot is the work/nudge."
+    "A solid, steady batter — strong vs spin, tight technique.",
+    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>turn in / drift away</b>.",
+    "They get out most often to balls that are <b>good length and down the leg side</b> (2.4 dismissals/100).",
+    "Most often out <b>caught in the field</b> (32% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -3919,16 +3935,20 @@
    "facts": [
     "Scores mainly through the off side; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (56% of dismissals)."
+    "Most often out caught in the field (29% of dismissals)."
    ],
    "order": 1296,
    "facts_pace": [
-    "Vs pace: averages 28 at a strike rate of 53, false-shot 19%.",
-    "Main scoring shot is the work/nudge."
+    "A solid, aggressive batter — vulnerable to swing.",
+    "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in</b>.",
+    "They get out most often to balls that are <b>full and outside off</b> (4.8 dismissals/100).",
+    "Most often out <b>caught behind</b> (40% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 52 at a strike rate of 60, false-shot 11%.",
-    "Main scoring shot is the work/nudge."
+    "A solid, aggressive batter — no glaring weakness.",
+    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>drift in</b>.",
+    "They get out most often to balls that are <b>good length and down the leg side</b> (2.9 dismissals/100).",
+    "Most often out <b>lbw</b> (43% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -4238,16 +4258,21 @@
    "facts": [
     "Scores mainly through the off side; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (51% of dismissals)."
+    "Most often out bowled (27% of dismissals)."
    ],
    "order": 3541,
    "facts_pace": [
-    "Vs pace: averages 32 at a strike rate of 42, false-shot 13%.",
-    "Main scoring shot is the work/nudge."
+    "A high-class, steady batter — strong vs pace, tight technique.",
+    "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in</b>.",
+    "They get out most often to balls that are <b>full and on the stumps</b> (3.4 dismissals/100).",
+    "Most often out <b>bowled</b> (40% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 57 at a strike rate of 57, false-shot 7%.",
-    "Main scoring shot is the work/nudge."
+    "A high-class, steady batter — strong vs spin, tight technique.",
+    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>turn away / drift in</b>.",
+    "They get out most often to balls that are <b>good length and in the channel</b> (2.0 dismissals/100).",
+    "Most often out <b>caught in the field</b> (33% of dismissals).",
+    "Vulnerable early — get at them hard in their first 30 balls."
    ],
    "scoring_clips": [
     {
@@ -4580,16 +4605,17 @@
    "hand": "RHB",
    "facts": [
     "Scores mainly down the ground; go-to shot is the drive.",
-    "Most often out caught (69% of dismissals)."
+    "Most often out caught behind (46% of dismissals)."
    ],
    "order": 197,
    "facts_pace": [
-    "Vs pace: averages 16 at a strike rate of 39, false-shot 15%.",
-    "Main scoring shot is the drive."
+    "Plan for pace: bowl <b>good length wide outside off</b>, gets it to <b>seam away</b>.",
+    "They get out most often to balls that are <b>full and wide outside off</b> (6.5 dismissals/100).",
+    "Most often out <b>caught behind</b> (71% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 14 at a strike rate of 35, false-shot 6%.",
-    "Main scoring shot is the drive."
+    "Plan for spin: bowl <b>full outside off</b>.",
+    "Most often out <b>lbw</b> (50% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -4742,16 +4768,18 @@
    "hand": "LHB",
    "facts": [
     "Scores mainly through the leg side; go-to shot is the drive.",
-    "Most often out caught (78% of dismissals)."
+    "Most often out caught in the field (41% of dismissals)."
    ],
    "order": 794,
    "facts_pace": [
-    "Vs pace: averages 32 at a strike rate of 68, false-shot 16%.",
-    "Main scoring shot is the drive."
+    "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in / swing in</b>.",
+    "They get out most often to balls that are <b>full and outside off</b> (9.1 dismissals/100).",
+    "Most often out <b>caught behind</b> (33% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 28 at a strike rate of 56, false-shot 12%.",
-    "Main scoring shot is the drive."
+    "Plan for spin: bowl <b>full down the leg side</b>, gets it to <b>drift in</b>.",
+    "They get out most often to balls that are <b>full and wide outside off</b> (4.3 dismissals/100).",
+    "Most often out <b>caught in the field</b> (47% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -5033,16 +5061,19 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the work/nudge.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (66% of dismissals)."
+    "Most often out caught behind (33% of dismissals)."
    ],
    "order": 3219,
    "facts_pace": [
-    "Vs pace: averages 31 at a strike rate of 65, false-shot 11%.",
-    "Main scoring shot is the work/nudge."
+    "A solid, aggressive batter — strong vs pace, tight technique.",
+    "Plan for pace: bowl <b>good length outside off</b>, gets it to <b>seam in</b>.",
+    "They get out most often to balls that are <b>full and outside off</b> (3.7 dismissals/100).",
+    "Most often out <b>caught behind</b> (31% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 46 at a strike rate of 57, false-shot 7%.",
-    "Main scoring shot is the work/nudge."
+    "A solid, aggressive batter — strong vs spin, tight technique.",
+    "Plan for spin: bowl <b>full down the leg side</b>, gets it to <b>turn away</b>.",
+    "Most often out <b>caught in the field</b> (35% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -5376,16 +5407,18 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the work/nudge.",
     "Weaker against spin than pace.",
-    "Most often out caught (55% of dismissals)."
+    "Most often out caught in the field (45% of dismissals)."
    ],
    "order": 337,
    "facts_pace": [
-    "Vs pace: averages 43 at a strike rate of 68, false-shot 18%.",
-    "Main scoring shot is the work/nudge."
+    "Plan for pace: bowl <b>good length in the channel</b>, gets it to <b>seam in</b>.",
+    "They get out most often to balls that are <b>full and in the channel</b> (4.0 dismissals/100).",
+    "Most often out <b>caught in the field</b> (50% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 16 at a strike rate of 38, false-shot 15%.",
-    "Main scoring shot is the work/nudge."
+    "Plan for spin: bowl <b>full on the stumps</b>.",
+    "They get out most often to balls that are <b>full and in the channel</b> (3.3 dismissals/100).",
+    "Most often out <b>stumped</b> (40% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -5603,16 +5636,19 @@
    "facts": [
     "Scores mainly through the off side; go-to shot is the drive.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (72% of dismissals)."
+    "Most often out caught behind (39% of dismissals)."
    ],
    "order": 2042,
    "facts_pace": [
-    "Vs pace: averages 21 at a strike rate of 57, false-shot 18%.",
-    "Main scoring shot is the drive."
+    "A modest, steady batter — vulnerable to swing.",
+    "Plan for pace: bowl <b>good length in the channel</b>.",
+    "They get out most often to balls that are <b>back of a length and wide outside off</b> (4.2 dismissals/100).",
+    "Most often out <b>caught behind</b> (52% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 31 at a strike rate of 49, false-shot 11%.",
-    "Main scoring shot is the drive."
+    "A modest, steady batter — no glaring weakness.",
+    "Plan for spin: bowl <b>good length in the channel</b>, gets it to <b>turn away</b>.",
+    "Most often out <b>caught behind</b> (22% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -5946,16 +5982,20 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the work/nudge.",
     "Weaker against spin than pace.",
-    "Most often out caught (48% of dismissals)."
+    "Most often out caught behind (27% of dismissals)."
    ],
    "order": 738,
    "facts_pace": [
-    "Vs pace: averages 12 at a strike rate of 45, false-shot 28%.",
-    "Main scoring shot is the work/nudge."
+    "A modest, patient batter — vulnerable to swing.",
+    "Plan for pace: bowl <b>back of a length outside off</b>, gets it to <b>seam in / swing in</b>.",
+    "They get out most often to balls that are <b>full and on the stumps</b> (8.1 dismissals/100).",
+    "Most often out <b>caught behind</b> (45% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 8 at a strike rate of 31, false-shot 14%.",
-    "Main scoring shot is the work/nudge."
+    "A modest, patient batter — no glaring weakness.",
+    "Plan for spin: bowl <b>good length on the stumps</b>, gets it to <b>drift in</b>.",
+    "They get out most often to balls that are <b>good length and in the channel</b> (7.9 dismissals/100).",
+    "Most often out <b>bowled</b> (28% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -6289,16 +6329,16 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the sweep.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (59% of dismissals)."
+    "Most often out caught behind (29% of dismissals)."
    ],
    "order": 235,
    "facts_pace": [
-    "Vs pace: averages 7 at a strike rate of 32, false-shot 22%.",
-    "Main scoring shot is the sweep."
+    "Plan for pace: bowl <b>good length outside off</b>.",
+    "Most often out <b>caught behind</b> (50% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 17 at a strike rate of 43, false-shot 9%.",
-    "Main scoring shot is the sweep."
+    "Plan for spin: bowl <b>full in the channel</b>, gets it to <b>drift in</b>.",
+    "Most often out <b>caught</b> (27% of dismissals)."
    ],
    "scoring_clips": [
     {
@@ -6464,16 +6504,16 @@
    "facts": [
     "Scores mainly down the ground; go-to shot is the drive.",
     "Handles spin well — pace is the more likely way through.",
-    "Most often out caught (64% of dismissals)."
+    "Most often out caught behind (43% of dismissals)."
    ],
    "order": 173,
    "facts_pace": [
-    "Vs pace: averages 7 at a strike rate of 36, false-shot 32%.",
-    "Main scoring shot is the drive."
+    "Plan for pace: bowl <b>good length wide outside off</b>.",
+    "Most often out <b>caught behind</b> (60% of dismissals)."
    ],
    "facts_spin": [
-    "Vs spin: averages 26 at a strike rate of 46, false-shot 22%.",
-    "Main scoring shot is the drive."
+    "Plan for spin: bowl <b>full on the stumps</b>.",
+    "Most often out <b>bowled</b> (75% of dismissals)."
    ],
    "scoring_clips": [
     {
