@@ -355,6 +355,18 @@ def _blabel(bucket, key, is_spin=False):
     return str(bucket)
 
 
+def _move_bare(bucket, key, is_spin=False):
+    """Bare movement for the 'gets it to ___' plan phrasing — 'seam away', 'swing in', 'turn away'
+    (infinitive form), vs _blabel's descriptive column form ('seams away')."""
+    if key == "seam_dir":
+        mv = "turn" if is_spin else "seam"
+        return {"in": f"{mv} in", "away": f"{mv} away"}.get(bucket, "")
+    if key == "swing_dir":
+        mv = "drift" if is_spin else "swing"
+        return {"in": f"{mv} in", "out": f"{mv} away"}.get(bucket, "")
+    return ""
+
+
 def _dim_rows(dim: list, key: str, is_spin: bool = False) -> list:
     """(label, avg, SR, false%, dis/100, bdry%, balls, weak) — weak flags the lowest-average
     bucket with a real sample (the batter's soft spot in that dimension)."""
@@ -409,7 +421,7 @@ def _dim_weakness_reads(P: dict) -> list:
     # danger cell
     g = P.get("grid_danger")
     if g:
-        out.append(f"Most dangerous ball: <b>{g['length_band'].lower()} {g['line_region']}</b> "
+        out.append(f"Most dangerous ball: <b>{g['length_band'].lower()} and {g['line_region']}</b> "
                    f"({g['dismissal_per100']:.1f} dismissals/100, avg {g['avg']:.0f}).")
     # risky stroke
     strokes = [d for d in dims.get("stroke", []) if d["balls"] >= 30 and d.get("false_pct") is not None]
@@ -554,11 +566,14 @@ def _plan_read(P: dict) -> str:
         if mv and straight and straight["avg"]:
             worst = min(mv, key=lambda d: d["avg"])
             if worst["avg"] < straight["avg"] * 0.8:
-                bits.append(f"get it to {_blabel(worst['bucket'], dk + '_dir', is_spin)}")
+                m = _move_bare(worst["bucket"], dk + "_dir", is_spin)
+                if m:
+                    bits.append(f"get it to {m}")
     plan = f"Plan for {gl}: " + ("; ".join(bits) if bits else "few clear structural weaknesses")
     g = P.get("grid_danger")
     if g:
-        plan += f". Danger ball: <b>{g['length_band'].lower()} {g['line_region']}</b> ({g['dismissal_per100']:.1f} outs/100, avg {g['avg']:.0f})"
+        plan += (f". Danger ball: balls that are <b>{g['length_band'].lower()} and {g['line_region']}</b> "
+                 f"({g['dismissal_per100']:.1f} outs/100, avg {g['avg']:.0f})")
     if P["dismissals"]:
         top = P["dismissals"].most_common(1)[0]
         plan += f"; they're most often out <b>{top[0].lower()}</b> to this attack"
@@ -591,16 +606,18 @@ def _summary_points(P: dict, fp_type: str = None) -> list:
             if mv and straight and straight["avg"]:
                 worst = min(mv, key=lambda d: d["avg"])
                 if worst["avg"] < straight["avg"] * 0.8:
-                    moves.append(_blabel(worst["bucket"], dk + "_dir", is_spin))
+                    m = _move_bare(worst["bucket"], dk + "_dir", is_spin)
+                    if m:
+                        moves.append(m)
         if wl and ln:
             plan_txt = (f"Plan for {P['group_label']}: bowl <b>{wl['bucket'].lower()} {ln['bucket']}</b>"
-                        + (f", get it to <b>{' / '.join(moves)}</b>" if moves else "") + ".")
+                        + (f", gets it to <b>{' / '.join(moves)}</b>" if moves else "") + ".")
             pts.append(plan_txt)
     # their danger ball (the length×line that dismisses them most) — the ball to hunt
     g = P.get("grid_danger")
     if g and not (plan_txt and g["line_region"] in plan_txt and g["length_band"].lower() in plan_txt):
-        pts.append(f"They get out most to the <b>{g['length_band'].lower()} {g['line_region']}</b> "
-                   f"({g['dismissal_per100']:.1f} dismissals/100).")
+        pts.append(f"They get out most often to balls that are <b>{g['length_band'].lower()} and "
+                   f"{g['line_region']}</b> ({g['dismissal_per100']:.1f} dismissals/100).")
     # how they get out (mode)
     d = _dismissal_read(P)
     if d:

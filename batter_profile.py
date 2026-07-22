@@ -20,6 +20,7 @@ from cricket_core.lookups import (
     BEATEN_QUALITIES as _BEATEN_QUALITIES,
     FALSE_SHOT_QUALITIES as _FALSE_SHOT_QUALITIES,
     HOW_OUT_MAP as _HOW_OUT_MAP,
+    CAUGHT_BEHIND_POS as _CAUGHT_BEHIND_POS,
     STROKE_FAMILY as _STROKE_FAMILY,
     BATTING_HAND_OVERRIDE as _HAND_OVERRIDE,
     PACE_TYPES as _PACE_TYPES,
@@ -303,6 +304,7 @@ def _annotate_batter_catches(batter_id, raw):
         if r.get("is_out") and r.get("how_out") == "Caught":
             pid = cmap.get(r.get("delivery_id"))
             r["catch_position"] = _BAT_FIELD_POS.get(pid) if pid else None
+            r["catch_group"] = ("behind" if pid in _CAUGHT_BEHIND_POS else "field") if pid else "unknown"
 
 
 def build_batter_profile(batter_id: str, raw: list | None = None, group: str | None = None) -> dict:
@@ -421,8 +423,14 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
         dir_known += r["runs"]
     dir_pct = {k: v / dir_known * 100 for k, v in dir_runs.items()} if dir_known else None
 
-    # dismissals
-    dis = Counter(r["how_out"] for r in raw if r["is_out"] and r["how_out"])
+    # dismissals — granular: "caught" is split into caught behind (keeper/slips/gully) vs caught in
+    # the field, since those imply very different plans (edge vs a genuine mishit to a set position).
+    def _dis_label(r):
+        if r["how_out"] == "Caught":
+            return {"behind": "Caught behind", "field": "Caught in the field"}.get(
+                r.get("catch_group"), "Caught")
+        return r["how_out"]
+    dis = Counter(_dis_label(r) for r in raw if r["is_out"] and r["how_out"])
     # where his caught dismissals were taken, by coarse type (pace/spin) — the field engine's
     # dismissal-evidence rule reads this (a whole-innings plan, so coarse to keep the sample usable).
     caught_positions = {"pace": Counter(), "spin": Counter()}
