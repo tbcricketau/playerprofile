@@ -26,6 +26,7 @@ from cricket_core.video import clip_stem
 from config import DATA_SCHEMA
 from report import build_profile
 from batter_profile import build_batter_profile
+from batting_report import card_summary
 from profile import _LEN_ADJ, _LINE_REGION, _LEN_BAND, _zone_lbl, LENGTH_ZONES_PACE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -362,6 +363,14 @@ def main():
         try:
             if _test_balls(conn, cur, bid, "bat") >= TEST_FLOOR:
                 out["batters"][bid] = {"name": nm, **distil_batter(build_batter_profile(bid), hand)}
+                # card facts = the report's TL;DR summary (richer than distil; coach matchup dropped)
+                for tw in ("pace", "spin"):
+                    try:
+                        pts = card_summary(bid, tw, include_matchup=False)
+                        if pts:
+                            out["batters"][bid][f"facts_{tw}"] = pts
+                    except Exception as e:
+                        print(f"  ! card summary {nm} ({tw}): {type(e).__name__}: {str(e)[:60]}")
                 sc, ds = batter_clips(conn, cur, bid)
                 out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
                 tag = f" · sco {len(sc)} dsm {len(ds)}"

@@ -157,13 +157,15 @@ def _phase_read(P: dict) -> str:
     return txt
 
 
-def _dismissal_read(P: dict) -> str:
+def _dismissal_read(P: dict, include_matchup: bool = True) -> str:
     dis, n = P["dismissals"], P["n_dismissals"]
     if not n:
         return ""
     top = dis.most_common(1)[0]
     bt = P["dismissal_bowler_type"].most_common(1)
-    btxt = f"; most often to {bt[0][0].lower()} ({bt[0][1]})" if bt else ""
+    # the bowler-type they get out to most is coach matchup detail — kept in the scouting report,
+    # dropped on the player pack card (which is already scoped to the bowler's type).
+    btxt = f"; most often to {bt[0][0].lower()} ({bt[0][1]})" if (bt and include_matchup) else ""
     return f"Most often out <b>{top[0].lower()}</b> ({top[1] / n * 100:.0f}% of dismissals){btxt}."
 
 
@@ -580,7 +582,7 @@ def _plan_read(P: dict) -> str:
     return plan + "."
 
 
-def _summary_points(P: dict, fp_type: str = None) -> list:
+def _summary_points(P: dict, fp_type: str = None, include_matchup: bool = True) -> list:
     """A TL;DR for a bowler who won't read the whole report: what kind of batter they are,
     how they get out, where to bowl, and their soft spot — 4-6 short lines. For a type-scoped
     report the plan is that type's ('plan for right-arm pace'); the combined report gives the
@@ -619,7 +621,7 @@ def _summary_points(P: dict, fp_type: str = None) -> list:
         pts.append(f"They get out most often to balls that are <b>{g['length_band'].lower()} and "
                    f"{g['line_region']}</b> ({g['dismissal_per100']:.1f} dismissals/100).")
     # how they get out (mode)
-    d = _dismissal_read(P)
+    d = _dismissal_read(P, include_matchup=include_matchup)
     if d:
         pts.append(d)
     # vulnerable early
@@ -629,6 +631,17 @@ def _summary_points(P: dict, fp_type: str = None) -> list:
             and e["dismissal_per100"] >= 1.4 * s["dismissal_per100"]):
         pts.append("Vulnerable early — get at them hard in their first 30 balls.")
     return pts[:6]
+
+
+def card_summary(batter_id: str, group: str | None = None, include_matchup: bool = False) -> list:
+    """The report's TL;DR summary points for a batter scoped to a bowler group — reused verbatim as
+    the opposition-batter CARD summary in the packs (so the card matches the report). `include_matchup`
+    defaults False: the 'most often to <bowler type>' clause is coach-only, dropped on the pack card
+    which is already scoped to the bowler's type. Returns HTML-bearing strings (bold lead-ins)."""
+    P = build_batter_profile(batter_id, group=group)
+    focus = ("spin" if P.get("is_spin_group") else "pace") if group else None
+    fp_type = _fingerprint_type(_fingerprint_cards(P, focus=focus))
+    return _summary_points(P, fp_type, include_matchup=include_matchup)
 
 
 def _file_url(path: str) -> str:

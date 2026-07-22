@@ -453,7 +453,8 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
             f'<span class="bt">{html.escape(sub or "")}</span></span>{rl}</summary>')
     lines = []
     if facts:
-        lines.append('<ul class="afacts">' + "".join(f'<li>{html.escape(f)}</li>' for f in facts) + '</ul>')
+        # facts are generated (distilled facts / report summary points with bold lead-ins) — trusted HTML
+        lines.append('<ul class="afacts">' + "".join(f'<li>{f}</li>' for f in facts) + '</ul>')
     else:
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     watch = []
