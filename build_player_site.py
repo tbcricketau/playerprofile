@@ -476,6 +476,24 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     return f'<details class="bwl">{summ}<div class="bbody">{"".join(lines)}</div></details>'
 
 
+def _over_round_point(ab, our_hand):
+    """Over/round-the-wicket split for the angle matchup — an LHB facing a RIGHT-arm pace bowler,
+    or an RHB facing a LEFT-arm pace bowler (the case where round-the-wicket creates the angle).
+    Returns a card point stating the split, or None when it's not that matchup."""
+    if not ab.get("is_pace"):
+        return None
+    arm = ab.get("arm")
+    if our_hand == "lhb" and arm == "right":
+        r, who = ab.get("round_lhb"), "left-handers"
+    elif our_hand == "rhb" and arm == "left":
+        r, who = ab.get("round_rhb"), "right-handers"
+    else:
+        return None
+    if r is None:
+        return None
+    return f"To {who}: <b>{100 - r:.0f}% over, {r:.0f}% round the wicket.</b>"
+
+
 def _tiered_inner(ordered, opp_tiers, card_fn):
     """Group opponent cards into Most likely XI / In the squad / Fringe sections (mirrors the
     scouting index). `ordered` = [(bid, meta), …]; `card_fn(bid, meta)` renders one card. With no
@@ -691,7 +709,12 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 
         def _card(bid, meta_):
             nm, ty = meta_
-            return _opp_card(bid, nm, ty, (about.get(bid) or {}).get("facts"),
+            ab = about.get(bid) or {}
+            facts = list(ab.get("facts") or [])
+            orp = _over_round_point(ab, hand)   # over/round split for the angle matchup (LHB vs RH pace …)
+            if orp:
+                facts.append(orp)
+            return _opp_card(bid, nm, ty, facts,
                              h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
                              opp_vision=opp_vision, report_url=report_urls.get(bid),
                              kinds=("stock", "wicket"),       # bowler card: bowling vision only

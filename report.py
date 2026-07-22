@@ -127,6 +127,10 @@ def _narrative(P: dict) -> dict:
     # Common themes
     spd = f"{_fmt(P['avg_spd'])} kph (up to {_fmt(P['max_spd_99'])})" if P["avg_spd"] else "pace not tracked"
     themes.append(f"{P['primary_type']}, averaging {spd}.")
+    nb = P.get("new_ball_share")                       # % of innings they open the bowling (Tests)
+    if not is_spin and nb is not None and nb >= 25:
+        themes.append(f"{'Usually' if nb >= 45 else 'Often'} takes the new ball "
+                      f"(opens in {_pct(nb)} of innings).")
     if P["common_len_band"]:
         themes.append(f"Typical length is <b>{P['common_len_band']}</b> (their good length); "
                       f"median {_fmt(P['avg_len_m'], '.1f')} m.")

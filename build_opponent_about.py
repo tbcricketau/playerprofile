@@ -73,7 +73,17 @@ def distil_bowler(P, type_label):
         facts.append(f"Takes most of their wickets {dlen['length'].lower()}{where}.")
     if P.get("is_pace") and st and (st.get("swing_mag") or 0) >= 0.6:
         facts.append("Gets the ball to swing — watch the ball in the air.")
+    nb = P.get("new_ball_share")
+    if P.get("is_pace") and nb is not None:
+        if nb >= 45:
+            facts.append("Usually takes the new ball.")
+        elif nb >= 25:
+            facts.append("Often takes the new ball.")
+    pt = P.get("primary_type") or ""
     return {"type": type_label, "is_pace": bool(P.get("is_pace")),
+            "arm": "left" if "Left" in pt else "right",            # for the over/round-by-hand card point
+            "round_lhb": P.get("round_lhb"), "round_rhb": P.get("round_rhb"),
+            "new_ball": P.get("new_ball_share"),                    # % of innings they take the new ball
             "facts": facts, "order": int(P.get("n_balls") or 0)}
 
 

@@ -1445,6 +1445,17 @@ def build_profile(
     # ── Length match-ups (on the hand-filtered set, all positions/overs) ─────────
     new_ball = _len_stats([r for r in hand_df if r.get("over_n") is not None and r["over_n"] < 10])
     old_ball = _len_stats([r for r in hand_df if r.get("over_n") is not None and r["over_n"] >= 40])
+    # new-ball share: % of innings the bowler bowled in the first two overs (i.e. opens). Career-wide
+    # (raw, all hands) — a squad-level trait, not hand-scoped.
+    _first_ov = {}
+    for r in raw:
+        if not r.get("is_legal") or r.get("over_n") is None:
+            continue
+        key = (r.get("match_id"), r.get("match_innings"))
+        if key not in _first_ov or r["over_n"] < _first_ov[key]:
+            _first_ov[key] = r["over_n"]
+    new_ball_share = (sum(1 for v in _first_ov.values() if v <= 1) / len(_first_ov) * 100
+                      if _first_ov else None)
     pos_groups = {
         "Top 3": _len_stats([r for r in hand_df if (r.get("bat_pos_n") or 0) in (1, 2, 3)]),
         "4–7":   _len_stats([r for r in hand_df if (r.get("bat_pos_n") or 0) in (4, 5, 6, 7)]),
@@ -1505,6 +1516,7 @@ def build_profile(
         "avg_spd": avg_spd, "max_spd_99": max_spd_99,
         "avg_len_m": avg_len_m, "short_pct": short_pct, "common_len_band": common_len_band,
         "new_ball": new_ball, "old_ball": old_ball, "pos_groups": pos_groups,
+        "new_ball_share": new_ball_share,
         "movement": movement,
         "round_pct": round_pct, "round_lhb": round_lhb, "round_rhb": round_rhb,
         "slower_ball_pct": slower_ball_pct, "slower_ball_kph": slower_ball_kph,
