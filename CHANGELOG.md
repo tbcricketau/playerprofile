@@ -4,6 +4,35 @@ Bump `REPORT_VERSION` in `version.py` on every git commit that changes report
 output, and record it here. The version + build date print in the top-right of
 the front page.
 
+## v1.5 — 22–23 July 2026
+Scouting-site rebuild + opposition-report language/content pass (coach + player QA). Reports and the
+two published sites (player-packs LIVE, scouting-test preview) brought in line.
+- **Batter reports → vs Pace / vs Spin macro-groups** (`batter_profile.MACRO_GROUPS`): one report each
+  for all pace / all spin, with a **Breakdown-by-Type** table inside (right/left pace; off spin / leg
+  break / left orthodox — the turn-direction split) and a **Suggested-Field variant per sub-type**.
+  `series.json` split into `batters-to-pace` / `batters-to-spin` via `bowl_group`; `publish_site._sidecar_map`
+  resolves the `_vs_<group>` suffix.
+- **Batter-report Summary (TL;DR)** reused verbatim as the opposition **batter card** in the packs
+  (`batting_report.card_summary`), with the coach-only "most often to <bowler type>" matchup clause
+  dropped on the card (`include_matchup=False`).
+- **Language pass:** granular dismissals — "caught behind" (keeper/slips/gully) vs "caught in the field"
+  (`catch_group` from `CAUGHT_BEHIND_POS`); plan grammar "gets it to **seam away**" (bare `_move_bare`,
+  not the "seams away" column form); danger ball "balls that are **back of a length and wide outside off**".
+- **Field engine de-editorialized:** "Caught at short leg 2× vs right-arm pace" (dropped "real evidence
+  to post that catcher"); "Deep behind square for the top-edged pull / the hook" (dropped the Law
+  justification). **Floating-fielder notes moved below the fielder table** (full width, shorter page).
+- **Bowler cards + report summary:** **"takes the new ball"** from a new-ball share (% of innings opening,
+  `profile.new_ball_share`); **over/round-by-hand** on pace bowler cards for the angle matchup only — an
+  LHB's pack shows it for RH-pace bowlers, an RHB's for LH-pace ("To left-handers: 63% over, 37% round").
+- **Bowling vision playlists named by phrase** (bt_0 → "Full on the stumps", …) — per-bowler titles stored
+  in the sidecar meta so `publish_site`'s re-bake keeps them; `cricket_core.video` merges caller titles.
+- **New scouting section "How bowlers have attacked our squad"** (`build_player_site.render_attack_section`)
+  — the exact pack attack-card content (+ vision) as coach pages; the attack section is otherwise coach-only
+  now (stripped from the player-facing pmode cut).
+- **Site chrome:** headshots + player-report-style rows on the scouting group index; opposition **squad-status
+  chips (Likely XI / In the squad / Fringe)** + tier grouping on the pack cards; opposition batter **role**
+  (opener/top/middle/lower) next to hand; **"View report"** button restyled to match the scouting site.
+
 ## v1.4 — 6 July 2026
 - **Report styling centralized** (`report_style.py`) — one `REPORT_CSS` stylesheet +
   `headline_cards()` metric-card builder + number formatters, now shared by the **Test, ODI and
