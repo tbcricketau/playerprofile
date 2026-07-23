@@ -46,3 +46,5 @@ photos/*.zip
 test_site/
 player_pack_site/
 test_site/
+.scouting_pw
+site_gated/
