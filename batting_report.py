@@ -357,16 +357,33 @@ def _blabel(bucket, key, is_spin=False):
     return str(bucket)
 
 
-def _move_bare(bucket, key, is_spin=False):
-    """Bare movement for the 'gets it to ___' plan phrasing — 'seam away', 'swing in', 'turn away'
-    (infinitive form), vs _blabel's descriptive column form ('seams away')."""
+def _move_gerund(bucket, key, is_spin=False):
+    """Gerund movement for the 'while ___' plan phrasing — 'seaming in', 'swinging away',
+    'turning in', 'drifting away'. Reads as the ball's action, not the batter's."""
     if key == "seam_dir":
-        mv = "turn" if is_spin else "seam"
+        mv = "turning" if is_spin else "seaming"
         return {"in": f"{mv} in", "away": f"{mv} away"}.get(bucket, "")
     if key == "swing_dir":
-        mv = "drift" if is_spin else "swing"
+        mv = "drifting" if is_spin else "swinging"
         return {"in": f"{mv} in", "out": f"{mv} away"}.get(bucket, "")
     return ""
+
+
+def _pitch_line(bucket):
+    """The PITCHING line for a plan — disambiguated with 'pitching' and remapping the leg-side
+    bucket to 'around leg' (a ball pitching on leg), since 'down the leg side' reads as the ball
+    going past the pads (a would-be wide), not where it lands."""
+    return "around leg" if bucket == "down the leg side" else bucket
+
+
+def _join_moves(moves):
+    """Join movement gerunds, sharing a common direction — ['seaming in','swinging in'] reads
+    'seaming / swinging in', not 'seaming in / swinging in'."""
+    if len(moves) == 2:
+        for dr in (" in", " away"):
+            if all(m.endswith(dr) for m in moves):
+                return " / ".join(m[: -len(dr)] for m in moves) + dr
+    return " / ".join(moves)
 
 
 def _dim_rows(dim: list, key: str, is_spin: bool = False) -> list:
@@ -559,8 +576,7 @@ def _plan_read(P: dict) -> str:
     dims, is_spin, gl = P["dims"], P["is_spin_group"], P["group_label"]
     bits = []
     wl, ln = _worst(dims.get("length", [])), _worst(dims.get("line", []))
-    if wl and ln:
-        bits.append(f"hunt the <b>{wl['bucket'].lower()} {ln['bucket']}</b>")
+    moves = []
     for dk in ("seam", "swing"):
         mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
               and d["balls"] >= 60 and d["avg"] is not None]
@@ -568,9 +584,16 @@ def _plan_read(P: dict) -> str:
         if mv and straight and straight["avg"]:
             worst = min(mv, key=lambda d: d["avg"])
             if worst["avg"] < straight["avg"] * 0.8:
-                m = _move_bare(worst["bucket"], dk + "_dir", is_spin)
+                m = _move_gerund(worst["bucket"], dk + "_dir", is_spin)
                 if m:
-                    bits.append(f"get it to {m}")
+                    moves.append(m)
+    if wl and ln:
+        hunt = f"hunt a <b>{wl['bucket'].lower()} pitching {_pitch_line(ln['bucket'])}</b>"
+        if moves:
+            hunt += f" while <b>{_join_moves(moves)}</b>"
+        bits.append(hunt)
+    elif moves:
+        bits.append(f"get it <b>{_join_moves(moves)}</b>")
     plan = f"Plan for {gl}: " + ("; ".join(bits) if bits else "few clear structural weaknesses")
     g = P.get("grid_danger")
     if g:
@@ -608,12 +631,13 @@ def _summary_points(P: dict, fp_type: str = None, include_matchup: bool = True) 
             if mv and straight and straight["avg"]:
                 worst = min(mv, key=lambda d: d["avg"])
                 if worst["avg"] < straight["avg"] * 0.8:
-                    m = _move_bare(worst["bucket"], dk + "_dir", is_spin)
+                    m = _move_gerund(worst["bucket"], dk + "_dir", is_spin)
                     if m:
                         moves.append(m)
         if wl and ln:
-            plan_txt = (f"Plan for {P['group_label']}: bowl <b>{wl['bucket'].lower()} {ln['bucket']}</b>"
-                        + (f", gets it to <b>{' / '.join(moves)}</b>" if moves else "") + ".")
+            plan_txt = (f"Plan for {P['group_label']}: bowl <b>{wl['bucket'].lower()} pitching "
+                        f"{_pitch_line(ln['bucket'])}</b>"
+                        + (f" while <b>{_join_moves(moves)}</b>" if moves else "") + ".")
             pts.append(plan_txt)
     # their danger ball (the length×line that dismisses them most) — the ball to hunt
     g = P.get("grid_danger")

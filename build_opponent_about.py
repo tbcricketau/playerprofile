@@ -171,11 +171,15 @@ def _clips_from_rows(rows, cap):
     return out
 
 
+NEW_BALL_MIN_SHARE = 45   # only bowlers who open (new_ball_share ≥ this) get a New-ball playlist
+
+
 def bowler_clips_from_profile(P, cap_each=10, wcap=40):
-    """(stock_clips, wicket_clips) built from the profile's coordinate-tagged rows, so the
-    example clips match the card's 'Stock ball' phrase. Pace stock samples BOTH angles (the
-    over-modal ball type + the round-modal ball type when they bowl round enough), combined
-    into one playlist. Wickets pull a generous pool (wcap) so more survive the storage filter."""
+    """(stock_clips, wicket_clips, new_ball_clips) built from the profile's coordinate-tagged rows,
+    so the example clips match the card's 'Stock ball' phrase. Pace stock samples BOTH angles (the
+    over-modal ball type + the round-modal ball type when they bowl round enough), combined into one
+    playlist. Wickets pull a generous pool (wcap). New-ball clips = first-10-overs deliveries, only
+    for pace bowlers who take the new ball (shown on the top-order batters' packs)."""
     df = P.get("df") or []
     wicket = _clips_from_rows([r for r in df if r.get("is_wicket") and _has_vid(r)], wcap)
     legal = [r for r in df if r.get("is_legal") and r.get("ball_type") and _has_vid(r)]
@@ -191,7 +195,12 @@ def bowler_clips_from_profile(P, cap_each=10, wcap=40):
         st = (P.get("ball_types") or {}).get("stock")
         key = (st["band"], st["region"]) if st else None
         stock = _clips_from_rows([r for r in legal if key and r["ball_type"] == key], cap_each * 2)
-    return stock, wicket
+    new_ball = []
+    if P.get("is_pace") and (P.get("new_ball_share") or 0) >= NEW_BALL_MIN_SHARE:
+        nb = [r for r in df if r.get("is_legal") and _has_vid(r)
+              and r.get("over_n") is not None and r["over_n"] < 10]
+        new_ball = _clips_from_rows(nb, wcap)        # first 10 overs, newest first, generous pool
+    return stock, wicket, new_ball
 
 
 def _angle_phrase(ms):
@@ -326,9 +335,9 @@ def main():
         conn, cur = set_conn_cursor()
         for bid, entry in out.get("bowlers", {}).items():
             try:                                          # re-profile so clips match the stock phrase
-                st, wk = bowler_clips_from_profile(build_profile(bid, hand="All"))
-                entry["stock_clips"], entry["wicket_clips"] = st, wk
-                print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)}")
+                st, wk, nb = bowler_clips_from_profile(build_profile(bid, hand="All"))
+                entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nb
+                print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)} · new {len(nb)}")
             except Exception as e:
                 print(f"  ! bowler {entry.get('name', bid)}: {type(e).__name__}: {e}")
         for bid, entry in out.get("batters", {}).items():
@@ -357,9 +366,9 @@ def main():
             if _test_balls(conn, cur, bid, "bowl") >= TEST_FLOOR:
                 P = build_profile(bid, hand="All")
                 entry = {"name": nm, **distil_bowler(P, ty or "Bowler")}
-                entry["stock_clips"], entry["wicket_clips"] = bowler_clips_from_profile(P)
+                entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = bowler_clips_from_profile(P)
                 out["bowlers"][bid] = entry
-                tag = f" · stock {len(entry['stock_clips'])} wkt {len(entry['wicket_clips'])}"
+                tag = f" · stock {len(entry['stock_clips'])} wkt {len(entry['wicket_clips'])} new {len(entry['new_ball_clips'])}"
             else:                                        # thin Test record -> all-format fallback
                 fb = allfmt_bowler_facts(conn, cur, bid, ty or "Bowler", LEN, LIN)
                 if not fb:

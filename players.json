@@ -6,7 +6,8 @@
    "batting"
   ],
   "prefs": "base",
-  "tier": "squad"
+  "tier": "squad",
+  "new_ball_footage": true
  },
  "2580027": {
   "name": "Jake Weatherald",
@@ -15,7 +16,8 @@
    "batting"
   ],
   "prefs": "base",
-  "tier": "squad"
+  "tier": "squad",
+  "new_ball_footage": true
  },
  "2480058": {
   "name": "Marnus Labuschagne",
@@ -24,7 +26,8 @@
    "batting"
   ],
   "prefs": "base",
-  "tier": "squad"
+  "tier": "squad",
+  "new_ball_footage": true
  },
  "940135": {
   "name": "Steve Smith",

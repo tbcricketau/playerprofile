@@ -458,7 +458,7 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     else:
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     watch = []
-    all_kinds = (("stock", "Stock ball"), ("wicket", "Wicket balls"),
+    all_kinds = (("stock", "Stock ball"), ("wicket", "Wicket balls"), ("new_ball", "New ball"),
                  ("scoring", "Scoring shots"), ("dismissal", "Dismissals"))
     show = [(k, l) for k, l in all_kinds if kinds is None or k in kinds]
     for kind, label in show:
@@ -633,6 +633,7 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
     opp_vision = {}
     for bid, clips in (opp_clips or {}).items():
         for kind, kk, tit in (("stock", "stock", "Stock ball"), ("wicket", "wkt", "Wicket balls"),
+                              ("new_ball", "nb", "New ball"),
                               ("scoring", "sco", "Scoring shots"), ("dismissal", "dsm", "Dismissals")):
             stems = clips.get(kind) or []
             items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=tit)
@@ -714,11 +715,13 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
             orp = _over_round_point(ab, hand)   # over/round split for the angle matchup (LHB vs RH pace …)
             if orp:
                 facts.append(orp)
+            # bowler card: bowling vision only. Top-order batters (rec.new_ball_footage) also get the
+            # New-ball playlist for bowlers who take the new ball (built into opp_vision when clips exist).
+            bkinds = ("stock", "wicket", "new_ball") if rec.get("new_ball_footage") else ("stock", "wicket")
             return _opp_card(bid, nm, ty, facts,
                              h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
                              opp_vision=opp_vision, report_url=report_urls.get(bid),
-                             kinds=("stock", "wicket"),       # bowler card: bowling vision only
-                             tier=(opp_tiers or {}).get(bid))
+                             kinds=bkinds, tier=(opp_tiers or {}).get(bid))
         body.append(_pack_section(f"The {opp} attack",
                                   "Grouped by how likely they are to play. Tap a bowler for what "
                                   "they're about, the fuller report, and any footage of you facing them.",
@@ -933,7 +936,8 @@ def build(out_dir, no_video=False, only=None):
         for bid, _ in _ord(opp_bowlers, about_bowl):
             a = about_bowl.get(bid) or {}
             opp_clips.setdefault(bid, {}).update(
-                {"stock": a.get("stock_clips") or [], "wicket": a.get("wicket_clips") or []})
+                {"stock": a.get("stock_clips") or [], "wicket": a.get("wicket_clips") or [],
+                 "new_ball": a.get("new_ball_clips") or []})
         for bid, _ in _ord(opp_batters, about_bat):
             a = about_bat.get(bid) or {}
             opp_clips.setdefault(bid, {}).update(
