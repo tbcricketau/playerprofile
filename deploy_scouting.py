@@ -18,7 +18,17 @@ re-encrypts with the new password on the next deploy. `--no-build` reuses the ex
 import argparse
 import os
 import shutil
+import stat
 import sys
+
+
+def _rmtree_force(path):
+    """rmtree that clears the read-only bit on git object files (Windows) before retrying."""
+    def _onerr(func, p, _exc):
+        os.chmod(p, stat.S_IWRITE)
+        func(p)
+    if os.path.isdir(path):
+        shutil.rmtree(path, onerror=_onerr)
 
 import staticgate
 from publish_site import HERE, DEFAULT_SAS_HOURS, build, deploy_github
@@ -57,8 +67,7 @@ def main():
     site = os.path.join(HERE, "site")
     if not os.path.isdir(site):
         sys.exit("No site/ to deploy (run without --no-build first).")
-    if os.path.isdir(_STAGE):
-        shutil.rmtree(_STAGE, ignore_errors=True)
+    _rmtree_force(_STAGE)
     shutil.copytree(site, _STAGE, ignore=shutil.ignore_patterns(".git"))
     n = staticgate.encrypt_dir(_STAGE, pw, args.title)
     print(f"gated {n} pages with the shared password")
