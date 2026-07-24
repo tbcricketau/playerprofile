@@ -111,7 +111,11 @@
   "bowl_types": [
    "spin"
   ],
-  "tier": "squad"
+  "tier": "squad",
+  "similar_bowler": {
+   "id": "5460009",
+   "name": "Sajid Khan"
+  }
  },
  "880149": {
   "name": "Josh Hazlewood",

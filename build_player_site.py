@@ -114,6 +114,8 @@ EXTRA_CSS = """<style>
    border:1px solid #d5dced;border-radius:6px;padding:2px 8px;margin-left:6px;letter-spacing:0;text-transform:none;
    white-space:nowrap;display:inline-block}
  .vwatch.off{color:#9aa4b2;border-style:dashed;cursor:default}
+ .simrow{margin:2px 0 14px;padding:10px 12px;background:#eef3fb;border:1px solid #d5dced;border-radius:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+ .simrow .simnote{color:#6b7280;font-size:12px}
  /* collapsible sections */
  details.pack{border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow:hidden}
  details.pack>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:baseline;gap:8px}
@@ -580,7 +582,7 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
     return playlists, titles
 
 
-def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
+def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, similar=None):
     """One modal-player page per player: a 'Dismissals — v X' playlist per attack-card series,
     plus any `extra` (playlists, titles) — the real head-to-head meetings. Fresh SAS minted at
     build time, like publish_site. Returns (dismissal_hrefs, h2h_links): {series_index: href#key}
@@ -647,6 +649,18 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
                 playlists[key] = resolved
                 titles[key] = tit
                 opp_vision[(bid, kind)] = f"{page_slug}-vision.html#{key}"
+    # similar reference bowler (e.g. Sajid Khan for Lyon) — how they went vs the opposition batters
+    similar_href = None
+    if similar and similar.get("clips"):
+        items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=f'{similar["name"]}')
+                 for e in similar["clips"] if e.get("clip_stem")]
+        if items:
+            resolved, avail, _tot = resolve_playlist(items)
+            resolved = resolved[:20]                 # cap the shown playlist at 20 balls
+            if avail:
+                playlists["similar"] = resolved
+                titles["similar"] = similar["title"]
+                similar_href = f"{page_slug}-vision.html#similar"
     snippet = ""
     if playlists:
         build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
@@ -654,7 +668,7 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None):
                           titles=titles)
         # in-page modal: injected into each of this player's pack pages so ▶ plays over the report
         snippet = inline_player_snippet(playlists, titles)
-    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet
+    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet, similar_href
 
 
 def _report_top(pid, name, role, sname, pages=None, current=None, tier=None):
@@ -736,7 +750,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 
 def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None, h2h_links=None,
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
-                  btype="pace", opp_vision=None, opp_tiers=None):
+                  btype="pace", opp_vision=None, opp_tiers=None, similar_href=None, similar_name=None):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -747,6 +761,9 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     h2h_rows = h2h_rows or {}
     tw = "spin" if btype == "spin" else "pace"
     body = [EXTRA_CSS, _report_top(pid, name, role, meta.get("name", ""), pages, current)]
+    if similar_href and similar_name:               # a similar reference bowler vs this opposition
+        body.append(f'<div class="simrow">{_vwatch(similar_href, f"&#9654; How {html.escape(similar_name)} bowled to {html.escape(opp)}")}'
+                    f'<span class="simnote">A similar bowler’s recent footage against these batters.</span></div>')
 
     if opp_batters:
         ordered = sorted(opp_batters.items(),
@@ -783,6 +800,14 @@ def _load_about(slug):
         return {}, {}
     d = json.load(open(p, encoding="utf-8"))
     return d.get("bowlers", {}), d.get("batters", {})
+
+
+def _load_similar(slug):
+    """{our_bowler_pid: {name, clips}} from data/similar_bowler_{opp}.json — a reference bowler's
+    footage vs the opposition batters (e.g. Sajid Khan for Lyon), or {}."""
+    opp = slug.split("-")[0]
+    p = os.path.join(HERE, "data", f"similar_bowler_{opp}.json")
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
 
 
 def _opp_tiers(slug):
@@ -836,7 +861,7 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
         vision, cell_vision, snippet = {}, {}, ""
         if not no_video and card and card.get("series"):
             try:
-                vision, _hl, _hm, cell_vision, _ov, snippet = _build_vision(
+                vision, _hl, _hm, cell_vision, _ov, snippet, _sh = _build_vision(
                     dest_dir, pslug, name, card, ({}, {}), opp_clips=None)
             except Exception as e:
                 print(f"  ! attack vision {name}: {type(e).__name__}: {e}")
@@ -926,6 +951,7 @@ def build(out_dir, no_video=False, only=None):
         opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
         about_bowl, about_bat = _load_about(slug)      # distilled facts, per role, id-keyed
         opp_tiers = _opp_tiers(slug)                    # opposition squad status (XI/squad/fringe)
+        similar_data = _load_similar(slug)              # reference-bowler footage per our bowler
         # signature footage for the opponents shown (N_OPP each) — bowlers get stock/wicket balls
         # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs).
         # An all-rounder gets ALL four kinds (distinct keys → no collision), so their bowler card
@@ -966,15 +992,20 @@ def build(out_dir, no_video=False, only=None):
             pslug = _slug(name)
             bts = rec.get("bowl_types", [])            # [] for a batter, [pace]/[spin]/[pace,spin]
             vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip = {}, [], {}, {}, {}, ""
+            similar_href = None
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
             had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
             # opponent signature footage (bowler stock/wicket, batter scoring/dismissal) shows
             # even with no h2h footage, so build the vision page whenever there are opp clips
             if not no_video and (cards.get(pid) or extra[0] or opp_clips):
+                sb = similar_data.get(pid)
+                sb_payload = ({"name": sb["name"], "clips": sb["clips"],
+                               "title": f'How {sb["name"]} bowled to {_short_opp(meta)}'}
+                              if sb and sb.get("clips") else None)
                 try:
-                    vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip = _build_vision(
-                        s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips)
+                    vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip, similar_href = _build_vision(
+                        s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips, similar=sb_payload)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             # tab list: Batting + one page per bowling type
@@ -1007,7 +1038,9 @@ def build(out_dir, no_video=False, only=None):
                                         report_urls=bt_report, h2h_links=h2h_links,
                                         had_meetings=had_bowl, h2h_map=h2h_map, h2h_rows=bowl_rows,
                                         pages=pages, current=bowl_href, btype=bt,
-                                        opp_vision=opp_vision, opp_tiers=opp_tiers) + vsnip,
+                                        opp_vision=opp_vision, opp_tiers=opp_tiers,
+                                        similar_href=similar_href,
+                                        similar_name=(sb["name"] if sb else None)) + vsnip,
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 
