@@ -1,0 +1,314 @@
+{
+ "pace": [
+  {
+   "batter": "Mushfiqur Rahim",
+   "bid": "300015",
+   "balls": 3155,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Mominul Haque",
+   "bid": "2700013",
+   "balls": 3362,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Litton Das",
+   "bid": "2540159",
+   "balls": 2547,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Mehidy Hasan Miraz",
+   "bid": "3080087",
+   "balls": 1644,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.1,
+   "Ramp / scoop": 0.4,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shadman Islam",
+   "bid": "2540166",
+   "balls": 1882,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Najmul Hussain Shanto",
+   "bid": "3110063",
+   "balls": 1282,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.2
+  },
+  {
+   "batter": "Mahmudul Hasan Joy",
+   "bid": "3630132",
+   "balls": 1467,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.2,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Taijul Islam",
+   "bid": "2700039",
+   "balls": 920,
+   "Conventional sweep": 0.1,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shakib Al Hasan",
+   "bid": "290007",
+   "balls": 555,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.7,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Zakir Hasan",
+   "bid": "2540168",
+   "balls": 704,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.4,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Jaker Ali",
+   "bid": "5460114",
+   "balls": 381,
+   "Conventional sweep": 0.3,
+   "Slog sweep": 0.8,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Nayeem Hasan",
+   "bid": "4353535",
+   "balls": 139,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shahadat Hossain",
+   "bid": "520069",
+   "balls": 293,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Hasan Mahmud",
+   "bid": "5180245",
+   "balls": 199,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 2.0,
+   "Switch hit": 0.0
+  }
+ ],
+ "spin": [
+  {
+   "batter": "Mushfiqur Rahim",
+   "bid": "300015",
+   "balls": 3874,
+   "Conventional sweep": 4.1,
+   "Slog sweep": 0.9,
+   "Reverse sweep": 0.9,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.3,
+   "Switch hit": 0.1
+  },
+  {
+   "batter": "Mominul Haque",
+   "bid": "2700013",
+   "balls": 2950,
+   "Conventional sweep": 5.5,
+   "Slog sweep": 0.7,
+   "Reverse sweep": 0.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Litton Das",
+   "bid": "2540159",
+   "balls": 2762,
+   "Conventional sweep": 2.1,
+   "Slog sweep": 0.7,
+   "Reverse sweep": 0.6,
+   "Paddle": 0.1,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Mehidy Hasan Miraz",
+   "bid": "3080087",
+   "balls": 2290,
+   "Conventional sweep": 3.7,
+   "Slog sweep": 0.6,
+   "Reverse sweep": 0.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.3,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shadman Islam",
+   "bid": "2540166",
+   "balls": 1026,
+   "Conventional sweep": 0.4,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Najmul Hussain Shanto",
+   "bid": "3110063",
+   "balls": 1335,
+   "Conventional sweep": 8.5,
+   "Slog sweep": 0.4,
+   "Reverse sweep": 4.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.1
+  },
+  {
+   "batter": "Mahmudul Hasan Joy",
+   "bid": "3630132",
+   "balls": 1014,
+   "Conventional sweep": 1.2,
+   "Slog sweep": 0.4,
+   "Reverse sweep": 0.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Taijul Islam",
+   "bid": "2700039",
+   "balls": 1063,
+   "Conventional sweep": 0.4,
+   "Slog sweep": 0.5,
+   "Reverse sweep": 0.6,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shakib Al Hasan",
+   "bid": "290007",
+   "balls": 744,
+   "Conventional sweep": 3.8,
+   "Slog sweep": 0.7,
+   "Reverse sweep": 0.9,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Zakir Hasan",
+   "bid": "2540168",
+   "balls": 500,
+   "Conventional sweep": 3.6,
+   "Slog sweep": 0.6,
+   "Reverse sweep": 0.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.2,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Jaker Ali",
+   "bid": "5460114",
+   "balls": 210,
+   "Conventional sweep": 4.8,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Nayeem Hasan",
+   "bid": "4353535",
+   "balls": 442,
+   "Conventional sweep": 7.9,
+   "Slog sweep": 0.7,
+   "Reverse sweep": 0.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shahadat Hossain",
+   "bid": "520069",
+   "balls": 242,
+   "Conventional sweep": 2.9,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Hasan Mahmud",
+   "bid": "5180245",
+   "balls": 220,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.9,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  }
+ ]
+}

@@ -197,6 +197,11 @@ def build(out_dir, sas_hours):
         has_mx = os.path.exists(mx_src)
         if has_mx:
             shutil.copy(mx_src, os.path.join(s_dir, "matchups.html"))
+        # series-level unorthodox-shot matrix (build_shot_matrix.py)
+        sm_src = os.path.join(REPORTS_DIR, f"shot_matrix_{s['slug'].split('-')[0]}.html")
+        has_sm = os.path.exists(sm_src)
+        if has_sm:
+            shutil.copy(sm_src, os.path.join(s_dir, "shot-matrix.html"))
         group_cards, s_total = [], 0
         for g in s.get("groups", []):
             g_dir = os.path.join(s_dir, g["slug"])
@@ -226,7 +231,8 @@ def build(out_dir, sas_hours):
                 print(f"  [ok] {s['slug']}/attacked-our-squad ({nap} players)")
         except Exception as e:
             print(f"  ! attack section {s['slug']}: {type(e).__name__}: {e}")
-        _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx, has_attacks=has_attacks)
+        _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx, has_attacks=has_attacks,
+                             has_shots=has_sm)
         series_cards.append((s["slug"], s["name"], s.get("subtitle", ""), s_total))
     _write_top_index(out_dir, cfg, series_cards)
     open(os.path.join(out_dir, ".nojekyll"), "w").close()
@@ -247,15 +253,19 @@ def _write_top_index(out_dir, cfg, series_cards):
     open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(_page(cfg.get("title", "Scouting"), body))
 
 
-def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False, has_attacks=False):
+def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False, has_attacks=False,
+                        has_shots=False):
     mx = ('<li><a href="matchups.html"><b>Match-ups</b>'
           '<span class="sub">the full simulated grid — every pairing, both directions</span></a>'
           '<span class="n">matrix</span></li>' if has_matchups else "")
     at = ('<li><a href="attacked-our-squad/index.html"><b>How bowlers have attacked our squad</b>'
           '<span class="sub">our squad · how the last few attacks came at each of them (last 3 series)</span></a>'
           '<span class="n">squad</span></li>' if has_attacks else "")
-    if group_cards or mx or at:
-        items = mx + at + "\n".join(
+    sm = ('<li><a href="shot-matrix.html"><b>Unorthodox shot options</b>'
+          '<span class="sub">sweeps, ramps, reverses — how often each batter plays them, vs pace and spin</span></a>'
+          '<span class="n">matrix</span></li>' if has_shots else "")
+    if group_cards or mx or at or sm:
+        items = mx + at + sm + "\n".join(
             f'<li><a href="{gl}/index.html"><b>{html.escape(gn)}</b></a>'
             f'<span class="n">{c} report{"s" if c != 1 else ""}</span></li>'
             for gl, gn, c in group_cards)

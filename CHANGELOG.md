@@ -32,6 +32,15 @@ two published sites (player-packs LIVE, scouting-test preview) brought in line.
 - **Site chrome:** headshots + player-report-style rows on the scouting group index; opposition **squad-status
   chips (Likely XI / In the squad / Fringe)** + tier grouping on the pack cards; opposition batter **role**
   (opener/top/middle/lower) next to hand; **"View report"** button restyled to match the scouting site.
+- **Similar-bowler playlist** — a pack bowler can name a reference bowler in `players.json` (`similar_bowler`);
+  `build_similar_bowler.py` builds "how {ref} bowled to {opp}" from their Test deliveries vs the opposition
+  batters (Sajid Khan for Lyon), shown on the bowling pack when our own footage vs these batters is thin.
+- **Unorthodox shot matrix** (`build_shot_matrix.py`) — a series page listing how often each opposition batter
+  plays the cross-batted / innovative shots (sweep, slog sweep, reverse sweep, paddle, ramp, switch hit), vs
+  pace and vs spin, from our warehouse stroke coding (type 24). Two matrices (Pace / Spin), linked from the
+  series index; `publish_site` copies `shot_matrix_{opp}.html` and adds the index card.
+- **Bowler-list reconciliation** — `series.json` bowler groups reconciled to the profiled bowlers and BAN
+  likely-XI tiers set across both batter and bowler groups.
 
 ## v1.4 — 6 July 2026
 - **Report styling centralized** (`report_style.py`) — one `REPORT_CSS` stylesheet +
