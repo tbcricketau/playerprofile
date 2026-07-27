@@ -357,6 +357,22 @@ def _opp_roster(slug):
             bowlers.setdefault(c["bowler_id"], (c["bowler"], c.get("bowler_type", "")))
         for c in store.get("they_bat", []):
             batters.setdefault(c["batter_id"], (c["batter"], c.get("bat_hand", "")))
+        # series.json is the squad roster of record: union in any named squad member the sim store
+        # lacks (uncapped players with no profile) so they still get a roster card, flagged no-data.
+        cfg_path = os.path.join(HERE, "series.json")
+        if os.path.exists(cfg_path):
+            cfg = json.load(open(cfg_path, encoding="utf-8"))
+            for s in cfg.get("series", []):
+                if s.get("slug") != slug:
+                    continue
+                for g in s.get("groups", []):
+                    is_bat = "batters" in g["slug"] or g.get("bowl_group") or g.get("kind") == "batting"
+                    for r in g.get("reports", []):
+                        rid = str(r["id"])
+                        if is_bat:
+                            batters.setdefault(rid, (r.get("name", rid), (r.get("hand", "") or "").upper()))
+                        else:
+                            bowlers.setdefault(rid, (r.get("name", rid), ""))
         return bowlers, batters
     except Exception:
         return {}, {}

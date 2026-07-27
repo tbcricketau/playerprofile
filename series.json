@@ -12,22 +12,22 @@
      "name": "Opposition Bowlers to LHB",
      "reports": [
       {
-       "id": "290007",
-       "hand": "lhb",
-       "tier": "squad",
-       "name": "Shakib Al Hasan"
-      },
-      {
        "id": "2220028",
        "hand": "lhb",
        "tier": "xi",
        "name": "Taskin Ahmed"
       },
       {
-       "id": "2700039",
+       "id": "3110073",
        "hand": "lhb",
        "tier": "xi",
-       "name": "Taijul Islam"
+       "name": "Ebadot Hossain"
+      },
+      {
+       "id": "5180245",
+       "hand": "lhb",
+       "tier": "xi",
+       "name": "Hasan Mahmud"
       },
       {
        "id": "3080087",
@@ -36,22 +36,10 @@
        "name": "Mehidy Hasan Miraz"
       },
       {
-       "id": "3110073",
+       "id": "2700039",
        "hand": "lhb",
        "tier": "squad",
-       "name": "Ebadot Hossain"
-      },
-      {
-       "id": "3630141",
-       "hand": "lhb",
-       "tier": "squad",
-       "name": "Shoriful Islam"
-      },
-      {
-       "id": "3630144",
-       "hand": "lhb",
-       "tier": "squad",
-       "name": "Hasan Murad"
+       "name": "Taijul Islam"
       },
       {
        "id": "4352598",
@@ -60,22 +48,10 @@
        "name": "Khaled Ahmed"
       },
       {
-       "id": "4353535",
-       "hand": "lhb",
-       "tier": "xi",
-       "name": "Nayeem Hasan"
-      },
-      {
-       "id": "5180245",
+       "id": "4353503",
        "hand": "lhb",
        "tier": "squad",
-       "name": "Hasan Mahmud"
-      },
-      {
-       "id": "5460155",
-       "hand": "lhb",
-       "tier": "xi",
-       "name": "Nahid Rana"
+       "name": "Musfik Hasan"
       }
      ]
     },
@@ -84,22 +60,22 @@
      "name": "Opposition Bowlers to RHB",
      "reports": [
       {
-       "id": "290007",
-       "hand": "rhb",
-       "tier": "squad",
-       "name": "Shakib Al Hasan"
-      },
-      {
        "id": "2220028",
        "hand": "rhb",
        "tier": "xi",
        "name": "Taskin Ahmed"
       },
       {
-       "id": "2700039",
+       "id": "3110073",
        "hand": "rhb",
        "tier": "xi",
-       "name": "Taijul Islam"
+       "name": "Ebadot Hossain"
+      },
+      {
+       "id": "5180245",
+       "hand": "rhb",
+       "tier": "xi",
+       "name": "Hasan Mahmud"
       },
       {
        "id": "3080087",
@@ -108,22 +84,10 @@
        "name": "Mehidy Hasan Miraz"
       },
       {
-       "id": "3110073",
+       "id": "2700039",
        "hand": "rhb",
        "tier": "squad",
-       "name": "Ebadot Hossain"
-      },
-      {
-       "id": "3630141",
-       "hand": "rhb",
-       "tier": "squad",
-       "name": "Shoriful Islam"
-      },
-      {
-       "id": "3630144",
-       "hand": "rhb",
-       "tier": "squad",
-       "name": "Hasan Murad"
+       "name": "Taijul Islam"
       },
       {
        "id": "4352598",
@@ -132,22 +96,10 @@
        "name": "Khaled Ahmed"
       },
       {
-       "id": "4353535",
-       "hand": "rhb",
-       "tier": "xi",
-       "name": "Nayeem Hasan"
-      },
-      {
-       "id": "5180245",
+       "id": "4353503",
        "hand": "rhb",
        "tier": "squad",
-       "name": "Hasan Mahmud"
-      },
-      {
-       "id": "5460155",
-       "hand": "rhb",
-       "tier": "xi",
-       "name": "Nahid Rana"
+       "name": "Musfik Hasan"
       }
      ]
     },
@@ -158,34 +110,16 @@
      "bowl_group": "pace",
      "reports": [
       {
-       "id": "2540159",
-       "hand": "rhb",
-       "tier": "xi",
-       "name": "Litton Das"
-      },
-      {
-       "id": "3630132",
-       "hand": "rhb",
-       "tier": "xi",
-       "name": "Mahmudul Hasan Joy"
-      },
-      {
        "id": "2540166",
        "hand": "lhb",
        "tier": "xi",
        "name": "Shadman Islam"
       },
       {
-       "id": "2540168",
-       "hand": "lhb",
-       "tier": "squad",
-       "name": "Zakir Hasan"
-      },
-      {
-       "id": "2700013",
+       "id": "3630131",
        "hand": "lhb",
        "tier": "xi",
-       "name": "Mominul Haque"
+       "name": "Tanzid Hasan"
       },
       {
        "id": "3110063",
@@ -194,27 +128,27 @@
        "name": "Najmul Hussain Shanto"
       },
       {
+       "id": "2700013",
+       "hand": "lhb",
+       "tier": "xi",
+       "name": "Mominul Haque"
+      },
+      {
        "id": "300015",
        "hand": "rhb",
        "tier": "xi",
        "name": "Mushfiqur Rahim"
       },
       {
-       "id": "520069",
-       "hand": "rhb",
-       "tier": "squad",
-       "name": "Shahadat Hossain"
-      },
-      {
-       "id": "290007",
+       "id": "380748",
        "hand": "lhb",
-       "tier": "squad",
-       "name": "Shakib Al Hasan"
+       "tier": "xi",
+       "name": "Soumya Sarkar"
       },
       {
        "id": "5460114",
        "hand": "rhb",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Jaker Ali"
       },
       {
@@ -222,6 +156,12 @@
        "hand": "rhb",
        "tier": "xi",
        "name": "Mehidy Hasan Miraz"
+      },
+      {
+       "id": "5170006",
+       "hand": "rhb",
+       "tier": "squad",
+       "name": "Amit Hasan"
       }
      ]
     },
@@ -232,34 +172,16 @@
      "bowl_group": "spin",
      "reports": [
       {
-       "id": "2540159",
-       "hand": "rhb",
-       "tier": "xi",
-       "name": "Litton Das"
-      },
-      {
-       "id": "3630132",
-       "hand": "rhb",
-       "tier": "xi",
-       "name": "Mahmudul Hasan Joy"
-      },
-      {
        "id": "2540166",
        "hand": "lhb",
        "tier": "xi",
        "name": "Shadman Islam"
       },
       {
-       "id": "2540168",
-       "hand": "lhb",
-       "tier": "squad",
-       "name": "Zakir Hasan"
-      },
-      {
-       "id": "2700013",
+       "id": "3630131",
        "hand": "lhb",
        "tier": "xi",
-       "name": "Mominul Haque"
+       "name": "Tanzid Hasan"
       },
       {
        "id": "3110063",
@@ -268,27 +190,27 @@
        "name": "Najmul Hussain Shanto"
       },
       {
+       "id": "2700013",
+       "hand": "lhb",
+       "tier": "xi",
+       "name": "Mominul Haque"
+      },
+      {
        "id": "300015",
        "hand": "rhb",
        "tier": "xi",
        "name": "Mushfiqur Rahim"
       },
       {
-       "id": "520069",
-       "hand": "rhb",
-       "tier": "squad",
-       "name": "Shahadat Hossain"
-      },
-      {
-       "id": "290007",
+       "id": "380748",
        "hand": "lhb",
-       "tier": "squad",
-       "name": "Shakib Al Hasan"
+       "tier": "xi",
+       "name": "Soumya Sarkar"
       },
       {
        "id": "5460114",
        "hand": "rhb",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Jaker Ali"
       },
       {
@@ -296,6 +218,12 @@
        "hand": "rhb",
        "tier": "xi",
        "name": "Mehidy Hasan Miraz"
+      },
+      {
+       "id": "5170006",
+       "hand": "rhb",
+       "tier": "squad",
+       "name": "Amit Hasan"
       }
      ]
     }
