@@ -362,9 +362,10 @@ def _opp_roster(slug):
         cfg_path = os.path.join(HERE, "series.json")
         if os.path.exists(cfg_path):
             cfg = json.load(open(cfg_path, encoding="utf-8"))
-            for s in cfg.get("series", []):
-                if s.get("slug") != slug:
-                    continue
+            base = slug.split("-")[0]              # CA XI slug reuses the base opponent's roster
+            match = next((s for s in cfg.get("series", []) if s.get("slug") == slug), None) \
+                or next((s for s in cfg.get("series", []) if s.get("slug", "").startswith(base + "-")), None)
+            for s in ([match] if match else []):
                 for g in s.get("groups", []):
                     is_bat = "batters" in g["slug"] or g.get("bowl_group") or g.get("kind") == "batting"
                     for r in g.get("reports", []):
@@ -833,13 +834,15 @@ def _opp_tiers(slug):
     if not os.path.exists(cfg_path):
         return {}
     cfg = json.load(open(cfg_path, encoding="utf-8"))
-    for s in cfg.get("series", []):
-        if s.get("slug") == slug:
-            out = {}
-            for g in s.get("groups", []):
-                for r in g.get("reports", []):
-                    out.setdefault(str(r["id"]), r.get("tier", "squad"))
-            return out
+    base = slug.split("-")[0]                       # e.g. a CA XI slug reuses the base opponent's tiers
+    match = next((s for s in cfg.get("series", []) if s.get("slug") == slug), None) \
+        or next((s for s in cfg.get("series", []) if s.get("slug", "").startswith(base + "-")), None)
+    if match:
+        out = {}
+        for g in match.get("groups", []):
+            for r in g.get("reports", []):
+                out.setdefault(str(r["id"]), r.get("tier", "squad"))
+        return out
     return {}
 
 
@@ -1078,7 +1081,12 @@ def main():
     ap.add_argument("--no-video", action="store_true",
                     help="skip minting SAS / resolving dismissal clips (fast offline build)")
     ap.add_argument("--only", nargs="*", help="build only these player ids (prototype)")
+    ap.add_argument("--squads", help="alternate squads file (default squads.json) — e.g. a CA XI roster "
+                    "vs the same opposition; its slug reuses the base opponent's data + tiers")
     args = ap.parse_args()
+    if args.squads:
+        global SQUADS
+        SQUADS = os.path.join(HERE, args.squads)
     build(os.path.join(HERE, args.out), no_video=args.no_video,
           only=set(args.only) if args.only else None)
 

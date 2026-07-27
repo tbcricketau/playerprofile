@@ -186,5 +186,158 @@
    "spin"
   ],
   "tier": "squad"
+ },
+ "3550357": {
+  "name": "Campbell Kellaway",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "2680008": {
+  "name": "Jake Doran",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "1070606": {
+  "name": "Josh Philippe",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "1070327": {
+  "name": "Kurtis Patterson",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "3550677": {
+  "name": "Sam Konstas",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "3550381": {
+  "name": "Teague Wyllie",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
+ },
+ "4310045": {
+  "name": "Campbell Thompson",
+  "role": "Bowler",
+  "packs": [
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "pace"
+  ]
+ },
+ "3750021": {
+  "name": "Corey Rocchiccioli",
+  "role": "Bowler",
+  "packs": [
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "spin"
+  ]
+ },
+ "4290003": {
+  "name": "Jerrssis Wadia",
+  "role": "Bowler",
+  "packs": [
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "spin"
+  ]
+ },
+ "3550742": {
+  "name": "Tom Menzies",
+  "role": "Bowler",
+  "packs": [
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "pace"
+  ]
+ },
+ "3110019": {
+  "name": "Xavier Crone",
+  "role": "Bowler",
+  "packs": [
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "pace"
+  ]
+ },
+ "3550562": {
+  "name": "Hanno Jacobs",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "pace"
+  ]
+ },
+ "1070502": {
+  "name": "Tom Rogers",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "pace"
+  ]
+ },
+ "3150058": {
+  "name": "Noah McFadyen",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "tier": "squad",
+  "bowl_types": [
+   "pace"
+  ]
  }
 }
