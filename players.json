@@ -340,5 +340,14 @@
   "bowl_types": [
    "pace"
   ]
+ },
+ "2840030": {
+  "name": "Jack Clayton",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ],
+  "prefs": "base",
+  "tier": "squad"
  }
 }

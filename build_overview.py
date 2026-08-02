@@ -119,12 +119,12 @@ def build(opp, group):
             P = build_batter_profile(bid, group=group)
         except Exception as e:
             print(f"  ! {name}: {type(e).__name__}: {str(e)[:60]}")
-            rows.append({"name": name, "sub": meta.get("hand", ""), "balls": 0,
-                         "plan": None, "field": None})
+            rows.append({"bid": bid, "name": name, "sub": meta.get("hand", ""), "balls": 0,
+                         "plan": None, "field": None, "threat": None})
             continue
         balls = int(P.get("n_balls") or 0)
         thin = balls < MIN_BALLS
-        rows.append({"name": name,
+        rows.append({"bid": bid, "name": name,
                      "sub": " · ".join(x for x in (meta.get("hand"), meta.get("role")) if x),
                      "balls": balls,
                      "plan": None if thin else plan_sentence(P),
@@ -193,6 +193,12 @@ def build(opp, group):
                 f'A batter needs {MIN_BALLS}+ balls vs {html.escape(label)} to carry a plan. '
                 f'Field placements are the evidenced moves off the stock field — the reasoning behind '
                 f'each one is in that batter\'s report.</p>')
+
+    # structured rows so the packs can render the same content inline (with headshots) rather than
+    # linking out to this page
+    json.dump({"opp": opp, "group": group, "label": label, "min_balls": MIN_BALLS, "rows": rows},
+              open(os.path.join(HERE, "data", f"overview_{group}_{opp}.json"), "w", encoding="utf-8"),
+              indent=1, ensure_ascii=False)
 
     out = os.path.join(HERE, "reports", f"overview_{group}_{opp}.html")
     open(out, "w", encoding="utf-8").write(
