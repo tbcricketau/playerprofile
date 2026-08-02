@@ -1,0 +1,121 @@
+{
+ "opp": "bangladesh",
+ "countries": [
+  "New Zealand",
+  "South Africa",
+  "England"
+ ],
+ "squad_avg": 22.0,
+ "squad_balls": 2813,
+ "squad_outs": 66,
+ "batters": [
+  {
+   "name": "Mushfiqur Rahim",
+   "hand": "RHB",
+   "role": "Middle order",
+   "matches": 5,
+   "balls": 390,
+   "outs": 9,
+   "avg": 18.3,
+   "avg_all": 43.5,
+   "false": 11.8,
+   "false_all": 9.2
+  },
+  {
+   "name": "Mominul Haque",
+   "hand": "LHB",
+   "role": "Top order",
+   "matches": 8,
+   "balls": 697,
+   "outs": 15,
+   "avg": 19.2,
+   "avg_all": 34.9,
+   "false": 16.1,
+   "false_all": 11.4
+  },
+  {
+   "name": "Litton Das",
+   "hand": "RHB",
+   "role": "Middle order",
+   "matches": 8,
+   "balls": 723,
+   "outs": 15,
+   "avg": 30.5,
+   "avg_all": 36.8,
+   "false": 9.0,
+   "false_all": 8.9
+  },
+  {
+   "name": "Tanzid Hasan",
+   "hand": "LHB",
+   "role": "Opener",
+   "matches": 0,
+   "balls": 0,
+   "outs": 0,
+   "avg": null,
+   "avg_all": 15.0,
+   "false": null,
+   "false_all": null
+  },
+  {
+   "name": "Mehidy Hasan Miraz",
+   "hand": "RHB",
+   "role": "Lower order",
+   "matches": 6,
+   "balls": 354,
+   "outs": 11,
+   "avg": 13.5,
+   "avg_all": 25.0,
+   "false": 12.7,
+   "false_all": 14.2
+  },
+  {
+   "name": "Najmul Hussain Shanto",
+   "hand": "LHB",
+   "role": "Top order",
+   "matches": 0,
+   "balls": 0,
+   "outs": 0,
+   "avg": null,
+   "avg_all": 35.0,
+   "false": null,
+   "false_all": 11.8
+  },
+  {
+   "name": "Shadman Islam",
+   "hand": "LHB",
+   "role": "Opener",
+   "matches": 5,
+   "balls": 356,
+   "outs": 10,
+   "avg": 17.9,
+   "avg_all": 27.8,
+   "false": 13.5,
+   "false_all": 12.8
+  },
+  {
+   "name": "Soumya Sarkar",
+   "hand": "LHB",
+   "role": "Opener",
+   "matches": 3,
+   "balls": 293,
+   "outs": 6,
+   "avg": 35.0,
+   "avg_all": 20.6,
+   "false": 18.1,
+   "false_all": 17.4
+  },
+  {
+   "name": "Jaker Ali",
+   "hand": "RHB",
+   "role": "Middle order",
+   "matches": 0,
+   "balls": 0,
+   "outs": 0,
+   "avg": null,
+   "avg_all": 30.1,
+   "false": null,
+   "false_all": 15.4
+  }
+ ]
+}

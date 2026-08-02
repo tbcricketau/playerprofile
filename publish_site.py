@@ -202,6 +202,19 @@ def build(out_dir, sas_hours):
         has_sm = os.path.exists(sm_src)
         if has_sm:
             shutil.copy(sm_src, os.path.join(s_dir, "shot-matrix.html"))
+        # series-level meeting overviews, one per bowler type (build_overview.py) — plan + field
+        # placements, a row per batter. Whatever groups have been built get linked.
+        opp0 = s["slug"].split("-")[0]
+        # seam-and-bounce conditions read (build_conditions.py)
+        cd_src = os.path.join(REPORTS_DIR, f"conditions_{opp0}.html")
+        has_cd = os.path.exists(cd_src)
+        if has_cd:
+            shutil.copy(cd_src, os.path.join(s_dir, "conditions.html"))
+        overviews = []
+        for ov in sorted(glob.glob(os.path.join(REPORTS_DIR, f"overview_*_{opp0}.html"))):
+            grp = os.path.basename(ov)[len("overview_"):-len(f"_{opp0}.html")]
+            shutil.copy(ov, os.path.join(s_dir, f"overview-{grp.replace('_', '-')}.html"))
+            overviews.append(grp)
         group_cards, s_total = [], 0
         for g in s.get("groups", []):
             g_dir = os.path.join(s_dir, g["slug"])
@@ -232,7 +245,7 @@ def build(out_dir, sas_hours):
         except Exception as e:
             print(f"  ! attack section {s['slug']}: {type(e).__name__}: {e}")
         _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx, has_attacks=has_attacks,
-                             has_shots=has_sm)
+                             has_shots=has_sm, overviews=overviews, has_conditions=has_cd)
         series_cards.append((s["slug"], s["name"], s.get("subtitle", ""), s_total))
     _write_top_index(out_dir, cfg, series_cards)
     open(os.path.join(out_dir, ".nojekyll"), "w").close()
@@ -253,8 +266,13 @@ def _write_top_index(out_dir, cfg, series_cards):
     open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(_page(cfg.get("title", "Scouting"), body))
 
 
+_OV_LABEL = {"pace": "Pace", "spin": "Spin", "left_pace": "Left-arm pace",
+             "right_pace": "Right-arm pace", "off_spin": "Off spin", "leg_spin": "Leg spin",
+             "left_orthodox": "Left-arm orthodox", "left_unorthodox": "Left-arm wrist spin"}
+
+
 def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False, has_attacks=False,
-                        has_shots=False):
+                        has_shots=False, overviews=None, has_conditions=False):
     mx = ('<li><a href="matchups.html"><b>Match-ups</b>'
           '<span class="sub">the full simulated grid — every pairing, both directions</span></a>'
           '<span class="n">matrix</span></li>' if has_matchups else "")
@@ -264,8 +282,17 @@ def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False, has_atta
     sm = ('<li><a href="shot-matrix.html"><b>Unorthodox shot options</b>'
           '<span class="sub">sweeps, ramps, reverses — how often each batter plays them, vs pace and spin</span></a>'
           '<span class="n">matrix</span></li>' if has_shots else "")
-    if group_cards or mx or at or sm:
-        items = mx + at + sm + "\n".join(
+    ov = "".join(
+        f'<li><a href="overview-{g.replace("_", "-")}.html">'
+        f'<b>{html.escape(_OV_LABEL.get(g, g.replace("_", " ").capitalize()))} meeting overview</b>'
+        f'<span class="sub">every batter — the plan against {html.escape(_OV_LABEL.get(g, g).lower())} '
+        f'and the field placements it implies</span></a>'
+        f'<span class="n">table</span></li>' for g in (overviews or []))
+    cd = ('<li><a href="conditions.html"><b>Seam-and-bounce conditions</b>'
+          '<span class="sub">how their batters have gone in NZ, SA and England — the closest '
+          'benchmark to Australia</span></a><span class="n">table</span></li>' if has_conditions else "")
+    if group_cards or mx or at or sm or ov or cd:
+        items = mx + at + sm + cd + ov + "\n".join(
             f'<li><a href="{gl}/index.html"><b>{html.escape(gn)}</b></a>'
             f'<span class="n">{c} report{"s" if c != 1 else ""}</span></li>'
             for gl, gn, c in group_cards)

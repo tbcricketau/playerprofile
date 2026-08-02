@@ -85,7 +85,8 @@
   "bowl_types": [
    "pace"
   ],
-  "tier": "squad"
+  "tier": "squad",
+  "release_detail": true
  },
  "1300007": {
   "name": "Mitch Starc",

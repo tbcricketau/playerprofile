@@ -23,6 +23,17 @@
    "Switch hit": 0.0
   },
   {
+   "batter": "Litton Das",
+   "bid": "2540159",
+   "balls": 2524,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
    "batter": "Mehidy Hasan Miraz",
    "bid": "3080087",
    "balls": 1635,
@@ -98,6 +109,17 @@
    "Slog sweep": 0.7,
    "Reverse sweep": 0.2,
    "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Litton Das",
+   "bid": "2540159",
+   "balls": 2785,
+   "Conventional sweep": 2.7,
+   "Slog sweep": 0.7,
+   "Reverse sweep": 0.8,
+   "Paddle": 0.1,
    "Ramp / scoop": 0.1,
    "Switch hit": 0.0
   },

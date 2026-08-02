@@ -605,6 +605,33 @@ def _plan_read(P: dict) -> str:
     return plan + "."
 
 
+def plan_sentence(P: dict) -> str | None:
+    """The "where to bowl" plan for a TYPE-SCOPED profile — "Plan for {type}: bowl {length}
+    pitching {line} while {seaming in}." Returns None for a combined (untyped) profile, or when
+    the length/line evidence is too thin to name a target. Shared by the report's summary and the
+    per-batter overview tables so both quote the same plan."""
+    if not P.get("group"):
+        return None
+    dims, is_spin = P["dims"], P["is_spin_group"]
+    wl, ln = _worst(dims.get("length", [])), _worst(dims.get("line", []))
+    if not (wl and ln):
+        return None
+    moves = []
+    for dk in ("seam", "swing"):
+        mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
+              and d["balls"] >= 60 and d["avg"] is not None]
+        straight = next((d for d in dims.get(dk, []) if d["bucket"] == "straight"), None)
+        if mv and straight and straight["avg"]:
+            worst = min(mv, key=lambda d: d["avg"])
+            if worst["avg"] < straight["avg"] * 0.8:
+                m = _move_gerund(worst["bucket"], dk + "_dir", is_spin)
+                if m:
+                    moves.append(m)
+    return (f"Plan for {P['group_label']}: bowl <b>{wl['bucket'].lower()} pitching "
+            f"{_pitch_line(ln['bucket'])}</b>"
+            + (f" while <b>{_join_moves(moves)}</b>" if moves else "") + ".")
+
+
 def _summary_points(P: dict, fp_type: str = None, include_matchup: bool = True) -> list:
     """A TL;DR for a bowler who won't read the whole report: what kind of batter they are,
     how they get out, where to bowl, and their soft spot — 4-6 short lines. For a type-scoped
@@ -619,26 +646,9 @@ def _summary_points(P: dict, fp_type: str = None, include_matchup: bool = True) 
         if vs and P.get("weakness") in ("pace", "spin"):
             pts.append(vs)
     # where to bowl — the plan target
-    plan_txt = None
-    if P.get("group"):
-        dims, is_spin = P["dims"], P["is_spin_group"]
-        wl, ln = _worst(dims.get("length", [])), _worst(dims.get("line", []))
-        moves = []
-        for dk in ("seam", "swing"):
-            mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
-                  and d["balls"] >= 60 and d["avg"] is not None]
-            straight = next((d for d in dims.get(dk, []) if d["bucket"] == "straight"), None)
-            if mv and straight and straight["avg"]:
-                worst = min(mv, key=lambda d: d["avg"])
-                if worst["avg"] < straight["avg"] * 0.8:
-                    m = _move_gerund(worst["bucket"], dk + "_dir", is_spin)
-                    if m:
-                        moves.append(m)
-        if wl and ln:
-            plan_txt = (f"Plan for {P['group_label']}: bowl <b>{wl['bucket'].lower()} pitching "
-                        f"{_pitch_line(ln['bucket'])}</b>"
-                        + (f" while <b>{_join_moves(moves)}</b>" if moves else "") + ".")
-            pts.append(plan_txt)
+    plan_txt = plan_sentence(P)
+    if plan_txt:
+        pts.append(plan_txt)
     # their danger ball (the length×line that dismisses them most) — the ball to hunt
     g = P.get("grid_danger")
     if g and not (plan_txt and g["line_region"] in plan_txt and g["length_band"].lower() in plan_txt):
@@ -783,7 +793,7 @@ def _build_player(P: dict, pdf_path: str) -> dict:
         from cricket_core.video import build_player_html, write_playlists
         pls = build_batting_playlists(P, cap=8)
         if not pls:
-            return {}
+            return {"lists": {}}          # no clips: keep `lists` so the template guards work
         player_path = pdf_path[:-4] + ".player.html"
         sub = f"{P['name']} — batting scout" + (f" vs {P['group_label']}" if P.get("group") else "")
         build_player_html(pls, player_path, title=P["name"], subtitle=sub)
@@ -794,7 +804,7 @@ def _build_player(P: dict, pdf_path: str) -> dict:
         return {"player": _file_url(player_path), "lists": {k: True for k in pls},
                 "stroke_name": stroke_name, "playlists": pls}
     except Exception:
-        return {}
+        return {"lists": {}}
 
 
 def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None,

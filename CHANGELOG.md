@@ -4,6 +4,35 @@ Bump `REPORT_VERSION` in `version.py` on every git commit that changes report
 output, and record it here. The version + build date print in the top-right of
 the front page.
 
+## v1.6 — 2 August 2026
+Four bowler requests answered, plus the BAN squad reconciled again after Litton Das was recalled.
+- **Meeting overviews** (`build_overview.py`) — one row per opposition batter for a given bowler type:
+  the plan against them (from the report's own `plan_sentence`, so the sheet and the report can't
+  drift), the field placements it implies (`field_engine.build_field`), and a second table of how they
+  score and get out (balls, BPD, false-shot rate, scoring area, short ball, top dismissal). Built for
+  **pace, left-arm pace, right-arm pace and spin**; each bowler's pack links the sheet for their own
+  type, with a fallback to the broad pace/spin one. Answers **Boland** (plan + key field placements)
+  and **Starc** (opposition batters vs left-arm pace).
+- **Honest gating throughout the overviews:** a batter needs 60+ balls vs the type to carry a plan,
+  4+ dismissals for a balls-per-dismissal figure, 40+ short balls for a short-ball read. Where one
+  pace sub-type has too few short balls, the column falls back to the batter's whole pace record and
+  says so, rather than leaving the bouncer question unanswered.
+- **Seam-and-bounce conditions** (`build_conditions.py`) — each opposition batter's record in Tests
+  played in New Zealand, South Africa and England, set against their overall Test record, since the
+  gap is the finding. Squad averages 22.0 there; five of the six with a sample average less than
+  their career mark. Batters who have never toured there are named rather than dropped. Answers
+  **Hazlewood**.
+- **Release-point detail** (`build_release_detail.py`) — a bowler's own crease position (close /
+  medium / wide) split by batter hand and over/round, because `release_line_unmirrored` is absolute
+  and the two angles can't be pooled. Opt-in per bowler via `players.json` `release_detail`, rendered
+  in that bowler's pack only. Answers **Cummins**.
+- **Batting-report fix:** `_build_player` returned a bare `{}` on its no-clips and exception paths, so
+  the template's `video.lists` guards raised `UndefinedError` and killed the render for thin batters
+  (hit `left_pace` for Tanzid and Soumya). Now returns `{"lists": {}}`, matching the bowling report's
+  existing fix. `plan_sentence()` extracted from `_summary_points` and verified byte-identical.
+- **Litton Das recalled** — back through the sim store (matchupmodel named-squad override),
+  opponent_about, h2h, shot matrix and matchups grid, tiered *in the squad*.
+
 ## v1.5 — 22–23 July 2026
 Scouting-site rebuild + opposition-report language/content pass (coach + player QA). Reports and the
 two published sites (player-packs LIVE, scouting-test preview) brought in line.

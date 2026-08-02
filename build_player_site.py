@@ -116,6 +116,14 @@ EXTRA_CSS = """<style>
  .vwatch.off{color:#9aa4b2;border-style:dashed;cursor:default}
  .simrow{margin:2px 0 14px;padding:10px 12px;background:#eef3fb;border:1px solid #d5dced;border-radius:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
  .simrow .simnote{color:#6b7280;font-size:12px}
+ .relwrap{margin:2px 0 16px;padding:12px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:10px}
+ .relwrap h3{margin:0 0 4px;font-size:15px;color:#003087}
+ .relwrap .relnote{margin:0 0 10px;color:#6b7280;font-size:12px;line-height:1.5}
+ table.reltab{border-collapse:collapse;font-size:13px;width:100%}
+ table.reltab th{text-align:left;font-weight:600;color:#6b7280;padding:4px 8px;border-bottom:1px solid #e5e7eb}
+ table.reltab td{padding:5px 8px;border-bottom:1px solid #f4f6f9;font-variant-numeric:tabular-nums}
+ table.reltab tr.grp td{font-weight:600;color:#1a1a2e;background:#f5f7fa;padding-top:7px}
+ table.reltab .thin{color:#9ca3af}
  /* collapsible sections */
  details.pack{border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow:hidden}
  details.pack>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:baseline;gap:8px}
@@ -420,6 +428,21 @@ _TYPESTR_TO_GROUP = {
     "left-arm wrist": "left_unorthodox", "left unorthodox": "left_unorthodox", "left-arm unorthodox": "left_unorthodox",
 }
 _PACE_GROUPS = {"right_pace", "left_pace"}
+
+
+_OV_LABEL = {"pace": "pace", "spin": "spin", "left_pace": "left-arm pace",
+             "right_pace": "right-arm pace", "off_spin": "off spin", "leg_spin": "leg spin",
+             "left_orthodox": "left-arm orthodox", "left_unorthodox": "left-arm wrist spin"}
+
+
+def _overview_href(slug, group):
+    """Link to the meeting overview for this bowler's own type, falling back to the broad
+    pace/spin sheet when their exact type hasn't been built. None if neither exists."""
+    for g in (group, "spin" if str(group).endswith(("spin", "orthodox", "unorthodox")) else "pace"):
+        if g and os.path.exists(os.path.join(HERE, "reports",
+                                             f"overview_{g}_{slug.split('-')[0]}.html")):
+            return f"../scouting/{slug}/overview-{g.replace('_', '-')}.html"
+    return None
 
 
 def _our_bowl_groups(slug):
@@ -767,7 +790,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 
 def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None, h2h_links=None,
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
-                  btype="pace", opp_vision=None, opp_tiers=None, similar_href=None, similar_name=None):
+                  btype="pace", opp_vision=None, opp_tiers=None, similar_href=None, similar_name=None,
+                  overview_href=None, overview_label=None, release=None):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -781,6 +805,13 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     if similar_href and similar_name:               # a similar reference bowler vs this opposition
         body.append(f'<div class="simrow">{_vwatch(similar_href, f"&#9654; How {html.escape(similar_name)} bowled to {html.escape(opp)}")}'
                     f'<span class="simnote">A similar bowler’s recent footage against these batters.</span></div>')
+    if release:                                     # opt-in, this bowler's pack only
+        body.append(_release_block(release))
+    if overview_href:                               # the meeting sheet for this bowler's own type
+        body.append(f'<div class="simrow"><a class="rlink" href="{overview_href}">'
+                    f'Meeting overview</a><span class="simnote">Every {html.escape(opp)} batter on one '
+                    f'page — the plan against {html.escape(overview_label or "your type")}, the field it '
+                    f'implies, and how they score and get out.</span></div>')
 
     if opp_batters:
         ordered = sorted(opp_batters.items(),
@@ -825,6 +856,48 @@ def _load_similar(slug):
     opp = slug.split("-")[0]
     p = os.path.join(HERE, "data", f"similar_bowler_{opp}.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+def _load_release_detail():
+    """{our_bowler_pid: {name, seasons, cells}} from data/release_detail.json — where on the crease
+    they release from and what it returns, by batter hand and over/round. Opt-in per bowler."""
+    p = os.path.join(HERE, "data", "release_detail.json")
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+_BAND_LABEL = {"close": "Close to the stumps", "medium": "Medium", "wide": "Wide"}
+
+
+def _release_block(rel):
+    """The bowler's own release-point table — their pack only, and only when they've asked for it.
+    Cells under the sample floor show their ball count instead of an average, because a crease
+    position they barely use can't carry one."""
+    if not rel or not rel.get("cells"):
+        return ""
+    rows = []
+    last = None
+    for c in rel["cells"]:
+        key = (c["angle"], c["hand"])
+        if key != last:
+            rows.append(f'<tr class=grp><td colspan=7>{c["angle"].capitalize()} the wicket '
+                        f'to {html.escape(c["hand"])}</td></tr>')
+            last = key
+        rateable = c.get("avg") is not None
+        rows.append(
+            f'<tr><td></td><td>{html.escape(_BAND_LABEL.get(c["band"], c["band"]))}</td>'
+            f'<td>{c["balls"]}</td><td>{c["wkts"]}</td>'
+            f'<td>{c["avg"] if rateable else "<span class=thin>—</span>"}</td>'
+            f'<td>{c["sr"] if rateable else "<span class=thin>—</span>"}</td>'
+            f'<td>{c["econ"] if c.get("econ") is not None else "<span class=thin>—</span>"}</td></tr>')
+    return (f'<div class="relwrap"><h3>Your release point</h3>'
+            f'<p class="relnote">Where you let the ball go across the crease, and what it returned — '
+            f'split by the batter\'s hand and by over/round, because the two angles sit on opposite '
+            f'sides of the stumps and can\'t be pooled. Test matches with release tracking'
+            + (f', {html.escape(rel["seasons"])}' if rel.get("seasons") else "") + '. An average needs '
+            f'{rel.get("min_balls", 150)}+ balls and 3+ wickets in the cell, otherwise the ball count '
+            f'is shown on its own.</p>'
+            f'<table class="reltab"><tr><th></th><th>Release</th><th>Balls</th><th>Wkts</th>'
+            f'<th>Avg</th><th>SR</th><th>Econ</th></tr>{"".join(rows)}</table></div>')
 
 
 def _opp_tiers(slug):
@@ -971,6 +1044,7 @@ def build(out_dir, no_video=False, only=None):
         about_bowl, about_bat = _load_about(slug)      # distilled facts, per role, id-keyed
         opp_tiers = _opp_tiers(slug)                    # opposition squad status (XI/squad/fringe)
         similar_data = _load_similar(slug)              # reference-bowler footage per our bowler
+        release_data = _load_release_detail()            # opt-in own-release table (per bowler)
         # signature footage for the opponents shown (N_OPP each) — bowlers get stock/wicket balls
         # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs).
         # An all-rounder gets ALL four kinds (distinct keys → no collision), so their bowler card
@@ -1059,7 +1133,10 @@ def build(out_dir, no_video=False, only=None):
                                         pages=pages, current=bowl_href, btype=bt,
                                         opp_vision=opp_vision, opp_tiers=opp_tiers,
                                         similar_href=similar_href,
-                                        similar_name=(sb["name"] if sb else None)) + vsnip,
+                                        similar_name=(sb["name"] if sb else None),
+                                        overview_href=_overview_href(slug, grp or bt),
+                                        overview_label=_OV_LABEL.get(grp or bt),
+                                        release=(release_data.get(pid) if bt == "pace" else None)) + vsnip,
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 

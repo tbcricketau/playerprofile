@@ -1,0 +1,129 @@
+{
+ "1300076": {
+  "name": "Pat Cummins",
+  "seasons": "2018–2025",
+  "cells": [
+   {
+    "angle": "over",
+    "hand": "LHB",
+    "band": "close",
+    "balls": 2,
+    "wkts": 0,
+    "runs": 0,
+    "avg": null,
+    "sr": null,
+    "econ": null,
+    "false_pct": null
+   },
+   {
+    "angle": "over",
+    "hand": "LHB",
+    "band": "medium",
+    "balls": 1097,
+    "wkts": 23,
+    "runs": 531,
+    "avg": 23.1,
+    "sr": 48,
+    "econ": 2.9,
+    "false_pct": 21.2
+   },
+   {
+    "angle": "over",
+    "hand": "LHB",
+    "band": "wide",
+    "balls": 276,
+    "wkts": 7,
+    "runs": 159,
+    "avg": 22.7,
+    "sr": 39,
+    "econ": 3.46,
+    "false_pct": 17.8
+   },
+   {
+    "angle": "over",
+    "hand": "RHB",
+    "band": "close",
+    "balls": 1,
+    "wkts": 0,
+    "runs": 0,
+    "avg": null,
+    "sr": null,
+    "econ": null,
+    "false_pct": null
+   },
+   {
+    "angle": "over",
+    "hand": "RHB",
+    "band": "medium",
+    "balls": 3906,
+    "wkts": 88,
+    "runs": 1870,
+    "avg": 21.2,
+    "sr": 44,
+    "econ": 2.87,
+    "false_pct": 21.8
+   },
+   {
+    "angle": "over",
+    "hand": "RHB",
+    "band": "wide",
+    "balls": 2893,
+    "wkts": 66,
+    "runs": 1338,
+    "avg": 20.3,
+    "sr": 44,
+    "econ": 2.77,
+    "false_pct": 20.2
+   },
+   {
+    "angle": "round",
+    "hand": "LHB",
+    "band": "medium",
+    "balls": 127,
+    "wkts": 2,
+    "runs": 64,
+    "avg": null,
+    "sr": null,
+    "econ": null,
+    "false_pct": 20.0
+   },
+   {
+    "angle": "round",
+    "hand": "LHB",
+    "band": "wide",
+    "balls": 1588,
+    "wkts": 31,
+    "runs": 769,
+    "avg": 24.8,
+    "sr": 51,
+    "econ": 2.91,
+    "false_pct": 20.1
+   },
+   {
+    "angle": "round",
+    "hand": "RHB",
+    "band": "medium",
+    "balls": 18,
+    "wkts": 0,
+    "runs": 9,
+    "avg": null,
+    "sr": null,
+    "econ": null,
+    "false_pct": null
+   },
+   {
+    "angle": "round",
+    "hand": "RHB",
+    "band": "wide",
+    "balls": 113,
+    "wkts": 5,
+    "runs": 73,
+    "avg": null,
+    "sr": null,
+    "econ": null,
+    "false_pct": null
+   }
+  ],
+  "min_balls": 150
+ }
+}
