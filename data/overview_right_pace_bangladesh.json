@@ -143,11 +143,19 @@
   {
    "bid": "5460114",
    "name": "Jaker Ali",
-   "sub": "RHB",
-   "balls": 0,
-   "plan": null,
-   "field": null,
-   "threat": null
+   "sub": "RHB · Middle order",
+   "balls": 324,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
+   "field": "<em>leg-side stock field</em> · Deep square leg · <em>spare: Mid-on</em>",
+   "threat": {
+    "balls": 324,
+    "n_out": 6,
+    "bpd": 54.0,
+    "false_pct": 18.484848484848484,
+    "area": "leg (70% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
   }
  ]
 }

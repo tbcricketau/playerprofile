@@ -459,6 +459,16 @@ def _load_overview(slug, group):
     return None
 
 
+def _strip_plan_prefix(plan, label):
+    """The column header names the bowler type, so the cell shouldn't repeat "Plan for X:" on
+    every row. Returns the plan from "bowl …" onward, sentence-cased."""
+    pre = f"Plan for {label}: "
+    if plan and plan.startswith(pre):
+        rest = plan[len(pre):]
+        return rest[:1].upper() + rest[1:]
+    return plan
+
+
 def _overview_section(ov, opp):
     """The whole opposition on one page, inline in the pack: a headshot + the plan and field per
     batter, then how they score and get out. Rendered here rather than linked so the pack stays
@@ -472,11 +482,17 @@ def _overview_section(ov, opp):
         who = (f'<td class=obat>{av}<span class=on><b>{html.escape(r["name"])}</b>'
                f'<span class=os>{html.escape(r.get("sub") or "")}</span></span></td>')
         if (r.get("balls") or 0) < mb:
-            cell = (f'<td colspan=2 class=othin>Only {r["balls"]} balls faced vs {html.escape(label)}'
-                    f' — too little to set a plan from.</td>') if r.get("balls") else \
-                   f'<td colspan=2 class=othin>No record vs {html.escape(label)}.</td>'
+            if r.get("error"):
+                cell = ('<td colspan=2 class=othin>Profile could not be built — a pipeline failure, '
+                        'not a gap in their record.</td>')
+            elif r.get("balls"):
+                cell = (f'<td colspan=2 class=othin>Only {r["balls"]} balls faced vs '
+                        f'{html.escape(label)} — too little to set a plan from.</td>')
+            else:
+                cell = f'<td colspan=2 class=othin>No record vs {html.escape(label)}.</td>'
         else:
-            cell = (f'<td>{r.get("plan") or "<span class=othin>No clear length/line target.</span>"}</td>'
+            plan = _strip_plan_prefix(r.get("plan"), label)
+            cell = (f'<td>{plan or "<span class=othin>No clear length/line target.</span>"}</td>'
                     f'<td>{r.get("field") or "<span class=othin>Too few balls to set a field.</span>"}</td>')
         plan_rows.append(f"<tr>{who}{cell}</tr>")
 
@@ -500,7 +516,7 @@ def _overview_section(ov, opp):
                    f'<td>{html.escape(t["top_out"]) if t.get("top_out") else "—"}</td></tr>')
 
     inner = (f'<div class=ovwrap><table class=ovt>'
-             f'<tr><th>Batter</th><th>Bowling plan</th><th>Field options</th></tr>'
+             f'<tr><th>Batter</th><th>Plan for {html.escape(label)}</th><th>Field options</th></tr>'
              f'{"".join(plan_rows)}</table></div>'
              f'<h4 class=ovh>How they score and get out</h4>'
              f'<div class=ovwrap><table class=ovt>'

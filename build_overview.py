@@ -14,6 +14,7 @@ import argparse
 import html
 import json
 import os
+import time
 
 from batter_profile import build_batter_profile, BOWLER_GROUPS, MACRO_GROUPS
 from batting_report import plan_sentence
@@ -70,7 +71,7 @@ _MIN_OUTS_FOR_BPD = 4      # below this, a balls-per-dismissal figure is noise �
 _MIN_SHORT_BALLS = 40
 
 
-_PACE_SUBS = ("left_pace", "right_pace")
+from batter_profile import _PACE_SUBS, _SPIN_SUBS       # the canonical sub-type lists
 
 
 def _short_read(P):
@@ -115,12 +116,21 @@ def build(opp, group):
     rows = []
     for bid, meta in sorted(batters.items(), key=lambda kv: -(kv[1].get("order") or 0)):
         name = (meta.get("name") or bid).strip()
-        try:
-            P = build_batter_profile(bid, group=group)
-        except Exception as e:
-            print(f"  ! {name}: {type(e).__name__}: {str(e)[:60]}")
+        # Retry: the warehouse connection drops intermittently, and a failed build must NOT be
+        # written as a zero — "no record vs X" is a claim about the player, not about our pipeline.
+        P, err = None, None
+        for attempt in range(3):
+            try:
+                P = build_batter_profile(bid, group=group)
+                break
+            except Exception as e:
+                err = f"{type(e).__name__}: {str(e)[:60]}"
+                if attempt < 2:
+                    time.sleep(8)
+        if P is None:
+            print(f"  ! {name}: FAILED after 3 tries — {err}")
             rows.append({"bid": bid, "name": name, "sub": meta.get("hand", ""), "balls": 0,
-                         "plan": None, "field": None, "threat": None})
+                         "plan": None, "field": None, "threat": None, "error": True})
             continue
         balls = int(P.get("n_balls") or 0)
         thin = balls < MIN_BALLS
@@ -148,14 +158,25 @@ def build(opp, group):
             f'<span class="sub">One row per batter — the plan against {html.escape(label)}, and the '
             f'field placements it implies. Same numbers as each batter\'s own report.</span></h1>',
             '<div class=owrap><table class=ov>',
-            '<tr><th>Batter</th><th>Bowling plan</th><th>Key field placements</th></tr>']
+            f'<tr><th>Batter</th><th>Plan for {html.escape(label)}</th>'
+            f'<th>Field options</th></tr>']
     for r in rows:
         if r["balls"] < MIN_BALLS:
-            cell = (f'<td colspan=2 class=thin>Only {r["balls"]} balls faced vs {html.escape(label)} '
-                    f'— too little to set a plan from.</td>') if r["balls"] else \
-                   f'<td colspan=2 class=thin>No record vs {html.escape(label)}.</td>'
+            if r.get("error"):
+                cell = ('<td colspan=2 class=thin>Profile could not be built — this is a pipeline '
+                        'failure, not a gap in their record.</td>')
+            elif r["balls"]:
+                cell = (f'<td colspan=2 class=thin>Only {r["balls"]} balls faced vs '
+                        f'{html.escape(label)} — too little to set a plan from.</td>')
+            else:
+                cell = f'<td colspan=2 class=thin>No record vs {html.escape(label)}.</td>'
         else:
-            cell = (f'<td>{r["plan"] or "<span class=thin>No clear length/line target.</span>"}</td>'
+            pre = f"Plan for {label}: "          # the header names the type — don't repeat it per row
+            pl = r["plan"]
+            if pl and pl.startswith(pre):
+                pl = pl[len(pre):]
+                pl = pl[:1].upper() + pl[1:]
+            cell = (f'<td>{pl or "<span class=thin>No clear length/line target.</span>"}</td>'
                     f'<td class=fld>{r["field"] or "<span class=thin>Too few balls to set a field.</span>"}</td>')
         body.append(f'<tr><td class=bat>{html.escape(r["name"])}'
                     f'<span>{html.escape(r["sub"] or "")}</span></td>{cell}</tr>')
@@ -193,6 +214,20 @@ def build(opp, group):
                 f'A batter needs {MIN_BALLS}+ balls vs {html.escape(label)} to carry a plan. '
                 f'Field placements are the evidenced moves off the stock field — the reasoning behind '
                 f'each one is in that batter\'s report.</p>')
+
+    # Sanity check: a pace/spin sub-type can never exceed its macro group, and a batter with balls
+    # against the macro but zero against BOTH sub-types means a build failed rather than a real gap.
+    # Compare against the macro dataset if it's already been built.
+    macro = "spin" if group in _SPIN_SUBS else ("pace" if group in _PACE_SUBS else None)
+    if macro:
+        mp = os.path.join(HERE, "data", f"overview_{macro}_{opp}.json")
+        if os.path.exists(mp):
+            mrows = {r["bid"]: r.get("balls") or 0 for r in json.load(open(mp, encoding="utf-8"))["rows"]}
+            for r in rows:
+                mb = mrows.get(r["bid"], 0)
+                if (r.get("balls") or 0) == 0 and mb > 0:
+                    print(f"  !! {r['name']}: 0 balls vs {group} but {mb} vs {macro} — "
+                          f"suspect a failed build, NOT a real absence")
 
     # structured rows so the packs can render the same content inline (with headshots) rather than
     # linking out to this page
