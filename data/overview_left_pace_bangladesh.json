@@ -1,0 +1,153 @@
+{
+ "opp": "bangladesh",
+ "group": "left_pace",
+ "label": "left-arm pace",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "300015",
+   "name": "Mushfiqur Rahim",
+   "sub": "RHB · Middle order",
+   "balls": 416,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching on the stumps</b> while <b>seaming away</b>.",
+   "field": "<em>off-side / square stock field</em> · Backward square leg · <em>spare: Mid-on</em>",
+   "threat": {
+    "balls": 416,
+    "n_out": 6,
+    "bpd": 69.33333333333333,
+    "false_pct": 15.676959619952495,
+    "area": "off (36% of runs)",
+    "short": "16% false (66 balls) — vs all pace",
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "2700013",
+   "name": "Mominul Haque",
+   "sub": "LHB · Top order",
+   "balls": 730,
+   "plan": "Plan for left-arm pace: bowl <b>back of a length pitching on the stumps</b> while <b>seaming / swinging away</b>.",
+   "field": "<em>leg-side stock field</em> · Deep point, Slip 3 · <em>spare: Mid-off</em>",
+   "threat": {
+    "balls": 730,
+    "n_out": 11,
+    "bpd": 66.36363636363636,
+    "false_pct": 15.290933694181327,
+    "area": "leg (50% of runs)",
+    "short": "12% false (50 balls) — vs all pace",
+    "top_out": "Caught behind (73%)"
+   }
+  },
+  {
+   "bid": "2540159",
+   "name": "Litton Das",
+   "sub": "RHB · Middle order",
+   "balls": 454,
+   "plan": "Plan for left-arm pace: bowl <b>back of a length pitching outside off</b> while <b>seaming in / swinging away</b>.",
+   "field": "<em>stock field</em> · Long-on, Deep square leg · <em>spare: Fine leg</em>",
+   "threat": {
+    "balls": 454,
+    "n_out": 9,
+    "bpd": 50.44444444444444,
+    "false_pct": 12.719298245614034,
+    "area": "off (36% of runs)",
+    "short": "18% false (88 balls) — vs all pace",
+    "top_out": "Caught in the field (44%)"
+   }
+  },
+  {
+   "bid": "3630131",
+   "name": "Tanzid Hasan",
+   "sub": "LHB · Opener",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "threat": null
+  },
+  {
+   "bid": "3080087",
+   "name": "Mehidy Hasan Miraz",
+   "sub": "RHB · Lower order",
+   "balls": 282,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching wide outside off</b>.",
+   "field": "<em>off-side / square stock field</em> · Short leg · <em>spare: Midwicket</em>",
+   "threat": {
+    "balls": 282,
+    "n_out": 5,
+    "bpd": 56.4,
+    "false_pct": 20.97902097902098,
+    "area": "off (48% of runs)",
+    "short": "25% false (68 balls) — vs all pace",
+    "top_out": "Caught in the field (40%)"
+   }
+  },
+  {
+   "bid": "3110063",
+   "name": "Najmul Hussain Shanto",
+   "sub": "LHB · Top order",
+   "balls": 258,
+   "plan": "Plan for left-arm pace: bowl <b>full pitching around leg</b>.",
+   "field": "<em>off-side / square stock field</em> · <em>spare: Cover</em>",
+   "threat": {
+    "balls": 258,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 22.60536398467433,
+    "area": "off (54% of runs)",
+    "short": null,
+    "top_out": "LBW (33%)"
+   }
+  },
+  {
+   "bid": "2540166",
+   "name": "Shadman Islam",
+   "sub": "LHB · Opener",
+   "balls": 397,
+   "plan": "Plan for left-arm pace: bowl <b>full pitching on the stumps</b> while <b>seaming away</b>.",
+   "field": "<em>stock field</em> · Deep point · <em>spare: Mid-on</em>",
+   "threat": {
+    "balls": 397,
+    "n_out": 8,
+    "bpd": 49.625,
+    "false_pct": 22.25,
+    "area": "leg (43% of runs)",
+    "short": null,
+    "top_out": "Caught behind (38%)"
+   }
+  },
+  {
+   "bid": "380748",
+   "name": "Soumya Sarkar",
+   "sub": "LHB · Opener",
+   "balls": 110,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching around leg</b>.",
+   "field": null,
+   "threat": {
+    "balls": 110,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 19.81981981981982,
+    "area": "off (66% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "5460114",
+   "name": "Jaker Ali",
+   "sub": "RHB · Middle order",
+   "balls": 57,
+   "plan": null,
+   "field": null,
+   "threat": {
+    "balls": 57,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 14.035087719298245,
+    "area": "leg (70% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  }
+ ]
+}

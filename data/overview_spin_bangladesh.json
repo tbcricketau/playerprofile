@@ -1,0 +1,161 @@
+{
+ "opp": "bangladesh",
+ "group": "spin",
+ "label": "spin",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "300015",
+   "name": "Mushfiqur Rahim",
+   "sub": "RHB · Middle order",
+   "balls": 3891,
+   "plan": "Plan for spin: bowl <b>full pitching in the channel</b> while <b>turning away</b>.",
+   "field": "<em>stock field</em> · <em>spare: Mid-off</em>",
+   "threat": {
+    "balls": 3891,
+    "n_out": 39,
+    "bpd": 99.76923076923077,
+    "false_pct": 8.119419642857142,
+    "area": "leg (39% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (33%)"
+   }
+  },
+  {
+   "bid": "2700013",
+   "name": "Mominul Haque",
+   "sub": "LHB · Top order",
+   "balls": 2965,
+   "plan": "Plan for spin: bowl <b>good length pitching in the channel</b>.",
+   "field": "<em>stock field</em> · Leg slip · <em>spare: Mid-off</em>",
+   "threat": {
+    "balls": 2965,
+    "n_out": 44,
+    "bpd": 67.38636363636364,
+    "false_pct": 10.610263522884882,
+    "area": "off (42% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (32%)"
+   }
+  },
+  {
+   "bid": "2540159",
+   "name": "Litton Das",
+   "sub": "RHB · Middle order",
+   "balls": 2785,
+   "plan": "Plan for spin: bowl <b>good length pitching around leg</b> while <b>turning away</b>.",
+   "field": "<em>stock field</em> · Backward square leg, Leg slip · <em>spare: Leg slip</em>",
+   "threat": {
+    "balls": 2785,
+    "n_out": 35,
+    "bpd": 79.57142857142857,
+    "false_pct": 8.720514653323804,
+    "area": "leg (41% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (34%)"
+   }
+  },
+  {
+   "bid": "3630131",
+   "name": "Tanzid Hasan",
+   "sub": "LHB · Opener",
+   "balls": 3,
+   "plan": null,
+   "field": null,
+   "threat": {
+    "balls": 3,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 0.0,
+    "area": "straight (100% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "3080087",
+   "name": "Mehidy Hasan Miraz",
+   "sub": "RHB · Lower order",
+   "balls": 2299,
+   "plan": "Plan for spin: bowl <b>good length pitching in the channel</b> while <b>turning away / drifting in</b>.",
+   "field": "<em>stock field</em>",
+   "threat": {
+    "balls": 2299,
+    "n_out": 36,
+    "bpd": 63.861111111111114,
+    "false_pct": 13.529682466635988,
+    "area": "off (37% of runs)",
+    "short": null,
+    "top_out": "Caught behind (25%)"
+   }
+  },
+  {
+   "bid": "3110063",
+   "name": "Najmul Hussain Shanto",
+   "sub": "LHB · Top order",
+   "balls": 1416,
+   "plan": "Plan for spin: bowl <b>full pitching in the channel</b> while <b>drifting in</b>.",
+   "field": "<em>stock field</em> · Deep backward square leg, Short leg",
+   "threat": {
+    "balls": 1416,
+    "n_out": 17,
+    "bpd": 83.29411764705883,
+    "false_pct": 10.711768851303734,
+    "area": "off (43% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (41%)"
+   }
+  },
+  {
+   "bid": "2540166",
+   "name": "Shadman Islam",
+   "sub": "LHB · Opener",
+   "balls": 1052,
+   "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
+   "field": "<em>stock field</em> · Deep square leg · <em>spare: Fine leg</em>",
+   "threat": {
+    "balls": 1052,
+    "n_out": 14,
+    "bpd": 75.14285714285714,
+    "false_pct": 9.297912713472487,
+    "area": "leg (43% of runs)",
+    "short": null,
+    "top_out": "LBW (43%)"
+   }
+  },
+  {
+   "bid": "380748",
+   "name": "Soumya Sarkar",
+   "sub": "LHB · Opener",
+   "balls": 323,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": "<em>stock field</em> · <em>spare: Cover</em>",
+   "threat": {
+    "balls": 323,
+    "n_out": 7,
+    "bpd": 46.142857142857146,
+    "false_pct": 18.181818181818183,
+    "area": "leg (50% of runs)",
+    "short": null,
+    "top_out": "Caught behind (43%)"
+   }
+  },
+  {
+   "bid": "5460114",
+   "name": "Jaker Ali",
+   "sub": "RHB · Middle order",
+   "balls": 210,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": "<em>stock field</em> · <em>spare: Backward point</em>",
+   "threat": {
+    "balls": 210,
+    "n_out": 5,
+    "bpd": 42.0,
+    "false_pct": 14.761904761904763,
+    "area": "off (46% of runs)",
+    "short": null,
+    "top_out": "Stumped (40%)"
+   }
+  }
+ ]
+}

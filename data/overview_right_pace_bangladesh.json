@@ -1,0 +1,153 @@
+{
+ "opp": "bangladesh",
+ "group": "right_pace",
+ "label": "right-arm pace",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "300015",
+   "name": "Mushfiqur Rahim",
+   "sub": "RHB · Middle order",
+   "balls": 2722,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
+   "field": "<em>stock field</em> · Backward square leg · <em>spare: Mid-on</em>",
+   "threat": {
+    "balls": 2722,
+    "n_out": 35,
+    "bpd": 77.77142857142857,
+    "false_pct": 13.231457323891167,
+    "area": "off (52% of runs)",
+    "short": "16% false (66 balls)",
+    "top_out": "Bowled (38%)"
+   }
+  },
+  {
+   "bid": "2700013",
+   "name": "Mominul Haque",
+   "sub": "LHB · Top order",
+   "balls": 2617,
+   "plan": "Plan for right-arm pace: bowl <b>full pitching in the channel</b> while <b>seaming away / swinging in</b>.",
+   "field": "<em>leg-side stock field</em> · Deep point, Slip 3 · <em>spare: Mid-off</em>",
+   "threat": {
+    "balls": 2617,
+    "n_out": 43,
+    "bpd": 60.86046511627907,
+    "false_pct": 15.881458966565349,
+    "area": "leg (49% of runs)",
+    "short": "10% false (44 balls)",
+    "top_out": "Caught behind (51%)"
+   }
+  },
+  {
+   "bid": "2540159",
+   "name": "Litton Das",
+   "sub": "RHB · Middle order",
+   "balls": 2070,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching outside off</b> while <b>seaming / swinging in</b>.",
+   "field": "<em>leg-side stock field</em> · Long-on, Deep square leg · <em>spare: Mid-off</em>",
+   "threat": {
+    "balls": 2070,
+    "n_out": 43,
+    "bpd": 48.13953488372093,
+    "false_pct": 12.226450999048526,
+    "area": "off (43% of runs)",
+    "short": "18% false (75 balls)",
+    "top_out": "Caught behind (37%)"
+   }
+  },
+  {
+   "bid": "3630131",
+   "name": "Tanzid Hasan",
+   "sub": "LHB · Opener",
+   "balls": 38,
+   "plan": null,
+   "field": null,
+   "threat": {
+    "balls": 38,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 15.789473684210526,
+    "area": "leg (66% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  },
+  {
+   "bid": "3080087",
+   "name": "Mehidy Hasan Miraz",
+   "sub": "RHB · Lower order",
+   "balls": 1353,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching in the channel</b>.",
+   "field": "<em>stock field</em> · Short leg · <em>spare: Mid-on</em>",
+   "threat": {
+    "balls": 1353,
+    "n_out": 39,
+    "bpd": 34.69230769230769,
+    "false_pct": 18.37037037037037,
+    "area": "off (50% of runs)",
+    "short": "25% false (62 balls)",
+    "top_out": "Caught behind (59%)"
+   }
+  },
+  {
+   "bid": "3110063",
+   "name": "Najmul Hussain Shanto",
+   "sub": "LHB · Top order",
+   "balls": 1073,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
+   "field": "<em>off-side / square stock field</em> · <em>spare: Mid-on</em>",
+   "threat": {
+    "balls": 1073,
+    "n_out": 22,
+    "bpd": 48.77272727272727,
+    "false_pct": 15.541165587419057,
+    "area": "off (48% of runs)",
+    "short": null,
+    "top_out": "Caught behind (50%)"
+   }
+  },
+  {
+   "bid": "2540166",
+   "name": "Shadman Islam",
+   "sub": "LHB · Opener",
+   "balls": 1459,
+   "plan": "Plan for right-arm pace: bowl <b>full pitching in the channel</b> while <b>seaming away</b>.",
+   "field": "<em>leg-side stock field</em> · Deep point · <em>spare: Mid-off</em>",
+   "threat": {
+    "balls": 1459,
+    "n_out": 29,
+    "bpd": 50.310344827586206,
+    "false_pct": 16.441136671177265,
+    "area": "leg (47% of runs)",
+    "short": null,
+    "top_out": "Caught behind (66%)"
+   }
+  },
+  {
+   "bid": "380748",
+   "name": "Soumya Sarkar",
+   "sub": "LHB · Opener",
+   "balls": 235,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching on the stumps</b>.",
+   "field": null,
+   "threat": {
+    "balls": 235,
+    "n_out": 8,
+    "bpd": 29.375,
+    "false_pct": 21.463414634146343,
+    "area": "leg (49% of runs)",
+    "short": null,
+    "top_out": "Caught behind (50%)"
+   }
+  },
+  {
+   "bid": "5460114",
+   "name": "Jaker Ali",
+   "sub": "RHB",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "threat": null
+  }
+ ]
+}

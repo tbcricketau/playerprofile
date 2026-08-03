@@ -45,6 +45,8 @@ photos/*.zip
 .claude/settings.local.json
 test_site/
 player_pack_site/
+caxi_player_site/
+caxi_player_pack_site/
 test_site/
 .scouting_pw
 site_gated/
