@@ -152,11 +152,14 @@ EXTRA_CSS = """<style>
  table.reltab .thin{color:#9ca3af}
  /* collapsible sections */
  details.pack{border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow:hidden}
- details.pack>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:baseline;gap:8px}
+ details.pack>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
  details.pack>summary::-webkit-details-marker{display:none}
  details.pack>summary::before{content:"▸";color:#9aa4b2;font-size:13px;transition:transform .15s;flex:0 0 auto}
  details.pack[open]>summary::before{transform:rotate(90deg)}
  details.pack>summary h2{font-size:16px;color:#003087;margin:0;display:inline}
+ /* give the title a fixed column above phone width so every section's description starts at the
+    same place — otherwise a short title pulls its description left and the boxes look ragged */
+ @media(min-width:620px){details.pack>summary h2{flex:0 0 215px}}
  details.pack>summary .desc{color:#6b7280;font-size:12.5px;font-weight:400;margin:0}
  details.pack>.body{padding:0 16px 14px}
  /* per-bowler cards */
@@ -973,9 +976,9 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                              opp_vision=opp_vision, report_url=report_urls.get(bid),
                              kinds=("scoring", "dismissal", "footage"),  # batter card: batting vision only
                              tier=(opp_tiers or {}).get(bid))
-        body.append(_pack_section(f"The {opp} batters — bowling {tw}",
-                                  f"Grouped by how likely they are to play. How each plays {tw}, plus "
-                                  "any footage of you bowling to them. Tap a batter.",
+        body.append(_pack_section(f"The {opp} batters",
+                                  "Grouped by how likely they are to play. Tap a batter to see their "
+                                  "summary and get links to vision.",
                                   inner=_tiered_inner(ordered, opp_tiers, _card)))
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls bowling to each of their batters — Test where "
