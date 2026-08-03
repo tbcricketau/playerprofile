@@ -135,8 +135,6 @@ EXTRA_CSS = """<style>
  .fchips{display:inline-flex;flex-wrap:wrap;gap:5px;vertical-align:middle}
  table.ovt tr.ovmain>td{border-bottom:none;padding-bottom:2px}
  table.ovt tr.ovchips>td{padding:4px 8px 10px;border-bottom:1px solid #f1f3f7}
- .ocl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9aa4b2;
-   font-weight:650;margin-right:8px}
  /* label sits INLINE, not in a fixed gutter — a reserved label column left so little width in a
     narrow field column that "leg-side stock field" wrapped over four lines */
  .ofl{padding:1px 0;font-size:12.5px;line-height:1.45}
@@ -571,7 +569,9 @@ def _overview_section(ov, opp):
                     f'<td>{fcell}</td>')
         # the field buttons run full width UNDER the row — stacked in the cell they dragged the
         # row's height out and left dead space beside the photo
-        tail = (f'<tr class=ovchips><td colspan=3><span class=ocl>Fields</span>'
+        # no label on this row — the section description says what the ◎ buttons do, so repeating
+        # "Fields" above every strip just cost vertical space
+        tail = (f'<tr class=ovchips><td colspan=3>'
                 f'<span class=fchips>{chips}</span></td></tr>') if chips else ""
         plan_rows.append(f'<tr class="{"ovmain" if chips else ""}">{who}{cell}</tr>{tail}')
 
@@ -604,7 +604,8 @@ def _overview_section(ov, opp):
     has_maps = any(r.get("fields") for r in ov["rows"])
     return _pack_section(
         "Overall opposition overview",
-        f"All {opp} batters on one page vs {label}, field options, how they score and get out.",
+        f"All {opp} batters on one page vs {label}, field options, how they score and get out. "
+        f"The ◎ buttons open a field map.",
         inner=inner, open=False) + (_FIELD_LIGHTBOX if has_maps else "")
 
 
