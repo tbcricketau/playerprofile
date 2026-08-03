@@ -123,6 +123,11 @@ EXTRA_CSS = """<style>
  table.ovt th{text-align:left;font-weight:600;color:#6b7280;padding:5px 8px;border-bottom:1px solid #e5e7eb;white-space:nowrap}
  table.ovt td{padding:7px 8px;border-bottom:1px solid #f4f6f9;vertical-align:top;font-variant-numeric:tabular-nums}
  table.ovt td.obat{white-space:nowrap;display:flex;align-items:center;gap:8px}
+ /* the .bav thumbnail rule is scoped to details.bwl (the opponent cards), so the table needs its
+    own or the headshot renders at its natural 440px */
+ table.ovt .bav{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#eef1f6;
+   flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:11px;
+   font-weight:700;color:#9aa4b2}
  table.ovt .on{display:flex;flex-direction:column;line-height:1.25}
  table.ovt .on b{color:#1a1a2e} table.ovt .os{color:#6b7280;font-size:11px}
  table.ovt .othin{color:#9ca3af;font-style:italic}
