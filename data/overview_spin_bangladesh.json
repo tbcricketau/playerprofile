@@ -10,7 +10,11 @@
    "sub": "RHB · Middle order",
    "balls": 3891,
    "plan": "Plan for spin: bowl <b>full pitching in the channel</b> while <b>turning away</b>.",
-   "field": "<em>stock field</em> · <em>spare: Mid-off</em>",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -37,7 +41,11 @@
    "sub": "LHB · Top order",
    "balls": 2965,
    "plan": "Plan for spin: bowl <b>good length pitching in the channel</b>.",
-   "field": "<em>stock field</em> · Leg slip · <em>spare: Mid-off</em>",
+   "field": {
+    "set": "stock field",
+    "move": "Leg slip",
+    "spare": "Mid-off"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -64,7 +72,11 @@
    "sub": "RHB · Middle order",
    "balls": 2785,
    "plan": "Plan for spin: bowl <b>good length pitching around leg</b> while <b>turning away</b>.",
-   "field": "<em>stock field</em> · Backward square leg, Leg slip · <em>spare: Leg slip</em>",
+   "field": {
+    "set": "stock field",
+    "move": "Backward square leg, Leg slip",
+    "spare": "Leg slip"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -109,7 +121,11 @@
    "sub": "RHB · Lower order",
    "balls": 2299,
    "plan": "Plan for spin: bowl <b>good length pitching in the channel</b> while <b>turning away / drifting in</b>.",
-   "field": "<em>stock field</em>",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -136,7 +152,11 @@
    "sub": "LHB · Top order",
    "balls": 1416,
    "plan": "Plan for spin: bowl <b>full pitching in the channel</b> while <b>drifting in</b>.",
-   "field": "<em>stock field</em> · Deep backward square leg, Short leg",
+   "field": {
+    "set": "stock field",
+    "move": "Deep backward square leg, Short leg",
+    "spare": ""
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -163,7 +183,11 @@
    "sub": "LHB · Opener",
    "balls": 1052,
    "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
-   "field": "<em>stock field</em> · Deep square leg · <em>spare: Fine leg</em>",
+   "field": {
+    "set": "stock field",
+    "move": "Deep square leg",
+    "spare": "Fine leg"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -190,7 +214,11 @@
    "sub": "LHB · Opener",
    "balls": 323,
    "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
-   "field": "<em>stock field</em> · <em>spare: Cover</em>",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Cover"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -217,7 +245,11 @@
    "sub": "RHB · Middle order",
    "balls": 210,
    "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
-   "field": "<em>stock field</em> · <em>spare: Backward point</em>",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Backward point"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",

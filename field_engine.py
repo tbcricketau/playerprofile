@@ -695,6 +695,23 @@ _SLIP_CODE = {"1st": "S1", "2nd": "S2", "3rd": "S3", "4th": "S4", "5th": "S5", "
               "1": "S1", "2": "S2", "3": "S3", "4": "S4", "5": "S5", "6": "S6"}
 
 
+_SLIP_ORD = {"1": "1st", "2": "2nd", "3": "3rd", "4": "4th", "5": "5th", "6": "6th",
+             "1st": "1st", "2nd": "2nd", "3rd": "3rd", "4th": "4th", "5th": "5th", "6th": "6th"}
+
+
+def pretty_position(pos):
+    """How a fielding position is SPOKEN, for anything a player reads: 'Slip 2' -> '2nd slip'.
+    The stock-field data and lookup 33 store 'Slip 2' / 'slip: 2nd'; nobody says that out loud.
+    Diagrams keep the compact S1/S2 codes (see _short_label) — this is for prose and tables."""
+    p = (pos or "").strip()
+    low = p.lower()
+    if low.startswith("slip"):
+        tail = low.split(":", 1)[1].strip() if ":" in low else low.replace("slip", "").strip()
+        ordinal = _SLIP_ORD.get(tail)
+        return f"{ordinal} slip" if ordinal else p
+    return p
+
+
 def _short_label(pos):
     """Compact code for a close catcher so the cordon doesn't stack long labels. Handles both
     the lookup-33 form ('Slip: 2nd') and the canonical name ('Slip 2')."""

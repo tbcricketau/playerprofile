@@ -132,7 +132,15 @@ EXTRA_CSS = """<style>
  table.ovt .on b{color:#1a1a2e} table.ovt .os{color:#6b7280;font-size:11px}
  table.ovt .othin{color:#9ca3af;font-style:italic}
  h4.ovh{margin:14px 0 4px;font-size:13px;color:#003087}
- .fchips{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
+ .fchips{display:inline-flex;flex-wrap:wrap;gap:5px;vertical-align:middle}
+ table.ovt tr.ovmain>td{border-bottom:none;padding-bottom:2px}
+ table.ovt tr.ovchips>td{padding:4px 8px 10px;border-bottom:1px solid #f1f3f7}
+ .ocl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9aa4b2;
+   font-weight:650;margin-right:8px}
+ .ofl{display:flex;gap:8px;align-items:baseline;padding:1px 0}
+ .ofl .ok{flex:0 0 44px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+   color:#6b7280;font-weight:650}
+ .ofl .ov{font-size:12.5px}
  a.fchip{display:inline-block;padding:3px 8px;border:1px solid #cdd6e5;border-radius:999px;
    background:#f5f7fa;color:#003087;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap}
  a.fchip:hover{background:#e8eef8;border-color:#9fb3d4}
@@ -528,6 +536,7 @@ def _overview_section(ov, opp):
         av = _avatar(r.get("bid"), "bav", _initials(r["name"]), name=r["name"])
         who = (f'<td class=obat>{av}<span class=on><b>{html.escape(r["name"])}</b>'
                f'<span class=os>{html.escape(r.get("sub") or "")}</span></span></td>')
+        chips = ""
         if (r.get("balls") or 0) < mb:
             if r.get("error"):
                 cell = ('<td colspan=2 class=othin>Profile could not be built — a pipeline failure, '
@@ -543,12 +552,21 @@ def _overview_section(ov, opp):
                 f'<a class="fchip" href="#" data-field="img/fields/{html.escape(fi["file"])}" '
                 f'data-fcap="{html.escape(r["name"])} — {html.escape(fi["label"])}">'
                 f'{html.escape(fi["label"])}</a>' for fi in (r.get("fields") or []))
-            fcell = r.get("field") or "<span class=othin>Too few balls to set a field.</span>"
-            if chips:
-                fcell += f'<div class="fchips">{chips}</div>'
+            fp = r.get("field")
+            if fp:
+                fcell = "".join(
+                    f'<div class=ofl><span class=ok>{k}</span><span class=ov>{html.escape(v)}</span></div>'
+                    for k, v in (("Set", fp.get("set")), ("Move", fp.get("move")),
+                                 ("Spare", fp.get("spare"))) if v)
+            else:
+                fcell = '<span class=othin>Too few balls to set a field.</span>'
             cell = (f'<td>{plan or "<span class=othin>No clear length/line target.</span>"}</td>'
                     f'<td>{fcell}</td>')
-        plan_rows.append(f"<tr>{who}{cell}</tr>")
+        # the field buttons run full width UNDER the row — stacked in the cell they dragged the
+        # row's height out and left dead space beside the photo
+        tail = (f'<tr class=ovchips><td colspan=3><span class=ocl>Fields</span>'
+                f'<span class=fchips>{chips}</span></td></tr>') if chips else ""
+        plan_rows.append(f'<tr class="{"ovmain" if chips else ""}">{who}{cell}</tr>{tail}')
 
     thr = []
     for r in ov["rows"]:

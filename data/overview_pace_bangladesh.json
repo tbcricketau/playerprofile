@@ -10,7 +10,11 @@
    "sub": "RHB · Middle order",
    "balls": 3138,
    "plan": "Plan for pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
-   "field": "<em>off-side / square stock field</em> · Backward square leg · <em>spare: Mid-on</em>",
+   "field": {
+    "set": "off-side / square stock field",
+    "move": "Backward square leg",
+    "spare": "Mid-on"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -45,7 +49,11 @@
    "sub": "LHB · Top order",
    "balls": 3347,
    "plan": "Plan for pace: bowl <b>good length pitching on the stumps</b> while <b>seaming away / swinging in</b>.",
-   "field": "<em>leg-side stock field</em> · Deep point, Slip 3 · <em>spare: Mid-off</em>",
+   "field": {
+    "set": "leg-side stock field",
+    "move": "Deep point, 3rd slip",
+    "spare": "Mid-off"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -80,7 +88,11 @@
    "sub": "RHB · Middle order",
    "balls": 2524,
    "plan": "Plan for pace: bowl <b>good length pitching outside off</b> while <b>seaming in / swinging away</b>.",
-   "field": "<em>leg-side stock field</em> · Long-on, Deep square leg · <em>spare: Mid-off</em>",
+   "field": {
+    "set": "leg-side stock field",
+    "move": "Long-on, Deep square leg",
+    "spare": "Mid-off"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -129,7 +141,11 @@
    "sub": "RHB · Lower order",
    "balls": 1635,
    "plan": "Plan for pace: bowl <b>good length pitching in the channel</b>.",
-   "field": "<em>stock field</em> · Short leg · <em>spare: Mid-off</em>",
+   "field": {
+    "set": "stock field",
+    "move": "Short leg",
+    "spare": "Mid-off"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -160,7 +176,11 @@
    "sub": "LHB · Top order",
    "balls": 1331,
    "plan": "Plan for pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
-   "field": "<em>off-side / square stock field</em> · <em>spare: Mid-on</em>",
+   "field": {
+    "set": "off-side / square stock field",
+    "move": "",
+    "spare": "Mid-on"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -191,7 +211,11 @@
    "sub": "LHB · Opener",
    "balls": 1856,
    "plan": "Plan for pace: bowl <b>full pitching on the stumps</b> while <b>seaming away</b>.",
-   "field": "<em>leg-side stock field</em> · Deep point · <em>spare: Mid-off</em>",
+   "field": {
+    "set": "leg-side stock field",
+    "move": "Deep point",
+    "spare": "Mid-off"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -226,7 +250,11 @@
    "sub": "LHB · Opener",
    "balls": 345,
    "plan": "Plan for pace: bowl <b>good length pitching on the stumps</b>.",
-   "field": "<em>stock field</em> · <em>spare: Mid-off</em>",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",
@@ -257,7 +285,11 @@
    "sub": "RHB · Middle order",
    "balls": 381,
    "plan": "Plan for pace: bowl <b>good length pitching in the channel</b> while <b>seaming in</b>.",
-   "field": "<em>leg-side stock field</em> · Deep square leg · <em>spare: Mid-on</em>",
+   "field": {
+    "set": "leg-side stock field",
+    "move": "Deep square leg",
+    "spare": "Mid-on"
+   },
    "fields": [
     {
      "label": "Early — first 30 balls",

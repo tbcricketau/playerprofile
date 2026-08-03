@@ -32,7 +32,10 @@ _CSS = """<style>
  table.ov td.bat{font-weight:600;color:#1a1a2e;white-space:nowrap}
  table.ov td.bat span{display:block;font-weight:400;color:#6b7280;font-size:12px}
  .thin{color:#9ca3af;font-style:italic}
- .fld{color:#1a1a2e} .fld em{color:#6b7280;font-style:normal}
+ .fld{color:#1a1a2e}
+ .fl{display:flex;gap:8px;align-items:baseline;padding:1px 0}
+ .fl .k{flex:0 0 46px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-weight:650}
+ .fl .v{font-size:13px}
  .note{color:#9ca3af;font-size:12px;margin-top:16px}
  h2.ov2{font-size:16px;color:#003087;margin:26px 0 2px}
  .sub2{color:#6b7280;font-size:13px;margin:0 0 6px}
@@ -75,9 +78,10 @@ def _field_images(P, group, img_dir, bid):
     return out
 
 
-def _fielding_cell(P, group):
-    """The placements this plan implies: the stock base, then the evidenced moves off it, then the
-    fielder worth relocating. Positions only — the justification lives in the batter's report."""
+def _field_parts(P, group):
+    """The field as three separate answers, because running them together behind dots hid what each
+    one was: SET the orthodox field for this type, MOVE the one change the evidence supports, SPARE
+    the fielder returning least. The reasoning behind each stays in the batter's own report."""
     sub = {"is_lhb": P.get("is_lhb"), "batter_id": P.get("batter_id"),
            "raw": P.get("raw"), "caught_positions": P.get("caught_positions")}
     try:
@@ -86,20 +90,19 @@ def _fielding_cell(P, group):
         f = None
     if not f:
         return None
-    bits = []
+    base = ""
     if f.get("base_note"):
-        # the note carries its own reasoning after an em dash — the table wants the variant name
-        # only, since the justification sits in the batter's report
+        # the note carries its reasoning after an em dash — keep the variant name only
         base = str(f["base_note"]).split("—")[0].strip().rstrip(".")
-        if base:
-            bits.append(f"<em>{html.escape(base)}</em>")
-    moves = [x["position"] for x in (f.get("field") or []) if x.get("tag") == "change"]
-    if moves:
-        bits.append(", ".join(html.escape(m) for m in moves))
+    moves = [field_engine.pretty_position(x["position"])
+             for x in (f.get("field") or []) if x.get("tag") == "change"]
     fl = (f.get("floating") or [None])[0]
-    if fl and fl.get("position"):
-        bits.append(f"<em>spare: {html.escape(str(fl['position']))}</em>")
-    return " · ".join(bits) if bits else None
+    spare = field_engine.pretty_position(fl["position"]) if fl and fl.get("position") else ""
+    if not (base or moves or spare):
+        return None
+    return {"set": base or "standard field",
+            "move": ", ".join(moves) if moves else "",
+            "spare": spare}
 
 
 _MIN_OUTS_FOR_BPD = 4      # below this, a balls-per-dismissal figure is noise — show the count instead
@@ -173,7 +176,7 @@ def build(opp, group):
                      "sub": " · ".join(x for x in (meta.get("hand"), meta.get("role")) if x),
                      "balls": balls,
                      "plan": None if thin else plan_sentence(P),
-                     "field": None if thin else _fielding_cell(P, group),
+                     "field": None if thin else _field_parts(P, group),
                      "fields": [] if thin else _field_images(
                          P, group, os.path.join(HERE, "reports", "fields", opp, group), bid),
                      "threat": _threat(P) if balls else None})
@@ -213,8 +216,16 @@ def build(opp, group):
             if pl and pl.startswith(pre):
                 pl = pl[len(pre):]
                 pl = pl[:1].upper() + pl[1:]
+            fp = r.get("field")
+            if fp:
+                fcell = "".join(
+                    f'<div class=fl><span class=k>{k}</span><span class=v>{html.escape(v)}</span></div>'
+                    for k, v in (("Set", fp.get("set")), ("Move", fp.get("move")),
+                                 ("Spare", fp.get("spare"))) if v)
+            else:
+                fcell = '<span class=thin>Too few balls to set a field.</span>'
             cell = (f'<td>{pl or "<span class=thin>No clear length/line target.</span>"}</td>'
-                    f'<td class=fld>{r["field"] or "<span class=thin>Too few balls to set a field.</span>"}</td>')
+                    f'<td class=fld>{fcell}</td>')
         body.append(f'<tr><td class=bat>{html.escape(r["name"])}'
                     f'<span>{html.escape(r["sub"] or "")}</span></td>{cell}</tr>')
     body.append('</table></div>')
@@ -247,6 +258,10 @@ def build(opp, group):
             f'<td>{html.escape(t["top_out"]) if t["top_out"] else "<span class=thin>—</span>"}</td></tr>')
     body.append('</table></div>')
 
+    body.append('<p class=note><b>Set</b> — the orthodox field for this bowling type and phase. '
+                '<b>Move</b> — the one change their record supports, from where their catches have '
+                'actually been taken. <b>Spare</b> — the fielder returning least, so the first to '
+                'relocate if you need someone elsewhere.</p>')
     body.append(f'<p class=note>Plan and field come from the same functions as the individual reports. '
                 f'A batter needs {MIN_BALLS}+ balls vs {html.escape(label)} to carry a plan. '
                 f'Field placements are the evidenced moves off the stock field — the reasoning behind '

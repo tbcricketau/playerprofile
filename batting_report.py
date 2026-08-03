@@ -753,7 +753,7 @@ def _field_blocks(P: dict) -> list:
         short_ball = None
 
         def _jrows(field):
-            return [(f["position"], "Change" if f["tag"] == "change" else "Stock",
+            return [(fe.pretty_position(f["position"]), "Change" if f["tag"] == "change" else "Stock",
                      f["why"], f["tag"]) for f in field]
 
         def _diagram(field):
