@@ -580,11 +580,16 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     if facts:
         # facts are generated (distilled facts / report summary points with bold lead-ins) — trusted HTML
         lines.append('<ul class="afacts">' + "".join(f'<li>{f}</li>' for f in facts) + '</ul>')
+    elif (opp_vision or {}).get((bid, "footage")):
+        # no warehouse record, but someone has cut footage — say what IS available
+        lines.append('<p class="cohort">No Test record to profile — footage only. '
+                     'Watch the clips below.</p>')
     else:
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     watch = []
     all_kinds = (("stock", "Stock ball"), ("wicket", "Wicket balls"), ("new_ball", "New ball"),
-                 ("scoring", "Scoring shots"), ("dismissal", "Dismissals"))
+                 ("scoring", "Scoring shots"), ("dismissal", "Dismissals"),
+                 ("footage", "Footage"))       # hand-supplied — the only vision for uncapped players
     show = [(k, l) for k, l in all_kinds if kinds is None or k in kinds]
     for kind, label in show:
         if opp_vision.get((bid, kind)):
@@ -705,7 +710,8 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
     return playlists, titles
 
 
-def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, similar=None):
+def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, similar=None,
+                  manual=None):
     """One modal-player page per player: a 'Dismissals — v X' playlist per attack-card series,
     plus any `extra` (playlists, titles) — the real head-to-head meetings. Fresh SAS minted at
     build time, like publish_site. Returns (dismissal_hrefs, h2h_links): {series_index: href#key}
@@ -772,6 +778,17 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                 playlists[key] = resolved
                 titles[key] = tit
                 opp_vision[(bid, kind)] = f"{page_slug}-vision.html#{key}"
+    # hand-supplied footage for opponents the warehouse has nothing on (uncapped call-ups). These
+    # carry a playable url already, so they skip resolve_playlist's storage probe entirely.
+    for bid, mv in (manual or {}).items():
+        items = [{"delivery_id": None, "clip_stem": None, "caption": c.get("caption", ""),
+                  "url": c["url"], "meta": {}} for c in (mv.get("clips") or []) if c.get("url")]
+        if not items:
+            continue
+        key = f"man_{bid}"
+        playlists[key] = items
+        titles[key] = "Footage"
+        opp_vision[(bid, "footage")] = f"{page_slug}-vision.html#{key}"
     # similar reference bowler (e.g. Sajid Khan for Lyon) — how they went vs the opposition batters
     similar_href = None
     if similar and similar.get("clips"):
@@ -854,7 +871,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                 facts.append(orp)
             # bowler card: bowling vision only. Top-order batters (rec.new_ball_footage) also get the
             # New-ball playlist for bowlers who take the new ball (built into opp_vision when clips exist).
-            bkinds = ("stock", "wicket", "new_ball") if rec.get("new_ball_footage") else ("stock", "wicket")
+            bkinds = ("stock", "wicket", "new_ball", "footage") if rec.get("new_ball_footage") \
+                else ("stock", "wicket", "footage")
             return _opp_card(bid, nm, ty, facts,
                              h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
                              opp_vision=opp_vision, report_url=report_urls.get(bid),
@@ -904,7 +922,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                              (about.get(bid) or {}).get(f"facts_{tw}"),
                              h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
                              opp_vision=opp_vision, report_url=report_urls.get(bid),
-                             kinds=("scoring", "dismissal"),  # batter card: batting vision only
+                             kinds=("scoring", "dismissal", "footage"),  # batter card: batting vision only
                              tier=(opp_tiers or {}).get(bid))
         body.append(_pack_section(f"The {opp} batters — bowling {tw}",
                                   f"Grouped by how likely they are to play. How each plays {tw}, plus "
@@ -935,6 +953,14 @@ def _load_similar(slug):
     footage vs the opposition batters (e.g. Sajid Khan for Lyon), or {}."""
     opp = slug.split("-")[0]
     p = os.path.join(HERE, "data", f"similar_bowler_{opp}.json")
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+def _load_manual_vision(slug):
+    """{opposition_player_id: {name, clips:[{caption, url}]}} — hand-supplied footage for players the
+    warehouse has nothing on (uncapped call-ups). The urls are already playable, so these skip the
+    storage probe that Fairplay clips go through."""
+    p = os.path.join(HERE, "data", f"manual_vision_{slug.split('-')[0]}.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
 
 
@@ -1127,6 +1153,7 @@ def build(out_dir, no_video=False, only=None):
         opp_tiers = _opp_tiers(slug)                    # opposition squad status (XI/squad/fringe)
         similar_data = _load_similar(slug)              # reference-bowler footage per our bowler
         release_data = _load_release_detail()            # opt-in own-release table (per bowler)
+        manual_vision = _load_manual_vision(slug)        # hand-supplied footage for uncapped opponents
         # signature footage for the opponents shown (N_OPP each) — bowlers get stock/wicket balls
         # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs).
         # An all-rounder gets ALL four kinds (distinct keys → no collision), so their bowler card
@@ -1180,7 +1207,8 @@ def build(out_dir, no_video=False, only=None):
                               if sb and sb.get("clips") else None)
                 try:
                     vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip, similar_href = _build_vision(
-                        s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips, similar=sb_payload)
+                        s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips,
+                        similar=sb_payload, manual=manual_vision)
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             # tab list: Batting + one page per bowling type
