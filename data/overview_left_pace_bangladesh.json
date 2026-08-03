@@ -11,6 +11,24 @@
    "balls": 416,
    "plan": "Plan for left-arm pace: bowl <b>good length pitching on the stumps</b> while <b>seaming away</b>.",
    "field": "<em>off-side / square stock field</em> · Backward square leg · <em>spare: Mid-on</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_300015_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_pace_300015_1.png"
+    },
+    {
+     "label": "Once set — alternative",
+     "file": "left_pace_300015_2.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_300015_3.png"
+    }
+   ],
    "threat": {
     "balls": 416,
     "n_out": 6,
@@ -28,6 +46,24 @@
    "balls": 730,
    "plan": "Plan for left-arm pace: bowl <b>back of a length pitching on the stumps</b> while <b>seaming / swinging away</b>.",
    "field": "<em>leg-side stock field</em> · Deep point, Slip 3 · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_2700013_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_pace_2700013_1.png"
+    },
+    {
+     "label": "Once set — alternative",
+     "file": "left_pace_2700013_2.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_2700013_3.png"
+    }
+   ],
    "threat": {
     "balls": 730,
     "n_out": 11,
@@ -45,6 +81,20 @@
    "balls": 454,
    "plan": "Plan for left-arm pace: bowl <b>back of a length pitching outside off</b> while <b>seaming in / swinging away</b>.",
    "field": "<em>stock field</em> · Long-on, Deep square leg · <em>spare: Fine leg</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_2540159_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_pace_2540159_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_2540159_2.png"
+    }
+   ],
    "threat": {
     "balls": 454,
     "n_out": 9,
@@ -62,6 +112,7 @@
    "balls": 0,
    "plan": null,
    "field": null,
+   "fields": [],
    "threat": null
   },
   {
@@ -71,6 +122,20 @@
    "balls": 282,
    "plan": "Plan for left-arm pace: bowl <b>good length pitching wide outside off</b>.",
    "field": "<em>off-side / square stock field</em> · Short leg · <em>spare: Midwicket</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_3080087_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_pace_3080087_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_3080087_2.png"
+    }
+   ],
    "threat": {
     "balls": 282,
     "n_out": 5,
@@ -88,6 +153,20 @@
    "balls": 258,
    "plan": "Plan for left-arm pace: bowl <b>full pitching around leg</b>.",
    "field": "<em>off-side / square stock field</em> · <em>spare: Cover</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_3110063_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_pace_3110063_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_3110063_2.png"
+    }
+   ],
    "threat": {
     "balls": 258,
     "n_out": 3,
@@ -105,6 +184,24 @@
    "balls": 397,
    "plan": "Plan for left-arm pace: bowl <b>full pitching on the stumps</b> while <b>seaming away</b>.",
    "field": "<em>stock field</em> · Deep point · <em>spare: Mid-on</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_2540166_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_pace_2540166_1.png"
+    },
+    {
+     "label": "Once set — alternative",
+     "file": "left_pace_2540166_2.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_2540166_3.png"
+    }
+   ],
    "threat": {
     "balls": 397,
     "n_out": 8,
@@ -122,6 +219,7 @@
    "balls": 110,
    "plan": "Plan for left-arm pace: bowl <b>good length pitching around leg</b>.",
    "field": null,
+   "fields": [],
    "threat": {
     "balls": 110,
     "n_out": 2,
@@ -139,6 +237,7 @@
    "balls": 57,
    "plan": null,
    "field": null,
+   "fields": [],
    "threat": {
     "balls": 57,
     "n_out": 0,

@@ -132,6 +132,19 @@ EXTRA_CSS = """<style>
  table.ovt .on b{color:#1a1a2e} table.ovt .os{color:#6b7280;font-size:11px}
  table.ovt .othin{color:#9ca3af;font-style:italic}
  h4.ovh{margin:14px 0 4px;font-size:13px;color:#003087}
+ .fchips{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
+ a.fchip{display:inline-block;padding:3px 8px;border:1px solid #cdd6e5;border-radius:999px;
+   background:#f5f7fa;color:#003087;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap}
+ a.fchip:hover{background:#e8eef8;border-color:#9fb3d4}
+ a.fchip::before{content:"\\25CE";margin-right:4px}
+ /* field-map overlay — same interaction as the video modal: click to open, click/Esc to close */
+ .fieldlb{position:fixed;inset:0;background:rgba(15,20,32,.82);z-index:9999;display:none;
+   align-items:center;justify-content:center;padding:16px}
+ .fieldlb.on{display:flex}
+ .fieldlb figure{margin:0;background:#fff;border-radius:12px;padding:12px;max-width:92vw;text-align:center}
+ .fieldlb img{max-width:min(78vw,520px);max-height:72vh;display:block;margin:0 auto}
+ .fieldlb figcaption{margin-top:8px;font-size:13px;font-weight:600;color:#1a1a2e}
+ .fieldlb .fclose{margin-top:8px;font-size:12px;color:#6b7280}
  table.reltab{border-collapse:collapse;font-size:13px;width:100%}
  table.reltab th{text-align:left;font-weight:600;color:#6b7280;padding:4px 8px;border-bottom:1px solid #e5e7eb}
  table.reltab td{padding:5px 8px;border-bottom:1px solid #f4f6f9;font-variant-numeric:tabular-nums}
@@ -459,6 +472,34 @@ def _load_overview(slug, group):
     return None
 
 
+_FIELD_LIGHTBOX = """
+<div class="fieldlb" id="fieldlb"><figure>
+  <img id="fieldlbimg" src="" alt="Suggested field">
+  <figcaption id="fieldlbcap"></figcaption>
+  <div class="fclose">Tap anywhere to close</div>
+</figure></div>
+<script>
+(function(){
+  var lb=document.getElementById('fieldlb');
+  if(!lb) return;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('[data-field]');
+    if(a){
+      e.preventDefault(); e.stopPropagation();
+      document.getElementById('fieldlbimg').src = a.getAttribute('data-field');
+      document.getElementById('fieldlbcap').textContent = a.getAttribute('data-fcap')||'';
+      lb.classList.add('on');
+      return;
+    }
+    if(lb.classList.contains('on')) lb.classList.remove('on');
+  }, true);
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape') lb.classList.remove('on');
+  });
+})();
+</script>"""
+
+
 def _strip_plan_prefix(plan, label):
     """The column header names the bowler type, so the cell shouldn't repeat "Plan for X:" on
     every row. Returns the plan from "bowl …" onward, sentence-cased."""
@@ -492,8 +533,15 @@ def _overview_section(ov, opp):
                 cell = f'<td colspan=2 class=othin>No record vs {html.escape(label)}.</td>'
         else:
             plan = _strip_plan_prefix(r.get("plan"), label)
+            chips = "".join(
+                f'<a class="fchip" href="#" data-field="img/fields/{html.escape(fi["file"])}" '
+                f'data-fcap="{html.escape(r["name"])} — {html.escape(fi["label"])}">'
+                f'{html.escape(fi["label"])}</a>' for fi in (r.get("fields") or []))
+            fcell = r.get("field") or "<span class=othin>Too few balls to set a field.</span>"
+            if chips:
+                fcell += f'<div class="fchips">{chips}</div>'
             cell = (f'<td>{plan or "<span class=othin>No clear length/line target.</span>"}</td>'
-                    f'<td>{r.get("field") or "<span class=othin>Too few balls to set a field.</span>"}</td>')
+                    f'<td>{fcell}</td>')
         plan_rows.append(f"<tr>{who}{cell}</tr>")
 
     thr = []
@@ -522,10 +570,11 @@ def _overview_section(ov, opp):
              f'<div class=ovwrap><table class=ovt>'
              f'<tr><th>Batter</th><th>Balls</th><th>BPD</th><th>False shot</th><th>Scores mostly</th>'
              f'<th>Vs the short ball</th><th>Most often out</th></tr>{"".join(thr)}</table></div>')
+    has_maps = any(r.get("fields") for r in ov["rows"])
     return _pack_section(
         "Overall opposition overview",
         f"All {opp} batters on one page vs {label}, field options, how they score and get out.",
-        inner=inner, open=False)
+        inner=inner, open=False) + (_FIELD_LIGHTBOX if has_maps else "")
 
 
 def _our_bowl_groups(slug):
@@ -1143,6 +1192,23 @@ def build(out_dir, no_video=False, only=None):
                 if p:
                     shutil.copy(p, os.path.join(img_dir, f"{pid}.png"))
                     _SITE_IMGS.add(str(pid))
+            # suggested-field maps for the overview overlay (build_overview renders them per
+            # bowler group; the pack links whichever group each of our bowlers sees)
+            fsrc = os.path.join(HERE, "reports", "fields", slug.split("-")[0])
+            if os.path.isdir(fsrc):
+                fdst = os.path.join(img_dir, "fields")
+                os.makedirs(fdst, exist_ok=True)
+                n_f = 0
+                for grp in os.listdir(fsrc):
+                    gdir = os.path.join(fsrc, grp)
+                    if not os.path.isdir(gdir):
+                        continue
+                    for f in os.listdir(gdir):
+                        if f.endswith(".png"):
+                            shutil.copy(os.path.join(gdir, f), os.path.join(fdst, f))
+                            n_f += 1
+                if n_f:
+                    print(f"  field maps copied: {n_f}")
         up = None if single else ("../index.html", "Series")
         open(os.path.join(s_dir, "index.html"), "w", encoding="utf-8").write(
             _page(f"{meta.get('name','')} — player packs", _roster_body(meta, roster), up=up))

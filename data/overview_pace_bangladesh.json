@@ -11,6 +11,24 @@
    "balls": 3138,
    "plan": "Plan for pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
    "field": "<em>off-side / square stock field</em> · Backward square leg · <em>spare: Mid-on</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_300015_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_300015_1.png"
+    },
+    {
+     "label": "Once set — alternative",
+     "file": "pace_300015_2.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_300015_3.png"
+    }
+   ],
    "threat": {
     "balls": 3138,
     "n_out": 41,
@@ -28,6 +46,24 @@
    "balls": 3347,
    "plan": "Plan for pace: bowl <b>good length pitching on the stumps</b> while <b>seaming away / swinging in</b>.",
    "field": "<em>leg-side stock field</em> · Deep point, Slip 3 · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_2700013_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_2700013_1.png"
+    },
+    {
+     "label": "Once set — alternative",
+     "file": "pace_2700013_2.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_2700013_3.png"
+    }
+   ],
    "threat": {
     "balls": 3347,
     "n_out": 54,
@@ -45,6 +81,20 @@
    "balls": 2524,
    "plan": "Plan for pace: bowl <b>good length pitching outside off</b> while <b>seaming in / swinging away</b>.",
    "field": "<em>leg-side stock field</em> · Long-on, Deep square leg · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_2540159_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_2540159_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_2540159_2.png"
+    }
+   ],
    "threat": {
     "balls": 2524,
     "n_out": 52,
@@ -62,6 +112,7 @@
    "balls": 38,
    "plan": null,
    "field": null,
+   "fields": [],
    "threat": {
     "balls": 38,
     "n_out": 2,
@@ -79,6 +130,20 @@
    "balls": 1635,
    "plan": "Plan for pace: bowl <b>good length pitching in the channel</b>.",
    "field": "<em>stock field</em> · Short leg · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_3080087_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_3080087_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_3080087_2.png"
+    }
+   ],
    "threat": {
     "balls": 1635,
     "n_out": 44,
@@ -96,6 +161,20 @@
    "balls": 1331,
    "plan": "Plan for pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
    "field": "<em>off-side / square stock field</em> · <em>spare: Mid-on</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_3110063_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_3110063_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_3110063_2.png"
+    }
+   ],
    "threat": {
     "balls": 1331,
     "n_out": 25,
@@ -113,6 +192,24 @@
    "balls": 1856,
    "plan": "Plan for pace: bowl <b>full pitching on the stumps</b> while <b>seaming away</b>.",
    "field": "<em>leg-side stock field</em> · Deep point · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_2540166_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_2540166_1.png"
+    },
+    {
+     "label": "Once set — alternative",
+     "file": "pace_2540166_2.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_2540166_3.png"
+    }
+   ],
    "threat": {
     "balls": 1856,
     "n_out": 37,
@@ -130,6 +227,20 @@
    "balls": 345,
    "plan": "Plan for pace: bowl <b>good length pitching on the stumps</b>.",
    "field": "<em>stock field</em> · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_380748_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_380748_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_380748_2.png"
+    }
+   ],
    "threat": {
     "balls": 345,
     "n_out": 10,
@@ -147,6 +258,20 @@
    "balls": 381,
    "plan": "Plan for pace: bowl <b>good length pitching in the channel</b> while <b>seaming in</b>.",
    "field": "<em>leg-side stock field</em> · Deep square leg · <em>spare: Mid-on</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "pace_5460114_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "pace_5460114_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "pace_5460114_2.png"
+    }
+   ],
    "threat": {
     "balls": 381,
     "n_out": 6,

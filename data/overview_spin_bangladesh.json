@@ -11,6 +11,16 @@
    "balls": 3891,
    "plan": "Plan for spin: bowl <b>full pitching in the channel</b> while <b>turning away</b>.",
    "field": "<em>stock field</em> · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_300015_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_300015_1.png"
+    }
+   ],
    "threat": {
     "balls": 3891,
     "n_out": 39,
@@ -28,6 +38,16 @@
    "balls": 2965,
    "plan": "Plan for spin: bowl <b>good length pitching in the channel</b>.",
    "field": "<em>stock field</em> · Leg slip · <em>spare: Mid-off</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_2700013_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_2700013_1.png"
+    }
+   ],
    "threat": {
     "balls": 2965,
     "n_out": 44,
@@ -45,6 +65,16 @@
    "balls": 2785,
    "plan": "Plan for spin: bowl <b>good length pitching around leg</b> while <b>turning away</b>.",
    "field": "<em>stock field</em> · Backward square leg, Leg slip · <em>spare: Leg slip</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_2540159_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_2540159_1.png"
+    }
+   ],
    "threat": {
     "balls": 2785,
     "n_out": 35,
@@ -62,6 +92,7 @@
    "balls": 3,
    "plan": null,
    "field": null,
+   "fields": [],
    "threat": {
     "balls": 3,
     "n_out": 0,
@@ -79,6 +110,16 @@
    "balls": 2299,
    "plan": "Plan for spin: bowl <b>good length pitching in the channel</b> while <b>turning away / drifting in</b>.",
    "field": "<em>stock field</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_3080087_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_3080087_1.png"
+    }
+   ],
    "threat": {
     "balls": 2299,
     "n_out": 36,
@@ -96,6 +137,16 @@
    "balls": 1416,
    "plan": "Plan for spin: bowl <b>full pitching in the channel</b> while <b>drifting in</b>.",
    "field": "<em>stock field</em> · Deep backward square leg, Short leg",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_3110063_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_3110063_1.png"
+    }
+   ],
    "threat": {
     "balls": 1416,
     "n_out": 17,
@@ -113,6 +164,16 @@
    "balls": 1052,
    "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
    "field": "<em>stock field</em> · Deep square leg · <em>spare: Fine leg</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_2540166_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_2540166_1.png"
+    }
+   ],
    "threat": {
     "balls": 1052,
     "n_out": 14,
@@ -130,6 +191,16 @@
    "balls": 323,
    "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
    "field": "<em>stock field</em> · <em>spare: Cover</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_380748_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_380748_1.png"
+    }
+   ],
    "threat": {
     "balls": 323,
     "n_out": 7,
@@ -147,6 +218,16 @@
    "balls": 210,
    "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
    "field": "<em>stock field</em> · <em>spare: Backward point</em>",
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_5460114_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_5460114_1.png"
+    }
+   ],
    "threat": {
     "balls": 210,
     "n_out": 5,

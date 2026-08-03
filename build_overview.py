@@ -40,6 +40,41 @@ _CSS = """<style>
 </style>"""
 
 
+def _field_images(P, group, img_dir, bid):
+    """Render each suggested field to a PNG file so the pack can open it as an overlay. Files, not
+    data-URIs — one <img> per batter per phase would add megabytes of base64 to every bowling pack.
+    Labels stay the descriptive ones (Early / Once set / Bouncer plan), matching the reports."""
+    sub = {"is_lhb": P.get("is_lhb"), "batter_id": P.get("batter_id"),
+           "raw": P.get("raw"), "caught_positions": P.get("caught_positions")}
+    wanted, short_ball = [], None
+    for phase, title in (("early", "Early — first 30 balls"), ("set", "Once set")):
+        try:
+            fs = field_engine.build_field(sub, group, phase)
+        except Exception:
+            fs = None
+        if not fs:
+            continue
+        short_ball = short_ball or fs.get("short_ball")
+        wanted.append((title, fs["field"]))
+        if fs.get("alt"):
+            wanted.append((f"{title} — alternative", fs["alt"]["field"]))
+    if short_ball:
+        wanted.append(("Bouncer plan", short_ball["field"]))
+    os.makedirs(img_dir, exist_ok=True)
+    out = []
+    for i, (title, field) in enumerate(wanted):
+        try:
+            png = field_engine.field_diagram(field, P.get("is_lhb"), title="").to_image(
+                format="png", width=340, height=340, scale=2)
+        except Exception as e:
+            print(f"     ! field image {title}: {type(e).__name__}: {str(e)[:40]}")
+            continue
+        fn = f"{group}_{bid}_{i}.png"       # group-qualified: the pack flattens all groups into one dir
+        open(os.path.join(img_dir, fn), "wb").write(png)
+        out.append({"label": title, "file": fn})
+    return out
+
+
 def _fielding_cell(P, group):
     """The placements this plan implies: the stock base, then the evidenced moves off it, then the
     fielder worth relocating. Positions only — the justification lives in the batter's report."""
@@ -139,6 +174,8 @@ def build(opp, group):
                      "balls": balls,
                      "plan": None if thin else plan_sentence(P),
                      "field": None if thin else _fielding_cell(P, group),
+                     "fields": [] if thin else _field_images(
+                         P, group, os.path.join(HERE, "reports", "fields", opp, group), bid),
                      "threat": _threat(P) if balls else None})
         # Short balls from ONE pace sub-type are too few to rate, so fall back to the batter's
         # whole pace record for that column and say so — an unanswered bouncer question is worse
