@@ -122,7 +122,7 @@ EXTRA_CSS = """<style>
  table.ovt{border-collapse:collapse;font-size:13px;width:100%;min-width:560px}
  table.ovt th{text-align:left;font-weight:600;color:#6b7280;padding:5px 8px;border-bottom:1px solid #e5e7eb;white-space:nowrap}
  table.ovt td{padding:7px 8px;border-bottom:1px solid #f4f6f9;vertical-align:top;font-variant-numeric:tabular-nums}
- table.ovt td.obat{white-space:nowrap;display:flex;align-items:center;gap:8px}
+ table.ovt td.obat{display:flex;align-items:center;gap:8px}   /* wraps: fixed layout can't overflow */
  /* the .bav thumbnail rule is scoped to details.bwl (the opponent cards), so the table needs its
     own or the headshot renders at its natural 440px */
  table.ovt .bav{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#eef1f6;
@@ -137,10 +137,17 @@ EXTRA_CSS = """<style>
  table.ovt tr.ovchips>td{padding:4px 8px 10px;border-bottom:1px solid #f1f3f7}
  .ocl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9aa4b2;
    font-weight:650;margin-right:8px}
- .ofl{display:flex;gap:8px;align-items:baseline;padding:1px 0}
- .ofl .ok{flex:0 0 44px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-   color:#6b7280;font-weight:650}
+ /* label sits INLINE, not in a fixed gutter — a reserved label column left so little width in a
+    narrow field column that "leg-side stock field" wrapped over four lines */
+ .ofl{padding:1px 0;font-size:12.5px;line-height:1.45}
+ .ofl .ok{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#9aa4b2;
+   font-weight:650;margin-right:5px}
  .ofl .ov{font-size:12.5px}
+ /* share the width deliberately: without this the plan column grows and squeezes the field one */
+ table.ovt.ovplan{table-layout:fixed}
+ table.ovt.ovplan th:nth-child(1){width:30%}
+ table.ovt.ovplan th:nth-child(2){width:38%}
+ table.ovt.ovplan th:nth-child(3){width:32%}
  a.fchip{display:inline-block;padding:3px 8px;border:1px solid #cdd6e5;border-radius:999px;
    background:#f5f7fa;color:#003087;font-size:11px;font-weight:600;text-decoration:none;white-space:nowrap}
  a.fchip:hover{background:#e8eef8;border-color:#9fb3d4}
@@ -587,8 +594,8 @@ def _overview_section(ov, opp):
                    f'<td>{html.escape(t["short"]) if t.get("short") else "<span class=othin>too few</span>"}</td>'
                    f'<td>{html.escape(t["top_out"]) if t.get("top_out") else "—"}</td></tr>')
 
-    inner = (f'<div class=ovwrap><table class=ovt>'
-             f'<tr><th>Batter</th><th>Plan for {html.escape(label)}</th><th>Field options</th></tr>'
+    inner = (f'<div class=ovwrap><table class="ovt ovplan">'
+             f'<tr><th>Batter</th><th>Plan for {html.escape(label)}</th><th>Field</th></tr>'
              f'{"".join(plan_rows)}</table></div>'
              f'<h4 class=ovh>How they score and get out</h4>'
              f'<div class=ovwrap><table class=ovt>'

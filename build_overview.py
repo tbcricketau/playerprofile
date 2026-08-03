@@ -33,8 +33,10 @@ _CSS = """<style>
  table.ov td.bat span{display:block;font-weight:400;color:#6b7280;font-size:12px}
  .thin{color:#9ca3af;font-style:italic}
  .fld{color:#1a1a2e}
- .fl{display:flex;gap:8px;align-items:baseline;padding:1px 0}
- .fl .k{flex:0 0 46px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-weight:650}
+ /* inline label — a fixed label gutter left too little width for the value in a narrow column */
+ .fl{padding:1px 0;font-size:13px;line-height:1.45}
+ .fl .k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#9aa4b2;
+   font-weight:650;margin-right:5px}
  .fl .v{font-size:13px}
  .note{color:#9ca3af;font-size:12px;margin-top:16px}
  h2.ov2{font-size:16px;color:#003087;margin:26px 0 2px}
