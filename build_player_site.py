@@ -122,7 +122,10 @@ EXTRA_CSS = """<style>
  table.ovt{border-collapse:collapse;font-size:13px;width:100%;min-width:560px}
  table.ovt th{text-align:left;font-weight:600;color:#6b7280;padding:5px 8px;border-bottom:1px solid #e5e7eb;white-space:nowrap}
  table.ovt td{padding:7px 8px;border-bottom:1px solid #f4f6f9;vertical-align:top;font-variant-numeric:tabular-nums}
- table.ovt td.obat{display:flex;align-items:center;gap:8px}   /* wraps: fixed layout can't overflow */
+ /* the cell stays a real table-cell — display:flex on a <td> drops it out of the table box model,
+    so its bottom border drew at its own content height and the row divider broke in two */
+ table.ovt td.obat{vertical-align:top}
+ table.ovt .obw{display:flex;align-items:center;gap:8px}
  /* the .bav thumbnail rule is scoped to details.bwl (the opponent cards), so the table needs its
     own or the headshot renders at its natural 440px */
  table.ovt .bav{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#eef1f6;
@@ -539,8 +542,8 @@ def _overview_section(ov, opp):
     plan_rows = []
     for r in ov["rows"]:
         av = _avatar(r.get("bid"), "bav", _initials(r["name"]), name=r["name"])
-        who = (f'<td class=obat>{av}<span class=on><b>{html.escape(r["name"])}</b>'
-               f'<span class=os>{html.escape(r.get("sub") or "")}</span></span></td>')
+        who = (f'<td class=obat><div class=obw>{av}<span class=on><b>{html.escape(r["name"])}</b>'
+               f'<span class=os>{html.escape(r.get("sub") or "")}</span></span></div></td>')
         chips = ""
         if (r.get("balls") or 0) < mb:
             if r.get("error"):
@@ -579,7 +582,8 @@ def _overview_section(ov, opp):
     for r in ov["rows"]:
         t = r.get("threat")
         av = _avatar(r.get("bid"), "bav", _initials(r["name"]), name=r["name"])
-        who = f'<td class=obat>{av}<span class=on><b>{html.escape(r["name"])}</b></span></td>'
+        who = (f'<td class=obat><div class=obw>{av}<span class=on>'
+               f'<b>{html.escape(r["name"])}</b></span></div></td>')
         if not t:
             thr.append(f'<tr>{who}<td colspan=6 class=othin>No record vs {html.escape(label)}.</td></tr>')
             continue
