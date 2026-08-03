@@ -150,6 +150,9 @@ EXTRA_CSS = """<style>
  table.reltab td{padding:5px 8px;border-bottom:1px solid #f4f6f9;font-variant-numeric:tabular-nums}
  table.reltab tr.grp td{font-weight:600;color:#1a1a2e;background:#f5f7fa;padding-top:7px}
  table.reltab .thin{color:#9ca3af}
+ table.reltab .few{color:#9aa4b2}
+ a.relwatch{color:#003087;text-decoration:none;font-size:12px}
+ a.relwatch:hover{opacity:.7}
  /* collapsible sections */
  details.pack{border:1px solid #e5e7eb;border-radius:12px;background:#fff;margin:12px 0;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow:hidden}
  details.pack>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
@@ -763,7 +766,7 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
 
 
 def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, similar=None,
-                  manual=None):
+                  manual=None, release=None):
     """One modal-player page per player: a 'Dismissals — v X' playlist per attack-card series,
     plus any `extra` (playlists, titles) — the real head-to-head meetings. Fresh SAS minted at
     build time, like publish_site. Returns (dismissal_hrefs, h2h_links): {series_index: href#key}
@@ -830,6 +833,22 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                 playlists[key] = resolved
                 titles[key] = tit
                 opp_vision[(bid, kind)] = f"{page_slug}-vision.html#{key}"
+    # example balls per release cell — 5 per angle/hand/band so the bowler can see each position
+    release_vision = {}
+    for i, c in enumerate((release or {}).get("cells", [])):
+        stems = c.get("clips") or []
+        items = [playlist_item(e["delivery_id"], e["clip_stem"],
+                               caption=f'{c["angle"].capitalize()} the wicket to {c["hand"]} — '
+                                       f'{c["band"]} of the stumps')
+                 for e in stems if e.get("clip_stem")]
+        if not items:
+            continue
+        resolved, avail, _tot = resolve_playlist(items)
+        if avail:
+            key = f"rel{i}"
+            playlists[key] = resolved
+            titles[key] = (f'{c["angle"].capitalize()} to {c["hand"]} — {c["band"]}')
+            release_vision[i] = f"{page_slug}-vision.html#{key}"
     # hand-supplied footage for opponents the warehouse has nothing on (uncapped call-ups). These
     # carry a playable url already, so they skip resolve_playlist's storage probe entirely.
     for bid, mv in (manual or {}).items():
@@ -860,7 +879,7 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                           titles=titles)
         # in-page modal: injected into each of this player's pack pages so ▶ plays over the report
         snippet = inline_player_snippet(playlists, titles)
-    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet, similar_href
+    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet, similar_href, release_vision
 
 
 def _report_top(pid, name, role, sname, pages=None, current=None, tier=None):
@@ -944,7 +963,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None, h2h_links=None,
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
                   btype="pace", opp_vision=None, opp_tiers=None, similar_href=None, similar_name=None,
-                  overview=None, release=None):
+                  overview=None, release=None, release_vision=None):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -959,7 +978,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
         body.append(f'<div class="simrow">{_vwatch(similar_href, f"&#9654; How {html.escape(similar_name)} bowled to {html.escape(opp)}")}'
                     f'<span class="simnote">A similar bowler’s recent footage against these batters.</span></div>')
     if release:                                     # opt-in, this bowler's pack only
-        body.append(_release_block(release))
+        body.append(_release_block(release, release_vision))
     if overview:                                    # the whole opposition, inline for this type
         body.append(_overview_section(overview, opp))
 
@@ -1026,12 +1045,13 @@ def _load_release_detail():
 _BAND_LABEL = {"close": "Close to the stumps", "medium": "Medium", "wide": "Wide"}
 
 
-def _release_block(rel):
+def _release_block(rel, vision=None):
     """The bowler's own release-point table — their pack only, and only when they've asked for it.
-    Cells under the sample floor show their ball count instead of an average, because a crease
-    position they barely use can't carry one."""
+    Average and strike rate need enough WICKETS (they're per-dismissal measures), economy enough
+    balls; a cell short of that shows its counts rather than a number built on two dismissals."""
     if not rel or not rel.get("cells"):
         return ""
+    vision = vision or {}
     rows = []
     last = None
     for c in rel["cells"]:
@@ -1040,18 +1060,21 @@ def _release_block(rel):
             rows.append(f'<tr class=grp><td colspan=7>{c["angle"].capitalize()} the wicket '
                         f'to {html.escape(c["hand"])}</td></tr>')
             last = key
-        rateable = c.get("avg") is not None
+        watch = _vwatch(vision.get(rel["cells"].index(c)), "&#9654;", cls="relwatch")
+        lo = ' class="few"' if c.get("low") else ""      # few wickets behind it — softened, not hidden
+
+        def _v(x, cls=lo):
+            return f'<span{cls}>{x}</span>' if x is not None else '<span class=thin>—</span>'
         rows.append(
-            f'<tr><td></td><td>{html.escape(_BAND_LABEL.get(c["band"], c["band"]))}</td>'
+            f'<tr><td>{watch}</td><td>{html.escape(_BAND_LABEL.get(c["band"], c["band"]))}</td>'
             f'<td>{c["balls"]}</td><td>{c["wkts"]}</td>'
-            f'<td>{c["avg"] if rateable else "<span class=thin>—</span>"}</td>'
-            f'<td>{c["sr"] if rateable else "<span class=thin>—</span>"}</td>'
-            f'<td>{c["econ"] if c.get("econ") is not None else "<span class=thin>—</span>"}</td></tr>')
+            f'<td>{_v(c.get("avg"))}</td><td>{_v(c.get("sr"))}</td>'
+            f'<td>{_v(c.get("econ"), "")}</td></tr>')
     note = (f'Where you let the ball go across the crease, and what it returned — split by the '
-            f"batter's hand and by over/round. Test matches with release tracking"
-            + (f', {html.escape(rel["seasons"])}' if rel.get("seasons") else "") + '. An average needs '
-            f'{rel.get("min_balls", 150)}+ balls and 3+ wickets in the cell, otherwise the ball count '
-            f'is shown on its own.')
+            f"batter's hand and by over/round. Your last {rel.get('years', 3)} years of Test cricket"
+            + (f' ({html.escape(rel["seasons"])})' if rel.get("seasons") else "") + '. Figures off '
+            f'fewer than {rel.get("low_wkts", 5)} wickets are greyed — read them next to the ball '
+            f'and wicket counts. &#9654; plays five balls from that position.')
     inner = (f'<div class="relwrap"><p class="relnote">{note}</p>'
              f'<table class="reltab"><tr><th></th><th>Release</th><th>Balls</th><th>Wkts</th>'
              f'<th>Avg</th><th>SR</th><th>Econ</th></tr>{"".join(rows)}</table></div>')
@@ -1113,7 +1136,7 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
         vision, cell_vision, snippet = {}, {}, ""
         if not no_video and card and card.get("series"):
             try:
-                vision, _hl, _hm, cell_vision, _ov, snippet, _sh = _build_vision(
+                vision, _hl, _hm, cell_vision, _ov, snippet, _sh, _rv = _build_vision(
                     dest_dir, pslug, name, card, ({}, {}), opp_clips=None)
             except Exception as e:
                 print(f"  ! attack vision {name}: {type(e).__name__}: {e}")
@@ -1263,7 +1286,7 @@ def build(out_dir, no_video=False, only=None):
             pslug = _slug(name)
             bts = rec.get("bowl_types", [])            # [] for a batter, [pace]/[spin]/[pace,spin]
             vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip = {}, [], {}, {}, {}, ""
-            similar_href = None
+            similar_href, release_vision = None, {}
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
             had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
@@ -1275,9 +1298,10 @@ def build(out_dir, no_video=False, only=None):
                                "title": f'How {sb["name"]} bowled to {_short_opp(meta)}'}
                               if sb and sb.get("clips") else None)
                 try:
-                    vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip, similar_href = _build_vision(
+                    vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip, similar_href, release_vision = _build_vision(
                         s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips,
-                        similar=sb_payload, manual=manual_vision)
+                        similar=sb_payload, manual=manual_vision,
+                        release=release_data.get(pid))
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             # tab list: Batting + one page per bowling type
@@ -1314,7 +1338,8 @@ def build(out_dir, no_video=False, only=None):
                                         similar_href=similar_href,
                                         similar_name=(sb["name"] if sb else None),
                                         overview=_load_overview(slug, grp or bt),
-                                        release=(release_data.get(pid) if bt == "pace" else None)) + vsnip,
+                                        release=(release_data.get(pid) if bt == "pace" else None),
+                                        release_vision=release_vision) + vsnip,
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 

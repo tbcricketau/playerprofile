@@ -1,47 +1,11 @@
 {
  "1300076": {
   "name": "Pat Cummins",
-  "seasons": "2018–2025",
+  "seasons": "2023–2025",
   "cells": [
    {
     "angle": "over",
     "hand": "LHB",
-    "band": "close",
-    "balls": 2,
-    "wkts": 0,
-    "runs": 0,
-    "avg": null,
-    "sr": null,
-    "econ": null,
-    "false_pct": null
-   },
-   {
-    "angle": "over",
-    "hand": "LHB",
-    "band": "medium",
-    "balls": 1097,
-    "wkts": 23,
-    "runs": 531,
-    "avg": 23.1,
-    "sr": 48,
-    "econ": 2.9,
-    "false_pct": 21.2
-   },
-   {
-    "angle": "over",
-    "hand": "LHB",
-    "band": "wide",
-    "balls": 276,
-    "wkts": 7,
-    "runs": 159,
-    "avg": 22.7,
-    "sr": 39,
-    "econ": 3.46,
-    "false_pct": 17.8
-   },
-   {
-    "angle": "over",
-    "hand": "RHB",
     "band": "close",
     "balls": 1,
     "wkts": 0,
@@ -49,81 +13,298 @@
     "avg": null,
     "sr": null,
     "econ": null,
-    "false_pct": null
+    "low": true,
+    "false_pct": null,
+    "clips": [
+     {
+      "delivery_id": "5460108020205901",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460108/B/2/5460108B205901"
+     }
+    ]
+   },
+   {
+    "angle": "over",
+    "hand": "LHB",
+    "band": "medium",
+    "balls": 406,
+    "wkts": 7,
+    "runs": 216,
+    "avg": 30.9,
+    "sr": 58,
+    "econ": 3.19,
+    "low": false,
+    "false_pct": 26.6,
+    "clips": [
+     {
+      "delivery_id": "5460387020202302",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/B/2/5460387B202302"
+     },
+     {
+      "delivery_id": "5460385020101405",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460385/B/1/5460385B101405"
+     },
+     {
+      "delivery_id": "5460383020104605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460383/B/1/5460383B104605"
+     },
+     {
+      "delivery_id": "5460126010209001",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460126/A/2/5460126A209001"
+     },
+     {
+      "delivery_id": "5460384020103305",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460384/B/1/5460384B103305"
+     }
+    ]
+   },
+   {
+    "angle": "over",
+    "hand": "LHB",
+    "band": "wide",
+    "balls": 40,
+    "wkts": 3,
+    "runs": 21,
+    "avg": 7.0,
+    "sr": 13,
+    "econ": 3.15,
+    "low": true,
+    "false_pct": null,
+    "clips": [
+     {
+      "delivery_id": "5460386020207105",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/B/2/5460386B207105"
+     },
+     {
+      "delivery_id": "5460385020106606",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460385/B/1/5460385B106606"
+     },
+     {
+      "delivery_id": "5460108020206104",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460108/B/2/5460108B206104"
+     },
+     {
+      "delivery_id": "5460385020106605",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460385/B/1/5460385B106605"
+     },
+     {
+      "delivery_id": "5460115020101504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460115/B/1/5460115B101504"
+     }
+    ]
    },
    {
     "angle": "over",
     "hand": "RHB",
     "band": "medium",
-    "balls": 3906,
-    "wkts": 88,
-    "runs": 1870,
-    "avg": 21.2,
-    "sr": 44,
-    "econ": 2.87,
-    "false_pct": 21.8
+    "balls": 1331,
+    "wkts": 33,
+    "runs": 602,
+    "avg": 18.2,
+    "sr": 40,
+    "econ": 2.71,
+    "low": false,
+    "false_pct": 30.9,
+    "clips": [
+     {
+      "delivery_id": "5460930020101704",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/B/1/5460930B101704"
+     },
+     {
+      "delivery_id": "5460825010105006",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/A/1/5460825A105006"
+     },
+     {
+      "delivery_id": "5460770020205906",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/B/2/5460770B205906"
+     },
+     {
+      "delivery_id": "5460770020105602",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/B/1/5460770B105602"
+     },
+     {
+      "delivery_id": "5460770020101602",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/B/1/5460770B101602"
+     }
+    ]
    },
    {
     "angle": "over",
     "hand": "RHB",
     "band": "wide",
-    "balls": 2893,
-    "wkts": 66,
-    "runs": 1338,
-    "avg": 20.3,
-    "sr": 44,
+    "balls": 593,
+    "wkts": 18,
+    "runs": 274,
+    "avg": 15.2,
+    "sr": 33,
     "econ": 2.77,
-    "false_pct": 20.2
+    "low": false,
+    "false_pct": 34.0,
+    "clips": [
+     {
+      "delivery_id": "5460930020100804",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/B/1/5460930B100804"
+     },
+     {
+      "delivery_id": "5460930020201004",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/B/2/5460930B201004"
+     },
+     {
+      "delivery_id": "5460930020202906",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/B/2/5460930B202906"
+     },
+     {
+      "delivery_id": "5460825010102704",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460825/A/1/5460825A102704"
+     },
+     {
+      "delivery_id": "5460824010104504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460824/A/1/5460824A104504"
+     }
+    ]
    },
    {
     "angle": "round",
     "hand": "LHB",
     "band": "medium",
-    "balls": 127,
+    "balls": 79,
     "wkts": 2,
-    "runs": 64,
-    "avg": null,
-    "sr": null,
-    "econ": null,
-    "false_pct": 20.0
+    "runs": 35,
+    "avg": 17.5,
+    "sr": 40,
+    "econ": 2.66,
+    "low": true,
+    "false_pct": null,
+    "clips": [
+     {
+      "delivery_id": "5460126010205601",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460126/A/2/5460126A205601"
+     },
+     {
+      "delivery_id": "5460108020201503",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460108/B/2/5460108B201503"
+     },
+     {
+      "delivery_id": "5460387020203506",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/B/2/5460387B203506"
+     },
+     {
+      "delivery_id": "5460383020207206",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460383/B/2/5460383B207206"
+     },
+     {
+      "delivery_id": "5460126010205202",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460126/A/2/5460126A205202"
+     }
+    ]
    },
    {
     "angle": "round",
     "hand": "LHB",
     "band": "wide",
-    "balls": 1588,
-    "wkts": 31,
-    "runs": 769,
-    "avg": 24.8,
-    "sr": 51,
-    "econ": 2.91,
-    "false_pct": 20.1
+    "balls": 495,
+    "wkts": 11,
+    "runs": 257,
+    "avg": 23.4,
+    "sr": 45,
+    "econ": 3.12,
+    "low": false,
+    "false_pct": 28.5,
+    "clips": [
+     {
+      "delivery_id": "5460930020200202",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/B/2/5460930B200202"
+     },
+     {
+      "delivery_id": "5460387020203504",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/B/2/5460387B203504"
+     },
+     {
+      "delivery_id": "5460387020203904",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/B/2/5460387B203904"
+     },
+     {
+      "delivery_id": "5460770020105801",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460770/B/1/5460770B105801"
+     },
+     {
+      "delivery_id": "5460387020106606",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460387/B/1/5460387B106606"
+     }
+    ]
    },
    {
     "angle": "round",
     "hand": "RHB",
     "band": "medium",
-    "balls": 18,
+    "balls": 6,
     "wkts": 0,
-    "runs": 9,
+    "runs": 1,
     "avg": null,
     "sr": null,
     "econ": null,
-    "false_pct": null
+    "low": true,
+    "false_pct": null,
+    "clips": [
+     {
+      "delivery_id": "5460930020104606",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5460930/B/1/5460930B104606"
+     },
+     {
+      "delivery_id": "5460114020101201",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460114/B/1/5460114B101201"
+     },
+     {
+      "delivery_id": "5460107020101402",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460107/B/1/5460107B101402"
+     },
+     {
+      "delivery_id": "5460107020101403",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460107/B/1/5460107B101403"
+     },
+     {
+      "delivery_id": "5460107020101404",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/Multi%20Day/5460107/B/1/5460107B101404"
+     }
+    ]
    },
    {
     "angle": "round",
     "hand": "RHB",
     "band": "wide",
-    "balls": 113,
-    "wkts": 5,
-    "runs": 73,
-    "avg": null,
-    "sr": null,
-    "econ": null,
-    "false_pct": null
+    "balls": 41,
+    "wkts": 2,
+    "runs": 23,
+    "avg": 11.5,
+    "sr": 20,
+    "econ": 3.37,
+    "low": true,
+    "false_pct": null,
+    "clips": [
+     {
+      "delivery_id": "5460384020203403",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460384/B/2/5460384B203403"
+     },
+     {
+      "delivery_id": "5460384020203602",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460384/B/2/5460384B203602"
+     },
+     {
+      "delivery_id": "5460386020111906",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460386/B/1/5460386B111906"
+     },
+     {
+      "delivery_id": "5460385020106804",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460385/B/1/5460385B106804"
+     },
+     {
+      "delivery_id": "5460384020203405",
+      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/5460384/B/2/5460384B203405"
+     }
+    ]
    }
   ],
-  "min_balls": 150
+  "low_wkts": 5,
+  "years": 3,
+  "since": "2023-08-04"
  }
 }
