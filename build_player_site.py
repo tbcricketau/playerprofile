@@ -628,6 +628,14 @@ def _our_bowl_groups(slug):
                 out.setdefault(str(c["bowler_id"]), {})["pace" if g in _PACE_GROUPS else "spin"] = g
     except Exception:
         pass
+    # players.json can name the group directly — domestic bowlers have no sim profile, so the store
+    # can't type them, and without this their footage/report links fall back to the broad set
+    try:
+        for pid, rec in json.load(open(PLAYERS, encoding="utf-8")).items():
+            if rec.get("bowl_groups"):
+                out.setdefault(str(pid), {}).update(rec["bowl_groups"])
+    except Exception:
+        pass
     return out
 
 
@@ -881,15 +889,32 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
             release_vision[i] = f"{page_slug}-vision.html#{key}"
     # hand-supplied footage for opponents the warehouse has nothing on (uncapped call-ups). These
     # carry a playable url already, so they skip resolve_playlist's storage probe entirely.
+    # One playlist per AUDIENCE, not one lump: a batter's clips are keyed by the bowler group facing
+    # them, a bowler's by the batter's hand. Showing a right-arm quick the left-arm-pace footage was
+    # just noise they had to sift.
+    manual_href = {}
     for bid, mv in (manual or {}).items():
-        items = [{"delivery_id": None, "clip_stem": None, "caption": c.get("caption", ""),
-                  "url": c["url"], "meta": {}} for c in (mv.get("clips") or []) if c.get("url")]
-        if not items:
-            continue
-        key = f"man_{bid}"
-        playlists[key] = items
-        titles[key] = "Footage"
-        opp_vision[(bid, "footage")] = f"{page_slug}-vision.html#{key}"
+        buckets = {}
+        for c in (mv.get("clips") or []):
+            if not c.get("url"):
+                continue
+            key = c.get("group") or c.get("hand")
+            if not key:
+                continue
+            item = {"delivery_id": None, "clip_stem": None, "caption": c.get("caption", ""),
+                    "url": c["url"], "meta": {}}
+            buckets.setdefault(key, []).append(item)
+            # also file it under the broad family, so a bowler whose exact type we can't resolve
+            # still gets the pace/spin set rather than an empty button
+            fam = ("pace" if key.endswith("_pace")
+                   else "spin" if key.endswith(("spin", "orthodox", "unorthodox")) else None)
+            if fam and fam != key:
+                buckets.setdefault(fam, []).append(item)
+        for key, items in buckets.items():
+            pk = f"man_{bid}_{key}"
+            playlists[pk] = items
+            titles[pk] = "Footage"
+            manual_href[(bid, key)] = f"{page_slug}-vision.html#{pk}"
     # similar reference bowler (e.g. Sajid Khan for Lyon) — how they went vs the opposition batters
     similar_href = None
     if similar and similar.get("clips"):
@@ -909,7 +934,8 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                           titles=titles)
         # in-page modal: injected into each of this player's pack pages so ▶ plays over the report
         snippet = inline_player_snippet(playlists, titles)
-    return hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet, similar_href, release_vision
+    return (hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet, similar_href,
+            release_vision, manual_href)
 
 
 def _report_top(pid, name, role, sname, pages=None, current=None, tier=None):
@@ -945,7 +971,7 @@ def _vision_list(h2h_links, prefix, had_meetings, verb):
 def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False,
                   opp_bowlers=None, about=None, report_urls=None, h2h_map=None, h2h_rows=None,
                   pages=None, current=None, hand="rhb", cell_vision=None, opp_vision=None,
-                  opp_tiers=None):
+                  opp_tiers=None, manual_href=None):
     """Batting pack: (1) how previous attacks bowled to you, (2) the opposition attack — one card
     per bowler with the distilled facts + a link to the hand-correct report + your footage."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -974,9 +1000,15 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
             # New-ball playlist for bowlers who take the new ball (built into opp_vision when clips exist).
             bkinds = ("stock", "wicket", "new_ball", "footage") if rec.get("new_ball_footage") \
                 else ("stock", "wicket", "footage")
+            # their bowling footage, filtered to OUR batter's hand — a right-hander has no use for
+            # the to-left-handers reel
+            ov = opp_vision
+            fh = _manual_for(manual_href, bid, hand)
+            if fh:
+                ov = {**opp_vision, (bid, "footage"): fh}
             return _opp_card(bid, nm, ty, facts,
                              h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
-                             opp_vision=opp_vision, report_url=report_urls.get(bid),
+                             opp_vision=ov, report_url=report_urls.get(bid),
                              kinds=bkinds, tier=(opp_tiers or {}).get(bid))
         body.append(_pack_section(f"The {opp} attack",
                                   "Grouped by how likely they are to play. Tap a bowler for what "
@@ -993,7 +1025,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
 def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None, h2h_links=None,
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
                   btype="pace", opp_vision=None, opp_tiers=None, similar_href=None, similar_name=None,
-                  overview=None, release=None, release_vision=None):
+                  overview=None, release=None, release_vision=None, manual_href=None,
+                  group=None):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -1019,10 +1052,15 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
         def _card(bid, meta_):
             nm, hnd = meta_
             role = (about.get(bid) or {}).get("role")
+            # their batting footage, filtered to the group OUR bowler actually bowls
+            ov = opp_vision
+            fh = _manual_for(manual_href, bid, group)
+            if fh:
+                ov = {**opp_vision, (bid, "footage"): fh}
             return _opp_card(bid, nm, (f"{hnd} · {role}" if role else hnd),
                              (about.get(bid) or {}).get(f"facts_{tw}"),
                              h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
-                             opp_vision=opp_vision, report_url=report_urls.get(bid),
+                             opp_vision=ov, report_url=report_urls.get(bid),
                              kinds=("scoring", "dismissal", "footage"),  # batter card: batting vision only
                              tier=(opp_tiers or {}).get(bid))
         body.append(_pack_section(f"The {opp} batters",
@@ -1055,6 +1093,17 @@ def _load_similar(slug):
     opp = slug.split("-")[0]
     p = os.path.join(HERE, "data", f"similar_bowler_{opp}.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+def _manual_for(manual_href, bid, key):
+    """Their footage for this audience: the exact type first, then the broad pace/spin set. A
+    left-arm orthodox bowler has no left-orthodox reel of a batter who's only been filmed against
+    off spin — the spin footage is still worth seeing, and each clip's caption names what it is."""
+    if not manual_href or not key:
+        return None
+    fam = ("pace" if str(key).endswith("_pace")
+           else "spin" if str(key).endswith(("spin", "orthodox", "unorthodox")) else None)
+    return manual_href.get((bid, key)) or (manual_href.get((bid, fam)) if fam else None)
 
 
 def _load_manual_vision(slug):
@@ -1166,7 +1215,7 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
         vision, cell_vision, snippet = {}, {}, ""
         if not no_video and card and card.get("series"):
             try:
-                vision, _hl, _hm, cell_vision, _ov, snippet, _sh, _rv = _build_vision(
+                vision, _hl, _hm, cell_vision, _ov, snippet, _sh, _rv, _mh = _build_vision(
                     dest_dir, pslug, name, card, ({}, {}), opp_clips=None)
             except Exception as e:
                 print(f"  ! attack vision {name}: {type(e).__name__}: {e}")
@@ -1316,7 +1365,7 @@ def build(out_dir, no_video=False, only=None):
             pslug = _slug(name)
             bts = rec.get("bowl_types", [])            # [] for a batter, [pace]/[spin]/[pace,spin]
             vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip = {}, [], {}, {}, {}, ""
-            similar_href, release_vision = None, {}
+            similar_href, release_vision, manual_href = None, {}, {}
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))
             had_bowl = bool(h2h and any(r["bowler_id"] == pid for r in h2h.get("our_bowling", [])))
@@ -1328,7 +1377,8 @@ def build(out_dir, no_video=False, only=None):
                                "title": f'How {sb["name"]} bowled to {_short_opp(meta)}'}
                               if sb and sb.get("clips") else None)
                 try:
-                    vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip, similar_href, release_vision = _build_vision(
+                    (vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip, similar_href,
+                     release_vision, manual_href) = _build_vision(
                         s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips,
                         similar=sb_payload, manual=manual_vision,
                         release=release_data.get(pid))
@@ -1348,7 +1398,8 @@ def build(out_dir, no_video=False, only=None):
                                     opp_bowlers=opp_bowlers, about=about_bowl, report_urls=bat_report,
                                     h2h_map=h2h_map, h2h_rows=bat_rows,
                                     pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision,
-                                    opp_vision=opp_vision, opp_tiers=opp_tiers) + vsnip,
+                                    opp_vision=opp_vision, opp_tiers=opp_tiers,
+                                    manual_href=manual_href) + vsnip,
                       up=("index.html", "Squad")))
             for bt in bts:
                 bowl_href = f"{pslug}-bowling-{bt}.html"
@@ -1369,7 +1420,8 @@ def build(out_dir, no_video=False, only=None):
                                         similar_name=(sb["name"] if sb else None),
                                         overview=_load_overview(slug, grp or bt),
                                         release=(release_data.get(pid) if bt == "pace" else None),
-                                        release_vision=release_vision) + vsnip,
+                                        release_vision=release_vision,
+                                        manual_href=manual_href, group=(grp or bt)) + vsnip,
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 

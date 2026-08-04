@@ -4,35 +4,43 @@
   "clips": [
    {
     "caption": "Beaten — vs left-arm pace",
-    "url": "https://www.dropbox.com/scl/fi/axicbfgxvzqfhfn2zwzb1/Amite-Hasan-vs-LAP-Beaten.MP4?rlkey=tmcjcyd179ukofmwkfqcpafvu&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/axicbfgxvzqfhfn2zwzb1/Amite-Hasan-vs-LAP-Beaten.MP4?rlkey=tmcjcyd179ukofmwkfqcpafvu&raw=1",
+    "group": "left_pace"
    },
    {
     "caption": "Boundaries — vs left-arm pace",
-    "url": "https://www.dropbox.com/scl/fi/p0qk42z4t6u0acliq8p7t/Amite-Hasan-vs-LAP-Boundaries.MP4?rlkey=t9jj1tsz1z3l0koymvtxouo4l&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/p0qk42z4t6u0acliq8p7t/Amite-Hasan-vs-LAP-Boundaries.MP4?rlkey=t9jj1tsz1z3l0koymvtxouo4l&raw=1",
+    "group": "left_pace"
    },
    {
     "caption": "Dismissals — vs left-arm pace",
-    "url": "https://www.dropbox.com/scl/fi/bzzvfvbt08t8231i773px/Amite-Hasan-vs-LAP-Dismissals.MP4?rlkey=lcx47vcjbwr6k72xyin2mn0r9&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/bzzvfvbt08t8231i773px/Amite-Hasan-vs-LAP-Dismissals.MP4?rlkey=lcx47vcjbwr6k72xyin2mn0r9&raw=1",
+    "group": "left_pace"
    },
    {
     "caption": "Beaten — vs right-arm pace",
-    "url": "https://www.dropbox.com/scl/fi/g5c3f6oa8icjcuz934lab/Amite-Hasan-vs-RAP-Beaten.MP4?rlkey=lm3mzaq8k0ex4ggc8o135dm53&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/g5c3f6oa8icjcuz934lab/Amite-Hasan-vs-RAP-Beaten.MP4?rlkey=lm3mzaq8k0ex4ggc8o135dm53&raw=1",
+    "group": "right_pace"
    },
    {
     "caption": "Boundaries — vs right-arm pace",
-    "url": "https://www.dropbox.com/scl/fi/qos7mrfcsrg17z5pdsedy/Amite-Hasan-vs-RAP-Boundaries.MP4?rlkey=e8h0aghpzjk37zzadrpx0bd7o&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/qos7mrfcsrg17z5pdsedy/Amite-Hasan-vs-RAP-Boundaries.MP4?rlkey=e8h0aghpzjk37zzadrpx0bd7o&raw=1",
+    "group": "right_pace"
    },
    {
     "caption": "Dismissals — vs right-arm pace",
-    "url": "https://www.dropbox.com/scl/fi/a12918d5olctokctjhyh3/Amite-Hasan-vs-RAP-Dismissals.MP4?rlkey=ic7waozq7l712omq5d7mid6q7&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/a12918d5olctokctjhyh3/Amite-Hasan-vs-RAP-Dismissals.MP4?rlkey=ic7waozq7l712omq5d7mid6q7&raw=1",
+    "group": "right_pace"
    },
    {
     "caption": "Beaten — vs right-arm off spin",
-    "url": "https://www.dropbox.com/scl/fi/d1k3gavj1x4sg9xwue62i/Amite-Hasan-vs-RAO-Beaten.MP4?rlkey=mo5b7gfekxqktno0cib43k05m&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/d1k3gavj1x4sg9xwue62i/Amite-Hasan-vs-RAO-Beaten.MP4?rlkey=mo5b7gfekxqktno0cib43k05m&raw=1",
+    "group": "off_spin"
    },
    {
     "caption": "Boundaries — vs right-arm off spin",
-    "url": "https://www.dropbox.com/scl/fi/hr41szftvhwqoa5o5diim/Amite-Hasan-vs-RAO-Boundaries.MP4?rlkey=wz472dl7v9ilsiwxn8dxm6f59&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/hr41szftvhwqoa5o5diim/Amite-Hasan-vs-RAO-Boundaries.MP4?rlkey=wz472dl7v9ilsiwxn8dxm6f59&raw=1",
+    "group": "off_spin"
    }
   ]
  },
@@ -41,35 +49,43 @@
   "clips": [
    {
     "caption": "To left-handers — overs 1–20",
-    "url": "https://www.dropbox.com/scl/fi/36daovj918o750irv907d/Musfik-Hasan-vs-LHB-Overs-1-to-20.mp4?rlkey=cft4u0j76vbkwsf9uuwh80m7j&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/36daovj918o750irv907d/Musfik-Hasan-vs-LHB-Overs-1-to-20.mp4?rlkey=cft4u0j76vbkwsf9uuwh80m7j&raw=1",
+    "hand": "lhb"
    },
    {
     "caption": "To left-handers — overs 21–50",
-    "url": "https://www.dropbox.com/scl/fi/d8zdoy4xyjjno1zwtak55/Musfik-Hasan-vs-LHB-Overs-21-to-50.mp4?rlkey=yzf4tr6mrzkvjdwprh7pgiwqo&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/d8zdoy4xyjjno1zwtak55/Musfik-Hasan-vs-LHB-Overs-21-to-50.mp4?rlkey=yzf4tr6mrzkvjdwprh7pgiwqo&raw=1",
+    "hand": "lhb"
    },
    {
     "caption": "To left-handers — overs 51–80",
-    "url": "https://www.dropbox.com/scl/fi/v9yetd7pco773kkvscjz8/Musfik-Hasan-vs-LHB-Overs-51-to-80.mp4?rlkey=ipx1x210ds69ghdevmlu3acjt&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/v9yetd7pco773kkvscjz8/Musfik-Hasan-vs-LHB-Overs-51-to-80.mp4?rlkey=ipx1x210ds69ghdevmlu3acjt&raw=1",
+    "hand": "lhb"
    },
    {
     "caption": "To left-handers — boundaries conceded",
-    "url": "https://www.dropbox.com/scl/fi/cncwleu041by1rwipb1hu/Musfik-Hasan-vs-LHB-Boundaries.MP4?rlkey=hq3266csrxbmdco201nnid2i6&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/cncwleu041by1rwipb1hu/Musfik-Hasan-vs-LHB-Boundaries.MP4?rlkey=hq3266csrxbmdco201nnid2i6&raw=1",
+    "hand": "lhb"
    },
    {
     "caption": "To right-handers — overs 1–20",
-    "url": "https://www.dropbox.com/scl/fi/tuh6xshai9kuy0bhspw88/Musfik-Hasan-vs-RHB-Overs-1-to-20.mp4?rlkey=s9vpkcjns0t3e4jcc8ih1y7m4&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/tuh6xshai9kuy0bhspw88/Musfik-Hasan-vs-RHB-Overs-1-to-20.mp4?rlkey=s9vpkcjns0t3e4jcc8ih1y7m4&raw=1",
+    "hand": "rhb"
    },
    {
     "caption": "To right-handers — overs 21–50",
-    "url": "https://www.dropbox.com/scl/fi/8a1sgeaq8oku2v071fncn/Musfik-Hasan-vs-RHB-Overs-21-to-50.mp4?rlkey=13ecafkzriwbc9ctyxdjg7b5l&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/8a1sgeaq8oku2v071fncn/Musfik-Hasan-vs-RHB-Overs-21-to-50.mp4?rlkey=13ecafkzriwbc9ctyxdjg7b5l&raw=1",
+    "hand": "rhb"
    },
    {
     "caption": "To right-handers — overs 51–80",
-    "url": "https://www.dropbox.com/scl/fi/llabqfybo28bclkqtd4wj/Musfik-Hasan-vs-RHB-Overs-51-to-80.mp4?rlkey=2pok4un0m5qpt94rs0fb6lqme&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/llabqfybo28bclkqtd4wj/Musfik-Hasan-vs-RHB-Overs-51-to-80.mp4?rlkey=2pok4un0m5qpt94rs0fb6lqme&raw=1",
+    "hand": "rhb"
    },
    {
     "caption": "To right-handers — boundaries conceded",
-    "url": "https://www.dropbox.com/scl/fi/uqdga6gmn8dhd8oggk446/Musfik-Hasan-vs-RHB-Boundaries.MP4?rlkey=aseke3rj4owowzbl2q5xjf26t&raw=1"
+    "url": "https://www.dropbox.com/scl/fi/uqdga6gmn8dhd8oggk446/Musfik-Hasan-vs-RHB-Boundaries.MP4?rlkey=aseke3rj4owowzbl2q5xjf26t&raw=1",
+    "hand": "rhb"
    }
   ]
  }

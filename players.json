@@ -49,7 +49,10 @@
   "bowl_types": [
    "pace"
   ],
-  "tier": "squad"
+  "tier": "squad",
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "350104": {
   "name": "Alex Carey",
@@ -72,7 +75,10 @@
    "pace",
    "spin"
   ],
-  "tier": "squad"
+  "tier": "squad",
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "1300076": {
   "name": "Pat Cummins",
@@ -252,7 +258,10 @@
   "tier": "squad",
   "bowl_types": [
    "pace"
-  ]
+  ],
+  "bowl_groups": {
+   "pace": "left_pace"
+  }
  },
  "3750021": {
   "name": "Corey Rocchiccioli",
@@ -264,7 +273,10 @@
   "tier": "squad",
   "bowl_types": [
    "spin"
-  ]
+  ],
+  "bowl_groups": {
+   "spin": "off_spin"
+  }
  },
  "4290003": {
   "name": "Jerrssis Wadia",
@@ -276,7 +288,10 @@
   "tier": "squad",
   "bowl_types": [
    "spin"
-  ]
+  ],
+  "bowl_groups": {
+   "spin": "left_orthodox"
+  }
  },
  "3550742": {
   "name": "Tom Menzies",
@@ -288,7 +303,10 @@
   "tier": "squad",
   "bowl_types": [
    "pace"
-  ]
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "3110019": {
   "name": "Xavier Crone",
@@ -300,7 +318,10 @@
   "tier": "squad",
   "bowl_types": [
    "pace"
-  ]
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "3550562": {
   "name": "Hanno Jacobs",
@@ -313,7 +334,10 @@
   "tier": "squad",
   "bowl_types": [
    "pace"
-  ]
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "1070502": {
   "name": "Tom Rogers",
@@ -339,7 +363,10 @@
   "tier": "squad",
   "bowl_types": [
    "pace"
-  ]
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "2840030": {
   "name": "Jack Clayton",
