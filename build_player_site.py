@@ -804,7 +804,7 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
 
 
 def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, similar=None,
-                  manual=None, release=None):
+                  manual=None, release=None, manual_keys=None):
     """One modal-player page per player: a 'Dismissals — v X' playlist per attack-card series,
     plus any `extra` (playlists, titles) — the real head-to-head meetings. Fresh SAS minted at
     build time, like publish_site. Returns (dismissal_hrefs, h2h_links): {series_index: href#key}
@@ -895,6 +895,7 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
     manual_href = {}
     for bid, mv in (manual or {}).items():
         buckets = {}
+        want = manual_keys if manual_keys else None
         for c in (mv.get("clips") or []):
             if not c.get("url"):
                 continue
@@ -910,10 +911,21 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                    else "spin" if key.endswith(("spin", "orthodox", "unorthodox")) else None)
             if fam and fam != key:
                 buckets.setdefault(fam, []).append(item)
+        emit = {k for k in buckets if want is None or k in want}
+        # the broad pace/spin bucket only earns its place when the exact type has no clips — with
+        # both, a left-arm quick's "vs pace" set would quietly hand back the right-arm footage
+        for fam in ("pace", "spin"):
+            suffix = "_pace" if fam == "pace" else ("spin", "orthodox", "unorthodox")
+            if fam in emit and any(k != fam and k.endswith(suffix) for k in emit):
+                emit.discard(fam)
         for key, items in buckets.items():
+            # only the sets THIS player can reach — otherwise their vision tab lists every reel,
+            # including the ones their card deliberately doesn't link
+            if key not in emit:
+                continue
             pk = f"man_{bid}_{key}"
             playlists[pk] = items
-            titles[pk] = "Footage"
+            titles[pk] = f'{mv.get("name", "Footage")} — {_MKEY_LABEL.get(key, key)}'
             manual_href[(bid, key)] = f"{page_slug}-vision.html#{pk}"
     # similar reference bowler (e.g. Sajid Khan for Lyon) — how they went vs the opposition batters
     similar_href = None
@@ -1093,6 +1105,30 @@ def _load_similar(slug):
     opp = slug.split("-")[0]
     p = os.path.join(HERE, "data", f"similar_bowler_{opp}.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+
+
+_MKEY_LABEL = {"lhb": "to left-handers", "rhb": "to right-handers",
+               "left_pace": "vs left-arm pace", "right_pace": "vs right-arm pace",
+               "off_spin": "vs off spin", "leg_spin": "vs leg spin",
+               "left_orthodox": "vs left-arm orthodox", "left_unorthodox": "vs left-arm wrist spin",
+               "pace": "vs pace", "spin": "vs spin"}
+
+
+def _manual_keys_for(pid, our_hands, our_groups, bts):
+    """Which footage sets this player can actually reach: their batting hand, plus the group (and
+    broad family) of each type they bowl."""
+    keys = set()
+    h = our_hands.get(pid)
+    if h:
+        keys.add(h)
+    for bt in (bts or []):
+        g = (our_groups.get(pid) or {}).get(bt) or bt
+        keys.add(g)
+        if str(g).endswith("_pace"):
+            keys.add("pace")
+        elif str(g).endswith(("spin", "orthodox", "unorthodox")):
+            keys.add("spin")
+    return keys
 
 
 def _manual_for(manual_href, bid, key):
@@ -1381,7 +1417,8 @@ def build(out_dir, no_video=False, only=None):
                      release_vision, manual_href) = _build_vision(
                         s_dir, pslug, name, cards.get(pid), extra, opp_clips=opp_clips,
                         similar=sb_payload, manual=manual_vision,
-                        release=release_data.get(pid))
+                        release=release_data.get(pid),
+                        manual_keys=_manual_keys_for(pid, our_hands, our_groups, bts))
                 except Exception as e:
                     print(f"  ! vision for {name}: {type(e).__name__}: {e}")
             # tab list: Batting + one page per bowling type
