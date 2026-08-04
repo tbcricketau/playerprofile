@@ -4,6 +4,33 @@ Bump `REPORT_VERSION` in `version.py` on every git commit that changes report
 output, and record it here. The version + build date print in the top-right of
 the front page.
 
+## v1.7 — 3–4 August 2026
+Review pass on the packs, plus per-player footage. All live on both pack sites.
+- **Overall opposition overview** (was "meeting overview") — now an **inline collapsible box in the
+  bowling pack** rather than a link to the coach site's series page, which 404'd from the pack bundle.
+  Carries an opposition **headshot per row**, the bowler type in the **column header** (so the rows
+  drop the repeated "Plan for X:"), and **field-map overlays**: each option is a chip opening its map
+  full-screen, closed by tap or Escape. Labels stay descriptive (Early / Once set / Bouncer plan).
+- **Field summary rewritten** — "stock field · Backward square leg · spare: Mid-on" ran three
+  unrelated things together behind dots. Now **Set / Move / Spare** on labelled lines with a key
+  stating each once. `field_engine.pretty_position()` renders slips as **"2nd slip"**, applied to the
+  overview and the report justification tables; diagrams keep the compact S1/S2 codes.
+- **Cummins' release table** — scoped to the **last 3 years** (the career sample was too broad to act
+  on, and it reverses the read: over-the-wicket to LHB costs 30.9 recently vs 23.4 round). Average and
+  strike rate now show **wherever a wicket exists** — they're per-wicket measures, and a 150-ball gate
+  was discarding a computed 14.6 average off 5 wickets, which read as a broken sum. Thin cells are
+  greyed, not hidden. **Five example balls per release position** behind the usual play button.
+- **Footage shown only to the players it's relevant to** — Amit's clips are keyed by the bowler group
+  facing him, Musfik's by the batter's hand, so a right-arm quick no longer sifts past left-arm-pace
+  and off-spin reels. Applies to the card buttons **and** the vision tab, which was still listing
+  every reel. `players.json` gains `bowl_groups` for bowlers the sim store can't type (the CA XI, and
+  Webster's pace) — filtering exposed that both would otherwise resolve to nothing.
+- **Layout fixes:** field buttons moved to a full-width strip under each row (stacked in the column
+  they dragged the row's height out); inline field labels after a fixed gutter starved the value on
+  narrow columns; and the row divider no longer breaks — a `<td>` set to `display:flex` leaves the
+  table box model, so its border drew at its own content height.
+- **CA XI:** Tom Rogers out, **Jack Clayton** in.
+
 ## v1.6 — 2 August 2026
 Four bowler requests answered, plus the BAN squad reconciled again after Litton Das was recalled.
 - **Meeting overviews** (`build_overview.py`) — one row per opposition batter for a given bowler type:
