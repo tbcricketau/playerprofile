@@ -129,6 +129,32 @@ is_spin = primary_type in _spin_types
 - Same warehouse via `cricket_core.warehouse`; same shared theme/charts
 - `livematchdashboard` is **match-centric** (one match at a time); `playerprofile` is **player-centric** (career data for one player)
 
+## Publishing — the link check is mandatory, not optional
+
+**Never `git push` a pack bundle by hand.** Broken links reached the live packs twice, and neither
+was a build failure — the build succeeded and produced a bundle containing dead links, so nothing
+complained. The gate therefore sits on the *push*, against the *assembled bundle*, which is what
+actually gets served.
+
+```powershell
+.\venv\Scripts\python.exe publish_packs.py aus      # assemble -> validate -> push (refuses if broken)
+.\venv\Scripts\python.exe publish_packs.py caxi --deep
+.\venv\Scripts\python.exe check_site.py player_pack_site   # validate on its own
+```
+
+`check_site.py` fails the build (exit 1) on: a dead internal href/src, a zero-byte target, a
+`#fragment` missing from the page it points at, or a play button whose playlist is absent or empty.
+It warns on orphan pages — usually a leftover carrying a stale breadcrumb. `--deep` HEADs a sample
+of media URLs, which is how you catch an expired Fairplay SAS before players do.
+
+`publish_site.deploy_github()` runs the same check before the coach site goes out, so
+`deploy_scouting.py` is covered too. `check=False` exists only for a deliberate override.
+
+**The failure mode to remember:** changing which report a card links (e.g. adding `bowl_groups`, or
+re-scoping a group) changes the link *targets*, so the reports must be re-injected before assembling.
+Assemble copies only what the packs link, so a stale bake shows up as dead links — which is exactly
+what the check catches.
+
 ## Known gaps / pending work
 
 - Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER`) uses assumed strings — verify against actual DB lookup values if cells appear out of order

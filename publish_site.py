@@ -342,7 +342,22 @@ def _write_group_index(g_dir, cfg, s, g, report_cards):
         _page(g["name"], body, up=("../index.html", s["name"])))
 
 
-def deploy_github(out_dir, repo_url, branch="main"):
+def deploy_github(out_dir, repo_url, branch="main", check=True):
+    # Gate: broken links have reached the live site twice, and neither was a build failure — the
+    # build succeeded and produced a bundle with dead links in it. Validate what we're about to
+    # serve, and refuse to push if it's broken. `check=False` only for a deliberate override.
+    if check:
+        from check_site import check as _check_site
+        print(f"validating {out_dir} before publish…")
+        errors, warnings = _check_site(out_dir)
+        for w in warnings[:10]:
+            print(f"  WARN  {w}")
+        for e in errors:
+            print(f"  FAIL  {e}")
+        if errors:
+            raise SystemExit(f"REFUSING TO PUBLISH: {len(errors)} broken link(s)/asset(s) in {out_dir}. "
+                             f"Fix them, or re-run with check=False if this is deliberate.")
+        print("  validation clean")
     _rmtree(os.path.join(out_dir, ".git"))
 
     def run(*a):
