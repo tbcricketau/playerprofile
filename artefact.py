@@ -61,8 +61,16 @@ def to_artefact(P: dict, kind: str = "bowler") -> dict:
     }
 
 
+def _slug(player_id) -> str:
+    """Filename-safe id. Ids are not always plain integers — a mirror-sourced profile uses
+    `c21:Amite_Hasan`, and on Windows a colon silently creates an NTFS *alternate data stream*
+    (a 0-byte file with the content hidden in a stream, invisible to globs and lost on copy).
+    Anything outside [A-Za-z0-9._-] becomes an underscore."""
+    return "".join(c if (c.isalnum() or c in "._-") else "_" for c in str(player_id))
+
+
 def path_for(kind: str, player_id) -> Path:
-    return PROFILE_DIR / f"{kind}_{player_id}.json"
+    return PROFILE_DIR / f"{kind}_{_slug(player_id)}.json"
 
 
 def publish(P_or_id, kind: str = "bowler", **build_kwargs) -> Path:
