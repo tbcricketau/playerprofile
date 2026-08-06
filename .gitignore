@@ -20,6 +20,9 @@ env/
 reports/*
 !reports/.gitkeep
 
+# ── Published profile artefacts (artefact.py) — player-derived data, rebuildable ──
+data/profiles/
+
 # ── Photo cache (SharePoint/Graph backend; local photos/ is the source) ─
 .photo_cache/
 
