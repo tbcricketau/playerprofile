@@ -199,6 +199,7 @@ EXTRA_CSS = """<style>
  details.bwl>.bbody p{margin:5px 0} details.bwl .k{color:#6b7280}
  ul.afacts{margin:4px 0 8px;padding-left:18px} ul.afacts li{margin:3px 0}
  .cohort{color:#9aa4b2;font-size:11.5px;font-style:italic}
+ .vfoot{color:#9aa4b2;font-size:11px;margin:10px 2px 0;line-height:1.45}
 </style>"""
 
 
@@ -532,6 +533,17 @@ def _strip_plan_prefix(plan, label):
     return plan
 
 
+# Batting order, near enough: the role band from their modal Test position. Players asked for the
+# lists to read down the order rather than by sample size, so this sorts WITHIN each squad tier.
+_ROLE_RANK = {"Opener": 0, "Top order": 1, "Middle order": 2, "Lower order": 3}
+
+
+def _bat_rank(role, order=0):
+    """Sort key — role band, then balls faced, so two openers stay in a sensible order and anyone
+    without a role (uncapped, no Test position on record) falls to the bottom of their tier."""
+    return (_ROLE_RANK.get(role, 4), -(order or 0))
+
+
 def _overview_section(ov, opp):
     """The whole opposition on one page, inline in the pack: a headshot + the plan and field per
     batter, then how they score and get out. Rendered here rather than linked so the pack stays
@@ -656,14 +668,17 @@ def _our_hands(slug):
 
 
 def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None, report_url=None,
-              kinds=None, tier=None):
+              kinds=None, tier=None, limited=None):
     """A per-opponent card in a PLAYER report: the distilled 'what they're about' facts (type-scoped
     by the caller), a link to the reduced PLAYER-MODE report on this opponent, video of their stock
     ball + wicket balls, and neutral footage against them. NO good/poor matchup verdict. `kinds`
     scopes which vision buttons show — an all-rounder carries both bowler (stock/wicket) and batter
     (scoring/dismissal) clips, but a bowler card must only offer the bowling ones (and vice versa).
-    `tier` = the opposition player's squad status (Most likely XI / In the squad / Fringe)."""
+    `tier` = the opposition player's squad status (Most likely XI / In the squad / Fringe).
+    `limited` = kinds whose footage isn't the exact thing asked for (a wider bowler type, or a
+    white-ball match) — starred, so nobody reads a fallback reel as the real sample."""
     opp_vision = opp_vision or {}
+    limited = limited or set()
     rl = (f'<a class="rlink" href="{report_url}" onclick="event.stopPropagation()" '
           f'title="full report on {html.escape(name)}">View report</a>') if report_url else ""
     av = _avatar(bid, "bav", _initials(name), name=name)
@@ -686,7 +701,8 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     show = [(k, l) for k, l in all_kinds if kinds is None or k in kinds]
     for kind, label in show:
         if opp_vision.get((bid, kind)):
-            watch.append(_vwatch(opp_vision[(bid, kind)], f"&#9654; {label}"))
+            star = "*" if kind in limited else ""
+            watch.append(_vwatch(opp_vision[(bid, kind)], f"&#9654; {label}{star}"))
     if watch:
         lines.append('<p>' + " ".join(watch) + '</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
@@ -862,7 +878,19 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                               ("scoring_pace", "scop", "Scoring shots vs pace"),
                               ("dismissal_pace", "dsmp", "Dismissals vs pace"),
                               ("scoring_spin", "scos", "Scoring shots vs spin"),
-                              ("dismissal_spin", "dsms", "Dismissals vs spin")):
+                              ("dismissal_spin", "dsms", "Dismissals vs spin"),
+                              ("scoring_right_pace", "scoRP", "Scoring shots vs right-arm pace"),
+                              ("dismissal_right_pace", "dsmRP", "Dismissals vs right-arm pace"),
+                              ("scoring_left_pace", "scoLP", "Scoring shots vs left-arm pace"),
+                              ("dismissal_left_pace", "dsmLP", "Dismissals vs left-arm pace"),
+                              ("scoring_off_spin", "scoOS", "Scoring shots vs off spin"),
+                              ("dismissal_off_spin", "dsmOS", "Dismissals vs off spin"),
+                              ("scoring_left_orthodox", "scoLO", "Scoring shots vs left-arm orthodox"),
+                              ("dismissal_left_orthodox", "dsmLO", "Dismissals vs left-arm orthodox"),
+                              ("scoring_leg_spin", "scoLS", "Scoring shots vs leg spin"),
+                              ("dismissal_leg_spin", "dsmLS", "Dismissals vs leg spin"),
+                              ("scoring_left_unorthodox", "scoLU", "Scoring shots vs left-arm wrist spin"),
+                              ("dismissal_left_unorthodox", "dsmLU", "Dismissals vs left-arm wrist spin")):
             stems = clips.get(kind) or []
             items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=tit)
                      for e in stems if e.get("clip_stem")]
@@ -1042,7 +1070,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
                   btype="pace", opp_vision=None, opp_tiers=None, similar_href=None, similar_name=None,
                   overview=None, release=None, release_vision=None, manual_href=None,
-                  group=None):
+                  group=None, clip_scopes=None):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -1059,21 +1087,45 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     if release:                                     # opt-in, this bowler's pack only
         body.append(_release_block(release, release_vision))
     if overview:                                    # the whole opposition, inline for this type
-        body.append(_overview_section(overview, opp))
+        _ovr = dict(overview)
+        _ovr["rows"] = sorted(overview.get("rows") or [],
+                              key=lambda r: _bat_rank((about.get(r.get("bid")) or {}).get("role"),
+                                                      (about.get(r.get("bid")) or {}).get("order", 0)))
+        body.append(_overview_section(_ovr, opp))
 
     if opp_batters:
+        # take the N most-seen batters, then read them down the batting order rather than by sample
+        # size — that's the order players think in
         ordered = sorted(opp_batters.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
+        ordered.sort(key=lambda kv: _bat_rank((about.get(kv[0]) or {}).get("role"),
+                                              (about.get(kv[0]) or {}).get("order", 0)))
+        starred = set()
 
         def _card(bid, meta_):
             nm, hnd = meta_
             role = (about.get(bid) or {}).get("role")
             # their batting footage, filtered to the group OUR bowler actually bowls
             ov = dict(opp_vision)
-            for _k in ("scoring", "dismissal"):        # prefer the type-scoped reel
-                _h = opp_vision.get((bid, f"{_k}_{tw}"))
+            # exact type first (off spin, not "spin" — pooled spin put Jadeja and Abrar Ahmed in an
+            # off spinner's reel), then the macro group if that type has no footage
+            lim = set()
+            scope = (clip_scopes or {}).get((bid, group)) if group else None
+            for _k in ("scoring", "dismissal"):
+                _h = (opp_vision.get((bid, f"{_k}_{group}")) if group else None)
+                if _h:
+                    # the reel exists for this exact type, but the clips inside it may have come from
+                    # a wider bowler type or a white-ball match (see batter_clips_best)
+                    if group and scope and scope != f"Test:{group}":
+                        lim.add(_k)
+                else:
+                    _h = opp_vision.get((bid, f"{_k}_{tw}"))
+                    if _h:
+                        lim.add(_k)
                 if _h:
                     ov[(bid, _k)] = _h
+            if lim:
+                starred.add(bid)
             fh = _manual_for(manual_href, bid, group)
             if fh:
                 ov[(bid, "footage")] = fh
@@ -1090,11 +1142,16 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                              h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
                              opp_vision=ov, report_url=report_urls.get(bid),
                              kinds=("scoring", "dismissal", "footage"),  # batter card: batting vision only
-                             tier=(opp_tiers or {}).get(bid))
+                             tier=(opp_tiers or {}).get(bid), limited=lim)
+        inner = _tiered_inner(ordered, opp_tiers, _card)   # renders the cards, so it fills `starred`
+        if starred:
+            inner += ('<p class="vfoot">* limited vision — no footage of them against this exact '
+                      'bowling type in Tests, so the reel widens to a near-enough type or to their '
+                      'white-ball footage.</p>')
         body.append(_pack_section(f"The {opp} batters",
                                   "Grouped by how likely they are to play. Tap a batter to see their "
                                   "summary and get links to vision.",
-                                  inner=_tiered_inner(ordered, opp_tiers, _card)))
+                                  inner=inner))
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls bowling to each of their batters — Test where "
                               "you've met, otherwise your ODI / T20 footage (the format is labelled).",
@@ -1383,7 +1440,7 @@ def build(out_dir, no_video=False, only=None):
         # keeps stock/wicket while their batter card keeps scoring/dismissal.
         _ord = lambda d, ab: sorted((d or {}).items(),
                                     key=lambda kv: -(ab.get(kv[0], {}).get("order", 0)))[:N_OPP]
-        opp_clips = {}
+        opp_clips, clip_scopes = {}, {}
         for bid, _ in _ord(opp_bowlers, about_bowl):
             a = about_bowl.get(bid) or {}
             opp_clips.setdefault(bid, {}).update(
@@ -1393,12 +1450,15 @@ def build(out_dir, no_video=False, only=None):
             a = about_bat.get(bid) or {}
             # per bowling type where we have it — an unscoped reel on a spinner's pack is mostly
             # pace, since that's most of what any batter faces
-            opp_clips.setdefault(bid, {}).update(
-                {"scoring": a.get("scoring_clips") or [], "dismissal": a.get("dismissal_clips") or [],
-                 "scoring_pace": a.get("scoring_clips_pace") or [],
-                 "dismissal_pace": a.get("dismissal_clips_pace") or [],
-                 "scoring_spin": a.get("scoring_clips_spin") or [],
-                 "dismissal_spin": a.get("dismissal_clips_spin") or []})
+            d = {"scoring": a.get("scoring_clips") or [], "dismissal": a.get("dismissal_clips") or []}
+            for _g in ("pace", "spin", "right_pace", "left_pace", "off_spin", "left_orthodox",
+                       "leg_spin", "left_unorthodox"):
+                d[f"scoring_{_g}"] = a.get(f"scoring_clips_{_g}") or []
+                d[f"dismissal_{_g}"] = a.get(f"dismissal_clips_{_g}") or []
+                # how far the reel had to reach for those clips — "Test:off_spin" is the real thing,
+                # anything else gets starred on the card
+                clip_scopes[(bid, _g)] = a.get(f"clip_scope_{_g}") or ""
+            opp_clips.setdefault(bid, {}).update(d)
         bowl_urls, bat_urls, bat_group_urls = _scouting_urls(slug)   # +{batter:{group:url}}
         our_groups = _our_bowl_groups(slug)            # our_bowler -> {pace/spin: batter group}
         our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb
@@ -1480,7 +1540,8 @@ def build(out_dir, no_video=False, only=None):
                                         overview=_load_overview(slug, grp or bt),
                                         release=(release_data.get(pid) if bt == "pace" else None),
                                         release_vision=release_vision,
-                                        manual_href=manual_href, group=(grp or bt)) + vsnip,
+                                        manual_href=manual_href, group=(grp or bt),
+                                        clip_scopes=clip_scopes) + vsnip,
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 

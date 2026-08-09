@@ -216,26 +216,65 @@ def _angle_phrase(ms):
     return f"{_LEN_ADJ.get(band, band.lower())} {region}"
 
 
-_STYLE = {"pace": "('1','2','3')", "spin": "('4','5')"}
+# Scoped by EXACT bowler type, not just pace/spin: an off spinner's pack pooling all spin still
+# served left-arm-orthodox footage (Noman Ali turning up in an off-spin reel). style ids mirror
+# batting_loaders._BOWLER_TYPE_CASE; hand 1 = right, 2 = left.
+_STYLE = {
+    "pace": "D.bowler_style_id IN ('1','2','3')",
+    "spin": "D.bowler_style_id IN ('4','5')",
+    "right_pace": "D.bowler_style_id IN ('1','2','3') AND D.bowler_hand_id='1'",
+    "left_pace": "D.bowler_style_id IN ('1','2','3') AND D.bowler_hand_id='2'",
+    "off_spin": "D.bowler_style_id='4' AND D.bowler_hand_id='1'",
+    "left_orthodox": "D.bowler_style_id='4' AND D.bowler_hand_id='2'",
+    "leg_spin": "D.bowler_style_id='5' AND D.bowler_hand_id='1'",
+    "left_unorthodox": "D.bowler_style_id='5' AND D.bowler_hand_id='2'",
+}
+_CLIP_GROUPS = ("pace", "spin", "right_pace", "left_pace", "off_spin", "left_orthodox",
+                "leg_spin", "left_unorthodox")
 
 
-def batter_clips(conn, cur, bid, cap=40, against=None):
+_FMT_SQL = {f: (f"M.series_id IN (SELECT series_id FROM [{DATA_SCHEMA}].[Series] "
+                f"WHERE name IN {international_series_sql(f)})") for f in ("Test", "ODI", "T20I")}
+_MACRO_OF = {"right_pace": "pace", "left_pace": "pace", "off_spin": "spin",
+             "left_orthodox": "spin", "leg_spin": "spin", "left_unorthodox": "spin"}
+
+
+def batter_clips_best(conn, cur, bid, against, cap=40):
+    """Clips for this batter against `against`, relaxing only as far as needed, and saying how far.
+
+    Order: this format + exact type, then the same format with the wider pace/spin set, then ODI,
+    then T20I. Test footage of a near-enough bowler type beats ODI footage of the exact type — it's
+    the format they'll actually play. Returns (scoring, dismissal, scope) where scope is e.g.
+    'Test:off_spin' or 'ODI:spin'; anything but 'Test:{against}' means the pack should flag it."""
+    macro = _MACRO_OF.get(against)
+    for fmt in ("Test", "ODI", "T20I"):
+        for grp in ([against, macro] if macro else [against]):
+            if not grp:
+                continue
+            sc, ds = batter_clips(conn, cur, bid, cap=cap, against=grp, fmt=fmt)
+            if sc or ds:
+                return sc, ds, f"{fmt}:{grp}"
+    return [], [], ""
+
+
+def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test"):
     """(scoring_clips, dismissal_clips) — example Test deliveries with video where the batter scores
     a boundary (how they score) and where they were dismissed (how they get out). Newest first.
 
-    `against` scopes to the bowling type the viewer actually bowls ('pace' / 'spin'). Unscoped, a
-    spinner's pack served whatever the batter's most recent boundaries were — overwhelmingly pace,
-    since that's most of what anyone faces."""
-    styles = _STYLE.get(against)
-    filt = f" AND D.bowler_style_id IN {styles}" if styles else ""
+    `against` scopes to the bowling type the viewer actually bowls. Unscoped, a spinner's pack served
+    whatever the batter's most recent boundaries were — overwhelmingly pace. Scoped only to the macro
+    group, an off spinner still got left-arm-orthodox footage."""
+    where = _STYLE.get(against)
+    filt = f" AND {where}" if where else ""
+    scope = _FMT_SQL.get(fmt, _TEST)
     scoring = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
         FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
-        WHERE D.striker_id='{bid}' AND D.legal_ball=1 AND {_TEST} AND D.video_file_name IS NOT NULL
+        WHERE D.striker_id='{bid}' AND D.legal_ball=1 AND {scope} AND D.video_file_name IS NOT NULL
           AND D.bat_score IN ('4','6'){filt}
         ORDER BY M.match_date DESC"""))
     dismissal = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
         FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
-        WHERE D.striker_id='{bid}' AND D.striker_dismissed='1' AND {_TEST}
+        WHERE D.striker_id='{bid}' AND D.striker_dismissed='1' AND {scope}
           AND D.video_file_name IS NOT NULL{filt}
         ORDER BY M.match_date DESC"""))
     return scoring, dismissal
@@ -351,9 +390,10 @@ def main():
             except Exception as e:
                 print(f"  ! bowler {entry.get('name', bid)}: {type(e).__name__}: {e}")
         for bid, entry in out.get("batters", {}).items():
-            for _tw in ("pace", "spin"):
-                _sc, _ds = batter_clips(conn, cur, bid, against=_tw)
+            for _tw in _CLIP_GROUPS:
+                _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw)
                 entry[f"scoring_clips_{_tw}"], entry[f"dismissal_clips_{_tw}"] = _sc, _ds
+                entry[f"clip_scope_{_tw}"] = _scope
             sc, ds = batter_clips(conn, cur, bid)
             entry["scoring_clips"], entry["dismissal_clips"] = sc, ds
             print(f"  batter {entry.get('name', bid):<20} scoring {len(sc)} · dismissal {len(ds)}")
@@ -403,11 +443,12 @@ def main():
                             out["batters"][bid][f"facts_{tw}"] = pts
                     except Exception as e:
                         print(f"  ! card summary {nm} ({tw}): {type(e).__name__}: {str(e)[:60]}")
-                # per bowling type: a spinner's pack must not serve pace boundaries
-                for _tw in ("pace", "spin"):
-                    _sc, _ds = batter_clips(conn, cur, bid, against=_tw)
+                # per EXACT bowling type: pace/spin alone still pooled all spin together
+                for _tw in _CLIP_GROUPS:
+                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw)
                     out["batters"][bid][f"scoring_clips_{_tw}"] = _sc
                     out["batters"][bid][f"dismissal_clips_{_tw}"] = _ds
+                    out["batters"][bid][f"clip_scope_{_tw}"] = _scope
                 sc, ds = batter_clips(conn, cur, bid)          # unscoped, kept as the fallback
                 out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
                 tag = f" · sco {len(sc)} dsm {len(ds)}"
