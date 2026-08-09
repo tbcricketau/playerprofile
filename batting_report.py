@@ -605,11 +605,17 @@ def _plan_read(P: dict) -> str:
     return plan + "."
 
 
-def plan_sentence(P: dict) -> str | None:
+def plan_sentence(P: dict, baseline: dict = None) -> str | None:
     """The "where to bowl" plan for a TYPE-SCOPED profile — "Plan for {type}: bowl {length}
     pitching {line} while {seaming in}." Returns None for a combined (untyped) profile, or when
     the length/line evidence is too thin to name a target. Shared by the report's summary and the
-    per-batter overview tables so both quote the same plan."""
+    per-batter overview tables so both quote the same plan.
+
+    `baseline` is a wider dims dict to take the STRAIGHT comparator from when the scoped profile has
+    none of its own. A spin sub-type usually doesn't: the ball that goes straight on is the arm ball,
+    flipper, top-spinner or undercutter, and those are ~2% of spin, so once split per type the bucket
+    vanishes and the movement clause silently never fires. Direction still comes from the scoped
+    profile — only the "what does it do when it DOESN'T deviate" reference is pooled."""
     if not P.get("group"):
         return None
     dims, is_spin = P["dims"], P["is_spin_group"]
@@ -621,6 +627,9 @@ def plan_sentence(P: dict) -> str | None:
         mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
               and d["balls"] >= 60 and d["avg"] is not None]
         straight = next((d for d in dims.get(dk, []) if d["bucket"] == "straight"), None)
+        if (not straight or not straight.get("avg")) and baseline:
+            straight = next((d for d in (baseline.get(dk) or []) if d["bucket"] == "straight"
+                             and d.get("avg")), None)
         if mv and straight and straight["avg"]:
             worst = min(mv, key=lambda d: d["avg"])
             if worst["avg"] < straight["avg"] * 0.8:

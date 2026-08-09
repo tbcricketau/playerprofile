@@ -216,17 +216,27 @@ def _angle_phrase(ms):
     return f"{_LEN_ADJ.get(band, band.lower())} {region}"
 
 
-def batter_clips(conn, cur, bid, cap=40):
+_STYLE = {"pace": "('1','2','3')", "spin": "('4','5')"}
+
+
+def batter_clips(conn, cur, bid, cap=40, against=None):
     """(scoring_clips, dismissal_clips) — example Test deliveries with video where the batter scores
-    a boundary (how they score) and where they were dismissed (how they get out). Newest first."""
+    a boundary (how they score) and where they were dismissed (how they get out). Newest first.
+
+    `against` scopes to the bowling type the viewer actually bowls ('pace' / 'spin'). Unscoped, a
+    spinner's pack served whatever the batter's most recent boundaries were — overwhelmingly pace,
+    since that's most of what anyone faces."""
+    styles = _STYLE.get(against)
+    filt = f" AND D.bowler_style_id IN {styles}" if styles else ""
     scoring = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
         FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
         WHERE D.striker_id='{bid}' AND D.legal_ball=1 AND {_TEST} AND D.video_file_name IS NOT NULL
-          AND D.bat_score IN ('4','6')
+          AND D.bat_score IN ('4','6'){filt}
         ORDER BY M.match_date DESC"""))
     dismissal = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
         FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
-        WHERE D.striker_id='{bid}' AND D.striker_dismissed='1' AND {_TEST} AND D.video_file_name IS NOT NULL
+        WHERE D.striker_id='{bid}' AND D.striker_dismissed='1' AND {_TEST}
+          AND D.video_file_name IS NOT NULL{filt}
         ORDER BY M.match_date DESC"""))
     return scoring, dismissal
 
@@ -341,6 +351,9 @@ def main():
             except Exception as e:
                 print(f"  ! bowler {entry.get('name', bid)}: {type(e).__name__}: {e}")
         for bid, entry in out.get("batters", {}).items():
+            for _tw in ("pace", "spin"):
+                _sc, _ds = batter_clips(conn, cur, bid, against=_tw)
+                entry[f"scoring_clips_{_tw}"], entry[f"dismissal_clips_{_tw}"] = _sc, _ds
             sc, ds = batter_clips(conn, cur, bid)
             entry["scoring_clips"], entry["dismissal_clips"] = sc, ds
             print(f"  batter {entry.get('name', bid):<20} scoring {len(sc)} · dismissal {len(ds)}")
@@ -390,7 +403,12 @@ def main():
                             out["batters"][bid][f"facts_{tw}"] = pts
                     except Exception as e:
                         print(f"  ! card summary {nm} ({tw}): {type(e).__name__}: {str(e)[:60]}")
-                sc, ds = batter_clips(conn, cur, bid)
+                # per bowling type: a spinner's pack must not serve pace boundaries
+                for _tw in ("pace", "spin"):
+                    _sc, _ds = batter_clips(conn, cur, bid, against=_tw)
+                    out["batters"][bid][f"scoring_clips_{_tw}"] = _sc
+                    out["batters"][bid][f"dismissal_clips_{_tw}"] = _ds
+                sc, ds = batter_clips(conn, cur, bid)          # unscoped, kept as the fallback
                 out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
                 tag = f" · sco {len(sc)} dsm {len(ds)}"
             else:

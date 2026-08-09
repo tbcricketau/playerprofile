@@ -858,7 +858,11 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
     for bid, clips in (opp_clips or {}).items():
         for kind, kk, tit in (("stock", "stock", "Stock ball"), ("wicket", "wkt", "Wicket balls"),
                               ("new_ball", "nb", "New ball"),
-                              ("scoring", "sco", "Scoring shots"), ("dismissal", "dsm", "Dismissals")):
+                              ("scoring", "sco", "Scoring shots"), ("dismissal", "dsm", "Dismissals"),
+                              ("scoring_pace", "scop", "Scoring shots vs pace"),
+                              ("dismissal_pace", "dsmp", "Dismissals vs pace"),
+                              ("scoring_spin", "scos", "Scoring shots vs spin"),
+                              ("dismissal_spin", "dsms", "Dismissals vs spin")):
             stems = clips.get(kind) or []
             items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=tit)
                      for e in stems if e.get("clip_stem")]
@@ -1065,12 +1069,24 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
             nm, hnd = meta_
             role = (about.get(bid) or {}).get("role")
             # their batting footage, filtered to the group OUR bowler actually bowls
-            ov = opp_vision
+            ov = dict(opp_vision)
+            for _k in ("scoring", "dismissal"):        # prefer the type-scoped reel
+                _h = opp_vision.get((bid, f"{_k}_{tw}"))
+                if _h:
+                    ov[(bid, _k)] = _h
             fh = _manual_for(manual_href, bid, group)
             if fh:
-                ov = {**opp_vision, (bid, "footage"): fh}
-            return _opp_card(bid, nm, (f"{hnd} · {role}" if role else hnd),
-                             (about.get(bid) or {}).get(f"facts_{tw}"),
+                ov[(bid, "footage")] = fh
+            # The cached card facts are built on the MACRO group (pace/spin). For a bowler whose exact
+            # type is known, swap in that type's plan — pooled spin told Lyon to turn it away from a
+            # right-hander, which an off spinner cannot do. The overview row already holds it.
+            facts = list((about.get(bid) or {}).get(f"facts_{tw}") or [])
+            row = next((r for r in ((overview or {}).get("rows") or []) if r.get("bid") == bid), None)
+            if row and row.get("plan"):
+                facts = [row["plan"] if f.startswith("Plan for ") else f for f in facts]
+                if not any(f.startswith("Plan for ") for f in facts):
+                    facts.insert(1 if facts else 0, row["plan"])
+            return _opp_card(bid, nm, (f"{hnd} · {role}" if role else hnd), facts,
                              h2h_map.get(f"hbowl_{bid}"), h2h_rows.get((pid, bid)), "bowling to",
                              opp_vision=ov, report_url=report_urls.get(bid),
                              kinds=("scoring", "dismissal", "footage"),  # batter card: batting vision only
@@ -1375,8 +1391,14 @@ def build(out_dir, no_video=False, only=None):
                  "new_ball": a.get("new_ball_clips") or []})
         for bid, _ in _ord(opp_batters, about_bat):
             a = about_bat.get(bid) or {}
+            # per bowling type where we have it — an unscoped reel on a spinner's pack is mostly
+            # pace, since that's most of what any batter faces
             opp_clips.setdefault(bid, {}).update(
-                {"scoring": a.get("scoring_clips") or [], "dismissal": a.get("dismissal_clips") or []})
+                {"scoring": a.get("scoring_clips") or [], "dismissal": a.get("dismissal_clips") or [],
+                 "scoring_pace": a.get("scoring_clips_pace") or [],
+                 "dismissal_pace": a.get("dismissal_clips_pace") or [],
+                 "scoring_spin": a.get("scoring_clips_spin") or [],
+                 "dismissal_spin": a.get("dismissal_clips_spin") or []})
         bowl_urls, bat_urls, bat_group_urls = _scouting_urls(slug)   # +{batter:{group:url}}
         our_groups = _our_bowl_groups(slug)            # our_bowler -> {pace/spin: batter group}
         our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb

@@ -1,0 +1,236 @@
+{
+ "opp": "bangladesh",
+ "group": "left_orthodox",
+ "label": "left-arm orthodox",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "300015",
+   "name": "Mushfiqur Rahim",
+   "sub": "RHB · Middle order",
+   "balls": 1854,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching in the channel</b> while <b>turning away</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Short leg",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_300015_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_300015_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 1854,
+    "n_out": 22,
+    "bpd": 84.27272727272727,
+    "false_pct": 8.913813459268004,
+    "area": "leg (44% of runs)",
+    "short": null,
+    "top_out": "LBW (27%)"
+   }
+  },
+  {
+   "bid": "2700013",
+   "name": "Mominul Haque",
+   "sub": "LHB · Top order",
+   "balls": 988,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching on the stumps</b> while <b>drifting away</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Leg slip",
+    "spare": "Leg slip"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_2700013_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_2700013_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 988,
+    "n_out": 17,
+    "bpd": 58.11764705882353,
+    "false_pct": 10.157068062827225,
+    "area": "off (39% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (53%)"
+   }
+  },
+  {
+   "bid": "2540159",
+   "name": "Litton Das",
+   "sub": "RHB · Middle order",
+   "balls": 1336,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching wide outside off</b> while <b>turning away</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Long-on, Backward square leg, Leg slip",
+    "spare": "Leg slip"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_2540159_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_2540159_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 1336,
+    "n_out": 16,
+    "bpd": 83.5,
+    "false_pct": 10.0,
+    "area": "off (36% of runs)",
+    "short": null,
+    "top_out": "Caught behind (44%)"
+   }
+  },
+  {
+   "bid": "3630131",
+   "name": "Tanzid Hasan",
+   "sub": "LHB · Opener",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "3080087",
+   "name": "Mehidy Hasan Miraz",
+   "sub": "RHB · Lower order",
+   "balls": 1039,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching in the channel</b> while <b>turning away / drifting in</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_3080087_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_3080087_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 1039,
+    "n_out": 18,
+    "bpd": 57.72222222222222,
+    "false_pct": 14.256198347107437,
+    "area": "off (39% of runs)",
+    "short": null,
+    "top_out": "Caught behind (28%)"
+   }
+  },
+  {
+   "bid": "3110063",
+   "name": "Najmul Hussain Shanto",
+   "sub": "LHB · Top order",
+   "balls": 585,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching in the channel</b> while <b>drifting away</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Deep backward square leg",
+    "spare": "Fine leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_3110063_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_3110063_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 585,
+    "n_out": 7,
+    "bpd": 83.57142857142857,
+    "false_pct": 10.051107325383304,
+    "area": "off (47% of runs)",
+    "short": null,
+    "top_out": "LBW (43%)"
+   }
+  },
+  {
+   "bid": "2540166",
+   "name": "Shadman Islam",
+   "sub": "LHB · Opener",
+   "balls": 310,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Deep square leg",
+    "spare": "Fine leg"
+   },
+   "fields": [
+    {
+     "label": "Once set",
+     "file": "left_orthodox_2540166_0.png"
+    }
+   ],
+   "threat": {
+    "balls": 310,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 4.823151125401929,
+    "area": "leg (37% of runs)",
+    "short": null,
+    "top_out": "LBW (33%)"
+   }
+  },
+  {
+   "bid": "380748",
+   "name": "Soumya Sarkar",
+   "sub": "LHB · Opener",
+   "balls": 37,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 37,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 40.0,
+    "area": "off (82% of runs)",
+    "short": null,
+    "top_out": "Caught (100%)"
+   }
+  },
+  {
+   "bid": "5460114",
+   "name": "Jaker Ali",
+   "sub": "RHB · Middle order",
+   "balls": 140,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 140,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 16.428571428571427,
+    "area": "off (57% of runs)",
+    "short": null,
+    "top_out": "Stumped (50%)"
+   }
+  }
+ ]
+}

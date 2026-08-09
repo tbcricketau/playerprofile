@@ -174,10 +174,20 @@ def build(opp, group):
             continue
         balls = int(P.get("n_balls") or 0)
         thin = balls < MIN_BALLS
+        # A spin sub-type carries almost no straight balls of its own (the arm ball / flipper /
+        # undercutter is ~2% of spin, and splits away to nothing per type), so the movement clause
+        # has nothing to compare against and never fires. Pool the straight reference from the whole
+        # spin record; the turn DIRECTION still comes from this bowler's actual type.
+        baseline = None
+        if group in _SPIN_SUBS and not thin:
+            try:
+                baseline = build_batter_profile(bid, group="spin").get("dims")
+            except Exception as e:
+                print(f"     ! spin baseline for {name}: {type(e).__name__}")
         rows.append({"bid": bid, "name": name,
                      "sub": " · ".join(x for x in (meta.get("hand"), meta.get("role")) if x),
                      "balls": balls,
-                     "plan": None if thin else plan_sentence(P),
+                     "plan": None if thin else plan_sentence(P, baseline=baseline),
                      "field": None if thin else _field_parts(P, group),
                      "fields": [] if thin else _field_images(
                          P, group, os.path.join(HERE, "reports", "fields", opp, group), bid),
@@ -279,9 +289,21 @@ def build(opp, group):
             mrows = {r["bid"]: r.get("balls") or 0 for r in json.load(open(mp, encoding="utf-8"))["rows"]}
             for r in rows:
                 mb = mrows.get(r["bid"], 0)
-                if (r.get("balls") or 0) == 0 and mb > 0:
+                # only when the macro sample is real: a batter with 3 balls vs spin can legitimately
+                # have 0 vs one sub-type, and a warning that cries wolf is one you stop reading
+                if (r.get("balls") or 0) == 0 and mb >= 20:
                     print(f"  !! {r['name']}: 0 balls vs {group} but {mb} vs {macro} — "
                           f"suspect a failed build, NOT a real absence")
+
+    # Don't let a bad run replace a good file. A warehouse drop mid-build fails every remaining
+    # profile, and writing that over a previously-good dataset turns a transient outage into
+    # persistent wrong data — which is how a good left_orthodox set was lost on 2026-08-04.
+    n_err = sum(1 for r in rows if r.get("error"))
+    if n_err and n_err >= max(2, len(rows) // 3):
+        raise SystemExit(
+            f"ABORTING: {n_err}/{len(rows)} profile builds failed — almost certainly the warehouse "
+            f"dropped, not a real absence of data. overview_{group}_{opp}.json left as it was; "
+            f"re-run when the connection is back.")
 
     # structured rows so the packs can render the same content inline (with headshots) rather than
     # linking out to this page

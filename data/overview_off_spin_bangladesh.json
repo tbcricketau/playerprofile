@@ -1,0 +1,261 @@
+{
+ "opp": "bangladesh",
+ "group": "off_spin",
+ "label": "off spin",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "300015",
+   "name": "Mushfiqur Rahim",
+   "sub": "RHB · Middle order",
+   "balls": 1542,
+   "plan": "Plan for off spin: bowl <b>full pitching around leg</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_300015_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_300015_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 1542,
+    "n_out": 11,
+    "bpd": 140.1818181818182,
+    "false_pct": 7.388809182209469,
+    "area": "leg (34% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (55%)"
+   }
+  },
+  {
+   "bid": "2700013",
+   "name": "Mominul Haque",
+   "sub": "LHB · Top order",
+   "balls": 1437,
+   "plan": "Plan for off spin: bowl <b>good length pitching around leg</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Leg slip",
+    "spare": "Fine leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_2700013_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_2700013_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 1437,
+    "n_out": 24,
+    "bpd": 59.875,
+    "false_pct": 11.904761904761905,
+    "area": "off (47% of runs)",
+    "short": null,
+    "top_out": "Caught behind (46%)"
+   }
+  },
+  {
+   "bid": "2540159",
+   "name": "Litton Das",
+   "sub": "RHB · Middle order",
+   "balls": 1038,
+   "plan": "Plan for off spin: bowl <b>good length pitching outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Leg slip, Backward square leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_2540159_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_2540159_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 1038,
+    "n_out": 13,
+    "bpd": 79.84615384615384,
+    "false_pct": 7.382550335570469,
+    "area": "leg (47% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (46%)"
+   }
+  },
+  {
+   "bid": "3630131",
+   "name": "Tanzid Hasan",
+   "sub": "LHB · Opener",
+   "balls": 3,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 3,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 0.0,
+    "area": "straight (100% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "3080087",
+   "name": "Mehidy Hasan Miraz",
+   "sub": "RHB · Lower order",
+   "balls": 836,
+   "plan": "Plan for off spin: bowl <b>good length pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Backward point"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_3080087_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_3080087_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 836,
+    "n_out": 11,
+    "bpd": 76.0,
+    "false_pct": 11.325611325611325,
+    "area": "leg (41% of runs)",
+    "short": null,
+    "top_out": "Caught (27%)"
+   }
+  },
+  {
+   "bid": "3110063",
+   "name": "Najmul Hussain Shanto",
+   "sub": "LHB · Top order",
+   "balls": 714,
+   "plan": "Plan for off spin: bowl <b>full pitching in the channel</b> while <b>drifting in</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Deep backward square leg, Short leg",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_3110063_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_3110063_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 714,
+    "n_out": 8,
+    "bpd": 89.25,
+    "false_pct": 11.468531468531468,
+    "area": "off (40% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (38%)"
+   }
+  },
+  {
+   "bid": "2540166",
+   "name": "Shadman Islam",
+   "sub": "LHB · Opener",
+   "balls": 585,
+   "plan": "Plan for off spin: bowl <b>full pitching in the channel</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Deep square leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_2540166_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_2540166_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 585,
+    "n_out": 10,
+    "bpd": 58.5,
+    "false_pct": 10.94017094017094,
+    "area": "leg (42% of runs)",
+    "short": null,
+    "top_out": "LBW (40%)"
+   }
+  },
+  {
+   "bid": "380748",
+   "name": "Soumya Sarkar",
+   "sub": "LHB · Opener",
+   "balls": 200,
+   "plan": "Plan for off spin: bowl <b>full pitching around leg</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_380748_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_380748_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 200,
+    "n_out": 5,
+    "bpd": 40.0,
+    "false_pct": 17.741935483870968,
+    "area": "leg (47% of runs)",
+    "short": null,
+    "top_out": "Caught behind (60%)"
+   }
+  },
+  {
+   "bid": "5460114",
+   "name": "Jaker Ali",
+   "sub": "RHB · Middle order",
+   "balls": 62,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 62,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 9.67741935483871,
+    "area": "leg (36% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  }
+ ]
+}
