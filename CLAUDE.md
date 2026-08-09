@@ -155,6 +155,26 @@ re-scoping a group) changes the link *targets*, so the reports must be re-inject
 Assemble copies only what the packs link, so a stale bake shows up as dead links — which is exactly
 what the check catches.
 
+## Vision reels are scoped to the EXACT bowler type — and say when they aren't
+
+A pack's footage must match the bowler whose pack it is. Scoped to the macro pace/spin group, an
+off spinner's pack served Jadeja, Abrar Ahmed and Noman Ali — the same pooling error that told Lyon
+to turn it away from a right-hander. `batter_clips_best()` (`build_opponent_about.py`) resolves by
+exact type (style id + hand) and relaxes in a fixed order, recording how far it went in
+`clip_scope_{group}`:
+
+1. this format + exact type · 2. same format, wider pace/spin set · 3. ODI · 4. T20I
+
+Test footage of a near-enough bowler type beats ODI footage of the exact type — Tests are what they
+play. Anything but `Test:{group}` stars the button (`Scoring shots*`) and triggers the footnote at
+the foot of the section. The star is **per button**: a batter can have real footage scoring against
+that type but none of getting out to it. It also fires when the clips exist in the warehouse but no
+blob resolves, which is the honest answer — the reel being served is the wider one either way.
+
+**Adding a new bowler type means three places, not one**: `_STYLE`/`_CLIP_GROUPS` in
+`build_opponent_about.py`, the `opp_clips` group list and the `_build_vision` kinds list in
+`build_player_site.py`. Miss the last and that type silently falls back to the macro group forever.
+
 ## Known gaps / pending work
 
 - Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER`) uses assumed strings — verify against actual DB lookup values if cells appear out of order
