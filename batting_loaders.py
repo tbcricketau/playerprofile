@@ -10,7 +10,7 @@ scope (it mixes Tests with domestic first-class).
 """
 from cricket_core.warehouse import set_conn_cursor, run_query
 from cricket_core.config import international_series_sql
-from config import DATA_SCHEMA
+from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
 
 # Official international Tests only (via Matches.series_id -> Series.name); match_length_id
 # mixes Tests with domestic first-class, so it's not used for scope.
@@ -22,8 +22,13 @@ def _intl_test(alias: str = "M") -> str:
             f"(SELECT series_id FROM [{DATA_SCHEMA}].[Series] WHERE name IN {_TEST_SERIES})")
 
 # Derived bowler-type CASE (who the batter is facing) — reused from the bowling side.
-_BOWLER_TYPE_CASE = """
+# Arm-switchers are caught FIRST: the feed codes every one of their balls with one registered
+# style+hand, so they'd otherwise land wholesale in an exact type they only bowl half the time.
+# 'Ambi Spin' keeps them in the macro spin group and out of the four exact spin types.
+_AMBI_IDS = ", ".join(f"'{i}'" for i in AMBIDEXTROUS_BOWLERS) or "''"
+_BOWLER_TYPE_CASE = f"""
     CASE
+        WHEN D.[bowler_id] IN ({_AMBI_IDS}) AND D.[bowler_style_id] IN ('4','5') THEN 'Ambi Spin'
         WHEN D.[bowler_style_id] IN ('1','2') AND D.[bowler_hand_id]='1' THEN 'Right Fast'
         WHEN D.[bowler_style_id] IN ('1','2') AND D.[bowler_hand_id]='2' THEN 'Left Fast'
         WHEN D.[bowler_style_id]='3' AND D.[bowler_hand_id]='1' THEN 'Right Medium'

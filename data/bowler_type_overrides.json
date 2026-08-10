@@ -1,0 +1,7 @@
+{
+  "_note": "Bowlers the warehouse cannot classify with one style+hand code. The feed stamps every delivery with the player's registered style and hand, so a bowler who switches arms is stamped with only one of them. Their balls are still spin (or pace), so they stay in the macro group and only drop out of the exact-type reels and profiles, where they would otherwise show the wrong bowler entirely. Add an id here when footage disagrees with the coded type. Verified by watching the vision, not by another data source — the Players table and the Deliveries rows come from the same feed and agree with each other.",
+  "ambidextrous": {
+    "5181166": "Rathnayake, Tharindu — bowls left-arm orthodox and off spin; all 767 balls coded right-arm off spin (spotted by Tom on Lyon's pack, 2026-08-09)",
+    "3380011": "Mendis, Kamindu — bowls left-arm orthodox and off spin; coded right-arm off spin"
+  }
+}

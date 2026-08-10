@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore")
 from cricket_core.config import project_path, international_series_sql
 from cricket_core.warehouse import set_conn_cursor, run_query
 from cricket_core.video import clip_stem
-from config import DATA_SCHEMA
+from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
 from report import build_profile
 from batter_profile import build_batter_profile
 from batting_report import card_summary
@@ -203,6 +203,27 @@ def bowler_clips_from_profile(P, cap_each=10, wcap=40):
     return stock, wicket, new_ball
 
 
+def bowler_clips_by_hand(bid):
+    """{"": (stock, wicket, new_ball), "lhb": (...), "rhb": (...)} — the bowler's reels built
+    separately for each batter hand, plus the both-hands set as a fallback.
+
+    A right-hander's pack was showing this bowler's deliveries to left-handers and vice versa: the
+    reels were built once at hand="All" and served to every pack. The stock ball, the wicket balls
+    and the angle all change with the batter's hand, so a pooled reel is showing the wrong thing.
+    One query, three profiles — `raw` is loaded here and reused."""
+    from profile import process_rows
+    from data_loaders import load_bowler_deliveries
+    raw = process_rows(load_bowler_deliveries(bid))
+    if not raw:
+        # an empty load is a dropped connection far more often than a bowler with no deliveries;
+        # writing the empty result would silently blank reels that were fine
+        raise RuntimeError(f"no deliveries loaded for bowler {bid}")
+    out = {}
+    for key, hand in (("", "All"), ("lhb", "vs LHB"), ("rhb", "vs RHB")):
+        out[key] = bowler_clips_from_profile(build_profile(bid, hand=hand, raw=raw))
+    return out
+
+
 def _angle_phrase(ms):
     """Natural 'a good length in the channel' phrase for one angle's modal ball (over/round),
     from _mode_stats output — matches the coordinate stock phrasing, not the raw group ids."""
@@ -265,6 +286,10 @@ def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test"):
     whatever the batter's most recent boundaries were — overwhelmingly pace. Scoped only to the macro
     group, an off spinner still got left-arm-orthodox footage."""
     where = _STYLE.get(against)
+    if where and against not in ("pace", "spin") and AMBIDEXTROUS_BOWLERS:
+        # an arm-switcher is coded as one type but bowls two — keep them out of the exact-type reel
+        where += " AND D.bowler_id NOT IN (" + ", ".join(
+            f"'{i}'" for i in AMBIDEXTROUS_BOWLERS) + ")"
     filt = f" AND {where}" if where else ""
     scope = _FMT_SQL.get(fmt, _TEST)
     scoring = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
@@ -382,13 +407,26 @@ def main():
     if args.clips_only:
         out = json.load(open(dst, encoding="utf-8"))
         conn, cur = set_conn_cursor()
+        n_err = 0
         for bid, entry in out.get("bowlers", {}).items():
             try:                                          # re-profile so clips match the stock phrase
-                st, wk, nb = bowler_clips_from_profile(build_profile(bid, hand="All"))
+                byh = bowler_clips_by_hand(bid)
+                st, wk, nb = byh[""]
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nb
-                print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)} · new {len(nb)}")
+                for _h in ("lhb", "rhb"):                  # a pack shows only its own batter's hand
+                    _s, _w, _n = byh[_h]
+                    entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
+                    entry[f"new_ball_clips_{_h}"] = _n
+                print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)} · new {len(nb)}"
+                      f"  | lhb {len(byh['lhb'][1])}w · rhb {len(byh['rhb'][1])}w")
             except Exception as e:
+                n_err += 1
                 print(f"  ! bowler {entry.get('name', bid)}: {type(e).__name__}: {e}")
+        if n_err:
+            raise SystemExit(
+                f"ABORTING: {n_err} bowler clip rebuild(s) failed — almost certainly the warehouse "
+                f"connection, not missing data. opponent_about_{args.opp}.json left untouched; "
+                f"re-run when the connection is back.")
         for bid, entry in out.get("batters", {}).items():
             for _tw in _CLIP_GROUPS:
                 _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw)
@@ -420,6 +458,11 @@ def main():
                 P = build_profile(bid, hand="All")
                 entry = {"name": nm, **distil_bowler(P, ty or "Bowler")}
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = bowler_clips_from_profile(P)
+                byh = bowler_clips_by_hand(bid)           # a pack shows only its own batter's hand
+                for _h in ("lhb", "rhb"):
+                    _s, _w, _n = byh[_h]
+                    entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
+                    entry[f"new_ball_clips_{_h}"] = _n
                 out["bowlers"][bid] = entry
                 tag = f" · stock {len(entry['stock_clips'])} wkt {len(entry['wicket_clips'])} new {len(entry['new_ball_clips'])}"
             else:                                        # thin Test record -> all-format fallback

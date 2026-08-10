@@ -874,6 +874,12 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
     for bid, clips in (opp_clips or {}).items():
         for kind, kk, tit in (("stock", "stock", "Stock ball"), ("wicket", "wkt", "Wicket balls"),
                               ("new_ball", "nb", "New ball"),
+                              ("stock_lhb", "stockL", "Stock ball to left-handers"),
+                              ("wicket_lhb", "wktL", "Wicket balls to left-handers"),
+                              ("new_ball_lhb", "nbL", "New ball to left-handers"),
+                              ("stock_rhb", "stockR", "Stock ball to right-handers"),
+                              ("wicket_rhb", "wktR", "Wicket balls to right-handers"),
+                              ("new_ball_rhb", "nbR", "New ball to right-handers"),
                               ("scoring", "sco", "Scoring shots"), ("dismissal", "dsm", "Dismissals"),
                               ("scoring_pace", "scop", "Scoring shots vs pace"),
                               ("dismissal_pace", "dsmp", "Dismissals vs pace"),
@@ -1046,18 +1052,31 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                 else ("stock", "wicket", "footage")
             # their bowling footage, filtered to OUR batter's hand — a right-hander has no use for
             # the to-left-handers reel
-            ov = opp_vision
+            # scope the reels to OUR batter's hand — the stock ball, the wicket balls and the angle
+            # all change between bowling to a left-hander and a right-hander
+            ov = dict(opp_vision)
+            lim = set()
+            for _k in ("stock", "wicket", "new_ball"):
+                # NO fallback to the pooled reel. Ebadot Hossain has 10 wicket clips to left-handers
+                # and none of them resolve to a playable blob, so a pooled fallback served a
+                # left-hander's pack 40 wicket balls that were all to right-handers. Better to show
+                # no button than the wrong hand — which is the whole point of scoping it.
+                _h = opp_vision.get((bid, f"{_k}_{hand}"))
+                ov[(bid, _k)] = _h if _h else None
+                if not _h:
+                    ov.pop((bid, _k), None)
             fh = _manual_for(manual_href, bid, hand)
             if fh:
-                ov = {**opp_vision, (bid, "footage"): fh}
+                ov[(bid, "footage")] = fh
             return _opp_card(bid, nm, ty, facts,
                              h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
                              opp_vision=ov, report_url=report_urls.get(bid),
-                             kinds=bkinds, tier=(opp_tiers or {}).get(bid))
+                             kinds=bkinds, tier=(opp_tiers or {}).get(bid), limited=lim)
+        inner = _tiered_inner(ordered, opp_tiers, _card)
         body.append(_pack_section(f"The {opp} attack",
                                   "Grouped by how likely they are to play. Tap a bowler for what "
                                   "they're about, the fuller report, and any footage of you facing them.",
-                                  inner=_tiered_inner(ordered, opp_tiers, _card)))
+                                  inner=inner))
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls facing each of their bowlers — Test where you've "
                               "met, otherwise your ODI / T20 footage (the format is labelled).",
@@ -1446,6 +1465,11 @@ def build(out_dir, no_video=False, only=None):
             opp_clips.setdefault(bid, {}).update(
                 {"stock": a.get("stock_clips") or [], "wicket": a.get("wicket_clips") or [],
                  "new_ball": a.get("new_ball_clips") or []})
+            # per batter hand — the stock ball, the wicket balls and the angle all change between
+            # bowling to a left-hander and a right-hander, so a pack must show only its own hand
+            for _h in ("lhb", "rhb"):
+                for _k in ("stock", "wicket", "new_ball"):
+                    opp_clips[bid][f"{_k}_{_h}"] = a.get(f"{_k}_clips_{_h}") or []
         for bid, _ in _ord(opp_batters, about_bat):
             a = about_bat.get(bid) or {}
             # per bowling type where we have it — an unscoped reel on a spinner's pack is mostly

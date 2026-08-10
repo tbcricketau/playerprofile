@@ -27,7 +27,15 @@ BUNDLES = {
             "repo": "https://github.com/tbcricketau/player-packs.git"},
     "caxi": {"assemble": "assemble_packs.py", "arg": "caxi",
              "bundle": "caxi_player_pack_site",
-             "repo": "https://github.com/tbcricketau/caxi-player-packs.git"},
+             "repo": "https://github.com/tbcricketau/caxi-player-packs.git",
+             "archived": (
+                 "CA XI packs were ARCHIVED 2026-08-10 (Tom) — the series is over and the site is "
+                 "offline. GitHub Pages is disabled on tbcricketau/caxi-player-packs; the repo and "
+                 "its history are intact and the last published state is tagged archived-2026-08-10.\n"
+                 "To bring it back: re-enable Pages on the repo (branch main, root), rebuild, then "
+                 "publish with --revive. NOTE the packs predate the 2026-08-10 fixes — the bowler "
+                 "reels are not scoped to the batter's hand and the batter reels not to the exact "
+                 "bowler type, so rebuild from source rather than re-pushing the tag.")},
 }
 
 
@@ -44,8 +52,12 @@ def main():
     ap.add_argument("-m", "--message", default="", help="commit message")
     ap.add_argument("--deep", action="store_true", help="also HEAD a sample of media urls")
     ap.add_argument("--no-assemble", action="store_true", help="validate/push what's already there")
+    ap.add_argument("--revive", action="store_true",
+                    help="publish a bundle that has been archived (see the note it prints)")
     a = ap.parse_args()
     cfg = BUNDLES[a.bundle]
+    if cfg.get("archived") and not a.revive:
+        raise SystemExit(f"{a.bundle}: {cfg['archived']}")
     out = os.path.join(HERE, cfg["bundle"])
 
     if not a.no_assemble:

@@ -57,7 +57,11 @@ _PACE_SUBS = ("right_pace", "left_pace")
 _SPIN_SUBS = ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox")
 MACRO_GROUPS = {
     "pace": (set().union(*(BOWLER_GROUPS[g][0] for g in _PACE_SUBS)), "pace", _PACE_SUBS),
-    "spin": (set().union(*(BOWLER_GROUPS[g][0] for g in _SPIN_SUBS)), "spin", _SPIN_SUBS),
+    # 'Ambi Spin' = an arm-switcher the feed can only stamp with one style+hand (see
+    # config.AMBIDEXTROUS_BOWLERS). Their balls are spin, so they count here; they're absent from
+    # every exact sub-type above, where the wrong arm would be actively misleading.
+    "spin": (set().union(*(BOWLER_GROUPS[g][0] for g in _SPIN_SUBS)) | {"Ambi Spin"},
+             "spin", _SPIN_SUBS),
 }
 
 

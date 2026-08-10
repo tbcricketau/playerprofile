@@ -175,6 +175,52 @@ blob resolves, which is the honest answer — the reel being served is the wider
 `build_opponent_about.py`, the `opp_clips` group list and the `_build_vision` kinds list in
 `build_player_site.py`. Miss the last and that type silently falls back to the macro group forever.
 
+### The rule behind it: a reel is scoped to whatever the pack is about
+
+Both pack types serve footage, and each has an axis it must be scoped on. Get one right and the
+other wrong and the pack looks fine while showing the wrong player entirely. Three separate reports
+in one day, all the same defect on a different axis:
+
+| Pack | Reel | Must be scoped to |
+|------|------|-------------------|
+| Bowling pack (our bowler) | opposition batter's scoring / dismissal clips | the **exact bowler type** the pack's bowler bowls |
+| Batting pack (our batter) | opposition bowler's stock / wicket / new-ball clips | **our batter's hand** |
+
+The batting-pack half went unnoticed from `a067e44` until 2026-08-10: the reels were built from
+`build_profile(bid, hand="All")`, so Steve Smith's pack showed Ebadot Hossain bowling to Ben Curran.
+`bowler_clips_by_hand()` now builds all three (both hands, to LHB, to RHB) off one delivery load.
+
+**No pooled fallback on the batting packs.** Ebadot has 10 wicket clips to left-handers and none of
+them resolve to a playable blob; falling back to the pooled reel served a left-hander's pack 40
+wicket balls that were all to right-handers. If a hand has no playable footage the button is
+omitted — showing nothing beats showing the wrong hand.
+
+**Verify the built pages, not the source data.** `audit_pack_hands.py` follows every play button in
+every batting pack through to its playlist, maps each clip back to a delivery and checks the
+striker's hand. Run it after a build, before publishing (exit 1 on any mixed or wrong reel). It
+needs the warehouse, which is why it isn't wired into `check_site.py` — the publish gate is
+deliberately offline-only.
+
+### Bowlers the feed can't classify — `data/bowler_type_overrides.json`
+
+Every delivery carries the bowler's *registered* style and hand, so a bowler who switches arms is
+stamped with one of them for all their balls. **Tharindu Rathnayake** bowls left-arm orthodox and
+off spin; all 767 of his deliveries are coded right-arm off spin, and the Players table agrees —
+both come from the same feed, so nothing in the warehouse contradicts it. Only the footage does.
+
+Ids listed under `ambidextrous` are dropped from the exact-type reels and profiles and kept in the
+macro pace/spin groups (the ball is still spin). It was skewing the plans as well as the video:
+Shanto's "off spin" record was 28% Rathnayake, and dropping those balls moved his sample 714 → 516
+and changed Mehidy's plan from *good length* to *full*. Add an id when footage disagrees with the
+coded type, and say who verified it.
+
+## CA XI packs — ARCHIVED 2026-08-10
+
+The site is offline (GitHub Pages disabled on `tbcricketau/caxi-player-packs`); the repo, history
+and the last published state (tag `archived-2026-08-10`) are intact. `publish_packs.py caxi` refuses
+unless given `--revive`. **Those packs predate the 2026-08-10 fixes** — wrong-hand bowler reels and
+pooled-spin batter reels — so reviving means rebuilding from source, not re-pushing the tag.
+
 ## Known gaps / pending work
 
 - Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER`) uses assumed strings — verify against actual DB lookup values if cells appear out of order
