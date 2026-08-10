@@ -195,11 +195,18 @@ them resolve to a playable blob; falling back to the pooled reel served a left-h
 wicket balls that were all to right-handers. If a hand has no playable footage the button is
 omitted — showing nothing beats showing the wrong hand.
 
-**Verify the built pages, not the source data.** `audit_pack_hands.py` follows every play button in
-every batting pack through to its playlist, maps each clip back to a delivery and checks the
-striker's hand. Run it after a build, before publishing (exit 1 on any mixed or wrong reel). It
-needs the warehouse, which is why it isn't wired into `check_site.py` — the publish gate is
-deliberately offline-only.
+**Verify the built pages, not the source data — and the publish gate now does.** `audit_pack_hands.py`
+follows every play button in every batting pack through to its playlist, maps each clip back to a
+delivery and checks the striker's hand. `publish_packs.py` runs it after `check_site` and **refuses
+to push** on any mixed, wrong or unscoped reel.
+
+It sits in `publish_packs.py`, **not** `check_site.py`: resolving who a clip is bowled to needs the
+warehouse, and the link check is deliberately offline-only — folding it in would make every link
+check depend on the VPN. It **fails closed**: an unreachable warehouse refuses the publish rather
+than skipping the check, since a silent downgrade is exactly how the wrong-hand reels survived from
+`a067e44` to 2026-08-10. `--no-hand-audit` is the deliberate override. Proven both ways — a clean
+bundle reports 157 reels across 13 batting packs and pushes; one reel repointed at a pooled key is
+named and refused with exit 1.
 
 ### Bowlers the feed can't classify — `data/bowler_type_overrides.json`
 
