@@ -18,13 +18,15 @@ import subprocess
 import sys
 
 from check_site import check as check_site
+from audit_pack_hands import run_audit
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 BUNDLES = {
     "aus": {"assemble": "assemble_packs.py", "arg": "aus",
             "bundle": "player_pack_site",
-            "repo": "https://github.com/tbcricketau/player-packs.git"},
+            "repo": "https://github.com/tbcricketau/player-packs.git",
+            "opp": "bangladesh", "slug": "bangladesh-home-2026"},
     "caxi": {"assemble": "assemble_packs.py", "arg": "caxi",
              "bundle": "caxi_player_pack_site",
              "repo": "https://github.com/tbcricketau/caxi-player-packs.git",
@@ -52,6 +54,8 @@ def main():
     ap.add_argument("-m", "--message", default="", help="commit message")
     ap.add_argument("--deep", action="store_true", help="also HEAD a sample of media urls")
     ap.add_argument("--no-assemble", action="store_true", help="validate/push what's already there")
+    ap.add_argument("--no-hand-audit", action="store_true",
+                    help="skip the warehouse hand audit (deliberate override only)")
     ap.add_argument("--revive", action="store_true",
                     help="publish a bundle that has been archived (see the note it prints)")
     a = ap.parse_args()
@@ -77,6 +81,27 @@ def main():
     if errors:
         raise SystemExit(f"\nREFUSING TO PUBLISH: {len(errors)} problem(s). Nothing was pushed.")
     print("  clean")
+
+    # Hand audit — check_site can't do this one: it needs the warehouse to resolve who each clip is
+    # bowled to, and that gate is deliberately offline-only. Kept here so it still blocks the push.
+    if not a.no_hand_audit:
+        print(f"hand audit {cfg['bundle']}…")
+        try:
+            mixed, wrong, pooled, _u, n, pages = run_audit(out, opp=cfg.get("opp", "bangladesh"),
+                                                           slug=cfg.get("slug", ""), quiet=True)
+        except Exception as e:
+            # A dropped VPN must not become a silent pass — this is the check that catches a pack
+            # showing the wrong batter's footage, which shipped unnoticed for weeks.
+            raise SystemExit(
+                f"\nREFUSING TO PUBLISH: the hand audit could not run ({type(e).__name__}: "
+                f"{str(e)[:120]}). It needs the warehouse — reconnect, or pass --no-hand-audit to "
+                f"publish without it (deliberate override only). Nothing was pushed.")
+        if mixed or wrong or pooled:
+            raise SystemExit(
+                f"\nREFUSING TO PUBLISH: {mixed} mixed-hand, {wrong} wrong-hand, {pooled} unscoped "
+                f"reel(s) across {pages} batting packs. A pack is showing footage of the wrong "
+                f"batter's hand. Nothing was pushed.")
+        print(f"  clean — {n} reels across {pages} batting packs, all one hand")
 
     msg = a.message or f"publish {datetime.datetime.now():%Y-%m-%d %H:%M}"
     _run(["git", "add", "-A"], out)

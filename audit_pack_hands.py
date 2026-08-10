@@ -35,18 +35,24 @@ def _base(u):
     return os.path.splitext(os.path.basename(unquote(u.split("?")[0])))[0].upper()
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--site", default="player_site")
-    ap.add_argument("--opp", default="bangladesh")
-    ap.add_argument("--slug", default="bangladesh-home-2026")
-    a = ap.parse_args()
-    site = os.path.join(HERE, a.site)
+def _batting_pages(site):
+    """Every *-batting.html under `site`, at any depth — the built site keeps them flat, the
+    assembled bundle nests them under players/."""
+    for root, _dirs, files in os.walk(site):
+        for fn in sorted(files):
+            if fn.endswith("-batting.html"):
+                yield root, fn
 
-    hands = _our_hands(a.slug)
+
+def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False):
+    """(mixed, wrong, pooled, unresolved, n_reels, n_pages) — 0/0/0 means every reel in every
+    batting pack holds only that pack batter's hand. Raises if the warehouse is unreachable."""
+    site = site if os.path.isabs(site) else os.path.join(HERE, site)
+
+    hands = _our_hands(slug)
     players = json.load(open(PLAYERS, encoding="utf-8"))
     name2pid = {(r.get("name") or "").lower(): p for p, r in players.items()}
-    about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{a.opp}.json"),
+    about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"),
                            encoding="utf-8"))
 
     stem2id = {}
@@ -59,14 +65,12 @@ def main():
                             stem2id[_base(e["clip_stem"])] = e["delivery_id"]
 
     reels, allids = {}, set()
-    for fn in sorted(os.listdir(site)):
-        if not fn.endswith("-batting.html"):
-            continue
+    for root, fn in _batting_pages(site):
         ps = fn[:-len("-batting.html")]
-        page = open(os.path.join(site, fn), encoding="utf-8").read()
+        page = open(os.path.join(root, fn), encoding="utf-8").read()
         h1 = re.search(r"<h1[^>]*>(.*?)</h1>", page, re.S)
         nm = re.sub(r"<[^>]+>", "", h1.group(1)).strip().lower() if h1 else ""
-        vp = os.path.join(site, f"{ps}-vision.html")
+        vp = os.path.join(root, f"{ps}-vision.html")
         pls = {}
         if os.path.exists(vp):
             m = re.search(r'PLAYLISTS\s*=\s*(\{.*?\});', open(vp, encoding="utf-8").read(), re.S)
@@ -96,7 +100,8 @@ def main():
             print(f"  POOLED  {ps:<24} {k}  (not scoped to a hand)")
         if not ids:
             unres += 1
-            print(f"  UNRESOLVED  {ps:<24} {k}")
+            if not quiet:
+                print(f"  UNRESOLVED  {ps:<24} {k}")
             continue
         want = hands.get(name2pid.get(nm))
         got = {hand_of[i] for i in ids if i in hand_of}
@@ -107,9 +112,18 @@ def main():
             wrong += 1
             print(f"  WRONG   {ps:<24} {k:<14} pack={want} reel={next(iter(got))}")
 
-    print(f"\n{len(reels)} bowler reels across {len(pages)} batting packs")
-    print(f"  mixed-hand : {mixed}\n  wrong-hand : {wrong}\n  pooled keys: {pooled}"
-          f"\n  unresolved : {unres}")
+    print(f"  {len(reels)} bowler reels across {len(pages)} batting packs — "
+          f"mixed {mixed} · wrong {wrong} · pooled {pooled} · unresolved {unres}")
+    return mixed, wrong, pooled, unres, len(reels), len(pages)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--site", default="player_site")
+    ap.add_argument("--opp", default="bangladesh")
+    ap.add_argument("--slug", default="bangladesh-home-2026")
+    a = ap.parse_args()
+    mixed, wrong, pooled, _unres, _n, _p = run_audit(a.site, a.opp, a.slug)
     return 1 if (mixed or wrong or pooled) else 0
 
 
