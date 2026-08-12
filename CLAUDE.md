@@ -221,6 +221,49 @@ Shanto's "off spin" record was 28% Rathnayake, and dropping those balls moved hi
 and changed Mehidy's plan from *good length* to *full*. Add an id when footage disagrees with the
 coded type, and say who verified it.
 
+## Adding one opposition player — merge, don't rebuild
+
+A full `build_opponent_about.py` run costs ~40 minutes and puts every other player's verified data
+back through a build that stalls on a VPN drop. Both builders take a merge flag:
+
+```powershell
+.\venv\Scripts\python.exe build_opponent_about.py --opp bangladesh --only-batters 2700039
+.\venv\Scripts\python.exe build_overview.py --opp bangladesh --group right_pace --only 2700039
+```
+
+Each rebuilds only the named players and merges into the existing file. In merge mode **any** failure
+aborts the write — with one player, a failure is the whole run. Check the merge was surgical (every
+other row byte-identical) rather than assuming it.
+
+A player also has to exist in the **matchup store** first: the roster comes from its `they_bat` /
+`we_bat` rows, so a squad member pinned only as a bowler has no batter card. Add the id to
+`matchupmodel/data/opp_squad_{opp}.json` and re-run `export_matchup_store.py`. `--only-batters`
+aborts with that instruction if the id isn't there. **Adding a batter adds them to EVERY bowling
+pack**, not just one type's — the roster is shared, so build the overview row for each group you
+care about or that pack falls back to the macro plan.
+
+## The pack pipeline, in order — and the step that isn't obvious
+
+```
+build_batting_reports.py / build_reports.py   render into reports/
+publish_site.py --out site                    bake into the coach-site group folders
+inject_reports.py                             bake into site/<series>/batters/   <-- REQUIRED
+build_player_site.py --out player_site        the packs
+publish_packs.py aus                          assemble -> link check -> hand audit -> push
+```
+
+`inject_reports.py` exists because `_scouting_urls` links `scouting/<series>/batters/<base>.pmode.html`
+and **no series.json group produces that folder**. It had been filled by a script outside the repo,
+so a plain `publish_site.py --out site` wiped it and the next assemble produced a bundle full of dead
+links (2026-08-10). Same lesson as the scratchpad assemblers: **a pipeline step that isn't in the repo
+isn't part of the pipeline.** The scheduled "Scouting Reports Refresh" task runs `publish_site`, so it
+wipes that folder every few days — re-run `inject_reports.py` before assembling.
+
+`build_player_site.py` **clears `player_site/` before writing**, so an interrupted build leaves an
+empty directory. Never publish a partial build; re-run it. (A wedged run is easy to spot — seconds of
+CPU over tens of minutes and almost no files written. It has hung with the warehouse perfectly
+reachable, so a stall is not proof of a VPN drop.)
+
 ## CA XI packs — ARCHIVED 2026-08-10
 
 The site is offline (GitHub Pages disabled on `tbcricketau/caxi-player-packs`); the repo, history
