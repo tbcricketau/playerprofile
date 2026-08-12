@@ -248,6 +248,37 @@
     "short": null,
     "top_out": "Caught in the field (100%)"
    }
+  },
+  {
+   "bid": "2700039",
+   "name": "Taijul Islam",
+   "sub": "LHB · Lower order",
+   "balls": 461,
+   "plan": "Plan for off spin: bowl <b>full pitching in the channel</b> while <b>drifting in</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "off_spin_2700039_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "off_spin_2700039_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 461,
+    "n_out": 21,
+    "bpd": 21.952380952380953,
+    "false_pct": 20.56737588652482,
+    "area": "leg (46% of runs)",
+    "short": null,
+    "top_out": "LBW (38%)"
+   }
   }
  ]
 }

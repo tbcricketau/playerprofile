@@ -399,6 +399,10 @@ def batter_role(conn, cur, bid):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--opp", default="bangladesh")
+    ap.add_argument("--only-batters", default="",
+                    help="comma-separated batter ids — build just these and MERGE into the existing "
+                         "file, leaving every other player (and the bowlers' per-hand reels) alone. "
+                         "Adding one player shouldn't cost a 40-minute full rebuild.")
     ap.add_argument("--clips-only", action="store_true",
                     help="only add stock/wicket example clips to the existing json (fast, no re-profile)")
     args = ap.parse_args()
@@ -451,7 +455,20 @@ def main():
     STK = {r["id"]: r["description"] for r in _q(conn, cur, f"SELECT id,description FROM [{DATA_SCHEMA}].[Lookups] WHERE lookup_type_id=24")}
     SQ = {r["id"]: r["description"] for r in _q(conn, cur, f"SELECT id,description FROM [{DATA_SCHEMA}].[Lookups] WHERE lookup_type_id=2811")}
 
-    out = {"opp": args.opp, "bowlers": {}, "batters": {}}
+    only = [x.strip() for x in args.only_batters.split(",") if x.strip()]
+    if only:
+        # merge mode: start from what's on disk so nothing else is touched
+        out = json.load(open(dst, encoding="utf-8"))
+        missing = [b for b in only if b not in batters]
+        if missing:
+            raise SystemExit(
+                f"ABORTING: {missing} not in the matchup store's they_bat rows for {args.opp}. "
+                f"Add the id to matchupmodel/data/opp_squad_{args.opp}.json 'batters' and re-run "
+                f"export_matchup_store.py, otherwise there's no name/hand to build from.")
+        bowlers, batters = {}, {b: batters[b] for b in only}
+        print(f"merge mode: rebuilding only {', '.join(nm for nm, _ in batters.values())}")
+    else:
+        out = {"opp": args.opp, "bowlers": {}, "batters": {}}
     for bid, (nm, ty) in bowlers.items():
         try:
             if _test_balls(conn, cur, bid, "bowl") >= TEST_FLOOR:

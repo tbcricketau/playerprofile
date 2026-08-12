@@ -305,6 +305,41 @@
     "short": null,
     "top_out": "Caught in the field (50%)"
    }
+  },
+  {
+   "bid": "2700039",
+   "name": "Taijul Islam",
+   "sub": "LHB · Lower order",
+   "balls": 680,
+   "plan": "Plan for right-arm pace: bowl <b>back of a length pitching outside off</b> while <b>seaming in</b>.",
+   "field": {
+    "set": "leg-side stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_2700039_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "right_pace_2700039_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_2700039_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 680,
+    "n_out": 24,
+    "bpd": 28.333333333333332,
+    "false_pct": 30.97345132743363,
+    "area": "leg (45% of runs)",
+    "short": "31% false (48 balls) — vs all pace",
+    "top_out": "Caught behind (46%)"
+   }
   }
  ]
 }

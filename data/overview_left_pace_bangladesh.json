@@ -271,6 +271,33 @@
     "short": null,
     "top_out": null
    }
+  },
+  {
+   "bid": "2700039",
+   "name": "Taijul Islam",
+   "sub": "LHB · Lower order",
+   "balls": 202,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching around leg</b>.",
+   "field": null,
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_2700039_0.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_2700039_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 202,
+    "n_out": 7,
+    "bpd": 28.857142857142858,
+    "false_pct": 23.26732673267327,
+    "area": "leg (49% of runs)",
+    "short": "30% false (49 balls) — vs all pace",
+    "top_out": "Caught behind (57%)"
+   }
   }
  ]
 }

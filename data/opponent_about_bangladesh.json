@@ -18407,6 +18407,1536 @@
    "clip_scope_left_orthodox": "Test:left_orthodox",
    "clip_scope_leg_spin": "Test:leg_spin",
    "clip_scope_left_unorthodox": "Test:left_unorthodox"
+  },
+  "2700039": {
+   "name": "Taijul Islam",
+   "hand": "LHB",
+   "facts": [
+    "Scores mainly through the leg side; go-to shot is the work/nudge.",
+    "Weaker against spin than pace.",
+    "Most often out caught behind (28% of dismissals)."
+   ],
+   "order": 724,
+   "facts_pace": [
+    "A modest, patient batter — vulnerable to swing.",
+    "Plan for pace: bowl <b>back of a length pitching outside off</b> while <b>seaming / swinging in</b>.",
+    "They get out most often to balls that are <b>back of a length and down the leg side</b> (10.0 dismissals/100).",
+    "Most often out <b>caught behind</b> (48% of dismissals)."
+   ],
+   "facts_spin": [
+    "A modest, patient batter — no glaring weakness.",
+    "Plan for spin: bowl <b>good length pitching on the stumps</b>.",
+    "They get out most often to balls that are <b>good length and outside off</b> (9.1 dismissals/100).",
+    "Most often out <b>bowled</b> (28% of dismissals)."
+   ],
+   "scoring_clips_pace": [
+    {
+     "delivery_id": "5461960020104601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104601"
+    },
+    {
+     "delivery_id": "5461960020104603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104603"
+    },
+    {
+     "delivery_id": "5461960020204003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204003"
+    },
+    {
+     "delivery_id": "5461785010105506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105506"
+    },
+    {
+     "delivery_id": "5461785010208603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A208603"
+    },
+    {
+     "delivery_id": "5461773010110601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110601"
+    },
+    {
+     "delivery_id": "5461773010110602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110602"
+    },
+    {
+     "delivery_id": "5460859020107003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107003"
+    },
+    {
+     "delivery_id": "5460859020107203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107203"
+    },
+    {
+     "delivery_id": "5460859020107602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107602"
+    },
+    {
+     "delivery_id": "5460852020114902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114902"
+    },
+    {
+     "delivery_id": "5460766010108604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A108604"
+    },
+    {
+     "delivery_id": "5460766010109002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109002"
+    },
+    {
+     "delivery_id": "5460766010109604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109604"
+    },
+    {
+     "delivery_id": "5460532020106302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B106302"
+    },
+    {
+     "delivery_id": "5460531020107405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B107405"
+    },
+    {
+     "delivery_id": "5460531020108401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108401"
+    },
+    {
+     "delivery_id": "5460531020108404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108404"
+    },
+    {
+     "delivery_id": "5460499010208901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A208901"
+    },
+    {
+     "delivery_id": "5460482020107105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B107105"
+    },
+    {
+     "delivery_id": "5460190010103703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A103703"
+    },
+    {
+     "delivery_id": "5460189010101202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101202"
+    },
+    {
+     "delivery_id": "5460189010101506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101506"
+    },
+    {
+     "delivery_id": "5460189010101906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101906"
+    },
+    {
+     "delivery_id": "5460189010103506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103506"
+    },
+    {
+     "delivery_id": "5460189010103806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103806"
+    },
+    {
+     "delivery_id": "5460189010201306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/2/5460189A201306"
+    },
+    {
+     "delivery_id": "5181273010107305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181273/A/1/5181273A107305"
+    },
+    {
+     "delivery_id": "4353735010116502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A116502"
+    },
+    {
+     "delivery_id": "4353735010116903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A116903"
+    },
+    {
+     "delivery_id": "4353175010207804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/2/4353175A207804"
+    },
+    {
+     "delivery_id": "4353174010110703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353174/A/1/4353174A110703"
+    },
+    {
+     "delivery_id": "4352913020108305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352913/B/1/4352913B108305"
+    },
+    {
+     "delivery_id": "4355308020202805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355308/B/2/4355308B202805"
+    },
+    {
+     "delivery_id": "4355307020205904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355307/B/2/4355307B205904"
+    },
+    {
+     "delivery_id": "4355985010106304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/1/4355985A106304"
+    },
+    {
+     "delivery_id": "4356120020105204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018-19/Men/Multi%20Day/4356120/B/1/4356120B105204"
+    },
+    {
+     "delivery_id": "4356184010113706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A113706"
+    },
+    {
+     "delivery_id": "4356184010114105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A114105"
+    },
+    {
+     "delivery_id": "4356183010108304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A108304"
+    }
+   ],
+   "dismissal_clips_pace": [
+    {
+     "delivery_id": "5461960020104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104605"
+    },
+    {
+     "delivery_id": "5461960020204005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204005"
+    },
+    {
+     "delivery_id": "5461773010110705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110705"
+    },
+    {
+     "delivery_id": "5460852020114904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114904"
+    },
+    {
+     "delivery_id": "5460750010206303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/2/5460750A206303"
+    },
+    {
+     "delivery_id": "5460532020106403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B106403"
+    },
+    {
+     "delivery_id": "5460532020205003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B205003"
+    },
+    {
+     "delivery_id": "5460531020108905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108905"
+    },
+    {
+     "delivery_id": "5460531020203004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/2/5460531B203004"
+    },
+    {
+     "delivery_id": "5460499010208903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A208903"
+    },
+    {
+     "delivery_id": "5460482020107201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B107201"
+    },
+    {
+     "delivery_id": "5460482020204104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/2/5460482B204104"
+    },
+    {
+     "delivery_id": "5460190010103704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A103704"
+    },
+    {
+     "delivery_id": "5460189010104002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A104002"
+    },
+    {
+     "delivery_id": "5460189010201601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/2/5460189A201601"
+    },
+    {
+     "delivery_id": "5181771010108403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/A/1/5181771A108403"
+    },
+    {
+     "delivery_id": "4353736010110605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/1/4353736A110605"
+    },
+    {
+     "delivery_id": "4353736010205602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/2/4353736A205602"
+    },
+    {
+     "delivery_id": "4353735010117002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A117002"
+    },
+    {
+     "delivery_id": "4353174010110704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353174/A/1/4353174A110704"
+    },
+    {
+     "delivery_id": "4352913020108306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352913/B/1/4352913B108306"
+    },
+    {
+     "delivery_id": "4352912020117104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352912/B/1/4352912B117104"
+    },
+    {
+     "delivery_id": "4355902010113402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355902/A/1/4355902A113402"
+    },
+    {
+     "delivery_id": "4355937020204105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/2/4355937B204105"
+    },
+    {
+     "delivery_id": "4355308020203303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355308/B/2/4355308B203303"
+    },
+    {
+     "delivery_id": "4355307020105704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355307/B/1/4355307B105704"
+    },
+    {
+     "delivery_id": "4355307020206703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355307/B/2/4355307B206703"
+    },
+    {
+     "delivery_id": "4356120020105904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018-19/Men/Multi%20Day/4356120/B/1/4356120B105904"
+    },
+    {
+     "delivery_id": "4356120020204804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018-19/Men/Multi%20Day/4356120/B/2/4356120B204804"
+    },
+    {
+     "delivery_id": "4356221010108906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356221/A/1/4356221A108906"
+    },
+    {
+     "delivery_id": "4356243020104506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/1/4356243B104506"
+    }
+   ],
+   "clip_scope_pace": "Test:pace",
+   "scoring_clips_spin": [
+    {
+     "delivery_id": "5461785010104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A104605"
+    },
+    {
+     "delivery_id": "5460859020107804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107804"
+    },
+    {
+     "delivery_id": "5460859020107805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107805"
+    },
+    {
+     "delivery_id": "5460500010104502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A104502"
+    },
+    {
+     "delivery_id": "5460499010103201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103201"
+    },
+    {
+     "delivery_id": "5460499010103703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103703"
+    },
+    {
+     "delivery_id": "5460190010206205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A206205"
+    },
+    {
+     "delivery_id": "5460190010206405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A206405"
+    },
+    {
+     "delivery_id": "5460189010103104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103104"
+    },
+    {
+     "delivery_id": "5460264010105804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/1/5460264A105804"
+    },
+    {
+     "delivery_id": "5460264010203406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/2/5460264A203406"
+    },
+    {
+     "delivery_id": "5460263010108302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/1/5460263A108302"
+    },
+    {
+     "delivery_id": "4353736010110004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/1/4353736A110004"
+    },
+    {
+     "delivery_id": "4353736010110403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/1/4353736A110403"
+    },
+    {
+     "delivery_id": "4353735010116204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A116204"
+    },
+    {
+     "delivery_id": "4355903010109405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355903/A/1/4355903A109405"
+    },
+    {
+     "delivery_id": "4355902010112902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355902/A/1/4355902A112902"
+    },
+    {
+     "delivery_id": "4355915010115002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/A/1/4355915A115002"
+    },
+    {
+     "delivery_id": "4355937020106705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B106705"
+    },
+    {
+     "delivery_id": "4355937020106706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B106706"
+    },
+    {
+     "delivery_id": "4355937020106906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B106906"
+    },
+    {
+     "delivery_id": "4355937020107706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B107706"
+    },
+    {
+     "delivery_id": "4355985010106606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/1/4355985A106606"
+    },
+    {
+     "delivery_id": "4356184010113601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A113601"
+    },
+    {
+     "delivery_id": "4356183010107505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A107505"
+    },
+    {
+     "delivery_id": "4356183010107805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A107805"
+    },
+    {
+     "delivery_id": "4356183010108804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A108804"
+    },
+    {
+     "delivery_id": "4356368010203002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356368/A/2/4356368A203002"
+    },
+    {
+     "delivery_id": "3080088010111304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111304"
+    },
+    {
+     "delivery_id": "3080081010107305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A107305"
+    },
+    {
+     "delivery_id": "3080081010202601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A202601"
+    }
+   ],
+   "dismissal_clips_spin": [
+    {
+     "delivery_id": "5461785010105801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105801"
+    },
+    {
+     "delivery_id": "5461785010209301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A209301"
+    },
+    {
+     "delivery_id": "5461773010207004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A207004"
+    },
+    {
+     "delivery_id": "5461363010113401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A113401"
+    },
+    {
+     "delivery_id": "5460859020108003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B108003"
+    },
+    {
+     "delivery_id": "5460859020204406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/2/5460859B204406"
+    },
+    {
+     "delivery_id": "5460766010109705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109705"
+    },
+    {
+     "delivery_id": "5460750010104902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A104902"
+    },
+    {
+     "delivery_id": "5460500010104602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A104602"
+    },
+    {
+     "delivery_id": "5460500010203604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/2/5460500A203604"
+    },
+    {
+     "delivery_id": "5460499010104101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A104101"
+    },
+    {
+     "delivery_id": "5460190010207205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A207205"
+    },
+    {
+     "delivery_id": "5460264010106302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/1/5460264A106302"
+    },
+    {
+     "delivery_id": "5460263010209706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/2/5460263A209706"
+    },
+    {
+     "delivery_id": "5181487010107202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181487/A/1/5181487A107202"
+    },
+    {
+     "delivery_id": "5181273010206801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181273/A/2/5181273A206801"
+    },
+    {
+     "delivery_id": "5181272010103506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/A/1/5181272A103506"
+    },
+    {
+     "delivery_id": "5181272010211402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/A/2/5181272A211402"
+    },
+    {
+     "delivery_id": "4353148020107301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353148/B/1/4353148B107301"
+    },
+    {
+     "delivery_id": "4353148020202403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353148/B/2/4353148B202403"
+    },
+    {
+     "delivery_id": "4353175010102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/1/4353175A102806"
+    },
+    {
+     "delivery_id": "4353175010208504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/2/4353175A208504"
+    },
+    {
+     "delivery_id": "4353174010205702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353174/A/2/4353174A205702"
+    },
+    {
+     "delivery_id": "4352913020206202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352913/B/2/4352913B206202"
+    },
+    {
+     "delivery_id": "4355903010205101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355903/A/2/4355903A205101"
+    },
+    {
+     "delivery_id": "4355902010206802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355902/A/2/4355902A206802"
+    },
+    {
+     "delivery_id": "4355937020107905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B107905"
+    },
+    {
+     "delivery_id": "4355985010106803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/1/4355985A106803"
+    },
+    {
+     "delivery_id": "4355985010205803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/2/4355985A205803"
+    },
+    {
+     "delivery_id": "4356184010114504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A114504"
+    },
+    {
+     "delivery_id": "4356183010203605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/2/4356183A203605"
+    },
+    {
+     "delivery_id": "4356220010104604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356220/A/1/4356220A104604"
+    },
+    {
+     "delivery_id": "4356220010206005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356220/A/2/4356220A206005"
+    },
+    {
+     "delivery_id": "4356368010104603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356368/A/1/4356368A104603"
+    },
+    {
+     "delivery_id": "4356368010203003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356368/A/2/4356368A203003"
+    },
+    {
+     "delivery_id": "4356367010112102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356367/A/1/4356367A112102"
+    },
+    {
+     "delivery_id": "3080088010111402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111402"
+    },
+    {
+     "delivery_id": "3080088010206904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206904"
+    },
+    {
+     "delivery_id": "3080081010107602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A107602"
+    },
+    {
+     "delivery_id": "3080081010202801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A202801"
+    }
+   ],
+   "clip_scope_spin": "Test:spin",
+   "scoring_clips_right_pace": [
+    {
+     "delivery_id": "5461960020204003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204003"
+    },
+    {
+     "delivery_id": "5461785010105506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105506"
+    },
+    {
+     "delivery_id": "5461785010208603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A208603"
+    },
+    {
+     "delivery_id": "5461773010110601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110601"
+    },
+    {
+     "delivery_id": "5461773010110602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110602"
+    },
+    {
+     "delivery_id": "5460859020107003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107003"
+    },
+    {
+     "delivery_id": "5460852020114902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114902"
+    },
+    {
+     "delivery_id": "5460766010108604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A108604"
+    },
+    {
+     "delivery_id": "5460766010109002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109002"
+    },
+    {
+     "delivery_id": "5460766010109604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109604"
+    },
+    {
+     "delivery_id": "5460532020106302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B106302"
+    },
+    {
+     "delivery_id": "5460531020107405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B107405"
+    },
+    {
+     "delivery_id": "5460531020108401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108401"
+    },
+    {
+     "delivery_id": "5460531020108404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108404"
+    },
+    {
+     "delivery_id": "5460499010208901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A208901"
+    },
+    {
+     "delivery_id": "5460482020107105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B107105"
+    },
+    {
+     "delivery_id": "5460189010101202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101202"
+    },
+    {
+     "delivery_id": "5460189010103506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103506"
+    },
+    {
+     "delivery_id": "5181273010107305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181273/A/1/5181273A107305"
+    },
+    {
+     "delivery_id": "4353735010116502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A116502"
+    },
+    {
+     "delivery_id": "4353735010116903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A116903"
+    },
+    {
+     "delivery_id": "4352913020108305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352913/B/1/4352913B108305"
+    },
+    {
+     "delivery_id": "4355308020202805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355308/B/2/4355308B202805"
+    },
+    {
+     "delivery_id": "4355307020205904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355307/B/2/4355307B205904"
+    },
+    {
+     "delivery_id": "4355985010106304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/1/4355985A106304"
+    },
+    {
+     "delivery_id": "4356120020105204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018-19/Men/Multi%20Day/4356120/B/1/4356120B105204"
+    },
+    {
+     "delivery_id": "4356184010113706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A113706"
+    },
+    {
+     "delivery_id": "4356184010114105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A114105"
+    },
+    {
+     "delivery_id": "4356183010108304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A108304"
+    },
+    {
+     "delivery_id": "4356183010109106",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A109106"
+    },
+    {
+     "delivery_id": "4356243020104202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/1/4356243B104202"
+    },
+    {
+     "delivery_id": "4356243020104302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/1/4356243B104302"
+    },
+    {
+     "delivery_id": "4356243020104306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/1/4356243B104306"
+    },
+    {
+     "delivery_id": "4356243020104503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/1/4356243B104503"
+    },
+    {
+     "delivery_id": "4356243020203804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/2/4356243B203804"
+    },
+    {
+     "delivery_id": "4356243020204104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/2/4356243B204104"
+    }
+   ],
+   "dismissal_clips_right_pace": [
+    {
+     "delivery_id": "5461960020204005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204005"
+    },
+    {
+     "delivery_id": "5461773010110705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110705"
+    },
+    {
+     "delivery_id": "5460852020114904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114904"
+    },
+    {
+     "delivery_id": "5460532020106403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B106403"
+    },
+    {
+     "delivery_id": "5460532020205003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B205003"
+    },
+    {
+     "delivery_id": "5460531020108905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108905"
+    },
+    {
+     "delivery_id": "5460531020203004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/2/5460531B203004"
+    },
+    {
+     "delivery_id": "5460499010208903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A208903"
+    },
+    {
+     "delivery_id": "5460482020107201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B107201"
+    },
+    {
+     "delivery_id": "5460482020204104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/2/5460482B204104"
+    },
+    {
+     "delivery_id": "5460189010104002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A104002"
+    },
+    {
+     "delivery_id": "5460189010201601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/2/5460189A201601"
+    },
+    {
+     "delivery_id": "5181771010108403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/A/1/5181771A108403"
+    },
+    {
+     "delivery_id": "4353736010110605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/1/4353736A110605"
+    },
+    {
+     "delivery_id": "4353736010205602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/2/4353736A205602"
+    },
+    {
+     "delivery_id": "4353735010117002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A117002"
+    },
+    {
+     "delivery_id": "4352913020108306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352913/B/1/4352913B108306"
+    },
+    {
+     "delivery_id": "4355902010113402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355902/A/1/4355902A113402"
+    },
+    {
+     "delivery_id": "4355937020204105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/2/4355937B204105"
+    },
+    {
+     "delivery_id": "4355308020203303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355308/B/2/4355308B203303"
+    },
+    {
+     "delivery_id": "4355307020105704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355307/B/1/4355307B105704"
+    },
+    {
+     "delivery_id": "4355307020206703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355307/B/2/4355307B206703"
+    },
+    {
+     "delivery_id": "4356221010108906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356221/A/1/4356221A108906"
+    },
+    {
+     "delivery_id": "4356243020104506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356243/B/1/4356243B104506"
+    }
+   ],
+   "clip_scope_right_pace": "Test:right_pace",
+   "scoring_clips_left_pace": [
+    {
+     "delivery_id": "5461960020104601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104601"
+    },
+    {
+     "delivery_id": "5461960020104603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104603"
+    },
+    {
+     "delivery_id": "5460859020107203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107203"
+    },
+    {
+     "delivery_id": "5460859020107602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107602"
+    },
+    {
+     "delivery_id": "5460190010103703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A103703"
+    },
+    {
+     "delivery_id": "5460189010101506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101506"
+    },
+    {
+     "delivery_id": "5460189010101906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101906"
+    },
+    {
+     "delivery_id": "5460189010103806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103806"
+    },
+    {
+     "delivery_id": "5460189010201306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/2/5460189A201306"
+    },
+    {
+     "delivery_id": "4353175010207804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/2/4353175A207804"
+    },
+    {
+     "delivery_id": "4353174010110703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353174/A/1/4353174A110703"
+    }
+   ],
+   "dismissal_clips_left_pace": [
+    {
+     "delivery_id": "5461960020104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104605"
+    },
+    {
+     "delivery_id": "5460750010206303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/2/5460750A206303"
+    },
+    {
+     "delivery_id": "5460190010103704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A103704"
+    },
+    {
+     "delivery_id": "4353174010110704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353174/A/1/4353174A110704"
+    },
+    {
+     "delivery_id": "4352912020117104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352912/B/1/4352912B117104"
+    },
+    {
+     "delivery_id": "4356120020105904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018-19/Men/Multi%20Day/4356120/B/1/4356120B105904"
+    },
+    {
+     "delivery_id": "4356120020204804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018-19/Men/Multi%20Day/4356120/B/2/4356120B204804"
+    }
+   ],
+   "clip_scope_left_pace": "Test:left_pace",
+   "scoring_clips_off_spin": [
+    {
+     "delivery_id": "5461785010104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A104605"
+    },
+    {
+     "delivery_id": "5460499010103201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103201"
+    },
+    {
+     "delivery_id": "5460263010108302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/1/5460263A108302"
+    },
+    {
+     "delivery_id": "4355903010109405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355903/A/1/4355903A109405"
+    },
+    {
+     "delivery_id": "4356184010113601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A113601"
+    },
+    {
+     "delivery_id": "4356183010108804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A108804"
+    },
+    {
+     "delivery_id": "3080088010111304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111304"
+    },
+    {
+     "delivery_id": "3080081010202601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A202601"
+    }
+   ],
+   "dismissal_clips_off_spin": [
+    {
+     "delivery_id": "5461785010105801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105801"
+    },
+    {
+     "delivery_id": "5461785010209301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A209301"
+    },
+    {
+     "delivery_id": "5460264010106302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/1/5460264A106302"
+    },
+    {
+     "delivery_id": "5181487010107202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181487/A/1/5181487A107202"
+    },
+    {
+     "delivery_id": "5181273010206801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181273/A/2/5181273A206801"
+    },
+    {
+     "delivery_id": "4353148020107301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353148/B/1/4353148B107301"
+    },
+    {
+     "delivery_id": "4353148020202403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353148/B/2/4353148B202403"
+    },
+    {
+     "delivery_id": "4353175010102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/1/4353175A102806"
+    },
+    {
+     "delivery_id": "4353175010208504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/2/4353175A208504"
+    },
+    {
+     "delivery_id": "4353174010205702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353174/A/2/4353174A205702"
+    },
+    {
+     "delivery_id": "4352913020206202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4352913/B/2/4352913B206202"
+    },
+    {
+     "delivery_id": "4355903010205101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355903/A/2/4355903A205101"
+    },
+    {
+     "delivery_id": "4355985010106803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/1/4355985A106803"
+    },
+    {
+     "delivery_id": "4356184010114504",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356184/A/1/4356184A114504"
+    },
+    {
+     "delivery_id": "4356183010203605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/2/4356183A203605"
+    },
+    {
+     "delivery_id": "4356220010104604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356220/A/1/4356220A104604"
+    },
+    {
+     "delivery_id": "4356368010104603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356368/A/1/4356368A104603"
+    },
+    {
+     "delivery_id": "3080088010111402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/1/3080088A111402"
+    },
+    {
+     "delivery_id": "3080088010206904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080088/A/2/3080088A206904"
+    },
+    {
+     "delivery_id": "3080081010107602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A107602"
+    },
+    {
+     "delivery_id": "3080081010202801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/2/3080081A202801"
+    }
+   ],
+   "clip_scope_off_spin": "Test:off_spin",
+   "scoring_clips_left_orthodox": [
+    {
+     "delivery_id": "5460500010104502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A104502"
+    },
+    {
+     "delivery_id": "5460499010103703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103703"
+    },
+    {
+     "delivery_id": "5460189010103104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103104"
+    },
+    {
+     "delivery_id": "5460264010105804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/1/5460264A105804"
+    },
+    {
+     "delivery_id": "5460264010203406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/2/5460264A203406"
+    },
+    {
+     "delivery_id": "4353736010110004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/1/4353736A110004"
+    },
+    {
+     "delivery_id": "4353736010110403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/1/4353736A110403"
+    },
+    {
+     "delivery_id": "4353735010116204",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A116204"
+    },
+    {
+     "delivery_id": "4355902010112902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355902/A/1/4355902A112902"
+    },
+    {
+     "delivery_id": "4355915010115002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/Multi%20Day/4355915/A/1/4355915A115002"
+    },
+    {
+     "delivery_id": "4355937020107706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B107706"
+    },
+    {
+     "delivery_id": "4356183010107505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A107505"
+    },
+    {
+     "delivery_id": "4356368010203002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356368/A/2/4356368A203002"
+    },
+    {
+     "delivery_id": "3080081010107305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017/Men/Multi%20Day/3080081/A/1/3080081A107305"
+    }
+   ],
+   "dismissal_clips_left_orthodox": [
+    {
+     "delivery_id": "5461773010207004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A207004"
+    },
+    {
+     "delivery_id": "5460859020108003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B108003"
+    },
+    {
+     "delivery_id": "5460859020204406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/2/5460859B204406"
+    },
+    {
+     "delivery_id": "5460750010104902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A104902"
+    },
+    {
+     "delivery_id": "5460500010104602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A104602"
+    },
+    {
+     "delivery_id": "5460500010203604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/2/5460500A203604"
+    },
+    {
+     "delivery_id": "5460499010104101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A104101"
+    },
+    {
+     "delivery_id": "5460263010209706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/2/5460263A209706"
+    },
+    {
+     "delivery_id": "5181272010211402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/A/2/5181272A211402"
+    },
+    {
+     "delivery_id": "4355902010206802",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4355902/A/2/4355902A206802"
+    },
+    {
+     "delivery_id": "4355937020107905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B107905"
+    },
+    {
+     "delivery_id": "4356220010206005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356220/A/2/4356220A206005"
+    },
+    {
+     "delivery_id": "4356368010203003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356368/A/2/4356368A203003"
+    },
+    {
+     "delivery_id": "4356367010112102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356367/A/1/4356367A112102"
+    }
+   ],
+   "clip_scope_left_orthodox": "Test:left_orthodox",
+   "scoring_clips_leg_spin": [
+    {
+     "delivery_id": "4355937020106705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B106705"
+    },
+    {
+     "delivery_id": "4355937020106706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B106706"
+    },
+    {
+     "delivery_id": "4355937020106906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2020/Men/Multi%20Day/4355937/B/1/4355937B106906"
+    },
+    {
+     "delivery_id": "4355985010106606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/1/4355985A106606"
+    },
+    {
+     "delivery_id": "4356183010107805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2018/Men/Multi%20Day/4356183/A/1/4356183A107805"
+    }
+   ],
+   "dismissal_clips_leg_spin": [
+    {
+     "delivery_id": "5461363010113401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A113401"
+    },
+    {
+     "delivery_id": "5460766010109705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109705"
+    },
+    {
+     "delivery_id": "4355985010205803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019/Men/Multi%20Day/4355985/A/2/4355985A205803"
+    }
+   ],
+   "clip_scope_leg_spin": "Test:leg_spin",
+   "scoring_clips_left_unorthodox": [],
+   "dismissal_clips_left_unorthodox": [
+    {
+     "delivery_id": "5181272010103506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/A/1/5181272A103506"
+    }
+   ],
+   "clip_scope_left_unorthodox": "Test:left_unorthodox",
+   "scoring_clips": [
+    {
+     "delivery_id": "5461960020104601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104601"
+    },
+    {
+     "delivery_id": "5461960020104603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104603"
+    },
+    {
+     "delivery_id": "5461960020204003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204003"
+    },
+    {
+     "delivery_id": "5461785010104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A104605"
+    },
+    {
+     "delivery_id": "5461785010105506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105506"
+    },
+    {
+     "delivery_id": "5461785010208603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A208603"
+    },
+    {
+     "delivery_id": "5461773010110601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110601"
+    },
+    {
+     "delivery_id": "5461773010110602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110602"
+    },
+    {
+     "delivery_id": "5460859020107003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107003"
+    },
+    {
+     "delivery_id": "5460859020107203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107203"
+    },
+    {
+     "delivery_id": "5460859020107602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107602"
+    },
+    {
+     "delivery_id": "5460859020107804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107804"
+    },
+    {
+     "delivery_id": "5460859020107805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B107805"
+    },
+    {
+     "delivery_id": "5460852020114902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114902"
+    },
+    {
+     "delivery_id": "5460766010108604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A108604"
+    },
+    {
+     "delivery_id": "5460766010109002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109002"
+    },
+    {
+     "delivery_id": "5460766010109604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109604"
+    },
+    {
+     "delivery_id": "5460532020106302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B106302"
+    },
+    {
+     "delivery_id": "5460531020107405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B107405"
+    },
+    {
+     "delivery_id": "5460531020108401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108401"
+    },
+    {
+     "delivery_id": "5460531020108404",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108404"
+    },
+    {
+     "delivery_id": "5460500010104502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A104502"
+    },
+    {
+     "delivery_id": "5460499010103201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103201"
+    },
+    {
+     "delivery_id": "5460499010103703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A103703"
+    },
+    {
+     "delivery_id": "5460499010208901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A208901"
+    },
+    {
+     "delivery_id": "5460482020107105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B107105"
+    },
+    {
+     "delivery_id": "5460190010103703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A103703"
+    },
+    {
+     "delivery_id": "5460190010206205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A206205"
+    },
+    {
+     "delivery_id": "5460190010206405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A206405"
+    },
+    {
+     "delivery_id": "5460189010101202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101202"
+    },
+    {
+     "delivery_id": "5460189010101506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101506"
+    },
+    {
+     "delivery_id": "5460189010101906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A101906"
+    },
+    {
+     "delivery_id": "5460189010103104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103104"
+    },
+    {
+     "delivery_id": "5460189010103506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103506"
+    },
+    {
+     "delivery_id": "5460189010103806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A103806"
+    },
+    {
+     "delivery_id": "5460189010201306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/2/5460189A201306"
+    },
+    {
+     "delivery_id": "5460264010105804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/1/5460264A105804"
+    },
+    {
+     "delivery_id": "5460264010203406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/2/5460264A203406"
+    },
+    {
+     "delivery_id": "5460263010108302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/1/5460263A108302"
+    },
+    {
+     "delivery_id": "5181273010107305",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181273/A/1/5181273A107305"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5461960020104605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/1/5461960B104605"
+    },
+    {
+     "delivery_id": "5461960020204005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461960/B/2/5461960B204005"
+    },
+    {
+     "delivery_id": "5461785010105801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/1/5461785A105801"
+    },
+    {
+     "delivery_id": "5461785010209301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461785/A/2/5461785A209301"
+    },
+    {
+     "delivery_id": "5461773010110705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/1/5461773A110705"
+    },
+    {
+     "delivery_id": "5461773010207004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026/Men/Multi%20Day/5461773/A/2/5461773A207004"
+    },
+    {
+     "delivery_id": "5461363010113401",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5461363/A/1/5461363A113401"
+    },
+    {
+     "delivery_id": "5460859020108003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/1/5460859B108003"
+    },
+    {
+     "delivery_id": "5460859020204406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460859/B/2/5460859B204406"
+    },
+    {
+     "delivery_id": "5460852020114904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460852/B/1/5460852B114904"
+    },
+    {
+     "delivery_id": "5460766010109705",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460766/A/1/5460766A109705"
+    },
+    {
+     "delivery_id": "5460750010104902",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/1/5460750A104902"
+    },
+    {
+     "delivery_id": "5460750010206303",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460750/A/2/5460750A206303"
+    },
+    {
+     "delivery_id": "5460532020106403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/1/5460532B106403"
+    },
+    {
+     "delivery_id": "5460532020205003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460532/B/2/5460532B205003"
+    },
+    {
+     "delivery_id": "5460531020108905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/1/5460531B108905"
+    },
+    {
+     "delivery_id": "5460531020203004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460531/B/2/5460531B203004"
+    },
+    {
+     "delivery_id": "5460500010104602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/1/5460500A104602"
+    },
+    {
+     "delivery_id": "5460500010203604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460500/A/2/5460500A203604"
+    },
+    {
+     "delivery_id": "5460499010104101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/1/5460499A104101"
+    },
+    {
+     "delivery_id": "5460499010208903",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/A/2/5460499A208903"
+    },
+    {
+     "delivery_id": "5460482020107201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/1/5460482B107201"
+    },
+    {
+     "delivery_id": "5460482020204104",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460482/B/2/5460482B204104"
+    },
+    {
+     "delivery_id": "5460190010103704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/1/5460190A103704"
+    },
+    {
+     "delivery_id": "5460190010207205",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460190/A/2/5460190A207205"
+    },
+    {
+     "delivery_id": "5460189010104002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/1/5460189A104002"
+    },
+    {
+     "delivery_id": "5460189010201601",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460189/A/2/5460189A201601"
+    },
+    {
+     "delivery_id": "5460264010106302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460264/A/1/5460264A106302"
+    },
+    {
+     "delivery_id": "5460263010209706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5460263/A/2/5460263A209706"
+    },
+    {
+     "delivery_id": "5181771010108403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181771/A/1/5181771A108403"
+    },
+    {
+     "delivery_id": "5181487010107202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/Multi%20Day/5181487/A/1/5181487A107202"
+    },
+    {
+     "delivery_id": "5181273010206801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181273/A/2/5181273A206801"
+    },
+    {
+     "delivery_id": "5181272010103506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/A/1/5181272A103506"
+    },
+    {
+     "delivery_id": "5181272010211402",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/5181272/A/2/5181272A211402"
+    },
+    {
+     "delivery_id": "4353736010110605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/1/4353736A110605"
+    },
+    {
+     "delivery_id": "4353736010205602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353736/A/2/4353736A205602"
+    },
+    {
+     "delivery_id": "4353735010117002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022/Men/Multi%20Day/4353735/A/1/4353735A117002"
+    },
+    {
+     "delivery_id": "4353148020107301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353148/B/1/4353148B107301"
+    },
+    {
+     "delivery_id": "4353148020202403",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/Multi%20Day/4353148/B/2/4353148B202403"
+    },
+    {
+     "delivery_id": "4353175010102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021/Men/Multi%20Day/4353175/A/1/4353175A102806"
+    }
+   ],
+   "role": "Lower order"
   }
  }
 }

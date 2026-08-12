@@ -168,6 +168,12 @@
        "hand": "rhb",
        "tier": "squad",
        "name": "Litton Das"
+      },
+      {
+       "id": "2700039",
+       "hand": "lhb",
+       "tier": "squad",
+       "name": "Taijul Islam"
       }
      ]
     },
@@ -236,6 +242,12 @@
        "hand": "rhb",
        "tier": "squad",
        "name": "Litton Das"
+      },
+      {
+       "id": "2700039",
+       "hand": "lhb",
+       "tier": "squad",
+       "name": "Taijul Islam"
       }
      ]
     }

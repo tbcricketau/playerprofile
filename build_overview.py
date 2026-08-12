@@ -149,11 +149,21 @@ def _threat(P):
     }
 
 
-def build(opp, group):
+def build(opp, group, only=None):
+    """`only` = batter ids to (re)build, merging into the existing overview and leaving every other
+    row as it was. Adding one player to a squad shouldn't re-profile the whole opposition."""
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
     batters = about.get("batters", {})
     label = (MACRO_GROUPS.get(group) or BOWLER_GROUPS.get(group) or (None, group))[1]
     rows = []
+    kept = []
+    if only:
+        prev = os.path.join(HERE, "data", f"overview_{group}_{opp}.json")
+        kept = [r for r in json.load(open(prev, encoding="utf-8")).get("rows", [])
+                if r.get("bid") not in only]
+        batters = {b: m for b, m in batters.items() if b in only}
+        print(f"merge mode: rebuilding {', '.join(m.get('name', b) for b, m in batters.items())} "
+              f"— keeping {len(kept)} existing row(s)")
     for bid, meta in sorted(batters.items(), key=lambda kv: -(kv[1].get("order") or 0)):
         name = (meta.get("name") or bid).strip()
         # Retry: the warehouse connection drops intermittently, and a failed build must NOT be
@@ -299,11 +309,14 @@ def build(opp, group):
     # profile, and writing that over a previously-good dataset turns a transient outage into
     # persistent wrong data — which is how a good left_orthodox set was lost on 2026-08-04.
     n_err = sum(1 for r in rows if r.get("error"))
-    if n_err and n_err >= max(2, len(rows) // 3):
+    if n_err and (only or n_err >= max(2, len(rows) // 3)):
+        # in merge mode ANY failure aborts — one player is the whole run, so a failure is total
         raise SystemExit(
             f"ABORTING: {n_err}/{len(rows)} profile builds failed — almost certainly the warehouse "
             f"dropped, not a real absence of data. overview_{group}_{opp}.json left as it was; "
             f"re-run when the connection is back.")
+    if only:
+        rows = kept + rows          # merge; build_player_site sorts by batting order at render
 
     # structured rows so the packs can render the same content inline (with headshots) rather than
     # linking out to this page
@@ -322,8 +335,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--opp", default="bangladesh")
     ap.add_argument("--group", default="pace", help="pace · spin · left_pace · right_pace · off_spin …")
+    ap.add_argument("--only", default="", help="comma-separated batter ids — rebuild just these "
+                                               "and merge, keeping every other row")
     a = ap.parse_args()
-    build(a.opp, a.group)
+    build(a.opp, a.group, only=[x.strip() for x in a.only.split(",") if x.strip()] or None)
 
 
 if __name__ == "__main__":
