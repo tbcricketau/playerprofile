@@ -163,10 +163,17 @@
   "name": "Matt Renshaw",
   "role": "Batter",
   "packs": [
-   "batting"
+   "batting",
+   "bowling"
   ],
   "prefs": "base",
-  "tier": "squad"
+  "tier": "squad",
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "off_spin"
+  }
  },
  "2480067": {
   "name": "Brendan Doggett",

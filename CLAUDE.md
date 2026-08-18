@@ -242,6 +242,60 @@ aborts with that instruction if the id isn't there. **Adding a batter adds them 
 pack**, not just one type's — the roster is shared, so build the overview row for each group you
 care about or that pack falls back to the macro plan.
 
+## Adding one of OUR squad players — hand-edit the two configs, never `build_squad.py`
+
+`build_squad.py` resolves a whole squad from names and **rewrites every player's entry, preserving
+only `prefs`**. Run it to add one name and it strips `tier`, `bowl_types`, `bowl_groups`,
+`new_ball_footage`, `similar_bowler` and `release_detail` from everyone else in the squad. To add
+one player, edit the two files by hand:
+
+- **`squads.json`** — the per-series roster. Append the id to the series' `players` list.
+- **`players.json`** — the persistent registry, keyed by id and shared across series. A player can
+  already be here from another squad (Renshaw was, from the CA XI work) and only need the roster line.
+
+Then re-run the pipeline below from `publish_site.py`. No warehouse rebuild is needed — nothing about
+the opposition changed.
+
+### The field that fails silently: `bowl_groups`
+
+`_our_bowl_groups()` types each of our bowlers from the **matchup store's `they_bat` rows**. A
+part-time bowler has no sim profile, so they are not in those rows and the store cannot type them.
+Without `bowl_groups` in `players.json` their pack still builds — it just links the **combined
+overview** batter reports and the macro pace/spin plans instead of their own type's. The page looks
+complete while serving plans built mostly from other bowling types, which is the same pooling defect
+the reel-scoping rule exists to prevent.
+
+So for any of our bowlers the store can't type, name the group explicitly:
+
+```json
+"2480059": {
+  "name": "Matt Renshaw", "role": "Batter",
+  "packs": ["batting", "bowling"],
+  "bowl_types": ["spin"],
+  "bowl_groups": {"spin": "off_spin"}
+}
+```
+
+Verify it on the **built page**, not the config — the link targets are the tell:
+
+```bash
+grep -o "_batting_test_[a-z]*_vs_[a-z_]*\.pmode" player_site/matt-renshaw-bowling-spin.html | sort | uniq -c
+```
+
+It should match a known-good pack of the same type (Renshaw's off-spin links are identical to Lyon's).
+A page with **no** `_vs_` links at all is the silent fallback.
+
+Three smaller things worth knowing:
+
+- **`bowl_types` creates the bowling page, not `role` or `packs`.** `build()` reads only `bowl_types`
+  to decide which pages to write. `role` controls the roster grouping heading, `packs` is effectively
+  documentation. A specialist bat who bowls a bit can stay `role: "Batter"` and still get both packs.
+- **The batter's hand comes from the matchup store's `we_bat` rows**, so a player missing there
+  defaults to `rhb` and their batting pack links the wrong hand's bowler reports. Check they're
+  present before building — the hand audit will catch it at the publish gate either way.
+- **Their attack card and h2h footage come from the matchup store too**, not from `squads.json`, so
+  both are usually already built. `build_h2h.py` reads `we_bat` / `they_bat`, never the roster.
+
 ## The pack pipeline, in order — and the step that isn't obvious
 
 ```
