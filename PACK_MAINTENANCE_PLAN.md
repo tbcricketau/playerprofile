@@ -83,6 +83,52 @@ The cap is the most attractive: it needs no state, it fails safe, and it makes "
 twenty balls of *evidence* rather than two overs of one innings. The exclusion rule is the most
 faithful to what a coach wants. They compose.
 
+## Front 3 — "rebuild only the new player" is not currently possible
+
+Adding Shoriful Islam on 2026-08-21 took **eight** steps. **Two** had a clean per-player path, and
+one of those was written that morning:
+
+| Step | Scoped? | Wholesale cost |
+|---|---|---|
+| `build_reports --ids` | ✅ | — |
+| `build_opponent_about --only-bowlers` | ✅ *(added 2026-08-21)* | — |
+| `export_matchup_store` | ❌ `--opp` only | re-simulates every pairing (217 for a 98-pairing squad) |
+| `build_h2h` | ❌ `--opp` only | re-picks every reel — **this is the reel collapse** |
+| `render_matchups` | ❌ `--opp` only | inherent: it is one grid |
+| `publish_site` | ❌ | re-bakes all 76 reports |
+| `inject_reports` | ❌ | re-bakes all 93 |
+| `build_player_site --only` | ⚠️ **trap** | clears `player_site/` first → a bundle of *only* those players |
+
+### The distinction to build around: re-render vs re-derive
+
+- **Re-render** (`publish_site`, `inject_reports`, `build_player_site`) — fixed inputs, same output.
+  Running these wholesale costs wall-clock and mints a fresh SAS. Harmless, and arguably *should*
+  stay wholesale so the bundle is always complete and internally consistent.
+- **Re-derive** (`export_matchup_store`, `build_h2h`) — goes back to the warehouse and samples the
+  world **as it is now**. Wholesale means silent drift: fresh Monte Carlo on every pair, and reels
+  re-picked to whatever was played most recently.
+
+**So the rule is not "rebuild less" — it is: never re-derive what you are not changing.** Only two
+steps re-derive, and neither can currently be scoped. That is the whole gap.
+
+### What to build
+
+1. **`build_h2h.py --only <ids>`** — merge semantics identical to `--only-batters` / `--only-bowlers`:
+   load the existing file, rebuild only the named players' pairings, abort the write on any failure.
+   This alone removes the need for the hand-freeze recipe in `CLAUDE.md`.
+2. **`export_matchup_store.py --only <ids>`** — pairs are independent, so keep the existing rows and
+   simulate only the new player's row/column. Also fixes the wasted 119 pairings (Front 1).
+3. **`build_player_site.py --only`** — either make it merge into the existing bundle instead of
+   clearing, or rename it `--preview` and have `publish_packs` refuse a bundle whose roster is
+   smaller than `squads.json`. It currently looks like the safe flag and is the dangerous one.
+4. **One entry point** — `add_player.py --opp bangladesh --bowler 3630141` (or `--batter`) running
+   the right steps, in order, with the right flags, and printing what it deliberately did *not*
+   touch. Today that sequence lived in a chat transcript and two scratchpad scripts.
+
+Worth noting for (4): the verification steps matter as much as the build steps. Today's run checked
+that the merge was surgical (every other row byte-identical) and that no reel outside the new player
+referenced the current series' dates. Both were one-off scripts. They belong in the entry point.
+
 ## Why this is worth doing before the next series
 
 The failure mode is silent in every case. A pack whose reels have collapsed looks identical to one
