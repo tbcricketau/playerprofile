@@ -14,7 +14,7 @@ report builders (`report.py`, `t20_report.py`, `odi_report.py`, `batting_report.
 `publish_site.py` generate the hosted site (github.com/tbcricketau/scouting-reports,
 refreshed by the "Scouting Reports Refresh" scheduled task via `refresh_site.bat`).
 Other fronts have their own plan docs: `WEBAPP_PLAN.md`, `FIELD_PLAN.md`, `VIDEO_PLAN.md`,
-`BATTING_PLAN.md`, `CHANGELOG.md`. Before a report leans on a player's FC/ODI/T20 numbers to
+`BATTING_PLAN.md`, `PACK_MAINTENANCE_PLAN.md`, `CHANGELOG.md`. Before a report leans on a player's FC/ODI/T20 numbers to
 say anything about Tests, read **`CROSSFORMAT_TRANSLATION.md`** — what translates (tempo/rates)
 and what must not be projected (averages, wicket rates), with the measured environment ratios.
 
@@ -221,6 +221,43 @@ Shanto's "off spin" record was 28% Rathnayake, and dropping those balls moved hi
 and changed Mehidy's plan from *good length* to *full*. Add an id when footage disagrees with the
 coded type, and say who verified it.
 
+## Mid-series, a h2h refresh silently re-points every reel at the match just played
+
+`build_h2h.py` takes the newest `MAX_BALLS` (20) of the best available format per pairing. The
+moment a match is played it becomes the newest footage *and* usually upgrades the chosen format, so
+a refresh doesn't add to a reel — it **replaces** it.
+
+Measured on 2026-08-21, after the first BAN Test (13-08) and the CA XI tour match (06-08):
+
+| | reels | from a single day | top dates |
+|---|---|---|---|
+| before | 26 | 58% | 2017-08-27, 2026-06-11, 2017-09-04 |
+| after | 95 | **94%** | **2026-08-13 (592 balls)**, 2026-08-06 (346) |
+
+Smith vs Taijul went from 20 balls across the 2017 tour to 20 balls from one day. Every top pairing
+read 20/20 from 13-08. The pack looks identical — same button, same "20 balls" — while the content
+has been quietly swapped for the game everyone just watched, which is the one thing a coach does
+*not* need footage of. The format upgrades (ODI 20 → Test 20) make it read as an improvement.
+
+**So during a series, freeze it.** Snapshot `data/h2h_{opp}.json` before running `build_h2h.py`,
+then restore that file and merge in **only** the new player's rows:
+
+```python
+base = {(r["striker_id"], r["bowler_id"]): r for r in old[section]}   # the frozen reels
+for r in new[section]:                                                # carry ONE player across
+    if str(r[id_field]) == NEW_ID and (r["striker_id"], r["bowler_id"]) not in base:
+        base[...] = r
+```
+
+Then verify no reel outside that player references the current series' dates. There is no flag for
+this yet — see `PACK_MAINTENANCE_PLAN.md`, which argues the real fix (a builder-respected notion of
+*frozen*, and a recency policy so a reel keeps its historical spread instead of collapsing).
+
+Freezing has a second payoff: the reports are rendered against whatever h2h existed at render time,
+so a refresh that isn't followed by a re-render leaves the reports' "Real meetings with this squad"
+line disagreeing with the pack that links it — Hasan Mahmud's report said *7 balls across 4 batters*
+while his pack would have said *224 across 19*. Freeze and they agree again.
+
 ## Adding one opposition player — merge, don't rebuild
 
 A full `build_opponent_about.py` run costs ~40 minutes and puts every other player's verified data
@@ -228,12 +265,16 @@ back through a build that stalls on a VPN drop. Both builders take a merge flag:
 
 ```powershell
 .\venv\Scripts\python.exe build_opponent_about.py --opp bangladesh --only-batters 2700039
+.\venv\Scripts\python.exe build_opponent_about.py --opp bangladesh --only-bowlers 3630141
 .\venv\Scripts\python.exe build_overview.py --opp bangladesh --group right_pace --only 2700039
 ```
 
 Each rebuilds only the named players and merges into the existing file. In merge mode **any** failure
-aborts the write — with one player, a failure is the whole run. Check the merge was surgical (every
-other row byte-identical) rather than assuming it.
+aborts the write — with one player, a failure is the whole run. (That abort was documented here
+before it existed: until 2026-08-21 the loops caught the exception, printed it and wrote anyway, so a
+dropped connection reported success having merged nothing. It now raises before the write.) Check the
+merge was surgical (every other row byte-identical) rather than assuming it — `--only-bowlers` was
+verified that way on Shoriful Islam: one bowler added, zero changed, zero removed.
 
 A player also has to exist in the **matchup store** first: the roster comes from its `they_bat` /
 `we_bat` rows, so a squad member pinned only as a bowler has no batter card. Add the id to
@@ -314,9 +355,14 @@ isn't part of the pipeline.** The scheduled "Scouting Reports Refresh" task runs
 wipes that folder every few days — re-run `inject_reports.py` before assembling.
 
 `build_player_site.py` **clears `player_site/` before writing**, so an interrupted build leaves an
-empty directory. Never publish a partial build; re-run it. (A wedged run is easy to spot — seconds of
-CPU over tens of minutes and almost no files written. It has hung with the warehouse perfectly
-reachable, so a stall is not proof of a VPN drop.)
+empty directory. Never publish a partial build; re-run it.
+
+**A stalled file count is NOT the wedged signal — it's the normal shape of this build.** It writes
+the photos and the roster index in the first minute (~154 files), then resolves clips for tens of
+minutes writing *nothing*, then emits the ~34 player pages at the end. Measured 2026-08-21: flat at
+154 files from 09:17 to 09:35, then complete. Judge it by **CPU accumulating** instead — that run
+climbed 20s → 29s → 39s while the file count sat still. A wedged run is CPU flat as well, over tens
+of minutes. It has hung with the warehouse perfectly reachable, so a stall is not proof of a VPN drop.
 
 ## CA XI packs — ARCHIVED 2026-08-10
 

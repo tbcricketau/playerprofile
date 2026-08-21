@@ -403,6 +403,10 @@ def main():
                     help="comma-separated batter ids — build just these and MERGE into the existing "
                          "file, leaving every other player (and the bowlers' per-hand reels) alone. "
                          "Adding one player shouldn't cost a 40-minute full rebuild.")
+    ap.add_argument("--only-bowlers", default="",
+                    help="comma-separated bowler ids — the same merge for an opposition bowler, "
+                         "leaving every batter and every other bowler alone. Combinable with "
+                         "--only-batters.")
     ap.add_argument("--clips-only", action="store_true",
                     help="only add stock/wicket example clips to the existing json (fast, no re-profile)")
     args = ap.parse_args()
@@ -455,20 +459,31 @@ def main():
     STK = {r["id"]: r["description"] for r in _q(conn, cur, f"SELECT id,description FROM [{DATA_SCHEMA}].[Lookups] WHERE lookup_type_id=24")}
     SQ = {r["id"]: r["description"] for r in _q(conn, cur, f"SELECT id,description FROM [{DATA_SCHEMA}].[Lookups] WHERE lookup_type_id=2811")}
 
-    only = [x.strip() for x in args.only_batters.split(",") if x.strip()]
-    if only:
+    only_bat = [x.strip() for x in args.only_batters.split(",") if x.strip()]
+    only_bowl = [x.strip() for x in args.only_bowlers.split(",") if x.strip()]
+    merging = bool(only_bat or only_bowl)
+    if merging:
         # merge mode: start from what's on disk so nothing else is touched
         out = json.load(open(dst, encoding="utf-8"))
-        missing = [b for b in only if b not in batters]
-        if missing:
+        missing_bat = [b for b in only_bat if b not in batters]
+        if missing_bat:
             raise SystemExit(
-                f"ABORTING: {missing} not in the matchup store's they_bat rows for {args.opp}. "
+                f"ABORTING: {missing_bat} not in the matchup store's they_bat rows for {args.opp}. "
                 f"Add the id to matchupmodel/data/opp_squad_{args.opp}.json 'batters' and re-run "
                 f"export_matchup_store.py, otherwise there's no name/hand to build from.")
-        bowlers, batters = {}, {b: batters[b] for b in only}
-        print(f"merge mode: rebuilding only {', '.join(nm for nm, _ in batters.values())}")
+        missing_bowl = [b for b in only_bowl if b not in bowlers]
+        if missing_bowl:
+            raise SystemExit(
+                f"ABORTING: {missing_bowl} not in the matchup store's we_bat rows for {args.opp}. "
+                f"Add the id to matchupmodel/data/opp_squad_{args.opp}.json 'bowlers' and re-run "
+                f"export_matchup_store.py, otherwise there's no name/type to build from.")
+        bowlers = {b: bowlers[b] for b in only_bowl}
+        batters = {b: batters[b] for b in only_bat}
+        print("merge mode: rebuilding only "
+              + ", ".join(nm for nm, _ in list(bowlers.values()) + list(batters.values())))
     else:
         out = {"opp": args.opp, "bowlers": {}, "batters": {}}
+    n_err = 0
     for bid, (nm, ty) in bowlers.items():
         try:
             if _test_balls(conn, cur, bid, "bowl") >= TEST_FLOOR:
@@ -490,6 +505,7 @@ def main():
                 tag = " [all-formats fallback]"
             print(f"  bowler {nm}: {len(out['bowlers'][bid]['facts'])} facts{tag}")
         except Exception as e:
+            n_err += 1
             print(f"  ! bowler {nm}: {type(e).__name__}: {e}")
     for bid, (nm, hand) in batters.items():
         try:
@@ -521,8 +537,18 @@ def main():
             out["batters"][bid]["role"] = batter_role(conn, cur, bid)   # opener/top/middle/lower
             print(f"  batter {nm}: {len(out['batters'][bid]['facts'])} facts{tag}")
         except Exception as e:
+            n_err += 1
             print(f"  ! batter {nm}: {type(e).__name__}: {e}")
     conn.close()
+
+    # In merge mode the file on disk already holds everyone else's verified data, so a partial
+    # write is worse than no write — a dropped connection would otherwise report success having
+    # merged nothing, and with one player a failure is the whole run.
+    if merging and n_err:
+        raise SystemExit(
+            f"ABORTING: {n_err} player rebuild(s) failed — almost certainly the warehouse "
+            f"connection, not missing data. opponent_about_{args.opp}.json left untouched; "
+            f"re-run when the connection is back.")
 
     dst = os.path.join(HERE, "data", f"opponent_about_{args.opp}.json")
     json.dump(out, open(dst, "w", encoding="utf-8"), indent=1, ensure_ascii=False)

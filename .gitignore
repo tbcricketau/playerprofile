@@ -53,3 +53,7 @@ caxi_player_pack_site/
 test_site/
 .scouting_pw
 site_gated/
+
+# Local snapshots taken before a merge/refresh overwrites a data file. Keep them on disk
+# (they are the undo for a build that can't be un-run) but never commit them.
+*.bak-*

@@ -52,6 +52,12 @@
        "hand": "lhb",
        "tier": "squad",
        "name": "Musfik Hasan"
+      },
+      {
+       "id": "3630141",
+       "hand": "lhb",
+       "tier": "squad",
+       "name": "Shoriful Islam"
       }
      ]
     },
@@ -100,6 +106,12 @@
        "hand": "rhb",
        "tier": "squad",
        "name": "Musfik Hasan"
+      },
+      {
+       "id": "3630141",
+       "hand": "rhb",
+       "tier": "squad",
+       "name": "Shoriful Islam"
       }
      ]
     },
