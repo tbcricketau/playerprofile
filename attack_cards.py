@@ -409,9 +409,28 @@ def card_for(pid, name=None, person="them"):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--ids", nargs="*", help="restrict to these player ids (testing)")
+    ap.add_argument("--squad", nargs="*", help="build for these squad slugs (default: every LIVE "
+                    "squad in squads.json)")
+    ap.add_argument("--include-archived", action="store_true",
+                    help="also build for archived squads (deliberate override)")
     args = ap.parse_args()
-    players = json.load(open(os.path.join(HERE, "players.json"), encoding="utf-8"))
-    ids = args.ids or list(players)
+    import squads as sq
+    players = sq.registry()
+    # The roster, not the registry: players.json holds every player ever named in any squad, so
+    # `list(players)` builds warehouse-queried cards for finished series as well as this one.
+    if args.ids:
+        ids = args.ids
+    else:
+        slugs = args.squad or sq.slugs(include_archived=args.include_archived)
+        ids = []
+        for s in slugs:
+            for pid in sq.roster(s, allow_archived=args.include_archived or bool(args.squad)):
+                if pid not in ids:
+                    ids.append(pid)
+        if not ids:
+            raise SystemExit("no live squad in squads.json — name the next series' roster, or pass "
+                             "--squad / --include-archived / --ids.")
+        print(f"attack cards for {len(ids)} player(s) across {len(slugs)} squad(s): {', '.join(slugs)}")
     conn, cur = set_conn_cursor()
     LEN = _lookup(conn, cur, 2819)
     LIN = _lookup(conn, cur, 2823)

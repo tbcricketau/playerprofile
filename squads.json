@@ -1,8 +1,10 @@
 {
  "bangladesh-home-2026": {
   "name": "Bangladesh Home Test Series 2026",
+  "team": "Australia",
   "opposition": "Australia v Bangladesh · 2 Tests · in Australia",
   "format": "Test",
+  "archived": "2026-08-31",
   "players": [
    "3080014",
    "2580027",
@@ -18,6 +20,30 @@
    "2710059",
    "1940169",
    "2480059"
+  ]
+ },
+ "bangladesh-caxi-2026": {
+  "name": "CA XI v Bangladesh",
+  "team": "CA XI",
+  "opponent": "Bangladesh",
+  "opposition": "CA XI v Bangladesh",
+  "format": "Test",
+  "archived": "2026-08-10",
+  "players": [
+   "3550357",
+   "2680008",
+   "1070606",
+   "1070327",
+   "3550677",
+   "3550381",
+   "4310045",
+   "3750021",
+   "4290003",
+   "3550742",
+   "3110019",
+   "3550562",
+   "3150058",
+   "2840030"
   ]
  }
 }

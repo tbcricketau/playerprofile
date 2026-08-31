@@ -26,7 +26,18 @@ BUNDLES = {
     "aus": {"assemble": "assemble_packs.py", "arg": "aus",
             "bundle": "player_pack_site",
             "repo": "https://github.com/tbcricketau/player-packs.git",
-            "opp": "bangladesh", "slug": "bangladesh-home-2026"},
+            "opp": "bangladesh", "slug": "bangladesh-home-2026",
+            "archived": (
+                "AUS player packs were ARCHIVED 2026-08-31 (Tom) — the Bangladesh home series is "
+                "over. GitHub Pages is disabled on tbcricketau/player-packs; the repo and its "
+                "history are intact and the last published state is tagged archived-2026-08-31.\n"
+                "The COACH-side copy of the series lives on, gated, in the scouting portal under "
+                "archive/bangladesh-home-2026 — frozen by archive_series.py and SAS-re-stamped on "
+                "every refresh, so its vision still plays. This bundle's does not.\n"
+                "To bring the pack site back: re-enable Pages (branch main, root), rebuild from "
+                "source, then publish with --revive. Rebuild rather than re-push the tag — a "
+                "bundle is only as fresh as the SAS baked into it, and this one expired "
+                "2026-08-27.")},
     "caxi": {"assemble": "assemble_packs.py", "arg": "caxi",
              "bundle": "caxi_player_pack_site",
              "repo": "https://github.com/tbcricketau/caxi-player-packs.git",

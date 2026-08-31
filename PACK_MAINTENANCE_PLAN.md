@@ -18,7 +18,28 @@ Adding Shoriful Islam to the Bangladesh packs should have touched Shoriful. It t
 
 None of these were failures. Every builder did exactly what it was written to do.
 
-## Front 1 — separate the teams in `players.json`
+## Front 1 — separate the teams in `players.json` — ✅ DONE 2026-08-31
+
+**Shipped.** `squads.json` now holds every roster keyed by slug, each with a `team` and an optional
+`archived` date; `squads_caxi.json` folded in and is retired. New **`squads.py`** is the one reader
+and the one definition of a squad. Every consumer that iterated the registry now takes a roster —
+`export_matchup_store.py --squad`, `attack_cards.py --squad`, `build_player_site.py --squad`,
+`fetch_photos.py` — and each **refuses** when every squad is archived rather than falling back.
+`build_squad.py` now merges into the registry instead of replacing entries, snapshots first, and
+refuses an archived slug before spending a warehouse round trip. Detail in `CLAUDE.md`.
+
+Measured on the Bangladesh squad, our side of the store: **31 batters / 18 bowlers → 14 / 8**, so up
+to **446 → 200** simulated pairings. Both Bangladesh squads are archived, so the exporter now refuses
+outright until the next roster is named.
+
+Two answers the argument below asked for: **`tier` was read by nothing** (all 31 entries said
+`"squad"`; `_opp_tiers` gets opposition tiers from `series.json`), so it was simply dropped rather
+than moved onto the roster. And an archived squad **stays in `squads.json` marked `archived`**
+(Tom, 2026-08-31) — restorable by deleting one line.
+
+The original argument follows.
+
+---
 
 `players.json` is a flat registry keyed by player id, shared across every series and every squad.
 It carries two kinds of field and only one of them belongs there:

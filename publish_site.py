@@ -247,22 +247,74 @@ def build(out_dir, sas_hours):
         _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx, has_attacks=has_attacks,
                              has_shots=has_sm, overviews=overviews, has_conditions=has_cd)
         series_cards.append((s["slug"], s["name"], s.get("subtitle", ""), s_total))
-    _write_top_index(out_dir, cfg, series_cards)
+    archived = _stage_archive(out_dir, cfg, hk_sas, sas_hours)
+    _write_top_index(out_dir, cfg, series_cards, archived)
     open(os.path.join(out_dir, ".nojekyll"), "w").close()
     print(f"\nBuilt {sum(c[3] for c in series_cards)} report(s) across "
-          f"{len(series_cards)} series -> {out_dir}")
+          f"{len(series_cards)} series -> {out_dir}"
+          + (f" (+{len(archived)} archived series staged)" if archived else ""))
+
+
+# ── Archived series ──────────────────────────────────────────────────────────────
+def _stage_archive(out_dir, cfg, hk_sas, sas_hours=DEFAULT_SAS_HOURS):
+    """Copy the frozen series in `archive/` into the portal and re-stamp their clip SAS.
+
+    Archived pages are never re-baked — they are the series exactly as it was published, which is
+    the point of freezing it. The one thing that must change is the SAS on the blob URLs: it lasts
+    ~6.5 days, so a coach opening a season-old archive would otherwise find every play button dead.
+    See archive_series.py for the freeze/restore side."""
+    import archive_series as arch
+    ms = arch.manifests()
+    if not ms:
+        return []
+    dest_root = os.path.join(out_dir, "archive")
+    os.makedirs(dest_root, exist_ok=True)
+    for m in ms:
+        shutil.copytree(os.path.join(arch.ARCHIVE, m["slug"]), os.path.join(dest_root, m["slug"]),
+                        ignore=shutil.ignore_patterns(".git", arch.MANIFEST))
+    # Ask for the same lifetime the live pages got. A bare get_fairplay_sas() would return the
+    # cached token in practice and a 6-hour one if the cache ever missed, quietly giving the
+    # archive a shorter life than the site it sits in.
+    sas = {"fairplay": get_fairplay_sas(ttl_hours=sas_hours)}
+    if hk_sas:
+        sas["hawkeyeupload"] = hk_sas
+    n_f, n_u = arch.restamp_sas(dest_root, sas)
+    print(f"  [ok] archive: {len(ms)} series staged, SAS re-stamped on {n_u} clip url(s) "
+          f"in {n_f} page(s)")
+    _write_archive_index(dest_root, cfg, ms)
+    return ms
+
+
+def _write_archive_index(dest_root, cfg, ms):
+    def _dmy(d):
+        return f"{d[8:10]}-{d[5:7]}-{d[:4]}" if len(d) == 10 else d
+    items = "\n".join(
+        f'<li><a href="{m["slug"]}/index.html"><b>{html.escape(m.get("name", m["slug"]))}</b>'
+        f'<span class="sub">{html.escape(m.get("subtitle", ""))}</span></a>'
+        f'<span class="n">archived {_dmy(m.get("archived", ""))}</span></li>' for m in ms)
+    body = ('<h1>Archive</h1><p class="lead">Series that are over. The pages and numbers are frozen '
+            'as they were published — only the vision links are kept current.</p>'
+            f'<ul class="cards">{items}</ul>')
+    open(os.path.join(dest_root, "index.html"), "w", encoding="utf-8").write(
+        _page("Archive", body, up=("../index.html", cfg.get("title", "Series"))))
 
 
 # ── Navigation pages (page shell + report card come from site_render) ────────────
 
 
-def _write_top_index(out_dir, cfg, series_cards):
+def _write_top_index(out_dir, cfg, series_cards, archived=()):
     items = "\n".join(
         f'<li><a href="{sl}/index.html"><b>{html.escape(nm)}</b>'
         f'<span class="sub">{html.escape(sub)}</span></a>'
         f'<span class="n">{tot} report{"s" if tot != 1 else ""}</span></li>'
         for sl, nm, sub, tot in series_cards)
-    body = f'<h1>{html.escape(cfg.get("title","Scouting"))}</h1><p class="lead">Select a series.</p><ul class="cards">{items}</ul>'
+    # One card, not a second list of series — an archive that reads as a peer of the current work
+    # is how a coach ends up preparing off a finished series.
+    arch = (f'<li><a href="archive/index.html"><b>Archive</b>'
+            f'<span class="sub">{", ".join(html.escape(m.get("name", m["slug"])) for m in archived)}'
+            f'</span></a><span class="n">{len(archived)} series</span></li>' if archived else "")
+    body = (f'<h1>{html.escape(cfg.get("title","Scouting"))}</h1>'
+            f'<p class="lead">Select a series.</p><ul class="cards">{items}{arch}</ul>')
     open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8").write(_page(cfg.get("title", "Scouting"), body))
 
 
@@ -345,7 +397,12 @@ def _write_group_index(g_dir, cfg, s, g, report_cards):
 def deploy_github(out_dir, repo_url, branch="main", check=True):
     # Gate: broken links have reached the live site twice, and neither was a build failure — the
     # build succeeded and produced a bundle with dead links in it. Validate what we're about to
-    # serve, and refuse to push if it's broken. `check=False` only for a deliberate override.
+    # serve, and refuse to push if it's broken.
+    #
+    # `check=False` has exactly two legitimate callers: a deliberate override, and a caller that
+    # has ALREADY checked the same bytes. deploy_scouting.py is the second — it must check before
+    # staticgate encrypts each page, because an encrypted page has no links left in it and this
+    # gate would pass it unconditionally. Don't "restore" the check there.
     if check:
         from check_site import check as _check_site
         print(f"validating {out_dir} before publish…")

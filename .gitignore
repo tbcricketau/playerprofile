@@ -40,6 +40,11 @@ site/
 player_site/
 photos/*.zip
 
+# ── Frozen series (archive_series.py freeze) ──────────────────────────────
+# The built pages of a finished series, staged into the gated portal by publish_site. Same
+# content as site/ and just as un-committable — playerprofile is the estate's one PUBLIC repo.
+archive/
+
 # ── Run logs (transient render / refresh output) ───────
 *.log
 

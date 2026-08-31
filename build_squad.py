@@ -15,8 +15,10 @@ Usage:
 (names.txt = one "First Last" per line. Series meta is read from series.json when present.)
 """
 import argparse
+import datetime
 import json
 import os
+import shutil
 
 from config import DATA_SCHEMA
 from cricket_core.warehouse import set_conn_cursor, run_query
@@ -120,10 +122,24 @@ def main():
     ap.add_argument("--series", required=True, help="series slug (matches series.json)")
     ap.add_argument("--names", help="text file, one 'First Last' per line")
     ap.add_argument("--dry-run", action="store_true", help="print the resolution, write nothing")
+    ap.add_argument("--team", help="whose squad this is (e.g. Australia, CA XI) — stored on the "
+                    "squad, kept across a re-resolve")
+    ap.add_argument("--force", action="store_true",
+                    help="overwrite a squad marked `archived` (deliberate override)")
     args = ap.parse_args()
 
     if not args.names:
         ap.error("--names is required (a text file of one 'First Last' per line)")
+
+    # Refuse BEFORE resolving — resolution is a warehouse round trip per name, and a run that was
+    # never going to be allowed to write should not pay for it.
+    prior = _load(SQUADS).get(args.series, {})
+    if prior.get("archived") and not args.force:
+        raise SystemExit(
+            f"{args.series} was ARCHIVED {prior['archived']} — that series is over. Writing to it "
+            f"would revive a finished squad under its own slug.\nUse a new --series slug for the "
+            f"new squad, or pass --force to overwrite this one deliberately.")
+
     names = [ln.strip() for ln in open(args.names, encoding="utf-8") if ln.strip()]
     resolved = resolve(names)
 
@@ -142,22 +158,47 @@ def main():
 
     squads = _load(SQUADS)
     players = _load(PLAYERS)
+
+    prior = squads.get(args.series, {})            # re-read after resolution; guarded up top
+
+    # Both files are hand-maintained and gitignored-adjacent: snapshot before overwriting.
+    stamp = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    for p in (SQUADS, PLAYERS):
+        if os.path.exists(p):
+            shutil.copy(p, f"{p}.bak-{stamp}")
+
     meta = _series_meta(args.series)
-    squads[args.series] = {**meta, "players": [r["id"] for r in resolved if r["id"]]}
+    # Carry the squad's own state across a re-resolve — `team` and `archived` are facts about the
+    # squad that no name list can supply, and a wholesale replace silently dropped them.
+    keep = {k: prior[k] for k in ("team", "archived") if k in prior}
+    if args.team:
+        keep["team"] = args.team
+    squads[args.series] = {**meta, **keep, "players": [r["id"] for r in resolved if r["id"]]}
+
+    # MERGE into the registry, never replace it. Only name/role/packs are derivable from a name
+    # list; `bowl_types`, `bowl_groups`, `new_ball_footage`, `similar_bowler`, `release_detail` and
+    # `prefs` are hand-set and were being dropped from every player this script resolved — which is
+    # why CLAUDE.md said to add one player by hand rather than run this.
+    changed = []
     for r in resolved:
         if not r["id"]:
             continue
-        existing = players.get(r["id"], {})
-        players[r["id"]] = {
-            "name": r["name"],
-            "role": r["role"],
-            "packs": r["packs"],
-            "prefs": existing.get("prefs", "base"),   # preserve stored preferences across series
-        }
-    json.dump(squads, open(SQUADS, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-    json.dump(players, open(PLAYERS, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
+        existing = dict(players.get(r["id"], {}))
+        kept = [k for k in existing if k not in ("name", "role", "packs")]
+        existing.update({"name": r["name"], "role": r["role"], "packs": r["packs"]})
+        players[r["id"]] = existing
+        if kept:
+            changed.append(f"{r['name']} (kept {', '.join(sorted(kept))})")
+
+    for path, data in ((SQUADS, squads), (PLAYERS, players)):
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, indent=1, ensure_ascii=False)
+            fh.write("\n")
     print(f"\nwrote {os.path.basename(SQUADS)} ({len(squads[args.series]['players'])} players) "
-          f"+ {os.path.basename(PLAYERS)} ({len(players)} total)")
+          f"+ {os.path.basename(PLAYERS)} ({len(players)} total); "
+          f"previous copies kept as *.bak-{stamp}")
+    for c in changed:
+        print(f"  registry preserved: {c}")
 
 
 if __name__ == "__main__":

@@ -23,12 +23,18 @@ from cricket_core import headshots as hs
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def resolve_squad():
-    """Map every players.json squad member into the store's ca_ids.csv."""
-    players = json.load(open(os.path.join(HERE, "players.json"), encoding="utf-8"))
+def resolve_squad(include_archived=True):
+    """Map our squad players into the store's ca_ids.csv.
+
+    Defaults to EVERY squad including archived ones — unlike the builders, a headshot is a fact
+    about the player, costs one lookup, and is wanted again the moment a name is recalled. The
+    flag exists so a caller can scope it if the registry ever grows large."""
+    import squads as sq
+    players = sq.registry()
+    ids = sq.all_live_ids() if not include_archived else list(players)
     rows = hs.read_map()
     have = {r["player_id"].strip() for r in rows}
-    todo = {pid: rec["name"] for pid, rec in players.items() if pid not in have}
+    todo = {pid: players[pid]["name"] for pid in ids if pid not in have and pid in players}
     if not todo:
         print("store already maps every squad player")
         return

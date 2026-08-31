@@ -147,8 +147,20 @@ actually gets served.
 It warns on orphan pages — usually a leftover carrying a stale breadcrumb. `--deep` HEADs a sample
 of media URLs, which is how you catch an expired Fairplay SAS before players do.
 
-`publish_site.deploy_github()` runs the same check before the coach site goes out, so
-`deploy_scouting.py` is covered too. `check=False` exists only for a deliberate override.
+`publish_site.deploy_github()` runs the same check before the coach site goes out.
+
+**The gated coach site needs its check in a different place, and for a while it had none.**
+`deploy_scouting.py` stages a copy of `site/`, encrypts every page with `staticgate`, then deploys —
+and `staticgate.encrypt_dir` replaces each `.html` with an encrypted shell. So `deploy_github`'s gate
+was walking pages that had no links left in them and passing whatever it was handed: the gated site
+was ungated against broken links from the day it was gated, while this file claimed it was covered.
+Fixed 2026-08-31 — the check now runs on the **staged copy while it is still plaintext**, and
+`deploy_github` is called with `check=False` because the same bytes have already been checked. That
+is not a bypass, and re-adding a check after encryption would only re-confirm that an encrypted page
+has no links. `--no-check` is the deliberate override; `--deep` HEADs a sample of media URLs.
+
+The general shape, now seen three times: **a gate that runs on the wrong artifact reports success
+forever.** Check what is actually served, at the last point it is still readable.
 
 **The failure mode to remember:** changing which report a card links (e.g. adding `bowl_groups`, or
 re-scoping a group) changes the link *targets*, so the reports must be re-injected before assembling.
@@ -283,19 +295,70 @@ aborts with that instruction if the id isn't there. **Adding a batter adds them 
 pack**, not just one type's — the roster is shared, so build the overview row for each group you
 care about or that pack falls back to the macro plan.
 
-## Adding one of OUR squad players — hand-edit the two configs, never `build_squad.py`
+## Two files, and a consumer wants the ROSTER — never the registry
 
-`build_squad.py` resolves a whole squad from names and **rewrites every player's entry, preserving
-only `prefs`**. Run it to add one name and it strips `tier`, `bowl_types`, `bowl_groups`,
-`new_ball_footage`, `similar_bowler` and `release_detail` from everyone else in the squad. To add
-one player, edit the two files by hand:
+This is the distinction the whole squad front turns on, and `squads.py` is the one reader for it.
 
-- **`squads.json`** — the per-series roster. Append the id to the series' `players` list.
-- **`players.json`** — the persistent registry, keyed by id and shared across series. A player can
-  already be here from another squad (Renshaw was, from the CA XI work) and only need the roster line.
+| | what it is | what it answers |
+|---|---|---|
+| **`players.json`** | the persistent **registry**, keyed by player id, shared across every series | what is true of the *player* — name, role, packs, prefs, `bowl_types`, `bowl_groups` |
+| **`squads.json`** | the **rosters**, keyed by slug | who was picked, for which team, for which series, and whether that series is over |
+
+**Iterating `players.json` builds for every player ever named in any squad.** That is how
+`export_matchup_store.py` came to simulate our 31-name registry against the opposition when the Test
+squad was 14 — the excess being a CA XI squad archived eleven days earlier, still costing full Monte
+Carlo on every pair. Use the registry as a **lookup**; take the roster from `squads.py`:
+
+```python
+from squads import roster, live_slugs, resolve
+for slug in live_slugs():                 # archived squads skipped by default
+    for pid, rec in resolve(roster(slug)):
+        ...
+```
+
+`python squads.py` prints every squad, its team, its size and its state.
+
+### Archiving a squad
+
+Set `"archived": "<date>"` on the slug in `squads.json`. The roster **stays in the file** so it can
+be read, restored and audited — un-archiving is deleting one line — but no builder prepares for it:
+
+- `build_player_site.py` skips archived slugs (`--squad` to name them, `--include-archived` to override)
+- `attack_cards.py` builds for live squads only
+- `export_matchup_store.py --squad` takes its roster from `squads.json`, and **refuses** when every
+  squad is archived rather than falling back to the registry
+- `build_squad.py` refuses to write to an archived slug — *before* it spends a warehouse round trip
+  per name — because a new series wants a new slug
+
+**Archiving the site is not archiving the squad, and the site went first.** CA XI's packs went
+offline 2026-08-10 and its 14 names drove the store for another eleven days. Take both.
+
+Archived so far: **`bangladesh-home-2026`** (2026-08-31) · **`bangladesh-caxi-2026`** (2026-08-10,
+folded in from the retired `squads_caxi.json`).
+
+### Adding ONE player to an existing squad — still by hand
+
+`build_squad.py` resolves a *whole* squad from a name list, so it is the tool for a **new** series,
+not for adding a name to a live one. To add one player, edit the two files:
+
+- **`squads.json`** — append the id to that slug's `players` list.
+- **`players.json`** — only if they are new. A player can already be here from another squad
+  (Renshaw was, from the CA XI work) and need nothing but the roster line.
 
 Then re-run the pipeline below from `publish_site.py`. No warehouse rebuild is needed — nothing about
 the opposition changed.
+
+**`build_squad.py` is now safe to run for a new squad** (it was not before 2026-08-31): it snapshots
+both files, **merges** into the registry instead of replacing entries — only `name`/`role`/`packs`
+are derived, so `bowl_types`, `bowl_groups`, `new_ball_footage`, `similar_bowler`, `release_detail`
+and `prefs` survive and it prints what it kept — and carries `team`/`archived` across a re-resolve.
+Verified: re-resolving Renshaw into a new squad keeps his `bowl_groups`, leaves the other 29 registry
+entries byte-identical, and leaves both archived flags alone.
+
+⚠ **`packs` and `role` ARE still overwritten**, because they are derived from the warehouse. A
+part-timer whose recent window shows no bowling loses `"bowling"` from `packs`, which drops them from
+`export_matchup_store`'s `our_bowl` — while `bowl_types` (which is what actually creates the bowling
+page) stays. Check a part-time bowler's `packs` after running it.
 
 ### The field that fails silently: `bowl_groups`
 
@@ -364,12 +427,76 @@ minutes writing *nothing*, then emits the ~34 player pages at the end. Measured 
 climbed 20s → 29s → 39s while the file count sat still. A wedged run is CPU flat as well, over tens
 of minutes. It has hung with the warehouse perfectly reachable, so a stall is not proof of a VPN drop.
 
-## CA XI packs — ARCHIVED 2026-08-10
+## Archiving a finished series
 
-The site is offline (GitHub Pages disabled on `tbcricketau/caxi-player-packs`); the repo, history
-and the last published state (tag `archived-2026-08-10`) are intact. `publish_packs.py caxi` refuses
-unless given `--revive`. **Those packs predate the 2026-08-10 fixes** — wrong-hand bowler reels and
-pooled-spin batter reels — so reviving means rebuilding from source, not re-pushing the tag.
+Two halves, because the two sites fail differently. The **coach portal** rebuilds itself from
+nothing every refresh, so a finished series either keeps being rebuilt forever or gets frozen. The
+**player-facing pack site** is a normal repo, so archiving it is a tag and a switch.
+
+### The coach half — freeze it into the portal
+
+```powershell
+.\venv\Scripts\python.exe archive_series.py freeze bangladesh-home-2026
+.\venv\Scripts\python.exe archive_series.py list
+.\venv\Scripts\python.exe archive_series.py restore bangladesh-home-2026   # bring it back live
+.\venv\Scripts\python.exe deploy_scouting.py --repo https://github.com/tbcricketau/scouting-reports.git
+```
+
+`freeze` copies the **built** pages from `site/<slug>` to `archive/<slug>`, stores the series.json
+entry inside the copy, and lifts the entry out of `series.json`. `publish_site.build()` then stages
+`archive/` into the portal at `archive/<slug>/`, behind the same password, reachable from one
+**Archive** card on the index rather than as a peer of the current series. It copies, never moves,
+and snapshots `series.json` first.
+
+**Why freezing is necessary at all:** `build()` clears its output directory except `.git` and
+re-bakes only what `series.json` lists ([publish_site.py:177]), and `deploy_github` force-pushes,
+which discards the repo's history. Nothing survives on its own, and nothing hand-placed in
+`scouting-reports` survives the scheduled refresh either — same lesson as `inject_reports.py`.
+
+**Why an archive can't just be left alone:** clip URLs carry a read SAS baked into the HTML with a
+~6.5-day life (`DEFAULT_SAS_HOURS`). A frozen page is a page whose vision dies within the week.
+`restamp_sas()` rewrites the query string on every blob URL under the staged copy and touches
+nothing else — no warehouse, no blob probing, no re-derivation — so the pages stay exactly as baked
+while the footage keeps playing. It keys on the **container** (`fairplay` / `hawkeyeupload`), not
+the storage account, so it needs no private `cricket_core` constants. Verified on the Bangladesh
+archive: 5,286 URLs re-stamped across 127 pages, and every page byte-identical once the SAS is
+stripped from both sides.
+
+`restore` puts the entry back in `series.json` and leaves the frozen copy alone. The reports must
+still be in `reports/` for the next build to bake them — that is what makes a restore possible, and
+it is the thing to check before deleting anything.
+
+Archiving adds **no new link-check findings** — the Bangladesh freeze measured 0 errors and the same
+33 pre-existing orphan warnings as the live site (the `.pmode.html` player-mode pages, which only
+the packs link). Once the pack site is offline those copies in the archive are the only surviving
+player-mode pages, so keep them.
+
+### The pack half — tag, note, Pages off
+
+1. `git -C player_pack_site tag -a archived-<date> -F <msg file>` and push the tag.
+2. Add an `archived` note to the bundle's entry in `publish_packs.py` — publishing then exits with
+   that message unless given `--revive`.
+3. **Tom disables GitHub Pages** on the bundle repo (Settings → Pages → source None). Repo and
+   history stay intact.
+
+Say in the note what the archive does *not* carry. Both archived bundles have a dead SAS baked in,
+so reviving means rebuilding from source, never re-pushing the tag.
+
+### Archived so far
+
+- **AUS player packs — 2026-08-31.** Bangladesh home Tests. Pages off on `tbcricketau/player-packs`,
+  tag `archived-2026-08-31`. Coach-side copy frozen at `archive/bangladesh-home-2026` and still
+  served, gated, with live vision. The bundle's own SAS expired 2026-08-27.
+- **CA XI packs — 2026-08-10.** Pages off on `tbcricketau/caxi-player-packs`, tag
+  `archived-2026-08-10`. **These predate the 2026-08-10 fixes** — wrong-hand bowler reels and
+  pooled-spin batter reels — so reviving means rebuilding from source.
+
+**Archiving the site is not archiving the squad.** It never has been: CA XI went offline on
+2026-08-10 and its 14 names were still driving `export_matchup_store.py` eleven days later, at 217
+simulated pairings for a 98-pairing squad. `freeze` removes the series from `series.json` only —
+`players.json`, `squads.json` and the matchup store still carry the squad. Front 1 of
+`PACK_MAINTENANCE_PLAN.md` is the real fix; until then, check those three by hand before building a
+new opposition.
 
 ## Known gaps / pending work
 

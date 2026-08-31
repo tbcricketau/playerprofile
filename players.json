@@ -6,7 +6,6 @@
    "batting"
   ],
   "prefs": "base",
-  "tier": "squad",
   "new_ball_footage": true
  },
  "2580027": {
@@ -16,7 +15,6 @@
    "batting"
   ],
   "prefs": "base",
-  "tier": "squad",
   "new_ball_footage": true
  },
  "2480058": {
@@ -26,7 +24,6 @@
    "batting"
   ],
   "prefs": "base",
-  "tier": "squad",
   "new_ball_footage": true
  },
  "940135": {
@@ -35,8 +32,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "2950104": {
   "name": "Cameron Green",
@@ -49,7 +45,6 @@
   "bowl_types": [
    "pace"
   ],
-  "tier": "squad",
   "bowl_groups": {
    "pace": "right_pace"
   }
@@ -60,8 +55,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "390157": {
   "name": "Beau Webster",
@@ -75,7 +69,6 @@
    "pace",
    "spin"
   ],
-  "tier": "squad",
   "bowl_groups": {
    "pace": "right_pace"
   }
@@ -91,7 +84,6 @@
   "bowl_types": [
    "pace"
   ],
-  "tier": "squad",
   "release_detail": true
  },
  "1300007": {
@@ -104,8 +96,7 @@
   "prefs": "base",
   "bowl_types": [
    "pace"
-  ],
-  "tier": "squad"
+  ]
  },
  "1300071": {
   "name": "Nathan Lyon",
@@ -118,7 +109,6 @@
   "bowl_types": [
    "spin"
   ],
-  "tier": "squad",
   "similar_bowler": {
    "id": "5460009",
    "name": "Sajid Khan"
@@ -134,8 +124,7 @@
   "prefs": "base",
   "bowl_types": [
    "pace"
-  ],
-  "tier": "squad"
+  ]
  },
  "2710059": {
   "name": "Scott Boland",
@@ -147,8 +136,7 @@
   "prefs": "base",
   "bowl_types": [
    "pace"
-  ],
-  "tier": "squad"
+  ]
  },
  "1940169": {
   "name": "Josh Inglis",
@@ -156,8 +144,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "2480059": {
   "name": "Matt Renshaw",
@@ -167,7 +154,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "spin"
   ],
@@ -185,8 +171,7 @@
   "prefs": "base",
   "bowl_types": [
    "pace"
-  ],
-  "tier": "squad"
+  ]
  },
  "2700257": {
   "name": "Todd Murphy",
@@ -198,8 +183,7 @@
   "prefs": "base",
   "bowl_types": [
    "spin"
-  ],
-  "tier": "squad"
+  ]
  },
  "3550357": {
   "name": "Campbell Kellaway",
@@ -207,8 +191,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "2680008": {
   "name": "Jake Doran",
@@ -216,8 +199,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "1070606": {
   "name": "Josh Philippe",
@@ -225,8 +207,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "1070327": {
   "name": "Kurtis Patterson",
@@ -234,8 +215,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "3550677": {
   "name": "Sam Konstas",
@@ -243,8 +223,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "3550381": {
   "name": "Teague Wyllie",
@@ -252,8 +231,7 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  },
  "4310045": {
   "name": "Campbell Thompson",
@@ -262,7 +240,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "pace"
   ],
@@ -277,7 +254,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "spin"
   ],
@@ -292,7 +268,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "spin"
   ],
@@ -307,7 +282,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "pace"
   ],
@@ -322,7 +296,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "pace"
   ],
@@ -338,7 +311,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "pace"
   ],
@@ -354,7 +326,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "pace"
   ]
@@ -367,7 +338,6 @@
    "bowling"
   ],
   "prefs": "base",
-  "tier": "squad",
   "bowl_types": [
    "pace"
   ],
@@ -381,7 +351,6 @@
   "packs": [
    "batting"
   ],
-  "prefs": "base",
-  "tier": "squad"
+  "prefs": "base"
  }
 }

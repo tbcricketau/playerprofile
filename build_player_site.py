@@ -1318,7 +1318,12 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
     squads = json.load(open(SQUADS, encoding="utf-8"))
     players = json.load(open(PLAYERS, encoding="utf-8"))
     cards = _load_cards()
-    slug = slug or next(iter(squads))
+    # Default to the first LIVE squad — an archived one is still in the file, and picking it would
+    # bake a finished series' squad into whatever series is being published.
+    slug = slug or next((s for s, m in squads.items() if not m.get("archived")), None)
+    if slug is None:
+        print("  ! attack section: every squad in squads.json is archived — nothing to render")
+        return 0
     meta = squads.get(slug, {})
     os.makedirs(os.path.join(dest_dir, "img"), exist_ok=True)
     if not no_video:
@@ -1384,10 +1389,36 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
     return len(built)
 
 
-def build(out_dir, no_video=False, only=None):
+def build(out_dir, no_video=False, only=None, squad=None, include_archived=False):
     squads = json.load(open(SQUADS, encoding="utf-8"))
     players = json.load(open(PLAYERS, encoding="utf-8"))
     cards = _load_cards()
+
+    # Resolve WHAT WE ARE BUILDING BEFORE CLEARING ANYTHING. This function empties out_dir, so a
+    # refusal after the clear leaves an empty bundle — the "never publish a partial build" trap with
+    # nothing left to publish. Decide first, destroy second.
+    #
+    # A finished series keeps its roster in squads.json so it can be read and restored, but no
+    # routine build prepares for it. Without this, adding the next opposition would rebuild every
+    # squad ever named — the leak that had CA XI's 14 still being simulated eleven days after their
+    # site went offline.
+    for s in (squad or []):
+        if s not in squads:
+            raise SystemExit(f"no squad {s!r} in {os.path.basename(SQUADS)} — "
+                             f"have {', '.join(squads)}")
+    slugs = [s for s in (squad or squads)
+             if include_archived or not squads.get(s, {}).get("archived")]
+    skipped = [s for s in (squad or squads) if s not in slugs]
+    if not slugs:
+        raise SystemExit(
+            f"nothing to build: every squad in {os.path.basename(SQUADS)} is archived, so "
+            f"{os.path.basename(out_dir)} was left untouched.\n"
+            f"Add the next series' roster to squads.json, or pass --include-archived to rebuild a "
+            f"finished one.")
+    if skipped:
+        print(f"  skipping archived squad(s): {', '.join(skipped)}  (--include-archived to build)")
+    single = len(slugs) == 1
+
     os.makedirs(out_dir, exist_ok=True)
     # clear (keep any .git)
     for f in os.listdir(out_dir):
@@ -1406,9 +1437,6 @@ def build(out_dir, no_video=False, only=None):
             get_fairplay_sas(ttl_hours=156)
         except Exception as e:
             print(f"  ! SAS prime failed ({e}) — vision links may be short-lived")
-
-    slugs = list(squads.keys())
-    single = len(slugs) == 1
 
     for slug in slugs:
         meta = squads[slug]
@@ -1587,14 +1615,20 @@ def main():
     ap.add_argument("--no-video", action="store_true",
                     help="skip minting SAS / resolving dismissal clips (fast offline build)")
     ap.add_argument("--only", nargs="*", help="build only these player ids (prototype)")
-    ap.add_argument("--squads", help="alternate squads file (default squads.json) — e.g. a CA XI roster "
-                    "vs the same opposition; its slug reuses the base opponent's data + tiers")
+    ap.add_argument("--squad", nargs="*", help="build only these squad slugs (default: every LIVE "
+                    "squad in squads.json). `python squads.py` lists them.")
+    ap.add_argument("--include-archived", action="store_true",
+                    help="also build squads marked `archived` (deliberate override — the series is "
+                         "over and the packs for it have been taken offline)")
+    ap.add_argument("--squads", help="alternate squads file (default squads.json). Legacy: the CA XI "
+                    "roster now lives in squads.json as its own slug, so prefer --squad.")
     args = ap.parse_args()
     if args.squads:
         global SQUADS
         SQUADS = os.path.join(HERE, args.squads)
     build(os.path.join(HERE, args.out), no_video=args.no_video,
-          only=set(args.only) if args.only else None)
+          only=set(args.only) if args.only else None,
+          squad=args.squad, include_archived=args.include_archived)
 
 
 if __name__ == "__main__":
