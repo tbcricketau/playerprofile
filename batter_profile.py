@@ -342,6 +342,17 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
     elif group and group in BOWLER_GROUPS:
         types, group_label = BOWLER_GROUPS[group]
         raw = [r for r in raw_all if r.get("bowler_type_simple") in types]
+    elif group:
+        # REFUSE an unknown group. This used to fall through, leaving `raw` unfiltered — so the
+        # profile silently described EVERY delivery while the page around it said "vs leg break".
+        # It cost a full rebuild of one overview and eleven batter reports on 2026-09-01, because
+        # matchupmodel names that type `leg_break` and this codebase names it `leg_spin`, and
+        # nothing anywhere objected. A wrong group must fail loudly, not average the whole career.
+        raise ValueError(
+            f"unknown bowler group {group!r} — known: "
+            f"{', '.join(sorted(set(BOWLER_GROUPS) | set(MACRO_GROUPS)))}. "
+            f"(matchupmodel calls these leg_break/left_wrist; here they are "
+            f"leg_spin/left_unorthodox.)")
 
     name = (info.get("player_name") or f"Batter {batter_id}").strip()
     team = (info.get("team_name") or "").strip()
