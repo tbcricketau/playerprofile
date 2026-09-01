@@ -292,7 +292,7 @@ def grid_danger(rows: list, min_balls: int = 25) -> dict | None:
 _BAT_FIELD_POS = None
 
 
-def _annotate_batter_catches(batter_id, raw):
+def _annotate_batter_catches(batter_id, raw, fmt="Test"):
     """Attach r['catch_position'] (fielding-position description, e.g. 'Fine leg: leg slip') to his
     caught dismissals, from the DeliveryFielders catcher. Best-effort — silent if the query fails."""
     global _BAT_FIELD_POS
@@ -301,7 +301,7 @@ def _annotate_batter_catches(batter_id, raw):
         from data_loaders import load_fielding_positions
         if _BAT_FIELD_POS is None:
             _BAT_FIELD_POS = load_fielding_positions()
-        cmap = load_batter_catch_positions(str(batter_id))
+        cmap = load_batter_catch_positions(str(batter_id), fmt=fmt)
     except Exception:
         return
     for r in raw:
@@ -311,9 +311,14 @@ def _annotate_batter_catches(batter_id, raw):
             r["catch_group"] = ("behind" if pid in _CAUGHT_BEHIND_POS else "field") if pid else "unknown"
 
 
-def build_batter_profile(batter_id: str, raw: list | None = None, group: str | None = None) -> dict:
+def build_batter_profile(batter_id: str, raw: list | None = None, group: str | None = None,
+                         fmt: str = "Test") -> dict:
+    """`fmt` scopes every warehouse read to that format's internationals (Test / ODI / T20).
+    It defaults to Test, so existing callers are unchanged. When `raw` is supplied the caller has
+    already scoped it — fmt then only affects the innings/info/catch lookups, so pass the SAME
+    format you loaded `raw` with or the share-of-runs denominator will come from another format."""
     if raw is None:
-        raw = process_batting_rows(load_batter_deliveries(batter_id))
+        raw = process_batting_rows(load_batter_deliveries(batter_id, fmt=fmt))
     # correct known warehouse hand errors for the profiled batter (all his deliveries)
     _hov = _HAND_OVERRIDE.get(str(batter_id))
     if _hov:
@@ -321,9 +326,9 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
             r["is_lhb"] = (_hov == "Left")
     # where his caught dismissals were actually taken (fielding position) — for the field engine's
     # dismissal-evidence rule (was he caught at a specific catcher, e.g. Carey's leg slip?).
-    _catch_pos = _annotate_batter_catches(batter_id, raw)
-    innings = load_batter_innings(batter_id)
-    info = load_batter_info(batter_id)
+    _catch_pos = _annotate_batter_catches(batter_id, raw, fmt=fmt)
+    innings = load_batter_innings(batter_id, fmt=fmt)
+    info = load_batter_info(batter_id, fmt=fmt)
 
     # Optional bowler-group filter (focused report). Headline + dimensions then reflect only
     # deliveries from that group; hand + share-of-runs stay on the full career. Groups can be an

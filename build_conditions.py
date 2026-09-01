@@ -22,6 +22,10 @@ from site_render import page as _page
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REF_CONDITIONS = ("New Zealand", "South Africa", "England")   # the seam-and-bounce benchmark
+# ⚠ SENA-away is a TEST idea — the benchmark for a red-ball tour of seam-and-bounce countries.
+# It is not meaningful for a white-ball series and this module does not yet pick a different
+# reference set per format. Passing --fmt ODI scopes the DELIVERIES correctly but still measures
+# them against NZ/SA/ENG. See ODI_PACKS_PLAN.md Layer 2.
 _FALSE_SQ = "('2','3','4','6','10','14','17','21','25','26','28')"
 _MIN_BALLS = 150        # below this the away average is too unstable to read as a trend
 
@@ -39,10 +43,10 @@ CSS = """<style>
 </style>"""
 
 
-def _rows(conn, cur, ids):
+def _rows(conn, cur, ids, fmt="Test"):
     S = DATA_SCHEMA
-    intl = (f"M.series_id IN (SELECT series_id FROM [{S}].[Series] "
-            f"WHERE name IN {international_series_sql('Test')})")
+    from data_loaders import _scope
+    intl = _scope(fmt, "M")
     cin = ",".join(f"'{c}'" for c in REF_CONDITIONS)
     # venue ids fetched first — a subquery isn't allowed inside SUM(CASE …)
     vids = [str(r["venue_id"]) for r in run_query(
@@ -76,11 +80,11 @@ def _f(v):
         return 0.0
 
 
-def build(opp):
+def build(opp, fmt="Test"):
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
     batters = about.get("batters", {})
     conn, cur = set_conn_cursor()
-    raw = _rows(conn, cur, list(batters))
+    raw = _rows(conn, cur, list(batters), fmt=fmt)
     conn.close()
     d = {r["pid"]: r for r in raw}
 
@@ -163,7 +167,9 @@ def build(opp):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--opp", default="bangladesh")
-    build(ap.parse_args().opp)
+    ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"))
+    a = ap.parse_args()
+    build(a.opp, fmt=a.fmt)
 
 
 if __name__ == "__main__":

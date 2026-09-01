@@ -55,7 +55,7 @@ def _build_t20_player(P, pdf_path, subtitle, target_country=None):
         from cricket_core.video import get_fairplay_sas, build_player_html, write_playlists
         from playlists import build_odi_playlists          # white-ball generic (T20 phase names match)
         get_fairplay_sas(ttl_hours=72)
-        built = build_odi_playlists(P, cap=8, target_country=target_country)
+        built = build_odi_playlists(P, cap=8, target_country=target_country, fmt="T20I")
         pls, meta = built["playlists"], built.get("meta")
         write_playlists(pdf_path[:-4] + ".playlists.json", pls, meta=meta)
         if not pls:

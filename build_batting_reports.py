@@ -33,6 +33,8 @@ def main():
     ap.add_argument("--out", default="reports", help="Output folder (default: reports)")
     ap.add_argument("--mode", choices=("combined", "focused", "both"), default="combined",
                     help="combined = broad overview; focused = per-bowler-type exploit report")
+    ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
+                    help="which format's internationals to profile (default: Test)")
     ap.add_argument("--group", default="right_pace",
                     help=f"bowler group for focused mode: {', '.join(_GROUPS)}")
     args = ap.parse_args()
@@ -53,7 +55,7 @@ def main():
     ok = fail = 0
     for i, (bid, group) in enumerate(jobs, 1):
         try:
-            path = render_batting_report(bid, out_dir=args.out, group=group)
+            path = render_batting_report(bid, out_dir=args.out, group=group, fmt=args.fmt)
             print(f"  [{i}/{len(jobs)}] {bid}{' vs ' + group if group else ''} -> {os.path.basename(path)}")
             ok += 1
         except Exception as e:

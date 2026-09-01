@@ -2,6 +2,66 @@
  "title": "Australia — Opposition Scouting",
  "series": [
   {
+   "slug": "zimbabwe-odi-away-2026",
+   "name": "Zimbabwe Away ODI Series 2026",
+   "subtitle": "Australia v Zimbabwe · ODIs · in Zimbabwe",
+   "target_country": "Zimbabwe",
+   "groups": [
+    {
+     "slug": "bowlers",
+     "name": "Zimbabwe Bowlers",
+     "format": "ODI",
+     "reports": [
+      {
+       "id": "1310087",
+       "tier": "xi",
+       "name": "Sikandar Raza"
+      },
+      {
+       "id": "4352462",
+       "tier": "xi",
+       "name": "Richard Ngarava"
+      },
+      {
+       "id": "3980005",
+       "tier": "xi",
+       "name": "Blessing Muzarabani"
+      },
+      {
+       "id": "5180206",
+       "tier": "xi",
+       "name": "Brad Evans"
+      },
+      {
+       "id": "3980017",
+       "tier": "xi",
+       "name": "Wellington Masakadza"
+      },
+      {
+       "id": "2950235",
+       "tier": "squad",
+       "name": "Sean Williams"
+      },
+      {
+       "id": "3550060",
+       "tier": "squad",
+       "name": "Wesley Madhevere"
+      },
+      {
+       "id": "5180198",
+       "tier": "squad",
+       "name": "Tanaka Chivanga"
+      },
+      {
+       "id": "6380303",
+       "tier": "squad",
+       "name": "Newman Nyamhuri"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "slug": "south-africa-away-2026",
    "name": "South Africa Away Test Series 2026",
    "subtitle": "Australia v South Africa · in South Africa",

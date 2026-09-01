@@ -352,5 +352,76 @@
    "batting"
   ],
   "prefs": "base"
+ },
+ "1300077": {
+  "name": "Mitch Marsh",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
+ },
+ "3550371": {
+  "name": "Cooper Connolly",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
+ },
+ "4390215": {
+  "name": "Ollie Peake",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ]
+ },
+ "3550715": {
+  "name": "Joel Davies",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
+ },
+ "3080018": {
+  "name": "Adam Zampa",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
+ },
+ "1810308": {
+  "name": "Billy Stanlake",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
+ },
+ "2580072": {
+  "name": "Nathan Ellis",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
+ },
+ "2840029": {
+  "name": "Xavier Bartlett",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
+ },
+ "1070522": {
+  "name": "Spencer Johnson",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ]
  }
 }

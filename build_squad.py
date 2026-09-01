@@ -54,8 +54,37 @@ def _packs(role):
     return ["batting", "bowling"] if role in ("Bowler", "All-rounder") else ["batting"]
 
 
+def _given(wh_name, surname):
+    """Given name(s) out of the warehouse `name` field ("Marsh, Shaun" -> "shaun")."""
+    n = (wh_name or "").strip()
+    if "," in n:
+        return n.split(",", 1)[1].strip().lower()
+    return n[:-len(surname)].strip().lower() if surname and n.lower().endswith(surname.lower()) else n.lower()
+
+
+def _first_name_score(want, got):
+    """How well the squad list's first name matches the warehouse's. Higher is better, 0 = no signal.
+
+    Shortenings are the norm on a team sheet — Mitch/Mitchell, Matt/Matthew — so a prefix counts,
+    but only one way round and only from 3 characters, or 'Ben' would match 'Benjamin' AND every
+    other B name equally."""
+    want, got = (want or "").lower(), (got or "").split()[0] if got else ""
+    if not want or not got:
+        return 0
+    if want == got:
+        return 3
+    if len(want) >= 3 and (got.startswith(want) or want.startswith(got)):
+        return 2
+    return 0
+
+
 def resolve(names):
-    """[full name] -> [{id, name, role, packs, bat_balls, bowl_balls, avg_pos}] (best match each)."""
+    """[full name] -> [{id, name, wh_name, role, packs, bat_balls, bowl_balls, avg_pos}].
+
+    Matching is FIRST NAME then career volume. Surname alone silently picked the most famous
+    holder of a common surname: a 2026-08-31 Zimbabwe ODI squad resolved Mitch Marsh to Shaun
+    Marsh, Spencer Johnson to Mitchell Johnson and Joel Davies to Alex Davies, and nothing in the
+    output showed it because only the INPUT name was printed back."""
     conn, cur = set_conn_cursor()
     surnames = sorted({n.split()[-1] for n in names})
     likes = " OR ".join(f"P.surname LIKE '%{s}%'" for s in surnames)
@@ -79,8 +108,9 @@ def resolve(names):
 
     out = []
     for full in names:
-        surname = full.split()[-1].lower()
-        best = None
+        parts = full.split()
+        surname, want_first = parts[-1].lower(), (parts[0] if len(parts) > 1 else "")
+        cands = []
         for pid, p in by_id.items():
             if surname not in (p["surname"] or "").lower():
                 continue
@@ -88,29 +118,44 @@ def resolve(names):
             wb = int(_f((bowlm.get(pid) or {}).get("balls")))
             if bb + wb == 0:
                 continue
-            if best is None or bb + wb > best[1]:
-                ap = (batm.get(pid) or {}).get("avg_pos")
-                ap = _f(ap, None) if ap not in (None, "None") else None
-                best = ({"id": pid, "name": full, "role": _role(ap, wb, bb), "packs": None,
-                         "bat_balls": bb, "bowl_balls": wb, "avg_pos": ap}, bb + wb)
-        if best is None:
-            out.append({"id": None, "name": full, "role": "Unknown", "packs": ["batting"],
-                        "bat_balls": 0, "bowl_balls": 0, "avg_pos": None})
-        else:
-            rec = best[0]
-            rec["packs"] = _packs(rec["role"])
-            out.append(rec)
+            ap = (batm.get(pid) or {}).get("avg_pos")
+            ap = _f(ap, None) if ap not in (None, "None") else None
+            got = _given(p["name"], p["surname"])
+            cands.append({"id": pid, "name": full, "wh_name": p["name"],
+                          "role": _role(ap, wb, bb), "packs": None,
+                          "bat_balls": bb, "bowl_balls": wb, "avg_pos": ap,
+                          "score": _first_name_score(want_first, got), "_tot": bb + wb})
+
+        if not cands:
+            out.append({"id": None, "name": full, "wh_name": "", "role": "Unknown",
+                        "packs": ["batting"], "bat_balls": 0, "bowl_balls": 0,
+                        "avg_pos": None, "score": 0, "alts": []})
+            continue
+
+        # First name decides; career volume only breaks a tie WITHIN the best-matching tier.
+        top = max(c["score"] for c in cands)
+        tier = [c for c in cands if c["score"] == top]
+        rec = max(tier, key=lambda c: c["_tot"])
+        rec["packs"] = _packs(rec["role"])
+        # Anything else we could plausibly have chosen, so a wrong pick is visible rather than
+        # inferred from a career shape that happens to look right.
+        rec["alts"] = [f'{c["wh_name"]} ({c["id"]}, bat={c["bat_balls"]} bowl={c["bowl_balls"]})'
+                       for c in sorted(cands, key=lambda c: -c["_tot"])
+                       if c["id"] != rec["id"] and (top == 0 or c["score"] == top)]
+        out.append(rec)
     return out
 
 
-def _series_meta(slug):
+def _series_meta(slug, fmt="Test"):
+    """Series display meta. `format` is NOT derivable from series.json — nothing in there records
+    it — so it is passed in and defaults to Test rather than being guessed from the slug."""
     if os.path.exists(SERIES_JSON):
         cfg = json.load(open(SERIES_JSON, encoding="utf-8"))
         for s in cfg.get("series", []):
             if s.get("slug") == slug:
                 return {"name": s.get("name", slug),
-                        "opposition": s.get("subtitle", ""), "format": "Test"}
-    return {"name": slug, "opposition": "", "format": "Test"}
+                        "opposition": s.get("subtitle", ""), "format": fmt}
+    return {"name": slug, "opposition": "", "format": fmt}
 
 
 def _load(path):
@@ -126,6 +171,8 @@ def main():
                     "squad, kept across a re-resolve")
     ap.add_argument("--force", action="store_true",
                     help="overwrite a squad marked `archived` (deliberate override)")
+    ap.add_argument("--format", default="Test", choices=("Test", "ODI", "T20I"),
+                    help="which format this squad was picked for (default: Test)")
     args = ap.parse_args()
 
     if not args.names:
@@ -143,14 +190,25 @@ def main():
     names = [ln.strip() for ln in open(args.names, encoding="utf-8") if ln.strip()]
     resolved = resolve(names)
 
-    print(f"{'name':<22}{'id':>10}  {'role':<12}{'packs'}")
+    # Print the WAREHOUSE name, not the one we were given — the input name always looks right.
+    print(f"{'name':<22}{'id':>10}  {'warehouse':<26}{'role':<12}{'packs'}")
     for r in resolved:
-        print(f"{r['name']:<22}{str(r['id']):>10}  {r['role']:<12}{'+'.join(r['packs'])}"
+        print(f"{r['name']:<22}{str(r['id']):>10}  {(r.get('wh_name') or '-')[:25]:<26}"
+              f"{r['role']:<12}{'+'.join(r['packs'])}"
               f"   (bat={r['bat_balls']} bowl={r['bowl_balls']} pos="
               f"{None if r['avg_pos'] is None else round(r['avg_pos'],1)})")
     missing = [r["name"] for r in resolved if r["id"] is None]
     if missing:
         print(f"\n! no warehouse match: {', '.join(missing)}")
+
+    weak = [r for r in resolved if r["id"] and not r.get("score")]
+    for r in weak:
+        print(f"\n? {r['name']} matched on SURNAME ONLY -> {r['wh_name']} ({r['id']}) — "
+              f"the first name did not match, so this is a career-volume guess. Check it.")
+    for r in resolved:
+        if r["id"] and r.get("alts"):
+            print(f"\n? {r['name']} -> {r['wh_name']} ({r['id']}); also matched: "
+                  f"{'; '.join(r['alts'][:4])}")
 
     if args.dry_run:
         print("\n(dry run — nothing written)")
@@ -167,7 +225,7 @@ def main():
         if os.path.exists(p):
             shutil.copy(p, f"{p}.bak-{stamp}")
 
-    meta = _series_meta(args.series)
+    meta = _series_meta(args.series, args.format)
     # Carry the squad's own state across a re-resolve — `team` and `archived` are facts about the
     # squad that no name list can supply, and a wholesale replace silently dropped them.
     keep = {k: prior[k] for k in ("team", "archived") if k in prior}
@@ -179,13 +237,30 @@ def main():
     # list; `bowl_types`, `bowl_groups`, `new_ball_footage`, `similar_bowler`, `release_detail` and
     # `prefs` are hand-set and were being dropped from every player this script resolved — which is
     # why CLAUDE.md said to add one player by hand rather than run this.
-    changed = []
+    changed, notes = [], []
     for r in resolved:
         if not r["id"]:
             continue
         existing = dict(players.get(r["id"], {}))
         kept = [k for k in existing if k not in ("name", "role", "packs")]
-        existing.update({"name": r["name"], "role": r["role"], "packs": r["packs"]})
+
+        # `packs` is derived from a career ratio, but `bowl_types` is HAND-SET and is what actually
+        # builds the bowling page. Deriving alone dropped "bowling" from any part-timer whose recent
+        # window is light — Renshaw, a Batter by ratio with bowl_types ["spin"] — which quietly cut
+        # them from export_matchup_store's our_bowl while their bowling page kept building. Never
+        # lose a pack the registry already asserts.
+        packs = list(r["packs"])
+        if existing.get("bowl_types") and "bowling" not in packs:
+            packs.append("bowling")
+            notes.append(f"{r['name']}: kept 'bowling' (bowl_types is set, career ratio says batter)")
+        for p in existing.get("packs", []):
+            if p not in packs:
+                packs.append(p)
+                notes.append(f"{r['name']}: kept '{p}' from the registry")
+
+        if existing.get("role") and existing["role"] != r["role"]:
+            notes.append(f"{r['name']}: role {existing['role']} -> {r['role']} (derived)")
+        existing.update({"name": r["name"], "role": r["role"], "packs": packs})
         players[r["id"]] = existing
         if kept:
             changed.append(f"{r['name']} (kept {', '.join(sorted(kept))})")
@@ -199,6 +274,8 @@ def main():
           f"previous copies kept as *.bak-{stamp}")
     for c in changed:
         print(f"  registry preserved: {c}")
+    for n in notes:
+        print(f"  ! {n}")
 
 
 if __name__ == "__main__":

@@ -18,8 +18,14 @@ from config import DATA_SCHEMA
 from site_render import page as _page
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-_INTL_TEST = (f"M.series_id IN (SELECT series_id FROM [{DATA_SCHEMA}].[Series] "
-              f"WHERE name IN {international_series_sql('Test')})")
+
+
+def _scope_sql(fmt="Test", alias="M"):
+    """Format scope for this builder. Was a Test-only module constant (_INTL_TEST)."""
+    from data_loaders import _scope
+    return _scope(fmt, alias)
+
+
 # unorthodox shots we can separate in stroke lookup 24 (id -> label). No 'upper cut' / 'paddle
 # scoop vs sweep' split in our vocab (those collapse into Cut / Paddle), so they're not shown.
 SHOTS = [("9", "Conventional sweep"), ("15", "Slog sweep"), ("18", "Reverse sweep"),
@@ -48,7 +54,7 @@ def _shade(pct):
     return f"rgb({r},{g},{b})"
 
 
-def _query(conn, cur, batter_ids):
+def _query(conn, cur, batter_ids, fmt="Test"):
     inlist = "('" + "','".join(batter_ids) + "')"
     when = " ".join(
         f"SUM(CASE WHEN D.bowler_style_id IN {grp} AND D.stroke_id='{sid}' THEN 1 ELSE 0 END) AS {tag}{sid},"
@@ -60,7 +66,7 @@ def _query(conn, cur, batter_ids):
             {when.rstrip(',')}
         FROM [{DATA_SCHEMA}].[Deliveries] D
         JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id = M.match_id
-        WHERE {_INTL_TEST} AND D.legal_ball = '1' AND D.striker_id IN {inlist}
+        WHERE {_scope_sql(fmt)} AND D.legal_ball = '1' AND D.striker_id IN {inlist}
         GROUP BY D.striker_id""", conn, cur)
 
 
@@ -71,11 +77,11 @@ def _f(v):
         return 0.0
 
 
-def build(opp):
+def build(opp, fmt="Test"):
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
     batters = about.get("batters", {})
     conn, cur = set_conn_cursor()
-    rows = _query(conn, cur, list(batters.keys()))
+    rows = _query(conn, cur, list(batters.keys()), fmt=fmt)
     conn.close()
 
     # a single column order across both tables: most-established (most Test balls faced) first

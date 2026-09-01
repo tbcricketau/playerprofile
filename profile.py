@@ -21,7 +21,7 @@ from data_loaders import (
     load_bowler_catch_positions, load_fielding_positions,
 )
 from cricket_core.charts import (
-    zone_concentration, danger_length, danger_line, danger_cell,
+    zone_concentration, danger_length, danger_line, danger_cell, is_tracked_length,
     LENGTH_ZONES_PACE, LENGTH_ZONES_SPIN, LENGTH_ZONES_1M, LENGTH_ZONES_05M, PITCH_HW,
 )
 from cricket_core.video import clip_stem as _clip_stem, resolve_clip as _resolve_clip
@@ -42,6 +42,23 @@ from cricket_core.lookups import (
 _SPEED_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_speed_profile.csv"
 
 _SHORT_BUCKETS = {"8-9m", "9-10m", "10-11m", "11-12m", "12-13m", "13-14m", "14m+"}
+
+# ── ball-tracking validity ────────────────────────────────────────────────────────────────────
+# The predicate lives in cricket_core.charts (imported above) — pitch_length is NOT NULL on every
+# delivery, so `is not None` reads like a coverage check and passes everything; untracked balls
+# carry the sentinel -20000 mm.
+#
+# A median was the defence here ("bad lengths wreck the mean") and it holds only while the bad
+# values are a minority. They are not: matches played in Zimbabwe are 46% tracked. So the median
+# landed in real data or in the sentinel depending on which side of 50% a bowler fell — Raza
+# (55.5% tracked) reported 3.50 m, Ngarava (44.4%) reported -20.00 m, off the same code, and
+# every bowler in between was biased low in proportion to their untracked share. Range-filter
+# FIRST, then average; a median does not fence out a sentinel.
+
+
+def tracked_lengths(rows, key: str = "pitch_length_m") -> list:
+    """The real measured lengths (metres) among `rows`, sentinels dropped."""
+    return [r[key] for r in rows if is_tracked_length(r.get(key))]
 
 # Coder swing/seam group labels (batter-relative). Pace and spin share the same three
 # directions under different codes: swing/drift 100/400 = INTO batter, 200/500 = none,
@@ -1229,15 +1246,20 @@ def build_profile(
     spell: str = "All",
     length_mode: str = "Zones",
     raw=None,
+    fmt: str = "Test",
 ) -> dict:
     """Compute the full bowler profile for the given filters.
 
     Returns a dict of metrics, danger zones and the filtered delivery lists.
     `raw` may be passed pre-loaded/processed to avoid re-querying (the app does
     this so filter changes don't re-hit the DB).
+
+    `fmt` scopes the warehouse reads to that format's internationals (Test / ODI / T20). The
+    loaders were already format-aware; only this entry point was pinned. When `raw` is supplied
+    the caller has scoped it — pass the SAME fmt so the info lookup agrees with the deliveries.
     """
     if raw is None:
-        raw = process_rows(load_bowler_deliveries(bowler_id))
+        raw = process_rows(load_bowler_deliveries(bowler_id, fmt=fmt))
     _annotate_catches(raw, bowler_id)
 
     # Bowler-type override for warehouse mis-codes (e.g. an express quick coded Medium).
@@ -1246,7 +1268,7 @@ def build_profile(
         for r in raw:
             r["bowler_type_simple"] = _bt_fix
 
-    info = load_bowler_info(str(bowler_id)) or {}
+    info = load_bowler_info(str(bowler_id), fmt=fmt) or {}
     name = (info.get("player_name") or "").strip() or f"Bowler {bowler_id}"
     team = (info.get("team_name") or "").strip()
     flag, _ = team_flag(team)
@@ -1298,16 +1320,18 @@ def build_profile(
     spd_inn2    = _mean(_speeds(lambda r: r["innings_group"] == "2nd Innings"))
 
     def _lengths(pred):
-        return [r["pitch_length_m"] for r in raw if r["is_legal"] and pred(r) and r["pitch_length_m"] is not None]
+        return tracked_lengths([r for r in raw if r["is_legal"] and pred(r)])
 
     len_spell1  = _mean(_lengths(lambda r: r["spell_group"] == "Spell 1"))
     len_spell2  = _mean(_lengths(lambda r: r["spell_group"] == "Spell 2"))
     len_spell3p = _mean(_lengths(lambda r: r["spell_group"] not in ("Spell 1", "Spell 2")))
 
-    lengths = [r["pitch_length_n"] for r in legal if r["pitch_length_n"] is not None]
-    # Median, not mean: ~10% of deliveries carry bad/negative length values
-    # (full tosses coded negative, occasional −20 m garbage) that wreck the mean.
-    avg_len_m = statistics.median(lengths) / 1000 if lengths else None
+    # Sentinels dropped BEFORE the median — see is_tracked_length. `tracked_len_pct` is the share
+    # of legal balls this number is actually built on, so a thin sample can be shown rather than
+    # inferred from a length that happens to look plausible.
+    lengths = tracked_lengths(legal)
+    avg_len_m = statistics.median(lengths) if lengths else None
+    tracked_len_pct = 100.0 * len(lengths) / len(legal) if legal else None
     # Most common 1 m length band (their "good length" in metres)
     _len_bands = Counter(
         r["pitch_length_group_m"] for r in legal
@@ -1514,7 +1538,8 @@ def build_profile(
         "bowl_avg": runs_tot / n_wkts if n_wkts else None,
         "strike_rate": n_balls / n_wkts if n_wkts else None,
         "avg_spd": avg_spd, "max_spd_99": max_spd_99,
-        "avg_len_m": avg_len_m, "short_pct": short_pct, "common_len_band": common_len_band,
+        "avg_len_m": avg_len_m, "tracked_len_pct": tracked_len_pct,
+        "short_pct": short_pct, "common_len_band": common_len_band,
         "new_ball": new_ball, "old_ball": old_ball, "pos_groups": pos_groups,
         "new_ball_share": new_ball_share,
         "movement": movement,

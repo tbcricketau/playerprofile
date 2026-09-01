@@ -54,6 +54,18 @@ def _pct(v, dp=0):
     return _fmt(v, f".{dp}f", "%")
 
 
+def _length_sub(P: dict) -> str:
+    """Sub-label under Avg length. Ball-tracking coverage varies hugely by where a match was
+    played — matches in Zimbabwe are 46% tracked, in Australia 99.8% — so say what share of the
+    bowler's deliveries the length is measured from once it stops being nearly all of them.
+    Below 80% the length and the pitch maps are a partial view and the reader has to know."""
+    sub = f"Short {_pct(P.get('short_pct'))}"
+    t = P.get("tracked_len_pct")
+    if t is not None and t < 80:
+        sub += f" · tracked on {t:.0f}% of balls"
+    return sub
+
+
 def headline_cards(P: dict, recent: dict = None) -> list:
     """The 8 top metric cards every BOWLING report shows, as card() dicts. Reads these profile keys
     (any may be None): n_balls, n_wkts, economy, bowl_avg, strike_rate, avg_spd, max_spd_99,
@@ -73,7 +85,7 @@ def headline_cards(P: dict, recent: dict = None) -> list:
         card("Bowl strike rate", _fmt(P.get("strike_rate")), recent=rec.get("Bowl strike rate", "")),
         card("Avg speed",     f"{_fmt(P.get('avg_spd'))} kph", f"P99 {_fmt(P.get('max_spd_99'))}",
              recent=rec.get("Avg speed", "")),
-        card("Avg length",    f"{_fmt(P.get('avg_len_m'), '.2f')} m", f"Short {_pct(P.get('short_pct'))}",
+        card("Avg length",    f"{_fmt(P.get('avg_len_m'), '.2f')} m", _length_sub(P),
              recent=rec.get("Avg length", "")),
         card("Round the wkt", _pct(P.get("round_pct")), split, recent=rec.get("Round the wkt", "")),
     ]

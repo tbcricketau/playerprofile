@@ -7,6 +7,7 @@ other projects (livetrackingdashboard etc.).
 """
 from cricket_core.video import playlist_item, resolve_playlist, write_playlists, attach_hawkeye
 from cricket_core.lookups import conditions_tier, conditions_bucket
+from cricket_core.charts import is_tracked_length
 
 # Over-select this many candidates per list, then keep the first `cap` whose clip exists
 # (coverage is patchy, so we need headroom). One HEAD probe per candidate (cached).
@@ -239,10 +240,15 @@ def _is_odi_variation(r, off_pace):
     return bool(off_pace and s and s <= off_pace)
 
 
-def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None) -> dict:
-    """Video playlists for an ODI bowler profile — wickets, powerplay, death, yorkers, slower
-    balls — reusing the shared clip resolver + captions. Only deliveries whose clip is actually
-    in storage (coverage is per-delivery, concentrated on recent matches)."""
+def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None,
+                        fmt: str = "ODI") -> dict:
+    """Video playlists for a white-ball bowler profile — wickets, powerplay, death, yorkers,
+    slower balls — reusing the shared clip resolver + captions. Only deliveries whose clip is
+    actually in storage (coverage is per-delivery, concentrated on recent matches).
+
+    `fmt` labels the sidecar. It used to be hardcoded "ODI", and t20_report calls this same
+    builder, so every T20 sidecar claimed to be an ODI one — which made the publish step serve a
+    T20 report wherever an ODI report was asked for."""
     df = [r for r in (P.get("raw") or []) if r.get("clip_stem")]
     is_spin, is_pace = P["is_spin"], P["is_pace"]
     off_pace = P.get("off_pace_kph")
@@ -266,9 +272,12 @@ def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None
     add("death", _diversify(_recent([r for r in df if r.get("phase") == "Death"])))
     if is_pace:
         from odi_profile import _is_bouncer
-        # Yorkers / very full — the block-hole balls
+        # Yorkers / very full — the block-hole balls. is_tracked_length, NOT `is not None`: an
+        # untracked ball carries -20000 mm, which sails through a `< 2.0` test, so the reel filled
+        # up with balls nobody measured. Ngarava's read as eight yorkers of which six were bowled
+        # in overs 1.1-5.6 at a 46%-tracked venue.
         add("yorkers", _diversify(_recent(
-            [r for r in df if r.get("pitch_length_m") is not None and r["pitch_length_m"] < 2.0])))
+            [r for r in df if is_tracked_length(r.get("pitch_length_m")) and r["pitch_length_m"] < 2.0])))
         # Bouncers / short balls
         add("bouncers", _diversify(_recent([r for r in df if _is_bouncer(r)])))
         # Slower balls, and the slower-ball yorker / slower-ball bouncer specifically
@@ -276,13 +285,13 @@ def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None
             add("slower_balls", _diversify(_recent(
                 [r for r in df if _is_odi_variation(r, off_pace)])))
             add("slower_yorkers", _diversify(_recent(
-                [r for r in df if r.get("pitch_length_m") is not None and r["pitch_length_m"] < 2.0
+                [r for r in df if is_tracked_length(r.get("pitch_length_m")) and r["pitch_length_m"] < 2.0
                  and _is_odi_variation(r, off_pace)])))
             add("slower_bouncers", _diversify(_recent(
                 [r for r in df if _is_bouncer(r) and _is_odi_variation(r, off_pace)])))
 
     meta = {
-        "bowler": P.get("name"), "bowler_id": P.get("bowler_id"), "format": "ODI",
+        "bowler": P.get("name"), "bowler_id": P.get("bowler_id"), "format": fmt,
         "target_country": target_country, "counts": counts,
         "note": "Clips via cricket_core.video (SSO SAS); coverage is per-delivery, concentrated "
                 "on recent matches, so older balls may have no clip.",

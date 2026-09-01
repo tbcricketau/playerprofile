@@ -108,32 +108,63 @@ def _refresh_playlists(pls, hk_sas):
 
 
 # ── Report → file resolution (manifest references bowlers by id + hand) ─────────
+# Where each format's reports are rendered. The white-ball builders write to their own
+# subfolders (odi_report.py -> reports/odi, t20_report.py -> reports/t20), so a scan of
+# REPORTS_DIR alone could not see them at all.
+_FMT_DIRS = {"test": REPORTS_DIR,
+             "odi": os.path.join(REPORTS_DIR, "odi"),
+             "t20": os.path.join(REPORTS_DIR, "t20")}
+
+
+def _fmt_key(v) -> str:
+    """Normalise a format label from series.json or a sidecar ('ODI', 'T20I', 'Test') to a key."""
+    v = (v or "Test").strip().lower()
+    return "t20" if v.startswith("t20") else ("odi" if v == "odi" else "test")
+
+
 def _sidecar_map():
-    """{(player_id, hand_tag, kind, bowl_group): report_base_name} from the rendered sidecars —
-    bowling sidecars carry meta.bowler_id, batting sidecars meta.batter_id. `bowl_group` is the
-    ''`_vs_<group>`'' suffix ('' for the combined report; 'pace'/'spin' for the macro batter
-    reports; 'right_pace'/… for atomic ones)."""
+    """{(player_id, hand_tag, kind, bowl_group, fmt): (src_dir, report_base_name)} from the
+    rendered sidecars — bowling sidecars carry meta.bowler_id, batting sidecars meta.batter_id.
+    `bowl_group` is the ''`_vs_<group>`'' suffix ('' for the combined report; 'pace'/'spin' for the
+    macro batter reports; 'right_pace'/… for atomic ones).
+
+    The hand tag comes from the Test filename suffix. The ODI and T20 reports have no such suffix
+    — they split by hand INSIDE the report — so they key as hand 'all'.
+
+    Format comes from the DIRECTORY, which is the only authority: the builder chose where to
+    write. meta.format is not trusted, because t20_report shares build_odi_playlists and every
+    T20 sidecar was stamped "ODI" — keying off it silently filed Starc's T20 report as his ODI
+    one and overwrote the real entry."""
     out = {}
-    for sc in glob.glob(os.path.join(REPORTS_DIR, "*.playlists.json")):
-        name = os.path.basename(sc)[: -len(".playlists.json")]
-        m = re.search(r"_(all|lhb|rhb)(?:_vs_(\w+))?$", name)
-        if not m:
-            continue
-        try:
-            meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
-            bid = str(meta.get("bowler_id") or meta.get("batter_id"))
-        except Exception:
-            continue
-        kind = "batting" if "_batting_" in name else "bowling"    # a player can have BOTH
-        out[(bid, m.group(1), kind, m.group(2) or "")] = name
+    for fmt, d in _FMT_DIRS.items():
+        for sc in sorted(glob.glob(os.path.join(d, "*.playlists.json"))):
+            name = os.path.basename(sc)[: -len(".playlists.json")]
+            try:
+                meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
+                bid = str(meta.get("bowler_id") or meta.get("batter_id"))
+            except Exception:
+                continue
+            if not bid or bid == "None":
+                continue
+            m = re.search(r"_(all|lhb|rhb)(?:_vs_(\w+))?$", name)
+            if m:
+                hand, group = m.group(1), (m.group(2) or "")
+            elif fmt != "test":
+                hand, group = "all", ""
+            else:
+                continue                       # a Test report with no hand suffix is not one of ours
+            kind = "batting" if "_batting_" in name else "bowling"    # a player can have BOTH
+            out[(bid, hand, kind, group, fmt)] = (d, name)
     return out
 
 
-def _bake_report(name, dest_dir, hk_sas):
+def _bake_report(name, dest_dir, hk_sas, src_dir=None):
     """Refresh a report's video (SAS) and write html + player + pdf into dest_dir.
-    Returns (natural_name, bowler_type, has_pdf) or None if the source isn't there."""
-    html_path = os.path.join(REPORTS_DIR, name + ".html")
-    sc_path = os.path.join(REPORTS_DIR, name + ".playlists.json")
+    `src_dir` is where the report was rendered (REPORTS_DIR for Test, reports/odi | reports/t20
+    for white-ball). Returns (natural_name, bowler_type, has_pdf, pid) or None if it isn't there."""
+    src_dir = src_dir or REPORTS_DIR
+    html_path = os.path.join(src_dir, name + ".html")
+    sc_path = os.path.join(src_dir, name + ".playlists.json")
     if not (os.path.exists(html_path) and os.path.exists(sc_path)):
         return None
     d = json.load(open(sc_path, encoding="utf-8"))
@@ -151,7 +182,7 @@ def _bake_report(name, dest_dir, hk_sas):
     open(os.path.join(dest_dir, name + ".html"), "w", encoding="utf-8").write(page)
 
     # reduced PLAYER-MODE cut (Vs Our Squad stripped) — same video refresh, linked from player packs
-    pm_path = os.path.join(REPORTS_DIR, name + ".pmode.html")
+    pm_path = os.path.join(src_dir, name + ".pmode.html")
     if os.path.exists(pm_path):
         pm = open(pm_path, encoding="utf-8").read()
         pm = _SNIPPET_RE.sub(lambda m: snippet, pm) if _SNIPPET_RE.search(pm) \
@@ -163,9 +194,9 @@ def _bake_report(name, dest_dir, hk_sas):
                       title=meta.get("bowler") or meta.get("batter") or name,
                       subtitle="bowling scout" if "_bowling_" in name else "batting scout",
                       titles=ptitles)
-    has_pdf = os.path.exists(os.path.join(REPORTS_DIR, name + ".pdf"))
+    has_pdf = os.path.exists(os.path.join(src_dir, name + ".pdf"))
     if has_pdf:
-        shutil.copy(os.path.join(REPORTS_DIR, name + ".pdf"), os.path.join(dest_dir, name + ".pdf"))
+        shutil.copy(os.path.join(src_dir, name + ".pdf"), os.path.join(dest_dir, name + ".pdf"))
     pid = str(meta.get("bowler_id") or meta.get("batter_id") or "")
     return (_natural_name(meta.get("bowler") or meta.get("batter") or name.replace("_", " ").title()), btype, has_pdf, pid)
 
@@ -220,13 +251,18 @@ def build(out_dir, sas_hours):
             g_dir = os.path.join(s_dir, g["slug"])
             os.makedirs(g_dir, exist_ok=True)
             report_cards = []
+            # Format is per-group and defaults to Test, so every existing series.json entry
+            # resolves exactly as before. An ODI/T20 group sets "format": "ODI" | "T20I".
+            gfmt = _fmt_key(g.get("format") or s.get("format"))
             for r in g.get("reports", []):
                 kind = g.get("kind", "bowling")
-                name = smap.get((str(r["id"]), r.get("hand", "all"), kind, g.get("bowl_group", "")))
-                if not name:
-                    print(f"  ! {s['slug']}/{g['slug']}: report id {r['id']} ({r.get('hand')}) "
-                          f"not rendered — skipped"); continue
-                res = _bake_report(name, g_dir, hk_sas)
+                hand = r.get("hand", "all") if gfmt == "test" else "all"
+                hit = smap.get((str(r["id"]), hand, kind, g.get("bowl_group", ""), gfmt))
+                if not hit:
+                    print(f"  ! {s['slug']}/{g['slug']}: report id {r['id']} "
+                          f"({hand}, {gfmt}) not rendered — skipped"); continue
+                src_dir, name = hit
+                res = _bake_report(name, g_dir, hk_sas, src_dir=src_dir)
                 if res:
                     title, btype, has_pdf, pid = res
                     report_cards.append((name, title, btype, has_pdf, r.get("tier", "squad"), pid))
@@ -238,7 +274,19 @@ def build(out_dir, sas_hours):
         has_attacks = False
         try:
             import build_player_site as bps
-            if s["slug"] in json.load(open(bps.SQUADS, encoding="utf-8")):
+            squads_all = json.load(open(bps.SQUADS, encoding="utf-8"))
+            sq = squads_all.get(s["slug"])
+            sq_fmt = _fmt_key(sq.get("format")) if sq else None
+            if sq is None:
+                pass
+            elif sq_fmt != "test":
+                # attack_cards.py derives these from TEST deliveries. Rendering them under a
+                # white-ball series would put Test plans on an ODI page, for whichever fraction
+                # of the roster happens to have a card — the same pooling defect the reel-scoping
+                # rule exists to prevent. Skip loudly until attack_cards is format-aware.
+                print(f"  - {s['slug']}/attacked-our-squad skipped: squad is {sq.get('format')} "
+                      f"and the attack cards are built from Test data")
+            else:
                 nap = bps.render_attack_section(os.path.join(s_dir, "attacked-our-squad"), slug=s["slug"])
                 has_attacks = nap > 0
                 print(f"  [ok] {s['slug']}/attacked-our-squad ({nap} players)")

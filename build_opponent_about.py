@@ -203,7 +203,7 @@ def bowler_clips_from_profile(P, cap_each=10, wcap=40):
     return stock, wicket, new_ball
 
 
-def bowler_clips_by_hand(bid):
+def bowler_clips_by_hand(bid, fmt="Test"):
     """{"": (stock, wicket, new_ball), "lhb": (...), "rhb": (...)} — the bowler's reels built
     separately for each batter hand, plus the both-hands set as a fallback.
 
@@ -220,7 +220,7 @@ def bowler_clips_by_hand(bid):
         raise RuntimeError(f"no deliveries loaded for bowler {bid}")
     out = {}
     for key, hand in (("", "All"), ("lhb", "vs LHB"), ("rhb", "vs RHB")):
-        out[key] = bowler_clips_from_profile(build_profile(bid, hand=hand, raw=raw))
+        out[key] = bowler_clips_from_profile(build_profile(bid, hand=hand, raw=raw, fmt=fmt))
     return out
 
 
@@ -260,15 +260,24 @@ _MACRO_OF = {"right_pace": "pace", "left_pace": "pace", "off_spin": "spin",
              "left_orthodox": "spin", "leg_spin": "spin", "left_unorthodox": "spin"}
 
 
-def batter_clips_best(conn, cur, bid, against, cap=40):
+# Which formats to fall back through, per pack format. The PACK's format comes first: footage of
+# a near-enough bowler type in the format they will actually play beats exact-type footage from a
+# different one. For a white-ball pack the nearest neighbour is the other white-ball format, not
+# Tests — an ODI pack falls back to T20I before it reaches for red-ball footage.
+_FMT_ORDER = {"Test": ("Test", "ODI", "T20I"),
+              "ODI": ("ODI", "T20I", "Test"),
+              "T20I": ("T20I", "ODI", "Test")}
+
+
+def batter_clips_best(conn, cur, bid, against, cap=40, fmt="Test"):
     """Clips for this batter against `against`, relaxing only as far as needed, and saying how far.
 
-    Order: this format + exact type, then the same format with the wider pace/spin set, then ODI,
-    then T20I. Test footage of a near-enough bowler type beats ODI footage of the exact type — it's
-    the format they'll actually play. Returns (scoring, dismissal, scope) where scope is e.g.
-    'Test:off_spin' or 'ODI:spin'; anything but 'Test:{against}' means the pack should flag it."""
+    Order: the pack's format + exact type, then the same format with the wider pace/spin set, then
+    the neighbouring formats (see _FMT_ORDER). Returns (scoring, dismissal, scope) where scope is
+    e.g. 'ODI:off_spin' or 'ODI:spin'; anything but '{fmt}:{against}' means the pack should flag
+    it."""
     macro = _MACRO_OF.get(against)
-    for fmt in ("Test", "ODI", "T20I"):
+    for fmt in _FMT_ORDER.get(fmt, _FMT_ORDER["Test"]):
         for grp in ([against, macro] if macro else [against]):
             if not grp:
                 continue
@@ -305,12 +314,12 @@ def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test"):
     return scoring, dismissal
 
 
-def _test_balls(conn, cur, bid, role):
-    """Legal Test balls the player has bowled ('bowl') or faced ('bat')."""
+def _test_balls(conn, cur, bid, role, fmt="Test"):
+    """Legal balls in this format the player has bowled ('bowl') or faced ('bat')."""
     col = "bowler_id" if role == "bowl" else "striker_id"
     r = _q(conn, cur, f"SELECT COUNT(*) n FROM [{DATA_SCHEMA}].[Deliveries] D "
                       f"JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id "
-                      f"WHERE D.{col}='{bid}' AND D.legal_ball=1 AND {_TEST}")
+                      f"WHERE D.{col}='{bid}' AND D.legal_ball=1 AND {_FMT_SQL.get(fmt, _TEST)}")
     return int(float(r[0]["n"] or 0)) if r else 0
 
 
@@ -383,11 +392,11 @@ def allfmt_batter_facts(conn, cur, bid, hand, STK, SQ):
 _ROLE_BANDS = ((2, "Opener"), (4, "Top order"), (7, "Middle order"), (99, "Lower order"))
 
 
-def batter_role(conn, cur, bid):
+def batter_role(conn, cur, bid, fmt="Test"):
     r = _q(conn, cur, f"""SELECT TOP 1 pos, COUNT(*) n FROM (
             SELECT TRY_CONVERT(int, D.striker_batting_position) pos, D.match_id, D.match_innings
             FROM [{DATA_SCHEMA}].[Deliveries] D JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id
-            WHERE D.striker_id='{bid}' AND {_TEST} AND TRY_CONVERT(int, D.striker_batting_position) BETWEEN 1 AND 11
+            WHERE D.striker_id='{bid}' AND {_FMT_SQL.get(fmt, _TEST)} AND TRY_CONVERT(int, D.striker_batting_position) BETWEEN 1 AND 11
             GROUP BY TRY_CONVERT(int, D.striker_batting_position), D.match_id, D.match_innings) t
         GROUP BY pos ORDER BY COUNT(*) DESC""")
     if not r or r[0].get("pos") in (None, "None"):
@@ -407,6 +416,9 @@ def main():
                     help="comma-separated bowler ids — the same merge for an opposition bowler, "
                          "leaving every batter and every other bowler alone. Combinable with "
                          "--only-batters.")
+    ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
+                    help="which format's internationals to profile, and prefer footage "
+                         "from (default: Test)")
     ap.add_argument("--clips-only", action="store_true",
                     help="only add stock/wicket example clips to the existing json (fast, no re-profile)")
     args = ap.parse_args()
@@ -418,7 +430,7 @@ def main():
         n_err = 0
         for bid, entry in out.get("bowlers", {}).items():
             try:                                          # re-profile so clips match the stock phrase
-                byh = bowler_clips_by_hand(bid)
+                byh = bowler_clips_by_hand(bid, fmt=args.fmt)
                 st, wk, nb = byh[""]
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nb
                 for _h in ("lhb", "rhb"):                  # a pack shows only its own batter's hand
@@ -437,7 +449,7 @@ def main():
                 f"re-run when the connection is back.")
         for bid, entry in out.get("batters", {}).items():
             for _tw in _CLIP_GROUPS:
-                _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw)
+                _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt)
                 entry[f"scoring_clips_{_tw}"], entry[f"dismissal_clips_{_tw}"] = _sc, _ds
                 entry[f"clip_scope_{_tw}"] = _scope
             sc, ds = batter_clips(conn, cur, bid)
@@ -486,11 +498,11 @@ def main():
     n_err = 0
     for bid, (nm, ty) in bowlers.items():
         try:
-            if _test_balls(conn, cur, bid, "bowl") >= TEST_FLOOR:
-                P = build_profile(bid, hand="All")
+            if _test_balls(conn, cur, bid, "bowl", fmt=args.fmt) >= TEST_FLOOR:
+                P = build_profile(bid, hand="All", fmt=args.fmt)
                 entry = {"name": nm, **distil_bowler(P, ty or "Bowler")}
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = bowler_clips_from_profile(P)
-                byh = bowler_clips_by_hand(bid)           # a pack shows only its own batter's hand
+                byh = bowler_clips_by_hand(bid, fmt=args.fmt)           # a pack shows only its own batter's hand
                 for _h in ("lhb", "rhb"):
                     _s, _w, _n = byh[_h]
                     entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
@@ -509,8 +521,8 @@ def main():
             print(f"  ! bowler {nm}: {type(e).__name__}: {e}")
     for bid, (nm, hand) in batters.items():
         try:
-            if _test_balls(conn, cur, bid, "bat") >= TEST_FLOOR:
-                out["batters"][bid] = {"name": nm, **distil_batter(build_batter_profile(bid), hand)}
+            if _test_balls(conn, cur, bid, "bat", fmt=args.fmt) >= TEST_FLOOR:
+                out["batters"][bid] = {"name": nm, **distil_batter(build_batter_profile(bid, fmt=args.fmt), hand)}
                 # card facts = the report's TL;DR summary (richer than distil; coach matchup dropped)
                 for tw in ("pace", "spin"):
                     try:
@@ -521,7 +533,7 @@ def main():
                         print(f"  ! card summary {nm} ({tw}): {type(e).__name__}: {str(e)[:60]}")
                 # per EXACT bowling type: pace/spin alone still pooled all spin together
                 for _tw in _CLIP_GROUPS:
-                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw)
+                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt)
                     out["batters"][bid][f"scoring_clips_{_tw}"] = _sc
                     out["batters"][bid][f"dismissal_clips_{_tw}"] = _ds
                     out["batters"][bid][f"clip_scope_{_tw}"] = _scope
@@ -534,7 +546,7 @@ def main():
                     continue
                 out["batters"][bid] = {"name": nm, **fb}
                 tag = " [all-formats fallback]"
-            out["batters"][bid]["role"] = batter_role(conn, cur, bid)   # opener/top/middle/lower
+            out["batters"][bid]["role"] = batter_role(conn, cur, bid, fmt=args.fmt)   # opener/top/middle/lower
             print(f"  batter {nm}: {len(out['batters'][bid]['facts'])} facts{tag}")
         except Exception as e:
             n_err += 1

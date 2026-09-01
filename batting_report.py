@@ -817,12 +817,12 @@ def _build_player(P: dict, pdf_path: str) -> dict:
 
 
 def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None,
-                          render_pdf: bool = True) -> str:
+                          render_pdf: bool = True, fmt: str = "Test") -> str:
     """Combined overview (group=None) or a focused per-bowler-type exploit report (e.g.
     group='right_pace'). Same engine; the focused one filters to that bowler group + adds a plan.
     `render_pdf=False` writes the .html + .pmode.html only (fast web iteration, skips the slow print)."""
-    raw_all = process_batting_rows(load_batter_deliveries(batter_id))
-    P = build_batter_profile(batter_id, raw=raw_all, group=group)
+    raw_all = process_batting_rows(load_batter_deliveries(batter_id, fmt=fmt))
+    P = build_batter_profile(batter_id, raw=raw_all, group=group, fmt=fmt)
 
     # a type-scoped player report (group set) keeps the fingerprint/impact but shows only the
     # traits + numbers for that bowling type. focus = pace/spin picks which fingerprint cards stay.

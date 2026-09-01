@@ -355,10 +355,23 @@ and `prefs` survive and it prints what it kept — and carries `team`/`archived`
 Verified: re-resolving Renshaw into a new squad keeps his `bowl_groups`, leaves the other 29 registry
 entries byte-identical, and leaves both archived flags alone.
 
-⚠ **`packs` and `role` ARE still overwritten**, because they are derived from the warehouse. A
-part-timer whose recent window shows no bowling loses `"bowling"` from `packs`, which drops them from
-`export_matchup_store`'s `our_bowl` — while `bowl_types` (which is what actually creates the bowling
-page) stays. Check a part-time bowler's `packs` after running it.
+⚠ **`role` IS still overwritten**, because it is derived from the warehouse. `packs` was too, and
+that is fixed (2026-09-01): a player whose registry entry has hand-set `bowl_types` keeps
+`"bowling"` even when the career ratio calls them a batter, and any pack already in the registry is
+carried across. Renshaw was the case — derived `["batting"]`, kept `["batting","bowling"]` — and
+losing it would have dropped him from `export_matchup_store`'s `our_bowl` while `bowl_types` kept
+building his bowling page. The script prints every such `!` note.
+
+**Name resolution matches the FIRST NAME, not just the surname** (fixed 2026-09-01). It used to
+take whichever surname match had the most career balls, which on the Zimbabwe ODI squad silently
+returned **Shaun** Marsh for Mitch Marsh, **Mitchell** Johnson for Spencer Johnson and **Alex**
+Davies for Joel Davies — three of fifteen. Nothing in the output revealed it because only the
+*input* name was printed back. It now scores exact > prefix (Mitch→Mitchell, Matt→Matthew), prints
+the **warehouse** name in its own column, and flags both surname-only matches (Ollie→Oliver, no
+first-name signal) and any alternate it could plausibly have picked. Always read that column.
+
+`--format Test|ODI|T20I` records what the squad was picked for; nothing in `series.json` carries
+format, so it cannot be inferred and defaults to Test.
 
 ### The field that fails silently: `bowl_groups`
 
@@ -498,9 +511,112 @@ simulated pairings for a 98-pairing squad. `freeze` removes the series from `ser
 `PACK_MAINTENANCE_PLAN.md` is the real fix; until then, check those three by hand before building a
 new opposition.
 
+## `pitch_length` is NOT NULL even when nothing was tracked — it carries `-20000`
+
+This is the most dangerous data fact in the project, because the obvious guard does nothing.
+`r.get("pitch_length_m") is not None` reads like a coverage check and **passes every ball**: an
+untracked delivery is stamped with the sentinel `-20000` mm (`-20.0` m), not NULL.
+
+Coverage is not a rounding error, and it varies by **where the match was played**:
+
+| venue | usable pitch_length | ball speed |
+|---|---|---|
+| Australia | 99.9% | 17.8% |
+| Sri Lanka / South Africa / NZ / WI | 99.5–100% | varies |
+| England · India · Bangladesh | 95–97% | — |
+| **Zimbabwe** | **46% ODI · 33% Test** | **4.8%** |
+| Ireland · Netherlands · Scotland | 40.6% · 0.1% · 0% | 0% |
+
+**A median does not fence out a sentinel.** That was the defence in both `profile.py` and
+`odi_profile.py` ("bad lengths wreck the mean") and it only holds while the bad values are a
+minority. Sentinels sort first, so the median lands at roughly the *(50 − untracked%) / tracked%*
+percentile of the real lengths — biased low in proportion to the untracked share, and outright
+`-20.00 m` past 50%. Measured: Raza (55.5% tracked) printed **3.50 m** when the truth was 6.50 m,
+Ngarava (44.4%) printed **-20.00 m**, Bosch (45.8%) printed **-20.00 m on a live Test report**,
+Henry (94.3%) was quietly 0.14 m low, Lyon (100%) was correct. The visibly broken ones were the
+lucky cases — the plausible-looking wrong numbers are the problem.
+
+**Use `cricket_core.charts.is_tracked_length` (one definition, estate-wide) before averaging.**
+`profile.tracked_lengths(rows)` is the list helper. Both `avg_len_m` builders now also return
+`tracked_len_pct`, and `report_style._length_sub` prints "tracked on N% of balls" under the Avg
+length card below 80% — a length built on 46% of deliveries has to say so.
+
+**Charts that bin into zones were already safe** (`pitch_scatter_map`, `danger_length/line/cell`,
+`zone_concentration`, `pitch_heatmap`): a sentinel falls outside every zone and is dropped by the
+`if ez is None: continue`. Anything that **averages, medians or thresholds** was not.
+
+**The threshold case is the one that reached a coach.** `build_odi_playlists` selected yorkers with
+`pitch_length_m is not None and < 2.0` — and `-20.0 < 2.0`. Ngarava's pack served **eight
+"yorkers", all eight confirmed `-20000`**, six of them bowled in overs 1.1–5.6. With the fix he has
+*no* yorker reel, which is the honest answer. When auditing, grep for comparisons against a length,
+not just for `is not None`.
+
+### 🔴 And the warehouse's own length GROUPS carry it too — this one reaches the simulation
+
+The worst instance, because it defeats the defence above. `pitch_length_group_pace_2_id` /
+`..._spin_2_id` are the warehouse's pre-bucketed zones, so code that bins by them looks safe from a
+bad coordinate. **It isn't: an untracked ball still gets a group, and it is always the fullest
+one** — pace `12999` "full/yorker", spin `10999` "full toss". Every other bucket is 0.0% untracked;
+these are 47.5% (Test pace), 56.2% (ODI pace), 79.6% (Test spin) and **90.6% (ODI spin)**.
+
+matchupmodel's zone grids bin on exactly those columns, so its fullest zone was mostly deliveries
+nobody measured — a "danger: full toss" plan largely fabricated. Fixed by `config.ZONE_TRACKED_SQL`
+in both `build_batter_response.py` and `build_bowler_delivery.py`.
+
+🔴 **The Test profile CSVs still carry it and are live** — the Bangladesh packs and the SA/NZ
+reports were produced from contaminated grids. Rebuilding them moves signed-off numbers, so it is
+a deliberate decision, not a side effect. See `ODI_PACKS_PLAN.md`.
+
+**The general rule:** a pre-bucketed category is not evidence that a measurement exists. Filter on
+the underlying coordinate before trusting any zone, group or band derived from it.
+
+## White-ball reports, and the format-aware publish path
+
+`build_reports.py --format Test|ODI|T20I` is the one batch driver for all three (it dispatches to
+`render_report` / `render_odi_report` / `render_t20_report`). `--hand` applies to **Test only** —
+the ODI and T20 reports carry both hands in their match-ups table and render one PDF per bowler.
+Failed ids are printed at the end for a straight retry, which matters because a VPN drop kills a
+whole batch.
+
+```powershell
+.\venv\Scripts\python.exe build_reports.py --format ODI --target-country Zimbabwe --ids 1310087 4352462
+```
+
+**A series.json group carries `"format"`, defaulting to Test**, so every pre-existing entry
+resolves exactly as before. `publish_site._sidecar_map()` keys on
+`(player_id, hand, kind, bowl_group, fmt)` and scans `reports/`, `reports/odi/` and `reports/t20/`
+— white-ball builders write to their own subfolders, so a scan of `reports/` alone could not see
+them, and their filenames have no `_(all|lhb|rhb)` suffix for the old regex to match.
+
+⚠ **Format comes from the DIRECTORY, never from `meta.format`.** `t20_report` shares
+`build_odi_playlists`, which hardcoded `"format": "ODI"` — so every T20 sidecar claimed to be an
+ODI one. Keying off that field filed Starc's *T20* report as his *ODI* one and silently overwrote
+the real entry. The stamp is now a parameter and is correct, but the directory is what the builder
+actually chose and is the only thing that cannot lie.
+
+**The attack section is skipped for a non-Test squad.** `attack_cards.py` derives "how bowlers have
+attacked our squad" from **Test** deliveries. Rendering it under an ODI series would put Test plans
+on an ODI page for whatever fraction of the roster happens to have a card — the pooling defect
+again — so `publish_site` skips it with a printed reason when the squad's `format` isn't Test.
+
+### What is NOT yet format-aware — the batting half
+
+The bowler reports are done. **The batting half is still hardwired to Test**, so there are no ODI
+*player packs* yet: `batting_loaders.py` has no `fmt` parameter at all (`_intl_test()`,
+`load_test_batters`), and `batter_profile`, `build_opponent_about`, `build_overview`,
+`build_shot_matrix`, `build_conditions` and `field_engine` (`_FMT = "test"`) all pin
+`international_series_sql('Test')`. `build_h2h.py` is already format-flexible (it picks the best
+available format per pairing) and the clip resolver walks Test → ODI → T20I.
+
+ODI phases (powerplay / middle / death) and ODI field norms are new work, not a parameter.
+
 ## Known gaps / pending work
 
 - Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER`) uses assumed strings — verify against actual DB lookup values if cells appear out of order
+- The warehouse spells Blessing **Muzarabani** as "Muzaurabani", and report titles use the feed's
+  name — a name-override store would be new machinery, so it is currently just wrong on the page
+- Opposition headshots fall back to initials (the shared store sources cricket.com.au, which has no
+  Zimbabwe players) — 5 of 9 Zimbabwe bowlers resolved, the rest show initials by design
 
 ## Player photos (2026-07-15 — shared `cricket_core.headshots`)
 

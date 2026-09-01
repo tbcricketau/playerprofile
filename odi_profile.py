@@ -17,7 +17,7 @@ from collections import Counter, defaultdict
 from data_loaders import load_bowler_deliveries, load_bowler_info
 import statistics
 from profile import (process_rows, _safe_float, _quantile, _SHORT_BUCKETS, _fingerprint, recent_fingerprint_vals,
-                    _pctl_of, load_phase_profiles)
+                    _pctl_of, load_phase_profiles, tracked_lengths)
 from cricket_core.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE)
 from cricket_core.lookups import team_flag
@@ -365,8 +365,11 @@ def build_odi_profile(bowler_id: str) -> dict:
     speeds = sorted(_num(legal, "ball_speed_n"))
 
     # ── headline extras for the shared headline_cards() row (defined exactly as the Test build) ──
-    _lengths = [r["pitch_length_m"] for r in legal if r.get("pitch_length_m") is not None]
-    avg_len_m = statistics.median(_lengths) if _lengths else None          # median: bad/neg lengths wreck the mean
+    # Sentinels dropped BEFORE the median — see profile.is_tracked_length. A median alone was the
+    # defence here too, and it reported Ngarava's average length as -20.00 m.
+    _lengths = tracked_lengths(legal)
+    avg_len_m = statistics.median(_lengths) if _lengths else None
+    tracked_len_pct = 100.0 * len(_lengths) / nb if nb else None
     short_pct = (sum(1 for r in legal if r.get("pitch_length_group_m") in _SHORT_BUCKETS) / nb * 100) if nb else 0.0
     _kr = [r for r in legal if r.get("is_round") is not None]
     round_pct = sum(1 for r in _kr if r["is_round"]) / len(_kr) * 100 if _kr else None
@@ -422,7 +425,7 @@ def build_odi_profile(bowler_id: str) -> dict:
         # canonical keys for the shared headline_cards() builder (identical row to Test / T20)
         "n_balls": nb, "n_wkts": wkts, "bowl_avg": runs / wkts if wkts else None,
         "avg_spd": _mean(speeds), "max_spd_99": _quantile(speeds, 0.99) if speeds else None,
-        "avg_len_m": avg_len_m, "short_pct": short_pct,
+        "avg_len_m": avg_len_m, "tracked_len_pct": tracked_len_pct, "short_pct": short_pct,
         "round_pct": round_pct, "round_lhb": round_lhb, "round_rhb": round_rhb,
         # sections
         "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="ODI", recent_vals=recent_fingerprint_vals(raw, is_spin)),
