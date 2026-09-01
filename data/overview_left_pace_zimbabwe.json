@@ -1,0 +1,206 @@
+{
+ "opp": "zimbabwe",
+ "group": "left_pace",
+ "label": "left-arm pace",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "1310087",
+   "name": "Sikandar Raza",
+   "sub": "RHB · Middle order",
+   "balls": 385,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 385,
+    "n_out": 10,
+    "bpd": 38.5,
+    "false_pct": 21.114369501466275,
+    "area": "off (43% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "2950235",
+   "name": "Sean Williams",
+   "sub": "LHB · Top order",
+   "balls": 198,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 198,
+    "n_out": 4,
+    "bpd": 49.5,
+    "false_pct": 28.07017543859649,
+    "area": "off (40% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "1300027",
+   "name": "Craig Ervine",
+   "sub": "LHB · Top order",
+   "balls": 257,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 257,
+    "n_out": 8,
+    "bpd": 32.125,
+    "false_pct": 27.049180327868854,
+    "area": "leg (47% of runs)",
+    "short": null,
+    "top_out": "Caught behind (50%)"
+   }
+  },
+  {
+   "bid": "3550060",
+   "name": "Wesley Madhevere",
+   "sub": "RHB · Top order",
+   "balls": 181,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 181,
+    "n_out": 6,
+    "bpd": 30.166666666666668,
+    "false_pct": 23.391812865497077,
+    "area": "leg (45% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  },
+  {
+   "bid": "5180206",
+   "name": "Brad Evans",
+   "sub": "RHB · Lower order",
+   "balls": 26,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 26,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 50.0,
+    "area": "off (46% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "4353138",
+   "name": "Ben Curran",
+   "sub": "LHB · Opener",
+   "balls": 154,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 154,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 25.766871165644172,
+    "area": "off (42% of runs)",
+    "short": null,
+    "top_out": "Run Out (50%)"
+   }
+  },
+  {
+   "bid": "5180199",
+   "name": "Innocent Kaia",
+   "sub": "RHB · Opener",
+   "balls": 218,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 218,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 26.457399103139014,
+    "area": "leg (46% of runs)",
+    "short": null,
+    "top_out": "Caught behind (33%)"
+   }
+  },
+  {
+   "bid": "5460149",
+   "name": "Brian Bennett",
+   "sub": "RHB · Opener",
+   "balls": 71,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 71,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 25.0,
+    "area": "off (59% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "5180207",
+   "name": "Clive Madande",
+   "sub": "RHB · Middle order",
+   "balls": 62,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 62,
+    "n_out": 4,
+    "bpd": 15.5,
+    "false_pct": 28.125,
+    "area": "straight (55% of runs)",
+    "short": null,
+    "top_out": "Caught behind (75%)"
+   }
+  },
+  {
+   "bid": "4352462",
+   "name": "Richard Ngarava",
+   "sub": "LHB · Lower order",
+   "balls": 52,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 52,
+    "n_out": 6,
+    "bpd": 8.666666666666666,
+    "false_pct": 43.39622641509434,
+    "area": "off (68% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "3980017",
+   "name": "Wellington Masakadza",
+   "sub": "LHB · Lower order",
+   "balls": 40,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 40,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 23.91304347826087,
+    "area": "off (57% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  }
+ ]
+}

@@ -1,0 +1,206 @@
+{
+ "opp": "zimbabwe",
+ "group": "off_spin",
+ "label": "off spin",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "1310087",
+   "name": "Sikandar Raza",
+   "sub": "RHB · Middle order",
+   "balls": 688,
+   "plan": "Plan for off spin: bowl <b>good length pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 688,
+    "n_out": 11,
+    "bpd": 62.54545454545455,
+    "false_pct": 10.06006006006006,
+    "area": "straight (37% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (45%)"
+   }
+  },
+  {
+   "bid": "2950235",
+   "name": "Sean Williams",
+   "sub": "LHB · Top order",
+   "balls": 651,
+   "plan": "Plan for off spin: bowl <b>good length pitching on the stumps</b> while <b>drifting in</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 651,
+    "n_out": 17,
+    "bpd": 38.294117647058826,
+    "false_pct": 10.507880910683012,
+    "area": "straight (41% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (35%)"
+   }
+  },
+  {
+   "bid": "1300027",
+   "name": "Craig Ervine",
+   "sub": "LHB · Top order",
+   "balls": 656,
+   "plan": "Plan for off spin: bowl <b>good length pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 656,
+    "n_out": 17,
+    "bpd": 38.588235294117645,
+    "false_pct": 10.613598673300165,
+    "area": "straight (44% of runs)",
+    "short": null,
+    "top_out": "Bowled (47%)"
+   }
+  },
+  {
+   "bid": "3550060",
+   "name": "Wesley Madhevere",
+   "sub": "RHB · Top order",
+   "balls": 210,
+   "plan": "Plan for off spin: bowl <b>good length pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 210,
+    "n_out": 5,
+    "bpd": 42.0,
+    "false_pct": 7.960199004975125,
+    "area": "leg (40% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (60%)"
+   }
+  },
+  {
+   "bid": "5180206",
+   "name": "Brad Evans",
+   "sub": "RHB · Lower order",
+   "balls": 15,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 15,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 0.0,
+    "area": "leg (67% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "4353138",
+   "name": "Ben Curran",
+   "sub": "LHB · Opener",
+   "balls": 157,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 157,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 12.025316455696203,
+    "area": "off (46% of runs)",
+    "short": null,
+    "top_out": "LBW (33%)"
+   }
+  },
+  {
+   "bid": "5180199",
+   "name": "Innocent Kaia",
+   "sub": "RHB · Opener",
+   "balls": 151,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 151,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 12.418300653594772,
+    "area": "straight (60% of runs)",
+    "short": null,
+    "top_out": "LBW (67%)"
+   }
+  },
+  {
+   "bid": "5460149",
+   "name": "Brian Bennett",
+   "sub": "RHB · Opener",
+   "balls": 62,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 62,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 22.580645161290324,
+    "area": "off (53% of runs)",
+    "short": null,
+    "top_out": "Caught behind (100%)"
+   }
+  },
+  {
+   "bid": "5180207",
+   "name": "Clive Madande",
+   "sub": "RHB · Middle order",
+   "balls": 78,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 78,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 13.924050632911392,
+    "area": "straight (65% of runs)",
+    "short": null,
+    "top_out": "Caught (100%)"
+   }
+  },
+  {
+   "bid": "4352462",
+   "name": "Richard Ngarava",
+   "sub": "LHB · Lower order",
+   "balls": 50,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 50,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 21.568627450980394,
+    "area": "off (47% of runs)",
+    "short": null,
+    "top_out": "Bowled (100%)"
+   }
+  },
+  {
+   "bid": "3980017",
+   "name": "Wellington Masakadza",
+   "sub": "LHB · Lower order",
+   "balls": 70,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 70,
+    "n_out": 4,
+    "bpd": 17.5,
+    "false_pct": 22.058823529411764,
+    "area": "off (47% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  }
+ ]
+}

@@ -133,7 +133,10 @@ def build(opp, fmt="Test"):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--opp", default="bangladesh")
-    build(ap.parse_args().opp)
+    ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
+                    help="which format's internationals to count (default: Test)")
+    a = ap.parse_args()
+    build(a.opp, fmt=a.fmt)
 
 
 if __name__ == "__main__":

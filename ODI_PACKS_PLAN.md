@@ -176,6 +176,25 @@ sim entirely** (`if str(b) in bmeta`), even when pinned in the squad file. The c
 🔴 **Tom re-enables Pages on `tbcricketau/player-packs`** (Settings → Pages → main / root). It was
 disabled when the series was archived, so the bundle can be pushed but will not serve until then.
 
+## The Zimbabwe run — what is built
+
+| artefact | state |
+|---|---|
+| `matchup_store_zimbabwe.json` | ✅ ODI, 99 + 105 pairings, our roster 15/11 from the squad |
+| `opponent_about_zimbabwe.json` | ✅ 7 bowlers, 11 batters — **every clip scope `ODI:*`**, none fell back to Test |
+| `overview_*_zimbabwe.json/html` | ✅ 7 groups (right_pace 6/11 with a plan · leg_break 10/11 · left_pace 3/11) |
+| `h2h_zimbabwe.json` | ✅ 51 reels over 8 distinct days, no single-day collapse; formats ODI/T20I/List A, **no Test** |
+| `shot_matrix_zimbabwe.html` | ✅ 11 batters each side |
+| `matchups_zimbabwe.html` | ✅ and it now says "ODI careers" rather than "Test careers" |
+| Zimbabwe ODI **bowler** reports | ✅ 9, live in the gated portal |
+| Zimbabwe ODI **batting** reports | ⏳ 66 rendering (11 batters × combined + 5 atomic groups) |
+
+**No coach-side batters group in `series.json`.** The Bangladesh series had `batters-to-pace` /
+`batters-to-spin`, built from the macro groups. Zimbabwe's coach view is the seven per-type
+overviews plus the match-ups grid and shot matrix, which is the designed coach depth; the
+individual batter reports reach the player packs through `inject_reports.py`. Adding coach-side
+batter cards is a `series.json` edit if Tom wants them.
+
 ## Rules this work must not break
 
 - **Reels stay scoped to what the pack is about** — bowling pack = exact bowler type, batting pack

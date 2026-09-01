@@ -1,0 +1,248 @@
+{
+ "pace": [
+  {
+   "batter": "Sikandar Raza",
+   "bid": "1310087",
+   "balls": 1575,
+   "Conventional sweep": 0.3,
+   "Slog sweep": 0.2,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.3,
+   "Ramp / scoop": 0.4,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Craig Ervine",
+   "bid": "1300027",
+   "balls": 1208,
+   "Conventional sweep": 0.1,
+   "Slog sweep": 0.1,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Sean Williams",
+   "bid": "2950235",
+   "balls": 1221,
+   "Conventional sweep": 0.4,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.1,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.6,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Wesley Madhevere",
+   "bid": "3550060",
+   "balls": 603,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.2,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.8,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Innocent Kaia",
+   "bid": "5180199",
+   "balls": 555,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.2,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ben Curran",
+   "bid": "4353138",
+   "balls": 403,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 1.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Brian Bennett",
+   "bid": "5460149",
+   "balls": 269,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Clive Madande",
+   "bid": "5180207",
+   "balls": 217,
+   "Conventional sweep": 0.5,
+   "Slog sweep": 0.5,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 1.8,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Richard Ngarava",
+   "bid": "4352462",
+   "balls": 162,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Wellington Masakadza",
+   "bid": "3980017",
+   "balls": 165,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.6,
+   "Paddle": 0.6,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Brad Evans",
+   "bid": "5180206",
+   "balls": 128,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 6.2,
+   "Switch hit": 0.0
+  }
+ ],
+ "spin": [
+  {
+   "batter": "Sikandar Raza",
+   "bid": "1310087",
+   "balls": 1329,
+   "Conventional sweep": 4.7,
+   "Slog sweep": 0.5,
+   "Reverse sweep": 0.6,
+   "Paddle": 0.1,
+   "Ramp / scoop": 0.2,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Craig Ervine",
+   "bid": "1300027",
+   "balls": 1064,
+   "Conventional sweep": 5.8,
+   "Slog sweep": 0.7,
+   "Reverse sweep": 2.8,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Sean Williams",
+   "bid": "2950235",
+   "balls": 1039,
+   "Conventional sweep": 4.9,
+   "Slog sweep": 2.7,
+   "Reverse sweep": 5.4,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.2,
+   "Switch hit": 0.2
+  },
+  {
+   "batter": "Wesley Madhevere",
+   "bid": "3550060",
+   "balls": 414,
+   "Conventional sweep": 4.3,
+   "Slog sweep": 2.2,
+   "Reverse sweep": 2.4,
+   "Paddle": 1.0,
+   "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Innocent Kaia",
+   "bid": "5180199",
+   "balls": 192,
+   "Conventional sweep": 3.1,
+   "Slog sweep": 0.5,
+   "Reverse sweep": 0.5,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ben Curran",
+   "bid": "4353138",
+   "balls": 216,
+   "Conventional sweep": 1.9,
+   "Slog sweep": 0.5,
+   "Reverse sweep": 1.9,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.9,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Brian Bennett",
+   "bid": "5460149",
+   "balls": 141,
+   "Conventional sweep": 9.9,
+   "Slog sweep": 2.1,
+   "Reverse sweep": 0.7,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Clive Madande",
+   "bid": "5180207",
+   "balls": 172,
+   "Conventional sweep": 1.2,
+   "Slog sweep": 3.5,
+   "Reverse sweep": 0.6,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Richard Ngarava",
+   "bid": "4352462",
+   "balls": 167,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Wellington Masakadza",
+   "bid": "3980017",
+   "balls": 158,
+   "Conventional sweep": 6.3,
+   "Slog sweep": 1.9,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.6,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Brad Evans",
+   "bid": "5180206",
+   "balls": 97,
+   "Conventional sweep": 10.3,
+   "Slog sweep": 9.3,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  }
+ ]
+}
