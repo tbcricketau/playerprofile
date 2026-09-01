@@ -68,15 +68,22 @@ Verified: an AST pass confirms `fmt` is bound everywhere it is used across all t
 and the default path is unchanged (Curran 1003 balls / 537 runs, Raza 2633 balls — identical to
 pre-refactor).
 
-### ⏸ Layer 3 — the field engine (the deepest)
+### ✅ Layer 3 — the field engine — RESOLVED BY OMISSION 2026-09-01
 
-`field_engine.py` has `_FMT = "test"` at module level and uses it for `fields.gps_corrected_field`,
-`OUT_LIMIT[_FMT]` and two `_FMT == "test"` behaviour branches. **This is not a parameter swap:**
+**ODI packs ship without Suggested Fields, and say so.** `cricket_core.fields` already carries the
+ODI half — stock fields and `OUT_LIMIT["odi"] = {"pp1": 2, "middle": 4, "death": 5}` — but the
+*tactics* in `field_engine.py` are red-ball: `_STOCK_VARIANTS` is a Test-phase library, `_rules`
+encodes Test logic ("R2 square early"), phases come from `is_early` rather than an over number, and
+no ODI run of `build_field_trigger_norms.py` exists.
 
-- ODI phases are **powerplay / middle / death**, not new-ball / old-ball.
-- Fielding restrictions differ per phase (2 out in PP1, 4 in the middle, 5 at the death) — the
-  `OUT_LIMIT` table has to become phase-aware for ODI, not just format-aware.
-- ODI field trigger norms do not exist; `build_field_trigger_norms.py` would need an ODI run.
+Generating a white-ball field from red-ball rules would be a plausible, unjustified answer — the
+exact failure this codebase keeps finding. `build_overview._field_images` / `_field_parts` now
+return empty for a non-Test format and print the reason once. Both call sites already tolerated a
+`None`, so the section simply does not render.
+
+To finish it properly later: derive phase from over number (`odi_profile._phase` already does),
+map to `pp1/middle/death`, write an ODI `_STOCK_VARIANTS` library, and run the trigger norms for
+ODI. That is cricket design work, not refactoring.
 
 ### ✅ Layer 4 — matchupmodel — DONE 2026-09-01
 
@@ -138,19 +145,36 @@ cohort response and is flagged confidence "None". A bowler with no profile is **
 sim entirely** (`if str(b) in bmeta`), even when pinned in the squad file. The count is printed
 ("N bowlers of M named") so it is visible, but the asymmetry is worth closing.
 
-### ⏸ Layer 5 — pack assembly + publish
+### ✅ Layer 5 — pack assembly + publish — CODE DONE 2026-09-01
 
-- `build_player_site.py` — format awareness end to end.
-- ⚠ **The reel-scope star is hardcoded to Test.** `build_player_site.py:1138` reads
-  `scope != f"Test:{group}"`, so in an ODI pack **every** reel would be starred as mis-scoped even
-  when it is perfectly scoped `ODI:off_spin`. The footnote would fire on all of them and stop
-  meaning anything — the star has to compare against the pack's own format.
-- **The ODI report has no player-mode cut.** `report.py` writes `.pmode.html` (116 exist); ODI and
-  T20 write none. The packs link `.pmode.html`, so this must be added or the packs link nothing.
-- `publish_packs.py` — revive the `aus` bundle (Tom's call): re-point it at the Zimbabwe series,
-  clear the `archived` note, publish with `--revive`. **Rebuild from source, never re-push the
-  tag** — the archived bundle's SAS expired 2026-08-27.
-- Tom re-enables Pages on `tbcricketau/player-packs` (Settings → Pages → main / root).
+- **The ODI/T20 reports now write a player-mode cut.** They wrote none, and the packs link
+  `<base>.pmode.html`, so an ODI pack would have linked nothing. It is byte-identical to the coach
+  page **on purpose** — Test's player mode exists to strip the coach-only "Vs Our Squad" verdicts
+  and these reports have no such section. ⚠ If one is ever added, this must start stripping it.
+- **The reel-scope star now compares against the pack's format.** It read `scope != f"Test:{group}"`,
+  so an ODI pack would have starred every reel as mis-scoped even when perfectly scoped
+  `ODI:off_spin` — a footnote that fires on everything means nothing. The pack's format is taken
+  from the **squad**, which is where it is recorded.
+- **`_scouting_urls` was doubly wrong for white-ball.** It globbed only `reports/` (ODI renders to
+  `reports/odi/`) and *inferred* the folder as `bowlers-vs-{hand}`, which is only true because the
+  Test groups happen to be named that — a white-ball group is `bowlers`, so every link would have
+  404'd. It now scans all format dirs and takes the group from **series.json**. Verified: Zimbabwe
+  resolves 9 links under `bowlers/` keyed `all`; South Africa is unchanged at 17 under
+  `bowlers-vs-lhb` keyed `lhb`.
+- **The batting packs fell back to nothing.** `hmap.get(hand)` with hand `rhb`/`lhb` finds nothing
+  in a white-ball map keyed `all`, so an ODI batting pack linked no reports; it now falls back to
+  the hand-agnostic report, which is what a both-hands report is.
+- **`build_h2h` format order follows the PACK.** `_FMT_PRIORITY` was Test-first, so an ODI pack
+  preferred a Test meeting over the ODI one it was preparing for. `_FMT_ORDER` now puts the pack's
+  format first and red-ball last for white-ball packs.
+- **`publish_packs.py` `aus` bundle revived** and repointed at `zimbabwe-odi-away-2026`
+  (`opp: zimbabwe`). The archived note is replaced by a comment recording what the repo held
+  before, that the `archived-2026-08-31` tag still holds it, and that publishing force-pushes over
+  that state on `main`. Reviving Bangladesh later means rebuilding from source — its baked SAS
+  expired 2026-08-27.
+
+🔴 **Tom re-enables Pages on `tbcricketau/player-packs`** (Settings → Pages → main / root). It was
+disabled when the series was archived, so the bundle can be pushed but will not serve until then.
 
 ## Rules this work must not break
 

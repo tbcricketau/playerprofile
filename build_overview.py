@@ -19,6 +19,15 @@ import time
 from batter_profile import build_batter_profile, BOWLER_GROUPS, MACRO_GROUPS
 from batting_report import plan_sentence
 import field_engine
+
+_warned_fmts = set()
+
+
+def _warn_no_fields(fmt):
+    if fmt not in _warned_fmts:
+        _warned_fmts.add(fmt)
+        print(f"  - suggested fields omitted: field_engine has {fmt} stock fields but no {fmt} "
+              f"tactics or trigger norms (see ODI_PACKS_PLAN.md Layer 3)")
 from site_render import page as _page
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -45,10 +54,19 @@ _CSS = """<style>
 </style>"""
 
 
-def _field_images(P, group, img_dir, bid):
+def _field_images(P, group, img_dir, bid, fmt="Test"):
     """Render each suggested field to a PNG file so the pack can open it as an overlay. Files, not
     data-URIs — one <img> per batter per phase would add megabytes of base64 to every bowling pack.
     Labels stay the descriptive ones (Early / Once set / Bouncer plan), matching the reports."""
+    # field_engine is TEST-ONLY, and deliberately so. cricket_core.fields already carries ODI
+    # stock fields and out-of-circle limits, but the TACTICS in field_engine do not: _STOCK_VARIANTS
+    # is a Test-phase library, _rules encodes red-ball logic (R2 square early), and no ODI run of
+    # build_field_trigger_norms.py exists. Producing a white-ball field from red-ball rules would
+    # be a plausible, unjustified answer -- the exact failure this codebase keeps finding. Omit the
+    # section instead, and say so. See ODI_PACKS_PLAN.md Layer 3.
+    if str(fmt).lower() != "test":
+        _warn_no_fields(fmt)
+        return []
     sub = {"is_lhb": P.get("is_lhb"), "batter_id": P.get("batter_id"),
            "raw": P.get("raw"), "caught_positions": P.get("caught_positions")}
     wanted, short_ball = [], None
@@ -80,10 +98,19 @@ def _field_images(P, group, img_dir, bid):
     return out
 
 
-def _field_parts(P, group):
+def _field_parts(P, group, fmt="Test"):
     """The field as three separate answers, because running them together behind dots hid what each
     one was: SET the orthodox field for this type, MOVE the one change the evidence supports, SPARE
     the fielder returning least. The reasoning behind each stays in the batter's own report."""
+    # field_engine is TEST-ONLY, and deliberately so. cricket_core.fields already carries ODI
+    # stock fields and out-of-circle limits, but the TACTICS in field_engine do not: _STOCK_VARIANTS
+    # is a Test-phase library, _rules encodes red-ball logic (R2 square early), and no ODI run of
+    # build_field_trigger_norms.py exists. Producing a white-ball field from red-ball rules would
+    # be a plausible, unjustified answer -- the exact failure this codebase keeps finding. Omit the
+    # section instead, and say so. See ODI_PACKS_PLAN.md Layer 3.
+    if str(fmt).lower() != "test":
+        _warn_no_fields(fmt)
+        return None
     sub = {"is_lhb": P.get("is_lhb"), "batter_id": P.get("batter_id"),
            "raw": P.get("raw"), "caught_positions": P.get("caught_positions")}
     try:
@@ -198,9 +225,9 @@ def build(opp, group, only=None, fmt="Test"):
                      "sub": " · ".join(x for x in (meta.get("hand"), meta.get("role")) if x),
                      "balls": balls,
                      "plan": None if thin else plan_sentence(P, baseline=baseline),
-                     "field": None if thin else _field_parts(P, group),
+                     "field": None if thin else _field_parts(P, group, fmt),
                      "fields": [] if thin else _field_images(
-                         P, group, os.path.join(HERE, "reports", "fields", opp, group), bid),
+                         P, group, os.path.join(HERE, "reports", "fields", opp, group), bid, fmt),
                      "threat": _threat(P) if balls else None})
         # Short balls from ONE pace sub-type are too few to rate, so fall back to the batter's
         # whole pace record for that column and say so — an unanswered bouncer question is worse

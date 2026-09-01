@@ -103,6 +103,11 @@ def render_t20_report(bowler_id: str, out_dir: str = "reports/t20",
         html = html.replace("</body>", snippet + "</body>")
     with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
         f.write(html)
+    # Player-mode cut — see the note in odi_report.render_odi_report. Identical to the coach page
+    # because this report carries no coach-only "Vs Our Squad" section; if one is ever added here,
+    # this must strip it.
+    with open(out_path[:-4] + ".pmode.html", "w", encoding="utf-8") as f:
+        f.write(html)
     _html_to_pdf(html, out_path)
     return out_path
 

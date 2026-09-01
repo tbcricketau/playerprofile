@@ -441,22 +441,58 @@ def _scouting_urls(series_slug):
     scouting reports in the assembled bundle. Bowler reports are hand-specific; batter reports have
     a combined overview plus per-bowler-type ('_vs_{group}') variants a bowler links type-scoped."""
     import glob
+    from publish_site import _FMT_DIRS, _fmt_key
+
+    # Which folder publish_site actually baked each bowler into, taken from series.json rather than
+    # inferred. The old code assumed "bowlers-vs-{hand}", which is only true because the Test series
+    # groups happen to be named that — a white-ball group is "bowlers" (no hand split), so every
+    # link would have pointed at a folder that does not exist.
+    grp_of = {}
+    try:
+        cfg = json.load(open(os.path.join(HERE, "series.json"), encoding="utf-8"))
+        for s in cfg.get("series", []):
+            if s.get("slug") != series_slug:
+                continue
+            for g in s.get("groups", []):
+                gf = _fmt_key(g.get("format") or s.get("format"))
+                for r in g.get("reports", []):
+                    hand = r.get("hand", "all") if gf == "test" else "all"
+                    grp_of[(str(r["id"]), hand)] = g["slug"]
+    except Exception:
+        pass
+
     bowl, bat, bat_groups = {}, {}, {}
+    # Scan every format's output dir — the white-ball builders write to reports/odi and reports/t20,
+    # so a glob of reports/ alone finds no ODI report at all.
+    for _fmt, _dir in _FMT_DIRS.items():
+        for sc in glob.glob(os.path.join(_dir, "*.playlists.json")):
+            base = os.path.basename(sc)[: -len(".playlists.json")]
+            try:
+                meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
+            except Exception:
+                continue
+            if not ("_bowling_" in base and meta.get("bowler_id")):
+                continue
+            bid = str(meta["bowler_id"])
+            # A Test report is hand-specific; ODI/T20 carry both hands inside one report.
+            hand = ("lhb" if base.endswith("_lhb")
+                    else "rhb" if base.endswith("_rhb") else "all")
+            grp = grp_of.get((bid, hand))
+            if not grp:
+                continue                        # not in this series' groups — not ours to link
+            # link the reduced PLAYER-MODE report (matchup verdicts stripped), not the coach cut
+            variant = ".pmode.html" if os.path.exists(
+                os.path.join(_dir, f"{base}.pmode.html")) else ".html"
+            bowl.setdefault(bid, {})[hand] = \
+                f"../scouting/{series_slug}/{grp}/{base}{variant}"
+
     for sc in glob.glob(os.path.join(HERE, "reports", "*.playlists.json")):
         base = os.path.basename(sc)[: -len(".playlists.json")]
         try:
             meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
         except Exception:
             continue
-        if "_bowling_" in base and meta.get("bowler_id"):
-            hand = "lhb" if base.endswith("_lhb") else "rhb"
-            grp = f"bowlers-vs-{hand}"
-            # link the reduced PLAYER-MODE report (matchup verdicts stripped), not the coach cut
-            variant = ".pmode.html" if os.path.exists(
-                os.path.join(HERE, "reports", f"{base}.pmode.html")) else ".html"
-            bowl.setdefault(str(meta["bowler_id"]), {})[hand] = \
-                f"../scouting/{series_slug}/{grp}/{base}{variant}"
-        elif "_batting_" in base and meta.get("batter_id"):
+        if "_batting_" in base and meta.get("batter_id"):
             bid = str(meta["batter_id"])
             m = re.search(r"_vs_([a-z_]+)$", base)     # a per-bowler-type player report
             variant = ".pmode.html" if os.path.exists(
@@ -1089,7 +1125,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                   had_meetings=False, h2h_map=None, h2h_rows=None, pages=None, current=None,
                   btype="pace", opp_vision=None, opp_tiers=None, similar_href=None, similar_name=None,
                   overview=None, release=None, release_vision=None, manual_href=None,
-                  group=None, clip_scopes=None):
+                  group=None, clip_scopes=None, fmt="Test"):
     """Bowling pack, SCOPED to one bowling type (pace or spin): one card per opposition batter,
     showing only how they play THAT type + footage of you bowling to them."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -1135,7 +1171,10 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                 if _h:
                     # the reel exists for this exact type, but the clips inside it may have come from
                     # a wider bowler type or a white-ball match (see batter_clips_best)
-                    if group and scope and scope != f"Test:{group}":
+                    # Compare against the PACK's format, not Test. Hardcoded, an ODI pack would
+                    # star every reel as mis-scoped even when it is perfectly scoped "ODI:off_spin",
+                    # and a footnote that fires on everything stops meaning anything.
+                    if group and scope and scope != f"{fmt}:{group}":
                         lim.add(_k)
                 else:
                     _h = opp_vision.get((bid, f"{_k}_{tw}"))
@@ -1440,6 +1479,10 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
 
     for slug in slugs:
         meta = squads[slug]
+        # The pack's format comes from the SQUAD, which is where it is recorded — a squad is picked
+        # for a format. It decides which reel scope counts as correctly scoped (an ODI pack must not
+        # star "ODI:off_spin" as a fallback) and which reports the cards link.
+        fmt = (meta.get("format") or "Test").strip()
         roster = [(pid, players.get(pid, {"name": pid, "role": "Unknown", "packs": ["batting"]}))
                   for pid in meta.get("players", []) if not only or pid in only]
         s_dir = out_dir if single else os.path.join(out_dir, slug)
@@ -1562,7 +1605,11 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
                 lbl = "Bowling" if len(bts) == 1 else f"Bowling: {bt.capitalize()}"
                 pages.append((lbl, f"{pslug}-bowling-{bt}.html"))
             hand = our_hands.get(pid, "rhb")           # link the bowler report for THIS hand
-            bat_report = {bid: hmap.get(hand) for bid, hmap in bowl_urls.items() if hmap.get(hand)}
+            # ... falling back to the hand-agnostic report where that is all there is. A Test report
+            # is rendered per hand; an ODI/T20 report carries both hands in its match-ups table and
+            # is keyed "all". Without the fallback an ODI batting pack linked no reports at all.
+            bat_report = {bid: (hmap.get(hand) or hmap.get("all"))
+                          for bid, hmap in bowl_urls.items() if (hmap.get(hand) or hmap.get("all"))}
             open(os.path.join(s_dir, bat_href), "w", encoding="utf-8").write(
                 _page(f"{name} — batting",
                       _batting_body(meta, pid, rec, cards.get(pid), vision, h2h_links, had_bat,
@@ -1593,7 +1640,7 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
                                         release=(release_data.get(pid) if bt == "pace" else None),
                                         release_vision=release_vision,
                                         manual_href=manual_href, group=(grp or bt),
-                                        clip_scopes=clip_scopes) + vsnip,
+                                        clip_scopes=clip_scopes, fmt=fmt) + vsnip,
                       up=("index.html", "Squad")))
         print(f"  {slug}: {len(roster)} players -> {s_dir}")
 

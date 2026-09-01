@@ -25,8 +25,16 @@ from cricket_core.formats import match_format
 HERE = os.path.dirname(os.path.abspath(__file__))
 MAX_BALLS = 20                                          # house rule: 10-20 most recent per pairing
 
-# format preference: a Test pack wants Test footage first, then the closest available.
-_FMT_PRIORITY = ["Test", "ODI", "T20I", "T20", "List A", "The Hundred", "FC", "T10"]
+# Format preference, per PACK format: a Test pack wants Test footage first, an ODI pack wants ODI.
+# For a white-ball pack the nearest neighbours are the other white-ball formats, so red-ball footage
+# comes last — hardcoding the Test order served an ODI pack a Test meeting in preference to the ODI
+# one it was preparing for. Same rule as build_opponent_about._FMT_ORDER.
+_FMT_ORDER = {
+    "Test": ["Test", "ODI", "T20I", "T20", "List A", "The Hundred", "FC", "T10"],
+    "ODI":  ["ODI", "List A", "T20I", "T20", "The Hundred", "Test", "FC", "T10"],
+    "T20I": ["T20I", "T20", "The Hundred", "T10", "ODI", "List A", "Test", "FC"],
+}
+_FMT_PRIORITY = _FMT_ORDER["Test"]           # back-compat for anything importing the old name
 _FMT_LABEL = {"Test": "Test", "ODI": "ODI", "T20I": "T20I", "T20": "domestic T20",
               "List A": "List A", "The Hundred": "The Hundred", "FC": "first-class", "T10": "T10"}
 HOW = {"4": "Bowled", "5": "Caught", "6": "LBW", "7": "Hit Wicket", "8": "Stumped", "9": "Run Out"}
@@ -58,7 +66,8 @@ def _fmt(r):
         return None
 
 
-def _rowify(raw, cap=MAX_BALLS):
+def _rowify(raw, cap=MAX_BALLS, order=None):
+    order = order or _FMT_ORDER["Test"]
     """Per (striker, bowler): group by format, keep only balls with a clip stem, pick the highest
     -priority format present, and take the newest `cap` of it. Returns {pair: (fmt, [balls])}."""
     by_pair = defaultdict(lambda: defaultdict(list))    # (s,b) -> fmt -> [ball]
@@ -68,7 +77,7 @@ def _rowify(raw, cap=MAX_BALLS):
         if not stem:
             continue                                    # no footage -> not useful for vision
         fmt = _fmt(r)
-        if fmt not in _FMT_PRIORITY:
+        if fmt not in order:
             continue
         out = r["striker_dismissed"] in ("1", "True", "true")
         by_pair[(r["striker_id"], r["bowler_id"])][fmt].append({
@@ -77,7 +86,7 @@ def _rowify(raw, cap=MAX_BALLS):
             "wicket": HOW.get(r["how_out_id"]) if out else None, "clip_stem": stem})
     chosen = {}
     for pair, byfmt in by_pair.items():
-        for fmt in _FMT_PRIORITY:
+        for fmt in order:
             if byfmt.get(fmt):
                 chosen[pair] = (fmt, byfmt[fmt][:cap])   # rows already newest-first
                 break
@@ -87,6 +96,9 @@ def _rowify(raw, cap=MAX_BALLS):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--opp", default="bangladesh")
+    ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
+                    help="the PACK's format — decides which footage a pairing prefers "
+                         "(default: Test)")
     args = ap.parse_args()
 
     store_p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{args.opp}.json")
@@ -97,8 +109,9 @@ def main():
     our_bowl = sorted({c["bowler_id"] for c in store["they_bat"]})
 
     conn, cur = set_conn_cursor()
-    a = _rowify(_pull(conn, cur, our_bat, opp_bowl))     # our batters facing their bowlers
-    b = _rowify(_pull(conn, cur, opp_bat, our_bowl))     # their batters facing our bowlers
+    order = _FMT_ORDER.get(args.fmt, _FMT_ORDER["Test"])
+    a = _rowify(_pull(conn, cur, our_bat, opp_bowl), order=order)   # our batters vs their bowlers
+    b = _rowify(_pull(conn, cur, opp_bat, our_bowl), order=order)   # their batters vs our bowlers
     conn.close()
 
     def pack(chosen):

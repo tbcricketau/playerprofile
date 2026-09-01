@@ -156,6 +156,15 @@ def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
         html = html.replace("</body>", snippet + "</body>")
     with open(out_path[:-4] + ".html", "w", encoding="utf-8") as f:
         f.write(html)
+    # Player-mode cut. The player packs link `<base>.pmode.html`, and publish_site only copies one
+    # if it exists — without this an ODI pack links nothing at all.
+    #
+    # It is byte-identical to the coach page ON PURPOSE: the Test report's player mode exists to
+    # strip the coach-only "Vs Our Squad" matchup verdicts, and this report has no such section.
+    # ⚠ If a vs-our-squad strip is ever added to _TEMPLATE, this must start stripping it — a player
+    # must never see how they personally match up against an opponent.
+    with open(out_path[:-4] + ".pmode.html", "w", encoding="utf-8") as f:
+        f.write(html)
     _html_to_pdf(html, out_path)
     return out_path
 

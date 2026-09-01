@@ -23,21 +23,17 @@ from audit_pack_hands import run_audit
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 BUNDLES = {
+    # REVIVED 2026-09-01 (Tom) and repointed at the Zimbabwe away ODI series. The repo previously
+    # served the Bangladesh home Tests, archived 2026-08-31 and still tagged archived-2026-08-31 —
+    # that state is recoverable from the tag, though its baked-in SAS expired 2026-08-27, so a
+    # revival of THAT series means rebuilding from source rather than checking the tag out.
+    # The Bangladesh coach-side copy is unaffected: it stays frozen and gated in the scouting
+    # portal at archive/bangladesh-home-2026, SAS-re-stamped on every refresh.
+    # ⚠ Publishing here force-pushes over the archived Bangladesh state on `main`.
     "aus": {"assemble": "assemble_packs.py", "arg": "aus",
             "bundle": "player_pack_site",
             "repo": "https://github.com/tbcricketau/player-packs.git",
-            "opp": "bangladesh", "slug": "bangladesh-home-2026",
-            "archived": (
-                "AUS player packs were ARCHIVED 2026-08-31 (Tom) — the Bangladesh home series is "
-                "over. GitHub Pages is disabled on tbcricketau/player-packs; the repo and its "
-                "history are intact and the last published state is tagged archived-2026-08-31.\n"
-                "The COACH-side copy of the series lives on, gated, in the scouting portal under "
-                "archive/bangladesh-home-2026 — frozen by archive_series.py and SAS-re-stamped on "
-                "every refresh, so its vision still plays. This bundle's does not.\n"
-                "To bring the pack site back: re-enable Pages (branch main, root), rebuild from "
-                "source, then publish with --revive. Rebuild rather than re-push the tag — a "
-                "bundle is only as fresh as the SAS baked into it, and this one expired "
-                "2026-08-27.")},
+            "opp": "zimbabwe", "slug": "zimbabwe-odi-away-2026"},
     "caxi": {"assemble": "assemble_packs.py", "arg": "caxi",
              "bundle": "caxi_player_pack_site",
              "repo": "https://github.com/tbcricketau/caxi-player-packs.git",

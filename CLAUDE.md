@@ -423,6 +423,32 @@ build_player_site.py --out player_site        the packs
 publish_packs.py aus                          assemble -> link check -> hand audit -> push
 ```
 
+**For a white-ball series, everything upstream takes `--fmt` and the opposition data comes first.**
+The full chain, in dependency order (Zimbabwe ODI as the worked example):
+
+```
+matchupmodel/scripts/build_batter_response.py  --fmt ODI      profile CSVs, once per format
+matchupmodel/scripts/build_bowler_delivery.py  --fmt ODI      (Test keeps unsuffixed filenames)
+matchupmodel/data/opp_squad_zimbabwe.json                     pin the opposition XV by hand
+matchupmodel/scripts/export_matchup_store.py --opp Zimbabwe --fmt ODI --squad <our slug>
+build_opponent_about.py --opp zimbabwe --fmt ODI              ~40 min, the long pole
+build_overview.py       --opp zimbabwe --fmt ODI --group …    once per bowler group
+build_h2h.py            --opp zimbabwe --fmt ODI              format order follows the PACK
+build_shot_matrix.py    --opp zimbabwe --fmt ODI
+build_batting_reports.py --fmt ODI --ids <opposition batters>
+build_reports.py --format ODI --ids <opposition bowlers>
+render_matchups.py --opp zimbabwe
+… then publish_site -> inject_reports -> build_player_site -> publish_packs as above
+```
+
+`build_conditions.py` is **skipped for white-ball**: it scopes correctly with `--fmt` but still
+measures against `REF_CONDITIONS` = NZ/SA/ENG, the SENA-away seam-and-bounce benchmark, which is a
+Test idea. Pick a white-ball reference set before using it.
+
+**Suggested Fields are omitted from non-Test packs** and `build_overview` prints why. The ODI stock
+fields and out-of-circle limits exist in `cricket_core.fields`, but `field_engine`'s tactics are
+red-ball. See `ODI_PACKS_PLAN.md` Layer 3.
+
 `inject_reports.py` exists because `_scouting_urls` links `scouting/<series>/batters/<base>.pmode.html`
 and **no series.json group produces that folder**. It had been filled by a script outside the repo,
 so a plain `publish_site.py --out site` wiped it and the next assemble produced a bundle full of dead
