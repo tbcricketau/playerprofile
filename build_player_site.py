@@ -443,6 +443,17 @@ def _scouting_urls(series_slug):
     import glob
     from publish_site import _FMT_DIRS, _fmt_key
 
+    # The series' format, from the SQUAD (a squad is picked for a format). Batter reports are named
+    # `_batting_{fmt}_{hand}[_vs_{group}]`, and without filtering on it a batter with both a Test
+    # and an ODI report resolved to whichever glob returned last — arbitrary, and silently the
+    # wrong format's numbers on a pack.
+    try:
+        _sq = json.load(open(SQUADS, encoding="utf-8")).get(series_slug, {})
+        _sfmt = _fmt_key(_sq.get("format"))
+    except Exception:
+        _sfmt = "test"
+    _bat_tag = f"_batting_{_sfmt}_"
+
     # Which folder publish_site actually baked each bowler into, taken from series.json rather than
     # inferred. The old code assumed "bowlers-vs-{hand}", which is only true because the Test series
     # groups happen to be named that — a white-ball group is "bowlers" (no hand split), so every
@@ -492,7 +503,7 @@ def _scouting_urls(series_slug):
             meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
         except Exception:
             continue
-        if "_batting_" in base and meta.get("batter_id"):
+        if _bat_tag in base and meta.get("batter_id"):
             bid = str(meta["batter_id"])
             m = re.search(r"_vs_([a-z_]+)$", base)     # a per-bowler-type player report
             variant = ".pmode.html" if os.path.exists(
@@ -1039,7 +1050,7 @@ def _report_top(pid, name, role, sname, pages=None, current=None, tier=None):
             f'{html.escape(sname)}</div></div></div>{tabs}')
 
 
-def _vision_list(h2h_links, prefix, had_meetings, verb):
+def _vision_list(h2h_links, prefix, had_meetings, verb, fmt="Test"):
     """The 'all footage' section body, filtered to one direction (#hbat_ / #hbowl_)."""
     links = [(h, t) for h, t in (h2h_links or []) if f"#{prefix}_" in h]
     if links:
@@ -1047,17 +1058,20 @@ def _vision_list(h2h_links, prefix, had_meetings, verb):
                         f'<span style="font-size:13px">{html.escape(title)}</span></li>'
                         for href, title in links)
         return '<ul style="list-style:none;padding:0;margin:0">' + items + '</ul>'
+    # Name the format the pack is FOR. Hardcoded "Tests", an ODI pack told a player they had no
+    # Test meetings with a side they are about to play a one-day series against.
+    fw = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
     if had_meetings:
-        return (f'<p class="ssum" style="color:#6b7280">You have {verb} them in Tests, but that '
+        return (f'<p class="ssum" style="color:#6b7280">You have {verb} them in {fw}, but that '
                 'footage is not in the clip library (older matches are not clipped).</p>')
-    return ('<p class="ssum" style="color:#6b7280">No Test meetings with this opposition yet — '
-            'nothing to show.</p>')
+    return (f'<p class="ssum" style="color:#6b7280">No {fw[:-1] if fw.endswith("s") else fw} '
+            'meetings with this opposition yet — nothing to show.</p>')
 
 
 def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_meetings=False,
                   opp_bowlers=None, about=None, report_urls=None, h2h_map=None, h2h_rows=None,
                   pages=None, current=None, hand="rhb", cell_vision=None, opp_vision=None,
-                  opp_tiers=None, manual_href=None):
+                  opp_tiers=None, manual_href=None, fmt="Test"):
     """Batting pack: (1) how previous attacks bowled to you, (2) the opposition attack — one card
     per bowler with the distilled facts + a link to the hand-correct report + your footage."""
     name, role = rec.get("name", pid), rec.get("role", "")
@@ -1116,7 +1130,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls facing each of their bowlers — Test where you've "
                               "met, otherwise your ODI / T20 footage (the format is labelled).",
-                              inner=_vision_list(h2h_links, "hbat", had_meetings, "facing"),
+                              inner=_vision_list(h2h_links, "hbat", had_meetings, "facing", fmt),
                               open=False))
     return "".join(body)
 
@@ -1203,9 +1217,10 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                              tier=(opp_tiers or {}).get(bid), limited=lim)
         inner = _tiered_inner(ordered, opp_tiers, _card)   # renders the cards, so it fills `starred`
         if starred:
-            inner += ('<p class="vfoot">* limited vision — no footage of them against this exact '
-                      'bowling type in Tests, so the reel widens to a near-enough type or to their '
-                      'white-ball footage.</p>')
+            _fw = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
+            inner += (f'<p class="vfoot">* limited vision — no footage of them against this exact '
+                      f'bowling type in {_fw}, so the reel widens to a near-enough type or to '
+                      'another format.</p>')
         body.append(_pack_section(f"The {opp} batters",
                                   "Grouped by how likely they are to play. Tap a batter to see their "
                                   "summary and get links to vision.",
@@ -1213,7 +1228,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
     body.append(_pack_section(f"Your vision vs {opp}",
                               "Your most recent balls bowling to each of their batters — Test where "
                               "you've met, otherwise your ODI / T20 footage (the format is labelled).",
-                              inner=_vision_list(h2h_links, "hbowl", had_meetings, "bowling to"),
+                              inner=_vision_list(h2h_links, "hbowl", had_meetings, "bowling to", fmt),
                               open=False))
     return "".join(body)
 
@@ -1617,7 +1632,7 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
                                     h2h_map=h2h_map, h2h_rows=bat_rows,
                                     pages=pages, current=bat_href, hand=hand, cell_vision=cell_vision,
                                     opp_vision=opp_vision, opp_tiers=opp_tiers,
-                                    manual_href=manual_href) + vsnip,
+                                    manual_href=manual_href, fmt=fmt) + vsnip,
                       up=("index.html", "Squad")))
             for bt in bts:
                 bowl_href = f"{pslug}-bowling-{bt}.html"

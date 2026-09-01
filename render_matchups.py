@@ -113,12 +113,16 @@ def build(opp):
     p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
     store = json.load(open(p, encoding="utf-8"))
     opp_title = store["opp"]
+    # Label the page with the format the store was simulated in. It said "Tests" regardless, which
+    # on an ODI page is simply wrong. Older stores predate the field, so default to Test.
+    fmt = (store.get("format") or "Test").strip()
+    fmt_word = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
     body = [CSS,
             f"<h1>Match-ups — {html.escape(opp_title)}</h1>",
-            '<p class="lead">Simulated matchups — a tool that plays each batter-v-bowler pairing out '
+            f'<p class="lead">Simulated matchups — a tool that plays each batter-v-bowler pairing out '
             'thousands of times from their full profiles. Green = advantage us, red = advantage them. '
             'A number with a dot (·) is a cohort read — that batter has not faced enough of that bowler '
-            'type in Tests to profile personally. Hover any cell for the detail.</p>',
+            f'type in {fmt_word} to profile personally. Hover any cell for the detail.</p>',
             _table(f"Their batters v our bowlers",
                    "Cell = the batter's simulated average against that bowler. Low (green) = the "
                    "bowler wins the matchup.",
@@ -129,7 +133,8 @@ def build(opp):
                    store["we_bat"], "batter", "bowler", good_when_high=True),
             _structural(store["we_bat"]),
             f'<p class=note>Simulation built {store["built"]} · {store["innings_per_pair"]} innings '
-            'per pairing · profiles from all Test careers. Real head-to-head history is deliberately '
+            f'per pairing · profiles from all {fmt_word[:-1] if fmt_word.endswith("s") else fmt_word} '
+            'careers. Real head-to-head history is deliberately '
             'not averaged here (usually 10–30 balls — watch it instead, via each report\'s vision '
             'links).</p>']
     out = os.path.join(HERE, "reports", f"matchups_{opp}.html")

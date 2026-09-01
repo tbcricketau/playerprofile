@@ -3,10 +3,17 @@
   "name": "Travis Head",
   "role": "Batter",
   "packs": [
-   "batting"
+   "batting",
+   "bowling"
   ],
   "prefs": "base",
-  "new_ball_footage": true
+  "new_ball_footage": true,
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "off_spin"
+  }
  },
  "2580027": {
   "name": "Jake Weatherald",
@@ -124,7 +131,10 @@
   "prefs": "base",
   "bowl_types": [
    "pace"
-  ]
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "2710059": {
   "name": "Scott Boland",
@@ -359,7 +369,13 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "3550371": {
   "name": "Cooper Connolly",
@@ -367,7 +383,13 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "left_orthodox"
+  }
  },
  "4390215": {
   "name": "Ollie Peake",
@@ -390,7 +412,13 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "leg_break"
+  }
  },
  "1810308": {
   "name": "Billy Stanlake",
@@ -398,7 +426,13 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "2580072": {
   "name": "Nathan Ellis",
@@ -406,7 +440,13 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "2840029": {
   "name": "Xavier Bartlett",
@@ -414,7 +454,13 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "1070522": {
   "name": "Spencer Johnson",
@@ -422,6 +468,12 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "left_pace"
+  }
  }
 }

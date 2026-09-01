@@ -488,6 +488,9 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
 
     return {
         "batter_id": str(batter_id), "name": name, "team": team, "flag": flag, "is_lhb": is_lhb,
+        # the format this profile was built from — consumers must not assume Test (the stroke
+        # norms are format-keyed, and ranking an ODI innings against Test norms is silently wrong)
+        "fmt": fmt,
         "raw": raw, "raw_all": raw_all, "n_balls": n_balls, "runs": runs, "n_out": n_out,
         "group": group, "group_label": group_label, "is_spin_group": is_spin_group,
         "average": runs / n_out if n_out else None,

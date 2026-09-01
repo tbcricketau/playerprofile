@@ -226,7 +226,15 @@ _STROKE_NORMS_CSV = r"c:\Projects\referencebuilder\data\batter_stroke_norms.csv"
 _STROKE_COHORT_CSV = r"c:\Projects\referencebuilder\data\stroke_norms_cohort.csv"
 _STROKE_NORMS = None
 _NORM_FAMS = ("Drive", "Cut", "Pull/Hook", "Sweep", "Work/Nudge", "Slog", "Ramp/Scoop")
-_NORM_FORMAT = "test"
+# The stroke norms are keyed by format and the CSVs carry test/odi/t20i rows. This was pinned to
+# "test", so an ODI report ranked an ODI batter against TEST percentiles -- the numbers rendered
+# fine and meant something else. Read it off the profile instead.
+_NORM_FORMAT = "test"          # fallback only, for a profile built before `fmt` was recorded
+
+
+def _norm_fmt(P):
+    f = str(P.get("fmt") or _NORM_FORMAT).lower()
+    return "t20i" if f.startswith("t20") else ("odi" if f == "odi" else "test")
 _MIN_COHORT = 40          # fine-grain cohort must be at least this big, else fall back
 
 
@@ -265,9 +273,9 @@ def _norms_grain(P: dict):
         chain.append(("spin", "spin") if P.get("is_spin_group") else ("pace", "pace"))
     chain.append(("all", None))
     for grp, label in chain:
-        n = max((int(_nf(cohort.get((_NORM_FORMAT, grp, f), {}), "n_batters") or 0)
+        n = max((int(_nf(cohort.get((_norm_fmt(P), grp, f), {}), "n_batters") or 0)
                  for f in _NORM_FAMS), default=0)
-        has_batter = any((P["batter_id"], _NORM_FORMAT, grp, f) in per for f in _NORM_FAMS)
+        has_batter = any((P["batter_id"], _norm_fmt(P), grp, f) in per for f in _NORM_FAMS)
         if n >= _MIN_COHORT and has_batter:
             return grp, label, n
     return None
@@ -282,8 +290,8 @@ def _stroke_norm_rows(P: dict) -> list:
     per, cohort = _stroke_norms_ref()
     rows = []
     for fam in _NORM_FAMS:
-        r = per.get((P["batter_id"], _NORM_FORMAT, grp, fam))
-        ch = cohort.get((_NORM_FORMAT, grp, fam), {})
+        r = per.get((P["batter_id"], _norm_fmt(P), grp, fam))
+        ch = cohort.get((_norm_fmt(P), grp, fam), {})
         if r is None:
             continue
         his, norm = _nf(r, "runs_pct"), _nf(ch, "runs_pct_median")
@@ -320,8 +328,8 @@ def _stroke_norm_read(P: dict) -> str:
     per, cohort = _stroke_norms_ref()
     over, under = [], []
     for fam in _NORM_FAMS:
-        r = per.get((P["batter_id"], _NORM_FORMAT, grp, fam))
-        ch = cohort.get((_NORM_FORMAT, grp, fam), {})
+        r = per.get((P["batter_id"], _norm_fmt(P), grp, fam))
+        ch = cohort.get((_norm_fmt(P), grp, fam), {})
         if r is None:
             continue
         his, norm = _nf(r, "runs_pct"), _nf(ch, "runs_pct_median")
@@ -961,7 +969,11 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     who = "_".join(x for x in (_slug(first), _slug(surname)) if x) or f"batter_{batter_id}"
     hand_tag = "lhb" if P["is_lhb"] else "rhb"
     gtag = f"_vs_{group}" if group else ""
-    out_path = os.path.abspath(os.path.join(out_dir, f"{who}_batting_test_{hand_tag}{gtag}.pdf"))
+    # The format goes in the NAME. It was hardcoded "test", so an ODI report would have been called
+    # ..._batting_test_rhb_vs_pace -- claiming Test data while holding ODI, and colliding with the
+    # real Test report for the same batter and group. Test keeps its existing filenames.
+    ftag = {"test": "test", "odi": "odi", "t20i": "t20", "t20": "t20"}.get(str(fmt).lower(), "test")
+    out_path = os.path.abspath(os.path.join(out_dir, f"{who}_batting_{ftag}_{hand_tag}{gtag}.pdf"))
     os.makedirs(out_dir, exist_ok=True)
 
     ctx["video"] = _build_player(P, out_path)
