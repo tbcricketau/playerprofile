@@ -186,8 +186,34 @@ disabled when the series was archived, so the bundle can be pushed but will not 
 | `h2h_zimbabwe.json` | ✅ 51 reels over 8 distinct days, no single-day collapse; formats ODI/T20I/List A, **no Test** |
 | `shot_matrix_zimbabwe.html` | ✅ 11 batters each side |
 | `matchups_zimbabwe.html` | ✅ and it now says "ODI careers" rather than "Test careers" |
-| Zimbabwe ODI **bowler** reports | ✅ 9, live in the gated portal |
-| Zimbabwe ODI **batting** reports | ⏳ 66 rendering (11 batters × combined + 5 atomic groups) |
+| Zimbabwe ODI **bowler** reports | ✅ 9, with player-mode cuts |
+| Zimbabwe ODI **batting** reports | ✅ 66 (11 batters × combined + 5 atomic groups) |
+| **Player packs** | ✅ 42 pages / 15 players — **published** to `tbcricketau/player-packs` |
+| **Coach portal** | ✅ 438 pages, redeployed gated |
+
+**Both gates passed.** Packs: 163 pages / 1,270 internal links, **0 errors**, and the hand audit
+read **203 reels across 15 batting packs — 0 mixed / 0 wrong / 0 pooled / 0 unresolved**. Portal:
+438 pages / 1,438 links, validated before gating.
+
+Verified on the built pages, not the config: every bowling pack links only its own type's batter
+reports (Zampa → `leg_spin`, Connolly → `left_orthodox`, Johnson → `left_pace`, Head → `off_spin`,
+Hazlewood → `right_pace`), and **no Test-format link appears in any ODI pack**.
+
+### 🔴 The bug this run existed to catch: `leg_break` is not a group name here
+
+matchupmodel's `TYPES` calls that type **`leg_break`**; this codebase calls it **`leg_spin`** (and
+`left_wrist` vs `left_unorthodox`). Zampa's `bowl_groups` was taken from the matchup store, so
+`leg_break` went into `players.json` — and **nothing objected**. `build_batter_profile` fell through
+its `elif group in BOWLER_GROUPS`, leaving `raw` unfiltered, so an overview and eleven batter
+reports were built on **every delivery** and labelled a leg-spin plan.
+
+The tell was the plan count: **10 of 11 batters "had a plan" against leg spin**, which is not
+believable for a Zimbabwe squad. Rebuilt correctly it is **2 of 11**. Zampa's pack also carried 18
+starred reels because `clip_scope_leg_break` does not exist; correctly scoped it is 8, and those 8
+are genuine.
+
+`build_batter_profile` now **raises** on an unknown group and names both vocabularies. Cost of the
+mistake: one overview and 55 report files rebuilt.
 
 **No coach-side batters group in `series.json`.** The Bangladesh series had `batters-to-pace` /
 `batters-to-spin`, built from the macro groups. Zimbabwe's coach view is the seven per-type
