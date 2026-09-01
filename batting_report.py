@@ -937,6 +937,9 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "photo_uri": get_photo_data_uri(P["batter_id"], fmt="test", name=P.get("name")),
         "attacked": _attacked_ctx(), "sim_options": _sim_options_ctx(),
         "hand_label": "LHB" if P["is_lhb"] else "RHB",
+        # the header said "Batting profile (Test)" whatever format it held
+        "fmt_label": {"test": "Test", "odi": "ODI", "t20i": "T20I", "t20": "T20"}.get(
+            str(P.get("fmt", "Test")).lower(), "Test"),
         "cards": _cards(P, card_recent), "impact_read": _impact_read(P),
         "vs_rows": _vs_rows(P), "vs_read": _vs_read(P),
         "shot_rows": _shot_rows(P), "dir_read": _dir_read(P),
@@ -1049,7 +1052,7 @@ _TEMPLATE = r"""
     <div>
       <h1>{{P.name}} {% if code %}<span class="flag">{{code}}</span>{% endif %}
         {% if P.group %}<span class="tag">vs {{P.group_label}}</span>{% endif %}</h1>
-      <div class="sub">{{P.team}} · {{hand_label}} · {% if P.group %}How to exploit — {{P.group_label}} plan{% else %}Batting profile (Test){% endif %}</div>
+      <div class="sub">{{P.team}} · {{hand_label}} · {% if P.group %}How to exploit — {{P.group_label}} plan{% else %}Batting profile ({{fmt_label}}){% endif %}</div>
     </div>
     <div class="ver">v{{version}}<br>{{build_date}}</div>
   </div>
