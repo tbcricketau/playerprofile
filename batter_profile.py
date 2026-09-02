@@ -344,15 +344,15 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
         raw = [r for r in raw_all if r.get("bowler_type_simple") in types]
     elif group:
         # REFUSE an unknown group. This used to fall through, leaving `raw` unfiltered — so the
-        # profile silently described EVERY delivery while the page around it said "vs leg break".
-        # It cost a full rebuild of one overview and eleven batter reports on 2026-09-01, because
-        # matchupmodel names that type `leg_break` and this codebase names it `leg_spin`, and
-        # nothing anywhere objected. A wrong group must fail loudly, not average the whole career.
+        # profile silently described EVERY delivery while the page around it said "vs leg spin".
+        # It cost a rebuild of one overview and eleven batter reports on 2026-09-01, because
+        # matchupmodel then used a second vocabulary for two of the six spin types and nothing
+        # anywhere reconciled them. The vocabulary is now cricket_core.BOWLER_GROUP_KEYS and the
+        # health check guards it. A wrong group must fail loudly, not average a whole career.
         raise ValueError(
             f"unknown bowler group {group!r} — known: "
             f"{', '.join(sorted(set(BOWLER_GROUPS) | set(MACRO_GROUPS)))}. "
-            f"(matchupmodel calls these leg_break/left_wrist; here they are "
-            f"leg_spin/left_unorthodox.)")
+            f"The estate vocabulary is cricket_core.lookups.BOWLER_GROUP_KEYS.")
 
     name = (info.get("player_name") or f"Batter {batter_id}").strip()
     team = (info.get("team_name") or "").strip()
