@@ -83,9 +83,26 @@ def main():
     errors, warnings = check_site(out, deep=a.deep)
     for w in warnings[:10]:
         print(f"  WARN  {w}")
-    for e in errors:
+    for e in errors[:40]:
         print(f"  FAIL  {e}")
+    if len(errors) > 40:
+        print(f"  … and {len(errors) - 40} more")
     if errors:
+        # Name the usual cause instead of leaving 121 identical dead links to be diagnosed by
+        # hand. The scheduled "Scouting Reports Refresh" task runs publish_site, which clears
+        # site/ and re-bakes only what series.json lists — and NO series.json group produces
+        # <slug>/batters/, so inject_reports' output is wiped every few days. That is documented
+        # in CLAUDE.md and still cost a confused investigation on 2026-09-02.
+        bat = [e for e in errors if "/batters/" in str(e).replace("\\", "/")]
+        if bat:
+            slugs = sorted({str(e).replace("\\", "/").split("/scouting/")[1].split("/")[0]
+                            for e in bat if "/scouting/" in str(e).replace("\\", "/")})
+            print(f"\n  {len(bat)} of these are under scouting/<slug>/batters/, which no "
+                  f"series.json group produces.\n"
+                  f"  That folder is filled by inject_reports.py and WIPED whenever publish_site "
+                  f"runs — including\n  the scheduled refresh. Re-run it, then publish again:\n"
+                  + "".join(f"      .\\venv\\Scripts\\python.exe inject_reports.py --slug {s}\n"
+                            for s in slugs or ["<slug>"]))
         raise SystemExit(f"\nREFUSING TO PUBLISH: {len(errors)} problem(s). Nothing was pushed.")
     print("  clean")
 
