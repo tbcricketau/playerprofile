@@ -321,7 +321,20 @@ def _slug(name):
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
-def _avatar(pid, cls, initials, fmt="test", name=None):
+# The kit a build's inline headshots should use. Set once per squad in build() — the format is a
+# property of the whole pack, not of each card, and threading it through five layers of HTML
+# helpers buys no extra correctness.
+#
+# The default is None, NOT "test". `_avatar` used to default to "test" and not one of its five
+# callers passed anything, so every inline headshot in an ODI pack showed the player in Test
+# whites while the store held their ODI shot. A default that silently picks a format is the same
+# shape of bug as the group filter that silently picked every delivery: None means "no preference"
+# and the store falls back through what it has.
+_PACK_PHOTO_FMT = None
+
+
+def _avatar(pid, cls, initials, fmt=None, name=None):
+    fmt = fmt or _PACK_PHOTO_FMT
     if pid and IMG_MODE == "file":
         if str(pid) in _SITE_IMGS:
             return f'<img class="{cls}" src="img/{pid}.png" alt="" loading="lazy">'
@@ -1379,6 +1392,8 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
         print("  ! attack section: every squad in squads.json is archived — nothing to render")
         return 0
     meta = squads.get(slug, {})
+    global _PACK_PHOTO_FMT
+    _PACK_PHOTO_FMT = (meta.get("format") or "Test").strip()
     os.makedirs(os.path.join(dest_dir, "img"), exist_ok=True)
     if not no_video:
         try:
@@ -1393,7 +1408,7 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
         name, role = rec.get("name", pid), rec.get("role", "Unknown")
         pslug = _slug(name)
         photo = None
-        p = get_photo_path(pid, fmt="test", name=name)
+        p = get_photo_path(pid, fmt=(meta.get("format") or "Test"), name=name)
         if p:
             shutil.copy(p, os.path.join(dest_dir, "img", f"{pid}.png"))
             _SITE_IMGS.add(str(pid))
@@ -1496,8 +1511,11 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
         meta = squads[slug]
         # The pack's format comes from the SQUAD, which is where it is recorded — a squad is picked
         # for a format. It decides which reel scope counts as correctly scoped (an ODI pack must not
-        # star "ODI:off_spin" as a fallback) and which reports the cards link.
+        # star "ODI:off_spin" as a fallback), which reports the cards link, and which kit the
+        # headshots show.
         fmt = (meta.get("format") or "Test").strip()
+        global _PACK_PHOTO_FMT
+        _PACK_PHOTO_FMT = fmt
         roster = [(pid, players.get(pid, {"name": pid, "role": "Unknown", "packs": ["batting"]}))
                   for pid in meta.get("players", []) if not only or pid in only]
         s_dir = out_dir if single else os.path.join(out_dir, slug)
@@ -1507,7 +1525,7 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
             os.makedirs(img_dir, exist_ok=True)
             import shutil
             for pid, rec in roster:
-                p = get_photo_path(pid, fmt="test", name=rec.get("name"))
+                p = get_photo_path(pid, fmt=fmt, name=rec.get("name"))
                 if p:
                     shutil.copy(p, os.path.join(img_dir, f"{pid}.png"))
                     _SITE_IMGS.add(str(pid))
@@ -1582,7 +1600,7 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
             for oid, (onm, _t) in list(opp_bowlers.items()) + list(opp_batters.items()):
                 if str(oid) in _SITE_IMGS:
                     continue
-                p = get_photo_path(oid, fmt="test", name=onm)
+                p = get_photo_path(oid, fmt=fmt, name=onm)
                 if p:
                     shutil.copy(p, os.path.join(s_dir, "img", f"{oid}.png"))
                     _SITE_IMGS.add(str(oid))

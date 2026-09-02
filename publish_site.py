@@ -65,12 +65,15 @@ def _initials(name):
     return (parts[0][0] + parts[-1][0]).upper() if len(parts) >= 2 else (parts[0][:2].upper() if parts else "?")
 
 
-def _row_photo(pid, name, g_dir):
+def _row_photo(pid, name, g_dir, fmt="Test"):
     """Copy the player's headshot into <group>/img/<pid>.png and return the relative href
-    (or None). Keeps the index page light — no inlined base64, matching the player packs."""
+    (or None). Keeps the index page light — no inlined base64, matching the player packs.
+
+    `fmt` picks the kit: the store holds separate test/odi/t20i shots from cricket.com.au, and
+    this was pinned to "test", so an ODI page showed players in Test whites."""
     if not pid:
         return None
-    p = get_photo_path(pid, fmt="test", name=name)
+    p = get_photo_path(pid, fmt=fmt, name=name)
     if not p:
         return None
     img_dir = os.path.join(g_dir, "img")
@@ -405,21 +408,23 @@ def _write_series_index(s_dir, cfg, s, group_cards, has_matchups=False, has_atta
         _page(s["name"], body, up=("../index.html", cfg.get("title", "Series"))))
 
 
-def _report_li(card, g_dir):
+def _report_li(card, g_dir, fmt="Test"):
     n, t, bt, pdf, tier, pid = card
     return report_card(t, bt, f"{n}.html", pdf_href=(f"{n}.pdf" if pdf else None),
                        vision_href=f"{n}.player.html", badge=_TIER_CHIP.get(tier), badge_class=tier,
-                       photo=_row_photo(pid, t, g_dir), initials=_initials(t))
+                       photo=_row_photo(pid, t, g_dir, fmt), initials=_initials(t))
 
 
 def _write_group_index(g_dir, cfg, s, g, report_cards):
+    # Kit for the headshots on this index — an ODI group shows the ODI shot, not Test whites.
+    photo_fmt = g.get("format") or s.get("format") or "Test"
     tiered = False
     if report_cards:
         by_tier = {}
         for card in report_cards:
             by_tier.setdefault(card[4], []).append(card)
         if len(by_tier) <= 1:                       # single tier (e.g. reference) → flat list
-            inner = f'<ul class="reports">{chr(10).join(_report_li(c, g_dir) for c in report_cards)}</ul>'
+            inner = f'<ul class="reports">{chr(10).join(_report_li(c, g_dir, photo_fmt) for c in report_cards)}</ul>'
         else:                                        # opposition → XI / Squad / Fringe sections
             tiered = True
             sections = []
@@ -427,7 +432,7 @@ def _write_group_index(g_dir, cfg, s, g, report_cards):
                 cards = by_tier.get(tier)
                 if not cards:
                     continue
-                items = "\n".join(_report_li(c, g_dir) for c in cards)
+                items = "\n".join(_report_li(c, g_dir, photo_fmt) for c in cards)
                 sections.append(f'<h2 class="tierhead {tier}">{heading}'
                                 f'<span>{len(cards)}</span></h2><ul class="reports">{items}</ul>')
             inner = "".join(sections)
