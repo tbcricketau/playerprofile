@@ -212,8 +212,27 @@ believable for a Zimbabwe squad. Rebuilt correctly it is **2 of 11**. Zampa's pa
 starred reels because `clip_scope_leg_break` does not exist; correctly scoped it is 8, and those 8
 are genuine.
 
-`build_batter_profile` now **raises** on an unknown group and names both vocabularies. Cost of the
-mistake: one overview and 55 report files rebuilt.
+`build_batter_profile` now **raises** on an unknown group. Cost of the mistake: one overview and 55
+report files rebuilt.
+
+**Fixed at the root 2026-09-02.** The two dialects are gone. `cricket_core.lookups` now owns
+`BOWLER_GROUP_KEYS` — the estate's one snake_case vocabulary — and matchupmodel *derives* `TYPES`
+from it with an import-time assert, rather than restating it. The name is **`leg_spin`**, and not
+by head-count: a leg break is a *delivery* a leg spinner bowls, alongside the googly, flipper and
+slider, so a bowler-**type** key must name the technique (Tom). `left_unorthodox` likewise names the
+technique and matches the warehouse's own label. matchupmodel's `TYPE_LABEL` already rendered it
+"Leg-spin" — only the key had been wrong.
+
+Re-keyed with values untouched: **9,193 `type` cells** across 8 profile CSVs (column-scoped, every
+other column fingerprinted before and after), 11 `bowler_type_key` values in the Zimbabwe store
+(patched rather than regenerated, so the published pack numbers did not move), and
+`hand_effects.json` — which mattered, because `structural()` had started looking up `leg_spin` in a
+file still keyed `leg_break` and would have resolved nothing. **No numbers changed**, so this was
+independent of the outstanding Test-CSV decision.
+
+`health_check.py` gains **`bowler-group-dialect` (HIGH)**. It reads the already comment-stripped
+source, so the write-ups that name the dead keys on purpose do not trip it — a guard that fires on
+its own documentation is one people learn to ignore. Verified both ways.
 
 **No coach-side batters group in `series.json`.** The Bangladesh series had `batters-to-pace` /
 `batters-to-spin`, built from the macro groups. Zimbabwe's coach view is the seven per-type
