@@ -228,7 +228,7 @@ def bowler_clips_best(bid, fmt="Test", min_stock=6):
     return best
 
 
-def bowler_clips_by_hand(bid, fmt="Test"):
+def bowler_clips_by_hand(bid, fmt="Test", min_stock=6):
     """{"": (stock, wicket, new_ball), "lhb": (...), "rhb": (...)} — the bowler's reels built
     separately for each batter hand, plus the both-hands set as a fallback.
 
@@ -238,15 +238,34 @@ def bowler_clips_by_hand(bid, fmt="Test"):
     One query, three profiles — `raw` is loaded here and reused."""
     from profile import process_rows
     from data_loaders import load_bowler_deliveries
-    raw = process_rows(load_bowler_deliveries(bid))
-    if not raw:
+
+    def _build(f):
+        raw = process_rows(load_bowler_deliveries(bid, fmt=f))
+        if not raw:
+            return None
+        return {key: bowler_clips_from_profile(build_profile(bid, hand=hand, raw=raw, fmt=f))
+                for key, hand in (("", "All"), ("lhb", "vs LHB"), ("rhb", "vs RHB"))}
+
+    # The pack's own format FIRST. This used to call load_bowler_deliveries(bid) with no fmt at
+    # all, so it silently defaulted to Test — every hand-scoped reel in an ODI pack was built from
+    # red-ball deliveries. The hand audit could not catch it: it checks whose hand the clip is
+    # bowled to, not which format it came from.
+    out = _build(fmt)
+    if out is None:
         # an empty load is a dropped connection far more often than a bowler with no deliveries;
         # writing the empty result would silently blank reels that were fine
-        raise RuntimeError(f"no deliveries loaded for bowler {bid}")
-    out = {}
-    for key, hand in (("", "All"), ("lhb", "vs LHB"), ("rhb", "vs RHB")):
-        out[key] = bowler_clips_from_profile(build_profile(bid, hand=hand, raw=raw, fmt=fmt))
-    return out
+        raise RuntimeError(f"no deliveries loaded for bowler {bid} in {fmt}")
+
+    # A thin record in the pack's format leaves a pack with no vision at all, which is the one
+    # thing a player can always use. Step to the neighbouring formats only when this one gives the
+    # hands nothing, and say which format was used.
+    if max(len(out["lhb"][0]), len(out["rhb"][0])) < min_stock:
+        for f in _FMT_ORDER.get(fmt, _FMT_ORDER["Test"])[1:]:
+            alt = _build(f)
+            if alt and max(len(alt["lhb"][0]), len(alt["rhb"][0])) > max(len(out["lhb"][0]),
+                                                                        len(out["rhb"][0])):
+                return alt, f
+    return out, fmt
 
 
 def _angle_phrase(ms):
@@ -455,7 +474,9 @@ def main():
         n_err = 0
         for bid, entry in out.get("bowlers", {}).items():
             try:                                          # re-profile so clips match the stock phrase
-                byh = bowler_clips_by_hand(bid, fmt=args.fmt)
+                byh, _src = bowler_clips_by_hand(bid, fmt=args.fmt)
+                if _src and _src != args.fmt:
+                    entry["clip_format"] = _src
                 st, wk, nb = byh[""]
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nb
                 for _h in ("lhb", "rhb"):                  # a pack shows only its own batter's hand
@@ -551,7 +572,9 @@ def main():
                 P = build_profile(bid, hand="All", fmt=args.fmt)
                 entry = {"name": nm, **distil_bowler(P, ty or "Bowler")}
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = bowler_clips_from_profile(P)
-                byh = bowler_clips_by_hand(bid, fmt=args.fmt)           # a pack shows only its own batter's hand
+                byh, _src = bowler_clips_by_hand(bid, fmt=args.fmt)   # a pack shows only its own hand
+                if _src and _src != args.fmt:
+                    entry["clip_format"] = _src
                 for _h in ("lhb", "rhb"):
                     _s, _w, _n = byh[_h]
                     entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
@@ -570,6 +593,18 @@ def main():
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nbc
                 if src and src != args.fmt:
                     entry["clip_format"] = src
+                # The BATTING packs read only the hand-scoped reels — an unscoped one is the pooled
+                # defect this codebase forbids — so build those too or the card has no buttons.
+                try:
+                    byh, hsrc = bowler_clips_by_hand(bid, fmt=args.fmt)
+                    for _h in ("lhb", "rhb"):
+                        _s, _w, _n = byh[_h]
+                        entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
+                        entry[f"new_ball_clips_{_h}"] = _n
+                    if hsrc and hsrc != args.fmt:
+                        entry["clip_format"] = hsrc
+                except Exception:
+                    pass
                 out["bowlers"][bid] = entry
                 tag = (f" [all-formats fallback · vision {src or 'none'}"
                        f" · stock {len(st)} wkt {len(wk)}]")
