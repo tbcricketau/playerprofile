@@ -4133,6 +4133,372 @@
     }
    ],
    "new_ball_clips_rhb": []
+  },
+  "5180198": {
+   "name": "Tanaka Chivanga",
+   "type": "Bowler",
+   "is_pace": true,
+   "arm": "right",
+   "round_lhb": 40.57142857142857,
+   "round_rhb": 3.594771241830065,
+   "new_ball": 9.090909090909092,
+   "facts": [
+    "Bowler — averages 135 km/h, tops 143.",
+    "By angle — over the wicket, a good length on the stumps; round the wicket, a good length down the leg side."
+   ],
+   "order": 481,
+   "stock_clips": [
+    {
+     "delivery_id": "5180728020100507",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B100507"
+    },
+    {
+     "delivery_id": "5180728020100707",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B100707"
+    },
+    {
+     "delivery_id": "5180728020100901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B100901"
+    },
+    {
+     "delivery_id": "5180728020101501",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B101501"
+    },
+    {
+     "delivery_id": "5180728020101502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B101502"
+    },
+    {
+     "delivery_id": "5180728020101503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B101503"
+    },
+    {
+     "delivery_id": "5180728020101505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B101505"
+    },
+    {
+     "delivery_id": "5180728020101506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B101506"
+    },
+    {
+     "delivery_id": "5462080020100801",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B100801"
+    },
+    {
+     "delivery_id": "5462080020100803",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B100803"
+    },
+    {
+     "delivery_id": "5462080020100804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B100804"
+    },
+    {
+     "delivery_id": "5462080020100805",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B100805"
+    },
+    {
+     "delivery_id": "5462080020100806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B100806"
+    },
+    {
+     "delivery_id": "5462080020101001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B101001"
+    },
+    {
+     "delivery_id": "5462080020101002",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B101002"
+    },
+    {
+     "delivery_id": "5462080020101003",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B101003"
+    },
+    {
+     "delivery_id": "5462080020101006",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B101006"
+    },
+    {
+     "delivery_id": "5462080020101201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B101201"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5462080020102804",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462080/B/1/5462080B102804"
+    },
+    {
+     "delivery_id": "5460374020104005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023-24/Men/1%20Day/5460374/B/1/5460374B104005"
+    },
+    {
+     "delivery_id": "5180728020100703",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180728/B/1/5180728B100703"
+    },
+    {
+     "delivery_id": "5180702020101106",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2022-23/Men/1%20Day/5180702/B/1/5180702B101106"
+    },
+    {
+     "delivery_id": "5180573020101105",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2021-22/Men/1%20Day/5180573/B/1/5180573B101105"
+    }
+   ],
+   "new_ball_clips": [],
+   "stock_clips_lhb": [
+    {
+     "delivery_id": "5460788010101101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A101101"
+    },
+    {
+     "delivery_id": "5460788010101102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A101102"
+    },
+    {
+     "delivery_id": "5460788010101301",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A101301"
+    },
+    {
+     "delivery_id": "5460788010101304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A101304"
+    },
+    {
+     "delivery_id": "5460788010109005",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A109005"
+    }
+   ],
+   "wicket_clips_lhb": [
+    {
+     "delivery_id": "5461178020105505",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461178/B/1/5461178B105505"
+    },
+    {
+     "delivery_id": "5460877020101001",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460877/B/1/5460877B101001"
+    },
+    {
+     "delivery_id": "5460862020100604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B100604"
+    },
+    {
+     "delivery_id": "5460862020106502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B106502"
+    },
+    {
+     "delivery_id": "5460862020201901",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/2/5460862B201901"
+    }
+   ],
+   "new_ball_clips_lhb": [],
+   "stock_clips_rhb": [
+    {
+     "delivery_id": "5460788010101502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A101502"
+    },
+    {
+     "delivery_id": "5460788010101507",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A101507"
+    },
+    {
+     "delivery_id": "5460788010101704",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A101704"
+    },
+    {
+     "delivery_id": "5460788010106102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A106102"
+    },
+    {
+     "delivery_id": "5460788010106304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A106304"
+    },
+    {
+     "delivery_id": "5460788010106306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A106306"
+    },
+    {
+     "delivery_id": "5460788010106307",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A106307"
+    },
+    {
+     "delivery_id": "5460788010106501",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A106501"
+    },
+    {
+     "delivery_id": "5460788010106502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A106502"
+    },
+    {
+     "delivery_id": "5460788010108605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A108605"
+    }
+   ],
+   "wicket_clips_rhb": [
+    {
+     "delivery_id": "5461312020101603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461312/B/1/5461312B101603"
+    },
+    {
+     "delivery_id": "5461312020201503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461312/B/2/5461312B201503"
+    },
+    {
+     "delivery_id": "5461312020203501",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461312/B/2/5461312B203501"
+    },
+    {
+     "delivery_id": "5461178020105706",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025-26/Men/Multi%20Day/5461178/B/1/5461178B105706"
+    },
+    {
+     "delivery_id": "5460877020105102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460877/B/1/5460877B105102"
+    },
+    {
+     "delivery_id": "5460862020101306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B101306"
+    },
+    {
+     "delivery_id": "5460862020101502",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B101502"
+    },
+    {
+     "delivery_id": "5460862020200202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/2/5460862B200202"
+    },
+    {
+     "delivery_id": "5460788010109004",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460788/A/1/5460788A109004"
+    },
+    {
+     "delivery_id": "5460274010101602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460274/A/1/5460274A101602"
+    },
+    {
+     "delivery_id": "5460274010102201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460274/A/1/5460274A102201"
+    },
+    {
+     "delivery_id": "5460274010102602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460274/A/1/5460274A102602"
+    }
+   ],
+   "new_ball_clips_rhb": []
+  },
+  "6380303": {
+   "name": "Newman Nyamhuri",
+   "type": "Bowler",
+   "is_pace": true,
+   "facts": [
+    "Bowler.",
+    "Usually <1 m in the in line.",
+    "Limited Test record — the above is from all formats they've played."
+   ],
+   "order": 1307,
+   "source": "all-formats",
+   "stock_clips": [
+    {
+     "delivery_id": "5462073020101201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B101201"
+    },
+    {
+     "delivery_id": "5462073020101203",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B101203"
+    },
+    {
+     "delivery_id": "5462073020101206",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B101206"
+    },
+    {
+     "delivery_id": "5462073020101207",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B101207"
+    },
+    {
+     "delivery_id": "5462073020102201",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102201"
+    },
+    {
+     "delivery_id": "5462073020102207",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102207"
+    },
+    {
+     "delivery_id": "5462073020102407",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102407"
+    },
+    {
+     "delivery_id": "5462023020101503",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B101503"
+    },
+    {
+     "delivery_id": "5462023020101701",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B101701"
+    },
+    {
+     "delivery_id": "5462023020101702",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B101702"
+    },
+    {
+     "delivery_id": "5462073020102405",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102405"
+    },
+    {
+     "delivery_id": "5462073020102406",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102406"
+    },
+    {
+     "delivery_id": "5462073020102602",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102602"
+    },
+    {
+     "delivery_id": "5462073020102603",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102603"
+    },
+    {
+     "delivery_id": "5462073020102604",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102604"
+    },
+    {
+     "delivery_id": "5462073020102605",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102605"
+    },
+    {
+     "delivery_id": "5462073020102606",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462073/B/1/5462073B102606"
+    },
+    {
+     "delivery_id": "5462023020101906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B101906"
+    },
+    {
+     "delivery_id": "5462023020102101",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B102101"
+    },
+    {
+     "delivery_id": "5462023020102302",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B102302"
+    }
+   ],
+   "wicket_clips": [
+    {
+     "delivery_id": "5462023020101905",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B101905"
+    },
+    {
+     "delivery_id": "5462023020102102",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2026-27/Men/1%20Day/5462023/B/1/5462023B102102"
+    },
+    {
+     "delivery_id": "5460595020103506",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/1%20Day/5460595/B/1/5460595B103506"
+    },
+    {
+     "delivery_id": "5460595020103906",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/1%20Day/5460595/B/1/5460595B103906"
+    },
+    {
+     "delivery_id": "5460595020104304",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/1%20Day/5460595/B/1/5460595B104304"
+    }
+   ],
+   "new_ball_clips": []
   }
  },
  "batters": {

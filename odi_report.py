@@ -101,16 +101,23 @@ def _grid_figs(legal, off_pace):
     figs = {}
     tot = len(legal) or 1
     for pk, offp in (("on", False), ("off", True)):
+        pk_rows = 0
         for sk, rnd in (("over", False), ("round", True)):
             rows = [r for r in legal if ((_var_type(r, off_pace) is not None) == offp) and (r.get("is_round") == rnd)]
             figs[f"{pk}_{sk}_pct"] = round(len(rows) / tot * 100)
+            pk_rows += len(rows)
             if len(rows) < 25:
                 continue
             try:
-                figs[f"{pk}_{sk}_pitch"] = _fig_uri(pitch_heatmap(rows, value="count", title="", font_scale=0.62), w=224, h=240)
-                figs[f"{pk}_{sk}_bee"] = _fig_uri(beehive(rows, metric="count", title="", line_zones=lz, font_scale=0.62), w=214, h=232)
+                figs[f"{pk}_{sk}_pitch"] = _fig_uri(pitch_heatmap(rows, value="count", title="", font_scale=0.52), w=224, h=240)
+                figs[f"{pk}_{sk}_bee"] = _fig_uri(beehive(rows, metric="count", title="", line_zones=lz, font_scale=0.52), w=214, h=232)
             except Exception:
                 pass
+        # Whether ANY chart rendered for this pace slice, and the balls behind it. With none, the
+        # template says so once instead of printing "— too few —" in four empty boxes.
+        figs[f"{pk}_any"] = any(figs.get(f"{pk}_{sk}_{suf}")
+                                for sk in ("over", "round") for suf in ("pitch", "bee"))
+        figs[f"{pk}_n"] = pk_rows
     return figs
 
 
@@ -121,7 +128,9 @@ def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
         raise ValueError(f"No ODI data for bowler {bowler_id}")
     legal = [r for r in P["raw"] if r["is_legal"]]
 
-    figs = _grid_figs(legal, P.get("off_pace_kph")) if P["is_pace"] else {}
+    # Maps read the MECHANICAL row set — ODI plus, when the ODI record is too thin to map, white-ball
+    # T20 (see odi_profile._supplement_rows). Outcome numbers on this page never do.
+    figs = _grid_figs(P.get("mech") or legal, P.get("off_pace_kph")) if P["is_pace"] else {}
 
     # Identical 8-card headline row to the Test pack — one canonical builder in report_style,
     # so Avg speed (with P99), length, round-the-wicket etc. match Test exactly.
@@ -273,6 +282,9 @@ _TEMPLATE = r"""
   <h2>Where They Bowl <span class="sub" style="font-weight:400">(pitch map + beehive · over vs round · stock vs slower)</span></h2>
   {% for plabel, pk in [("On pace (stock speed)", "on"), ("Off pace (slower balls)", "off")] %}
   <div style="font-weight:700;font-size:10px;margin:8px 0 2px;color:{{c.ACCENT}}">{{plabel}}</div>
+  {% if not figs[pk~"_any"] %}
+  <div class="cap" style="text-align:left;padding:6px 2px;color:{{c.TEXT_SEC}}">Too few tracked balls to map ({{figs[pk~"_n"]}} in total) — no over/round or pitch/stumps split shown.</div>
+  {% else %}
   <div class="grid4">
     {% for side, sk in [("Over", "over"), ("Round", "round")] %}
     {% for kind, suf in [("pitch", "pitch"), ("at stumps", "bee")] %}
@@ -280,8 +292,9 @@ _TEMPLATE = r"""
     {% endfor %}
     {% endfor %}
   </div>
+  {% endif %}
   {% endfor %}
-  <div class="cap" style="text-align:left">The % on each pitch map is that slice's share of all legal balls (e.g. over the wicket, on pace). Off pace = slower-ball variations.</div>
+  <div class="cap" style="text-align:left">The % on each pitch map is that slice's share of all legal balls (e.g. over the wicket, on pace). Off pace = slower-ball variations.{% if P.supplement_from %} <b>These maps and the speed cards also include this bowler's {{P.supplement_from}} deliveries</b> — their ODI record alone is too thin to read. Where the ball lands and how fast it is bowled carry across white-ball formats; the economy, average, wicket and phase numbers on this page are ODI only.{% endif %}</div>
 
   <div class="note">
     ODI internationals only. Ball-change eras in this sample:

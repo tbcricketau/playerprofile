@@ -203,6 +203,31 @@ def bowler_clips_from_profile(P, cap_each=10, wcap=40):
     return stock, wicket, new_ball
 
 
+def bowler_clips_best(bid, fmt="Test", min_stock=6):
+    """(stock, wicket, new_ball, source_format) — reels for this bowler, stepping formats until
+    there is something to watch.
+
+    A bowler with a thin record in the pack's format still has footage in another: Newman Nyamhuri
+    has 192 ODI balls and no usable ODI reel, which left his card with no vision at all. Where the
+    ball lands and how it is bowled carry across white-ball formats, so T20I/T20 footage of the
+    same bowler is worth watching — it is the outcome numbers that must not travel.
+
+    Returns the format it actually used so the card can say so."""
+    order = _FMT_ORDER.get(fmt, _FMT_ORDER["Test"])
+    best = ([], [], [], "")
+    for f in order:
+        try:
+            P = build_profile(bid, hand="All", fmt=f)
+        except Exception:
+            continue
+        st, wk, nb = bowler_clips_from_profile(P)
+        if len(st) >= min_stock or (st and not best[0]):
+            return st, wk, nb, f
+        if not best[0] and (st or wk):
+            best = (st, wk, nb, f)
+    return best
+
+
 def bowler_clips_by_hand(bid, fmt="Test"):
     """{"": (stock, wicket, new_ball), "lhb": (...), "rhb": (...)} — the bowler's reels built
     separately for each batter hand, plus the both-hands set as a fallback.
@@ -465,6 +490,30 @@ def main():
     bowlers = {c["bowler_id"]: (c["bowler"], c.get("bowler_type", "")) for c in store["we_bat"]}
     batters = {c["batter_id"]: (c["batter"], c.get("bat_hand", "")) for c in store["they_bat"]}
 
+    # The store is a MODEL ARTEFACT, not the roster. A bowler with too few zoned balls to simulate
+    # is dropped from it — and was therefore silently absent from this file, so their card in every
+    # pack had no notes at all. Tanaka Chivanga (481 ODI balls) and Newman Nyamhuri (192) both
+    # vanished that way while having live bowler reports in the portal.
+    #
+    # Take the roster from the pinned squad and let the per-player gates below decide how much can
+    # be said: a full profile above TEST_FLOOR, the all-formats fallback beneath it. Something beats
+    # an empty card.
+    sq_path = os.path.join(project_path("matchupmodel"), "data", f"opp_squad_{args.opp}.json")
+    if os.path.exists(sq_path):
+        sq = json.load(open(sq_path, encoding="utf-8"))
+        names = {str(k): v for k, v in (sq.get("names") or {}).items()}
+        added = []
+        for b in sq.get("bowlers", []):
+            if str(b) not in bowlers:
+                bowlers[str(b)] = (names.get(str(b), str(b)), "")
+                added.append(names.get(str(b), str(b)))
+        for b in sq.get("batters", []):
+            if str(b) not in batters:
+                batters[str(b)] = (names.get(str(b), str(b)), "")
+                added.append(names.get(str(b), str(b)))
+        if added:
+            print(f"squad adds {len(added)} not in the sim store: {', '.join(added)}")
+
     conn, cur = set_conn_cursor()
     LEN = {r["id"]: r["description"] for r in _q(conn, cur, f"SELECT id,description FROM [{DATA_SCHEMA}].[Lookups] WHERE lookup_type_id=2819")}
     LIN = {r["id"]: r["description"] for r in _q(conn, cur, f"SELECT id,description FROM [{DATA_SCHEMA}].[Lookups] WHERE lookup_type_id=2823")}
@@ -509,12 +558,21 @@ def main():
                     entry[f"new_ball_clips_{_h}"] = _n
                 out["bowlers"][bid] = entry
                 tag = f" · stock {len(entry['stock_clips'])} wkt {len(entry['wicket_clips'])} new {len(entry['new_ball_clips'])}"
-            else:                                        # thin Test record -> all-format fallback
+            else:                                        # thin record -> all-format fallback
                 fb = allfmt_bowler_facts(conn, cur, bid, ty or "Bowler", LEN, LIN)
                 if not fb:
                     continue
-                out["bowlers"][bid] = {"name": nm, **fb}
-                tag = " [all-formats fallback]"
+                entry = {"name": nm, **fb}
+                # A thin record used to mean NO vision at all, which is the one thing a player can
+                # always use. Step formats until there is something to watch and record which one,
+                # so the card can say the footage is from another format.
+                st, wk, nbc, src = bowler_clips_best(bid, fmt=args.fmt)
+                entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nbc
+                if src and src != args.fmt:
+                    entry["clip_format"] = src
+                out["bowlers"][bid] = entry
+                tag = (f" [all-formats fallback · vision {src or 'none'}"
+                       f" · stock {len(st)} wkt {len(wk)}]")
             print(f"  bowler {nm}: {len(out['bowlers'][bid]['facts'])} facts{tag}")
         except Exception as e:
             n_err += 1

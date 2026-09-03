@@ -332,6 +332,41 @@ def _hand_split(rows):
     return out
 
 
+# A thin ODI record gets topped up from white-ball T20 for the MECHANICAL measures only.
+#
+# What may borrow across formats and what may not is not a matter of taste — CROSSFORMAT_TRANSLATION
+# has it: tempo and mechanics translate, outcomes do not. So where a bowler lands the ball and how
+# fast they bowl it may be read across ODI and T20 (same white ball, same fields, same bowler);
+# economy, average, wickets and the phase table may NOT, because a T20 death over is not an ODI
+# death over. The supplement therefore reaches the pitch maps, the beehives and the speed cards,
+# and nothing that counts a run or a wicket.
+#
+# `supplement_from` on the profile records whether it happened, so the report can say so rather
+# than quietly presenting two formats as one.
+_SUPP_MIN_TRACKED = 60          # tracked balls below which the ODI record is too thin to map
+_SUPP_MIN_SPEEDS = 40           # speed-tracked balls below which the pace cards are too thin
+
+
+def _supplement_rows(bowler_id, legal):
+    """Extra white-ball rows to READ MECHANICS from when the ODI sample is thin: (rows, label).
+
+    T20I first, then the wider T20 pool (all major leagues) — nearest neighbour first. Returns
+    ([], "") when the ODI record is already sufficient or nothing can be loaded."""
+    tracked = len(tracked_lengths(legal))
+    speeds = len([s for s in _num(legal, "ball_speed_n") if s])
+    if tracked >= _SUPP_MIN_TRACKED and speeds >= _SUPP_MIN_SPEEDS:
+        return [], ""
+    for fmt, label in (("T20I", "T20I"), ("T20", "T20")):
+        try:
+            extra = process_rows(load_bowler_deliveries(str(bowler_id), fmt=fmt))
+        except Exception:
+            continue
+        extra = [r for r in extra if r.get("is_legal")]
+        if len(tracked_lengths(extra)) >= 25 or len(_num(extra, "ball_speed_n")) >= 25:
+            return extra, label
+    return [], ""
+
+
 def build_odi_profile(bowler_id: str) -> dict:
     raw = process_rows(load_bowler_deliveries(str(bowler_id), fmt="ODI"))
     if not raw:
@@ -362,14 +397,19 @@ def build_odi_profile(bowler_id: str) -> dict:
     nb = len(legal)
     runs = sum(_bowler_runs(r) for r in raw)
     wkts = sum(1 for r in legal if r["is_wicket"])
-    speeds = sorted(_num(legal, "ball_speed_n"))
+
+    # Mechanical measures may borrow from T20 when the ODI record is thin; outcome measures above
+    # (runs/wkts/economy) are computed from ODI ONLY and stay that way.
+    supp_rows, supp_label = _supplement_rows(bowler_id, legal)
+    mech = legal + supp_rows                      # pitch maps, beehives, speeds read from this
+    speeds = sorted(_num(mech, "ball_speed_n"))
 
     # ── headline extras for the shared headline_cards() row (defined exactly as the Test build) ──
     # Sentinels dropped BEFORE the median — see profile.is_tracked_length. A median alone was the
     # defence here too, and it reported Ngarava's average length as -20.00 m.
-    _lengths = tracked_lengths(legal)
+    _lengths = tracked_lengths(mech)
     avg_len_m = statistics.median(_lengths) if _lengths else None
-    tracked_len_pct = 100.0 * len(_lengths) / nb if nb else None
+    tracked_len_pct = 100.0 * len(_lengths) / len(mech) if mech else None
     short_pct = (sum(1 for r in legal if r.get("pitch_length_group_m") in _SHORT_BUCKETS) / nb * 100) if nb else 0.0
     _kr = [r for r in legal if r.get("is_round") is not None]
     round_pct = sum(1 for r in _kr if r["is_round"]) / len(_kr) * 100 if _kr else None
@@ -426,6 +466,9 @@ def build_odi_profile(bowler_id: str) -> dict:
         "n_balls": nb, "n_wkts": wkts, "bowl_avg": runs / wkts if wkts else None,
         "avg_spd": _mean(speeds), "max_spd_99": _quantile(speeds, 0.99) if speeds else None,
         "avg_len_m": avg_len_m, "tracked_len_pct": tracked_len_pct, "short_pct": short_pct,
+        # "" when the ODI record stood on its own; "T20I"/"T20" when the maps and speed cards
+        # above also read that format. Outcome numbers never do.
+        "supplement_from": supp_label, "mech": mech,
         "round_pct": round_pct, "round_lhb": round_lhb, "round_rhb": round_rhb,
         # sections
         "fingerprint": _fingerprint(str(bowler_id), is_pace, is_spin, fmt="ODI", recent_vals=recent_fingerprint_vals(raw, is_spin)),

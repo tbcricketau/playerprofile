@@ -321,20 +321,21 @@ def _slug(name):
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
-# The kit a build's inline headshots should use. Set once per squad in build() — the format is a
-# property of the whole pack, not of each card, and threading it through five layers of HTML
-# helpers buys no extra correctness.
+# The FORMAT of the pack being built. Set once per squad in build() — it is a property of the
+# whole pack, not of each card, and threading it through five layers of HTML helpers buys no
+# extra correctness. Used for the inline headshot kit and for labelling head-to-head footage
+# that came from another format.
 #
 # The default is None, NOT "test". `_avatar` used to default to "test" and not one of its five
 # callers passed anything, so every inline headshot in an ODI pack showed the player in Test
 # whites while the store held their ODI shot. A default that silently picks a format is the same
 # shape of bug as the group filter that silently picked every delivery: None means "no preference"
 # and the store falls back through what it has.
-_PACK_PHOTO_FMT = None
+_PACK_FMT = None
 
 
 def _avatar(pid, cls, initials, fmt=None, name=None):
-    fmt = fmt or _PACK_PHOTO_FMT
+    fmt = fmt or _PACK_FMT
     if pid and IMG_MODE == "file":
         if str(pid) in _SITE_IMGS:
             return f'<img class="{cls}" src="img/{pid}.png" alt="" loading="lazy">'
@@ -767,7 +768,10 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
         lines.append('<p>' + " ".join(watch) + '</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
         fl = h2h_row.get("format_label", "Test")       # as a matchup verdict). Label the format so
-        note = "" if fl == "Test" else f' <span class="cohort">({fl}, not Test)</span>'  # non-Test is clear
+        # Name the PACK's format, not Test. Hardcoded, an ODI pack said "(T20I, not Test)" about a
+        # side it is about to play a one-day series against.
+        pf = (_PACK_FMT or "Test").strip()
+        note = "" if fl == pf else f' <span class="cohort">({fl}, not {html.escape(pf)})</span>' 
         met = f'{h2h_row["balls"]} balls of you {h2h_verb} them.{note}'
         if vision_href:
             met += " " + _vwatch(vision_href, "&#9654; Watch")
@@ -1392,8 +1396,8 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
         print("  ! attack section: every squad in squads.json is archived — nothing to render")
         return 0
     meta = squads.get(slug, {})
-    global _PACK_PHOTO_FMT
-    _PACK_PHOTO_FMT = (meta.get("format") or "Test").strip()
+    global _PACK_FMT
+    _PACK_FMT = (meta.get("format") or "Test").strip()
     os.makedirs(os.path.join(dest_dir, "img"), exist_ok=True)
     if not no_video:
         try:
@@ -1514,8 +1518,8 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
         # star "ODI:off_spin" as a fallback), which reports the cards link, and which kit the
         # headshots show.
         fmt = (meta.get("format") or "Test").strip()
-        global _PACK_PHOTO_FMT
-        _PACK_PHOTO_FMT = fmt
+        global _PACK_FMT
+        _PACK_FMT = fmt
         roster = [(pid, players.get(pid, {"name": pid, "role": "Unknown", "packs": ["batting"]}))
                   for pid in meta.get("players", []) if not only or pid in only]
         s_dir = out_dir if single else os.path.join(out_dir, slug)
