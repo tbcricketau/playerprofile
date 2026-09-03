@@ -197,6 +197,19 @@ in one day, all the same defect on a different axis:
 |------|------|-------------------|
 | Bowling pack (our bowler) | opposition batter's scoring / dismissal clips | the **exact bowler type** the pack's bowler bowls |
 | Batting pack (our batter) | opposition bowler's stock / wicket / new-ball clips | **our batter's hand** |
+| Either, white-ball | every reel | the pack's **FORMAT** — red-ball footage never belongs in a white-ball pack |
+
+**The format axis, added 2026-09-02, and it was 203 for 203.** `bowler_clips_by_hand` called
+`load_bowler_deliveries(bid)` with no `fmt`, so it took the Test default: every hand-scoped reel in
+the Zimbabwe ODI packs was red-ball footage, and the packs were published three times that way.
+`audit_pack_hands` reported them **clean** each time, because it resolves whose *hand* a clip is
+bowled to and format was never something it looked at — the audit now resolves the clip's series
+too and `publish_packs` refuses on an off-format reel.
+
+Borrowing the *neighbouring white-ball* format is deliberate and still allowed: `build_opponent_about`
+steps ODI → T20I → T20 when a bowler's record in the pack's own format leaves both hands with
+nothing, and records `clip_format` so the card can say so. A T20I clip in an ODI pack is worth
+watching. A Test one is not.
 
 The batting-pack half went unnoticed from `a067e44` until 2026-08-10: the reels were built from
 `build_profile(bid, hand="All")`, so Steve Smith's pack showed Ebadot Hossain bowling to Ben Curran.
