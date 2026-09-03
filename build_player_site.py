@@ -1105,6 +1105,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
     if opp_bowlers:
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
+        borrowed = set()      # formats a reel had to fall back to; drives the footnote below
 
         def _card(bid, meta_):
             nm, ty = meta_
@@ -1135,18 +1136,31 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
             fh = _manual_for(manual_href, bid, hand)
             if fh:
                 ov[(bid, "footage")] = fh
+            # This bowler's record in the pack's own format left the hands with no footage, so the
+            # reel was built from a neighbouring white-ball format (build_opponent_about steps
+            # ODI -> T20I -> T20). Allowed, but the player should know what they are watching.
+            _cf = ab.get("clip_format")
+            if _cf:
+                lim.update(k for k in ("stock", "wicket", "new_ball") if ov.get((bid, k)))
+                if lim:
+                    borrowed.add(_cf)
             return _opp_card(bid, nm, ty, facts,
                              h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
                              opp_vision=ov, report_url=report_urls.get(bid),
                              kinds=bkinds, tier=(opp_tiers or {}).get(bid), limited=lim)
         inner = _tiered_inner(ordered, opp_tiers, _card)
+        if borrowed:
+            inner += (f'<p class="vfoot">* this bowler has too little {html.escape(fmt)} footage, '
+                      f'so the reel is their {" / ".join(sorted(html.escape(b) for b in borrowed))} '
+                      f'bowling — the same bowler, a different format.</p>')
         body.append(_pack_section(f"The {opp} attack",
                                   "Grouped by how likely they are to play. Tap a bowler for what "
                                   "they're about, the fuller report, and any footage of you facing them.",
                                   inner=inner))
     body.append(_pack_section(f"Your vision vs {opp}",
-                              "Your most recent balls facing each of their bowlers — Test where you've "
-                              "met, otherwise your ODI / T20 footage (the format is labelled).",
+                              f"Your most recent balls facing each of their bowlers — {html.escape(fmt)} "
+                              f"where you've met, otherwise your nearest-format footage "
+                              f"(the format is labelled).",
                               inner=_vision_list(h2h_links, "hbat", had_meetings, "facing", fmt),
                               open=False))
     return "".join(body)
