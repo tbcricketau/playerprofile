@@ -466,6 +466,25 @@ minutes writing *nothing*, then emits the ~34 player pages at the end. Measured 
 climbed 20s → 29s → 39s while the file count sat still. A wedged run is CPU flat as well, over tens
 of minutes. It has hung with the warehouse perfectly reachable, so a stall is not proof of a VPN drop.
 
+### Run a batch UNBUFFERED, or you cannot tell working from wedged
+
+`python … | grep -v WARNING` block-buffers stdout, so a batch that prints one line per report shows
+**nothing at all** until ~8 KB accumulates. Combined with the note above, that is a trap: an empty
+log reads as "quiet phase, still working" when it may be a dead process.
+
+It cost 45 minutes on 2026-09-02. A `build_reports` batch hung on a Chrome print — python at 4.1 s
+of CPU after 45 minutes, Chrome up and idle, **zero** reports written — while the log showed only
+the header line. The tell was file **mtimes**: the newest PDF was still from the previous evening.
+
+- Run batches as `python -u …` **with no pipe**. The harness captures output either way, and `-u`
+  plus no pipe means one visible line per report.
+- Judge a suspected stall by **CPU accumulating** and **output-file mtimes**, never by log silence.
+- Chrome hanging mid-print is a real failure mode with no timeout around it. Killing the task
+  cleans up its Chrome processes; a single re-render then works (Raza: 73 s end to end), so a wedge
+  is usually transient rather than a code fault — check before you go looking for a bug.
+- For a long batch, put a watchdog on it (`Monitor` with a stall check) rather than reading silence
+  as progress.
+
 ## Archiving a finished series
 
 Two halves, because the two sites fail differently. The **coach portal** rebuilds itself from
