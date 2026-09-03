@@ -48,6 +48,17 @@ BUNDLES = {
 }
 
 
+def _squad_fmt(slug):
+    """The format the squad was picked for, so the audit can reject a red-ball clip in a
+    white-ball pack. None (no format check) when the slug is unknown."""
+    try:
+        import json
+        with open(os.path.join(HERE, "squads.json"), encoding="utf-8") as fh:
+            return (json.load(fh).get(slug) or {}).get("format")
+    except Exception:
+        return None
+
+
 def _run(args, cwd):
     r = subprocess.run(args, cwd=cwd, capture_output=True, text=True)
     if r.returncode and "nothing to commit" not in (r.stdout + r.stderr):
@@ -111,8 +122,9 @@ def main():
     if not a.no_hand_audit:
         print(f"hand audit {cfg['bundle']}…")
         try:
-            mixed, wrong, pooled, _u, n, pages = run_audit(out, opp=cfg.get("opp", "bangladesh"),
-                                                           slug=cfg.get("slug", ""), quiet=True)
+            mixed, wrong, pooled, _u, n, pages, offfmt = run_audit(
+                out, opp=cfg.get("opp", "bangladesh"), slug=cfg.get("slug", ""), quiet=True,
+                fmt=_squad_fmt(cfg.get("slug", "")))
         except Exception as e:
             # A dropped VPN must not become a silent pass — this is the check that catches a pack
             # showing the wrong batter's footage, which shipped unnoticed for weeks.
@@ -120,12 +132,13 @@ def main():
                 f"\nREFUSING TO PUBLISH: the hand audit could not run ({type(e).__name__}: "
                 f"{str(e)[:120]}). It needs the warehouse — reconnect, or pass --no-hand-audit to "
                 f"publish without it (deliberate override only). Nothing was pushed.")
-        if mixed or wrong or pooled:
+        if mixed or wrong or pooled or offfmt:
             raise SystemExit(
-                f"\nREFUSING TO PUBLISH: {mixed} mixed-hand, {wrong} wrong-hand, {pooled} unscoped "
-                f"reel(s) across {pages} batting packs. A pack is showing footage of the wrong "
-                f"batter's hand. Nothing was pushed.")
-        print(f"  clean — {n} reels across {pages} batting packs, all one hand")
+                f"\nREFUSING TO PUBLISH: {mixed} mixed-hand, {wrong} wrong-hand, {pooled} unscoped, "
+                f"{offfmt} off-format reel(s) across {pages} batting packs. A pack is showing "
+                f"footage of the wrong batter's hand, or from the wrong side of red/white ball. "
+                f"Nothing was pushed.")
+        print(f"  clean — {n} reels across {pages} batting packs, all one hand and format")
 
     msg = a.message or f"publish {datetime.datetime.now():%Y-%m-%d %H:%M}"
     _run(["git", "add", "-A"], out)
