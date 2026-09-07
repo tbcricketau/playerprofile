@@ -2,6 +2,177 @@
  "title": "Australia — Opposition Scouting",
  "series": [
   {
+   "slug": "india-a-od-2026",
+   "name": "India One-Day Series 2026",
+   "subtitle": "Australia A v India A · 3 one-day matches · in Puducherry",
+   "target_country": "India",
+   "format": "ODI",
+   "level": "a-team",
+   "groups": [
+    {
+     "slug": "bowlers",
+     "name": "India A Bowlers",
+     "format": "ODI",
+     "level": "a-team",
+     "kind": "bowling",
+     "reports": [
+      {
+       "id": "6381324",
+       "tier": "squad",
+       "name": "Vipraj Nigam"
+      },
+      {
+       "id": "3630029",
+       "tier": "squad",
+       "name": "Anukul Roy"
+      },
+      {
+       "id": "6381338",
+       "tier": "squad",
+       "name": "Suryansh Shedge"
+      },
+      {
+       "id": "4354608",
+       "tier": "squad",
+       "name": "Ayush Badoni"
+      },
+      {
+       "id": "5490039",
+       "tier": "squad",
+       "name": "Nishant Sindu"
+      },
+      {
+       "id": "5181010",
+       "tier": "squad",
+       "name": "Mohd Arshad Khan"
+      },
+      {
+       "id": "5181011",
+       "tier": "squad",
+       "name": "Yash Ravisingh Thakur"
+      },
+      {
+       "id": "6380434",
+       "tier": "squad",
+       "name": "Anshul Kamboj"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "india-a-4day-2026",
+   "name": "India Four-Day Series 2026",
+   "subtitle": "Australia A v India A · 2 four-day matches · in Puducherry",
+   "target_country": "India",
+   "format": "Test",
+   "level": "a-team",
+   "groups": [
+    {
+     "slug": "bowlers-vs-lhb",
+     "name": "India A Bowlers to LHB",
+     "format": "Test",
+     "level": "a-team",
+     "kind": "bowling",
+     "reports": [
+      {
+       "id": "6380716",
+       "tier": "squad",
+       "name": "Saransh Jain",
+       "hand": "lhb"
+      },
+      {
+       "id": "6381489",
+       "tier": "squad",
+       "name": "Harsh Surendra Dubey",
+       "hand": "lhb"
+      },
+      {
+       "id": "5181011",
+       "tier": "squad",
+       "name": "Yash Ravisingh Thakur",
+       "hand": "lhb"
+      },
+      {
+       "id": "5181028",
+       "tier": "squad",
+       "name": "Gurnoor Brar",
+       "hand": "lhb"
+      },
+      {
+       "id": "6381482",
+       "tier": "squad",
+       "name": "Zeeshan Ansari",
+       "hand": "lhb"
+      },
+      {
+       "id": "6380434",
+       "tier": "squad",
+       "name": "Anshul Kamboj",
+       "hand": "lhb"
+      },
+      {
+       "id": "7230044",
+       "tier": "squad",
+       "name": "Auqib Nabi",
+       "hand": "lhb"
+      }
+     ]
+    },
+    {
+     "slug": "bowlers-vs-rhb",
+     "name": "India A Bowlers to RHB",
+     "format": "Test",
+     "level": "a-team",
+     "kind": "bowling",
+     "reports": [
+      {
+       "id": "6380716",
+       "tier": "squad",
+       "name": "Saransh Jain",
+       "hand": "rhb"
+      },
+      {
+       "id": "6381489",
+       "tier": "squad",
+       "name": "Harsh Surendra Dubey",
+       "hand": "rhb"
+      },
+      {
+       "id": "5181011",
+       "tier": "squad",
+       "name": "Yash Ravisingh Thakur",
+       "hand": "rhb"
+      },
+      {
+       "id": "5181028",
+       "tier": "squad",
+       "name": "Gurnoor Brar",
+       "hand": "rhb"
+      },
+      {
+       "id": "6381482",
+       "tier": "squad",
+       "name": "Zeeshan Ansari",
+       "hand": "rhb"
+      },
+      {
+       "id": "6380434",
+       "tier": "squad",
+       "name": "Anshul Kamboj",
+       "hand": "rhb"
+      },
+      {
+       "id": "7230044",
+       "tier": "squad",
+       "name": "Auqib Nabi",
+       "hand": "rhb"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "slug": "zimbabwe-odi-away-2026",
    "name": "Zimbabwe Away ODI Series 2026",
    "subtitle": "Australia v Zimbabwe · ODIs · in Zimbabwe",

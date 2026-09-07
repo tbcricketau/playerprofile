@@ -292,7 +292,7 @@ def grid_danger(rows: list, min_balls: int = 25) -> dict | None:
 _BAT_FIELD_POS = None
 
 
-def _annotate_batter_catches(batter_id, raw, fmt="Test"):
+def _annotate_batter_catches(batter_id, raw, fmt="Test", level="international"):
     """Attach r['catch_position'] (fielding-position description, e.g. 'Fine leg: leg slip') to his
     caught dismissals, from the DeliveryFielders catcher. Best-effort — silent if the query fails."""
     global _BAT_FIELD_POS
@@ -301,7 +301,7 @@ def _annotate_batter_catches(batter_id, raw, fmt="Test"):
         from data_loaders import load_fielding_positions
         if _BAT_FIELD_POS is None:
             _BAT_FIELD_POS = load_fielding_positions()
-        cmap = load_batter_catch_positions(str(batter_id), fmt=fmt)
+        cmap = load_batter_catch_positions(str(batter_id), fmt=fmt, level=level)
     except Exception:
         return
     for r in raw:
@@ -312,13 +312,17 @@ def _annotate_batter_catches(batter_id, raw, fmt="Test"):
 
 
 def build_batter_profile(batter_id: str, raw: list | None = None, group: str | None = None,
-                         fmt: str = "Test") -> dict:
-    """`fmt` scopes every warehouse read to that format's internationals (Test / ODI / T20).
-    It defaults to Test, so existing callers are unchanged. When `raw` is supplied the caller has
-    already scoped it — fmt then only affects the innings/info/catch lookups, so pass the SAME
-    format you loaded `raw` with or the share-of-runs denominator will come from another format."""
+                         fmt: str = "Test", level: str = "international",
+                         source: str = "warehouse") -> dict:
+    """`fmt` scopes every warehouse read to that format (Test / ODI / T20) and `level` to that
+    standard of cricket ("international" or "a-team"). Both default to the senior international
+    case, so existing callers are unchanged. When `raw` is supplied the caller has already scoped
+    it — fmt and level then only affect the innings/info/catch lookups, so pass the SAME pair you
+    loaded `raw` with or the share-of-runs denominator will come from a different body of
+    cricket."""
     if raw is None:
-        raw = process_batting_rows(load_batter_deliveries(batter_id, fmt=fmt))
+        raw = process_batting_rows(load_batter_deliveries(batter_id, fmt=fmt, level=level,
+                                                          source=source))
     # correct known warehouse hand errors for the profiled batter (all his deliveries)
     _hov = _HAND_OVERRIDE.get(str(batter_id))
     if _hov:
@@ -326,9 +330,9 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
             r["is_lhb"] = (_hov == "Left")
     # where his caught dismissals were actually taken (fielding position) — for the field engine's
     # dismissal-evidence rule (was he caught at a specific catcher, e.g. Carey's leg slip?).
-    _catch_pos = _annotate_batter_catches(batter_id, raw, fmt=fmt)
-    innings = load_batter_innings(batter_id, fmt=fmt)
-    info = load_batter_info(batter_id, fmt=fmt)
+    _catch_pos = _annotate_batter_catches(batter_id, raw, fmt=fmt, level=level)
+    innings = load_batter_innings(batter_id, fmt=fmt, level=level)
+    info = load_batter_info(batter_id, fmt=fmt, level=level)
 
     # Optional bowler-group filter (focused report). Headline + dimensions then reflect only
     # deliveries from that group; hand + share-of-runs stay on the full career. Groups can be an

@@ -20,10 +20,11 @@ from site_render import page as _page
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def _scope_sql(fmt="Test", alias="M"):
-    """Format scope for this builder. Was a Test-only module constant (_INTL_TEST)."""
+def _scope_sql(fmt="Test", alias="M", level="international"):
+    """Format + LEVEL scope for this builder. Was a Test-only module constant (_INTL_TEST),
+    then format-aware; level picks the standard of cricket (see cricket_core A_TEAM_SERIES)."""
     from data_loaders import _scope
-    return _scope(fmt, alias)
+    return _scope(fmt, alias, level)
 
 
 # unorthodox shots we can separate in stroke lookup 24 (id -> label). No 'upper cut' / 'paddle
@@ -54,7 +55,7 @@ def _shade(pct):
     return f"rgb({r},{g},{b})"
 
 
-def _query(conn, cur, batter_ids, fmt="Test"):
+def _query(conn, cur, batter_ids, fmt="Test", level="international"):
     inlist = "('" + "','".join(batter_ids) + "')"
     when = " ".join(
         f"SUM(CASE WHEN D.bowler_style_id IN {grp} AND D.stroke_id='{sid}' THEN 1 ELSE 0 END) AS {tag}{sid},"
@@ -66,7 +67,7 @@ def _query(conn, cur, batter_ids, fmt="Test"):
             {when.rstrip(',')}
         FROM [{DATA_SCHEMA}].[Deliveries] D
         JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id = M.match_id
-        WHERE {_scope_sql(fmt)} AND D.legal_ball = '1' AND D.striker_id IN {inlist}
+        WHERE {_scope_sql(fmt, level=level)} AND D.legal_ball = '1' AND D.striker_id IN {inlist}
         GROUP BY D.striker_id""", conn, cur)
 
 
@@ -77,11 +78,11 @@ def _f(v):
         return 0.0
 
 
-def build(opp, fmt="Test"):
+def build(opp, fmt="Test", level="international"):
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
     batters = about.get("batters", {})
     conn, cur = set_conn_cursor()
-    rows = _query(conn, cur, list(batters.keys()), fmt=fmt)
+    rows = _query(conn, cur, list(batters.keys()), fmt=fmt, level=level)
     conn.close()
 
     # a single column order across both tables: most-established (most Test balls faced) first
@@ -135,8 +136,11 @@ def main():
     ap.add_argument("--opp", default="bangladesh")
     ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
                     help="which format's internationals to count (default: Test)")
+    ap.add_argument("--level", default="international", choices=("international", "a-team"),
+                    help="which standard of cricket. 'a-team' scopes to International 1st "
+                         "Class / Tour Matches / List A ODI (default: international)")
     a = ap.parse_args()
-    build(a.opp, fmt=a.fmt)
+    build(a.opp, fmt=a.fmt, level=a.level)
 
 
 if __name__ == "__main__":

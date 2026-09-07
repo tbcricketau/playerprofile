@@ -75,6 +75,27 @@ def roster(slug, path=None, allow_archived=False):
     return [str(p) for p in m.get("players", [])]
 
 
+def opp_key(slug, path=None):
+    """The token that names this series' opposition DATA FILES — matchup_store_{key}.json,
+    h2h_{key}.json, overview_{group}_{key}.json, opponent_about_{key}.json, and the rest.
+
+    It defaults to the slug's first token, which is what every consumer used to compute inline, so
+    every existing series resolves exactly as before. It is overridable because that default breaks
+    the moment two LIVE squads face the same opponent in different formats: `india-a-4day-2026` and
+    `india-a-od-2026` both reduce to "india", and the four-day and one-day packs would then read
+    and overwrite each other's store, h2h and overviews — silently, since each file is valid, just
+    for the wrong format.
+
+    Set `opp_key` on the squad in squads.json to separate them (e.g. "india_a_fc" / "india_a_la").
+    This is the DATA key, not the warehouse team name: the team is still "India A" in both.
+    """
+    try:
+        m = meta(slug, path)
+    except KeyError:
+        m = {}
+    return str(m.get("opp_key") or str(slug).split("-")[0])
+
+
 def resolve(ids, path=None):
     """[(id, registry record)] for the given ids — the registry used as a lookup, not a loop.
     An id with no registry entry still comes back, so a roster line can never silently vanish."""

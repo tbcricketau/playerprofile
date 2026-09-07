@@ -78,6 +78,13 @@ def _first_name_score(want, got):
     return 0
 
 
+def _sqlq(s):
+    """A surname as a T-SQL string literal body. Names carry apostrophes — O'Neill, O'Keefe,
+    D'Arcy — and interpolating one raw closed the quote and failed the whole squad resolve with
+    "Incorrect syntax near 'Neill'", which reads like a warehouse fault rather than a name."""
+    return str(s).replace("'", "''")
+
+
 def resolve(names):
     """[full name] -> [{id, name, wh_name, role, packs, bat_balls, bowl_balls, avg_pos}].
 
@@ -87,7 +94,7 @@ def resolve(names):
     output showed it because only the INPUT name was printed back."""
     conn, cur = set_conn_cursor()
     surnames = sorted({n.split()[-1] for n in names})
-    likes = " OR ".join(f"P.surname LIKE '%{s}%'" for s in surnames)
+    likes = " OR ".join(f"P.surname LIKE '%{_sqlq(s)}%'" for s in surnames)
     players = run_query(
         f"SELECT P.player_id, P.name, P.surname FROM [{DATA_SCHEMA}].[Players] P WHERE {likes}",
         conn, cur)

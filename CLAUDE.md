@@ -657,16 +657,189 @@ attacked our squad" from **Test** deliveries. Rendering it under an ODI series w
 on an ODI page for whatever fraction of the roster happens to have a card — the pooling defect
 again — so `publish_site` skips it with a printed reason when the squad's `format` isn't Test.
 
-### What is NOT yet format-aware — the batting half
+### The batting half is format-aware too (2026-09-02)
 
-The bowler reports are done. **The batting half is still hardwired to Test**, so there are no ODI
-*player packs* yet: `batting_loaders.py` has no `fmt` parameter at all (`_intl_test()`,
-`load_test_batters`), and `batter_profile`, `build_opponent_about`, `build_overview`,
-`build_shot_matrix`, `build_conditions` and `field_engine` (`_FMT = "test"`) all pin
-`international_series_sql('Test')`. `build_h2h.py` is already format-flexible (it picks the best
-available format per pairing) and the clip resolver walks Test → ODI → T20I.
+`batting_loaders`, `batter_profile`, `build_opponent_about`, `build_overview` and
+`build_shot_matrix` all take `fmt`. `build_h2h.py` picks the best available format per pairing and
+the clip resolver walks the pack's format first. Still Test-pinned: **`field_engine`** (`_FMT =
+"test"`, so Suggested Fields are omitted from non-Test packs) and **`build_conditions.py`** (it
+measures against `REF_CONDITIONS` = NZ/SA/ENG, a SENA-away Test idea).
 
 ODI phases (powerplay / middle / death) and ODI field norms are new work, not a parameter.
+
+## LEVEL is a second axis, and it is not FORMAT (2026-09-04)
+
+A four-day Australia A match is **Test-format cricket at a-team level**. Format is the shape of the
+game — four innings, red ball, the report layout and kit. Level is its standard — which series
+count as a player's record. Everything scoped by format alone until now because the two always
+moved together: an "International Tests M" match is Test-format *and* senior.
+
+```python
+from cricket_core.config import series_sql          # series_sql(fmt, level)
+series_sql("Test")                # ('International Tests M')
+series_sql("Test", "a-team")      # ('International 1st Class M', 'International Tour Matches M')
+series_sql("ODI",  "a-team")      # ('International List A ODI M')
+```
+
+`level="international"` is the default in every signature, so **every pre-existing series resolves
+byte for byte as before** — verified against the shipped CSVs and the Zimbabwe pack's links.
+`international_series_sql(fmt)` is retained as the senior case. There is no men's A-team T20 bucket
+in the warehouse, so `series_sql("T20I", "a-team")` **raises** rather than serving the women's
+`International List A T20 F`.
+
+Threaded through: `data_loaders._scope`, `batting_loaders`, `profile`, `odi_profile`,
+`batter_profile`, `build_opponent_about`, `build_overview`, `build_shot_matrix`, `build_h2h`,
+`build_reports`, `build_batting_reports`, `publish_site`, `build_player_site`, `audit_pack_hands`,
+and matchupmodel's `format_filter` / `profile_csv` / both profile builders / `export_matchup_store`.
+
+Design, measurements and what is still open: **`A_TEAM_LEVEL_PLAN.md`**.
+
+## SOURCE is a third axis — where the ball record comes from (2026-09-07)
+
+```
+format   the shape of the game        Test / ODI / T20I / T20
+level    the standard of the game     international / a-team
+source   where the record comes from  warehouse / c21 / both
+```
+
+All three are orthogonal and all three default to the old behaviour, so nothing existing moves.
+
+`source` exists because **the warehouse holds no Indian domestic cricket at all** — no Ranji, no
+Duleep, no Vijay Hazare, only the IPL. An India A bowler's record there is a few hundred balls at
+38% tracking; Cricket-21 has thousands at 98% with video on every one. `c21_source.py` reads the
+C21 mirror and returns rows in the **warehouse row shape** — same column names, same string
+conventions, `"None"` for what C21 lacks — so no consumer can tell where a row came from.
+
+```powershell
+.\venv\Scripts\python.exe build_c21_player_map.py            # warehouse ids <-> C21 ids, once
+.\venv\Scripts\python.exe build_opponent_about.py --opp india_a_4day --fmt Test --level a-team --source both
+.\venv\Scripts\python.exe build_overview.py --opp india_a_4day --fmt Test --level a-team --source both --group right_pace
+```
+
+Measured on the four-day pack: batters with a plan went **3 of 6 to 5 of 6**, Mokhade 64 → 538
+balls, Rasheed 202 → 523, Nabi's bowling 30 tracked balls → 1,132. Survey and limits:
+`cricket21/docs/INDIA_DOMESTIC.md`, design in `A_TEAM_LEVEL_PLAN.md`.
+
+**The coordinates are safe to pool, and that was checked rather than assumed.** C21's raw line axis
+correlates with the warehouse at r = −0.14 because the two mirror left-handers differently — the
+classic way to publish a plan that is right for one hand and backwards for the other.
+`cricket21/calibrate.py` fits the transform per hand (opposite slopes, which IS the mirroring) and
+an independent check on 2026-09-07 found the distributions agree: RHB median 344 (warehouse) vs 337
+(C21), LHB 172 vs 188.
+
+**A gate must count the SAME source it builds from.** `_test_balls` decides full profile against the
+thin all-formats fallback. Counting the warehouse while building from `both` sent every player whose
+record is only in C21 down the fallback — which is warehouse-only too, found nothing, and skipped
+them silently. Aman Mokhade and Ayush Pandey have no warehouse record at all.
+
+**What C21 does not give:** ball speed in Ranji (0.2% — pace cards get lengths and lines but no
+speed), seam/swing movement, bowler spell. The zone GROUP columns are deliberately left `None`
+rather than synthesised: those are the columns that stamp an untracked ball "full toss".
+
+### A clip is a STEM or a URL — never assume the stem
+
+Fairplay clips are stored extension-less and resolved with a fresh read SAS at bake time, so they
+travel as a `clip_stem`. **Cricket-21 serves its own footage** from a complete, unauthenticated
+`hdvod.cricket-21.com` URL: nothing to resolve, no SAS to mint, and re-stamping it would corrupt it.
+A playlist entry therefore carries **one or the other** — `c21_source.clip_ref(row, stem)` decides,
+and a Fairplay stem always wins where both exist, so a warehouse delivery is never displaced.
+
+Anything that reads a clip must accept both. Four places assumed the stem, and three of them threw
+the footage away without a word:
+
+- `cricket_core.resolve_playlist` overwrote `url` from the stem and DROPPED whatever would not
+  resolve — a source with a clip on every ball produced empty reels.
+- `build_player_site` filtered six call sites on `clip_stem` (now `_clip_item` / `_playable`).
+- `build_opponent_about._has_vid` asked only about `video_file_name`.
+- 🔴 **`audit_pack_hands` could not see them at all.** An unresolvable clip is dropped from the
+  reel's id list, so a reel made entirely of C21 footage would have looked **empty and passed as
+  clean without ever being checked** — the "gate that only checks what it was built to check"
+  failure once more. It now indexes url-bearing entries and resolves hand + red/white format from
+  the mirror via `c21_source.delivery_facts`, selecting them **by provenance, never by id shape**
+  (C21 ids are 6 digits, warehouse 16 — they cannot collide today, but that is an observation about
+  two independent id spaces, not a guarantee).
+
+**Probe before trusting a C21 clip URL.** The vendor path is *constructed*, not confirmed, and the
+host answers a missing clip with a valid ~1.5 KB stub rather than a 404 — check the size, not the
+status. Six sampled on 2026-09-07 returned 12–20 MB of `video/mp4`.
+
+**C21 has its own sentinel.** An untracked ball has LengthY at or near 0, which the calibration
+maps to a CLUSTER around its per-hand intercept — about **−1810 mm for a right-hander, −2195 for a
+left-hander** (RHB −1810.2/−1798.0/−1785.9, LHB −2195.4/−2182.9/−2145.5), on **14.9% of right-hand
+and 15.4% of left-hand deliveries**. Same trap as the warehouse's −20000, with no single value to
+match on: use the RANGE. Never `is not None`, never an equality test.
+
+### Where level has to be CARRIED, not just passed
+
+- **`reports/ateam/`** — level lives in the PATH, like format. A player can hold both records
+  (Anshul Kamboj: 366 A-team first-class balls, 108 Test) and the filename carries neither, so one
+  render would silently overwrite the other. `_sidecar_map` keys on `(id, hand, kind, group, fmt,
+  level)`.
+- **A stepping fallback must skip what does not exist at the level.** `bowler_clips_best` /
+  `batter_clips_best` step Test → ODI → T20I; at a-team the T20I step *raises*, and the raise killed
+  the whole bowler rather than moving on — Saransh Jain and Anshul Kamboj vanished from the four-day
+  file with only a `! bowler` line to show it.
+- **…and it must not cross the red/white line to do it.** The first repair made the a-team order
+  Test → ODI → **T20**, reasoning that the pooled league scope is where an uncapped Indian player's
+  footage actually lives. It is — and T20 footage in a four-day pack is off-format, which is the
+  thing the reel rule forbids. **The publish gate refused the bundle with 58 off-format reels across
+  15 batting packs**, every one Kamboj or Ansari. The gate was right and the chain was wrong.
+  `_fmt_order` now returns **(format, level) pairs**: a red-ball pack falls back on LEVEL — A-team
+  first-class, then senior Tests — and never leaves red-ball; a white-ball pack moves among
+  white-ball formats only. The international table keeps its historical chain, whose cross-colour
+  steps have never fired in a shipped pack; if one ever does, this same gate stops it.
+- **`build_h2h`'s format preference inverts.** An Australia A v India A four-day meeting classifies
+  as `FC`, which the senior orders rank dead last — the pack for that very fixture would have
+  preferred a senior Test meeting between two of the players over the game they played against each
+  other.
+- **`audit_pack_hands._series_fmt`** is a red-vs-white check, so A-team first-class cricket has to
+  read as `Test`. It matched none of the tests and returned `''`, which the caller skips — a
+  four-day pack could have carried a List A reel and passed as clean.
+- **`inject_reports` bakes from the level's directory.** It resolves report NAMES through
+  `_scouting_urls`, which is level-aware, but `_bake_report` defaults to `reports/` — so for an
+  A-team squad every name resolved and every source was missing, and it injected **zero of 61**
+  reports while printing a wall of "no source in reports/". The names being right is what makes this
+  one look like a data problem rather than a path one.
+
+### A-team first-class cricket is barely tracked — borrow the SHAPE, never the outcome
+
+2026 A-team first-class cricket is **38.5% tracked**. Two of the seven India A bowlers have *zero*
+tracked deliveries against 366 and 138 bowled, and no `--min-balls` threshold rescues a bowler with
+nothing to threshold — they are simply absent from `bowler_delivery_*.csv`, and
+`export_matchup_store` drops any bowler missing from it, so the pack shows an attack that is mostly
+blank without anything failing.
+
+```powershell
+.\venv\Scripts\python.exe scripts\build_bowler_delivery.py --fmt Test --level a-team `
+    --min-balls 100 --supplement test,t20
+```
+
+- **WHERE a bowler pitches it** may be read from another body of cricket, nearest format first.
+- **OUTCOMES ARE NEVER SUPPLEMENTED.** `bowler_effectiveness` stays on the pack's own scope, so an
+  IPL economy can never become an A-team wicket rate; a supplemented bowler simulates at the type
+  baseline. Every row records its `source`, carried into the store as `shape_source`.
+- `q_present()` asks who **bowls** in the scope at all, tracking not required — the zone grid can
+  only see tracked bowlers, so a bowler with 366 untracked balls looked like one who does not exist.
+
+Result: **6 of 7 profiled, up from 2.** Auqib Nabi (30 tracked A-team, 52 IPL) stays under
+threshold and carries no plan, which is the honest answer.
+
+### Two live squads against one opponent — three things that assumed there was only ever one
+
+- **Opposition data keyed off `slug.split("-")[0]`.** `india-a-4day-2026` and `india-a-od-2026`
+  both reduce to `india` and would have shared and overwritten one `matchup_store`, `h2h`,
+  `opponent_about` and set of overviews. Use **`squads.opp_key(slug)`** — an explicit `opp_key` in
+  squads.json, defaulting to the old derivation. `export_matchup_store --key` separates the data key
+  from the warehouse team name and **refuses** when it does not match what playerprofile will read.
+- **Batting reports carry their format in the FILENAME, not the folder** (`_batting_test_` /
+  `_batting_odi_`, all in `reports/`). `_sidecar_map` took format from the directory — right for
+  bowling reports, wrong for these — so a player's Test and ODI batting reports collided and the
+  Test one won. It had never bitten because no two squads had shared a player across formats; these
+  two share four (Gaikwad, Thakur, Kamboj, Badoni).
+- **A multi-squad build nests packs under `players/<slug>/`, so `../scouting/` is one level short.**
+  `_scouting_urls` takes `up=`. It also means adding a live squad silently re-homes every *other*
+  live squad's packs — which is why Australia A builds into its own bundle (`ausa_player_site` →
+  `ausa_player_pack_site` → `tbcricketau/australia-a-packs`) and Zimbabwe keeps naming its squad.
 
 ## Known gaps / pending work
 

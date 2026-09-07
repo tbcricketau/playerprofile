@@ -1,0 +1,182 @@
+{
+ "pace": [
+  {
+   "batter": "Tilak Varma",
+   "bid": "4352313",
+   "balls": 210,
+   "Conventional sweep": 1.4,
+   "Slog sweep": 1.4,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ruturaj Gaikwad",
+   "bid": "4352297",
+   "balls": 129,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.8,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Prabhsimran Singh",
+   "bid": "4352118",
+   "balls": 153,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Priyansh Arya",
+   "bid": "6381340",
+   "balls": 134,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Suryansh Shedge",
+   "bid": "6381338",
+   "balls": 74,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 1.4,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 4.1
+  },
+  {
+   "batter": "Vipraj Nigam",
+   "bid": "6381324",
+   "balls": 52,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 7.7,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Vaibhav Suryavanshi",
+   "bid": "6380863",
+   "balls": 82,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 1.2,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ayush Badoni",
+   "bid": "4354608",
+   "balls": 44,
+   "Conventional sweep": 9.1,
+   "Slog sweep": 2.3,
+   "Reverse sweep": 2.3,
+   "Paddle": 0.0,
+   "Ramp / scoop": 6.8,
+   "Switch hit": 0.0
+  }
+ ],
+ "spin": [
+  {
+   "batter": "Tilak Varma",
+   "bid": "4352313",
+   "balls": 284,
+   "Conventional sweep": 2.8,
+   "Slog sweep": 1.1,
+   "Reverse sweep": 1.1,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.7,
+   "Switch hit": 0.4
+  },
+  {
+   "batter": "Ruturaj Gaikwad",
+   "bid": "4352297",
+   "balls": 189,
+   "Conventional sweep": 10.1,
+   "Slog sweep": 1.6,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Prabhsimran Singh",
+   "bid": "4352118",
+   "balls": 71,
+   "Conventional sweep": 5.6,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 1.4,
+   "Ramp / scoop": 1.4,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Priyansh Arya",
+   "bid": "6381340",
+   "balls": 62,
+   "Conventional sweep": 1.6,
+   "Slog sweep": 4.8,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Suryansh Shedge",
+   "bid": "6381338",
+   "balls": 65,
+   "Conventional sweep": 4.6,
+   "Slog sweep": 3.1,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 1.5
+  },
+  {
+   "batter": "Vipraj Nigam",
+   "bid": "6381324",
+   "balls": 72,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 2.8,
+   "Reverse sweep": 1.4,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 1.4
+  },
+  {
+   "batter": "Ayush Badoni",
+   "bid": "4354608",
+   "balls": 57,
+   "Conventional sweep": 5.3,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 1.8,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Nishant Sindu",
+   "bid": "5490039",
+   "balls": 45,
+   "Conventional sweep": 2.2,
+   "Slog sweep": 4.4,
+   "Reverse sweep": 2.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  }
+ ]
+}

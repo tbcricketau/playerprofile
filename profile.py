@@ -1247,6 +1247,8 @@ def build_profile(
     length_mode: str = "Zones",
     raw=None,
     fmt: str = "Test",
+    level: str = "international",
+    source: str = "warehouse",
 ) -> dict:
     """Compute the full bowler profile for the given filters.
 
@@ -1254,12 +1256,13 @@ def build_profile(
     `raw` may be passed pre-loaded/processed to avoid re-querying (the app does
     this so filter changes don't re-hit the DB).
 
-    `fmt` scopes the warehouse reads to that format's internationals (Test / ODI / T20). The
-    loaders were already format-aware; only this entry point was pinned. When `raw` is supplied
-    the caller has scoped it — pass the SAME fmt so the info lookup agrees with the deliveries.
+    `fmt` scopes the warehouse reads to that format (Test / ODI / T20) and `level` to that
+    standard of cricket ("international" or "a-team"). When `raw` is supplied the caller has
+    scoped it — pass the SAME fmt and level so the info lookup agrees with the deliveries.
     """
     if raw is None:
-        raw = process_rows(load_bowler_deliveries(bowler_id, fmt=fmt))
+        raw = process_rows(load_bowler_deliveries(bowler_id, fmt=fmt, level=level,
+                                                  source=source))
     _annotate_catches(raw, bowler_id)
 
     # Bowler-type override for warehouse mis-codes (e.g. an express quick coded Medium).
@@ -1268,7 +1271,7 @@ def build_profile(
         for r in raw:
             r["bowler_type_simple"] = _bt_fix
 
-    info = load_bowler_info(str(bowler_id), fmt=fmt) or {}
+    info = load_bowler_info(str(bowler_id), fmt=fmt, level=level) or {}
     name = (info.get("player_name") or "").strip() or f"Bowler {bowler_id}"
     team = (info.get("team_name") or "").strip()
     flag, _ = team_flag(team)

@@ -1672,7 +1672,8 @@ def _build_player(P: dict, pdf_path: str, subtitle: str, target_country: str | N
 def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
                   position: str = "All positions", spell: str = "All",
                   length_mode: str = "Zones", with_playlists: bool = True,
-                  target_country: str | None = "Australia", render_pdf: bool = True) -> str:
+                  target_country: str | None = "Australia", render_pdf: bool = True,
+                  level: str = "international", source: str = "warehouse") -> str:
     """Build the profile, render HTML, print to PDF. Returns the PDF path. When
     `with_playlists`, also builds video playlists + a `<pdf>.player.html` modal player and links
     the report's ▶ buttons to it (best-effort — never breaks the report if video is unavailable).
@@ -1680,7 +1681,8 @@ def render_report(bowler_id: str, hand: str = "All", out_dir: str = "reports",
     `target_country` = where the next series is played; video examples are ordered like-for-like
     (that country's conditions first, then similar, then the rest). Defaults to Australia (home
     series). Pass None for pure recency."""
-    P = build_profile(bowler_id, hand=hand, position=position, spell=spell, length_mode=length_mode)
+    P = build_profile(bowler_id, hand=hand, position=position, spell=spell,
+                      length_mode=length_mode, level=level, source=source)
     P["_recent_cards"] = _recent_card_vals(P)          # last-3-yr values for the top cards (once)
 
     os.makedirs(out_dir, exist_ok=True)

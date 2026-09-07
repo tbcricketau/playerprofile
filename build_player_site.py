@@ -397,11 +397,19 @@ def _pack_section(title, desc, inner=None, open=True):
 
 
 # ── Per-opposition-bowler matchup (SCOUTING_REBUILD.md we_bat direction) ──────────
+def _opp_key(slug):
+    """Which opposition data files this series reads. See squads.opp_key — the default is the
+    slug's first token, overridable so two live squads facing the same opponent in different
+    formats (india-a-4day-2026 / india-a-od-2026) do not share one store, h2h and overview set."""
+    from squads import opp_key
+    return opp_key(slug, SQUADS)
+
+
 def _matchups(slug):
     """{our_batter_id: [we_bat cells]} sorted most-dangerous first, from the matchup store."""
     try:
         from cricket_core.config import project_path
-        opp = slug.split("-")[0]
+        opp = _opp_key(slug)
         p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
         store = json.load(open(p, encoding="utf-8"))
         by_bat = {}
@@ -420,7 +428,7 @@ def _opp_roster(slug):
     Used only as a roster + labels — no matchup numbers reach the player packs."""
     try:
         from cricket_core.config import project_path
-        opp = slug.split("-")[0]
+        opp = _opp_key(slug)
         p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
         store = json.load(open(p, encoding="utf-8"))
         bowlers, batters = {}, {}
@@ -450,12 +458,12 @@ def _opp_roster(slug):
         return {}, {}
 
 
-def _scouting_urls(series_slug):
+def _scouting_urls(series_slug, up="../"):
     """({bowler_id: {hand: url}}, {batter_id: url}, {batter_id: {group: url}}) — the player-mode
     scouting reports in the assembled bundle. Bowler reports are hand-specific; batter reports have
     a combined overview plus per-bowler-type ('_vs_{group}') variants a bowler links type-scoped."""
     import glob
-    from publish_site import _FMT_DIRS, _fmt_key
+    from publish_site import _LEVEL_DIRS, _fmt_key, _level_key
 
     # The series' format, from the SQUAD (a squad is picked for a format). Batter reports are named
     # `_batting_{fmt}_{hand}[_vs_{group}]`, and without filtering on it a batter with both a Test
@@ -464,8 +472,9 @@ def _scouting_urls(series_slug):
     try:
         _sq = json.load(open(SQUADS, encoding="utf-8")).get(series_slug, {})
         _sfmt = _fmt_key(_sq.get("format"))
+        _slvl = _level_key(_sq.get("level"))
     except Exception:
-        _sfmt = "test"
+        _sfmt, _slvl = "test", "international"
     _bat_tag = f"_batting_{_sfmt}_"
 
     # Which folder publish_site actually baked each bowler into, taken from series.json rather than
@@ -489,7 +498,11 @@ def _scouting_urls(series_slug):
     bowl, bat, bat_groups = {}, {}, {}
     # Scan every format's output dir — the white-ball builders write to reports/odi and reports/t20,
     # so a glob of reports/ alone finds no ODI report at all.
-    for _fmt, _dir in _FMT_DIRS.items():
+    # …and only this series' LEVEL. An A-team pack must link the A-team report, not the senior
+    # one for the same player in the same format — they are different cricket under one filename,
+    # separated by the folder they render into (reports/ vs reports/ateam/).
+    _dirs = _LEVEL_DIRS[_slvl]
+    for _fmt, _dir in _dirs.items():
         for sc in glob.glob(os.path.join(_dir, "*.playlists.json")):
             base = os.path.basename(sc)[: -len(".playlists.json")]
             try:
@@ -509,9 +522,10 @@ def _scouting_urls(series_slug):
             variant = ".pmode.html" if os.path.exists(
                 os.path.join(_dir, f"{base}.pmode.html")) else ".html"
             bowl.setdefault(bid, {})[hand] = \
-                f"../scouting/{series_slug}/{grp}/{base}{variant}"
+                f"{up}scouting/{series_slug}/{grp}/{base}{variant}"
 
-    for sc in glob.glob(os.path.join(HERE, "reports", "*.playlists.json")):
+    _bat_dir = _dirs["test"]        # batting reports render to the level's root folder
+    for sc in glob.glob(os.path.join(_bat_dir, "*.playlists.json")):
         base = os.path.basename(sc)[: -len(".playlists.json")]
         try:
             meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
@@ -521,8 +535,8 @@ def _scouting_urls(series_slug):
             bid = str(meta["batter_id"])
             m = re.search(r"_vs_([a-z_]+)$", base)     # a per-bowler-type player report
             variant = ".pmode.html" if os.path.exists(
-                os.path.join(HERE, "reports", f"{base}.pmode.html")) else ".html"
-            url = f"../scouting/{series_slug}/batters/{base}{variant}"
+                os.path.join(_bat_dir, f"{base}.pmode.html")) else ".html"
+            url = f"{up}scouting/{series_slug}/batters/{base}{variant}"
             if m:
                 bat_groups.setdefault(bid, {})[m.group(1)] = url
             elif bid not in bat:
@@ -548,7 +562,7 @@ _OV_LABEL = {"pace": "pace", "spin": "spin", "left_pace": "left-arm pace",
 def _load_overview(slug, group):
     """Structured overview rows for this bowler's own type, falling back to the broad pace/spin set
     when their exact type hasn't been built. None if neither exists."""
-    opp = slug.split("-")[0]
+    opp = _opp_key(slug)
     for g in (group, "spin" if str(group).endswith(("spin", "orthodox", "unorthodox")) else "pace"):
         p = os.path.join(HERE, "data", f"overview_{g}_{opp}.json") if g else None
         if p and os.path.exists(p):
@@ -692,7 +706,7 @@ def _our_bowl_groups(slug):
     out = {}
     try:
         from cricket_core.config import project_path
-        opp = slug.split("-")[0]
+        opp = _opp_key(slug)
         store = json.load(open(os.path.join(project_path("matchupmodel"), "data",
                                              f"matchup_store_{opp}.json"), encoding="utf-8"))
         for c in store.get("they_bat", []):
@@ -716,7 +730,7 @@ def _our_hands(slug):
     """{our_batter_id: 'lhb'/'rhb'} from the matchup store's we_bat rows."""
     try:
         from cricket_core.config import project_path
-        opp = slug.split("-")[0]
+        opp = _opp_key(slug)
         p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
         store = json.load(open(p, encoding="utf-8"))
         out = {}
@@ -829,7 +843,7 @@ def _short_opp(meta):
 
 def _load_h2h(slug):
     """h2h_{opp}.json for this series, indexed both ways, or None."""
-    opp = slug.split("-")[0]
+    opp = _opp_key(slug)
     p = os.path.join(HERE, "data", f"h2h_{opp}.json")
     if not os.path.exists(p):
         return None
@@ -841,7 +855,7 @@ def _opp_names(slug):
     """id -> display name for the opposition, from the matchup store (matchupmodel)."""
     try:
         from cricket_core.config import project_path
-        opp = slug.split("-")[0]
+        opp = _opp_key(slug)
         p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{opp}.json")
         store = json.load(open(p, encoding="utf-8"))
         names = {}
@@ -870,10 +884,10 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
                 continue
             them = r[them_key]
             key = f"{prefix}_{them}"                 # hbat_/hbowl_ so both directions coexist
-            items = [playlist_item(d["delivery_id"], d["clip_stem"],
+            items = [_clip_item(d,
                                    caption=f'{d["date"][8:10]}-{d["date"][5:7]}-{d["date"][:4]} · '
                                            + (f'OUT {d["wicket"]}' if d["wicket"] else f'{d["runs"]} run{"s" if d["runs"] != 1 else ""}'))
-                     for d in r["deliveries"] if d["clip_stem"]]
+                     for d in r["deliveries"] if _playable(d)]
             if items:
                 playlists[key] = items
                 titles[key] = (f'{label} {name_of.get(them, them)} · {r["balls"]} balls '
@@ -881,6 +895,22 @@ def _h2h_playlists(h2h, pid, players, opp_names=None):
     add(h2h.get("our_batting", []), "striker_id", "bowler_id", "hbat", "You v")
     add(h2h.get("our_bowling", []), "bowler_id", "striker_id", "hbowl", "You to")
     return playlists, titles
+
+
+def _clip_item(e, caption="", meta=None):
+    """playlist_item from an entry that carries EITHER a Fairplay `clip_stem` or a finished C21
+    `url`. Six call sites filtered on `clip_stem` alone, so every Cricket-21 clip was discarded
+    before it reached a reel — a source with footage on 100% of its balls produced nothing."""
+    from cricket_core.video import playlist_item
+    it = playlist_item(e.get("delivery_id"), e.get("clip_stem"), caption=caption, meta=meta)
+    if not e.get("clip_stem") and e.get("url"):
+        it["url"] = e["url"]
+    return it
+
+
+def _playable(e):
+    """Does this entry point at a clip at all, from either source?"""
+    return bool(e.get("clip_stem") or e.get("url"))
 
 
 def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, similar=None,
@@ -893,10 +923,10 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                                      inline_player_snippet)
     playlists, titles, hrefs, h2h_links = {}, {}, {}, []
     for i, s in enumerate(card.get("series", []) if card else []):
-        items = [playlist_item(o["delivery_id"], o["clip_stem"],
+        items = [_clip_item(o,
                                caption=f'{o["how"]} — {o["bowler"] or "?"} · '
                                        f'{o["length"] or "?"}, {o["line"] or "?"} · {_dfmt(o["date"])}')
-                 for o in s.get("dismissals", []) if o.get("clip_stem")]
+                 for o in s.get("dismissals", []) if _playable(o)]
         if not items:
             continue
         resolved, avail, _tot = resolve_playlist(items)
@@ -912,9 +942,9 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
             for idx, c in enumerate(s.get(fam, []) or []):
                 if c.get("flag") != "more" or not c.get("examples"):
                     continue
-                items = [playlist_item(e["delivery_id"], e["clip_stem"],
+                items = [_clip_item(e,
                                        caption=f'{c["label"]} — {s["opp"]}')
-                         for e in c["examples"] if e.get("clip_stem")]
+                         for e in c["examples"] if _playable(e)]
                 if not items:
                     continue
                 resolved, avail, _tot = resolve_playlist(items)
@@ -962,8 +992,8 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                               ("scoring_left_unorthodox", "scoLU", "Scoring shots vs left-arm wrist spin"),
                               ("dismissal_left_unorthodox", "dsmLU", "Dismissals vs left-arm wrist spin")):
             stems = clips.get(kind) or []
-            items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=tit)
-                     for e in stems if e.get("clip_stem")]
+            items = [_clip_item(e, caption=tit)
+                     for e in stems if _playable(e)]
             if not items:
                 continue
             resolved, avail, _tot = resolve_playlist(items)
@@ -977,10 +1007,10 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
     release_vision = {}
     for i, c in enumerate((release or {}).get("cells", [])):
         stems = c.get("clips") or []
-        items = [playlist_item(e["delivery_id"], e["clip_stem"],
+        items = [_clip_item(e,
                                caption=f'{c["angle"].capitalize()} the wicket to {c["hand"]} — '
                                        f'{c["band"]} of the stumps')
-                 for e in stems if e.get("clip_stem")]
+                 for e in stems if _playable(e)]
         if not items:
             continue
         resolved, avail, _tot = resolve_playlist(items)
@@ -1032,8 +1062,8 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
     # similar reference bowler (e.g. Sajid Khan for Lyon) — how they went vs the opposition batters
     similar_href = None
     if similar and similar.get("clips"):
-        items = [playlist_item(e["delivery_id"], e["clip_stem"], caption=f'{similar["name"]}')
-                 for e in similar["clips"] if e.get("clip_stem")]
+        items = [_clip_item(e, caption=f'{similar["name"]}')
+                 for e in similar["clips"] if _playable(e)]
         if items:
             resolved, avail, _tot = resolve_playlist(items)
             resolved = resolved[:20]                 # cap the shown playlist at 20 balls
@@ -1268,7 +1298,7 @@ def _load_about(slug):
     """(bowlers, batters) — each id-keyed. Kept SEPARATE: an all-rounder (Shakib, Taijul,
     Mehidy) is in both, and a flat id→facts merge let the batter entry clobber the bowler
     entry, so their bowler card served batting (scoring) clips."""
-    opp = slug.split("-")[0]
+    opp = _opp_key(slug)
     p = os.path.join(HERE, "data", f"opponent_about_{opp}.json")
     if not os.path.exists(p):
         return {}, {}
@@ -1279,7 +1309,7 @@ def _load_about(slug):
 def _load_similar(slug):
     """{our_bowler_pid: {name, clips}} from data/similar_bowler_{opp}.json — a reference bowler's
     footage vs the opposition batters (e.g. Sajid Khan for Lyon), or {}."""
-    opp = slug.split("-")[0]
+    opp = _opp_key(slug)
     p = os.path.join(HERE, "data", f"similar_bowler_{opp}.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
 
@@ -1549,7 +1579,7 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
                     _SITE_IMGS.add(str(pid))
             # suggested-field maps for the overview overlay (build_overview renders them per
             # bowler group; the pack links whichever group each of our bowlers sees)
-            fsrc = os.path.join(HERE, "reports", "fields", slug.split("-")[0])
+            fsrc = os.path.join(HERE, "reports", "fields", _opp_key(slug))
             if os.path.isdir(fsrc):
                 fdst = os.path.join(img_dir, "fields")
                 os.makedirs(fdst, exist_ok=True)
@@ -1605,7 +1635,13 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
                 # anything else gets starred on the card
                 clip_scopes[(bid, _g)] = a.get(f"clip_scope_{_g}") or ""
             opp_clips.setdefault(bid, {}).update(d)
-        bowl_urls, bat_urls, bat_group_urls = _scouting_urls(slug)   # +{batter:{group:url}}
+        # Depth matters: assemble_packs copies this tree to <bundle>/players/, and a MULTI-squad
+        # build nests each squad under its slug. A page at players/<slug>/x.html reaching
+        # "../scouting/" lands on players/scouting/, which does not exist — every scouting link
+        # in a two-squad bundle would be dead. (check_site would refuse the push rather than
+        # publish it, but the build has to be right, not merely blocked.)
+        bowl_urls, bat_urls, bat_group_urls = _scouting_urls(
+            slug, up=("../" if single else "../../"))   # +{batter:{group:url}}
         our_groups = _our_bowl_groups(slug)            # our_bowler -> {pace/spin: batter group}
         our_hands = _our_hands(slug)                   # our_batter_id -> lhb/rhb
         # h2h counts kept per DIRECTION — an all-rounder can both face and bowl to the same
@@ -1629,6 +1665,11 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
             pslug = _slug(name)
             bts = rec.get("bowl_types", [])            # [] for a batter, [pace]/[spin]/[pace,spin]
             vision, h2h_links, h2h_map, cell_vision, opp_vision, vsnip = {}, [], {}, {}, {}, ""
+            # `sb` (this bowler's similar-reference-bowler record) is read further down when the
+            # bowling page is written, but was only ASSIGNED inside the vision branch below. Any
+            # build that skips vision — --no-video, or a bowler with no attack card, no h2h and no
+            # opposition clips — reached it unbound and died with UnboundLocalError.
+            sb = None
             similar_href, release_vision, manual_href = None, {}, {}
             extra = _h2h_playlists(h2h, pid, players, opp_names) if h2h else ({}, {})
             had_bat = bool(h2h and any(r["striker_id"] == pid for r in h2h.get("our_batting", [])))

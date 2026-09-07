@@ -1,0 +1,170 @@
+{
+ "opp": "india_a_od",
+ "group": "right_pace",
+ "label": "right-arm pace",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "6380863",
+   "name": "Vaibhav Suryavanshi",
+   "sub": "LHB · Opener",
+   "balls": 67,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 67,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 29.41176470588235,
+    "area": "leg (66% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  },
+  {
+   "bid": "4352118",
+   "name": "Prabhsimran Singh",
+   "sub": "RHB · Opener",
+   "balls": 153,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 153,
+    "n_out": 4,
+    "bpd": 38.25,
+    "false_pct": 27.027027027027028,
+    "area": "off (56% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (75%)"
+   }
+  },
+  {
+   "bid": "4354608",
+   "name": "Ayush Badoni",
+   "sub": "RHB · Middle order",
+   "balls": 44,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 44,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 25.806451612903224,
+    "area": "leg (55% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (33%)"
+   }
+  },
+  {
+   "bid": "6381340",
+   "name": "Priyansh Arya",
+   "sub": "LHB · Opener",
+   "balls": 109,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 109,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 28.07017543859649,
+    "area": "leg (62% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  },
+  {
+   "bid": "4352313",
+   "name": "Tilak Varma",
+   "sub": "LHB · Top order",
+   "balls": 201,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching around leg</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 201,
+    "n_out": 5,
+    "bpd": 40.2,
+    "false_pct": 16.33986928104575,
+    "area": "leg (41% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (60%)"
+   }
+  },
+  {
+   "bid": "4352297",
+   "name": "Ruturaj Gaikwad",
+   "sub": "RHB · Top order",
+   "balls": 119,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 119,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 14.166666666666666,
+    "area": "off (53% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (33%)"
+   }
+  },
+  {
+   "bid": "6381338",
+   "name": "Suryansh Shedge",
+   "sub": "RHB · Middle order",
+   "balls": 73,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 73,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 36.507936507936506,
+    "area": "leg (41% of runs)",
+    "short": null,
+    "top_out": "Caught behind (67%)"
+   }
+  },
+  {
+   "bid": "5490039",
+   "name": "Nishant Sindu",
+   "sub": "LHB · Middle order",
+   "balls": 28,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 28,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 15.0,
+    "area": "leg (71% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "6381324",
+   "name": "Vipraj Nigam",
+   "sub": "RHB · Lower order",
+   "balls": 48,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 48,
+    "n_out": 4,
+    "bpd": 12.0,
+    "false_pct": 39.39393939393939,
+    "area": "off (73% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  }
+ ]
+}

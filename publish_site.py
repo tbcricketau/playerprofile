@@ -118,6 +118,23 @@ _FMT_DIRS = {"test": REPORTS_DIR,
              "odi": os.path.join(REPORTS_DIR, "odi"),
              "t20": os.path.join(REPORTS_DIR, "t20")}
 
+# A-team reports render to a parallel tree. LEVEL, like format, is carried by the DIRECTORY:
+# the filename holds only id, hand and group, so a player with both an A-team and a senior
+# record (Anshul Kamboj: 366 A-team first-class balls, 108 Test) would otherwise resolve to one
+# entry and the second bake would win silently.
+_ATEAM_ROOT = os.path.join(REPORTS_DIR, "ateam")
+_ATEAM_DIRS = {"test": _ATEAM_ROOT,
+               "odi": os.path.join(_ATEAM_ROOT, "odi"),
+               "t20": os.path.join(_ATEAM_ROOT, "t20")}
+_LEVEL_DIRS = {"international": _FMT_DIRS, "a-team": _ATEAM_DIRS}
+
+
+def _level_key(v) -> str:
+    """Normalise a level label from series.json / squads.json. Anything unknown reads as the
+    senior case, which is what every pre-existing series means."""
+    v = (v or "international").strip().lower()
+    return "a-team" if v in ("a-team", "a_team", "ateam", "a") else "international"
+
 
 def _fmt_key(v) -> str:
     """Normalise a format label from series.json or a sidecar ('ODI', 'T20I', 'Test') to a key."""
@@ -125,8 +142,24 @@ def _fmt_key(v) -> str:
     return "t20" if v.startswith("t20") else ("odi" if v == "odi" else "test")
 
 
+def _opp_key_for(series):
+    """Which opposition data files this series' built pages come from.
+
+    The slug's first token was the key everywhere; it stops working the moment two live squads
+    face the same opponent in different formats, which is what india-a-4day-2026 and
+    india-a-od-2026 do — both reduce to "india" and would share one set of overviews and shot
+    matrices. squads.json carries the real key; the old derivation is the fallback so every
+    pre-existing series resolves unchanged. See squads.opp_key."""
+    try:
+        import build_player_site as bps
+        from squads import opp_key
+        return opp_key(series["slug"], bps.SQUADS)
+    except Exception:
+        return str(series["slug"]).split("-")[0]
+
+
 def _sidecar_map():
-    """{(player_id, hand_tag, kind, bowl_group, fmt): (src_dir, report_base_name)} from the
+    """{(player_id, hand_tag, kind, bowl_group, fmt, level): (src_dir, report_base_name)} from the
     rendered sidecars — bowling sidecars carry meta.bowler_id, batting sidecars meta.batter_id.
     `bowl_group` is the ''`_vs_<group>`'' suffix ('' for the combined report; 'pace'/'spin' for the
     macro batter reports; 'right_pace'/… for atomic ones).
@@ -139,7 +172,8 @@ def _sidecar_map():
     T20 sidecar was stamped "ODI" — keying off it silently filed Starc's T20 report as his ODI
     one and overwrote the real entry."""
     out = {}
-    for fmt, d in _FMT_DIRS.items():
+    scopes = [(lvl, fmt, d) for lvl, dirs in _LEVEL_DIRS.items() for fmt, d in dirs.items()]
+    for level, fmt, d in scopes:
         for sc in sorted(glob.glob(os.path.join(d, "*.playlists.json"))):
             name = os.path.basename(sc)[: -len(".playlists.json")]
             try:
@@ -157,7 +191,20 @@ def _sidecar_map():
             else:
                 continue                       # a Test report with no hand suffix is not one of ours
             kind = "batting" if "_batting_" in name else "bowling"    # a player can have BOTH
-            out[(bid, hand, kind, group, fmt)] = (d, name)
+            # BATTING reports put the format in the FILENAME, not the folder — every one of them
+            # renders into reports/ (or reports/ateam/), tagged `_batting_test_` / `_batting_odi_`.
+            # Keyed off the folder they would all read as "test", so one player's ODI and Test
+            # batting reports collide on (id, hand, kind, group) and the Test one wins the sort.
+            # No two squads had overlapped a player across formats until now; the India A four-day
+            # and one-day squads share Gaikwad, Thakur, Kamboj and Badoni, which would have served
+            # the one-day packs their four-day reports. The rule is unchanged — take the format the
+            # BUILDER chose, never meta.format — it is just that for these it chose a filename.
+            rfmt = fmt
+            if kind == "batting":
+                fm = re.search(r"_batting_(test|odi|t20i|t20)_", name)
+                if fm:
+                    rfmt = _fmt_key(fm.group(1))
+            out[(bid, hand, kind, group, rfmt, level)] = (d, name)
     return out
 
 
@@ -238,7 +285,7 @@ def build(out_dir, sas_hours):
             shutil.copy(sm_src, os.path.join(s_dir, "shot-matrix.html"))
         # series-level meeting overviews, one per bowler type (build_overview.py) — plan + field
         # placements, a row per batter. Whatever groups have been built get linked.
-        opp0 = s["slug"].split("-")[0]
+        opp0 = _opp_key_for(s)
         # seam-and-bounce conditions read (build_conditions.py)
         cd_src = os.path.join(REPORTS_DIR, f"conditions_{opp0}.html")
         has_cd = os.path.exists(cd_src)
@@ -257,13 +304,16 @@ def build(out_dir, sas_hours):
             # Format is per-group and defaults to Test, so every existing series.json entry
             # resolves exactly as before. An ODI/T20 group sets "format": "ODI" | "T20I".
             gfmt = _fmt_key(g.get("format") or s.get("format"))
+            # Level is per-group too, and defaults to the senior case — so every series.json
+            # entry written before A-team packs existed resolves exactly as it did.
+            glvl = _level_key(g.get("level") or s.get("level"))
             for r in g.get("reports", []):
                 kind = g.get("kind", "bowling")
                 hand = r.get("hand", "all") if gfmt == "test" else "all"
-                hit = smap.get((str(r["id"]), hand, kind, g.get("bowl_group", ""), gfmt))
+                hit = smap.get((str(r["id"]), hand, kind, g.get("bowl_group", ""), gfmt, glvl))
                 if not hit:
                     print(f"  ! {s['slug']}/{g['slug']}: report id {r['id']} "
-                          f"({hand}, {gfmt}) not rendered — skipped"); continue
+                          f"({hand}, {gfmt}, {glvl}) not rendered — skipped"); continue
                 src_dir, name = hit
                 res = _bake_report(name, g_dir, hk_sas, src_dir=src_dir)
                 if res:
@@ -280,15 +330,21 @@ def build(out_dir, sas_hours):
             squads_all = json.load(open(bps.SQUADS, encoding="utf-8"))
             sq = squads_all.get(s["slug"])
             sq_fmt = _fmt_key(sq.get("format")) if sq else None
+            sq_lvl = _level_key(sq.get("level")) if sq else None
             if sq is None:
                 pass
-            elif sq_fmt != "test":
-                # attack_cards.py derives these from TEST deliveries. Rendering them under a
+            elif sq_fmt != "test" or sq_lvl != "international":
+                # attack_cards.py derives these from SENIOR TEST deliveries. Rendering them under a
                 # white-ball series would put Test plans on an ODI page, for whichever fraction
                 # of the roster happens to have a card — the same pooling defect the reel-scoping
-                # rule exists to prevent. Skip loudly until attack_cards is format-aware.
-                print(f"  - {s['slug']}/attacked-our-squad skipped: squad is {sq.get('format')} "
-                      f"and the attack cards are built from Test data")
+                # rule exists to prevent. Level is the same argument on the other axis: an
+                # Australia A squad is mostly uncapped, so the section would cover the handful with
+                # Test caps and silently speak for the rest. Skip loudly until attack_cards is
+                # format- and level-aware.
+                why = (f"squad is {sq.get('format')}" if sq_fmt != "test"
+                       else f"squad is {sq.get('level')} level")
+                print(f"  - {s['slug']}/attacked-our-squad skipped: {why} "
+                      f"and the attack cards are built from senior Test data")
             else:
                 nap = bps.render_attack_section(os.path.join(s_dir, "attacked-our-squad"), slug=s["slug"])
                 has_attacks = nap > 0

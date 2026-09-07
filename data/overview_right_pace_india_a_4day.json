@@ -1,0 +1,273 @@
+{
+ "opp": "india_a_4day",
+ "group": "right_pace",
+ "label": "right-arm pace",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "4352110",
+   "name": "Devdutt Padikkal",
+   "sub": "LHB · Top order",
+   "balls": 770,
+   "plan": "Plan for right-arm pace: bowl <b>full pitching outside off</b>.",
+   "field": {
+    "set": "leg-side stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_4352110_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "right_pace_4352110_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_4352110_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 770,
+    "n_out": 5,
+    "bpd": 154.0,
+    "false_pct": 21.828908554572273,
+    "area": "leg (62% of runs)",
+    "short": null,
+    "top_out": "Caught behind (60%)"
+   }
+  },
+  {
+   "bid": "3630218",
+   "name": "Dhruv Jurel",
+   "sub": "RHB · Middle order",
+   "balls": 863,
+   "plan": "Plan for right-arm pace: bowl <b>full pitching outside off</b>.",
+   "field": {
+    "set": "leg-side stock field",
+    "move": "Long-on",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_3630218_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "right_pace_3630218_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_3630218_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 863,
+    "n_out": 8,
+    "bpd": 107.875,
+    "false_pct": 22.97872340425532,
+    "area": "leg (42% of runs)",
+    "short": null,
+    "top_out": "Caught behind (25%)"
+   }
+  },
+  {
+   "bid": "5460174",
+   "name": "Sai Sudharsan",
+   "sub": "LHB · Top order",
+   "balls": 569,
+   "plan": "Plan for right-arm pace: bowl <b>back of a length pitching outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Backward square leg",
+    "spare": "Mid-on"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_5460174_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "right_pace_5460174_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_5460174_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 569,
+    "n_out": 5,
+    "bpd": 113.8,
+    "false_pct": 29.82456140350877,
+    "area": "straight (50% of runs)",
+    "short": null,
+    "top_out": "Caught behind (60%)"
+   }
+  },
+  {
+   "bid": "5460632",
+   "name": "Aman Mokhade",
+   "sub": "RHB · Opener",
+   "balls": 237,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_5460632_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "right_pace_5460632_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_5460632_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 237,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 21.818181818181817,
+    "area": "straight (100% of runs)",
+    "short": null,
+    "top_out": "LBW (67%)"
+   }
+  },
+  {
+   "bid": "4352297",
+   "name": "Ruturaj Gaikwad",
+   "sub": "RHB · Top order",
+   "balls": 233,
+   "plan": "Plan for right-arm pace: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_4352297_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "right_pace_4352297_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_4352297_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 233,
+    "n_out": 6,
+    "bpd": 38.833333333333336,
+    "false_pct": 20.338983050847457,
+    "area": "straight (49% of runs)",
+    "short": null,
+    "top_out": "Caught behind (50%)"
+   }
+  },
+  {
+   "bid": "5490034",
+   "name": "Shaik Rasheed",
+   "sub": "RHB · Middle order",
+   "balls": 177,
+   "plan": "Plan for right-arm pace: bowl <b>good length pitching wide outside off</b>.",
+   "field": null,
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_5490034_0.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_5490034_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 177,
+    "n_out": 4,
+    "bpd": 44.25,
+    "false_pct": 9.473684210526315,
+    "area": "straight (100% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "6380716",
+   "name": "Saransh Jain",
+   "sub": "LHB · Lower order",
+   "balls": 116,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 116,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 20.0,
+    "area": "straight (48% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "6381489",
+   "name": "Harsh Surendra Dubey",
+   "sub": "LHB · Lower order",
+   "balls": 137,
+   "plan": null,
+   "field": null,
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_6381489_0.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_6381489_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 137,
+    "n_out": 5,
+    "bpd": 27.4,
+    "false_pct": 13.698630136986301,
+    "area": "straight (70% of runs)",
+    "short": null,
+    "top_out": "Caught (100%)"
+   }
+  },
+  {
+   "bid": "5460629",
+   "name": "Ayush Pandey",
+   "sub": "LHB · Opener",
+   "balls": 100,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 100,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 27.027027027027028,
+    "area": "straight (100% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  }
+ ]
+}

@@ -181,7 +181,10 @@
   "prefs": "base",
   "bowl_types": [
    "pace"
-  ]
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
  },
  "2700257": {
   "name": "Todd Murphy",
@@ -193,15 +196,25 @@
   "prefs": "base",
   "bowl_types": [
    "spin"
-  ]
+  ],
+  "bowl_groups": {
+   "spin": "off_spin"
+  }
  },
  "3550357": {
   "name": "Campbell Kellaway",
   "role": "Batter",
   "packs": [
-   "batting"
+   "batting",
+   "bowling"
   ],
-  "prefs": "base"
+  "prefs": "base",
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "left_orthodox"
+  }
  },
  "2680008": {
   "name": "Jake Doran",
@@ -261,6 +274,7 @@
   "name": "Corey Rocchiccioli",
   "role": "Bowler",
   "packs": [
+   "batting",
    "bowling"
   ],
   "prefs": "base",
@@ -475,5 +489,208 @@
   "bowl_groups": {
    "pace": "left_pace"
   }
+ },
+ "2850086": {
+  "name": "Jack Edwards",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "2960022": {
+  "name": "Peter Handscomb",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ]
+ },
+ "2480051": {
+  "name": "Sam Harper",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ]
+ },
+ "2830011": {
+  "name": "Liam Hatcher",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "2840035": {
+  "name": "Nathan McSweeney",
+  "role": "Batter",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "off_spin"
+  }
+ },
+ "2700233": {
+  "name": "Fergus O'Neill",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "2730059": {
+  "name": "Jhye Richardson",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "1940344": {
+  "name": "Jason Sangha",
+  "role": "Batter",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "leg_spin"
+  }
+ },
+ "2700297": {
+  "name": "Liam Scott",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "4390234": {
+  "name": "Mahli Beardman",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "6380036": {
+  "name": "Nikhil Chaudhary",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "leg_spin"
+  }
+ },
+ "1070472": {
+  "name": "Ben Dwarshuis",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "left_pace"
+  }
+ },
+ "1070429": {
+  "name": "Riley Meredith",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "2700285": {
+  "name": "Mitch Owen",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "3050039": {
+  "name": "Tanveer Sangha",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "leg_spin"
+  }
+ },
+ "3400037": {
+  "name": "Lachlan Shaw",
+  "role": "Batter",
+  "packs": [
+   "batting"
+  ]
  }
 }

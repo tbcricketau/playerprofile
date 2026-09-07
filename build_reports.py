@@ -57,7 +57,15 @@ def main():
     ap.add_argument("--hand", help="Batter hand: all | lhb | rhb (Test only; required for Test)")
     ap.add_argument("--ids", nargs="+", help="Explicit bowler IDs (space or comma separated)")
     ap.add_argument("--csv", default=DEFAULT_CSV, help=f"CSV of players (default: {os.path.basename(DEFAULT_CSV)})")
-    ap.add_argument("--out", help="Output folder (default: reports, or reports/odi | reports/t20)")
+    ap.add_argument("--out", help="Output folder (default: reports, or reports/odi | reports/t20; prefixed with ateam/ at a-team level)")
+    ap.add_argument("--source", default="warehouse",
+                    choices=("warehouse", "c21", "both"),
+                    help="where the ball record comes from. 'both' adds Cricket-21 Indian "
+                         "domestic cricket, which the warehouse does not hold at all")
+    ap.add_argument("--level", default="international", choices=("international", "a-team"),
+                    help="which standard of cricket. 'a-team' scopes to International 1st "
+                         "Class / Tour Matches / List A ODI and writes under reports/ateam/ "
+                         "(default: international)")
     # Room to grow — accepted now, threaded straight through to build_profile.
     ap.add_argument("--position", default="All positions", help='e.g. "Openers (1-2)", "Top 3", "Top 4"')
     ap.add_argument("--spell", default="All", help='e.g. "Opening (Spell 1)", "Later (Spell 2+)"')
@@ -80,7 +88,12 @@ def main():
         if args.hand:
             print(f"(--hand ignored: the {fmt} report carries both hands in its match-ups table)")
 
-    out_dir = args.out or {"Test": "reports", "ODI": "reports/odi", "T20I": "reports/t20"}[fmt]
+    # Level lives in the PATH alongside format — a player can hold an A-team and a senior record
+    # and the filename carries neither, so one render would silently overwrite the other.
+    _base = {"Test": "reports", "ODI": "reports/odi", "T20I": "reports/t20"}[fmt]
+    if args.level == "a-team":
+        _base = _base.replace("reports", "reports/ateam", 1)
+    out_dir = args.out or _base
 
     ids = _ids_from_args(args.ids) if args.ids else _ids_from_csv(args.csv)
     if not ids:
@@ -90,10 +103,12 @@ def main():
         if fmt == "Test":
             return render_report(bid, hand=hand, out_dir=out_dir, position=args.position,
                                  spell=args.spell, length_mode=args.length,
-                                 target_country=target_country)
+                                 target_country=target_country, level=args.level,
+                                 source=args.source)
         if fmt == "ODI":
             from odi_report import render_odi_report
-            return render_odi_report(bid, out_dir=out_dir, target_country=target_country)
+            return render_odi_report(bid, out_dir=out_dir, target_country=target_country,
+                                     level=args.level)
         from t20_report import render_t20_report
         return render_t20_report(bid, out_dir=out_dir, target_country=target_country)
 

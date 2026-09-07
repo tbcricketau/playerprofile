@@ -36,8 +36,20 @@ def _base(u):
 
 
 def _series_fmt(series_name):
-    """Coarse format of a Series.name — 'Test' / 'ODI' / 'T20' / '' (unknown)."""
+    """Coarse RED/WHITE-ball format of a Series.name — 'Test' / 'ODI' / 'T20' / '' (unknown).
+
+    This is a red-vs-white check, not a level one: 'Test' here means red-ball, so A-team
+    first-class cricket belongs in it. It has to, because the gate only rejects what it can
+    classify — 'International 1st Class M' and 'International Tour Matches M' matched none of
+    these tests and came back '' , which the caller skips. An Australia A four-day pack could then
+    have carried a List A reel and been passed as clean, the same shape of hole as the hand audit
+    that never looked at format.
+
+    Order matters: 'International List A ODI M' has to reach the white-ball test, so the
+    first-class check names its buckets rather than matching a loose 'class'/'tour'."""
     n = (series_name or "").lower()
+    if "1st class" in n or "first class" in n or "tour matches" in n:
+        return "Test"                       # A-team / tour red-ball cricket
     if "test" in n:
         return "Test"
     if "odi" in n or "one day" in n or "one-day" in n or "list a" in n:
@@ -67,14 +79,22 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"),
                            encoding="utf-8"))
 
-    stem2id = {}
+    stem2id, c21_ids = {}, set()
     for grp in ("bowlers", "batters"):
         for v in about.get(grp, {}).values():
             for key, lst in v.items():
                 if isinstance(lst, list) and "clips" in key:
                     for e in lst:
+                        # Index BOTH clip sources. A Fairplay entry carries an extension-less
+                        # stem; a Cricket-21 entry carries a finished url. Indexing only stems
+                        # left every C21 clip unresolvable, and an unresolvable clip is dropped
+                        # from the reel's id list — so a reel made entirely of C21 footage would
+                        # have looked EMPTY and passed as clean without being checked at all.
                         if isinstance(e, dict) and e.get("clip_stem"):
                             stem2id[_base(e["clip_stem"])] = e["delivery_id"]
+                        elif isinstance(e, dict) and e.get("url"):
+                            stem2id[_base(e["url"])] = e["delivery_id"]
+                            c21_ids.add(str(e["delivery_id"]))
 
     reels, allids = {}, set()
     for root, fn in _batting_pages(site):
@@ -110,6 +130,26 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
         for r in run_query(q, conn, cur):
             hand_of[r["did"]] = "lhb" if r["bh"] == "2" else "rhb"
             fmt_of[r["did"]] = _series_fmt(r.get("series"))
+    # Cricket-21 deliveries are not in the warehouse — resolve those from the mirror, or every
+    # C21 reel goes unchecked. The gate has to be able to see all the footage it is gating.
+    #
+    # Selected by PROVENANCE (the entry carried a url, not a stem), never by id shape. C21 ids are
+    # six digits and warehouse ids sixteen, so they cannot collide today — but that is an observed
+    # fact about two independent id spaces, not a guarantee, and if one ever did collide the
+    # warehouse query above would have answered it with a different player's hand. Where an id is
+    # known to be C21, the mirror's answer wins.
+    unseen = [i for i in allids if str(i) in c21_ids]
+    if unseen:
+        try:
+            import c21_source
+            for did, (hand, cfmt) in c21_source.delivery_facts(unseen).items():
+                hand_of[did] = hand
+                fmt_of[did] = cfmt
+        except Exception as e:
+            raise SystemExit(
+                f"the hand audit could not resolve {len(unseen)} Cricket-21 clip(s) "
+                f"({type(e).__name__}: {str(e)[:100]}). Refusing rather than skipping them — "
+                f"an unchecked reel is what this gate exists to prevent.")
 
     mixed = wrong = pooled = unres = offfmt = 0
     want_fmt = {"test": "Test", "odi": "ODI", "t20i": "T20", "t20": "T20"}.get(str(fmt or "").lower())

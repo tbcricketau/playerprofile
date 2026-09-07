@@ -1,0 +1,170 @@
+{
+ "opp": "india_a_od",
+ "group": "off_spin",
+ "label": "off spin",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "6380863",
+   "name": "Vaibhav Suryavanshi",
+   "sub": "LHB · Opener",
+   "balls": 23,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 23,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 30.434782608695652,
+    "area": "leg (69% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "4352118",
+   "name": "Prabhsimran Singh",
+   "sub": "RHB · Opener",
+   "balls": 19,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 19,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 12.5,
+    "area": "straight (43% of runs)",
+    "short": null,
+    "top_out": "Caught behind (100%)"
+   }
+  },
+  {
+   "bid": "4354608",
+   "name": "Ayush Badoni",
+   "sub": "RHB · Middle order",
+   "balls": 15,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 15,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 0.0,
+    "area": "leg (81% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "6381340",
+   "name": "Priyansh Arya",
+   "sub": "LHB · Opener",
+   "balls": 54,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 54,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 12.195121951219512,
+    "area": "leg (62% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "4352313",
+   "name": "Tilak Varma",
+   "sub": "LHB · Top order",
+   "balls": 101,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 101,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 9.183673469387756,
+    "area": "off (40% of runs)",
+    "short": null,
+    "top_out": "LBW (100%)"
+   }
+  },
+  {
+   "bid": "4352297",
+   "name": "Ruturaj Gaikwad",
+   "sub": "RHB · Top order",
+   "balls": 70,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 70,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 5.555555555555555,
+    "area": "leg (44% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "6381338",
+   "name": "Suryansh Shedge",
+   "sub": "RHB · Middle order",
+   "balls": 15,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 15,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 6.666666666666667,
+    "area": "straight (50% of runs)",
+    "short": null,
+    "top_out": "Bowled (100%)"
+   }
+  },
+  {
+   "bid": "5490039",
+   "name": "Nishant Sindu",
+   "sub": "LHB · Middle order",
+   "balls": 12,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 12,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 9.090909090909092,
+    "area": "off (80% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "6381324",
+   "name": "Vipraj Nigam",
+   "sub": "RHB · Lower order",
+   "balls": 27,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 27,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 36.8421052631579,
+    "area": "leg (48% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  }
+ ]
+}

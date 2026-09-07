@@ -55,6 +55,11 @@ test_site/
 player_pack_site/
 caxi_player_site/
 caxi_player_pack_site/
+# Australia A tour of India 2026 — two squads in one bundle. ausa_player_pack_site holds
+# its own .git (remote tbcricketau/australia-a-packs), so leaving it tracked would both
+# publish the packs from THIS public repo and leave a broken submodule pointer behind.
+ausa_player_site/
+ausa_player_pack_site/
 test_site/
 .scouting_pw
 site_gated/

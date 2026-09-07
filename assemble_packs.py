@@ -20,6 +20,11 @@ SITE = os.path.join(HERE, "site")          # coach scouting site — source of t
 
 BUNDLES = {
     "aus": {"player": "player_site", "out": "player_pack_site", "title": "Player packs"},
+    # Australia A in India — two squads (four-day + one-day) in one bundle. build_player_site
+    # writes a series-selector index and nests each squad under its slug whenever more than one
+    # is built, so the landing page offers both without any extra machinery here.
+    "ausa": {"player": "ausa_player_site", "out": "ausa_player_pack_site",
+             "title": "Australia A player packs"},
     "caxi": {"player": "caxi_player_site", "out": "caxi_player_pack_site",
              "title": "CA XI player packs"},
 }

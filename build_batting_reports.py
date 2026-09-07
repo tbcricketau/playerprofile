@@ -30,14 +30,32 @@ _GROUPS = ("right_pace", "left_pace", "off_spin", "leg_spin", "left_orthodox", "
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--ids", nargs="+", required=True, help="Batter IDs (space or comma separated)")
-    ap.add_argument("--out", default="reports", help="Output folder (default: reports)")
+    ap.add_argument("--out", default=None,
+                    help="Output folder (default: reports, or reports/ateam at a-team level)")
     ap.add_argument("--mode", choices=("combined", "focused", "both"), default="combined",
                     help="combined = broad overview; focused = per-bowler-type exploit report")
     ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
                     help="which format's internationals to profile (default: Test)")
     ap.add_argument("--group", default="right_pace",
                     help=f"bowler group for focused mode: {', '.join(_GROUPS)}")
+    ap.add_argument("--level", default="international", choices=("international", "a-team"),
+                    help="which standard of cricket. 'a-team' scopes to International 1st "
+                         "Class / Tour Matches / List A ODI and writes under reports/ateam/, "
+                         "so an A-team report can never overwrite the senior one for the "
+                         "same player (default: international)")
+    ap.add_argument("--source", default="warehouse",
+                    choices=("warehouse", "c21", "both"),
+                    help="where the ball record comes from. 'both' adds Cricket-21 "
+                         "Indian domestic cricket, which the warehouse does not hold at "
+                         "all — see c21_source and cricket21/docs/INDIA_DOMESTIC.md")
     args = ap.parse_args()
+
+    # LEVEL LIVES IN THE PATH, like format does. A player can hold both an A-team and a senior
+    # record — Anshul Kamboj has 366 A-team first-class balls and 108 Test ones — and the filename
+    # carries only the id, the hand and the group. Written to one folder, the second render would
+    # silently overwrite the first and publish_site would bake whichever won. The same reasoning as
+    # "format comes from the DIRECTORY, never from meta.format" in CLAUDE.md.
+    out_dir = args.out or ("reports/ateam" if args.level == "a-team" else "reports")
 
     ids = _ids_from_args(args.ids)
     if not ids:
@@ -55,13 +73,14 @@ def main():
     ok = fail = 0
     for i, (bid, group) in enumerate(jobs, 1):
         try:
-            path = render_batting_report(bid, out_dir=args.out, group=group, fmt=args.fmt)
+            path = render_batting_report(bid, out_dir=out_dir, group=group, fmt=args.fmt,
+                                         level=args.level, source=args.source)
             print(f"  [{i}/{len(jobs)}] {bid}{' vs ' + group if group else ''} -> {os.path.basename(path)}")
             ok += 1
         except Exception as e:
             print(f"  [{i}/{len(jobs)}] {bid} FAILED: {type(e).__name__}: {str(e)[:100]}")
             fail += 1
-    print(f"Done: {ok} succeeded, {fail} failed. Output in: {os.path.abspath(args.out)}")
+    print(f"Done: {ok} succeeded, {fail} failed. Output in: {os.path.abspath(out_dir)}")
 
 
 if __name__ == "__main__":

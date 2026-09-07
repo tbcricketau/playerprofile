@@ -176,7 +176,7 @@ def _threat(P):
     }
 
 
-def build(opp, group, only=None, fmt="Test"):
+def build(opp, group, only=None, fmt="Test", level="international", source="warehouse"):
     """`only` = batter ids to (re)build, merging into the existing overview and leaving every other
     row as it was. Adding one player to a squad shouldn't re-profile the whole opposition."""
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
@@ -198,7 +198,8 @@ def build(opp, group, only=None, fmt="Test"):
         P, err = None, None
         for attempt in range(3):
             try:
-                P = build_batter_profile(bid, group=group, fmt=fmt)
+                P = build_batter_profile(bid, group=group, fmt=fmt, level=level,
+                                         source=source)
                 break
             except Exception as e:
                 err = f"{type(e).__name__}: {str(e)[:60]}"
@@ -218,7 +219,8 @@ def build(opp, group, only=None, fmt="Test"):
         baseline = None
         if group in _SPIN_SUBS and not thin:
             try:
-                baseline = build_batter_profile(bid, group="spin", fmt=fmt).get("dims")
+                baseline = build_batter_profile(bid, group="spin", fmt=fmt, level=level,
+                                                source=source).get("dims")
             except Exception as e:
                 print(f"     ! spin baseline for {name}: {type(e).__name__}")
         rows.append({"bid": bid, "name": name,
@@ -235,7 +237,8 @@ def build(opp, group, only=None, fmt="Test"):
         t = rows[-1]["threat"]
         if t and not t["short"] and group in _PACE_SUBS:
             try:
-                s = _short_read(build_batter_profile(bid, group="pace", fmt=fmt))
+                s = _short_read(build_batter_profile(bid, group="pace", fmt=fmt, level=level,
+                                                     source=source))
                 if s:
                     t["short"] = f"{s} — vs all pace"
             except Exception:
@@ -366,9 +369,17 @@ def main():
                                                "and merge, keeping every other row")
     ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
                     help="which format's internationals to profile (default: Test)")
+    ap.add_argument("--level", default="international", choices=("international", "a-team"),
+                    help="which standard of cricket. 'a-team' scopes to International 1st "
+                         "Class / Tour Matches / List A ODI (default: international)")
+    ap.add_argument("--source", default="warehouse",
+                    choices=("warehouse", "c21", "both"),
+                    help="where the ball record comes from. 'both' adds Cricket-21 "
+                         "Indian domestic cricket, which the warehouse does not hold at "
+                         "all — see c21_source and cricket21/docs/INDIA_DOMESTIC.md")
     a = ap.parse_args()
     build(a.opp, a.group, only=[x.strip() for x in a.only.split(",") if x.strip()] or None,
-          fmt=a.fmt)
+          fmt=a.fmt, level=a.level, source=a.source)
 
 
 if __name__ == "__main__":

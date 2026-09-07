@@ -21,7 +21,7 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
-from publish_site import _bake_report, DEFAULT_SAS_HOURS
+from publish_site import _bake_report, DEFAULT_SAS_HOURS, _LEVEL_DIRS, _level_key
 from build_player_site import _scouting_urls
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -36,6 +36,18 @@ def inject(slug, out="site", sas_hours=DEFAULT_SAS_HOURS):
         print(f"  (no hawkeye SAS: {type(e).__name__}) — baking without a video refresh")
         hk_sas = ""
 
+    # Batting reports render under the SQUAD'S LEVEL — reports/ for an international squad,
+    # reports/ateam/ for an A-team one. _scouting_urls already resolves the right base NAMES,
+    # but _bake_report defaults to reports/, so every A-team link reported "no source" and the
+    # injection wrote nothing at all. Take the directory from the same place the names came from.
+    try:
+        import json as _json
+        from build_player_site import SQUADS as _SQ
+        _lvl = _level_key((_json.load(open(_SQ, encoding="utf-8")).get(slug) or {}).get("level"))
+    except Exception:
+        _lvl = "international"
+    src_dir = _LEVEL_DIRS[_lvl]["test"]
+
     _bowl, bat, bat_groups = _scouting_urls(slug)
     bases = set()
     for url in list(bat.values()) + [u for g in bat_groups.values() for u in g.values()]:
@@ -45,12 +57,13 @@ def inject(slug, out="site", sas_hours=DEFAULT_SAS_HOURS):
     os.makedirs(dest, exist_ok=True)
     n, missing = 0, []
     for base in sorted(bases):
-        if _bake_report(base, dest, hk_sas):
+        if _bake_report(base, dest, hk_sas, src_dir=src_dir):
             n += 1
         else:
             missing.append(base)
     for m in missing:
-        print(f"  ! no source in reports/ for {m} — the pack link will be dead")
+        print(f"  ! no source in {os.path.relpath(src_dir, HERE)} for {m} "
+              f"— the pack link will be dead")
     print(f"injected {n} batter report(s) -> {dest}"
           + (f" · {len(missing)} MISSING" if missing else ""))
     return n, missing

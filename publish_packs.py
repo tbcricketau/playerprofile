@@ -34,6 +34,14 @@ BUNDLES = {
             "bundle": "player_pack_site",
             "repo": "https://github.com/tbcricketau/player-packs.git",
             "opp": "zimbabwe", "slug": "zimbabwe-odi-away-2026"},
+    # Australia A in India, Sep-Oct 2026 — the first bundle carrying TWO squads, a four-day and a
+    # one-day, on one landing page. `squads` replaces the single opp/slug pair: the hand audit is
+    # per squad (it resolves our batters' hands from that squad's matchup store) and each squad's
+    # packs sit in their own subfolder, so it runs once per subfolder rather than once per bundle.
+    "ausa": {"assemble": "assemble_packs.py", "arg": "ausa",
+             "bundle": "ausa_player_pack_site",
+             "repo": "https://github.com/tbcricketau/australia-a-packs.git",
+             "squads": ["india-a-4day-2026", "india-a-od-2026"]},
     "caxi": {"assemble": "assemble_packs.py", "arg": "caxi",
              "bundle": "caxi_player_pack_site",
              "repo": "https://github.com/tbcricketau/caxi-player-packs.git",
@@ -57,6 +65,16 @@ def _squad_fmt(slug):
             return (json.load(fh).get(slug) or {}).get("format")
     except Exception:
         return None
+
+
+def _opp_key(slug):
+    """The opposition data key for a squad — which opponent_about/h2h files the audit reads.
+    Falls back to the slug's first token, which is what every series before Australia A used."""
+    try:
+        from squads import opp_key
+        return opp_key(slug)
+    except Exception:
+        return str(slug).split("-")[0] or "bangladesh"
 
 
 def _run(args, cwd):
@@ -121,24 +139,41 @@ def main():
     # bowled to, and that gate is deliberately offline-only. Kept here so it still blocks the push.
     if not a.no_hand_audit:
         print(f"hand audit {cfg['bundle']}…")
-        try:
-            mixed, wrong, pooled, _u, n, pages, offfmt = run_audit(
-                out, opp=cfg.get("opp", "bangladesh"), slug=cfg.get("slug", ""), quiet=True,
-                fmt=_squad_fmt(cfg.get("slug", "")))
-        except Exception as e:
-            # A dropped VPN must not become a silent pass — this is the check that catches a pack
-            # showing the wrong batter's footage, which shipped unnoticed for weeks.
-            raise SystemExit(
-                f"\nREFUSING TO PUBLISH: the hand audit could not run ({type(e).__name__}: "
-                f"{str(e)[:120]}). It needs the warehouse — reconnect, or pass --no-hand-audit to "
-                f"publish without it (deliberate override only). Nothing was pushed.")
-        if mixed or wrong or pooled or offfmt:
-            raise SystemExit(
-                f"\nREFUSING TO PUBLISH: {mixed} mixed-hand, {wrong} wrong-hand, {pooled} unscoped, "
-                f"{offfmt} off-format reel(s) across {pages} batting packs. A pack is showing "
-                f"footage of the wrong batter's hand, or from the wrong side of red/white ball. "
-                f"Nothing was pushed.")
-        print(f"  clean — {n} reels across {pages} batting packs, all one hand and format")
+        # One entry per squad in the bundle. A bundle used to be one squad, so opp/slug sat on the
+        # bundle; a two-squad bundle audited that way would resolve every page against ONE squad's
+        # hands and format, which is the pooling error this gate exists to catch, committed by the
+        # gate itself. Each squad's packs live in their own subfolder when the bundle is multi-squad.
+        jobs = ([(s, os.path.join(out, "players", s)) for s in cfg["squads"]]
+                if cfg.get("squads") else [(cfg.get("slug", ""), out)])
+        totals = dict(mixed=0, wrong=0, pooled=0, offfmt=0, n=0, pages=0)
+        for slug, site in jobs:
+            if not os.path.isdir(site):
+                raise SystemExit(
+                    f"\nREFUSING TO PUBLISH: {slug} has no pack folder at "
+                    f"{os.path.relpath(site, HERE)} — the bundle does not contain the squad it "
+                    f"claims to. Rebuild the player site for every live squad and re-assemble.")
+            try:
+                mixed, wrong, pooled, _u, n, pages, offfmt = run_audit(
+                    site, opp=_opp_key(slug), slug=slug, quiet=True, fmt=_squad_fmt(slug))
+            except Exception as e:
+                # A dropped VPN must not become a silent pass — this is the check that catches a
+                # pack showing the wrong batter's footage, which shipped unnoticed for weeks.
+                raise SystemExit(
+                    f"\nREFUSING TO PUBLISH: the hand audit could not run for {slug} "
+                    f"({type(e).__name__}: {str(e)[:120]}). It needs the warehouse — reconnect, or "
+                    f"pass --no-hand-audit to publish without it (deliberate override only). "
+                    f"Nothing was pushed.")
+            if mixed or wrong or pooled or offfmt:
+                raise SystemExit(
+                    f"\nREFUSING TO PUBLISH: {slug} has {mixed} mixed-hand, {wrong} wrong-hand, "
+                    f"{pooled} unscoped, {offfmt} off-format reel(s) across {pages} batting packs. "
+                    f"A pack is showing footage of the wrong batter's hand, or from the wrong side "
+                    f"of red/white ball. Nothing was pushed.")
+            print(f"  {slug}: clean — {n} reels across {pages} batting packs")
+            totals["n"] += n
+            totals["pages"] += pages
+        print(f"  clean — {totals['n']} reels across {totals['pages']} batting packs, "
+              f"all one hand and format")
 
     msg = a.message or f"publish {datetime.datetime.now():%Y-%m-%d %H:%M}"
     _run(["git", "add", "-A"], out)

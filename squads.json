@@ -68,5 +68,56 @@
    "2840029",
    "1070522"
   ]
+ },
+ "india-a-4day-2026": {
+  "name": "India Four-Day Series 2026",
+  "team": "Australia A",
+  "opponent": "India A",
+  "opposition": "Australia A v India A · 2 four-day matches · in Puducherry",
+  "format": "Test",
+  "level": "a-team",
+  "opp_key": "india_a_4day",
+  "players": [
+   "2480067",
+   "2850086",
+   "2960022",
+   "2480051",
+   "2830011",
+   "3550357",
+   "3550677",
+   "2840035",
+   "2700257",
+   "2700233",
+   "1070606",
+   "2730059",
+   "3750021",
+   "1940344",
+   "2700297"
+  ]
+ },
+ "india-a-od-2026": {
+  "name": "India One-Day Series 2026",
+  "team": "Australia A",
+  "opponent": "India A",
+  "opposition": "Australia A v India A · 3 one-day matches · in Puducherry",
+  "format": "ODI",
+  "level": "a-team",
+  "opp_key": "india_a_od",
+  "players": [
+   "4390234",
+   "6380036",
+   "1070472",
+   "2850086",
+   "1070429",
+   "1070522",
+   "3550677",
+   "2840035",
+   "2700257",
+   "2700285",
+   "1070606",
+   "3050039",
+   "2700297",
+   "3400037"
+  ]
  }
 }

@@ -34,6 +34,21 @@ _FMT_ORDER = {
     "ODI":  ["ODI", "List A", "T20I", "T20", "The Hundred", "Test", "FC", "T10"],
     "T20I": ["T20I", "T20", "The Hundred", "T10", "ODI", "List A", "Test", "FC"],
 }
+
+# At A-TEAM level the same preference inverts at the top. An Australia A v India A four-day meeting
+# classifies as "FC", which the orders above rank dead last — so a pack for that very fixture would
+# have preferred a senior Test meeting between two of the players over the A-team game they actually
+# played against each other. The pack's own cricket comes first; senior meetings are the fallback.
+_FMT_ORDER_A = {
+    "Test": ["FC", "Test", "List A", "ODI", "T20I", "T20", "The Hundred", "T10"],
+    "ODI":  ["List A", "ODI", "FC", "T20I", "T20", "The Hundred", "Test", "T10"],
+    "T20I": ["T20I", "T20", "The Hundred", "T10", "List A", "ODI", "FC", "Test"],
+}
+
+
+def fmt_order(fmt="Test", level="international"):
+    table = _FMT_ORDER_A if level == "a-team" else _FMT_ORDER
+    return table.get(fmt, table["Test"])
 _FMT_PRIORITY = _FMT_ORDER["Test"]           # back-compat for anything importing the old name
 _FMT_LABEL = {"Test": "Test", "ODI": "ODI", "T20I": "T20I", "T20": "domestic T20",
               "List A": "List A", "The Hundred": "The Hundred", "FC": "first-class", "T10": "T10"}
@@ -99,6 +114,10 @@ def main():
     ap.add_argument("--fmt", default="Test", choices=("Test", "ODI", "T20I"),
                     help="the PACK's format — decides which footage a pairing prefers "
                          "(default: Test)")
+    ap.add_argument("--level", default="international", choices=("international", "a-team"),
+                    help="which standard of cricket the pack is for. 'a-team' prefers "
+                         "first-class / List A meetings over senior ones — the fixture the "
+                         "players are actually preparing for")
     args = ap.parse_args()
 
     store_p = os.path.join(project_path("matchupmodel"), "data", f"matchup_store_{args.opp}.json")
@@ -109,7 +128,7 @@ def main():
     our_bowl = sorted({c["bowler_id"] for c in store["they_bat"]})
 
     conn, cur = set_conn_cursor()
-    order = _FMT_ORDER.get(args.fmt, _FMT_ORDER["Test"])
+    order = fmt_order(args.fmt, args.level)
     a = _rowify(_pull(conn, cur, our_bat, opp_bowl), order=order)   # our batters vs their bowlers
     b = _rowify(_pull(conn, cur, opp_bat, our_bowl), order=order)   # their batters vs our bowlers
     conn.close()

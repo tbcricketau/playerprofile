@@ -347,18 +347,26 @@ _SUPP_MIN_TRACKED = 60          # tracked balls below which the ODI record is to
 _SUPP_MIN_SPEEDS = 40           # speed-tracked balls below which the pace cards are too thin
 
 
-def _supplement_rows(bowler_id, legal):
+def _supplement_rows(bowler_id, legal, level="international"):
     """Extra white-ball rows to READ MECHANICS from when the ODI sample is thin: (rows, label).
 
     T20I first, then the wider T20 pool (all major leagues) — nearest neighbour first. Returns
-    ([], "") when the ODI record is already sufficient or nothing can be loaded."""
+    ([], "") when the ODI record is already sufficient or nothing can be loaded.
+
+    At a-team level the T20I step is SKIPPED, not merely attempted: there is no men's A-team T20
+    bucket in the warehouse, so asking for one would either raise or, worse, reach for senior
+    internationals and supplement an uncapped player's record with cricket they never played. The
+    pooled "T20" step still applies at both levels — that scope is all major T20 leagues (the IPL
+    among them), which is level-agnostic by construction and is where an A-team player's white-ball
+    footage actually lives."""
     tracked = len(tracked_lengths(legal))
     speeds = len([s for s in _num(legal, "ball_speed_n") if s])
     if tracked >= _SUPP_MIN_TRACKED and speeds >= _SUPP_MIN_SPEEDS:
         return [], ""
-    for fmt, label in (("T20I", "T20I"), ("T20", "T20")):
+    steps = (("T20", "T20"),) if level == "a-team" else (("T20I", "T20I"), ("T20", "T20"))
+    for fmt, label in steps:
         try:
-            extra = process_rows(load_bowler_deliveries(str(bowler_id), fmt=fmt))
+            extra = process_rows(load_bowler_deliveries(str(bowler_id), fmt=fmt, level=level))
         except Exception:
             continue
         extra = [r for r in extra if r.get("is_legal")]
@@ -367,8 +375,8 @@ def _supplement_rows(bowler_id, legal):
     return [], ""
 
 
-def build_odi_profile(bowler_id: str) -> dict:
-    raw = process_rows(load_bowler_deliveries(str(bowler_id), fmt="ODI"))
+def build_odi_profile(bowler_id: str, level: str = "international") -> dict:
+    raw = process_rows(load_bowler_deliveries(str(bowler_id), fmt="ODI", level=level))
     if not raw:
         return {"bowler_id": str(bowler_id), "name": f"Bowler {bowler_id}", "empty": True}
 
@@ -379,7 +387,7 @@ def build_odi_profile(bowler_id: str) -> dict:
         r["phase"] = _phase(r.get("over_n"))
         r["era"] = _era(r.get("match_date"))
 
-    info = load_bowler_info(str(bowler_id), fmt="ODI") or {}
+    info = load_bowler_info(str(bowler_id), fmt="ODI", level=level) or {}
     name = (info.get("player_name") or f"Bowler {bowler_id}").strip()
     team = (info.get("team_name") or "").strip()
     flag = team_flag(team)[0] if team else ""
@@ -400,7 +408,7 @@ def build_odi_profile(bowler_id: str) -> dict:
 
     # Mechanical measures may borrow from T20 when the ODI record is thin; outcome measures above
     # (runs/wkts/economy) are computed from ODI ONLY and stay that way.
-    supp_rows, supp_label = _supplement_rows(bowler_id, legal)
+    supp_rows, supp_label = _supplement_rows(bowler_id, legal, level)
     mech = legal + supp_rows                      # pitch maps, beehives, speeds read from this
     speeds = sorted(_num(mech, "ball_speed_n"))
 

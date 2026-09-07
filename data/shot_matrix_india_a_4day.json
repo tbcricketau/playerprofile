@@ -1,0 +1,193 @@
+{
+ "pace": [
+  {
+   "batter": "Dhruv Jurel",
+   "bid": "3630218",
+   "balls": 637,
+   "Conventional sweep": 0.2,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Sai Sudharsan",
+   "bid": "5460174",
+   "balls": 484,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Devdutt Padikkal",
+   "bid": "4352110",
+   "balls": 501,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shaik Rasheed",
+   "bid": "5490034",
+   "balls": 52,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Saransh Jain",
+   "bid": "6380716",
+   "balls": 57,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Harsh Surendra Dubey",
+   "bid": "6381489",
+   "balls": 60,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ayush Pandey",
+   "bid": "5460629",
+   "balls": 103,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ruturaj Gaikwad",
+   "bid": "4352297",
+   "balls": 87,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Aman Mokhade",
+   "bid": "5460632",
+   "balls": 46,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  }
+ ],
+ "spin": [
+  {
+   "batter": "Dhruv Jurel",
+   "bid": "3630218",
+   "balls": 598,
+   "Conventional sweep": 0.3,
+   "Slog sweep": 0.2,
+   "Reverse sweep": 0.7,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Sai Sudharsan",
+   "bid": "5460174",
+   "balls": 664,
+   "Conventional sweep": 3.2,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.5,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Devdutt Padikkal",
+   "bid": "4352110",
+   "balls": 573,
+   "Conventional sweep": 0.2,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.3,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Shaik Rasheed",
+   "bid": "5490034",
+   "balls": 150,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Saransh Jain",
+   "bid": "6380716",
+   "balls": 144,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Harsh Surendra Dubey",
+   "bid": "6381489",
+   "balls": 118,
+   "Conventional sweep": 2.5,
+   "Slog sweep": 1.7,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ayush Pandey",
+   "bid": "5460629",
+   "balls": 58,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ruturaj Gaikwad",
+   "bid": "4352297",
+   "balls": 45,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  }
+ ]
+}

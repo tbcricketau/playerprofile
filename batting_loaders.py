@@ -4,8 +4,10 @@ batting_loaders.py — warehouse queries for the batting profile, in any format.
 Mirrors data_loaders.py (bowling) but keyed on striker_id.  Everything is returned
 as strings (run_query stringifies) — parse in batter_profile.process_batting_rows.
 
-Scope = official internationals of the requested format, via Matches.series_id -> Series.name,
-same as the bowling loaders.  match_length_id is NOT used for scope (it mixes Tests with domestic
+Scope = one FORMAT at one LEVEL, via Matches.series_id -> Series.name, same as the bowling
+loaders. `level` is "international" (default) or "a-team" — format is the shape of the game,
+level is its standard, and pooling the two is how an Australia A pack ends up quoting senior
+Test numbers.  match_length_id is NOT used for scope (it mixes Tests with domestic
 first-class).  `fmt` defaults to "Test" everywhere, so every existing caller is unchanged.
 
 The format scope helpers are IMPORTED from data_loaders rather than redefined — the bowling side
@@ -17,9 +19,9 @@ from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
 from data_loaders import _scope
 
 
-def _intl_test(alias: str = "M", fmt: str = "Test") -> str:
-    """Retained name, now format-aware. Prefer passing fmt explicitly at the call site."""
-    return _scope(fmt, alias)
+def _intl_test(alias: str = "M", fmt: str = "Test", level: str = "international") -> str:
+    """Retained name, now format- and level-aware. Prefer passing both at the call site."""
+    return _scope(fmt, alias, level)
 
 # Derived bowler-type CASE (who the batter is facing) — reused from the bowling side.
 # Arm-switchers are caught FIRST: the feed codes every one of their balls with one registered
@@ -41,7 +43,8 @@ _BOWLER_TYPE_CASE = f"""
 """
 
 
-def load_batters(min_runs: int = 500, fmt: str = "Test") -> list:
+def load_batters(min_runs: int = 500, fmt: str = "Test",
+                 level: str = "international") -> list:
     """Batters with >= min_runs off the bat in that format's internationals."""
     conn, cur = set_conn_cursor()
     q = f"""
@@ -53,7 +56,7 @@ def load_batters(min_runs: int = 500, fmt: str = "Test") -> list:
     FROM [{DATA_SCHEMA}].[Deliveries] AS D
     JOIN [{DATA_SCHEMA}].[Matches] AS M ON D.[match_id] = M.[match_id]
     LEFT JOIN [{DATA_SCHEMA}].[Players] AS P ON D.[striker_id] = P.[player_id]
-    WHERE {_scope(fmt, 'M')} AND D.[striker_id] IS NOT NULL
+    WHERE {_scope(fmt, 'M', level)} AND D.[striker_id] IS NOT NULL
     GROUP BY D.[striker_id]
     HAVING SUM(CAST(D.[bat_score] AS int)) >= {min_runs}
     ORDER BY SUM(CAST(D.[bat_score] AS int)) DESC
@@ -63,7 +66,7 @@ def load_batters(min_runs: int = 500, fmt: str = "Test") -> list:
     return rows
 
 
-def search_batters(term: str, fmt: str = "Test") -> list:
+def search_batters(term: str, fmt: str = "Test", level: str = "international") -> list:
     """Fuzzy name search over that format's batters (>=200 runs)."""
     conn, cur = set_conn_cursor()
     safe = term.replace("'", "''")
@@ -74,7 +77,7 @@ def search_batters(term: str, fmt: str = "Test") -> list:
     FROM [{DATA_SCHEMA}].[Deliveries] AS D
     JOIN [{DATA_SCHEMA}].[Matches] AS M ON D.[match_id] = M.[match_id]
     LEFT JOIN [{DATA_SCHEMA}].[Players] AS P ON D.[striker_id] = P.[player_id]
-    WHERE {_scope(fmt, 'M')}
+    WHERE {_scope(fmt, 'M', level)}
       AND (P.[surname] LIKE '%{safe}%' OR P.[name] LIKE '%{safe}%')
     GROUP BY D.[striker_id]
     HAVING SUM(CAST(D.[bat_score] AS int)) >= 200
@@ -85,7 +88,8 @@ def search_batters(term: str, fmt: str = "Test") -> list:
     return rows
 
 
-def load_batter_info(batter_id: str, fmt: str = "Test") -> dict:
+def load_batter_info(batter_id: str, fmt: str = "Test",
+                     level: str = "international") -> dict:
     """Name + primary team (most-faced batting team IN THIS FORMAT) for the header.
 
     The team subquery is format-scoped like every other loader here. Unscoped it answered "across
@@ -99,7 +103,7 @@ def load_batter_info(batter_id: str, fmt: str = "Test") -> dict:
          FROM [{DATA_SCHEMA}].[Deliveries] D2
          JOIN [{DATA_SCHEMA}].[Matches] M2 ON D2.[match_id] = M2.[match_id]
          JOIN [{DATA_SCHEMA}].[Teams] T ON D2.[team_batting_id] = T.[team_id]
-         WHERE D2.[striker_id] = '{batter_id}' AND {_scope(fmt, 'M2')}
+         WHERE D2.[striker_id] = '{batter_id}' AND {_scope(fmt, 'M2', level)}
          GROUP BY T.[team_name] ORDER BY COUNT(*) DESC) AS team_name
     FROM [{DATA_SCHEMA}].[Players] P
     WHERE P.[player_id] = '{batter_id}'
@@ -109,7 +113,21 @@ def load_batter_info(batter_id: str, fmt: str = "Test") -> dict:
     return rows[0] if rows else {}
 
 
-def load_batter_deliveries(batter_id: str, fmt: str = "Test") -> list:
+def load_batter_deliveries(batter_id: str, fmt: str = "Test",
+                           level: str = "international",
+                           source: str = "warehouse") -> list:
+    """`source` is the third axis beside format and level: 'warehouse' | 'c21' | 'both'.
+    The warehouse holds no Indian domestic cricket, so an India A batter can have nothing
+    there and hundreds of tracked balls in Cricket-21 (see c21_source)."""
+    if source not in ("warehouse", "c21", "both"):
+        raise ValueError(f"unknown source {source!r} — warehouse | c21 | both")
+    if source != "warehouse":
+        import c21_source
+        extra = c21_source.load_batter_deliveries(batter_id, fmt=fmt)
+        if source == "c21":
+            return extra
+        base = load_batter_deliveries(batter_id, fmt, level, "warehouse")
+        return sorted(base + extra, key=lambda r: str(r.get("match_date") or ""))
     """Every delivery faced by the batter in that format, with the fields the profile needs."""
     conn, cur = set_conn_cursor()
     q = f"""
@@ -144,7 +162,7 @@ def load_batter_deliveries(batter_id: str, fmt: str = "Test") -> list:
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_sh  ON L_sh.[lookup_type_id]=10 AND L_sh.[id]=D.[striker_hand_id]
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_bps ON L_bps.[lookup_type_id]=2805 AND L_bps.[id]=D.[bowler_pace_spin_id]
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_sm  ON L_sm.[lookup_type_id]=2812 AND L_sm.[id]=D.[striker_movement_id]
-    WHERE D.[striker_id] = '{batter_id}' AND {_scope(fmt, 'M')}
+    WHERE D.[striker_id] = '{batter_id}' AND {_scope(fmt, 'M', level)}
     ORDER BY M.[match_date], D.[match_innings], D.[over], D.[ball_in_over]
     """
     rows = run_query(q, conn, cur)
@@ -152,7 +170,8 @@ def load_batter_deliveries(batter_id: str, fmt: str = "Test") -> list:
     return rows
 
 
-def load_batter_innings(batter_id: str, fmt: str = "Test") -> list:
+def load_batter_innings(batter_id: str, fmt: str = "Test",
+                        level: str = "international") -> list:
     """Per-innings aggregation for the share-of-runs metric: the batter's off-bat runs
     and balls in each innings, the team's off-bat innings total, and the match total
     (both teams) — computed in SQL so we don't pull every ball twice."""
@@ -166,7 +185,7 @@ def load_batter_innings(batter_id: str, fmt: str = "Test") -> list:
                MAX(CASE WHEN D.[striker_id] = '{batter_id}' AND D.[striker_dismissed]='1' THEN 1 ELSE 0 END) AS his_out
         FROM [{DATA_SCHEMA}].[Deliveries] D
         JOIN [{DATA_SCHEMA}].[Matches] M ON D.[match_id] = M.[match_id]
-        WHERE {_scope(fmt, 'M')}
+        WHERE {_scope(fmt, 'M', level)}
           AND D.[match_id] IN (SELECT DISTINCT match_id FROM [{DATA_SCHEMA}].[Deliveries] WHERE striker_id='{batter_id}')
         GROUP BY D.[match_id], D.[match_innings]
     ),
@@ -184,7 +203,8 @@ def load_batter_innings(batter_id: str, fmt: str = "Test") -> list:
     return rows
 
 
-def load_batter_catch_positions(batter_id: str, fmt: str = "Test") -> dict:
+def load_batter_catch_positions(batter_id: str, fmt: str = "Test",
+                                level: str = "international") -> dict:
     """Where THIS batter's caught dismissals in that format were taken: {delivery_id: fielding_position_id}.
     The catcher is the DeliveryFielders row with fielder_catch = 1; unrecorded (0/28/NULL) -> None.
     Mirror of data_loaders.load_bowler_catch_positions, keyed on the striker being out caught."""
@@ -195,7 +215,7 @@ def load_batter_catch_positions(batter_id: str, fmt: str = "Test") -> dict:
     JOIN [{DATA_SCHEMA}].[Matches] AS M ON D.match_id = M.match_id
     JOIN [{DATA_SCHEMA}].[DeliveryFielders] AS DF
         ON DF.delivery_id = D.delivery_id AND DF.fielder_catch = 1
-    WHERE D.[striker_id] = '{batter_id}' AND {_scope(fmt, 'M')}
+    WHERE D.[striker_id] = '{batter_id}' AND {_scope(fmt, 'M', level)}
       AND D.[striker_dismissed] = '1' AND D.[how_out_id] = '5'
     """
     rows = run_query(q, conn, cur)

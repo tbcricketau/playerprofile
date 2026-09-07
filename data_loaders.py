@@ -1,6 +1,7 @@
 import streamlit as st
 from config import DATA_SCHEMA
-from cricket_core.config import international_series_sql
+from cricket_core.config import (international_series_sql, series_sql,
+                                 T20_LEAGUE_SERIES, t20_pool_sql)
 from cricket_core.warehouse import set_conn_cursor, run_query
 
 # Official international Tests only.  match_length_id does NOT separate internationals from
@@ -15,34 +16,34 @@ def _intl_test(alias: str = "M") -> str:
             f"(SELECT series_id FROM [{DATA_SCHEMA}].[Series] WHERE name IN {_TEST_SERIES})")
 
 
-def _intl(fmt: str = "Test", alias: str = "M") -> str:
-    """WHERE fragment restricting to official internationals of a format (Test / ODI / T20I).
-    match_length_id mixes internationals with domestic, so we scope by Series.name."""
+def _intl(fmt: str = "Test", alias: str = "M", level: str = "international") -> str:
+    """WHERE fragment restricting to one format at one LEVEL of cricket.
+
+    match_length_id mixes internationals with domestic, so we scope by Series.name. `level` picks
+    which body of cricket counts as the player's record: "international" (the default, official
+    internationals) or "a-team" (International 1st Class / Tour Matches / List A ODI). Format is
+    the shape of the game, level is its standard — see cricket_core.config.A_TEAM_SERIES."""
     return (f"{alias}.series_id IN (SELECT series_id FROM [{DATA_SCHEMA}].[Series] "
-            f"WHERE name IN {international_series_sql(fmt)})")
+            f"WHERE name IN {series_sql(fmt, level)})")
 
 
 # The T20 pack pools ALL major men's T20 competitions (mlid='7'), not just internationals, then
-# neutralises by league strength (referencebuilder/t20_league_strength.csv). Keep this list in
-# sync with build_t20_league_strength.py. See memory t20-league-strength.
-_T20_LEAGUES = (
-    "International T20 M", "International T20 World Cup M", "England Domestic T20 M",
-    "Aus Domestic T20 M", "Indian Premier League T20 M", "West Indies Domestic T20 M",
-    "UAE Domestic T20 M", "Pakistan Domestic T20 M", "South Africa Domestic T20 M",
-    "NZ Domestic T20 M", "USA Domestic T20 M", "Sri Lanka Domestic T20 M", "Global Super League M",
-)
+# neutralises by league strength (referencebuilder/t20_league_strength.csv). The list now lives in
+# cricket_core.config.T20_LEAGUE_SERIES — it was duplicated here and in matchupmodel, kept in sync
+# by a comment asking the next person to remember. See memory t20-league-strength.
+_T20_LEAGUES = T20_LEAGUE_SERIES
 
 
 def _t20_all(alias: str = "M") -> str:
     """WHERE fragment for all major men's T20 competitions (T20 format = match_length_id '7')."""
-    names = ",".join(f"'{n}'" for n in _T20_LEAGUES)
     return (f"{alias}.match_length_id='7' AND {alias}.series_id IN "
-            f"(SELECT series_id FROM [{DATA_SCHEMA}].[Series] WHERE name IN ({names}))")
+            f"(SELECT series_id FROM [{DATA_SCHEMA}].[Series] WHERE name IN {t20_pool_sql()})")
 
 
-def _scope(fmt: str, alias: str = "M") -> str:
-    """Format scope: 'T20' pools all major T20 leagues; everything else = that format's internationals."""
-    return _t20_all(alias) if str(fmt).upper() == "T20" else _intl(fmt, alias)
+def _scope(fmt: str, alias: str = "M", level: str = "international") -> str:
+    """Which body of cricket a query counts. 'T20' pools all major T20 leagues; everything else is
+    that format at that level — internationals by default, A-team cricket when level="a-team"."""
+    return _t20_all(alias) if str(fmt).upper() == "T20" else _intl(fmt, alias, level)
 
 
 @st.cache_data(ttl=3600)
@@ -130,10 +131,10 @@ def load_bowler_catch_positions(bowler_id: str) -> dict:
 
 
 @st.cache_data(ttl=3600)
-def load_bowler_info(bowler_id: str, fmt: str = "Test") -> dict:
-    """Name, surname and primary (most-common) bowling team for a bowler in a format's
-    internationals. Falls back to the Players table for the name if the bowler has no
-    deliveries in that format (e.g. a white-ball specialist with no Tests)."""
+def load_bowler_info(bowler_id: str, fmt: str = "Test", level: str = "international") -> dict:
+    """Name, surname and primary (most-common) bowling team for a bowler in one format at one
+    level. Falls back to the Players table for the name if the bowler has no deliveries in that
+    scope (e.g. a white-ball specialist with no Tests, or an uncapped A-team player)."""
     conn, cursor = set_conn_cursor()
     query = f"""
     SELECT TOP 1
@@ -145,7 +146,7 @@ def load_bowler_info(bowler_id: str, fmt: str = "Test") -> dict:
     JOIN [{DATA_SCHEMA}].[Players] AS P ON D.bowler_id = P.player_id
     JOIN [{DATA_SCHEMA}].[Teams]   AS T ON D.team_bowling_id = T.team_id
     WHERE D.bowler_id = '{bowler_id}'
-      AND {_intl(fmt, 'M')}
+      AND {_scope(fmt, 'M', level)}
     GROUP BY P.name, P.surname, T.team_name
     ORDER BY COUNT(*) DESC
     """
@@ -208,11 +209,32 @@ def search_bowlers(name_like: str) -> list:
 
 
 @st.cache_data(ttl=3600)
-def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test") -> list:
-    """All deliveries for a bowler in a format's internationals, with fields needed for profiling.
-    fmt: 'Test' | 'ODI' | 'T20I' (scopes to that format's official international series).
+def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test",
+                           level: str = "international",
+                           source: str = "warehouse") -> list:
+    """All deliveries for a bowler in one format at one level, with fields needed for profiling.
+
+    fmt:    'Test' | 'ODI' | 'T20I' | 'T20'  — the shape of the game.
+    level:  'international' | 'a-team'       — the standard of the game (see _intl).
+    source: 'warehouse' | 'c21' | 'both'     — where the ball record comes from.
+
+    The three are orthogonal. `source` exists because the warehouse holds no Indian domestic
+    cricket at all, so an India A bowler's record there can be a few hundred balls at 38%
+    tracking while Cricket-21 has thousands at 98% (see c21_source). 'both' unions them and
+    re-sorts by date; the C21 rows carry `source='c21'` so a consumer can tell them apart.
+
     dev_limit: if > 0, caps rows returned (for fast local testing only).
     """
+    if source not in ("warehouse", "c21", "both"):
+        raise ValueError(f"unknown source {source!r} — warehouse | c21 | both")
+    if source != "warehouse":
+        import c21_source
+        extra = c21_source.load_bowler_deliveries(bowler_id, fmt=fmt)
+        if source == "c21":
+            return extra[:dev_limit] if dev_limit > 0 else extra
+        base = load_bowler_deliveries(bowler_id, dev_limit, fmt, level, "warehouse")
+        both = sorted(base + extra, key=lambda r: str(r.get("match_date") or ""))
+        return both[:dev_limit] if dev_limit > 0 else both
     conn, cursor = set_conn_cursor()
     top_clause = f"TOP {dev_limit}" if dev_limit > 0 else ""
     query = f"""
@@ -319,7 +341,7 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
     LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_bm
         ON L_bm.[lookup_type_id]    = 2812 AND L_bm.[id]    = D.[ball_movement_id]
     WHERE D.[bowler_id]          = '{bowler_id}'
-      AND {_scope(fmt, 'M')}
+      AND {_scope(fmt, 'M', level)}
     ORDER BY M.[match_date], D.[match_innings], D.[over], D.[ball_in_over]
     """
     result = run_query(query, conn, cursor)
