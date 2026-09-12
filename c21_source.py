@@ -63,7 +63,32 @@ PLAYER_MAP = os.path.join(HERE, "data", "c21_player_map.json")
 # Competitions this module will serve. Deliberately a list, not "everything in the mirror": the
 # mirror also holds Bangladesh and South African domestic cricket pulled for other series, and a
 # player's record must not silently acquire it.
-INDIA_DOMESTIC = ("Ranji", "Duleep", "Hazare", "Irani", "India A")
+#
+# "South Africa A in India" added 2026-09-12: India A's two unofficial Tests against South Africa A
+# (Oct-Nov 2025) are not in the warehouse at all, and their competition name does not contain
+# "India A". Australia A in India 2025 is deliberately NOT added — the warehouse holds it fully
+# tracked with video, and C21 has it barely coded.
+INDIA_DOMESTIC = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South Africa A in India")
+
+
+def merge_with_warehouse(base, extra):
+    """Union ONE player's warehouse rows (`base`) and Cricket-21 rows (`extra`) without counting a
+    match twice.
+
+    Some matches are in both. India A's two unofficial Tests in Sri Lanka (June-July 2026) are in
+    the warehouse at 0% tracking and in the mirror at 98%, and the loaders simply concatenated the
+    two, so Sai Sudharsan's 484 balls there counted as 968 in the four-day pack published
+    2026-09-07 — and seven more players the same way (found 2026-09-12). A player plays one match
+    on a given start date, so the date is the key. Where both sources hold it, keep the copy with
+    more balls for this player, and Cricket-21 on a tie (the tracked copy with video): a match C21
+    has barely coded never displaces a fully tracked warehouse one."""
+    from collections import Counter
+    day = lambda r: str(r.get("match_date") or "")[:10]
+    wd, cd = Counter(day(r) for r in base), Counter(day(r) for r in extra)
+    shared = (set(wd) & set(cd)) - {""}
+    to_c21 = {d for d in shared if cd[d] >= wd[d]}
+    return ([r for r in base if day(r) not in to_c21]
+            + [r for r in extra if day(r) not in (shared - to_c21)])
 
 # C21 bowler_type -> the project's bowler_type_simple vocabulary (cricket_core PACE_TYPES/SPIN_TYPES)
 _BOWLER_TYPE = {
@@ -157,11 +182,21 @@ _FMT_MATCH = {                       # our format -> C21 mirror `format` values
 def _rows(pid, role, fmt):
     """Raw mirror rows for one player in one format. `role` is 'bowler' or 'striker'."""
     pm = player_map().get(str(pid))
-    if not pm or not pm.get("c21_ids"):
+    if not pm:
         return []
-    ids = ",".join(str(int(i)) for i in pm["c21_ids"])
-    comps = " OR ".join(f"m.competition_name LIKE '%{k}%'" for k in INDIA_DOMESTIC)
     fmts = _FMT_MATCH.get(fmt, ("First Class",))
+    # A Cricket-21 player id belongs to ONE of its two databases, multi-day or white-ball, and the
+    # same number is a different person in the other: 6314 is Devdutt Padikkal in white-ball and
+    # Imran Qayyum in multi-day, 3330 is Hardik Pandya and Ashar Zaidi (found 2026-09-12). The
+    # mirror holds matches from both, so an id list with no database attached attributes another
+    # player's balls as soon as both men appear in it. Take the list for the database this
+    # format's matches came from; the old mixed list is only a fallback for entries not yet split.
+    key = "c21_ids_multiday" if any(f in ("First Class", "Test") for f in fmts) else "c21_ids_white"
+    idl = pm[key] if key in pm else pm.get("c21_ids")
+    if not idl:
+        return []
+    ids = ",".join(str(int(i)) for i in idl)
+    comps = " OR ".join(f"m.competition_name LIKE '%{k}%'" for k in INDIA_DOMESTIC)
     fl = " OR ".join(f"m.format = '{f}'" for f in fmts)
     col = "bowler_id" if role == "bowler" else "striker_id"
     q = f"""

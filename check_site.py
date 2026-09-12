@@ -24,7 +24,11 @@ from collections import defaultdict
 
 _LINK = re.compile(r'(?:href|src)="([^"]+)"')
 _DATAPL = re.compile(r'data-pl="([^"]+)"')
-_EXTERNAL = re.compile(r'"(https://[^"]+?\.(?:mp4|MP4|png|jpg|jpeg))(?:\?[^"]*)?"')
+# The query string is INSIDE the group. It used to sit outside, so --deep HEADed every Fairplay
+# clip with its SAS stripped off — which storage refuses whether the token is fresh or expired. The
+# check meant to catch an expired SAS could therefore never pass a Fairplay bundle at all, and it
+# refused the Zimbabwe packs on 2026-09-11 with a token that served 200 when probed directly.
+_EXTERNAL = re.compile(r'"(https://[^"]+?\.(?:mp4|MP4|png|jpg|jpeg)(?:\?[^"]*)?)"')
 _SKIP = ("http://", "https://", "data:", "#", "mailto:", "javascript:")
 
 
@@ -102,9 +106,13 @@ def check(root, deep=False, sample=6):
                 req = urllib.request.Request(u, method="HEAD")
                 with urllib.request.urlopen(req, timeout=25) as r:
                     if r.status != 200:
-                        errors.append(f"media {r.status}: {u[:110]}")
+                        errors.append(f"media {r.status}: {u.split('?', 1)[0][:110]}")
             except Exception as e:
-                errors.append(f"media unreachable ({type(e).__name__}): {u[:110]}")
+                # The url now carries its token — print the path only, and the status, which is
+                # what tells an expired SAS (403) from a missing clip (404).
+                code = getattr(e, "code", None)
+                errors.append(f"media unreachable ({type(e).__name__}{f' {code}' if code else ''}): "
+                              f"{u.split('?', 1)[0][:110]}")
         print(f"  checked {checked} external media urls across {len(seen)} host(s)")
 
     print(f"  {len(pages)} pages, {n_links} internal links")

@@ -156,6 +156,15 @@ def load_bowler_info(bowler_id: str, fmt: str = "Test", level: str = "internatio
                            f"'' AS team_name FROM [{DATA_SCHEMA}].[Players] P "
                            f"WHERE P.player_id = '{bowler_id}'", conn, cursor)
     conn.close()
+    if not result:
+        # No warehouse record at all — a reserved 99xxxxxxx id for a player only Cricket-21 has
+        # (Nachiket Bhute). Name from the C21 map, in the warehouse's "Surname, Other names" form.
+        import c21_source
+        nm = (c21_source.player_map().get(str(bowler_id)) or {}).get("name") or ""
+        if nm:
+            first, _sep, last = nm.rpartition(" ")
+            return {"player_name": f"{last}, {first}" if first else last, "last_name": last,
+                    "team_name": ""}
     return result[0] if result else {}
 
 
@@ -233,7 +242,9 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
         if source == "c21":
             return extra[:dev_limit] if dev_limit > 0 else extra
         base = load_bowler_deliveries(bowler_id, dev_limit, fmt, level, "warehouse")
-        both = sorted(base + extra, key=lambda r: str(r.get("match_date") or ""))
+        # never count a match held by both sources twice — see c21_source.merge_with_warehouse
+        both = sorted(c21_source.merge_with_warehouse(base, extra),
+                      key=lambda r: str(r.get("match_date") or ""))
         return both[:dev_limit] if dev_limit > 0 else both
     conn, cursor = set_conn_cursor()
     top_clause = f"TOP {dev_limit}" if dev_limit > 0 else ""

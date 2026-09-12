@@ -110,6 +110,15 @@ def load_batter_info(batter_id: str, fmt: str = "Test",
     """
     rows = run_query(q, conn, cur)
     conn.close()
+    if not rows:
+        # No warehouse record at all — a reserved 99xxxxxxx id for a player only Cricket-21 has
+        # (Yash Rathod, Nachiket Bhute). Without this the report was titled "Batter 990010366".
+        # Warehouse style is "Surname, Other names", which the report filename is built from.
+        import c21_source
+        nm = (c21_source.player_map().get(str(batter_id)) or {}).get("name") or ""
+        if nm:
+            first, _sep, last = nm.rpartition(" ")
+            return {"player_name": f"{last}, {first}" if first else last, "team_name": ""}
     return rows[0] if rows else {}
 
 
@@ -127,7 +136,9 @@ def load_batter_deliveries(batter_id: str, fmt: str = "Test",
         if source == "c21":
             return extra
         base = load_batter_deliveries(batter_id, fmt, level, "warehouse")
-        return sorted(base + extra, key=lambda r: str(r.get("match_date") or ""))
+        # never count a match held by both sources twice — see c21_source.merge_with_warehouse
+        return sorted(c21_source.merge_with_warehouse(base, extra),
+                      key=lambda r: str(r.get("match_date") or ""))
     """Every delivery faced by the batter in that format, with the fields the profile needs."""
     conn, cur = set_conn_cursor()
     q = f"""

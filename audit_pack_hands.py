@@ -151,12 +151,13 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
                 f"({type(e).__name__}: {str(e)[:100]}). Refusing rather than skipping them — "
                 f"an unchecked reel is what this gate exists to prevent.")
 
-    mixed = wrong = pooled = unres = offfmt = 0
+    mixed = wrong = pooled = unres = offfmt = xhand = 0
     want_fmt = {"test": "Test", "odi": "ODI", "t20i": "T20", "t20": "T20"}.get(str(fmt or "").lower())
     pages = set()
     for (ps, nm, k), ids in sorted(reels.items()):
         pages.add(ps)
-        if not re.match(r'^(stock|wkt|nb)[LR]_', k):
+        km = re.match(r'^(stock|wkt|nb)(X?)([LR])_', k)
+        if not km:
             pooled += 1
             print(f"  POOLED  {ps:<24} {k}  (not scoped to a hand)")
         if not ids:
@@ -165,6 +166,18 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
                 print(f"  UNRESOLVED  {ps:<24} {k}")
             continue
         want = hands.get(name2pid.get(nm))
+        # A DECLARED other-hand reel — key stockXR_ / wktXL_ — is the stated fallback for a bowler
+        # with no footage at all to this pack's hand (Tanaka Chivanga has 2 playable ODI balls to
+        # left-handers). The button says which hand it shows. It is still checked, against the hand
+        # it DECLARES: it must be entirely that hand, and that hand must not be the pack's own, or
+        # the label is wrong. An undeclared reel is held to the pack's hand exactly as before.
+        if km and km.group(2):
+            xhand += 1
+            declared = "lhb" if km.group(3) == "L" else "rhb"
+            if want and declared == want:
+                wrong += 1
+                print(f"  WRONG   {ps:<24} {k:<14} labelled other-hand, but the pack is {want}")
+            want = declared
         got = {hand_of[i] for i in ids if i in hand_of}
         if len(got) > 1:
             mixed += 1
@@ -186,7 +199,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
 
     print(f"  {len(reels)} bowler reels across {len(pages)} batting packs — "
           f"mixed {mixed} · wrong {wrong} · pooled {pooled} · off-format {offfmt} · "
-          f"unresolved {unres}")
+          f"unresolved {unres} · declared other-hand {xhand}")
     return mixed, wrong, pooled, unres, len(reels), len(pages), offfmt
 
 

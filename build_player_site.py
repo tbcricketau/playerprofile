@@ -566,7 +566,17 @@ def _load_overview(slug, group):
     for g in (group, "spin" if str(group).endswith(("spin", "orthodox", "unorthodox")) else "pace"):
         p = os.path.join(HERE, "data", f"overview_{g}_{opp}.json") if g else None
         if p and os.path.exists(p):
-            return json.load(open(p, encoding="utf-8"))
+            ov = json.load(open(p, encoding="utf-8"))
+            # An exact-type file where NOT ONE batter carries a plan is worse than the broad set.
+            # India A's four-day batters faced no leg spin at all in either source, so the leg-spin
+            # overview built 2026-09-12 had 0 plans of 10, and because the file existed Jason
+            # Sangha's pack would have swapped the spin plans it had for a column of "No record vs
+            # leg spin". A partial file stays (each empty row says why). The macro file labels
+            # itself, so the section still says which bowling type its plans are for.
+            if g == group and g not in ("pace", "spin") and not any(
+                    r.get("plan") for r in ov.get("rows") or []):
+                continue
+            return ov
     return None
 
 
@@ -743,7 +753,7 @@ def _our_hands(slug):
 
 
 def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=None, report_url=None,
-              kinds=None, tier=None, limited=None):
+              kinds=None, tier=None, limited=None, xhand=None, general=None):
     """A per-opponent card in a PLAYER report: the distilled 'what they're about' facts (type-scoped
     by the caller), a link to the reduced PLAYER-MODE report on this opponent, video of their stock
     ball + wicket balls, and neutral footage against them. NO good/poor matchup verdict. `kinds`
@@ -777,7 +787,13 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
     for kind, label in show:
         if opp_vision.get((bid, kind)):
             star = "*" if kind in limited else ""
-            watch.append(_vwatch(opp_vision[(bid, kind)], f"&#9654; {label}{star}"))
+            # a reel standing in from the other hand says so on the button itself
+            side = ""
+            if (xhand or {}).get(kind):
+                side = " — to " + ("left-handers" if xhand[kind] == "lhb" else "right-handers")
+            # a stock slot holding untracked recent deliveries is not a stock ball — say what it is
+            shown = "Recent bowling" if kind in (general or ()) else label
+            watch.append(_vwatch(opp_vision[(bid, kind)], f"&#9654; {shown}{side}{star}"))
     if watch:
         lines.append('<p>' + " ".join(watch) + '</p>')
     if h2h_row:                                        # footage only — no runs/wickets (that reads
@@ -991,6 +1007,18 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                               ("dismissal_leg_spin", "dsmLS", "Dismissals vs leg spin"),
                               ("scoring_left_unorthodox", "scoLU", "Scoring shots vs left-arm wrist spin"),
                               ("dismissal_left_unorthodox", "dsmLU", "Dismissals vs left-arm wrist spin")):
+            xh = (clips.get("_xhand") or {}).get(kind)
+            if xh:
+                # The other hand's reel standing in for a hand with no footage at all. Its own key
+                # (stockXR_), so audit_pack_hands holds it to the hand it declares rather than
+                # passing or failing it as this pack's hand, and a title that says what it is.
+                kk = kk[:-1] + "X" + ("L" if xh == "lhb" else "R")
+                shown = "left-handers" if xh == "lhb" else "right-handers"
+                asked = "left-handers" if kind.endswith("_lhb") else "right-handers"
+                tit = f"{tit.split(' to ')[0]} to {shown} (no footage to {asked})"
+            if kind in (clips.get("_general") or set()):
+                # untracked footage: their latest deliveries, not an identified stock ball
+                tit = tit.replace("Stock ball", "Recent bowling", 1)
             stems = clips.get(kind) or []
             items = [_clip_item(e, caption=tit)
                      for e in stems if _playable(e)]
@@ -1136,6 +1164,8 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
         ordered = sorted(opp_bowlers.items(),
                          key=lambda kv: -(about.get(kv[0], {}).get("order", 0)))[:N_OPP]
         borrowed = set()      # formats a reel had to fall back to; drives the footnote below
+        other_hand = set()    # bowlers whose reel shows the other hand; drives the second footnote
+        recent_bowl = set()   # bowlers whose stock slot is recent untracked bowling; third footnote
 
         def _card(bid, meta_):
             nm, ty = meta_
@@ -1174,15 +1204,43 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                 lim.update(k for k in ("stock", "wicket", "new_ball") if ov.get((bid, k)))
                 if lim:
                     borrowed.add(_cf)
+            # Per reel since 2026-09-11: build_opponent_about steps each hand's stock and wicket
+            # reel on its own, so one button can be T20I footage while the one beside it is ODI —
+            # and a hand with no footage at all may show the other hand's, which the button names.
+            xh, gen = {}, set()
+            for _k in ("stock", "wicket", "new_ball"):
+                if not ov.get((bid, _k)):
+                    continue
+                _kf = ab.get(f"clip_format_{_k}_{hand}")
+                if _kf and _kf != fmt:
+                    lim.add(_k)
+                    borrowed.add(_kf)
+                if ab.get(f"clip_hand_{_k}_{hand}"):
+                    xh[_k] = ab[f"clip_hand_{_k}_{hand}"]
+                if ab.get(f"clip_general_{_k}_{hand}"):
+                    gen.add(_k)
+            if xh:
+                other_hand.add(bid)
+            if gen:
+                recent_bowl.add(bid)
             return _opp_card(bid, nm, ty, facts,
                              h2h_map.get(f"hbat_{bid}"), h2h_rows.get((pid, bid)), "facing",
                              opp_vision=ov, report_url=report_urls.get(bid),
-                             kinds=bkinds, tier=(opp_tiers or {}).get(bid), limited=lim)
+                             kinds=bkinds, tier=(opp_tiers or {}).get(bid), limited=lim,
+                             xhand=xh, general=gen)
         inner = _tiered_inner(ordered, opp_tiers, _card)
         if borrowed:
             inner += (f'<p class="vfoot">* this bowler has too little {html.escape(fmt)} footage, '
                       f'so the reel is their {" / ".join(sorted(html.escape(b) for b in borrowed))} '
                       f'bowling — the same bowler, a different format.</p>')
+        if other_hand:
+            other = "right-handers" if hand == "lhb" else "left-handers"
+            inner += (f'<p class="vfoot">Where a button says "to {other}", there is no footage of '
+                      f'that bowler bowling to {handword}, so the reel shows them bowling to '
+                      f'{other} instead.</p>')
+        if recent_bowl:
+            inner += ('<p class="vfoot">"Recent bowling" is their latest footage. Those deliveries '
+                      'have no ball-tracking, so their stock ball cannot be picked out of them.</p>')
         body.append(_pack_section(f"The {opp} attack",
                                   "Grouped by how likely they are to play. Tap a bowler for what "
                                   "they're about, the fuller report, and any footage of you facing them.",
@@ -1622,6 +1680,15 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
             for _h in ("lhb", "rhb"):
                 for _k in ("stock", "wicket", "new_ball"):
                     opp_clips[bid][f"{_k}_{_h}"] = a.get(f"{_k}_clips_{_h}") or []
+                    # a reel standing in from the OTHER hand, declared by build_opponent_about when
+                    # this hand has no footage at all — it gets its own playlist key (stockXR_) and
+                    # the button says which hand it shows
+                    if a.get(f"clip_hand_{_k}_{_h}"):
+                        opp_clips[bid].setdefault("_xhand", {})[f"{_k}_{_h}"] = a[f"clip_hand_{_k}_{_h}"]
+                    # no stock ball could be identified (the footage that plays is untracked), so
+                    # the stock slot holds their recent deliveries — relabelled, never called stock
+                    if a.get(f"clip_general_{_k}_{_h}"):
+                        opp_clips[bid].setdefault("_general", set()).add(f"{_k}_{_h}")
         for bid, _ in _ord(opp_batters, about_bat):
             a = about_bat.get(bid) or {}
             # per bowling type where we have it — an unscoped reel on a spinner's pack is mostly

@@ -17,29 +17,19 @@
      "kind": "bowling",
      "reports": [
       {
+       "id": "5490039",
+       "tier": "squad",
+       "name": "Nishant Sindu"
+      },
+      {
        "id": "6381324",
        "tier": "squad",
        "name": "Vipraj Nigam"
       },
       {
-       "id": "3630029",
+       "id": "6380254",
        "tier": "squad",
-       "name": "Anukul Roy"
-      },
-      {
-       "id": "6381338",
-       "tier": "squad",
-       "name": "Suryansh Shedge"
-      },
-      {
-       "id": "4354608",
-       "tier": "squad",
-       "name": "Ayush Badoni"
-      },
-      {
-       "id": "5490039",
-       "tier": "squad",
-       "name": "Nishant Sindu"
+       "name": "Arshin Kulkarni"
       },
       {
        "id": "5181010",
@@ -47,14 +37,24 @@
        "name": "Mohd Arshad Khan"
       },
       {
+       "id": "6380398",
+       "tier": "squad",
+       "name": "Naman Dhir"
+      },
+      {
+       "id": "3080016",
+       "tier": "squad",
+       "name": "Hardik Pandya"
+      },
+      {
+       "id": "6381318",
+       "tier": "squad",
+       "name": "Gurjapneet Singh"
+      },
+      {
        "id": "5181011",
        "tier": "squad",
        "name": "Yash Ravisingh Thakur"
-      },
-      {
-       "id": "6380434",
-       "tier": "squad",
-       "name": "Anshul Kamboj"
       }
      ]
     }
@@ -76,33 +76,21 @@
      "kind": "bowling",
      "reports": [
       {
-       "id": "6380716",
+       "id": "6380399",
        "tier": "squad",
-       "name": "Saransh Jain",
+       "name": "Shams Mulani",
        "hand": "lhb"
       },
       {
-       "id": "6381489",
+       "id": "6380423",
        "tier": "squad",
-       "name": "Harsh Surendra Dubey",
+       "name": "Tanush Kotian",
        "hand": "lhb"
       },
       {
-       "id": "5181011",
+       "id": "4352120",
        "tier": "squad",
-       "name": "Yash Ravisingh Thakur",
-       "hand": "lhb"
-      },
-      {
-       "id": "5181028",
-       "tier": "squad",
-       "name": "Gurnoor Brar",
-       "hand": "lhb"
-      },
-      {
-       "id": "6381482",
-       "tier": "squad",
-       "name": "Zeeshan Ansari",
+       "name": "Tushar Deshpande",
        "hand": "lhb"
       },
       {
@@ -112,9 +100,21 @@
        "hand": "lhb"
       },
       {
-       "id": "7230044",
+       "id": "7230047",
        "tier": "squad",
-       "name": "Auqib Nabi",
+       "name": "Praful Hinge",
+       "hand": "lhb"
+      },
+      {
+       "id": "990020028",
+       "tier": "squad",
+       "name": "Nachiket Bhute",
+       "hand": "lhb"
+      },
+      {
+       "id": "5181018",
+       "tier": "squad",
+       "name": "Vijaykumar Vyshak",
        "hand": "lhb"
       }
      ]
@@ -127,33 +127,21 @@
      "kind": "bowling",
      "reports": [
       {
-       "id": "6380716",
+       "id": "6380399",
        "tier": "squad",
-       "name": "Saransh Jain",
+       "name": "Shams Mulani",
        "hand": "rhb"
       },
       {
-       "id": "6381489",
+       "id": "6380423",
        "tier": "squad",
-       "name": "Harsh Surendra Dubey",
+       "name": "Tanush Kotian",
        "hand": "rhb"
       },
       {
-       "id": "5181011",
+       "id": "4352120",
        "tier": "squad",
-       "name": "Yash Ravisingh Thakur",
-       "hand": "rhb"
-      },
-      {
-       "id": "5181028",
-       "tier": "squad",
-       "name": "Gurnoor Brar",
-       "hand": "rhb"
-      },
-      {
-       "id": "6381482",
-       "tier": "squad",
-       "name": "Zeeshan Ansari",
+       "name": "Tushar Deshpande",
        "hand": "rhb"
       },
       {
@@ -163,9 +151,21 @@
        "hand": "rhb"
       },
       {
-       "id": "7230044",
+       "id": "7230047",
        "tier": "squad",
-       "name": "Auqib Nabi",
+       "name": "Praful Hinge",
+       "hand": "rhb"
+      },
+      {
+       "id": "990020028",
+       "tier": "squad",
+       "name": "Nachiket Bhute",
+       "hand": "rhb"
+      },
+      {
+       "id": "5181018",
+       "tier": "squad",
+       "name": "Vijaykumar Vyshak",
        "hand": "rhb"
       }
      ]

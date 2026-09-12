@@ -1,73 +1,73 @@
 {
  "opp": "india_a_4day",
- "group": "spin",
- "label": "spin",
+ "group": "left_orthodox",
+ "label": "left-arm orthodox",
  "min_balls": 60,
  "rows": [
   {
    "bid": "4352110",
    "name": "Devdutt Padikkal",
    "sub": "LHB · Top order",
-   "balls": 971,
-   "plan": "Plan for spin: bowl <b>full pitching outside off</b>.",
+   "balls": 388,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching on the stumps</b>.",
    "field": {
     "set": "stock field",
     "move": "Long-off",
-    "spare": ""
+    "spare": "Cover"
    },
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4352110_0.png"
+     "file": "left_orthodox_4352110_0.png"
     },
     {
      "label": "Once set",
-     "file": "spin_4352110_1.png"
+     "file": "left_orthodox_4352110_1.png"
     }
    ],
    "threat": {
-    "balls": 971,
-    "n_out": 11,
-    "bpd": 88.27272727272727,
-    "false_pct": 11.596385542168674,
-    "area": "off (46% of runs)",
+    "balls": 388,
+    "n_out": 4,
+    "bpd": 97.0,
+    "false_pct": 7.430340557275541,
+    "area": "off (47% of runs)",
     "short": null,
-    "top_out": "Caught (55%)"
+    "top_out": "Caught (50%)"
    }
   },
   {
    "bid": "5460174",
    "name": "Sai Sudharsan",
    "sub": "LHB · Top order",
-   "balls": 695,
-   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "balls": 161,
+   "plan": null,
    "field": {
     "set": "stock field",
     "move": "Backward square leg",
-    "spare": "Fine leg"
+    "spare": "Backward square leg"
    },
    "fields": [
     {
      "label": "Once set",
-     "file": "spin_5460174_0.png"
+     "file": "left_orthodox_5460174_0.png"
     }
    ],
    "threat": {
-    "balls": 695,
-    "n_out": 6,
-    "bpd": 115.83333333333333,
-    "false_pct": 23.75,
-    "area": "off (59% of runs)",
+    "balls": 161,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 9.70873786407767,
+    "area": "off (68% of runs)",
     "short": null,
-    "top_out": "LBW (67%)"
+    "top_out": "LBW (100%)"
    }
   },
   {
    "bid": "5460632",
    "name": "Aman Mokhade",
    "sub": "RHB · Opener",
-   "balls": 352,
-   "plan": "Plan for spin: bowl <b>full pitching outside off</b>.",
+   "balls": 240,
+   "plan": null,
    "field": {
     "set": "stock field",
     "move": "",
@@ -76,14 +76,14 @@
    "fields": [
     {
      "label": "Once set",
-     "file": "spin_5460632_0.png"
+     "file": "left_orthodox_5460632_0.png"
     }
    ],
    "threat": {
-    "balls": 352,
-    "n_out": 3,
+    "balls": 240,
+    "n_out": 1,
     "bpd": null,
-    "false_pct": 13.671875,
+    "false_pct": 12.244897959183673,
     "area": null,
     "short": null,
     "top_out": "Caught (100%)"
@@ -93,8 +93,8 @@
    "bid": "5460629",
    "name": "Ayush Pandey",
    "sub": "LHB · Opener",
-   "balls": 294,
-   "plan": "Plan for spin: bowl <b>full pitching outside off</b>.",
+   "balls": 108,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching on the stumps</b>.",
    "field": {
     "set": "stock field",
     "move": "",
@@ -103,14 +103,14 @@
    "fields": [
     {
      "label": "Once set",
-     "file": "spin_5460629_0.png"
+     "file": "left_orthodox_5460629_0.png"
     }
    ],
    "threat": {
-    "balls": 294,
-    "n_out": 3,
+    "balls": 108,
+    "n_out": 2,
     "bpd": null,
-    "false_pct": 16.05839416058394,
+    "false_pct": 9.090909090909092,
     "area": null,
     "short": null,
     "top_out": "Caught (100%)"
@@ -120,8 +120,8 @@
    "bid": "990010366",
    "name": "Yash Rathod",
    "sub": "RHB",
-   "balls": 263,
-   "plan": "Plan for spin: bowl <b>good length pitching outside off</b>.",
+   "balls": 170,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching on the stumps</b>.",
    "field": {
     "set": "stock field",
     "move": "",
@@ -130,14 +130,14 @@
    "fields": [
     {
      "label": "Once set",
-     "file": "spin_990010366_0.png"
+     "file": "left_orthodox_990010366_0.png"
     }
    ],
    "threat": {
-    "balls": 263,
+    "balls": 170,
     "n_out": 2,
     "bpd": null,
-    "false_pct": 7.480314960629921,
+    "false_pct": 7.361963190184049,
     "area": null,
     "short": null,
     "top_out": "Caught (100%)"
@@ -147,8 +147,8 @@
    "bid": "3630228",
    "name": "Kumar Kushagra",
    "sub": "RHB",
-   "balls": 220,
-   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "balls": 154,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching on the stumps</b>.",
    "field": {
     "set": "stock field",
     "move": "",
@@ -157,14 +157,14 @@
    "fields": [
     {
      "label": "Once set",
-     "file": "spin_3630228_0.png"
+     "file": "left_orthodox_3630228_0.png"
     }
    ],
    "threat": {
-    "balls": 220,
+    "balls": 154,
     "n_out": 3,
     "bpd": null,
-    "false_pct": 5.164319248826291,
+    "false_pct": 5.442176870748299,
     "area": null,
     "short": null,
     "top_out": "Caught (100%)"
@@ -174,92 +174,69 @@
    "bid": "4352119",
    "name": "Narayan Jagadeesan",
    "sub": "RHB · Opener",
-   "balls": 143,
+   "balls": 61,
    "plan": null,
-   "field": {
-    "set": "stock field",
-    "move": "",
-    "spare": "Mid-off"
-   },
-   "fields": [
-    {
-     "label": "Once set",
-     "file": "spin_4352119_0.png"
-    }
-   ],
+   "field": null,
+   "fields": [],
    "threat": {
-    "balls": 143,
-    "n_out": 3,
+    "balls": 61,
+    "n_out": 1,
     "bpd": null,
-    "false_pct": 16.883116883116884,
-    "area": "off (42% of runs)",
+    "false_pct": 11.11111111111111,
+    "area": "off (100% of runs)",
     "short": null,
-    "top_out": "Caught in the field (33%)"
+    "top_out": "Stumped (100%)"
    }
   },
   {
    "bid": "6380423",
    "name": "Tanush Kotian",
    "sub": "RHB · Lower order",
-   "balls": 212,
-   "plan": "Plan for spin: bowl <b>good length pitching on the stumps</b>.",
+   "balls": 29,
+   "plan": null,
    "field": null,
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "spin_6380423_0.png"
-    }
-   ],
+   "fields": [],
    "threat": {
-    "balls": 212,
-    "n_out": 5,
-    "bpd": 42.4,
-    "false_pct": 22.137404580152673,
-    "area": "straight (42% of runs)",
+    "balls": 29,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 23.80952380952381,
+    "area": "off (80% of runs)",
     "short": null,
-    "top_out": "Caught (40%)"
+    "top_out": "Bowled (100%)"
    }
   },
   {
    "bid": "5490034",
    "name": "Shaik Rasheed",
    "sub": "RHB · Middle order",
-   "balls": 162,
-   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "",
-    "spare": ""
-   },
-   "fields": [
-    {
-     "label": "Once set",
-     "file": "spin_5490034_0.png"
-    }
-   ],
+   "balls": 103,
+   "plan": null,
+   "field": null,
+   "fields": [],
    "threat": {
-    "balls": 162,
-    "n_out": 4,
-    "bpd": 40.5,
-    "false_pct": 9.090909090909092,
+    "balls": 103,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 8.333333333333334,
     "area": null,
     "short": null,
-    "top_out": "Stumped (25%)"
+    "top_out": "Stumped (33%)"
    }
   },
   {
    "bid": "6380399",
    "name": "Shams Mulani",
    "sub": "LHB",
-   "balls": 130,
+   "balls": 106,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 130,
+    "balls": 106,
     "n_out": 2,
     "bpd": null,
-    "false_pct": 23.25581395348837,
+    "false_pct": 25.471698113207548,
     "area": null,
     "short": null,
     "top_out": "Caught (50%)"

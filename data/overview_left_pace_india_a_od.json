@@ -1,44 +1,28 @@
 {
  "opp": "india_a_od",
- "group": "off_spin",
- "label": "off spin",
+ "group": "left_pace",
+ "label": "left-arm pace",
  "min_balls": 60,
  "rows": [
   {
    "bid": "3080016",
    "name": "Hardik Pandya",
    "sub": "RHB",
-   "balls": 5,
+   "balls": 0,
    "plan": null,
    "field": null,
    "fields": [],
-   "threat": {
-    "balls": 5,
-    "n_out": 0,
-    "bpd": null,
-    "false_pct": 0.0,
-    "area": null,
-    "short": null,
-    "top_out": null
-   }
+   "threat": null
   },
   {
    "bid": "5460174",
    "name": "Sai Sudharsan",
    "sub": "LHB",
-   "balls": 5,
+   "balls": 0,
    "plan": null,
    "field": null,
    "fields": [],
-   "threat": {
-    "balls": 5,
-    "n_out": 0,
-    "bpd": null,
-    "false_pct": 20.0,
-    "area": null,
-    "short": null,
-    "top_out": null
-   }
+   "threat": null
   },
   {
    "bid": "4352129",
@@ -54,48 +38,48 @@
    "bid": "4352110",
    "name": "Devdutt Padikkal",
    "sub": "LHB",
-   "balls": 147,
+   "balls": 95,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 147,
+    "balls": 95,
     "n_out": 1,
     "bpd": null,
-    "false_pct": 6.944444444444445,
+    "false_pct": 9.63855421686747,
     "area": null,
     "short": null,
-    "top_out": "Caught (100%)"
+    "top_out": "Bowled (100%)"
    }
   },
   {
    "bid": "6381340",
    "name": "Priyansh Arya",
    "sub": "LHB · Opener",
-   "balls": 57,
+   "balls": 25,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 57,
-    "n_out": 0,
+    "balls": 25,
+    "n_out": 1,
     "bpd": null,
-    "false_pct": 11.363636363636363,
-    "area": "leg (62% of runs)",
+    "false_pct": 16.0,
+    "area": "leg (67% of runs)",
     "short": null,
-    "top_out": null
+    "top_out": "Caught in the field (100%)"
    }
   },
   {
    "bid": "6380398",
    "name": "Naman Dhir",
    "sub": "RHB",
-   "balls": 10,
+   "balls": 5,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 10,
+    "balls": 5,
     "n_out": 0,
     "bpd": null,
     "false_pct": 0.0,
@@ -108,18 +92,18 @@
    "bid": "4352118",
    "name": "Prabhsimran Singh",
    "sub": "RHB · Opener",
-   "balls": 28,
+   "balls": 31,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 28,
-    "n_out": 1,
+    "balls": 31,
+    "n_out": 0,
     "bpd": null,
-    "false_pct": 5.882352941176471,
-    "area": "straight (43% of runs)",
+    "false_pct": 6.666666666666667,
+    "area": null,
     "short": null,
-    "top_out": "Caught behind (100%)"
+    "top_out": null
    }
   },
   {
@@ -136,16 +120,16 @@
    "bid": "4352297",
    "name": "Ruturaj Gaikwad",
    "sub": "RHB · Top order",
-   "balls": 70,
+   "balls": 10,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 70,
+    "balls": 10,
     "n_out": 0,
     "bpd": null,
-    "false_pct": 5.555555555555555,
-    "area": "leg (44% of runs)",
+    "false_pct": 10.0,
+    "area": "off (50% of runs)",
     "short": null,
     "top_out": null
    }
@@ -154,16 +138,16 @@
    "bid": "5490039",
    "name": "Nishant Sindu",
    "sub": "LHB · Middle order",
-   "balls": 12,
+   "balls": 2,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 12,
+    "balls": 2,
     "n_out": 0,
     "bpd": null,
-    "false_pct": 9.090909090909092,
-    "area": "off (80% of runs)",
+    "false_pct": 50.0,
+    "area": "off (100% of runs)",
     "short": null,
     "top_out": null
    }
@@ -172,16 +156,16 @@
    "bid": "6381324",
    "name": "Vipraj Nigam",
    "sub": "RHB · Lower order",
-   "balls": 27,
+   "balls": 9,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 27,
+    "balls": 9,
     "n_out": 0,
     "bpd": null,
-    "false_pct": 36.8421052631579,
-    "area": "leg (48% of runs)",
+    "false_pct": 37.5,
+    "area": "off (90% of runs)",
     "short": null,
     "top_out": null
    }
@@ -190,18 +174,18 @@
    "bid": "3630228",
    "name": "Kumar Kushagra",
    "sub": "RHB · Middle order",
-   "balls": 33,
+   "balls": 19,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 33,
+    "balls": 19,
     "n_out": 1,
     "bpd": null,
-    "false_pct": 24.242424242424242,
-    "area": "leg (50% of runs)",
+    "false_pct": 28.571428571428573,
+    "area": "off (67% of runs)",
     "short": null,
-    "top_out": "Caught behind (100%)"
+    "top_out": "Bowled (100%)"
    }
   }
  ]

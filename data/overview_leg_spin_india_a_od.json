@@ -5,9 +5,75 @@
  "min_balls": 60,
  "rows": [
   {
-   "bid": "6380863",
-   "name": "Vaibhav Suryavanshi",
+   "bid": "3080016",
+   "name": "Hardik Pandya",
+   "sub": "RHB",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "5460174",
+   "name": "Sai Sudharsan",
+   "sub": "LHB",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "4352129",
+   "name": "Rajat Patidar",
+   "sub": "RHB",
+   "balls": 5,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 5,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 0.0,
+    "area": null,
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "4352110",
+   "name": "Devdutt Padikkal",
+   "sub": "LHB",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "6381340",
+   "name": "Priyansh Arya",
    "sub": "LHB · Opener",
+   "balls": 5,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 5,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 0.0,
+    "area": "straight (75% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "6380398",
+   "name": "Naman Dhir",
+   "sub": "RHB",
    "balls": 0,
    "plan": null,
    "field": null,
@@ -33,58 +99,14 @@
    }
   },
   {
-   "bid": "4354608",
-   "name": "Ayush Badoni",
-   "sub": "RHB · Middle order",
-   "balls": 20,
+   "bid": "6380254",
+   "name": "Arshin Kulkarni",
+   "sub": "RHB",
+   "balls": 0,
    "plan": null,
    "field": null,
    "fields": [],
-   "threat": {
-    "balls": 20,
-    "n_out": 0,
-    "bpd": null,
-    "false_pct": 0.0,
-    "area": "off (59% of runs)",
-    "short": null,
-    "top_out": null
-   }
-  },
-  {
-   "bid": "6381340",
-   "name": "Priyansh Arya",
-   "sub": "LHB · Opener",
-   "balls": 5,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 5,
-    "n_out": 1,
-    "bpd": null,
-    "false_pct": 0.0,
-    "area": "straight (75% of runs)",
-    "short": null,
-    "top_out": "Caught in the field (100%)"
-   }
-  },
-  {
-   "bid": "4352313",
-   "name": "Tilak Varma",
-   "sub": "LHB · Top order",
-   "balls": 83,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 83,
-    "n_out": 0,
-    "bpd": null,
-    "false_pct": 5.555555555555555,
-    "area": "off (43% of runs)",
-    "short": null,
-    "top_out": null
-   }
+   "threat": null
   },
   {
    "bid": "4352297",
@@ -100,24 +122,6 @@
     "bpd": null,
     "false_pct": 8.51063829787234,
     "area": "leg (68% of runs)",
-    "short": null,
-    "top_out": "LBW (100%)"
-   }
-  },
-  {
-   "bid": "6381338",
-   "name": "Suryansh Shedge",
-   "sub": "RHB · Middle order",
-   "balls": 29,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 29,
-    "n_out": 1,
-    "bpd": null,
-    "false_pct": 22.22222222222222,
-    "area": "leg (56% of runs)",
     "short": null,
     "top_out": "LBW (100%)"
    }
@@ -154,6 +158,24 @@
     "bpd": null,
     "false_pct": 16.666666666666668,
     "area": "off (77% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "3630228",
+   "name": "Kumar Kushagra",
+   "sub": "RHB · Middle order",
+   "balls": 12,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 12,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 16.666666666666668,
+    "area": "leg (60% of runs)",
     "short": null,
     "top_out": null
    }

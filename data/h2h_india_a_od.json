@@ -3,263 +3,210 @@
  "cap": 20,
  "our_batting": [
   {
-   "striker_id": "2700257",
-   "bowler_id": "4354608",
+   "striker_id": "3050039",
+   "bowler_id": "6381318",
    "format": "List A",
    "format_label": "List A",
-   "balls": 2,
-   "clips": 2,
+   "balls": 9,
+   "clips": 9,
    "deliveries": [
     {
-     "delivery_id": "5460889020104206",
+     "delivery_id": "5460889020104308",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104206"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104308"
     },
     {
-     "delivery_id": "5460889020104204",
+     "delivery_id": "5460889020104305",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104204"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104305"
+    },
+    {
+     "delivery_id": "5460889020104304",
+     "date": "2025-10-05",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104304"
+    },
+    {
+     "delivery_id": "5460889020104303",
+     "date": "2025-10-05",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104303"
+    },
+    {
+     "delivery_id": "5460889020104302",
+     "date": "2025-10-05",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104302"
+    },
+    {
+     "delivery_id": "5460887020103201",
+     "date": "2025-10-01",
+     "runs": 0,
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B103201"
+    },
+    {
+     "delivery_id": "5460887020103003",
+     "date": "2025-10-01",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B103003"
+    },
+    {
+     "delivery_id": "5460887020103002",
+     "date": "2025-10-01",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B103002"
+    },
+    {
+     "delivery_id": "5460887020103001",
+     "date": "2025-10-01",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B103001"
     }
    ]
   },
   {
    "striker_id": "2850086",
-   "bowler_id": "4354608",
+   "bowler_id": "6381318",
    "format": "List A",
    "format_label": "List A",
-   "balls": 15,
-   "clips": 15,
+   "balls": 7,
+   "clips": 7,
    "deliveries": [
     {
-     "delivery_id": "5460889020104205",
+     "delivery_id": "5460889020104307",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104205"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104307"
     },
     {
-     "delivery_id": "5460889020104202",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104202"
-    },
-    {
-     "delivery_id": "5460889020104201",
+     "delivery_id": "5460889020104306",
      "date": "2025-10-05",
      "runs": 0,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104201"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104306"
     },
     {
-     "delivery_id": "5460889020104006",
+     "delivery_id": "5460889020104106",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104006"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104106"
     },
     {
-     "delivery_id": "5460889020104004",
+     "delivery_id": "5460889020104103",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104004"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104103"
     },
     {
-     "delivery_id": "5460889020104002",
+     "delivery_id": "5460889020104101",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104002"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104101"
     },
     {
-     "delivery_id": "5460889020103805",
+     "delivery_id": "5460889020103905",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103805"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103905"
     },
     {
-     "delivery_id": "5460889020103804",
-     "date": "2025-10-05",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103804"
-    },
-    {
-     "delivery_id": "5460889020103802",
+     "delivery_id": "5460889020103903",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103802"
-    },
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103903"
+    }
+   ]
+  },
+  {
+   "striker_id": "2700257",
+   "bowler_id": "6381318",
+   "format": "List A",
+   "format_label": "List A",
+   "balls": 1,
+   "clips": 1,
+   "deliveries": [
     {
-     "delivery_id": "5460889020103605",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103605"
-    },
-    {
-     "delivery_id": "5460889020103604",
+     "delivery_id": "5460889020104301",
      "date": "2025-10-05",
      "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103604"
-    },
-    {
-     "delivery_id": "5460889020103602",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103602"
-    },
-    {
-     "delivery_id": "5460889020103406",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103406"
-    },
-    {
-     "delivery_id": "5460889020103403",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103403"
-    },
-    {
-     "delivery_id": "5460889020103401",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103401"
+     "wicket": "Caught",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104301"
     }
    ]
   },
   {
    "striker_id": "2700297",
-   "bowler_id": "4354608",
+   "bowler_id": "6381318",
    "format": "List A",
    "format_label": "List A",
-   "balls": 16,
-   "clips": 16,
+   "balls": 7,
+   "clips": 7,
    "deliveries": [
     {
-     "delivery_id": "5460889020104203",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": "Caught",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104203"
-    },
-    {
-     "delivery_id": "5460889020104005",
+     "delivery_id": "5460889020104105",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104005"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104105"
     },
     {
-     "delivery_id": "5460889020104003",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104003"
-    },
-    {
-     "delivery_id": "5460889020104001",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104001"
-    },
-    {
-     "delivery_id": "5460889020103806",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103806"
-    },
-    {
-     "delivery_id": "5460889020103803",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103803"
-    },
-    {
-     "delivery_id": "5460889020103801",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103801"
-    },
-    {
-     "delivery_id": "5460889020103606",
+     "delivery_id": "5460889020104104",
      "date": "2025-10-05",
      "runs": 0,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103606"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104104"
     },
     {
-     "delivery_id": "5460889020103603",
+     "delivery_id": "5460889020104102",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103603"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B104102"
     },
     {
-     "delivery_id": "5460889020103601",
+     "delivery_id": "5460889020103906",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103601"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103906"
     },
     {
-     "delivery_id": "5460889020103405",
+     "delivery_id": "5460889020103904",
      "date": "2025-10-05",
      "runs": 1,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103405"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103904"
     },
     {
-     "delivery_id": "5460889020103404",
+     "delivery_id": "5460889020103902",
+     "date": "2025-10-05",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103902"
+    },
+    {
+     "delivery_id": "5460889020103901",
      "date": "2025-10-05",
      "runs": 0,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103404"
-    },
-    {
-     "delivery_id": "5460889020103402",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103402"
-    },
-    {
-     "delivery_id": "5460889020102105",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B102105"
-    },
-    {
-     "delivery_id": "5460889020102103",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B102103"
-    },
-    {
-     "delivery_id": "5460889020102102",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B102102"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B103901"
     }
    ]
   },
@@ -821,40 +768,103 @@
    ]
   },
   {
-   "striker_id": "3050039",
-   "bowler_id": "6381338",
+   "striker_id": "3400037",
+   "bowler_id": "6381318",
    "format": "List A",
    "format_label": "List A",
-   "balls": 4,
-   "clips": 4,
+   "balls": 13,
+   "clips": 13,
    "deliveries": [
     {
-     "delivery_id": "5460887020103105",
-     "date": "2025-10-01",
-     "runs": 1,
+     "delivery_id": "5460889020101607",
+     "date": "2025-10-05",
+     "runs": 4,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B103105"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101607"
     },
     {
-     "delivery_id": "5460887020103101",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B103101"
-    },
-    {
-     "delivery_id": "5460887020102903",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B102903"
-    },
-    {
-     "delivery_id": "5460887020102902",
-     "date": "2025-10-01",
+     "delivery_id": "5460889020101606",
+     "date": "2025-10-05",
      "runs": 0,
      "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B102902"
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101606"
+    },
+    {
+     "delivery_id": "5460889020101605",
+     "date": "2025-10-05",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101605"
+    },
+    {
+     "delivery_id": "5460889020101602",
+     "date": "2025-10-05",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101602"
+    },
+    {
+     "delivery_id": "5460889020101601",
+     "date": "2025-10-05",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101601"
+    },
+    {
+     "delivery_id": "5460889020101405",
+     "date": "2025-10-05",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101405"
+    },
+    {
+     "delivery_id": "5460889020101404",
+     "date": "2025-10-05",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101404"
+    },
+    {
+     "delivery_id": "5460889020101403",
+     "date": "2025-10-05",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101403"
+    },
+    {
+     "delivery_id": "5460889020101402",
+     "date": "2025-10-05",
+     "runs": 6,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101402"
+    },
+    {
+     "delivery_id": "5460889020101401",
+     "date": "2025-10-05",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101401"
+    },
+    {
+     "delivery_id": "5460889020101206",
+     "date": "2025-10-05",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101206"
+    },
+    {
+     "delivery_id": "5460889020101203",
+     "date": "2025-10-05",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101203"
+    },
+    {
+     "delivery_id": "5460889020101201",
+     "date": "2025-10-05",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/B/1/5460889B101201"
     }
    ]
   },
@@ -903,253 +913,6 @@
      "runs": 1,
      "wicket": null,
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B102305"
-    }
-   ]
-  },
-  {
-   "striker_id": "3400037",
-   "bowler_id": "4354608",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 5,
-   "clips": 5,
-   "deliveries": [
-    {
-     "delivery_id": "5460887020101506",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B101506"
-    },
-    {
-     "delivery_id": "5460887020101505",
-     "date": "2025-10-01",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B101505"
-    },
-    {
-     "delivery_id": "5460887020101502",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B101502"
-    },
-    {
-     "delivery_id": "5460887020101501",
-     "date": "2025-10-01",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B101501"
-    },
-    {
-     "delivery_id": "5460887020101305",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/B/1/5460887B101305"
-    }
-   ]
-  },
-  {
-   "striker_id": "2840035",
-   "bowler_id": "4354608",
-   "format": "FC",
-   "format_label": "first-class",
-   "balls": 20,
-   "clips": 20,
-   "deliveries": [
-    {
-     "delivery_id": "5460886020204306",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B204306"
-    },
-    {
-     "delivery_id": "5460886020204304",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B204304"
-    },
-    {
-     "delivery_id": "5460886020204303",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B204303"
-    },
-    {
-     "delivery_id": "5460886020204302",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B204302"
-    },
-    {
-     "delivery_id": "5460886020204106",
-     "date": "2025-09-23",
-     "runs": 6,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B204106"
-    },
-    {
-     "delivery_id": "5460886020204101",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B204101"
-    },
-    {
-     "delivery_id": "5460886020203106",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B203106"
-    },
-    {
-     "delivery_id": "5460886020203105",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B203105"
-    },
-    {
-     "delivery_id": "5460886020203104",
-     "date": "2025-09-23",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B203104"
-    },
-    {
-     "delivery_id": "5460886020203103",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B203103"
-    },
-    {
-     "delivery_id": "5460886020203102",
-     "date": "2025-09-23",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B203102"
-    },
-    {
-     "delivery_id": "5460886020203101",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B203101"
-    },
-    {
-     "delivery_id": "5460886020202906",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202906"
-    },
-    {
-     "delivery_id": "5460886020202901",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202901"
-    },
-    {
-     "delivery_id": "5460886020202705",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202705"
-    },
-    {
-     "delivery_id": "5460886020202703",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202703"
-    },
-    {
-     "delivery_id": "5460886020202702",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202702"
-    },
-    {
-     "delivery_id": "5460886020105506",
-     "date": "2025-09-23",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/1/5460886B105506"
-    },
-    {
-     "delivery_id": "5460886020105505",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/1/5460886B105505"
-    },
-    {
-     "delivery_id": "5460886020105504",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/1/5460886B105504"
-    }
-   ]
-  },
-  {
-   "striker_id": "1070606",
-   "bowler_id": "4354608",
-   "format": "FC",
-   "format_label": "first-class",
-   "balls": 6,
-   "clips": 6,
-   "deliveries": [
-    {
-     "delivery_id": "5460886020202706",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202706"
-    },
-    {
-     "delivery_id": "5460886020202704",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202704"
-    },
-    {
-     "delivery_id": "5460886020202701",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/2/5460886B202701"
-    },
-    {
-     "delivery_id": "5460886020105501",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/1/5460886B105501"
-    },
-    {
-     "delivery_id": "5460886020105302",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/1/5460886B105302"
-    },
-    {
-     "delivery_id": "5460886020105301",
-     "date": "2025-09-23",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/1/5460886B105301"
     }
    ]
   },
@@ -1349,23 +1112,6 @@
    ]
   },
   {
-   "striker_id": "3550677",
-   "bowler_id": "4354608",
-   "format": "FC",
-   "format_label": "first-class",
-   "balls": 1,
-   "clips": 1,
-   "deliveries": [
-    {
-     "delivery_id": "5460886020102701",
-     "date": "2025-09-23",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/B/1/5460886B102701"
-    }
-   ]
-  },
-  {
    "striker_id": "1070522",
    "bowler_id": "5181011",
    "format": "T20",
@@ -1379,208 +1125,6 @@
      "runs": 0,
      "wicket": null,
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/T20/6380409/B/1/6380409B101708"
-    }
-   ]
-  },
-  {
-   "striker_id": "2840035",
-   "bowler_id": "3630029",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 6,
-   "clips": 6,
-   "deliveries": [
-    {
-     "delivery_id": "3630013010103106",
-     "date": "2018-02-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630013/A/1/3630013A103106"
-    },
-    {
-     "delivery_id": "3630013010103105",
-     "date": "2018-02-03",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630013/A/1/3630013A103105"
-    },
-    {
-     "delivery_id": "3630013010103104",
-     "date": "2018-02-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630013/A/1/3630013A103104"
-    },
-    {
-     "delivery_id": "3630013010103103",
-     "date": "2018-02-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630013/A/1/3630013A103103"
-    },
-    {
-     "delivery_id": "3630013010103101",
-     "date": "2018-02-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630013/A/1/3630013A103101"
-    },
-    {
-     "delivery_id": "3630013010102906",
-     "date": "2018-02-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630013/A/1/3630013A102906"
-    }
-   ]
-  },
-  {
-   "striker_id": "2850086",
-   "bowler_id": "3630029",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 20,
-   "clips": 20,
-   "deliveries": [
-    {
-     "delivery_id": "6382232020103603",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": "Bowled",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B103603"
-    },
-    {
-     "delivery_id": "6382232020103601",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B103601"
-    },
-    {
-     "delivery_id": "6382232020102905",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102905"
-    },
-    {
-     "delivery_id": "6382232020102904",
-     "date": "2018-01-14",
-     "runs": 2,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102904"
-    },
-    {
-     "delivery_id": "6382232020102903",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102903"
-    },
-    {
-     "delivery_id": "6382232020102705",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102705"
-    },
-    {
-     "delivery_id": "6382232020102704",
-     "date": "2018-01-14",
-     "runs": 6,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102704"
-    },
-    {
-     "delivery_id": "6382232020102506",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102506"
-    },
-    {
-     "delivery_id": "6382232020102505",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102505"
-    },
-    {
-     "delivery_id": "6382232020102501",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102501"
-    },
-    {
-     "delivery_id": "6382232020102306",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102306"
-    },
-    {
-     "delivery_id": "6382232020102305",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102305"
-    },
-    {
-     "delivery_id": "6382232020102304",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102304"
-    },
-    {
-     "delivery_id": "6382232020102302",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/B/1/6382232B102302"
-    },
-    {
-     "delivery_id": "3630006010103603",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": "Bowled",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/A/1/3630006A103603"
-    },
-    {
-     "delivery_id": "3630006010103601",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/A/1/3630006A103601"
-    },
-    {
-     "delivery_id": "3630006010102905",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/A/1/3630006A102905"
-    },
-    {
-     "delivery_id": "3630006010102904",
-     "date": "2018-01-14",
-     "runs": 2,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/A/1/3630006A102904"
-    },
-    {
-     "delivery_id": "3630006010102903",
-     "date": "2018-01-14",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/A/1/3630006A102903"
-    },
-    {
-     "delivery_id": "3630006010102705",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/A/1/3630006A102705"
     }
    ]
   }
@@ -1740,121 +1284,6 @@
    ]
   },
   {
-   "striker_id": "4354608",
-   "bowler_id": "2700257",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 15,
-   "clips": 15,
-   "deliveries": [
-    {
-     "delivery_id": "5460889010104404",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": "Caught",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104404"
-    },
-    {
-     "delivery_id": "5460889010104401",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104401"
-    },
-    {
-     "delivery_id": "5460889010104201",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104201"
-    },
-    {
-     "delivery_id": "5460889010104006",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104006"
-    },
-    {
-     "delivery_id": "5460889010104004",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104004"
-    },
-    {
-     "delivery_id": "5460889010104001",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104001"
-    },
-    {
-     "delivery_id": "5460889010103805",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103805"
-    },
-    {
-     "delivery_id": "5460889010103802",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103802"
-    },
-    {
-     "delivery_id": "5460889010103801",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103801"
-    },
-    {
-     "delivery_id": "5460889010103606",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103606"
-    },
-    {
-     "delivery_id": "5460889010103604",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103604"
-    },
-    {
-     "delivery_id": "5460887010104306",
-     "date": "2025-10-01",
-     "runs": 6,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104306"
-    },
-    {
-     "delivery_id": "5460887010104301",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104301"
-    },
-    {
-     "delivery_id": "5460887010104106",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104106"
-    },
-    {
-     "delivery_id": "5460887010104105",
-     "date": "2025-10-01",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104105"
-    }
-   ]
-  },
-  {
    "striker_id": "6381324",
    "bowler_id": "2700257",
    "format": "List A",
@@ -1935,30 +1364,6 @@
    ]
   },
   {
-   "striker_id": "4354608",
-   "bowler_id": "2850086",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 2,
-   "clips": 2,
-   "deliveries": [
-    {
-     "delivery_id": "5460889010104106",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104106"
-    },
-    {
-     "delivery_id": "5460889010104104",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A104104"
-    }
-   ]
-  },
-  {
    "striker_id": "6381324",
    "bowler_id": "3050039",
    "format": "List A",
@@ -2024,79 +1429,6 @@
      "runs": 0,
      "wicket": null,
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103703"
-    }
-   ]
-  },
-  {
-   "striker_id": "4354608",
-   "bowler_id": "3050039",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 9,
-   "clips": 9,
-   "deliveries": [
-    {
-     "delivery_id": "5460889010103902",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103902"
-    },
-    {
-     "delivery_id": "5460889010103901",
-     "date": "2025-10-05",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103901"
-    },
-    {
-     "delivery_id": "5460889010103706",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103706"
-    },
-    {
-     "delivery_id": "5460889010103701",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103701"
-    },
-    {
-     "delivery_id": "5460889010103506",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103506"
-    },
-    {
-     "delivery_id": "5460889010103505",
-     "date": "2025-10-05",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103505"
-    },
-    {
-     "delivery_id": "5460889010103504",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A103504"
-    },
-    {
-     "delivery_id": "5460887010104202",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104202"
-    },
-    {
-     "delivery_id": "5460887010104201",
-     "date": "2025-10-01",
-     "runs": 2,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104201"
     }
    ]
   },
@@ -2348,208 +1680,6 @@
    ]
   },
   {
-   "striker_id": "4352313",
-   "bowler_id": "2700257",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 6,
-   "clips": 6,
-   "deliveries": [
-    {
-     "delivery_id": "5460889010101401",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": "LBW",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A101401"
-    },
-    {
-     "delivery_id": "5460889010101206",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A101206"
-    },
-    {
-     "delivery_id": "5460889010101205",
-     "date": "2025-10-05",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A101205"
-    },
-    {
-     "delivery_id": "5460889010101203",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A101203"
-    },
-    {
-     "delivery_id": "3630050020101305",
-     "date": "2020-01-28",
-     "runs": 0,
-     "wicket": "Caught",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/1%20Day/3630050/B/1/3630050B101305"
-    },
-    {
-     "delivery_id": "3630050020101301",
-     "date": "2020-01-28",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2019-20/Men/1%20Day/3630050/B/1/3630050B101301"
-    }
-   ]
-  },
-  {
-   "striker_id": "4352313",
-   "bowler_id": "3050039",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 20,
-   "clips": 20,
-   "deliveries": [
-    {
-     "delivery_id": "5460889010101306",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A101306"
-    },
-    {
-     "delivery_id": "5460889010101304",
-     "date": "2025-10-05",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460889/A/1/5460889A101304"
-    },
-    {
-     "delivery_id": "5460888010104004",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104004"
-    },
-    {
-     "delivery_id": "5460888010103406",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103406"
-    },
-    {
-     "delivery_id": "5460888010103405",
-     "date": "2025-10-03",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103405"
-    },
-    {
-     "delivery_id": "5460888010103404",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103404"
-    },
-    {
-     "delivery_id": "5460888010103401",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103401"
-    },
-    {
-     "delivery_id": "5460888010103201",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103201"
-    },
-    {
-     "delivery_id": "5460888010103006",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103006"
-    },
-    {
-     "delivery_id": "5460888010103001",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103001"
-    },
-    {
-     "delivery_id": "5460888010102806",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102806"
-    },
-    {
-     "delivery_id": "5460888010101904",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101904"
-    },
-    {
-     "delivery_id": "5460888010101903",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101903"
-    },
-    {
-     "delivery_id": "5460888010101902",
-     "date": "2025-10-03",
-     "runs": 6,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101902"
-    },
-    {
-     "delivery_id": "5460888010101706",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101706"
-    },
-    {
-     "delivery_id": "5460888010101705",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101705"
-    },
-    {
-     "delivery_id": "5460888010101704",
-     "date": "2025-10-03",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101704"
-    },
-    {
-     "delivery_id": "5460888010101703",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101703"
-    },
-    {
-     "delivery_id": "5460888010101702",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101702"
-    },
-    {
-     "delivery_id": "5460888010101701",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101701"
-    }
-   ]
-  },
-  {
    "striker_id": "4352118",
    "bowler_id": "2700297",
    "format": "List A",
@@ -2773,222 +1903,6 @@
    ]
   },
   {
-   "striker_id": "4352313",
-   "bowler_id": "2850086",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 20,
-   "clips": 20,
-   "deliveries": [
-    {
-     "delivery_id": "5460888010104607",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": "Caught",
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104607"
-    },
-    {
-     "delivery_id": "5460888010104606",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104606"
-    },
-    {
-     "delivery_id": "5460888010104605",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104605"
-    },
-    {
-     "delivery_id": "5460888010104604",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104604"
-    },
-    {
-     "delivery_id": "5460888010104603",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104603"
-    },
-    {
-     "delivery_id": "5460888010104602",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104602"
-    },
-    {
-     "delivery_id": "5460888010104601",
-     "date": "2025-10-03",
-     "runs": 2,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A104601"
-    },
-    {
-     "delivery_id": "5460888010103901",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A103901"
-    },
-    {
-     "delivery_id": "5460888010102604",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102604"
-    },
-    {
-     "delivery_id": "5460888010102406",
-     "date": "2025-10-03",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102406"
-    },
-    {
-     "delivery_id": "5460888010101106",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101106"
-    },
-    {
-     "delivery_id": "5460888010101105",
-     "date": "2025-10-03",
-     "runs": 2,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101105"
-    },
-    {
-     "delivery_id": "5460888010101104",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101104"
-    },
-    {
-     "delivery_id": "5460888010101101",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A101101"
-    },
-    {
-     "delivery_id": "5460888010100805",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A100805"
-    },
-    {
-     "delivery_id": "5460888010100803",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A100803"
-    },
-    {
-     "delivery_id": "5460888010100802",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A100802"
-    },
-    {
-     "delivery_id": "5460888010100602",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A100602"
-    },
-    {
-     "delivery_id": "5460888010100601",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A100601"
-    },
-    {
-     "delivery_id": "5460888010100402",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A100402"
-    }
-   ]
-  },
-  {
-   "striker_id": "6381338",
-   "bowler_id": "2850086",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 8,
-   "clips": 8,
-   "deliveries": [
-    {
-     "delivery_id": "5460888010102606",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102606"
-    },
-    {
-     "delivery_id": "5460888010102605",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102605"
-    },
-    {
-     "delivery_id": "5460888010102603",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102603"
-    },
-    {
-     "delivery_id": "5460888010102602",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102602"
-    },
-    {
-     "delivery_id": "5460888010102601",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102601"
-    },
-    {
-     "delivery_id": "5460888010102405",
-     "date": "2025-10-03",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102405"
-    },
-    {
-     "delivery_id": "5460888010102404",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102404"
-    },
-    {
-     "delivery_id": "5460888010102403",
-     "date": "2025-10-03",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460888/A/1/5460888A102403"
-    }
-   ]
-  },
-  {
    "striker_id": "5490039",
    "bowler_id": "2850086",
    "format": "List A",
@@ -3061,58 +1975,6 @@
      "runs": 1,
      "wicket": null,
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104704"
-    }
-   ]
-  },
-  {
-   "striker_id": "4354608",
-   "bowler_id": "2700297",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 6,
-   "clips": 6,
-   "deliveries": [
-    {
-     "delivery_id": "5460887010104905",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104905"
-    },
-    {
-     "delivery_id": "5460887010104904",
-     "date": "2025-10-01",
-     "runs": 0,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104904"
-    },
-    {
-     "delivery_id": "5460887010104903",
-     "date": "2025-10-01",
-     "runs": 4,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104903"
-    },
-    {
-     "delivery_id": "5460887010104901",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104901"
-    },
-    {
-     "delivery_id": "5460887010104707",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104707"
-    },
-    {
-     "delivery_id": "5460887010104705",
-     "date": "2025-10-01",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460887/A/1/5460887A104705"
     }
    ]
   },
@@ -3420,6 +2282,870 @@
    ]
   },
   {
+   "striker_id": "5460174",
+   "bowler_id": "2700257",
+   "format": "FC",
+   "format_label": "first-class",
+   "balls": 20,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "5460886010206806",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206806"
+    },
+    {
+     "delivery_id": "5460886010206805",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206805"
+    },
+    {
+     "delivery_id": "5460886010206804",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206804"
+    },
+    {
+     "delivery_id": "5460886010206605",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206605"
+    },
+    {
+     "delivery_id": "5460886010206604",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206604"
+    },
+    {
+     "delivery_id": "5460886010206603",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206603"
+    },
+    {
+     "delivery_id": "5460886010206602",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206602"
+    },
+    {
+     "delivery_id": "5460886010206601",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206601"
+    },
+    {
+     "delivery_id": "5460886010206405",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206405"
+    },
+    {
+     "delivery_id": "5460886010206404",
+     "date": "2025-09-23",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206404"
+    },
+    {
+     "delivery_id": "5460886010206403",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206403"
+    },
+    {
+     "delivery_id": "5460886010206402",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206402"
+    },
+    {
+     "delivery_id": "5460886010206401",
+     "date": "2025-09-23",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A206401"
+    },
+    {
+     "delivery_id": "5460886010205506",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A205506"
+    },
+    {
+     "delivery_id": "5460886010205504",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A205504"
+    },
+    {
+     "delivery_id": "5460886010205503",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A205503"
+    },
+    {
+     "delivery_id": "5460886010205501",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A205501"
+    },
+    {
+     "delivery_id": "5460886010205306",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A205306"
+    },
+    {
+     "delivery_id": "5460886010205305",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A205305"
+    },
+    {
+     "delivery_id": "5460886010205304",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A205304"
+    }
+   ]
+  },
+  {
+   "striker_id": "5460174",
+   "bowler_id": "2850086",
+   "format": "FC",
+   "format_label": "first-class",
+   "balls": 20,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "5460886010204406",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204406"
+    },
+    {
+     "delivery_id": "5460886010204402",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204402"
+    },
+    {
+     "delivery_id": "5460886010204401",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204401"
+    },
+    {
+     "delivery_id": "5460886010204205",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204205"
+    },
+    {
+     "delivery_id": "5460886010204204",
+     "date": "2025-09-23",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204204"
+    },
+    {
+     "delivery_id": "5460886010204203",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204203"
+    },
+    {
+     "delivery_id": "5460886010204202",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204202"
+    },
+    {
+     "delivery_id": "5460886010204201",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A204201"
+    },
+    {
+     "delivery_id": "5460886010103106",
+     "date": "2025-09-23",
+     "runs": 5,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A103106"
+    },
+    {
+     "delivery_id": "5460886010103105",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A103105"
+    },
+    {
+     "delivery_id": "5460886010103104",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A103104"
+    },
+    {
+     "delivery_id": "5460886010103103",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A103103"
+    },
+    {
+     "delivery_id": "5460886010103102",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A103102"
+    },
+    {
+     "delivery_id": "5460886010103101",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A103101"
+    },
+    {
+     "delivery_id": "5460886010102907",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A102907"
+    },
+    {
+     "delivery_id": "5460886010102906",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A102906"
+    },
+    {
+     "delivery_id": "5460886010102905",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A102905"
+    },
+    {
+     "delivery_id": "5460886010102904",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A102904"
+    },
+    {
+     "delivery_id": "5460886010102903",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A102903"
+    },
+    {
+     "delivery_id": "5460886010102705",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A102705"
+    }
+   ]
+  },
+  {
+   "striker_id": "4352110",
+   "bowler_id": "2700257",
+   "format": "FC",
+   "format_label": "first-class",
+   "balls": 20,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "5460886010203805",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": "Bowled",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A203805"
+    },
+    {
+     "delivery_id": "5460886010203804",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A203804"
+    },
+    {
+     "delivery_id": "5460886010203603",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A203603"
+    },
+    {
+     "delivery_id": "5460886010203601",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/2/5460886A203601"
+    },
+    {
+     "delivery_id": "5460886010101404",
+     "date": "2025-09-23",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A101404"
+    },
+    {
+     "delivery_id": "5460886010101403",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A101403"
+    },
+    {
+     "delivery_id": "5460886010101402",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A101402"
+    },
+    {
+     "delivery_id": "5460886010101401",
+     "date": "2025-09-23",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460886/A/1/5460886A101401"
+    },
+    {
+     "delivery_id": "5460885010113702",
+     "date": "2025-09-16",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A113702"
+    },
+    {
+     "delivery_id": "5460885010113701",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A113701"
+    },
+    {
+     "delivery_id": "5460885010112905",
+     "date": "2025-09-16",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112905"
+    },
+    {
+     "delivery_id": "5460885010112904",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112904"
+    },
+    {
+     "delivery_id": "5460885010112704",
+     "date": "2025-09-16",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112704"
+    },
+    {
+     "delivery_id": "5460885010112703",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112703"
+    },
+    {
+     "delivery_id": "5460885010112702",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112702"
+    },
+    {
+     "delivery_id": "5460885010112701",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112701"
+    },
+    {
+     "delivery_id": "5460885010112501",
+     "date": "2025-09-16",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112501"
+    },
+    {
+     "delivery_id": "5460885010112305",
+     "date": "2025-09-16",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112305"
+    },
+    {
+     "delivery_id": "5460885010112304",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112304"
+    },
+    {
+     "delivery_id": "5460885010112303",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A112303"
+    }
+   ]
+  },
+  {
+   "striker_id": "4352110",
+   "bowler_id": "2700297",
+   "format": "FC",
+   "format_label": "first-class",
+   "balls": 20,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "5460885010111806",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111806"
+    },
+    {
+     "delivery_id": "5460885010111805",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111805"
+    },
+    {
+     "delivery_id": "5460885010111804",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111804"
+    },
+    {
+     "delivery_id": "5460885010111803",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111803"
+    },
+    {
+     "delivery_id": "5460885010111802",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111802"
+    },
+    {
+     "delivery_id": "5460885010111801",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111801"
+    },
+    {
+     "delivery_id": "5460885010111606",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111606"
+    },
+    {
+     "delivery_id": "5460885010111605",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111605"
+    },
+    {
+     "delivery_id": "5460885010111604",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111604"
+    },
+    {
+     "delivery_id": "5460885010111603",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111603"
+    },
+    {
+     "delivery_id": "5460885010111602",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111602"
+    },
+    {
+     "delivery_id": "5460885010111601",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111601"
+    },
+    {
+     "delivery_id": "5460885010111206",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111206"
+    },
+    {
+     "delivery_id": "5460885010111205",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111205"
+    },
+    {
+     "delivery_id": "5460885010111204",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111204"
+    },
+    {
+     "delivery_id": "5460885010111203",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111203"
+    },
+    {
+     "delivery_id": "5460885010111003",
+     "date": "2025-09-16",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111003"
+    },
+    {
+     "delivery_id": "5460885010111002",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111002"
+    },
+    {
+     "delivery_id": "5460885010111001",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A111001"
+    },
+    {
+     "delivery_id": "5460885010107706",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A107706"
+    }
+   ]
+  },
+  {
+   "striker_id": "5460174",
+   "bowler_id": "2700297",
+   "format": "FC",
+   "format_label": "first-class",
+   "balls": 20,
+   "clips": 20,
+   "deliveries": [
+    {
+     "delivery_id": "5460885010105101",
+     "date": "2025-09-16",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A105101"
+    },
+    {
+     "delivery_id": "5460885010104906",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104906"
+    },
+    {
+     "delivery_id": "5460885010104905",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104905"
+    },
+    {
+     "delivery_id": "5460885010104904",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104904"
+    },
+    {
+     "delivery_id": "5460885010104903",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104903"
+    },
+    {
+     "delivery_id": "5460885010104902",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104902"
+    },
+    {
+     "delivery_id": "5460885010104901",
+     "date": "2025-09-16",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104901"
+    },
+    {
+     "delivery_id": "5460885010104706",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104706"
+    },
+    {
+     "delivery_id": "5460885010104705",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104705"
+    },
+    {
+     "delivery_id": "5460885010104704",
+     "date": "2025-09-16",
+     "runs": 4,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104704"
+    },
+    {
+     "delivery_id": "5460885010104703",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104703"
+    },
+    {
+     "delivery_id": "5460885010104702",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104702"
+    },
+    {
+     "delivery_id": "5460885010104701",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104701"
+    },
+    {
+     "delivery_id": "5460885010104506",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104506"
+    },
+    {
+     "delivery_id": "5460885010104505",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104505"
+    },
+    {
+     "delivery_id": "5460885010104504",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104504"
+    },
+    {
+     "delivery_id": "5460885010104503",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104503"
+    },
+    {
+     "delivery_id": "5460885010104502",
+     "date": "2025-09-16",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104502"
+    },
+    {
+     "delivery_id": "5460885010104501",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A104501"
+    },
+    {
+     "delivery_id": "5460885010102206",
+     "date": "2025-09-16",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460885/A/1/5460885A102206"
+    }
+   ]
+  },
+  {
+   "striker_id": "3080016",
+   "bowler_id": "3050039",
+   "format": "ODI",
+   "format_label": "ODI",
+   "balls": 6,
+   "clips": 6,
+   "deliveries": [
+    {
+     "delivery_id": "5460707010104506",
+     "date": "2025-03-04",
+     "runs": 2,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460707/A/1/5460707A104506"
+    },
+    {
+     "delivery_id": "5460707010104505",
+     "date": "2025-03-04",
+     "runs": 6,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460707/A/1/5460707A104505"
+    },
+    {
+     "delivery_id": "5460707010104504",
+     "date": "2025-03-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460707/A/1/5460707A104504"
+    },
+    {
+     "delivery_id": "5460707010104503",
+     "date": "2025-03-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460707/A/1/5460707A104503"
+    },
+    {
+     "delivery_id": "5460707010104502",
+     "date": "2025-03-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460707/A/1/5460707A104502"
+    },
+    {
+     "delivery_id": "5460707010104501",
+     "date": "2025-03-04",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/1%20Day/5460707/A/1/5460707A104501"
+    }
+   ]
+  },
+  {
+   "striker_id": "4352110",
+   "bowler_id": "2840035",
+   "format": "FC",
+   "format_label": "first-class",
+   "balls": 3,
+   "clips": 3,
+   "deliveries": [
+    {
+     "delivery_id": "6381007020206406",
+     "date": "2024-10-31",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/6381007/B/2/6381007B206406"
+    },
+    {
+     "delivery_id": "6381007020206405",
+     "date": "2024-10-31",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/6381007/B/2/6381007B206405"
+    },
+    {
+     "delivery_id": "6381007020206401",
+     "date": "2024-10-31",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/6381007/B/2/6381007B206401"
+    }
+   ]
+  },
+  {
+   "striker_id": "5460174",
+   "bowler_id": "2840035",
+   "format": "FC",
+   "format_label": "first-class",
+   "balls": 3,
+   "clips": 3,
+   "deliveries": [
+    {
+     "delivery_id": "6381007020206404",
+     "date": "2024-10-31",
+     "runs": 1,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/6381007/B/2/6381007B206404"
+    },
+    {
+     "delivery_id": "6381007020206403",
+     "date": "2024-10-31",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/6381007/B/2/6381007B206403"
+    },
+    {
+     "delivery_id": "6381007020206402",
+     "date": "2024-10-31",
+     "runs": 0,
+     "wicket": null,
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024-25/Men/Multi%20Day/6381007/B/2/6381007B206402"
+    }
+   ]
+  },
+  {
    "striker_id": "4352297",
    "bowler_id": "3050039",
    "format": "T20I",
@@ -3566,44 +3292,6 @@
      "runs": 2,
      "wicket": null,
      "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2023/Men/T20/5460102/A/1/5460102A101506"
-    }
-   ]
-  },
-  {
-   "striker_id": "3630029",
-   "bowler_id": "2850086",
-   "format": "List A",
-   "format_label": "List A",
-   "balls": 4,
-   "clips": 4,
-   "deliveries": [
-    {
-     "delivery_id": "6382232010104601",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/A/1/6382232A104601"
-    },
-    {
-     "delivery_id": "6382232010104405",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/6382232/A/1/6382232A104405"
-    },
-    {
-     "delivery_id": "3630006020104601",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/B/1/3630006B104601"
-    },
-    {
-     "delivery_id": "3630006020104405",
-     "date": "2018-01-14",
-     "runs": 1,
-     "wicket": null,
-     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2017-18/Men/1%20Day/3630006/B/1/3630006B104405"
     }
    ]
   }

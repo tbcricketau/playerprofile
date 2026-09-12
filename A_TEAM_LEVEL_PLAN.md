@@ -139,12 +139,25 @@ change every URL already shared. Australia A therefore builds into its own bundl
   T20 leagues, level-agnostic by construction, and where an uncapped Indian player's white-ball
   footage actually lives.
 
-## Provisional opposition
+## Opposition — the announced squads (re-pinned 2026-09-12)
 
-India A had not been named for this tour. `opp_squad_india_a_4day.json` and
-`opp_squad_india_a_od.json` are pinned from whoever played the June–July 2026 A-team block against
-Sri Lanka A and Afghanistan A. **Re-pin from the announced squad and re-run the pipeline before the
-tour** — `--only-batters` / `--only-bowlers` merge one player without a 40-minute rebuild.
+India A named both squads on 2026-09-12, and `opp_squad_india_a_4day.json` /
+`opp_squad_india_a_od.json` are re-pinned from them. The provisional pins from the June–July block
+sit beside them as `*.provisional-2026-09-04.json`. **9 of the 15 four-day names and 7 of the 15
+one-day names were new.**
+
+Before the rebuild, Cricket-21 was surveyed for every named player over the last 12 months and 11
+matches the mirror lacked were pulled — the Irani Cup 2025/26, seven Ranji 2025/26 matches, both
+South Africa A in India unofficial Tests and one Vijay Hazare game (`cricket21/docs/INDIA_DOMESTIC.md`).
+**The one-day pack now builds with `--source both` as well.** It was left warehouse-only for the
+provisional squad, when half the names gained nothing. With this squad C21's List A adds footage
+for Padikkal, Prabhsimran Singh, Thakur, Nigam, Gurjapneet Singh and Pandya.
+
+Yash Rathod and Nachiket Bhute have no warehouse record at all and carry reserved ids — see
+`CLAUDE.md` § SOURCE. The rebuild also added the bowler-type groups the first build had skipped:
+left-arm orthodox and leg spin for the four-day pack (Kellaway, Jason Sangha), left-arm pace for
+the one-day pack (Dwarshuis, Spencer Johnson). Without them those bowlers' packs fell back to the
+macro pace/spin plans. `--only-batters` / `--only-bowlers` still merge one player without a rebuild.
 
 ## Still open
 

@@ -63,8 +63,29 @@ def _caption(r, is_spin):
     return " · ".join(parts)
 
 
+def _c21_url(r):
+    """The finished Cricket-21 clip url on a row, or None. C21 serves its own footage, so a C21
+    delivery has no Fairplay stem to resolve — see c21_source.clip_ref."""
+    u = r.get("c21_video_url")
+    return u if u not in (None, "", "None", "none") else None
+
+
+def _has_clip(r):
+    """Does this delivery point at footage from either source? Filtering on `clip_stem` alone
+    dropped every Cricket-21 ball before it reached a report playlist (2026-09-12)."""
+    return bool(r.get("clip_stem") or _c21_url(r))
+
+
+def _with_url(it, r):
+    """Attach the C21 url to a playlist item that has no stem. resolve_playlist passes such an
+    item through untouched."""
+    if not r.get("clip_stem") and _c21_url(r):
+        it["url"] = _c21_url(r)
+    return it
+
+
 def _item(r, is_spin):
-    return playlist_item(
+    return _with_url(playlist_item(
         r.get("delivery_id"), r.get("clip_stem"), _caption(r, is_spin),
         meta={
             "over": r.get("over_n"), "speed_kph": r.get("ball_speed_n"),
@@ -74,7 +95,7 @@ def _item(r, is_spin):
             "match": r.get("match_name"), "date": r.get("match_date"),
             "country": r.get("venue_country"), "city": r.get("venue_city"),
         },
-    )
+    ), r)
 
 
 def _diversify(rows):
@@ -137,7 +158,7 @@ def build_playlists(P: dict, cap: int = 10, target_country: str | None = None) -
     series). When set, clips are ordered by LIKE-FOR-LIKE conditions first — same country,
     then the same conditions bucket (AUS↔SA/NZ etc.), then the rest — and by recency within
     each tier. When None, pure recency (coverage is better on recent matches anyway)."""
-    df = [r for r in P["df"] if r.get("clip_stem")]
+    df = [r for r in P["df"] if _has_clip(r)]
     is_spin, is_pace = P["is_spin"], P["is_pace"]
     out, counts = {}, {}
 
@@ -249,7 +270,7 @@ def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None
     `fmt` labels the sidecar. It used to be hardcoded "ODI", and t20_report calls this same
     builder, so every T20 sidecar claimed to be an ODI one — which made the publish step serve a
     T20 report wherever an ODI report was asked for."""
-    df = [r for r in (P.get("raw") or []) if r.get("clip_stem")]
+    df = [r for r in (P.get("raw") or []) if _has_clip(r)]
     is_spin, is_pace = P["is_spin"], P["is_pace"]
     off_pace = P.get("off_pace_kph")
     out, counts = {}, {}
@@ -322,13 +343,13 @@ def _bat_caption(r):
 
 
 def _bat_item(r):
-    return playlist_item(r.get("delivery_id"), r.get("clip_stem"), _bat_caption(r), meta={
+    return _with_url(playlist_item(r.get("delivery_id"), r.get("clip_stem"), _bat_caption(r), meta={
         "over": r.get("over"), "speed_kph": r.get("ball_speed_n"),
         "length": r.get("length_band"), "line": r.get("line_region"),
         "seam_dir": r.get("seam_dir"), "swing_dir": r.get("swing_dir"),
         "is_out": bool(r.get("is_out")), "how_out": r.get("how_out"),
         "bowler_type": r.get("bowler_type_simple"), "match": r.get("match_name"), "date": r.get("match_date"),
-    })
+    }), r)
 
 
 def _bat_take(rows, cap):
@@ -340,7 +361,7 @@ def _bat_take(rows, cap):
 def build_batting_playlists(P: dict, cap: int = 8) -> dict:
     """{key: [resolved items]} for a batter profile: the danger ball, his risky stroke's false
     shots, dismissals — recent/illustrative first, only deliveries whose clip is in storage."""
-    raw = [r for r in (P.get("raw") or []) if r.get("clip_stem")]
+    raw = [r for r in (P.get("raw") or []) if _has_clip(r)]
     out = {}
 
     def add(key, rows):

@@ -147,6 +147,15 @@ actually gets served.
 It warns on orphan pages — usually a leftover carrying a stale breadcrumb. `--deep` HEADs a sample
 of media URLs, which is how you catch an expired Fairplay SAS before players do.
 
+⚠ **Until 2026-09-11 `--deep` could not pass a Fairplay bundle at all.** Its URL regex left the
+`?sas` query string outside the capture group, so it HEADed every clip with the token stripped off,
+which storage refuses whether the token is fresh or expired. It refused the Zimbabwe packs twice with a
+token that served 200 when probed directly. Fixed and proven both ways: the re-stamped bundle passes,
+the page as published on 09-03 fails with six 403s. Error lines now print the status code and never the
+token. **To refresh an expired SAS without rebuilding**, re-stamp the bundle with
+`archive_series.restamp_sas` and publish with `publish_packs.py <bundle> --no-assemble --deep`. No
+builder runs, so no reel can move.
+
 `publish_site.deploy_github()` runs the same check before the coach site goes out.
 
 **The gated coach site needs its check in a different place, and for a while it had none.**
@@ -215,10 +224,38 @@ The batting-pack half went unnoticed from `a067e44` until 2026-08-10: the reels 
 `build_profile(bid, hand="All")`, so Steve Smith's pack showed Ebadot Hossain bowling to Ben Curran.
 `bowler_clips_by_hand()` now builds all three (both hands, to LHB, to RHB) off one delivery load.
 
-**No pooled fallback on the batting packs.** Ebadot has 10 wicket clips to left-handers and none of
-them resolve to a playable blob; falling back to the pooled reel served a left-hander's pack 40
-wicket balls that were all to right-handers. If a hand has no playable footage the button is
-omitted — showing nothing beats showing the wrong hand.
+**No pooled fallback on the batting packs — but a DECLARED other-hand one (2026-09-11).** Ebadot has
+10 wicket clips to left-handers and none of them resolve to a playable blob. Falling back to the
+pooled reel served a left-hander's pack 40 wicket balls that were all to right-handers, unlabelled,
+and that stays forbidden. What replaced "omit the button" is a stated fallback, which Tom asked for
+on the Zimbabwe packs: "even if we have to use RHB vision for LHB, we just need to state it".
+
+### A reel is built from clips that PLAY, and falls back in a fixed, labelled order
+
+A `video_file_name` is not footage. The warehouse names a clip for every coded ball whether or not
+Fairplay stored one, and Zimbabwe's record is mostly unclipped — almost nothing before 2022-23, and
+two of the three Bangladesh ODIs in July 2026. Taking the newest N named balls filled reels with dead
+clips, the bake dropped them, and the buttons vanished: Wellington Masakadza had no vision in any pack
+while 127 T20I balls of him bowling to left-handers played. `build_opponent_about._plays` now
+HEAD-probes each stem (16 at a time, skipping a match after 3 misses and no hit), and each hand's
+stock and wicket reel falls back in this order:
+
+1. the pack's format, clips that play
+2. a neighbouring format on the SAME side of red/white (ODI ↔ T20I) — starred and footnoted
+3. stock only: **"Recent bowling"**, the latest playable deliveries to that hand, when the footage that
+   plays is untracked and no stock ball can be identified (Tanaka Chivanga, Wesley Madhevere)
+4. the **other hand's** reel — playlist key `stockXR_` / `wktXL_`, button "… — to right-handers",
+   footnoted
+
+`audit_pack_hands` holds an `X` reel to the hand it DECLARES (and fails it if that is the pack's own
+hand), and every other reel to the pack's hand as before. The entry keys are
+`clip_format_{kind}_{hand}`, `clip_hand_{kind}_{hand}` and `clip_general_{kind}_{hand}`, written by
+`_store_hand_reels`. The old whole-bowler `clip_format` stamp is no longer written — it starred every
+button whatever format each came from.
+
+Probing means `build_opponent_about` needs Fairplay access (`PROBE_CLIPS = False` turns it off). The
+all-formats fallback branch for **batters** now builds clips as well: it wrote facts only, so Brad
+Evans had no batting vision in any of the eleven bowling packs.
 
 **Verify the built pages, not the source data — and the publish gate now does.** `audit_pack_hands.py`
 follows every play button in every batting pack through to its playlist, maps each clip back to a
@@ -732,6 +769,27 @@ thin all-formats fallback. Counting the warehouse while building from `both` sen
 record is only in C21 down the fallback — which is warehouse-only too, found nothing, and skipped
 them silently. Aman Mokhade and Ayush Pandey have no warehouse record at all.
 
+**Four things that break a C21 join — all found 2026-09-12, re-pinning India A:**
+
+- **A C21 player id belongs to ONE database.** Multi-day and white-ball number players
+  independently: 6314 is Devdutt Padikkal in white-ball and Imran Qayyum in multi-day.
+  `c21_player_map.json` carries `c21_ids_multiday` / `c21_ids_white`, and `c21_source._rows` takes
+  the list for the database the format's matches come from. The old mixed `c21_ids` is only a
+  fallback for entries not yet split. Resolve per database, on date of birth, never on name alone.
+- **C21 holds duplicate records of one person** (Ayush Pandey three, Yash Rathod two, V Vyshak two,
+  same date of birth). Map all of them.
+- **A match can be in BOTH sources.** India A's unofficial Tests in Sri Lanka are in the warehouse
+  (0% tracked) and the mirror (98%), and `source="both"` simply concatenated them — eight players'
+  balls counted twice in the four-day pack published 2026-09-07 (Sudharsan 484 → 968).
+  `c21_source.merge_with_warehouse` keys on the player's match date and keeps the fuller copy,
+  C21 on a tie. Outcome numbers (runs, dismissals, BPD) moved when it landed. Lengths and lines did
+  not, because the duplicate warehouse copy was untracked.
+- **A player with no warehouse record at all gets a RESERVED id**, `99` + their C21 multi-day id —
+  Yash Rathod `990010366`, Nachiket Bhute `990020028` — mapped by hand in `c21_player_map.json`.
+  Warehouse queries return nothing for it and every C21 path works. `load_batter_info` /
+  `load_bowler_info` fall back to the map for the name. Without that the report was titled
+  "Batter 990010366".
+
 **What C21 does not give:** ball speed in Ranji (0.2% — pace cards get lengths and lines but no
 speed), seam/swing movement, bowler spell. The zone GROUP columns are deliberately left `None`
 rather than synthesised: those are the columns that stamp an untracked ball "full toss".
@@ -751,6 +809,12 @@ the footage away without a word:
   resolve — a source with a clip on every ball produced empty reels.
 - `build_player_site` filtered six call sites on `clip_stem` (now `_clip_item` / `_playable`).
 - `build_opponent_about._has_vid` asked only about `video_file_name`.
+- **Two more, found 2026-09-12.** `batter_clips` queried the warehouse alone, so Ayush Pandey,
+  Yash Rathod and Kumar Kushagra had no scoring or dismissal vision in any pack despite 500–700
+  C21 first-class balls each. It now takes `source` and merges C21 rows by match date, at the
+  pack's own format step only. And `playlists.py` filtered on `clip_stem` in three places, so the
+  REPORTS' watch buttons carried no C21 footage either — Aman Mokhade's four-day batting report had
+  one playlist clip, 32 after `_has_clip` / `_with_url`.
 - 🔴 **`audit_pack_hands` could not see them at all.** An unresolvable clip is dropped from the
   reel's id list, so a reel made entirely of C21 footage would have looked **empty and passed as
   clean without ever being checked** — the "gate that only checks what it was built to check"

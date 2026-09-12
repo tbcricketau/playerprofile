@@ -166,20 +166,71 @@ def _has_vid(r):
             or r.get("c21_video_url") not in (None, "None", "none", "", "nan"))
 
 
+# A video_file_name is not footage. The warehouse names a clip for every coded ball whether or not
+# Fairplay ever stored one, and Zimbabwe's record is mostly unclipped: almost nothing before 2022-23,
+# and two of the three Bangladesh ODIs in July 2026. Taking the newest N named balls filled reels
+# with clips that could not play, build_player_site dropped them at bake time, and the buttons
+# vanished — Wellington Masakadza had 20 stock clips to left-handers stored and none that played,
+# while older ODI balls and 127 T20I balls to left-handers did. A reel is built from clips that PLAY.
+PROBE_CLIPS = True
+_MATCH_PROBE = {}          # match folder -> [hits, misses]
+_MATCH_MISS_LIMIT = 3      # this many misses and no hit = the match was never clipped
+
+
+def _plays(ref):
+    """Does this clip reference serve footage? A Cricket-21 url does (the vendor hosts it, nothing
+    to resolve); a Fairplay stem is HEAD-probed once per stem, and a match whose first few clips are
+    all missing is treated as unclipped without probing the rest of it."""
+    if not PROBE_CLIPS or ref.get("url"):
+        return True
+    stem = ref.get("clip_stem") or ""
+    _head, _sep, tail = stem.partition("/fairplay/")
+    folder = "/".join(tail.split("/")[:4])            # season / gender / format / match
+    tally = _MATCH_PROBE.setdefault(folder, [0, 0])
+    if tally[0] == 0 and tally[1] >= _MATCH_MISS_LIMIT:
+        return False
+    from cricket_core.video import resolve_clip
+    ok = resolve_clip(stem) is not None
+    tally[0 if ok else 1] += 1
+    return ok
+
+
+_PROBE_POOL = None
+
+
+def _playable_first(refs, cap, batch=16):
+    """The first `cap` references that play, in the order given (newest first).
+
+    Probed `batch` at a time. One at a time, four Zimbabwe bowlers took 23 minutes on 2026-09-11,
+    which would have made a full opposition build several hours."""
+    global _PROBE_POOL
+    if _PROBE_POOL is None:
+        from concurrent.futures import ThreadPoolExecutor
+        _PROBE_POOL = ThreadPoolExecutor(batch)
+    out = []
+    for i in range(0, len(refs), batch):
+        chunk = refs[i:i + batch]
+        for ref, ok in zip(chunk, _PROBE_POOL.map(_plays, chunk)):
+            if ok:
+                out.append(ref)
+                if len(out) >= cap:
+                    return out
+    return out
+
+
 def _clips_from_rows(rows, cap):
-    """Newest-first clip stems for a set of profile delivery rows (they already carry
-    season / gender / match / video for clip_stem). Capped at `cap`."""
+    """Newest-first PLAYABLE clip references for a set of profile delivery rows (they already
+    carry season / gender / match / video for clip_stem). Capped at `cap`."""
     import c21_source
     rows = sorted(rows, key=lambda r: r.get("match_date") or "", reverse=True)
-    out = []
+    refs = []
     for r in rows:
         ref = c21_source.clip_ref(r, clip_stem(
             r.get("season"), r.get("gender_id"), r.get("match_length_id"),
             r.get("match_id"), r.get("video_file_name")))
         if ref:
-            out.append({"delivery_id": r.get("delivery_id"), **ref})
-        if len(out) >= cap:
-            break
+            refs.append({"delivery_id": r.get("delivery_id"), **ref})
+    out = _playable_first(refs, cap)
     return out
 
 
@@ -252,10 +303,13 @@ def bowler_clips_by_hand(bid, fmt="Test", min_stock=6, level="international",
     from profile import process_rows
     from data_loaders import load_bowler_deliveries
 
+    raws = {}                 # format -> processed rows, for the recent-bowling fallback below
+
     def _build(f, lv=None):
         raw = process_rows(load_bowler_deliveries(bid, fmt=f, level=lv or level, source=source))
         if not raw:
             return None
+        raws[f] = raw
         return {key: bowler_clips_from_profile(build_profile(bid, hand=hand, raw=raw, fmt=f,
                                                              level=lv or level, source=source))
                 for key, hand in (("", "All"), ("lhb", "vs LHB"), ("rhb", "vs RHB"))}
@@ -270,16 +324,93 @@ def bowler_clips_by_hand(bid, fmt="Test", min_stock=6, level="international",
         # writing the empty result would silently blank reels that were fine
         raise RuntimeError(f"no deliveries loaded for bowler {bid} in {fmt}")
 
-    # A thin record in the pack's format leaves a pack with no vision at all, which is the one
-    # thing a player can always use. Step to the neighbouring formats only when this one gives the
-    # hands nothing, and say which format was used.
-    if max(len(out["lhb"][0]), len(out["rhb"][0])) < min_stock:
-        for f, lv in _fmt_order(fmt, level)[1:]:
-            alt = _build(f, lv)
-            if alt and max(len(alt["lhb"][0]), len(alt["rhb"][0])) > max(len(out["lhb"][0]),
-                                                                        len(out["rhb"][0])):
-                return alt, f
+    # PER HAND, PER REEL. A thin record in the pack's format leaves a hand with no vision, which is
+    # the one thing a player can always use. This used to step formats for the whole bowler, and
+    # only when BOTH hands' stock reels were short — counted before anyone checked the clips played —
+    # so Wellington Masakadza stepped nowhere and every pack showed nothing. Each hand's stock and
+    # wicket reel now steps on its own, nearest format first, never across the red/white line (the
+    # batting-pack audit refuses that in both directions), and records the format it used.
+    idx = {"stock": 0, "wicket": 1}
+    floor = {"stock": min_stock, "wicket": 3}
+    out = {k: list(v) for k, v in out.items()}
+    srcfmt, xhand, alts = {}, {}, None
+
+    def _alt(f, lv):
+        try:
+            return _build(f, lv)
+        except Exception as e:                      # a step that fails leaves the reel as it was
+            print(f"    ! bowler {bid}: {f} fallback not built ({type(e).__name__})")
+            return None
+
+    for h in ("lhb", "rhb"):
+        for k, i in idx.items():
+            if len(out[h][i]) >= floor[k]:
+                continue
+            if alts is None:
+                alts = [(f, _alt(f, lv)) for f, lv in _fmt_order(fmt, level)[1:]
+                        if _same_colour(f, fmt)]
+            for f, alt in alts:
+                if alt and len(alt[h][i]) > len(out[h][i]):
+                    out[h][i], srcfmt[(h, k)] = alt[h][i], f
+                    break
+
+    # No identifiable STOCK ball is not the same as no footage. The stock reel is picked from
+    # TRACKED deliveries — length and line define the ball type — and the footage that plays for
+    # Tanaka Chivanga and Wesley Madhevere is untracked, so none of it can be tagged as their stock
+    # ball. A hand like that gets its most recent playable deliveries to that hand instead, flagged
+    # so the button reads "Recent bowling" and never "Stock ball".
+    general = set()
+    order = [fmt] + [f for f, _lv in _fmt_order(fmt, level)[1:] if _same_colour(f, fmt)]
+    for h in ("lhb", "rhb"):
+        if out[h][0]:
+            continue
+        for f in order:
+            rows = [r for r in raws.get(f) or []
+                    if r.get("is_legal") and bool(r.get("is_lhb")) == (h == "lhb") and _has_vid(r)]
+            recent = _clips_from_rows(rows, 12)
+            if recent:
+                out[h][0] = recent
+                general.add((h, "stock"))
+                if f != fmt:
+                    srcfmt[(h, "stock")] = f
+                break
+
+    # Last resort, and STATED: a hand with nothing in any allowed format borrows the other hand's
+    # reel. Tanaka Chivanga has 2 playable ODI balls to left-handers and no T20I footage, and Sean
+    # Williams has no playable wicket to a left-hander in either white-ball format. Tom, 2026-09-11:
+    # right-hand footage in a left-hander's pack is acceptable as long as the pack says so. It gets
+    # its own playlist key and label in build_player_site, and audit_pack_hands checks it against
+    # the hand it declares — so this is a labelled fallback, not a return of the pooled reel.
+    for h, o in (("lhb", "rhb"), ("rhb", "lhb")):
+        for k, i in idx.items():
+            if not out[h][i] and out[o][i] and (o, k) not in xhand:
+                out[h][i], xhand[(h, k)] = list(out[o][i]), o
+                if (o, k) in srcfmt:
+                    srcfmt[(h, k)] = srcfmt[(o, k)]
+                if (o, k) in general:
+                    general.add((h, k))
+    out = {k: tuple(v) for k, v in out.items()}
+    out["_srcfmt"], out["_xhand"], out["_general"] = srcfmt, xhand, general
     return out, fmt
+
+
+def _store_hand_reels(entry, byh):
+    """Write the per-hand reels, and where each came from, onto an opponent_about entry.
+
+    `clip_format_{kind}_{hand}` names a borrowed white-ball format, `clip_hand_{kind}_{hand}` names
+    the other hand when its reel stands in, and `clip_general_{kind}_{hand}` marks a stock slot that
+    holds recent untracked deliveries rather than an identified stock ball. build_player_site stars
+    and labels from these."""
+    for _h in ("lhb", "rhb"):
+        _s, _w, _n = byh[_h]
+        entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
+        entry[f"new_ball_clips_{_h}"] = _n
+    for (h, k), f in (byh.get("_srcfmt") or {}).items():
+        entry[f"clip_format_{k}_{h}"] = f
+    for (h, k), o in (byh.get("_xhand") or {}).items():
+        entry[f"clip_hand_{k}_{h}"] = o
+    for h, k in (byh.get("_general") or ()):
+        entry[f"clip_general_{k}_{h}"] = True
 
 
 def _angle_phrase(ms):
@@ -373,7 +504,8 @@ def _fmt_order(fmt="Test", level="international"):
     return tuple((f, level) for f in _FMT_ORDER.get(fmt, _FMT_ORDER["Test"]))
 
 
-def batter_clips_best(conn, cur, bid, against, cap=40, fmt="Test", level="international"):
+def batter_clips_best(conn, cur, bid, against, cap=40, fmt="Test", level="international",
+                      source="warehouse"):
     """Clips for this batter against `against`, relaxing only as far as needed, and saying how far.
 
     Order: the pack's format + exact type, then the same format with the wider pace/spin set, then
@@ -381,17 +513,69 @@ def batter_clips_best(conn, cur, bid, against, cap=40, fmt="Test", level="intern
     e.g. 'ODI:off_spin' or 'ODI:spin'; anything but '{fmt}:{against}' means the pack should flag
     it."""
     macro = _MACRO_OF.get(against)
-    for f, lv in _fmt_order(fmt, level):
+    order = _fmt_order(fmt, level)
+    for f, lv in order:
+        if fmt in _WHITE and f not in _WHITE:
+            continue          # a white-ball pack never borrows red-ball footage
+        # Cricket-21 rows join at the pack's OWN step only. C21 holds Indian domestic cricket with no
+        # level, so adding it at every step would file the same Ranji footage under a label claiming
+        # a senior or a neighbouring format.
+        src = source if (f, lv) == order[0] else "warehouse"
         for grp in ([against, macro] if macro else [against]):
             if not grp:
                 continue
-            sc, ds = batter_clips(conn, cur, bid, cap=cap, against=grp, fmt=f, level=lv)
+            sc, ds = batter_clips(conn, cur, bid, cap=cap, against=grp, fmt=f, level=lv, source=src)
             if sc or ds:
                 return sc, ds, f"{f}:{grp}"
     return [], [], ""
 
 
-def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test", level="international"):
+_WHITE = ("ODI", "T20I", "T20")
+
+
+def _same_colour(f, fmt):
+    """Is format `f` on the same side of the red/white-ball line as the pack's `fmt`? The bowler
+    reels in a batting pack are held to this in BOTH directions by audit_pack_hands."""
+    return (f in _WHITE) == (fmt in _WHITE)
+
+
+_C21_BAT = {}
+
+
+def _c21_batter_rows(bid, fmt):
+    """Cricket-21 deliveries faced by this batter in `fmt`, loaded once per build. The reels ask for
+    them per bowling type and per kind, sixteen times a batter."""
+    key = (str(bid), fmt)
+    if key not in _C21_BAT:
+        import c21_source
+        try:
+            _C21_BAT[key] = c21_source.load_batter_deliveries(bid, fmt=fmt)
+        except Exception as e:
+            print(f"    ! batter {bid}: no Cricket-21 rows ({type(e).__name__}: {str(e)[:80]})")
+            _C21_BAT[key] = []
+    return _C21_BAT[key]
+
+
+# _STYLE as a test on a warehouse-shaped row. C21 rows carry the same style and hand ids.
+_STYLE_ROW = {
+    "pace": lambda s, h: s in ("1", "2", "3"),
+    "spin": lambda s, h: s in ("4", "5"),
+    "right_pace": lambda s, h: s in ("1", "2", "3") and h == "1",
+    "left_pace": lambda s, h: s in ("1", "2", "3") and h == "2",
+    "off_spin": lambda s, h: s == "4" and h == "1",
+    "left_orthodox": lambda s, h: s == "4" and h == "2",
+    "leg_spin": lambda s, h: s == "5" and h == "1",
+    "left_unorthodox": lambda s, h: s == "5" and h == "2",
+}
+
+
+def _style_ok(r, against):
+    test = _STYLE_ROW.get(against)
+    return True if test is None else test(str(r.get("bowler_style_id")), str(r.get("bowler_hand_id")))
+
+
+def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test", level="international",
+                 source="warehouse"):
     """(scoring_clips, dismissal_clips) — example Test deliveries with video where the batter scores
     a boundary (how they score) and where they were dismissed (how they get out). Newest first.
 
@@ -405,16 +589,33 @@ def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test", level="intern
             f"'{i}'" for i in AMBIDEXTROUS_BOWLERS) + ")"
     filt = f" AND {where}" if where else ""
     scope = _fmt_sql(fmt, level)
-    scoring = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
+    # Over-fetch, then keep the first `cap` that play — the newest named balls are often from a
+    # match that was never clipped (see _plays).
+    pool = cap * 6 if PROBE_CLIPS else cap
+    wh_sc = _q(conn, cur, f"""SELECT TOP {pool} {_CLIP_COLS}, CONVERT(varchar(10), M.match_date, 23) match_date
         FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
         WHERE D.striker_id='{bid}' AND D.legal_ball=1 AND {scope} AND D.video_file_name IS NOT NULL
           AND D.bat_score IN ('4','6'){filt}
-        ORDER BY M.match_date DESC"""))
-    dismissal = _stems(_q(conn, cur, f"""SELECT TOP {cap} {_CLIP_COLS}
+        ORDER BY M.match_date DESC""")
+    wh_ds = _q(conn, cur, f"""SELECT TOP {pool} {_CLIP_COLS}, CONVERT(varchar(10), M.match_date, 23) match_date
         FROM [{DATA_SCHEMA}].[Deliveries] D {_CLIP_JOINS}
         WHERE D.striker_id='{bid}' AND D.striker_dismissed='1' AND {scope}
           AND D.video_file_name IS NOT NULL{filt}
-        ORDER BY M.match_date DESC"""))
+        ORDER BY M.match_date DESC""")
+    if source != "warehouse":
+        # Cricket-21 footage. The batter reels read the warehouse alone until 2026-09-12, so an India
+        # A batter whose recent record is all Ranji had no scoring or dismissal vision in any pack:
+        # Ayush Pandey (698 first-class balls), Yash Rathod (510) and Kumar Kushagra (568), every
+        # ball with video, all showed nothing. Merged by match date, as the loaders are.
+        import c21_source
+        rows = [r for r in _c21_batter_rows(bid, fmt) if _style_ok(r, against)]
+        wh_sc = c21_source.merge_with_warehouse(
+            wh_sc, [r for r in rows if r.get("legal_ball") == "1" and r.get("bat_score") in ("4", "6")])
+        wh_ds = c21_source.merge_with_warehouse(
+            wh_ds, [r for r in rows if r.get("striker_dismissed") == "1"])
+    newest = lambda rs: sorted(rs, key=lambda r: str(r.get("match_date") or ""), reverse=True)
+    scoring = _playable_first(_stems(newest(wh_sc)), cap)
+    dismissal = _playable_first(_stems(newest(wh_ds)), cap)
     return scoring, dismissal
 
 
@@ -577,14 +778,14 @@ def main():
             try:                                          # re-profile so clips match the stock phrase
                 byh, _src = bowler_clips_by_hand(bid, fmt=args.fmt, level=args.level,
                                                  source=args.source)
-                if _src and _src != args.fmt:
-                    entry["clip_format"] = _src
+                # Where a reel came from is now recorded per hand and per reel. The old whole-bowler
+                # stamp would star every button on the card, so clear it along with stale per-reel keys.
+                for _k in [k for k in entry if k == "clip_format"
+                           or k.startswith(("clip_format_", "clip_hand_"))]:
+                    entry.pop(_k)
                 st, wk, nb = byh[""]
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nb
-                for _h in ("lhb", "rhb"):                  # a pack shows only its own batter's hand
-                    _s, _w, _n = byh[_h]
-                    entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
-                    entry[f"new_ball_clips_{_h}"] = _n
+                _store_hand_reels(entry, byh)              # a pack shows only its own batter's hand
                 print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)} · new {len(nb)}"
                       f"  | lhb {len(byh['lhb'][1])}w · rhb {len(byh['rhb'][1])}w")
             except Exception as e:
@@ -597,10 +798,11 @@ def main():
                 f"re-run when the connection is back.")
         for bid, entry in out.get("batters", {}).items():
             for _tw in _CLIP_GROUPS:
-                _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt, level=args.level)
+                _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt, level=args.level,
+                                                         source=args.source)
                 entry[f"scoring_clips_{_tw}"], entry[f"dismissal_clips_{_tw}"] = _sc, _ds
                 entry[f"clip_scope_{_tw}"] = _scope
-            sc, ds = batter_clips(conn, cur, bid, fmt=args.fmt, level=args.level)
+            sc, ds = batter_clips(conn, cur, bid, fmt=args.fmt, level=args.level, source=args.source)
             entry["scoring_clips"], entry["dismissal_clips"] = sc, ds
             print(f"  batter {entry.get('name', bid):<20} scoring {len(sc)} · dismissal {len(ds)}")
         conn.close()
@@ -682,12 +884,7 @@ def main():
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = bowler_clips_from_profile(P)
                 byh, _src = bowler_clips_by_hand(bid, fmt=args.fmt, level=args.level,
                                                  source=args.source)   # a pack shows only its own hand
-                if _src and _src != args.fmt:
-                    entry["clip_format"] = _src
-                for _h in ("lhb", "rhb"):
-                    _s, _w, _n = byh[_h]
-                    entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
-                    entry[f"new_ball_clips_{_h}"] = _n
+                _store_hand_reels(entry, byh)
                 out["bowlers"][bid] = entry
                 tag = f" · stock {len(entry['stock_clips'])} wkt {len(entry['wicket_clips'])} new {len(entry['new_ball_clips'])}"
             else:                                        # thin record -> all-format fallback
@@ -705,21 +902,19 @@ def main():
                 st, wk, nbc, src = bowler_clips_best(bid, fmt=args.fmt, level=args.level,
                                                      source=args.source)
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nbc
-                if src and src != args.fmt:
-                    entry["clip_format"] = src
+                # `src` is the format the POOLED reel used, and it is no longer stamped as
+                # clip_format: the batting packs never show the pooled reel, and the stamp starred
+                # every hand-scoped button whatever format those came from. Per-reel provenance is
+                # written by _store_hand_reels.
                 # The BATTING packs read only the hand-scoped reels — an unscoped one is the pooled
                 # defect this codebase forbids — so build those too or the card has no buttons.
                 try:
-                    byh, hsrc = bowler_clips_by_hand(bid, fmt=args.fmt, level=args.level,
-                                                      source=args.source)
-                    for _h in ("lhb", "rhb"):
-                        _s, _w, _n = byh[_h]
-                        entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
-                        entry[f"new_ball_clips_{_h}"] = _n
-                    if hsrc and hsrc != args.fmt:
-                        entry["clip_format"] = hsrc
-                except Exception:
-                    pass
+                    byh, _hsrc = bowler_clips_by_hand(bid, fmt=args.fmt, level=args.level,
+                                                       source=args.source)
+                    _store_hand_reels(entry, byh)
+                except Exception as e:
+                    # was a bare pass: the card then had no buttons and nothing in the log said why
+                    print(f"  ! bowler {nm}: hand reels not built ({type(e).__name__}: {str(e)[:80]})")
                 out["bowlers"][bid] = entry
                 tag = (f" [all-formats fallback · vision {src or 'none'}"
                        f" · stock {len(st)} wkt {len(wk)}]")
@@ -745,26 +940,46 @@ def main():
                         print(f"  ! card summary {nm} ({tw}): {type(e).__name__}: {str(e)[:60]}")
                 # per EXACT bowling type: pace/spin alone still pooled all spin together
                 for _tw in _CLIP_GROUPS:
-                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt, level=args.level)
+                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt, level=args.level,
+                                                         source=args.source)
                     out["batters"][bid][f"scoring_clips_{_tw}"] = _sc
                     out["batters"][bid][f"dismissal_clips_{_tw}"] = _ds
                     out["batters"][bid][f"clip_scope_{_tw}"] = _scope
-                sc, ds = batter_clips(conn, cur, bid, fmt=args.fmt,
-                                      level=args.level)        # unscoped TYPE, kept as fallback
+                sc, ds = batter_clips(conn, cur, bid, fmt=args.fmt, level=args.level,
+                                      source=args.source)      # unscoped TYPE, kept as fallback
                 out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
                 tag = f" · sco {len(sc)} dsm {len(ds)}"
             else:
                 fb = allfmt_batter_facts(conn, cur, bid, hand, STK, SQ,
                                          scope_label=_scope_label(args.fmt, args.level))
                 if not fb:
-                    # was a bare continue, matching the bowler branch: four India A batters left the
-                    # four-day file with no line in the log at all, so "7 bowlers, 6 batters" read as
-                    # the whole squad. They still get a roster card from the squad union — the
-                    # problem was never the missing entry, it was not being told.
-                    print(f"  batter {nm}: SKIPPED — nothing to say in any format")
-                    continue
+                    # Not enough to profile in any format — but there can still be footage. Shams
+                    # Mulani has 248 Cricket-21 first-class balls, under TEST_FLOOR, and the
+                    # all-formats fallback reads the warehouse only, so he was skipped outright and
+                    # his card showed no vision. Keep a footage-only entry; it is dropped below,
+                    # with a log line, only when there is nothing to watch either.
+                    note = [f"Limited {_scope_label(args.fmt, args.level)} record — not enough balls to profile."]
+                    fb = {"hand": hand, "facts": note, "facts_pace": note, "facts_spin": note,
+                          "order": 0, "source": "footage-only"}
                 out["batters"][bid] = {"name": nm, **fb}
-                tag = " [all-formats fallback]"
+                # A thin record used to mean NO vision for a batter at all: this branch wrote facts
+                # and no clips, so Brad Evans had no footage in any of the eleven bowling packs while
+                # 31 ODI and 111 T20I balls of him batting play. Same reels as the full branch.
+                for _tw in _CLIP_GROUPS:
+                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt, level=args.level,
+                                                         source=args.source)
+                    out["batters"][bid][f"scoring_clips_{_tw}"] = _sc
+                    out["batters"][bid][f"dismissal_clips_{_tw}"] = _ds
+                    out["batters"][bid][f"clip_scope_{_tw}"] = _scope
+                sc, ds = batter_clips(conn, cur, bid, fmt=args.fmt, level=args.level, source=args.source)
+                out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
+                if fb.get("source") == "footage-only":
+                    _e = out["batters"][bid]
+                    if not any(_e.get(k) for k in _e if k.endswith("_clips") or "_clips_" in k):
+                        del out["batters"][bid]
+                        print(f"  batter {nm}: SKIPPED — nothing to say or show in any format")
+                        continue
+                tag = f" [{fb.get('source')} · sco {len(sc)} dsm {len(ds)}]"
             out["batters"][bid]["role"] = batter_role(conn, cur, bid, fmt=args.fmt,
                                                       level=args.level)   # opener/top/middle/lower
             print(f"  batter {nm}: {len(out['batters'][bid]['facts'])} facts{tag}")

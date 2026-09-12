@@ -8,17 +8,30 @@
   "c21_name": "Aman Mokhade",
   "bowl_balls": 24,
   "bat_balls": 788,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   25168
+  ],
+  "c21_ids_white": [
+   25172
+  ]
  },
  "6380434": {
   "name": "Anshul Kamboj",
   "c21_ids": [
-   27946
+   27946,
+   27964
   ],
   "c21_name": "Anshul Kamboj",
   "bowl_balls": 957,
   "bat_balls": 296,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   27946
+  ],
+  "c21_ids_white": [
+   27964
+  ]
  },
  "3630029": {
   "name": "Anukul Roy",
@@ -65,12 +78,27 @@
  "5460629": {
   "name": "Ayush Pandey",
   "c21_ids": [
-   35000
+   24579,
+   24581,
+   26519,
+   26538,
+   35000,
+   35015
   ],
   "c21_name": "Ayush Pandey",
   "bowl_balls": 0,
   "bat_balls": 163,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   24581,
+   26519,
+   35000
+  ],
+  "c21_ids_white": [
+   24579,
+   26538,
+   35015
+  ]
  },
  "4352110": {
   "name": "Devdutt Padikkal",
@@ -81,7 +109,13 @@
   "c21_name": "Devdutt Padikkal",
   "bowl_balls": 36,
   "bat_balls": 1737,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   7631
+  ],
+  "c21_ids_white": [
+   6314
+  ]
  },
  "3630218": {
   "name": "Dhruv Jurel",
@@ -125,17 +159,30 @@
   "c21_name": "Kumar Kushagra",
   "bowl_balls": 0,
   "bat_balls": 476,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   14512
+  ],
+  "c21_ids_white": [
+   8251
+  ]
  },
  "5181010": {
   "name": "Mohd Arshad Khan",
   "c21_ids": [
+   20005,
    20009
   ],
   "c21_name": "Arshad Khan",
   "bowl_balls": 25,
   "bat_balls": 45,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   20009
+  ],
+  "c21_ids_white": [
+   20005
+  ]
  },
  "4352118": {
   "name": "Prabhsimran Singh",
@@ -146,27 +193,47 @@
   "c21_name": "Prabhsimran Singh",
   "bowl_balls": 0,
   "bat_balls": 336,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   13483
+  ],
+  "c21_ids_white": [
+   7216
+  ]
  },
  "6381340": {
   "name": "Priyansh Arya",
   "c21_ids": [
+   25662,
    25669
   ],
   "c21_name": "Priyansh Arya",
   "bowl_balls": 0,
   "bat_balls": 20,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   25662
+  ],
+  "c21_ids_white": [
+   25669
+  ]
  },
  "4352297": {
   "name": "Ruturaj Gaikwad",
   "c21_ids": [
+   6059,
    6382
   ],
   "c21_name": "Ruturaj Gaikwad",
   "bowl_balls": 0,
   "bat_balls": 418,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   6382
+  ],
+  "c21_ids_white": [
+   6059
+  ]
  },
  "5460174": {
   "name": "Sai Sudharsan",
@@ -177,7 +244,13 @@
   "c21_name": "Sai Sudharsan",
   "bowl_balls": 0,
   "bat_balls": 532,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   23454
+  ],
+  "c21_ids_white": [
+   23450
+  ]
  },
  "6380716": {
   "name": "Saransh Jain",
@@ -193,12 +266,19 @@
  "5490034": {
   "name": "Shaik Rasheed",
   "c21_ids": [
-   26894
+   26894,
+   26913
   ],
   "c21_name": "Shaik Rasheed",
   "bowl_balls": 91,
   "bat_balls": 333,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   26894
+  ],
+  "c21_ids_white": [
+   26913
+  ]
  },
  "6381338": {
   "name": "Suryansh Shedge",
@@ -230,7 +310,13 @@
   "c21_name": "Vipraj Nigam",
   "bowl_balls": 337,
   "bat_balls": 69,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   45980
+  ],
+  "c21_ids_white": [
+   46066
+  ]
  },
  "5181011": {
   "name": "Yash Ravisingh Thakur",
@@ -241,7 +327,13 @@
   "c21_name": "Yash Thakur",
   "bowl_balls": 630,
   "bat_balls": 48,
-  "confidence": "exact"
+  "confidence": "dob matched to warehouse, per database (2026-09-12)",
+  "c21_ids_multiday": [
+   7604
+  ],
+  "c21_ids_white": [
+   6287
+  ]
  },
  "6381482": {
   "name": "Zeeshan Ansari",
@@ -253,5 +345,251 @@
   "bowl_balls": 318,
   "bat_balls": 14,
   "confidence": "exact"
+ },
+ "990010366": {
+  "name": "Yash Rathod",
+  "c21_name": "Yash Rathod",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   10366,
+   25180
+  ],
+  "c21_ids_white": [
+   7058,
+   25186
+  ],
+  "c21_ids": [
+   7058,
+   10366,
+   25180,
+   25186
+  ],
+  "confidence": "name only — no warehouse record, reserved id 99+C21 multi-day id"
+ },
+ "6380399": {
+  "name": "Shams Mulani",
+  "c21_name": "Shams Mulani",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   9011
+  ],
+  "c21_ids_white": [
+   6697
+  ],
+  "c21_ids": [
+   6697,
+   9011
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "6380423": {
+  "name": "Tanush Kotian",
+  "c21_name": "Tanush Kotian",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   8802
+  ],
+  "c21_ids_white": [
+   6486
+  ],
+  "c21_ids": [
+   6486,
+   8802
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "4352120": {
+  "name": "Tushar Deshpande",
+  "c21_name": "Tushar Deshpande",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   9118
+  ],
+  "c21_ids_white": [
+   6806
+  ],
+  "c21_ids": [
+   6806,
+   9118
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "7230047": {
+  "name": "Praful Hinge",
+  "c21_name": "Praful Hinge",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   15168
+  ],
+  "c21_ids_white": [
+   25132
+  ],
+  "c21_ids": [
+   15168,
+   25132
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "4352119": {
+  "name": "N Jagadeesan",
+  "c21_name": "N Jagadeesan",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   5995
+  ],
+  "c21_ids_white": [
+   5608
+  ],
+  "c21_ids": [
+   5608,
+   5995
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "990020028": {
+  "name": "Nachiket Bhute",
+  "c21_name": "Nachiket Bhute",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   20028
+  ],
+  "c21_ids_white": [
+   20024
+  ],
+  "c21_ids": [
+   20024,
+   20028
+  ],
+  "confidence": "name only — no warehouse record, reserved id 99+C21 multi-day id"
+ },
+ "5181018": {
+  "name": "V Vyshak",
+  "c21_name": "V Vyshak",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   3879,
+   75746
+  ],
+  "c21_ids_white": [
+   4487,
+   75690
+  ],
+  "c21_ids": [
+   3879,
+   4487,
+   75690,
+   75746
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "4352129": {
+  "name": "Rajat Patidar",
+  "c21_name": "Rajat Patidar",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   5416
+  ],
+  "c21_ids_white": [
+   5039
+  ],
+  "c21_ids": [
+   5039,
+   5416
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "5490039": {
+  "name": "Nishant Sindhu",
+  "c21_name": "Nishant Sindhu",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   26811
+  ],
+  "c21_ids_white": [
+   26830
+  ],
+  "c21_ids": [
+   26811,
+   26830
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "6380254": {
+  "name": "Arshin Kulkarni",
+  "c21_name": "Arshin Kulkarni",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   42759
+  ],
+  "c21_ids_white": [
+   42845
+  ],
+  "c21_ids": [
+   42759,
+   42845
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "6380398": {
+  "name": "Naman Dhir",
+  "c21_name": "Naman Dhir",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   37037
+  ],
+  "c21_ids_white": [
+   37052
+  ],
+  "c21_ids": [
+   37037,
+   37052
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "3080016": {
+  "name": "Hardik Pandya",
+  "c21_name": "Hardik Pandya",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   2659
+  ],
+  "c21_ids_white": [
+   3330
+  ],
+  "c21_ids": [
+   2659,
+   3330
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "6381318": {
+  "name": "Gurjapneet Singh",
+  "c21_name": "Gurjapneet Singh",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   23471
+  ],
+  "c21_ids_white": [
+   23467
+  ],
+  "c21_ids": [
+   23467,
+   23471
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-12)"
  }
 }

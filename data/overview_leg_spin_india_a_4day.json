@@ -1,0 +1,132 @@
+{
+ "opp": "india_a_4day",
+ "group": "leg_spin",
+ "label": "leg spin",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "4352110",
+   "name": "Devdutt Padikkal",
+   "sub": "LHB · Top order",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "5460174",
+   "name": "Sai Sudharsan",
+   "sub": "LHB · Top order",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "5460632",
+   "name": "Aman Mokhade",
+   "sub": "RHB · Opener",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "5460629",
+   "name": "Ayush Pandey",
+   "sub": "LHB · Opener",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "990010366",
+   "name": "Yash Rathod",
+   "sub": "RHB",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "3630228",
+   "name": "Kumar Kushagra",
+   "sub": "RHB",
+   "balls": 42,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 42,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 4.761904761904762,
+    "area": null,
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "4352119",
+   "name": "Narayan Jagadeesan",
+   "sub": "RHB · Opener",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "6380423",
+   "name": "Tanush Kotian",
+   "sub": "RHB · Lower order",
+   "balls": 17,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 17,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 25.0,
+    "area": null,
+    "short": null,
+    "top_out": "Caught (100%)"
+   }
+  },
+  {
+   "bid": "5490034",
+   "name": "Shaik Rasheed",
+   "sub": "RHB · Middle order",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "6380399",
+   "name": "Shams Mulani",
+   "sub": "LHB",
+   "balls": 2,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 2,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 0.0,
+    "area": null,
+    "short": null,
+    "top_out": null
+   }
+  }
+ ]
+}
