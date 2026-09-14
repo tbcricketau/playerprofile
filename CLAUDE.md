@@ -158,6 +158,33 @@ builder runs, so no reel can move.
 
 `publish_site.deploy_github()` runs the same check before the coach site goes out.
 
+### Bake only the series you named — `--only` (2026-09-13)
+
+`build()` cleared its whole output and re-baked every series in `series.json`, which is right for
+the scheduled refresh and wrong for everything else: producing the nine Zimbabwe report pages the
+packs link cost **93.7 minutes**, re-baking five untouched series and re-staging a 102 MB archive
+with 5,286 SAS re-stamps.
+
+```powershell
+.\venv\Scripts\python.exe publish_site.py --out site --only zimbabwe-odi-away-2026
+.\venv\Scripts\python.exe publish_site.py --out site --no-archive        # full bake, skip the archive
+```
+
+`--only` clears **just the named series' directories** and leaves every other series, the archive
+and their index cards alone; it implies `--no-archive`. Measured on `australia-reference`:
+**93.7 min → 18.2**, with every other series byte-identical in file count and mtime, the archive
+untouched at 218 files, and Zimbabwe's 57 injected batter reports surviving — which a full bake
+destroys. Default behaviour with no flag is unchanged, so the scheduled task is unaffected.
+
+The cost is **~109s per report** with only ~2 min of fixed startup (`_sidecar_map` is 7s of it), so
+the saving is proportional to reports skipped, not to overhead avoided. `_existing_card` keeps
+un-rebuilt series on the landing page by counting report **stems** — counting `.html` files read
+New Zealand as 32 reports when it has 16, because `.html` and `.player.html` both matched.
+
+⚠ **`deploy_scouting.py` cannot reach these flags**: it calls `build(site, sas_hours)`
+positionally, so an unflagged run is a full bake. Use `--no-build` to deploy the `site/` you just
+baked — safe while the baked SAS is inside its ~6.5-day life, which is the thing to check first.
+
 **The gated coach site needs its check in a different place, and for a while it had none.**
 `deploy_scouting.py` stages a copy of `site/`, encrypts every page with `staticgate`, then deploys —
 and `staticgate.encrypt_dir` replaces each `.html` with an encrypted shell. So `deploy_github`'s gate
@@ -195,6 +222,32 @@ blob resolves, which is the honest answer — the reel being served is the wider
 **Adding a new bowler type means three places, not one**: `_STYLE`/`_CLIP_GROUPS` in
 `build_opponent_about.py`, the `opp_clips` group list and the `_build_vision` kinds list in
 `build_player_site.py`. Miss the last and that type silently falls back to the macro group forever.
+
+### Death overs are a reel too (2026-09-13) — and a new reel KIND means FOUR places
+
+Tom asked for footage of who bowls the last ten overs. `bowler_clips_from_profile` takes
+`death_from` and selects `over_n >= 41` — **`odi_profile._phase`'s own threshold**, so the pack
+button and the report's `death` playlist pick the same balls rather than two definitions of
+"death". Hand-scoped `dthL_`/`dthR_` like every other bowler reel: the ball a bowler goes to at the
+death against a left-hander is not the one they go to against a right-hander.
+
+- **Passed DOWN, never assumed.** Over 41 cannot occur in a T20 (20-over innings) and is simply
+  mid-innings in a Test. Only a 50-over pack sets the threshold; everything else gets `None`.
+- **No share gate.** `NEW_BALL_MIN_SHARE = 45` is right for the new ball and would delete every
+  death bowler: the real ones sit at 8–17% of their deliveries (Muzarabani 17.3%, Evans 15.7%,
+  Raza 13.2% — and Raza bowls the MOST death balls of anyone in that squad, 466). Having playable
+  death footage is the gate.
+- **`bowler_clips_from_profile` now returns FOUR reels.** Every caller unpacks it positionally and
+  there are four such sites — `bowler_clips_best`, the `--clips-only` path, the main bowler loop,
+  and `_store_hand_reels`. A capped grep found two of them and the run died on
+  `ValueError: too many values to unpack`. Its docstring now says so.
+
+**The fourth place is `audit_pack_hands`, and it is the one that matters.** That file has TWO
+regexes: `KEY_RE` decides what is **collected**, the classifier decides what each key *is*. A kind
+missing from `KEY_RE` is never collected, never audited, and publishes in silence — the "a gate
+only checks what it was built to check" failure this project keeps rediscovering. Both were
+changed together, and it was proven afterwards rather than assumed: the gate's own `KEY_RE` finds
+312 keys on the built packs (120 stock + 120 wkt + 72 dth), matching the 312 it reported.
 
 ### The rule behind it: a reel is scoped to whatever the pack is about
 
@@ -793,6 +846,32 @@ them silently. Aman Mokhade and Ayush Pandey have no warehouse record at all.
 **What C21 does not give:** ball speed in Ranji (0.2% — pace cards get lengths and lines but no
 speed), seam/swing movement, bowler spell. The zone GROUP columns are deliberately left `None`
 rather than synthesised: those are the columns that stamp an untracked ball "full toss".
+
+### A flag that is accepted and discarded is worse than one that is missing (2026-09-13)
+
+`build_reports` has taken `--source` since the axis landed and **passed it only on the Test
+branch**. The ODI branch called `render_odi_report(...)` without it, which took no such parameter,
+so every white-ball report has been warehouse-only while reporting success. Ernest Masuku rendered
+on 66 warehouse balls with 7 clips while 196 Cricket-21 balls with video on 190 sat unused; with
+the fix, 180 legal balls and 34 clips, and he gains death, yorker and bouncer reels he had none of.
+
+Threaded `render_odi_report` → `build_odi_profile` → the loaders **and `_supplement_rows`**. Fixing
+only the first leaves the mechanics supplement warehouse-only, so a bowler thin in the warehouse
+would read C21 for his ODI rows and then silently fall back to warehouse-only T20I to map his
+lengths. 🔴 **`render_t20_report` still has this gap** and takes neither `source` nor `level`.
+
+**A bowler with nothing to say can still have something to show.** `allfmt_bowler_facts` reads the
+warehouse alone and needs 150 rows, so a bowler under `TEST_FLOOR` whose cricket is only in C21 was
+dropped from the packs entirely. The batter branch was fixed for exactly this (Shams Mulani); the
+bowler branch never was. It now keeps a **footage-only** entry and deletes it, with a log line, only
+when nothing plays either. Masuku went from absent in all 15 packs to a card with 45 hand-scoped
+reels including 30 death clips, carrying *"Limited ODI record — not enough balls to profile"*
+instead of a fabricated plan: he genuinely fails the 300-ball floor at 262.
+
+**So a squad pin whose players are C21-only must say `--source both` in its note.** Tripurana Vijay
+has 12 warehouse bowling balls and 348 in C21; without the flag he is a footage-only card, with it
+he is a full profile. `opp_squad_india_a_4day.json` records that requirement where the next person
+will look.
 
 ### A clip is a STEM or a URL — never assume the stem
 
