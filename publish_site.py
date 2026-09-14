@@ -252,15 +252,36 @@ def _bake_report(name, dest_dir, hk_sas, src_dir=None):
 
 
 # ── Site build (Series → Group → Reports) ───────────────────────────────────────
-def build(out_dir, sas_hours):
+def build(out_dir, sas_hours, only=None, stage_archive=True):
+    """Bake the coach site. `only` = series.json slugs to rebuild; every other series is LEFT ALONE.
+
+    Clearing the whole output and re-baking every series is right for the scheduled refresh and
+    wrong for everything else. Measured 2026-09-13: producing the nine Zimbabwe report pages the
+    player packs link cost 90 minutes, because it re-baked five series nobody had touched and
+    re-staged a 102 MB archive with 5,286 SAS re-stamps. With `only` we clear just those series'
+    directories — clear only what you rebuild.
+
+    `stage_archive=False` skips the archive copy and its SAS re-stamp. The archive still needs a
+    re-stamp inside the SAS lifetime (~6.5 days) or its vision dies, so a FULL run keeps doing it;
+    this is for the targeted runs in between.
+    """
     cfg = json.load(open(SERIES_JSON, encoding="utf-8"))
     smap = _sidecar_map()
+    only = set(only or ())
     if os.path.isdir(out_dir):
         for f in os.listdir(out_dir):
-            if f != ".git":
-                p = os.path.join(out_dir, f)
-                _rmtree(p) if os.path.isdir(p) else os.remove(p)
+            if f == ".git":
+                continue
+            # A targeted run touches only the series it names. Every other series, the archive and
+            # the index stay exactly as they were — which is the whole point of the flag.
+            if only and f not in only:
+                continue
+            p = os.path.join(out_dir, f)
+            _rmtree(p) if os.path.isdir(p) else os.remove(p)
     os.makedirs(out_dir, exist_ok=True)
+    if only:
+        print(f"targeted bake: {', '.join(sorted(only))} "
+              f"(every other series left as it was)")
 
     print(f"Priming a {sas_hours}h (~{sas_hours/24:.1f}-day) read SAS…")
     get_fairplay_sas(ttl_hours=sas_hours)
@@ -271,6 +292,14 @@ def build(out_dir, sas_hours):
 
     series_cards = []
     for s in cfg.get("series", []):
+        if only and s.get("slug") not in only:
+            # Not rebuilt. Keep its existing landing-page card, counted off what is already on
+            # disk — otherwise a targeted run silently drops every other series from the index,
+            # which reads as data loss even though the pages are untouched.
+            _kept = _existing_card(out_dir, s)
+            if _kept:
+                series_cards.append(_kept)
+            continue
         s_dir = os.path.join(out_dir, s["slug"])
         os.makedirs(s_dir, exist_ok=True)
         # series-level Match-ups matrix (render_matchups.py) — the ONE full simulated grid
@@ -354,7 +383,15 @@ def build(out_dir, sas_hours):
         _write_series_index(s_dir, cfg, s, group_cards, has_matchups=has_mx, has_attacks=has_attacks,
                              has_shots=has_sm, overviews=overviews, has_conditions=has_cd)
         series_cards.append((s["slug"], s["name"], s.get("subtitle", ""), s_total))
-    archived = _stage_archive(out_dir, cfg, hk_sas, sas_hours)
+    if stage_archive:
+        archived = _stage_archive(out_dir, cfg, hk_sas, sas_hours)
+    else:
+        # Not re-staged — but the index must still carry the Archive card when the staged copy is
+        # already there, or the archive vanishes from the portal's navigation.
+        import archive_series as arch
+        archived = arch.manifests() if os.path.isdir(os.path.join(out_dir, "archive")) else []
+        print("  - archive: not re-staged. Its clip SAS expires ~6.5 days after the last full run, "
+              "so a full run has to happen inside that window.")
     _write_top_index(out_dir, cfg, series_cards, archived)
     open(os.path.join(out_dir, ".nojekyll"), "w").close()
     print(f"\nBuilt {sum(c[3] for c in series_cards)} report(s) across "
@@ -407,6 +444,37 @@ def _write_archive_index(dest_root, cfg, ms):
 
 
 # ── Navigation pages (page shell + report card come from site_render) ────────────
+
+
+def _existing_card(out_dir, s):
+    """The landing-page card for a series this run did NOT rebuild, counted off what is on disk.
+
+    Counts distinct report STEMS, because one baked report leaves several files: x.html, x.pdf
+    and x.player.html, sometimes x.pmode.html. Counting .html files reported New Zealand as 32
+    reports when it has 16, since .html and .player.html both matched. Counting .pdf alone would
+    undercount any report whose PDF failed to render, so key on the stem.
+
+    Returns None when the series has never been baked, so a brand-new slug added to series.json
+    is simply absent from a targeted run's index rather than showing as an empty card."""
+    s_dir = os.path.join(out_dir, s["slug"])
+    if not os.path.isdir(s_dir):
+        return None
+    tot = 0
+    for g in s.get("groups", []):
+        g_dir = os.path.join(s_dir, g.get("slug", ""))
+        if not os.path.isdir(g_dir):
+            continue
+        stems = set()
+        for f in os.listdir(g_dir):
+            # longest suffixes first: ".player.html" must not be stripped as ".html"
+            for suf in (".pmode.html", ".player.html", ".pdf", ".html"):
+                if f.endswith(suf):
+                    stem = f[: -len(suf)]
+                    if stem and stem != "index":
+                        stems.add(stem)
+                    break
+        tot += len(stems)
+    return (s["slug"], s["name"], s.get("subtitle", ""), tot)
 
 
 def _write_top_index(out_dir, cfg, series_cards, archived=()):
@@ -549,9 +617,18 @@ def main():
     ap.add_argument("--sas-hours", type=int, default=DEFAULT_SAS_HOURS)
     ap.add_argument("--deploy-repo", help="GitHub repo URL to publish site/ to")
     ap.add_argument("--branch", default="main")
+    ap.add_argument("--only", nargs="+", default=None, metavar="SLUG",
+                    help="rebuild ONLY these series.json slugs, leaving every other series, the "
+                         "archive and their index cards alone. Baking one series' reports should "
+                         "not cost a full re-bake of the other five (90 minutes, 2026-09-13)")
+    ap.add_argument("--no-archive", action="store_true",
+                    help="skip staging the frozen archive and re-stamping its clip SAS (a 102 MB "
+                         "copy and ~5,286 url rewrites). Implied by --only; pass it on a full run "
+                         "only when the archive SAS is still inside its ~6.5-day life")
     args = ap.parse_args()
     out = os.path.join(HERE, args.out)
-    build(out, min(args.sas_hours, 167))
+    build(out, min(args.sas_hours, 167), only=args.only,
+          stage_archive=not (args.no_archive or args.only))
     if args.deploy_repo:
         deploy_github(out, args.deploy_repo, args.branch)
     else:

@@ -124,7 +124,7 @@ def load_batter_info(batter_id: str, fmt: str = "Test",
 
 def load_batter_deliveries(batter_id: str, fmt: str = "Test",
                            level: str = "international",
-                           source: str = "warehouse") -> list:
+                           source: str = "warehouse", dedupe: bool = True) -> list:
     """`source` is the third axis beside format and level: 'warehouse' | 'c21' | 'both'.
     The warehouse holds no Indian domestic cricket, so an India A batter can have nothing
     there and hundreds of tracked balls in Cricket-21 (see c21_source)."""
@@ -136,9 +136,11 @@ def load_batter_deliveries(batter_id: str, fmt: str = "Test",
         if source == "c21":
             return extra
         base = load_batter_deliveries(batter_id, fmt, level, "warehouse")
-        # never count a match held by both sources twice — see c21_source.merge_with_warehouse
-        return sorted(c21_source.merge_with_warehouse(base, extra),
-                      key=lambda r: str(r.get("match_date") or ""))
+        # STATISTICS dedupe, CLIPS do not — see the same note in data_loaders. A match in both
+        # sources counts once for the numbers, but its footage exists twice over and both copies
+        # are worth showing, so clip builders pass dedupe=False.
+        rows = c21_source.merge_with_warehouse(base, extra) if dedupe else base + extra
+        return sorted(rows, key=lambda r: str(r.get("match_date") or ""))
     """Every delivery faced by the batter in that format, with the fields the profile needs."""
     conn, cur = set_conn_cursor()
     q = f"""

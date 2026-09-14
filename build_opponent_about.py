@@ -22,6 +22,7 @@ warnings.filterwarnings("ignore")
 
 from cricket_core.config import project_path, international_series_sql, series_sql
 from cricket_core.warehouse import set_conn_cursor, run_query
+from cricket_core.lookups import BOWLER_TYPE_OVERRIDE, BOWLER_TYPE_LABEL
 from cricket_core.video import clip_stem
 from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
 from report import build_profile
@@ -177,6 +178,27 @@ _MATCH_PROBE = {}          # match folder -> [hits, misses]
 _MATCH_MISS_LIMIT = 3      # this many misses and no hit = the match was never clipped
 
 
+def _require_fairplay():
+    """Fail the build if a Fairplay SAS cannot be minted.
+
+    _plays reads "no SAS" as "the clip is not in storage", so a credential failure silently rewrites
+    every reel to Cricket-21 clips and whatever was already cached. On 2026-09-13 the device-code
+    credential hit a stale lock eleven times during a clips-only rebuild and the reels came out
+    SHORTER than they went in: Sikandar Raza's wicket balls to left-handers 14 -> 3, Brad Evans
+    14 -> 4, and all 51 dropped clips played when probed a few minutes later. A vision rebuild must
+    never quietly remove vision, so this fails closed like the publish gate's hand audit."""
+    from cricket_core.video import get_fairplay_sas
+    try:
+        if get_fairplay_sas(ttl_hours=6):
+            return
+    except Exception as e:
+        raise SystemExit(
+            f"ABORTING: no Fairplay SAS ({type(e).__name__}: {str(e)[:140]}). Every Fairplay clip "
+            f"would read as missing and the reels would be written SHORTER than they are now. "
+            f"Nothing was changed — fix the credential and re-run.")
+    raise SystemExit("ABORTING: no Fairplay SAS (empty token). Nothing was changed.")
+
+
 def _plays(ref):
     """Does this clip reference serve footage? A Cricket-21 url does (the vendor hosts it, nothing
     to resolve); a Fairplay stem is HEAD-probed once per stem, and a match whose first few clips are
@@ -237,8 +259,14 @@ def _clips_from_rows(rows, cap):
 NEW_BALL_MIN_SHARE = 45   # only bowlers who open (new_ball_share ≥ this) get a New-ball playlist
 
 
-def bowler_clips_from_profile(P, cap_each=10, wcap=40):
-    """(stock_clips, wicket_clips, new_ball_clips) built from the profile's coordinate-tagged rows,
+# Death overs, per odi_profile._phase (Powerplay <= 10, Death >= 41). Passed DOWN from the caller
+# rather than assumed here, because over 41+ is meaningless in a T20 (the innings ends at 20) and
+# WRONG in a Test, where it is simply the middle of a long innings. Only a 50-over pack sets it.
+DEATH_FROM_OVER = 41
+
+
+def bowler_clips_from_profile(P, cap_each=10, wcap=40, death_from=None):
+    """(stock_clips, wicket_clips, new_ball_clips, death_clips) from the profile's tagged rows,
     so the example clips match the card's 'Stock ball' phrase. Pace stock samples BOTH angles (the
     over-modal ball type + the round-modal ball type when they bowl round enough), combined into one
     playlist. Wickets pull a generous pool (wcap). New-ball clips = first-10-overs deliveries, only
@@ -263,7 +291,16 @@ def bowler_clips_from_profile(P, cap_each=10, wcap=40):
         nb = [r for r in df if r.get("is_legal") and _has_vid(r)
               and r.get("over_n") is not None and r["over_n"] < 10]
         new_ball = _clips_from_rows(nb, wcap)        # first 10 overs, newest first, generous pool
-    return stock, wicket, new_ball
+    # Death overs — the mirror of the new-ball reel, and deliberately NOT gated on a share threshold
+    # the way the new ball is. Measured on this squad, the genuine death bowlers sit at 8-17% of
+    # their deliveries (Muzarabani 17.3%, Evans 15.7%, Raza 13.2%), so a NEW_BALL_MIN_SHARE-style
+    # gate would delete every one of them. Having playable death footage IS the gate.
+    death = []
+    if death_from is not None:
+        dd = [r for r in df if r.get("is_legal") and _has_vid(r)
+              and r.get("over_n") is not None and r["over_n"] >= death_from]
+        death = _clips_from_rows(dd, wcap)
+    return stock, wicket, new_ball, death
 
 
 def bowler_clips_best(bid, fmt="Test", min_stock=6, level="international", source="warehouse"):
@@ -283,7 +320,7 @@ def bowler_clips_best(bid, fmt="Test", min_stock=6, level="international", sourc
             P = build_profile(bid, hand="All", fmt=f, level=lv, source=source)
         except Exception:
             continue
-        st, wk, nb = bowler_clips_from_profile(P)
+        st, wk, nb, _d = bowler_clips_from_profile(P)
         if len(st) >= min_stock or (st and not best[0]):
             return st, wk, nb, f
         if not best[0] and (st or wk):
@@ -293,8 +330,12 @@ def bowler_clips_best(bid, fmt="Test", min_stock=6, level="international", sourc
 
 def bowler_clips_by_hand(bid, fmt="Test", min_stock=6, level="international",
                          source="warehouse"):
-    """{"": (stock, wicket, new_ball), "lhb": (...), "rhb": (...)} — the bowler's reels built
-    separately for each batter hand, plus the both-hands set as a fallback.
+    """{"": (stock, wicket, new_ball, death), "lhb": (...), "rhb": (...)} — the bowler's reels
+    built separately for each batter hand, plus the both-hands set as a fallback.
+
+    FOUR reels per hand since 2026-09-13, not three. Every caller unpacks this tuple positionally,
+    so adding a reel means finding all of them — there are four (bowler_clips_best, the clips-only
+    path, the main bowler loop, and _store_hand_reels), and a capped grep will miss some.
 
     A right-hander's pack was showing this bowler's deliveries to left-handers and vice versa: the
     reels were built once at hand="All" and served to every pack. The stock ball, the wicket balls
@@ -306,12 +347,20 @@ def bowler_clips_by_hand(bid, fmt="Test", min_stock=6, level="international",
     raws = {}                 # format -> processed rows, for the recent-bowling fallback below
 
     def _build(f, lv=None):
-        raw = process_rows(load_bowler_deliveries(bid, fmt=f, level=lv or level, source=source))
+        # dedupe=False: this function picks CLIPS, and the published facts come from the separate
+        # build_profile call in main(). A match held by both sources has footage in both, and the
+        # statistics dedupe was throwing one side's clips away — see data_loaders.
+        raw = process_rows(load_bowler_deliveries(bid, fmt=f, level=lv or level, source=source,
+                                                  dedupe=False))
         if not raw:
             return None
         raws[f] = raw
+        # A death reel only where a death over exists: a 50-over innings. Never T20 (the innings
+        # ends at 20, so over 41 cannot occur) and never Test (over 41 is mid-innings, not death).
+        _death_from = DEATH_FROM_OVER if str(f).upper() == "ODI" else None
         return {key: bowler_clips_from_profile(build_profile(bid, hand=hand, raw=raw, fmt=f,
-                                                             level=lv or level, source=source))
+                                                             level=lv or level, source=source),
+                                               death_from=_death_from)
                 for key, hand in (("", "All"), ("lhb", "vs LHB"), ("rhb", "vs RHB"))}
 
     # The pack's own format FIRST. This used to call load_bowler_deliveries(bid) with no fmt at
@@ -402,9 +451,10 @@ def _store_hand_reels(entry, byh):
     holds recent untracked deliveries rather than an identified stock ball. build_player_site stars
     and labels from these."""
     for _h in ("lhb", "rhb"):
-        _s, _w, _n = byh[_h]
+        _s, _w, _n, _d = byh[_h]
         entry[f"stock_clips_{_h}"], entry[f"wicket_clips_{_h}"] = _s, _w
         entry[f"new_ball_clips_{_h}"] = _n
+        entry[f"death_clips_{_h}"] = _d
     for (h, k), f in (byh.get("_srcfmt") or {}).items():
         entry[f"clip_format_{k}_{h}"] = f
     for (h, k), o in (byh.get("_xhand") or {}).items():
@@ -517,10 +567,20 @@ def batter_clips_best(conn, cur, bid, against, cap=40, fmt="Test", level="intern
     for f, lv in order:
         if fmt in _WHITE and f not in _WHITE:
             continue          # a white-ball pack never borrows red-ball footage
-        # Cricket-21 rows join at the pack's OWN step only. C21 holds Indian domestic cricket with no
-        # level, so adding it at every step would file the same Ranji footage under a label claiming
-        # a senior or a neighbouring format.
-        src = source if (f, lv) == order[0] else "warehouse"
+        # Cricket-21 rows join at the pack's OWN step only WHEN THE PACK IS A-TEAM. C21 holds Indian
+        # domestic cricket with no level, so joining it at an a-team pack's fallback step would file
+        # Ranji footage under a label claiming senior or neighbouring cricket. That is the case this
+        # guard was written for and it still holds unchanged.
+        #
+        # A SENIOR pack is a different shape (Tom asked for this, 2026-09-13, Brendan Taylor). Its
+        # fallback step is another SENIOR white-ball format, and c21_source already filters by fmt,
+        # so the rows joining a T20I step are genuine T20Is — Zimbabwe's tri-series and World Cup
+        # matches — not domestic cricket wearing a T20I label. Taylor is the case that shows why it
+        # matters: all 200 of his ODI boundaries carry a Fairplay name and none of them PLAY
+        # (Zimbabwe is barely clipped before 2022-23), while his 37 playable boundary clips sit in
+        # C21's T20I record. Warehouse-only at the fallback step left his scoring reel empty.
+        # audit_pack_hands still resolves every clip's series and refuses anything off-format.
+        src = source if ((f, lv) == order[0] or level == "international") else "warehouse"
         for grp in ([against, macro] if macro else [against]):
             if not grp:
                 continue
@@ -607,12 +667,15 @@ def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test", level="intern
         # A batter whose recent record is all Ranji had no scoring or dismissal vision in any pack:
         # Ayush Pandey (698 first-class balls), Yash Rathod (510) and Kumar Kushagra (568), every
         # ball with video, all showed nothing. Merged by match date, as the loaders are.
-        import c21_source
+        # UNION, not merge. The statistics dedupe (merge_with_warehouse) keeps one copy of a match
+        # so averages cannot double — right for numbers, wrong for footage: both sources filmed the
+        # same match and hold DIFFERENT balls of it. Merging here dropped Ben Curran's left-arm
+        # orthodox dismissals from 3 to 0 and Clive Madande's leg-spin scoring from 3 to 0
+        # (2026-09-13), every one of which played when probed. _playable_first caps the reel, so the
+        # union just gives it more to choose from, newest first.
         rows = [r for r in _c21_batter_rows(bid, fmt) if _style_ok(r, against)]
-        wh_sc = c21_source.merge_with_warehouse(
-            wh_sc, [r for r in rows if r.get("legal_ball") == "1" and r.get("bat_score") in ("4", "6")])
-        wh_ds = c21_source.merge_with_warehouse(
-            wh_ds, [r for r in rows if r.get("striker_dismissed") == "1"])
+        wh_sc = wh_sc + [r for r in rows if r.get("legal_ball") == "1" and r.get("bat_score") in ("4", "6")]
+        wh_ds = wh_ds + [r for r in rows if r.get("striker_dismissed") == "1"]
     newest = lambda rs: sorted(rs, key=lambda r: str(r.get("match_date") or ""), reverse=True)
     scoring = _playable_first(_stems(newest(wh_sc)), cap)
     dismissal = _playable_first(_stems(newest(wh_ds)), cap)
@@ -665,6 +728,17 @@ def _scope_label(fmt="Test", level="international"):
     if level == "a-team":
         return {"Test": "first-class A", "ODI": "List A"}.get(fmt, "A-team")
     return {"Test": "Test", "ODI": "ODI", "T20I": "T20I"}.get(fmt, fmt)
+
+
+def _override_type(bid):
+    """The hand-checked bowler type, for a player the matchup store has no label for.
+
+    The store only carries bowlers it can simulate, so a squad-union addition arrives with an
+    empty type and the card opened on the bare word "Bowler" — which is what a reader already
+    knew. The estate keeps its corrections in one place; read them rather than guessing.
+    """
+    ov = BOWLER_TYPE_OVERRIDE.get(str(bid))
+    return BOWLER_TYPE_LABEL.get(ov, ov) if ov else None
 
 
 def allfmt_bowler_facts(conn, cur, bid, type_label, LEN, LIN, scope_label="Test"):
@@ -768,6 +842,8 @@ def main():
     ap.add_argument("--clips-only", action="store_true",
                     help="only add stock/wicket example clips to the existing json (fast, no re-profile)")
     args = ap.parse_args()
+    if PROBE_CLIPS:
+        _require_fairplay()      # fail closed: no SAS means every Fairplay clip reads as missing
 
     dst = os.path.join(HERE, "data", f"opponent_about_{args.opp}.json")
     if args.clips_only:
@@ -783,8 +859,9 @@ def main():
                 for _k in [k for k in entry if k == "clip_format"
                            or k.startswith(("clip_format_", "clip_hand_"))]:
                     entry.pop(_k)
-                st, wk, nb = byh[""]
-                entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nb
+                st, wk, nb, dth = byh[""]
+                (entry["stock_clips"], entry["wicket_clips"],
+                 entry["new_ball_clips"], entry["death_clips"]) = st, wk, nb, dth
                 _store_hand_reels(entry, byh)              # a pack shows only its own batter's hand
                 print(f"  bowler {entry.get('name', bid):<20} stock {len(st)} · wicket {len(wk)} · new {len(nb)}"
                       f"  | lhb {len(byh['lhb'][1])}w · rhb {len(byh['rhb'][1])}w")
@@ -880,21 +957,33 @@ def main():
                 # simulate — so a squad-union addition like Auqib Nabi had none and his card opened
                 # "Bowler - averages 130 km/h". The profile knows what they bowl; use that before
                 # falling back to a word that says nothing.
-                entry = {"name": nm, **distil_bowler(P, ty or P.get("primary_type") or "Bowler")}
-                entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = bowler_clips_from_profile(P)
+                entry = {"name": nm, **distil_bowler(
+                    P, ty or _override_type(bid) or P.get("primary_type") or "Bowler")}
+                _dfrom = DEATH_FROM_OVER if str(args.fmt).upper() == "ODI" else None
+                (entry["stock_clips"], entry["wicket_clips"],
+                 entry["new_ball_clips"], entry["death_clips"]) = bowler_clips_from_profile(
+                     P, death_from=_dfrom)
                 byh, _src = bowler_clips_by_hand(bid, fmt=args.fmt, level=args.level,
                                                  source=args.source)   # a pack shows only its own hand
                 _store_hand_reels(entry, byh)
                 out["bowlers"][bid] = entry
                 tag = f" · stock {len(entry['stock_clips'])} wkt {len(entry['wicket_clips'])} new {len(entry['new_ball_clips'])}"
             else:                                        # thin record -> all-format fallback
-                fb = allfmt_bowler_facts(conn, cur, bid, ty or "Bowler", LEN, LIN,
+                fb = allfmt_bowler_facts(conn, cur, bid,
+                                         ty or _override_type(bid) or "Bowler", LEN, LIN,
                                          scope_label=_scope_label(args.fmt, args.level))
                 if not fb:
-                    # was a bare continue — the player vanished from the file with no line in the
-                    # log, so a card with no notes looked like a rendering fault, not missing data
-                    print(f"  bowler {nm}: SKIPPED — nothing to say in any format")
-                    continue
+                    # Not enough to profile in any format — but there can still be footage, and the
+                    # same fix already exists one branch down for batters (Shams Mulani). This
+                    # fallback reads the WAREHOUSE only and needs 150 rows: Ernest Masuku has ~70
+                    # there and 196 in Cricket-21 with video on 190 of them, so he was dropped from
+                    # every pack while holding the most watchable record of any thin bowler in the
+                    # squad. Keep a footage-only entry; it is deleted below, with a log line, only
+                    # when nothing plays either.
+                    note = [f"Limited {_scope_label(args.fmt, args.level)} record — "
+                            f"not enough balls to profile."]
+                    fb = {"type": ty or _override_type(bid) or "Bowler", "is_pace": None,
+                          "facts": note, "order": 0, "source": "footage-only"}
                 entry = {"name": nm, **fb}
                 # A thin record used to mean NO vision at all, which is the one thing a player can
                 # always use. Step formats until there is something to watch and record which one,
@@ -916,7 +1005,14 @@ def main():
                     # was a bare pass: the card then had no buttons and nothing in the log said why
                     print(f"  ! bowler {nm}: hand reels not built ({type(e).__name__}: {str(e)[:80]})")
                 out["bowlers"][bid] = entry
-                tag = (f" [all-formats fallback · vision {src or 'none'}"
+                if fb.get("source") == "footage-only":
+                    # Nothing to say AND nothing to watch is the only case worth dropping.
+                    _e = out["bowlers"][bid]
+                    if not any(_e.get(k) for k in _e if k.endswith("_clips") or "_clips_" in k):
+                        del out["bowlers"][bid]
+                        print(f"  bowler {nm}: SKIPPED — nothing to say or show in any format")
+                        continue
+                tag = (f" [{fb.get('source')} · vision {src or 'none'}"
                        f" · stock {len(st)} wkt {len(wk)}]")
             print(f"  bowler {nm}: {len(out['bowlers'][bid]['facts'])} facts{tag}")
         except Exception as e:

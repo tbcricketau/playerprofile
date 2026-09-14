@@ -108,7 +108,7 @@ def main():
         if fmt == "ODI":
             from odi_report import render_odi_report
             return render_odi_report(bid, out_dir=out_dir, target_country=target_country,
-                                     level=args.level)
+                                     level=args.level, source=args.source)
         from t20_report import render_t20_report
         return render_t20_report(bid, out_dir=out_dir, target_country=target_country)
 

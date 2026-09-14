@@ -123,8 +123,8 @@ def _grid_figs(legal, off_pace):
 
 def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
                       with_playlists: bool = True, target_country: str | None = "Australia",
-                      level: str = "international") -> str:
-    P = build_odi_profile(str(bowler_id), level=level)
+                      level: str = "international", source: str = "warehouse") -> str:
+    P = build_odi_profile(str(bowler_id), level=level, source=source)
     if P.get("empty"):
         raise ValueError(f"No ODI data for bowler {bowler_id}")
     legal = [r for r in P["raw"] if r["is_legal"]]

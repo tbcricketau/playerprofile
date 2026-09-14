@@ -67,3 +67,5 @@ site_gated/
 # Local snapshots taken before a merge/refresh overwrites a data file. Keep them on disk
 # (they are the undo for a build that can't be un-run) but never commit them.
 *.bak-*
+# Same, for a snapshot taken when a run failed part-way (.bad-auth-DATE).
+*.bad-*

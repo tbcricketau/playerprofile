@@ -781,6 +781,7 @@ def _opp_card(bid, name, sub, facts, vision_href, h2h_row, h2h_verb, opp_vision=
         lines.append('<p class="cohort">Not enough data on this opponent yet.</p>')
     watch = []
     all_kinds = (("stock", "Stock ball"), ("wicket", "Wicket balls"), ("new_ball", "New ball"),
+                 ("death", "Death overs"),
                  ("scoring", "Scoring shots"), ("dismissal", "Dismissals"),
                  ("footage", "Footage"))       # hand-supplied — the only vision for uncapped players
     show = [(k, l) for k, l in all_kinds if kinds is None or k in kinds]
@@ -990,6 +991,12 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                               ("stock_rhb", "stockR", "Stock ball to right-handers"),
                               ("wicket_rhb", "wktR", "Wicket balls to right-handers"),
                               ("new_ball_rhb", "nbR", "New ball to right-handers"),
+                              # Death overs (41+) — the mirror of the new-ball reel, ODI packs only.
+                              # Keys are dth/dthL/dthR so audit_pack_hands collects and hand-checks
+                              # them like every other bowler reel.
+                              ("death", "dth", "Death overs"),
+                              ("death_lhb", "dthL", "Death overs to left-handers"),
+                              ("death_rhb", "dthR", "Death overs to right-handers"),
                               ("scoring", "sco", "Scoring shots"), ("dismissal", "dsm", "Dismissals"),
                               ("scoring_pace", "scop", "Scoring shots vs pace"),
                               ("dismissal_pace", "dsmp", "Dismissals vs pace"),
@@ -1176,15 +1183,18 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                 facts.append(orp)
             # bowler card: bowling vision only. Top-order batters (rec.new_ball_footage) also get the
             # New-ball playlist for bowlers who take the new ball (built into opp_vision when clips exist).
-            bkinds = ("stock", "wicket", "new_ball", "footage") if rec.get("new_ball_footage") \
-                else ("stock", "wicket", "footage")
+            # "death" is offered to every batter, not gated on new_ball_footage: who bowls the last
+            # ten overs matters to the whole order, not just the top of it. The button only renders
+            # where the reel actually has clips, so a bowler who never bowls there shows nothing.
+            bkinds = ("stock", "wicket", "new_ball", "death", "footage") \
+                if rec.get("new_ball_footage") else ("stock", "wicket", "death", "footage")
             # their bowling footage, filtered to OUR batter's hand — a right-hander has no use for
             # the to-left-handers reel
             # scope the reels to OUR batter's hand — the stock ball, the wicket balls and the angle
             # all change between bowling to a left-hander and a right-hander
             ov = dict(opp_vision)
             lim = set()
-            for _k in ("stock", "wicket", "new_ball"):
+            for _k in ("stock", "wicket", "new_ball", "death"):
                 # NO fallback to the pooled reel. Ebadot Hossain has 10 wicket clips to left-handers
                 # and none of them resolve to a playable blob, so a pooled fallback served a
                 # left-hander's pack 40 wicket balls that were all to right-handers. Better to show
@@ -1208,7 +1218,7 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
             # reel on its own, so one button can be T20I footage while the one beside it is ODI —
             # and a hand with no footage at all may show the other hand's, which the button names.
             xh, gen = {}, set()
-            for _k in ("stock", "wicket", "new_ball"):
+            for _k in ("stock", "wicket", "new_ball", "death"):
                 if not ov.get((bid, _k)):
                     continue
                 _kf = ab.get(f"clip_format_{_k}_{hand}")
@@ -1315,6 +1325,15 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                         lim.add(_k)
                 if _h:
                     ov[(bid, _k)] = _h
+                else:
+                    # NO pooled fallback — the same rule the batting packs follow for bowler reels.
+                    # _build_vision builds an unscoped `sco_{id}` / `dsm_{id}` playlist for every
+                    # batter, and `ov = dict(opp_vision)` copies it in before this loop runs, so a
+                    # batter with no footage against this bowler's type kept the pooled reel and the
+                    # card showed it unstarred. Zampa's leg-spin pack served Brad Evans scoring off
+                    # Asitha Fernando, a right-arm quick (found by Tom, 2026-09-13). Showing nothing
+                    # beats showing the wrong bowling type.
+                    ov.pop((bid, _k), None)
             if lim:
                 starred.add(bid)
             fh = _manual_for(manual_href, bid, group)
@@ -1674,11 +1693,14 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
             a = about_bowl.get(bid) or {}
             opp_clips.setdefault(bid, {}).update(
                 {"stock": a.get("stock_clips") or [], "wicket": a.get("wicket_clips") or [],
-                 "new_ball": a.get("new_ball_clips") or []})
+                 "new_ball": a.get("new_ball_clips") or [],
+                 "death": a.get("death_clips") or []})
             # per batter hand — the stock ball, the wicket balls and the angle all change between
-            # bowling to a left-hander and a right-hander, so a pack must show only its own hand
+            # bowling to a left-hander and a right-hander, so a pack must show only its own hand.
+            # Death overs are hand-scoped for the same reason: the ball a bowler goes to at the
+            # death against a left-hander is not the one they go to against a right-hander.
             for _h in ("lhb", "rhb"):
-                for _k in ("stock", "wicket", "new_ball"):
+                for _k in ("stock", "wicket", "new_ball", "death"):
                     opp_clips[bid][f"{_k}_{_h}"] = a.get(f"{_k}_clips_{_h}") or []
                     # a reel standing in from the OTHER hand, declared by build_opponent_about when
                     # this hand has no footage at all — it gets its own playlist key (stockXR_) and

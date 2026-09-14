@@ -68,7 +68,26 @@ PLAYER_MAP = os.path.join(HERE, "data", "c21_player_map.json")
 # (Oct-Nov 2025) are not in the warehouse at all, and their competition name does not contain
 # "India A". Australia A in India 2025 is deliberately NOT added — the warehouse holds it fully
 # tracked with video, and C21 has it barely coded.
-INDIA_DOMESTIC = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South Africa A in India")
+# Zimbabwe added 2026-09-13. Innocent Kaia had 42 balls against leg spin in the warehouse and not
+# one of them in Fairplay storage, so his card carried no playable footage at all — and he was not
+# alone. C21 holds Zimbabwe's last 18 months coded with video on every ball, so 59 matches were
+# pulled for the VISION (the published numbers were deliberately left alone). These patterns cover
+# the 22 competitions that came with them: home series ("... in Zimbabwe"), tours ("Zimbabwe in
+# ..."), the A-team fixtures, the domestic tri-series and the T20 World Cup legs they played.
+SERVED_COMPETITIONS = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South Africa A in India",
+                       "in Zimbabwe", "Zimbabwe in", "Zimbabwe A", "Zimbabwe Twenty20",
+                       # "ICC Mens ...", not "T20 World Cup" and not "Mens T20 World Cup": a bare
+                       # "T20 World Cup" matched the ICC Womens T20 World Cup 2024 match pulled for
+                       # other work, and so does "Mens" — "Womens" contains it. These are substring
+                       # tests, so the pattern has to carry the distinguishing prefix. Nothing leaks
+                       # today (the reels select by player id), but a loose pattern here is how a
+                       # record quietly acquires cricket that is not its own.
+                       "ICC Mens T20 World Cup", "T20I Tri-Series")
+
+# The old name, kept so nothing that imports it breaks. It was only ever India by accident of what
+# had been pulled, and a list called INDIA_DOMESTIC is the last place anyone would look when a
+# Zimbabwe reel comes back empty.
+INDIA_DOMESTIC = SERVED_COMPETITIONS
 
 
 def merge_with_warehouse(base, extra):

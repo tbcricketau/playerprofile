@@ -220,7 +220,7 @@ def search_bowlers(name_like: str) -> list:
 @st.cache_data(ttl=3600)
 def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test",
                            level: str = "international",
-                           source: str = "warehouse") -> list:
+                           source: str = "warehouse", dedupe: bool = True) -> list:
     """All deliveries for a bowler in one format at one level, with fields needed for profiling.
 
     fmt:    'Test' | 'ODI' | 'T20I' | 'T20'  — the shape of the game.
@@ -242,9 +242,13 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
         if source == "c21":
             return extra[:dev_limit] if dev_limit > 0 else extra
         base = load_bowler_deliveries(bowler_id, dev_limit, fmt, level, "warehouse")
-        # never count a match held by both sources twice — see c21_source.merge_with_warehouse
-        both = sorted(c21_source.merge_with_warehouse(base, extra),
-                      key=lambda r: str(r.get("match_date") or ""))
+        # STATISTICS dedupe, CLIPS do not. A match held by both sources must count once or the
+        # averages double (c21_source.merge_with_warehouse) — but the two sources hold DIFFERENT
+        # footage of that match, and dropping one side throws playable clips away. Zimbabwe's C21
+        # pull cost Sikandar Raza 11 of 14 wicket balls to left-handers that way (2026-09-13), all
+        # of which played. Clip builders pass dedupe=False and take the union.
+        rows = c21_source.merge_with_warehouse(base, extra) if dedupe else base + extra
+        both = sorted(rows, key=lambda r: str(r.get("match_date") or ""))
         return both[:dev_limit] if dev_limit > 0 else both
     conn, cursor = set_conn_cursor()
     top_clause = f"TOP {dev_limit}" if dev_limit > 0 else ""

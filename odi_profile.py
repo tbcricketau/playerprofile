@@ -347,7 +347,7 @@ _SUPP_MIN_TRACKED = 60          # tracked balls below which the ODI record is to
 _SUPP_MIN_SPEEDS = 40           # speed-tracked balls below which the pace cards are too thin
 
 
-def _supplement_rows(bowler_id, legal, level="international"):
+def _supplement_rows(bowler_id, legal, level="international", source="warehouse"):
     """Extra white-ball rows to READ MECHANICS from when the ODI sample is thin: (rows, label).
 
     T20I first, then the wider T20 pool (all major leagues) — nearest neighbour first. Returns
@@ -366,7 +366,11 @@ def _supplement_rows(bowler_id, legal, level="international"):
     steps = (("T20", "T20"),) if level == "a-team" else (("T20I", "T20I"), ("T20", "T20"))
     for fmt, label in steps:
         try:
-            extra = process_rows(load_bowler_deliveries(str(bowler_id), fmt=fmt, level=level))
+            # source travels here too: fixing only build_odi_profile would leave the supplement
+            # warehouse-only, so a bowler thin in the warehouse would read C21 for his ODI rows and
+            # then silently fall back to warehouse-only T20I/T20 to map his mechanics.
+            extra = process_rows(load_bowler_deliveries(str(bowler_id), fmt=fmt, level=level,
+                                                        source=source))
         except Exception:
             continue
         extra = [r for r in extra if r.get("is_legal")]
@@ -375,8 +379,14 @@ def _supplement_rows(bowler_id, legal, level="international"):
     return [], ""
 
 
-def build_odi_profile(bowler_id: str, level: str = "international") -> dict:
-    raw = process_rows(load_bowler_deliveries(str(bowler_id), fmt="ODI", level=level))
+def build_odi_profile(bowler_id: str, level: str = "international",
+                      source: str = "warehouse") -> dict:
+    """`source` reaches the loaders so an ODI report can be built from Cricket-21 as well as the
+    warehouse. build_reports accepted --source and threw it away on the ODI path: Ernest Masuku
+    rendered on 66 warehouse balls with 7 clips while 196 C21 balls with video on 190 sat unused
+    (2026-09-13). The Test path had passed it since the source axis landed."""
+    raw = process_rows(load_bowler_deliveries(str(bowler_id), fmt="ODI", level=level,
+                                              source=source))
     if not raw:
         return {"bowler_id": str(bowler_id), "name": f"Bowler {bowler_id}", "empty": True}
 
@@ -408,7 +418,7 @@ def build_odi_profile(bowler_id: str, level: str = "international") -> dict:
 
     # Mechanical measures may borrow from T20 when the ODI record is thin; outcome measures above
     # (runs/wkts/economy) are computed from ODI ONLY and stay that way.
-    supp_rows, supp_label = _supplement_rows(bowler_id, legal, level)
+    supp_rows, supp_label = _supplement_rows(bowler_id, legal, level, source)
     mech = legal + supp_rows                      # pitch maps, beehives, speeds read from this
     speeds = sorted(_num(mech, "ball_speed_n"))
 
