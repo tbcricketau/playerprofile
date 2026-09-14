@@ -10,7 +10,7 @@
    "round_rhb": 27.956989247311824,
    "new_ball": 9.090909090909092,
    "facts": [
-    "Off-spin — averages 88 km/h.",
+    "Off-spin \u2014 averages 88 km/h.",
     "Stock ball: full on the stumps (24% of what they bowl).",
     "Takes most of their wickets good length, around 6th stump."
    ],
@@ -440,7 +440,7 @@
    "round_rhb": 4.968944099378882,
    "new_ball": 40.0,
    "facts": [
-    "Right pace — averages 132 km/h, tops 140.",
+    "Right pace \u2014 averages 132 km/h, tops 140.",
     "Stock ball: a good length wide outside off (21% of what they bowl).",
     "Takes most of their wickets full, around wide of 6th.",
     "Often takes the new ball."
@@ -799,7 +799,7 @@
    "round_rhb": 0.4754358161648178,
    "new_ball": 66.66666666666666,
    "facts": [
-    "Right pace — averages 131 km/h, tops 138.",
+    "Right pace \u2014 averages 131 km/h, tops 138.",
     "Stock ball: a good length wide outside off (24% of what they bowl).",
     "Takes most of their wickets full, around 6th stump.",
     "Usually takes the new ball."
@@ -1713,7 +1713,7 @@
    "round_rhb": 96.88149688149689,
    "new_ball": 12.5,
    "facts": [
-    "Left Orthodox — averages 83 km/h.",
+    "Left Orthodox \u2014 averages 83 km/h.",
     "Stock ball: full on the stumps (39% of what they bowl).",
     "Takes most of their wickets full, around stumps."
    ],
@@ -2079,7 +2079,7 @@
    "round_rhb": 5.633802816901409,
    "new_ball": 50.0,
    "facts": [
-    "Right Medium — averages 136 km/h, tops 142.",
+    "Right Medium \u2014 averages 136 km/h, tops 142.",
     "Stock ball: full wide outside off (25% of what they bowl).",
     "Round the wicket, their stock ball is a good length wide outside off.",
     "Takes most of their wickets good length.",
@@ -2874,9 +2874,9 @@
    "round_rhb": 0.0,
    "new_ball": 66.66666666666666,
    "facts": [
-    "Right Medium — averages 124 km/h, tops 130.",
+    "Right Medium \u2014 averages 124 km/h, tops 130.",
     "Stock ball: full wide outside off (25% of what they bowl).",
-    "By angle — over the wicket, full wide outside off; round the wicket, a good length wide outside off.",
+    "By angle \u2014 over the wicket, full wide outside off; round the wicket, a good length wide outside off.",
     "Takes most of their wickets full, around wide of 6th.",
     "Usually takes the new ball."
    ],
@@ -3660,547 +3660,302 @@
     }
    ]
   },
-  "5181018": {
-   "name": "Vijaykumar Vyshak",
-   "type": "Right Medium",
-   "is_pace": true,
+  "6381322": {
+   "name": "Tripurana Vijay",
+   "type": "Off Spin",
+   "is_pace": false,
    "arm": "right",
-   "round_lhb": 15.942028985507244,
-   "round_rhb": 0.0,
-   "new_ball": 75.0,
+   "round_lhb": 96.53179190751445,
+   "round_rhb": 29.411764705882355,
+   "new_ball": 0.0,
    "facts": [
-    "Right Medium — averages 131 km/h, tops 137.",
-    "Stock ball: a good length wide outside off (22% of what they bowl).",
-    "Takes most of their wickets good length, around 6th stump.",
-    "Usually takes the new ball."
+    "Off Spin \u2014 averages 85 km/h.",
+    "Stock ball: full outside off (24% of what they bowl)."
    ],
-   "order": 390,
+   "order": 348,
    "stock_clips": [
     {
-     "delivery_id": "291494",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_9.MP4"
+     "delivery_id": "303203",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_55.MP4"
     },
     {
-     "delivery_id": "291496",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_11.MP4"
+     "delivery_id": "303206",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_58.MP4"
     },
     {
-     "delivery_id": "291506",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_21.MP4"
+     "delivery_id": "303207",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_59.MP4"
     },
     {
-     "delivery_id": "291507",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_22.MP4"
+     "delivery_id": "303218",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_70.MP4"
     },
     {
-     "delivery_id": "291508",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_23.MP4"
+     "delivery_id": "303219",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_71.MP4"
     },
     {
-     "delivery_id": "291516",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_31.MP4"
+     "delivery_id": "303286",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_138.MP4"
     },
     {
-     "delivery_id": "291517",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_32.MP4"
+     "delivery_id": "303287",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_139.MP4"
     },
     {
-     "delivery_id": "291533",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_48.MP4"
+     "delivery_id": "303319",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_171.MP4"
     },
     {
-     "delivery_id": "291565",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_80.MP4"
+     "delivery_id": "303320",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_172.MP4"
     },
     {
-     "delivery_id": "291576",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_91.MP4"
+     "delivery_id": "303335",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_187.MP4"
+    },
+    {
+     "delivery_id": "303358",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_210.MP4"
+    },
+    {
+     "delivery_id": "303359",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_211.MP4"
+    },
+    {
+     "delivery_id": "303371",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_223.MP4"
+    },
+    {
+     "delivery_id": "303372",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_224.MP4"
+    },
+    {
+     "delivery_id": "303392",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_244.MP4"
+    },
+    {
+     "delivery_id": "303395",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_247.MP4"
+    },
+    {
+     "delivery_id": "303403",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_255.MP4"
+    },
+    {
+     "delivery_id": "303408",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_260.MP4"
+    },
+    {
+     "delivery_id": "303418",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_270.MP4"
+    },
+    {
+     "delivery_id": "303429",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_281.MP4"
     }
    ],
    "wicket_clips": [
     {
-     "delivery_id": "292524",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_1039.MP4"
+     "delivery_id": "303335",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_187.MP4"
     },
     {
-     "delivery_id": "293119",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_18.MP4"
-    },
-    {
-     "delivery_id": "288885",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/2nd%20Innings/Utt%20Vs%20KA%2015-02-262_183.MP4"
-    },
-    {
-     "delivery_id": "289125",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/2nd%20Innings/Utt%20Vs%20KA%2015-02-262_423.MP4"
-    },
-    {
-     "delivery_id": "289144",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/2nd%20Innings/Utt%20Vs%20KA%2015-02-262_442.MP4"
-    },
-    {
-     "delivery_id": "289699",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/4th%20Innings/Utt%20Vs%20KA%2015-02-264_9.MP4"
+     "delivery_id": "281424",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_262.MP4"
     }
    ],
-   "new_ball_clips": [
-    {
-     "delivery_id": "291492",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_7.MP4"
-    },
-    {
-     "delivery_id": "291493",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_8.MP4"
-    },
-    {
-     "delivery_id": "291494",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_9.MP4"
-    },
-    {
-     "delivery_id": "291495",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_10.MP4"
-    },
-    {
-     "delivery_id": "291496",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_11.MP4"
-    },
-    {
-     "delivery_id": "291497",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_12.MP4"
-    },
-    {
-     "delivery_id": "291504",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_19.MP4"
-    },
-    {
-     "delivery_id": "291505",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_20.MP4"
-    },
-    {
-     "delivery_id": "291506",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_21.MP4"
-    },
-    {
-     "delivery_id": "291507",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_22.MP4"
-    },
-    {
-     "delivery_id": "291508",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_23.MP4"
-    },
-    {
-     "delivery_id": "291509",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_24.MP4"
-    },
-    {
-     "delivery_id": "291516",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_31.MP4"
-    },
-    {
-     "delivery_id": "291517",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_32.MP4"
-    },
-    {
-     "delivery_id": "291518",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_33.MP4"
-    },
-    {
-     "delivery_id": "291519",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_34.MP4"
-    },
-    {
-     "delivery_id": "291520",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_35.MP4"
-    },
-    {
-     "delivery_id": "291521",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_36.MP4"
-    },
-    {
-     "delivery_id": "291528",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_43.MP4"
-    },
-    {
-     "delivery_id": "291529",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_44.MP4"
-    },
-    {
-     "delivery_id": "291530",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_45.MP4"
-    },
-    {
-     "delivery_id": "291531",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_46.MP4"
-    },
-    {
-     "delivery_id": "291532",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_47.MP4"
-    },
-    {
-     "delivery_id": "291533",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_48.MP4"
-    },
-    {
-     "delivery_id": "293102",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_1.MP4"
-    },
-    {
-     "delivery_id": "293103",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_2.MP4"
-    },
-    {
-     "delivery_id": "293104",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_3.MP4"
-    },
-    {
-     "delivery_id": "293105",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_4.MP4"
-    },
-    {
-     "delivery_id": "293106",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_5.MP4"
-    },
-    {
-     "delivery_id": "293107",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_6.MP4"
-    },
-    {
-     "delivery_id": "293114",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_13.MP4"
-    },
-    {
-     "delivery_id": "293115",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_14.MP4"
-    },
-    {
-     "delivery_id": "293116",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_15.MP4"
-    },
-    {
-     "delivery_id": "293117",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_16.MP4"
-    },
-    {
-     "delivery_id": "293118",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_17.MP4"
-    },
-    {
-     "delivery_id": "293119",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_18.MP4"
-    },
-    {
-     "delivery_id": "293126",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_25.MP4"
-    },
-    {
-     "delivery_id": "293127",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_26.MP4"
-    },
-    {
-     "delivery_id": "293128",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_27.MP4"
-    },
-    {
-     "delivery_id": "293129",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_28.MP4"
-    }
-   ],
+   "new_ball_clips": [],
+   "death_clips": [],
    "stock_clips_lhb": [
     {
-     "delivery_id": "291600",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_115.MP4"
+     "delivery_id": "303284",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_136.MP4"
     },
     {
-     "delivery_id": "291601",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_116.MP4"
+     "delivery_id": "303285",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_137.MP4"
     },
     {
-     "delivery_id": "291602",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_117.MP4"
+     "delivery_id": "303330",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_182.MP4"
     },
     {
-     "delivery_id": "291603",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_118.MP4"
+     "delivery_id": "303331",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_183.MP4"
     },
     {
-     "delivery_id": "291604",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_119.MP4"
+     "delivery_id": "303332",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_184.MP4"
     },
     {
-     "delivery_id": "291605",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_120.MP4"
+     "delivery_id": "303343",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_195.MP4"
     },
     {
-     "delivery_id": "291613",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_128.MP4"
+     "delivery_id": "303345",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_197.MP4"
     },
     {
-     "delivery_id": "291614",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_129.MP4"
+     "delivery_id": "303355",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_207.MP4"
     },
     {
-     "delivery_id": "291695",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_210.MP4"
+     "delivery_id": "303356",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_208.MP4"
     },
     {
-     "delivery_id": "291706",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_221.MP4"
+     "delivery_id": "303360",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_212.MP4"
+    },
+    {
+     "delivery_id": "303367",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_219.MP4"
+    },
+    {
+     "delivery_id": "303368",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_220.MP4"
+    },
+    {
+     "delivery_id": "303381",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_233.MP4"
+    },
+    {
+     "delivery_id": "303383",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_235.MP4"
+    },
+    {
+     "delivery_id": "303384",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_236.MP4"
+    },
+    {
+     "delivery_id": "303391",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_243.MP4"
+    },
+    {
+     "delivery_id": "303393",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_245.MP4"
+    },
+    {
+     "delivery_id": "303394",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_246.MP4"
+    },
+    {
+     "delivery_id": "303396",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_248.MP4"
+    },
+    {
+     "delivery_id": "303404",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_256.MP4"
     }
    ],
    "wicket_clips_lhb": [
     {
-     "delivery_id": "293119",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_18.MP4"
+     "delivery_id": "303335",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_187.MP4"
+    },
+    {
+     "delivery_id": "281424",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_262.MP4"
     }
    ],
-   "new_ball_clips_lhb": [
-    {
-     "delivery_id": "293115",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_14.MP4"
-    },
-    {
-     "delivery_id": "293116",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_15.MP4"
-    },
-    {
-     "delivery_id": "293117",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_16.MP4"
-    },
-    {
-     "delivery_id": "293118",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_17.MP4"
-    },
-    {
-     "delivery_id": "293119",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_18.MP4"
-    }
-   ],
+   "new_ball_clips_lhb": [],
+   "death_clips_lhb": [],
    "stock_clips_rhb": [
     {
-     "delivery_id": "291494",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_9.MP4"
+     "delivery_id": "303203",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_55.MP4"
     },
     {
-     "delivery_id": "291496",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_11.MP4"
+     "delivery_id": "303219",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_71.MP4"
     },
     {
-     "delivery_id": "291506",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_21.MP4"
+     "delivery_id": "303335",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_187.MP4"
     },
     {
-     "delivery_id": "291507",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_22.MP4"
+     "delivery_id": "303524",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_376.MP4"
     },
     {
-     "delivery_id": "291508",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_23.MP4"
+     "delivery_id": "303572",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_424.MP4"
     },
     {
-     "delivery_id": "291516",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_31.MP4"
+     "delivery_id": "281397",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_235.MP4"
     },
     {
-     "delivery_id": "291517",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_32.MP4"
+     "delivery_id": "281398",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_236.MP4"
     },
     {
-     "delivery_id": "291533",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_48.MP4"
+     "delivery_id": "281399",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_237.MP4"
     },
     {
-     "delivery_id": "291565",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_80.MP4"
+     "delivery_id": "281401",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_239.MP4"
     },
     {
-     "delivery_id": "291576",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_91.MP4"
+     "delivery_id": "281409",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_247.MP4"
+    },
+    {
+     "delivery_id": "281410",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_248.MP4"
+    },
+    {
+     "delivery_id": "281411",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_249.MP4"
+    },
+    {
+     "delivery_id": "281412",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_250.MP4"
+    },
+    {
+     "delivery_id": "281413",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_251.MP4"
+    },
+    {
+     "delivery_id": "281421",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_259.MP4"
+    },
+    {
+     "delivery_id": "281436",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_274.MP4"
+    },
+    {
+     "delivery_id": "281450",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_288.MP4"
+    },
+    {
+     "delivery_id": "281675",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_513.MP4"
+    },
+    {
+     "delivery_id": "281676",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_514.MP4"
+    },
+    {
+     "delivery_id": "281687",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_525.MP4"
     }
    ],
    "wicket_clips_rhb": [
     {
-     "delivery_id": "292524",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_1039.MP4"
+     "delivery_id": "303335",
+     "url": "https://hdvod.cricket-21.com/Volume8/2026/SEPTEMBER%202026/Match%20Videos/Duleep%20Trophy%202026/Final%20East%20Zone%20vs%20South%20Zone%2006.09.2026/1st%20Innings/EZ%20Vs%20SZ%2006-09-261_187.MP4"
     },
     {
-     "delivery_id": "288885",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/2nd%20Innings/Utt%20Vs%20KA%2015-02-262_183.MP4"
-    },
-    {
-     "delivery_id": "289125",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/2nd%20Innings/Utt%20Vs%20KA%2015-02-262_423.MP4"
-    },
-    {
-     "delivery_id": "289144",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/2nd%20Innings/Utt%20Vs%20KA%2015-02-262_442.MP4"
-    },
-    {
-     "delivery_id": "289699",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Semifinal%201%20Uttarakhand%20vs%20Karnataka%2015.02.2026/4th%20Innings/Utt%20Vs%20KA%2015-02-264_9.MP4"
+     "delivery_id": "281424",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Quarter%20Final%203%20Bengal%20vs%20Andhra%2006.02.2026/2nd%20Innings/bg%20Vs%20AN%2006-02-262_262.MP4"
     }
    ],
-   "new_ball_clips_rhb": [
-    {
-     "delivery_id": "291492",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_7.MP4"
-    },
-    {
-     "delivery_id": "291493",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_8.MP4"
-    },
-    {
-     "delivery_id": "291494",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_9.MP4"
-    },
-    {
-     "delivery_id": "291495",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_10.MP4"
-    },
-    {
-     "delivery_id": "291496",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_11.MP4"
-    },
-    {
-     "delivery_id": "291497",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_12.MP4"
-    },
-    {
-     "delivery_id": "291504",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_19.MP4"
-    },
-    {
-     "delivery_id": "291505",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_20.MP4"
-    },
-    {
-     "delivery_id": "291506",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_21.MP4"
-    },
-    {
-     "delivery_id": "291507",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_22.MP4"
-    },
-    {
-     "delivery_id": "291508",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_23.MP4"
-    },
-    {
-     "delivery_id": "291509",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_24.MP4"
-    },
-    {
-     "delivery_id": "291516",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_31.MP4"
-    },
-    {
-     "delivery_id": "291517",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_32.MP4"
-    },
-    {
-     "delivery_id": "291518",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_33.MP4"
-    },
-    {
-     "delivery_id": "291519",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_34.MP4"
-    },
-    {
-     "delivery_id": "291520",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_35.MP4"
-    },
-    {
-     "delivery_id": "291521",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_36.MP4"
-    },
-    {
-     "delivery_id": "291528",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_43.MP4"
-    },
-    {
-     "delivery_id": "291529",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_44.MP4"
-    },
-    {
-     "delivery_id": "291530",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_45.MP4"
-    },
-    {
-     "delivery_id": "291531",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_46.MP4"
-    },
-    {
-     "delivery_id": "291532",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_47.MP4"
-    },
-    {
-     "delivery_id": "291533",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/1st%20Innings/J%20&%20K%20Vs%20KA%2024-02-261_48.MP4"
-    },
-    {
-     "delivery_id": "293102",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_1.MP4"
-    },
-    {
-     "delivery_id": "293103",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_2.MP4"
-    },
-    {
-     "delivery_id": "293104",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_3.MP4"
-    },
-    {
-     "delivery_id": "293105",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_4.MP4"
-    },
-    {
-     "delivery_id": "293106",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_5.MP4"
-    },
-    {
-     "delivery_id": "293107",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_6.MP4"
-    },
-    {
-     "delivery_id": "293114",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_13.MP4"
-    },
-    {
-     "delivery_id": "293126",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_25.MP4"
-    },
-    {
-     "delivery_id": "293127",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_26.MP4"
-    },
-    {
-     "delivery_id": "293128",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_27.MP4"
-    },
-    {
-     "delivery_id": "293129",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_28.MP4"
-    },
-    {
-     "delivery_id": "293130",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_29.MP4"
-    },
-    {
-     "delivery_id": "293131",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_30.MP4"
-    },
-    {
-     "delivery_id": "293138",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_37.MP4"
-    },
-    {
-     "delivery_id": "293139",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_38.MP4"
-    },
-    {
-     "delivery_id": "293140",
-     "url": "https://hdvod.cricket-21.com/Volume7/2026/FEBRUARY%202026/Match%20Videos/Ranji%20Trophy%20202526/Final%20Jammu%20&%20Kashmir%20vs%20Karnataka%2024.02.2026/3rd%20Innings/J%20&%20K%20Vs%20KA%2024-02-263_39.MP4"
-    }
-   ]
+   "new_ball_clips_rhb": [],
+   "death_clips_rhb": [],
+   "clip_hand_wicket_lhb": "rhb"
   }
  },
  "batters": {
@@ -4209,7 +3964,7 @@
    "hand": "RHB",
    "facts": [
     "Main scoring shot is the work/nudge.",
-    "Handles spin well — pace is the more likely way through.",
+    "Handles spin well \u2014 pace is the more likely way through.",
     "Most often out caught (78% of dismissals)."
    ],
    "order": 446,
@@ -5954,7 +5709,7 @@
    "facts": [
     "Scores mainly through the leg side; go-to shot is the drive.",
     "Most often out caught (52% of dismissals).",
-    "Vulnerable early — worth attacking in their first 30 balls."
+    "Vulnerable early \u2014 worth attacking in their first 30 balls."
    ],
    "order": 1209,
    "facts_pace": [
@@ -9048,7 +8803,7 @@
    "hand": "RHB",
    "facts": [
     "Main scoring shot is the work/nudge.",
-    "Handles spin well — pace is the more likely way through.",
+    "Handles spin well \u2014 pace is the more likely way through.",
     "Most often out caught (67% of dismissals)."
    ],
    "order": 299,
@@ -11561,7 +11316,7 @@
    "facts": [
     "Scores mainly down the ground; go-to shot is the drive.",
     "Most often out bowled (33% of dismissals).",
-    "Vulnerable early — worth attacking in their first 30 balls."
+    "Vulnerable early \u2014 worth attacking in their first 30 balls."
    ],
    "order": 262,
    "facts_pace": [
@@ -12201,13 +11956,13 @@
    "name": "Shams Mulani",
    "hand": "LHB",
    "facts": [
-    "Limited first-class A record — not enough balls to profile."
+    "Limited first-class A record \u2014 not enough balls to profile."
    ],
    "facts_pace": [
-    "Limited first-class A record — not enough balls to profile."
+    "Limited first-class A record \u2014 not enough balls to profile."
    ],
    "facts_spin": [
-    "Limited first-class A record — not enough balls to profile."
+    "Limited first-class A record \u2014 not enough balls to profile."
    ],
    "order": 0,
    "source": "footage-only",

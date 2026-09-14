@@ -112,9 +112,9 @@
        "hand": "lhb"
       },
       {
-       "id": "5181018",
+       "id": "6381322",
        "tier": "squad",
-       "name": "Vijaykumar Vyshak",
+       "name": "Tripurana Vijay",
        "hand": "lhb"
       }
      ]
@@ -163,9 +163,9 @@
        "hand": "rhb"
       },
       {
-       "id": "5181018",
+       "id": "6381322",
        "tier": "squad",
-       "name": "Vijaykumar Vyshak",
+       "name": "Tripurana Vijay",
        "hand": "rhb"
       }
      ]
@@ -189,11 +189,6 @@
        "name": "Sikandar Raza"
       },
       {
-       "id": "4352462",
-       "tier": "xi",
-       "name": "Richard Ngarava"
-      },
-      {
        "id": "3980005",
        "tier": "xi",
        "name": "Blessing Muzarabani"
@@ -209,9 +204,9 @@
        "name": "Wellington Masakadza"
       },
       {
-       "id": "2950235",
-       "tier": "squad",
-       "name": "Sean Williams"
+       "id": "4354351",
+       "tier": "xi",
+       "name": "Graeme Cremer"
       },
       {
        "id": "3550060",
@@ -219,14 +214,19 @@
        "name": "Wesley Madhevere"
       },
       {
-       "id": "5180198",
+       "id": "2540092",
        "tier": "squad",
-       "name": "Tanaka Chivanga"
+       "name": "Ryan Burl"
       },
       {
        "id": "6380303",
        "tier": "squad",
        "name": "Newman Nyamhuri"
+      },
+      {
+       "id": "5460383",
+       "tier": "squad",
+       "name": "Ernest Masuku"
       }
      ]
     }

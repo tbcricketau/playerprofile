@@ -418,7 +418,13 @@
   "packs": [
    "batting",
    "bowling"
-  ]
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "left_orthodox"
+  }
  },
  "3080018": {
   "name": "Adam Zampa",

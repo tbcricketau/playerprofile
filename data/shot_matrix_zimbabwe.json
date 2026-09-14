@@ -23,14 +23,14 @@
    "Switch hit": 0.0
   },
   {
-   "batter": "Sean Williams",
-   "bid": "2950235",
-   "balls": 1221,
-   "Conventional sweep": 0.4,
+   "batter": "Brendan Taylor",
+   "bid": "340022",
+   "balls": 1175,
+   "Conventional sweep": 0.1,
    "Slog sweep": 0.0,
-   "Reverse sweep": 0.1,
+   "Reverse sweep": 0.0,
    "Paddle": 0.0,
-   "Ramp / scoop": 0.6,
+   "Ramp / scoop": 1.8,
    "Switch hit": 0.0
   },
   {
@@ -42,6 +42,17 @@
    "Reverse sweep": 0.0,
    "Paddle": 0.0,
    "Ramp / scoop": 0.8,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ryan Burl",
+   "bid": "2540092",
+   "balls": 402,
+   "Conventional sweep": 0.2,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.2,
+   "Ramp / scoop": 0.5,
    "Switch hit": 0.0
   },
   {
@@ -67,31 +78,20 @@
    "Switch hit": 0.0
   },
   {
-   "batter": "Brian Bennett",
-   "bid": "5460149",
-   "balls": 269,
+   "batter": "Tadiwanashe Marumani",
+   "bid": "4352623",
+   "balls": 359,
    "Conventional sweep": 0.0,
    "Slog sweep": 0.0,
    "Reverse sweep": 0.0,
    "Paddle": 0.0,
-   "Ramp / scoop": 0.0,
+   "Ramp / scoop": 0.3,
    "Switch hit": 0.0
   },
   {
-   "batter": "Clive Madande",
-   "bid": "5180207",
-   "balls": 217,
-   "Conventional sweep": 0.5,
-   "Slog sweep": 0.5,
-   "Reverse sweep": 0.0,
-   "Paddle": 0.0,
-   "Ramp / scoop": 1.8,
-   "Switch hit": 0.0
-  },
-  {
-   "batter": "Richard Ngarava",
-   "bid": "4352462",
-   "balls": 162,
+   "batter": "Brian Bennett",
+   "bid": "5460149",
+   "balls": 269,
    "Conventional sweep": 0.0,
    "Slog sweep": 0.0,
    "Reverse sweep": 0.0,
@@ -146,12 +146,12 @@
    "Switch hit": 0.0
   },
   {
-   "batter": "Sean Williams",
-   "bid": "2950235",
-   "balls": 1039,
-   "Conventional sweep": 4.9,
-   "Slog sweep": 2.7,
-   "Reverse sweep": 5.4,
+   "batter": "Brendan Taylor",
+   "bid": "340022",
+   "balls": 841,
+   "Conventional sweep": 6.7,
+   "Slog sweep": 1.8,
+   "Reverse sweep": 4.3,
    "Paddle": 0.0,
    "Ramp / scoop": 0.2,
    "Switch hit": 0.2
@@ -165,6 +165,17 @@
    "Reverse sweep": 2.4,
    "Paddle": 1.0,
    "Ramp / scoop": 0.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ryan Burl",
+   "bid": "2540092",
+   "balls": 421,
+   "Conventional sweep": 1.0,
+   "Slog sweep": 1.2,
+   "Reverse sweep": 1.4,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
    "Switch hit": 0.0
   },
   {
@@ -190,34 +201,23 @@
    "Switch hit": 0.0
   },
   {
+   "batter": "Tadiwanashe Marumani",
+   "bid": "4352623",
+   "balls": 123,
+   "Conventional sweep": 8.1,
+   "Slog sweep": 2.4,
+   "Reverse sweep": 4.1,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
    "batter": "Brian Bennett",
    "bid": "5460149",
    "balls": 141,
    "Conventional sweep": 9.9,
    "Slog sweep": 2.1,
    "Reverse sweep": 0.7,
-   "Paddle": 0.0,
-   "Ramp / scoop": 0.0,
-   "Switch hit": 0.0
-  },
-  {
-   "batter": "Clive Madande",
-   "bid": "5180207",
-   "balls": 172,
-   "Conventional sweep": 1.2,
-   "Slog sweep": 3.5,
-   "Reverse sweep": 0.6,
-   "Paddle": 0.0,
-   "Ramp / scoop": 0.0,
-   "Switch hit": 0.0
-  },
-  {
-   "batter": "Richard Ngarava",
-   "bid": "4352462",
-   "balls": 167,
-   "Conventional sweep": 0.0,
-   "Slog sweep": 0.0,
-   "Reverse sweep": 0.0,
    "Paddle": 0.0,
    "Ramp / scoop": 0.0,
    "Switch hit": 0.0

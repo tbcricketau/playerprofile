@@ -16,28 +16,10 @@
     "balls": 688,
     "n_out": 11,
     "bpd": 62.54545454545455,
-    "false_pct": 10.06006006006006,
-    "area": "straight (37% of runs)",
+    "false_pct": 8.89894419306184,
+    "area": "straight (38% of runs)",
     "short": null,
-    "top_out": "Caught in the field (45%)"
-   }
-  },
-  {
-   "bid": "2950235",
-   "name": "Sean Williams",
-   "sub": "LHB · Top order",
-   "balls": 651,
-   "plan": "Plan for off spin: bowl <b>good length pitching on the stumps</b> while <b>drifting in</b>.",
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 651,
-    "n_out": 17,
-    "bpd": 38.294117647058826,
-    "false_pct": 10.507880910683012,
-    "area": "straight (41% of runs)",
-    "short": null,
-    "top_out": "Caught in the field (35%)"
+    "top_out": "Caught in the field (36%)"
    }
   },
   {
@@ -59,39 +41,75 @@
    }
   },
   {
-   "bid": "3550060",
-   "name": "Wesley Madhevere",
+   "bid": "340022",
+   "name": "Brendan Taylor",
    "sub": "RHB · Top order",
-   "balls": 210,
-   "plan": "Plan for off spin: bowl <b>good length pitching outside off</b>.",
+   "balls": 381,
+   "plan": "Plan for off spin: bowl <b>full pitching outside off</b>.",
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 210,
-    "n_out": 5,
-    "bpd": 42.0,
-    "false_pct": 7.960199004975125,
-    "area": "leg (40% of runs)",
+    "balls": 381,
+    "n_out": 8,
+    "bpd": 47.625,
+    "false_pct": 10.084033613445378,
+    "area": "leg (50% of runs)",
     "short": null,
-    "top_out": "Caught in the field (60%)"
+    "top_out": "Caught in the field (62%)"
    }
   },
   {
-   "bid": "5180206",
-   "name": "Brad Evans",
-   "sub": "RHB · Lower order",
-   "balls": 15,
+   "bid": "3550060",
+   "name": "Wesley Madhevere",
+   "sub": "RHB · Top order",
+   "balls": 236,
+   "plan": "Plan for off spin: bowl <b>full pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 236,
+    "n_out": 5,
+    "bpd": 47.2,
+    "false_pct": 8.482142857142858,
+    "area": "leg (39% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (40%)"
+   }
+  },
+  {
+   "bid": "2540092",
+   "name": "Ryan Burl",
+   "sub": "LHB · Middle order",
+   "balls": 239,
+   "plan": "Plan for off spin: bowl <b>full pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 239,
+    "n_out": 6,
+    "bpd": 39.833333333333336,
+    "false_pct": 13.080168776371307,
+    "area": "straight (45% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (33%)"
+   }
+  },
+  {
+   "bid": "5180199",
+   "name": "Innocent Kaia",
+   "sub": "RHB · Opener",
+   "balls": 178,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 15,
-    "n_out": 0,
-    "bpd": null,
-    "false_pct": 0.0,
-    "area": "leg (67% of runs)",
+    "balls": 178,
+    "n_out": 4,
+    "bpd": 44.5,
+    "false_pct": 11.428571428571429,
+    "area": "straight (64% of runs)",
     "short": null,
-    "top_out": null
+    "top_out": "LBW (75%)"
    }
   },
   {
@@ -106,28 +124,28 @@
     "balls": 157,
     "n_out": 3,
     "bpd": null,
-    "false_pct": 12.025316455696203,
-    "area": "off (46% of runs)",
+    "false_pct": 10.96774193548387,
+    "area": "leg (49% of runs)",
     "short": null,
     "top_out": "LBW (33%)"
    }
   },
   {
-   "bid": "5180199",
-   "name": "Innocent Kaia",
-   "sub": "RHB · Opener",
-   "balls": 151,
+   "bid": "4352623",
+   "name": "Tadiwanashe Marumani",
+   "sub": "LHB · Opener",
+   "balls": 89,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 151,
-    "n_out": 3,
-    "bpd": null,
-    "false_pct": 12.418300653594772,
-    "area": "straight (60% of runs)",
+    "balls": 89,
+    "n_out": 7,
+    "bpd": 12.714285714285714,
+    "false_pct": 25.37313432835821,
+    "area": "leg (38% of runs)",
     "short": null,
-    "top_out": "LBW (67%)"
+    "top_out": "Bowled (57%)"
    }
   },
   {
@@ -149,39 +167,21 @@
    }
   },
   {
-   "bid": "5180207",
-   "name": "Clive Madande",
-   "sub": "RHB · Middle order",
-   "balls": 78,
+   "bid": "5180206",
+   "name": "Brad Evans",
+   "sub": "RHB · Lower order",
+   "balls": 19,
    "plan": null,
    "field": null,
    "fields": [],
    "threat": {
-    "balls": 78,
-    "n_out": 1,
+    "balls": 19,
+    "n_out": 0,
     "bpd": null,
-    "false_pct": 13.924050632911392,
-    "area": "straight (65% of runs)",
+    "false_pct": 5.882352941176471,
+    "area": null,
     "short": null,
-    "top_out": "Caught (100%)"
-   }
-  },
-  {
-   "bid": "4352462",
-   "name": "Richard Ngarava",
-   "sub": "LHB · Lower order",
-   "balls": 50,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 50,
-    "n_out": 1,
-    "bpd": null,
-    "false_pct": 21.568627450980394,
-    "area": "off (47% of runs)",
-    "short": null,
-    "top_out": "Bowled (100%)"
+    "top_out": null
    }
   },
   {
@@ -197,7 +197,7 @@
     "n_out": 4,
     "bpd": 17.5,
     "false_pct": 22.058823529411764,
-    "area": "off (47% of runs)",
+    "area": "off (48% of runs)",
     "short": null,
     "top_out": "Bowled (50%)"
    }

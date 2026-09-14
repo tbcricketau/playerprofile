@@ -591,5 +591,322 @@
    23471
   ],
   "confidence": "dob matched to warehouse, per database (2026-09-12)"
+ },
+ "5460149": {
+  "name": "Brian Bennett",
+  "c21_name": "Brian Bennett",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   24020
+  ],
+  "c21_ids_white": [
+   24017
+  ],
+  "c21_ids": [
+   24017,
+   24020
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "5180198": {
+  "name": "Tanaka Chivanga",
+  "c21_name": "Tanaka Chivanga",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   21786
+  ],
+  "c21_ids_white": [
+   21786
+  ],
+  "c21_ids": [
+   21786
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "4353138": {
+  "name": "Ben Curran",
+  "c21_name": "Ben Curran",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   13829
+  ],
+  "c21_ids_white": [
+   7566
+  ],
+  "c21_ids": [
+   7566,
+   13829
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "1300027": {
+  "name": "Craig Ervine",
+  "c21_name": "Craig Ervine",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   1116
+  ],
+  "c21_ids_white": [
+   1116
+  ],
+  "c21_ids": [
+   1116
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "5180206": {
+  "name": "Brad Evans",
+  "c21_name": "Brad Evans",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   21784
+  ],
+  "c21_ids_white": [
+   21784
+  ],
+  "c21_ids": [
+   21784
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "5180199": {
+  "name": "Innocent Kaia",
+  "c21_name": "Innocent Kaia",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   24889
+  ],
+  "c21_ids_white": [
+   24887
+  ],
+  "c21_ids": [
+   24887,
+   24889
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "5180207": {
+  "name": "Clive Madande",
+  "c21_name": "Clive Madande",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   21781
+  ],
+  "c21_ids_white": [
+   21781
+  ],
+  "c21_ids": [
+   21781
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "3550060": {
+  "name": "Wesley Madhevere",
+  "c21_name": "Wesley Madhevere",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   5249
+  ],
+  "c21_ids_white": [
+   4867
+  ],
+  "c21_ids": [
+   4867,
+   5249
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "3980017": {
+  "name": "Wellington Masakadza",
+  "c21_name": "Wellington Masakadza",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   4027
+  ],
+  "c21_ids_white": [
+   4639
+  ],
+  "c21_ids": [
+   4027,
+   4639
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "5460383": {
+  "name": "Ernest Masuku",
+  "c21_name": "Ernest Masuku",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   21780
+  ],
+  "c21_ids_white": [
+   21780
+  ],
+  "c21_ids": [
+   21780
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "3980005": {
+  "name": "Blessing Muzarabani",
+  "c21_name": "Blessing Muzarabani",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   8840
+  ],
+  "c21_ids_white": [
+   6523
+  ],
+  "c21_ids": [
+   6523,
+   8840
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "4352462": {
+  "name": "Richard Ngarava",
+  "c21_name": "Richard Ngarava",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   5256
+  ],
+  "c21_ids_white": [
+   4874
+  ],
+  "c21_ids": [
+   4874,
+   5256
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "6380303": {
+  "name": "Newman Nyamhuri",
+  "c21_name": "Newman Nyamhuri",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   47322
+  ],
+  "c21_ids_white": [
+   47403
+  ],
+  "c21_ids": [
+   47322,
+   47403
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "1310087": {
+  "name": "Sikandar Raza",
+  "c21_name": "Sikandar Raza",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   2372
+  ],
+  "c21_ids_white": [
+   2984
+  ],
+  "c21_ids": [
+   2372,
+   2984
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "2950235": {
+  "name": "Sean Williams",
+  "c21_name": "Sean Williams",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids_multiday": [
+   1541
+  ],
+  "c21_ids_white": [
+   1541
+  ],
+  "c21_ids": [
+   1541
+  ],
+  "confidence": "dob matched to warehouse, per database (2026-09-13)"
+ },
+ "340022": {
+  "name": "Brendan Taylor",
+  "c21_name": "Brendan Taylor",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids": [
+   985
+  ],
+  "confidence": "name matched in pulled Zimbabwe men's matches, per database inferred from match format (First Class/Test = multi-day, ODI/List A/T20I = white); NO dob check (2026-09-13)",
+  "c21_ids_multiday": [
+   985
+  ],
+  "c21_ids_white": [
+   985
+  ]
+ },
+ "2540092": {
+  "name": "Ryan Burl",
+  "c21_name": "Ryan Burl",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids": [
+   2463
+  ],
+  "confidence": "name matched in pulled Zimbabwe men's matches, per database inferred from match format (First Class/Test = multi-day, ODI/List A/T20I = white); NO dob check (2026-09-13)",
+  "c21_ids_white": [
+   2463
+  ]
+ },
+ "4352623": {
+  "name": "Tadiwanashe Marumani",
+  "c21_name": "Tadiwanashe Marumani",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids": [
+   8600
+  ],
+  "confidence": "name matched in pulled Zimbabwe men's matches, per database inferred from match format (First Class/Test = multi-day, ODI/List A/T20I = white); NO dob check (2026-09-13)",
+  "c21_ids_white": [
+   8600
+  ]
+ },
+ "4354351": {
+  "name": "Graeme Cremer",
+  "c21_name": "Graeme Cremer",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids": [
+   988
+  ],
+  "confidence": "name matched in pulled Zimbabwe men's matches, per database inferred from match format (First Class/Test = multi-day, ODI/List A/T20I = white); NO dob check (2026-09-13)",
+  "c21_ids_white": [
+   988
+  ]
+ },
+ "6381322": {
+  "name": "Tripurana Vijay",
+  "c21_name": "Tripurana Vijay",
+  "bowl_balls": 0,
+  "bat_balls": 0,
+  "c21_ids": [
+   32229
+  ],
+  "c21_ids_multiday": [
+   32229
+  ],
+  "confidence": "name matched in the C21 mirror's Indian domestic competitions (Ranji, Duleep); multi-day database inferred from match format; NO dob check (2026-09-14)"
  }
 }
