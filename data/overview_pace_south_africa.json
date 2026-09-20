@@ -1,0 +1,188 @@
+{
+ "opp": "south_africa",
+ "group": "pace",
+ "label": "pace",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "2710003",
+   "name": "Quinton de Kock",
+   "sub": "LHB · Opener",
+   "balls": 3025,
+   "plan": "Plan for pace: bowl <b>good length pitching outside off</b> while <b>seaming in</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 3025,
+    "n_out": 62,
+    "bpd": 48.79032258064516,
+    "false_pct": 18.364312267657994,
+    "area": "off (48% of runs)",
+    "short": "16% false (47 balls)",
+    "top_out": "Caught in the field (32%)"
+   }
+  },
+  {
+   "bid": "1300073",
+   "name": "David Miller",
+   "sub": "LHB · Middle order",
+   "balls": 1645,
+   "plan": "Plan for pace: bowl <b>good length pitching wide outside off</b> while <b>seaming away / swinging in</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 1645,
+    "n_out": 43,
+    "bpd": 38.25581395348837,
+    "false_pct": 20.276497695852534,
+    "area": "off (44% of runs)",
+    "short": "18% false (66 balls)",
+    "top_out": "Caught in the field (33%)"
+   }
+  },
+  {
+   "bid": "3760008",
+   "name": "Aiden Markram",
+   "sub": "RHB · Top order",
+   "balls": 1598,
+   "plan": "Plan for pace: bowl <b>good length pitching around leg</b> while <b>seaming in</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 1598,
+    "n_out": 40,
+    "bpd": 39.95,
+    "false_pct": 18.68060091443501,
+    "area": "off (45% of runs)",
+    "short": "34% false (52 balls)",
+    "top_out": "Caught in the field (48%)"
+   }
+  },
+  {
+   "bid": "3080067",
+   "name": "Temba Bavuma",
+   "sub": "RHB · Top order",
+   "balls": 1339,
+   "plan": "Plan for pace: bowl <b>back of a length pitching around leg</b> while <b>seaming in / swinging away</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 1339,
+    "n_out": 29,
+    "bpd": 46.172413793103445,
+    "false_pct": 18.333333333333332,
+    "area": "leg (42% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (38%)"
+   }
+  },
+  {
+   "bid": "2540186",
+   "name": "Corbin Bosch",
+   "sub": "RHB · Lower order",
+   "balls": 147,
+   "plan": "Plan for pace: bowl <b>full pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 147,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 34.26573426573427,
+    "area": "off (47% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "4353850",
+   "name": "Tony de Zorzi",
+   "sub": "LHB · Opener",
+   "balls": 616,
+   "plan": "Plan for pace: bowl <b>back of a length pitching outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 616,
+    "n_out": 8,
+    "bpd": 77.0,
+    "false_pct": 34.9112426035503,
+    "area": "off (39% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (62%)"
+   }
+  },
+  {
+   "bid": "4353843",
+   "name": "Matthew Breetzke",
+   "sub": "RHB · Top order",
+   "balls": 419,
+   "plan": "Plan for pace: bowl <b>back of a length pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 419,
+    "n_out": 7,
+    "bpd": 59.857142857142854,
+    "false_pct": 25.981873111782477,
+    "area": "off (48% of runs)",
+    "short": null,
+    "top_out": "LBW (43%)"
+   }
+  },
+  {
+   "bid": "4352600",
+   "name": "Ryan Rickelton",
+   "sub": "LHB · Opener",
+   "balls": 511,
+   "plan": "Plan for pace: bowl <b>back of a length pitching outside off</b> while <b>seaming away</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 511,
+    "n_out": 14,
+    "bpd": 36.5,
+    "false_pct": 31.179775280898877,
+    "area": "straight (46% of runs)",
+    "short": null,
+    "top_out": "Caught behind (43%)"
+   }
+  },
+  {
+   "bid": "4352128",
+   "name": "Marco Jansen",
+   "sub": "RHB · Middle order",
+   "balls": 285,
+   "plan": "Plan for pace: bowl <b>good length pitching wide outside off</b> while <b>swinging away</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 285,
+    "n_out": 11,
+    "bpd": 25.90909090909091,
+    "false_pct": 20.401337792642142,
+    "area": "leg (39% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (55%)"
+   }
+  },
+  {
+   "bid": "4352508",
+   "name": "Tristan Stubbs",
+   "sub": "RHB · Middle order",
+   "balls": 283,
+   "plan": "Plan for pace: bowl <b>back of a length pitching wide outside off</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 283,
+    "n_out": 6,
+    "bpd": 47.166666666666664,
+    "false_pct": 27.84313725490196,
+    "area": "leg (51% of runs)",
+    "short": null,
+    "top_out": "Caught behind (50%)"
+   }
+  }
+ ]
+}

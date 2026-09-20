@@ -409,8 +409,15 @@
   "name": "Ollie Peake",
   "role": "Batter",
   "packs": [
-   "batting"
-  ]
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "off_spin"
+  }
  },
  "3550715": {
   "name": "Joel Davies",

@@ -30,10 +30,15 @@ BUNDLES = {
     # The Bangladesh coach-side copy is unaffected: it stays frozen and gated in the scouting
     # portal at archive/bangladesh-home-2026, SAS-re-stamped on every refresh.
     # ⚠ Publishing here force-pushes over the archived Bangladesh state on `main`.
+    # TWO squads since 2026-09-19 (Tom): the Zimbabwe away ODIs and the South Africa away ODIs on
+    # one landing page, each nested under its own slug, exactly as the `ausa` bundle below. The
+    # single `opp`/`slug` pair it carried before is gone ON PURPOSE — left in place it would have
+    # resolved EVERY page in the bundle, South Africa's included, against Zimbabwe's opposition and
+    # Zimbabwe's hands, which is the pooling error this gate exists to catch, committed by the gate.
     "aus": {"assemble": "assemble_packs.py", "arg": "aus",
             "bundle": "player_pack_site",
             "repo": "https://github.com/tbcricketau/player-packs.git",
-            "opp": "zimbabwe", "slug": "zimbabwe-odi-away-2026"},
+            "squads": ["zimbabwe-odi-away-2026", "south-africa-odi-away-2026"]},
     # Australia A in India, Sep-Oct 2026 — the first bundle carrying TWO squads, a four-day and a
     # one-day, on one landing page. `squads` replaces the single opp/slug pair: the hand audit is
     # per squad (it resolves our batters' hands from that squad's matchup store) and each squad's

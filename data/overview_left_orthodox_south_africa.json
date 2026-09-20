@@ -1,0 +1,188 @@
+{
+ "opp": "south_africa",
+ "group": "left_orthodox",
+ "label": "left-arm orthodox",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "2710003",
+   "name": "Quinton de Kock",
+   "sub": "LHB · Opener",
+   "balls": 270,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching in the channel</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 270,
+    "n_out": 5,
+    "bpd": 54.0,
+    "false_pct": 4.580152671755725,
+    "area": "off (42% of runs)",
+    "short": null,
+    "top_out": "LBW (40%)"
+   }
+  },
+  {
+   "bid": "1300073",
+   "name": "David Miller",
+   "sub": "LHB · Middle order",
+   "balls": 159,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching on the stumps</b> while <b>turning in / drifting away</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 159,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 9.395973154362416,
+    "area": "straight (42% of runs)",
+    "short": null,
+    "top_out": "Caught (33%)"
+   }
+  },
+  {
+   "bid": "3760008",
+   "name": "Aiden Markram",
+   "sub": "RHB · Top order",
+   "balls": 339,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching in the channel</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 339,
+    "n_out": 7,
+    "bpd": 48.42857142857143,
+    "false_pct": 8.47953216374269,
+    "area": "straight (46% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (43%)"
+   }
+  },
+  {
+   "bid": "3080067",
+   "name": "Temba Bavuma",
+   "sub": "RHB · Top order",
+   "balls": 241,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching on the stumps</b> while <b>turning away / drifting in</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 241,
+    "n_out": 7,
+    "bpd": 34.42857142857143,
+    "false_pct": 10.407239819004525,
+    "area": "leg (35% of runs)",
+    "short": null,
+    "top_out": "Bowled (43%)"
+   }
+  },
+  {
+   "bid": "2540186",
+   "name": "Corbin Bosch",
+   "sub": "RHB · Lower order",
+   "balls": 56,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 56,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 34.69387755102041,
+    "area": "leg (60% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "4353850",
+   "name": "Tony de Zorzi",
+   "sub": "LHB · Opener",
+   "balls": 105,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 105,
+    "n_out": 5,
+    "bpd": 21.0,
+    "false_pct": 11.267605633802816,
+    "area": "off (39% of runs)",
+    "short": null,
+    "top_out": "Bowled (40%)"
+   }
+  },
+  {
+   "bid": "4353843",
+   "name": "Matthew Breetzke",
+   "sub": "RHB · Top order",
+   "balls": 121,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 121,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 17.92452830188679,
+    "area": "off (51% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "4352600",
+   "name": "Ryan Rickelton",
+   "sub": "LHB · Opener",
+   "balls": 61,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 61,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 14.285714285714286,
+    "area": "straight (91% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "4352128",
+   "name": "Marco Jansen",
+   "sub": "RHB · Middle order",
+   "balls": 66,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 66,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 18.181818181818183,
+    "area": "straight (52% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (100%)"
+   }
+  },
+  {
+   "bid": "4352508",
+   "name": "Tristan Stubbs",
+   "sub": "RHB · Middle order",
+   "balls": 22,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 22,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 9.090909090909092,
+    "area": "off (67% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  }
+ ]
+}

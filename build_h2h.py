@@ -26,13 +26,21 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MAX_BALLS = 20                                          # house rule: 10-20 most recent per pairing
 
 # Format preference, per PACK format: a Test pack wants Test footage first, an ODI pack wants ODI.
-# For a white-ball pack the nearest neighbours are the other white-ball formats, so red-ball footage
-# comes last — hardcoding the Test order served an ODI pack a Test meeting in preference to the ODI
-# one it was preparing for. Same rule as build_opponent_about._FMT_ORDER.
+#
+# ⚠ These are WHOLE-INNINGS reels — a head-to-head reel is every ball one player has bowled to the
+# other, not a phase — so under the 2026-09-17 rule they may not borrow another format at all. The
+# comment here used to say "same rule as build_opponent_about._FMT_ORDER" and had stopped being
+# true: that module was tightened on 09-04 and this table was left behind, so an ODI pack could
+# still reach a Test meeting. It did, twice, and the publish gate never saw it because h2h reels
+# are keyed hbat_/hbowl_ and audit_pack_hands collects only the bowler-reel keys.
+#
+# What remains inside each list is one body of cricket in different clothes: List A IS the 50-over
+# game and The Hundred and T10 are the 20-over game's neighbours, so a pairing found there is the
+# same contest at the same phase structure. Crossing between the lists is what stopped.
 _FMT_ORDER = {
-    "Test": ["Test", "ODI", "T20I", "T20", "List A", "The Hundred", "FC", "T10"],
-    "ODI":  ["ODI", "List A", "T20I", "T20", "The Hundred", "Test", "FC", "T10"],
-    "T20I": ["T20I", "T20", "The Hundred", "T10", "ODI", "List A", "Test", "FC"],
+    "Test": ["Test", "FC"],
+    "ODI":  ["ODI", "List A"],
+    "T20I": ["T20I", "T20", "The Hundred", "T10"],
 }
 
 # At A-TEAM level the same preference inverts at the top. An Australia A v India A four-day meeting
@@ -40,9 +48,9 @@ _FMT_ORDER = {
 # have preferred a senior Test meeting between two of the players over the A-team game they actually
 # played against each other. The pack's own cricket comes first; senior meetings are the fallback.
 _FMT_ORDER_A = {
-    "Test": ["FC", "Test", "List A", "ODI", "T20I", "T20", "The Hundred", "T10"],
-    "ODI":  ["List A", "ODI", "FC", "T20I", "T20", "The Hundred", "Test", "T10"],
-    "T20I": ["T20I", "T20", "The Hundred", "T10", "List A", "ODI", "FC", "Test"],
+    "Test": ["FC", "Test"],
+    "ODI":  ["List A", "ODI"],
+    "T20I": ["T20I", "T20", "The Hundred", "T10"],
 }
 
 

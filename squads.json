@@ -69,6 +69,32 @@
    "1070522"
   ]
  },
+ "south-africa-odi-away-2026": {
+  "name": "South Africa Away ODI Series 2026",
+  "opposition": "Australia v South Africa · ODIs · in South Africa",
+  "format": "ODI",
+  "team": "Australia",
+  "opp_key": "south_africa",
+  "players": [
+   "1300077",
+   "3080014",
+   "3550371",
+   "1940169",
+   "2950104",
+   "2480059",
+   "4390215",
+   "350104",
+   "3550715",
+   "3080018",
+   "880149",
+   "2580072",
+   "2840029",
+   "1070522",
+   "1300076",
+   "1300007",
+   "2850086"
+  ]
+ },
  "india-a-4day-2026": {
   "name": "India Four-Day Series 2026",
   "team": "Australia A",

@@ -233,6 +233,66 @@
    ]
   },
   {
+   "slug": "south-africa-odi-away-2026",
+   "name": "South Africa Away ODI Series 2026",
+   "subtitle": "Australia v South Africa · ODIs · in South Africa",
+   "target_country": "South Africa",
+   "groups": [
+    {
+     "slug": "bowlers",
+     "name": "South Africa Bowlers",
+     "format": "ODI",
+     "reports": [
+      {
+       "id": "3080070",
+       "tier": "xi",
+       "name": "Keshav Maharaj"
+      },
+      {
+       "id": "4352128",
+       "tier": "xi",
+       "name": "Marco Jansen"
+      },
+      {
+       "id": "3760008",
+       "tier": "xi",
+       "name": "Aiden Markram"
+      },
+      {
+       "id": "3110053",
+       "tier": "xi",
+       "name": "Bjorn Fortuin"
+      },
+      {
+       "id": "5460045",
+       "tier": "xi",
+       "name": "Gerald Coetzee"
+      },
+      {
+       "id": "2540186",
+       "tier": "xi",
+       "name": "Corbin Bosch"
+      },
+      {
+       "id": "4353399",
+       "tier": "squad",
+       "name": "Kwena Maphaka"
+      },
+      {
+       "id": "4353804",
+       "tier": "squad",
+       "name": "Duan Jansen"
+      },
+      {
+       "id": "6380271",
+       "tier": "squad",
+       "name": "Nqobani Mokoena"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "slug": "south-africa-away-2026",
    "name": "South Africa Away Test Series 2026",
    "subtitle": "Australia v South Africa · in South Africa",

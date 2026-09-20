@@ -1,0 +1,188 @@
+{
+ "opp": "south_africa",
+ "group": "leg_spin",
+ "label": "leg spin",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "2710003",
+   "name": "Quinton de Kock",
+   "sub": "LHB · Opener",
+   "balls": 340,
+   "plan": "Plan for leg spin: bowl <b>good length pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 340,
+    "n_out": 5,
+    "bpd": 68.0,
+    "false_pct": 9.15032679738562,
+    "area": "off (46% of runs)",
+    "short": null,
+    "top_out": "LBW (40%)"
+   }
+  },
+  {
+   "bid": "1300073",
+   "name": "David Miller",
+   "sub": "LHB · Middle order",
+   "balls": 345,
+   "plan": "Plan for leg spin: bowl <b>good length pitching outside off</b> while <b>turning in / drifting away</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 345,
+    "n_out": 5,
+    "bpd": 69.0,
+    "false_pct": 14.950166112956811,
+    "area": "off (49% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (40%)"
+   }
+  },
+  {
+   "bid": "3760008",
+   "name": "Aiden Markram",
+   "sub": "RHB · Top order",
+   "balls": 341,
+   "plan": "Plan for leg spin: bowl <b>full pitching on the stumps</b> while <b>drifting in</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 341,
+    "n_out": 11,
+    "bpd": 31.0,
+    "false_pct": 16.257668711656443,
+    "area": "off (54% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (64%)"
+   }
+  },
+  {
+   "bid": "3080067",
+   "name": "Temba Bavuma",
+   "sub": "RHB · Top order",
+   "balls": 312,
+   "plan": "Plan for leg spin: bowl <b>full pitching on the stumps</b> while <b>turning away</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 312,
+    "n_out": 6,
+    "bpd": 52.0,
+    "false_pct": 15.96958174904943,
+    "area": "leg (42% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  },
+  {
+   "bid": "2540186",
+   "name": "Corbin Bosch",
+   "sub": "RHB · Lower order",
+   "balls": 22,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 22,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 36.36363636363637,
+    "area": "leg (47% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  },
+  {
+   "bid": "4353850",
+   "name": "Tony de Zorzi",
+   "sub": "LHB · Opener",
+   "balls": 38,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 38,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 42.42424242424242,
+    "area": "off (64% of runs)",
+    "short": null,
+    "top_out": "Caught behind (33%)"
+   }
+  },
+  {
+   "bid": "4353843",
+   "name": "Matthew Breetzke",
+   "sub": "RHB · Top order",
+   "balls": 125,
+   "plan": "Plan for leg spin: bowl <b>full pitching on the stumps</b>.",
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 125,
+    "n_out": 4,
+    "bpd": 31.25,
+    "false_pct": 26.436781609195403,
+    "area": "leg (50% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (50%)"
+   }
+  },
+  {
+   "bid": "4352600",
+   "name": "Ryan Rickelton",
+   "sub": "LHB · Opener",
+   "balls": 61,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 61,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 24.56140350877193,
+    "area": "off (50% of runs)",
+    "short": null,
+    "top_out": "LBW (50%)"
+   }
+  },
+  {
+   "bid": "4352128",
+   "name": "Marco Jansen",
+   "sub": "RHB · Middle order",
+   "balls": 79,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 79,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 17.28395061728395,
+    "area": "off (41% of runs)",
+    "short": null,
+    "top_out": "Caught behind (33%)"
+   }
+  },
+  {
+   "bid": "4352508",
+   "name": "Tristan Stubbs",
+   "sub": "RHB · Middle order",
+   "balls": 81,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 81,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 14.893617021276595,
+    "area": "off (73% of runs)",
+    "short": null,
+    "top_out": "Caught behind (33%)"
+   }
+  }
+ ]
+}

@@ -237,10 +237,109 @@ death against a left-hander is not the one they go to against a right-hander.
   death bowler: the real ones sit at 8–17% of their deliveries (Muzarabani 17.3%, Evans 15.7%,
   Raza 13.2% — and Raza bowls the MOST death balls of anyone in that squad, 466). Having playable
   death footage is the gate.
-- **`bowler_clips_from_profile` now returns FOUR reels.** Every caller unpacks it positionally and
-  there are four such sites — `bowler_clips_best`, the `--clips-only` path, the main bowler loop,
-  and `_store_hand_reels`. A capped grep found two of them and the run died on
-  `ValueError: too many values to unpack`. Its docstring now says so.
+- **`bowler_clips_from_profile` returned FOUR reels as a positional tuple, and no longer does.**
+  Every caller unpacked it positionally across four sites — `bowler_clips_best`, the
+  `--clips-only` path, the main bowler loop, and `_store_hand_reels`. A capped grep found two of
+  them and the run died on `ValueError: too many values to unpack`. ⚠ **Superseded 2026-09-17**:
+  it returns a **dict** keyed by reel name (`stock`, `wicket`, `new_ball`, `middle`, `death`),
+  because the phase rule below added a fifth reel and would have invited the same failure again.
+  A phase has a name, not an index.
+
+### Borrowing is PHASE-MATCHED, not red-vs-white (Tom, 2026-09-17)
+
+The rule was a hard line: a white-ball pack could borrow the other white-ball format for any reel,
+a red-ball pack could borrow nothing. Too blunt in both directions. **What has to match is the
+bowling context, not the colour of the ball** — T20I middle overs are a different exercise from ODI
+middle overs, while Test bowling and ODI middle-overs bowling are close relatives.
+
+`build_opponent_about._BORROW` keys **(pack format, reel) → ((source format, source phase), …)**:
+
+| Pack | Reel | May borrow |
+|------|------|-----------|
+| Test | stock / wicket | ODI overs 11-40 |
+| ODI  | new_ball (powerplay) | T20I overs 1-6 |
+| ODI  | middle | Test deliveries (a Test innings has no phases) |
+| ODI  | death | T20I overs 16-20 |
+| T20I | new_ball | ODI overs 1-10 |
+| T20I | death | ODI overs 41-50 |
+
+**A reel missing from that table borrows NOTHING** and is built from the pack's own format alone.
+That is the expensive half and it is deliberate: the whole-innings reels — stock, wicket, the
+batter reels in `batter_clips_best`, and h2h — no longer borrow at all in a white-ball pack. It
+costs real footage. Duan Jansen's 11 wicket clips and Nqobani Mokoena's 14 were T20I and went.
+
+Three things make it work rather than merely restrict:
+
+- **The bands come from `cricket_core.formats.phase_bands`**, not from numbers restated here, so
+  one_day is 1-10 / 11-40 / 41-50 and t20 is 1-6 / 7-15 / 16-20 in one place. ⚠ As of 2026-09-20
+  that is an **uncommitted** change in cricket-core (another session's, also consumed by
+  videobuilder). If it is reverted these builders fail on import, which is the right failure — a
+  second local copy of "the death overs" is how two definitions drift apart.
+- **Over numbers are 1-BASED** (verified: ODI overs run 1..50, T20I 1..20). The old new-ball reel
+  asked for `over_n < 10` and so dropped the 10th over from every powerplay reel it ever built.
+- **A phase reel needs no slicing** — the source format's own death reel is already cut to its
+  death band. Only a whole-innings borrow (Test stock ← ODI middle) slices, via `_phase_slice`,
+  and it slices the ROWS before the stock ball is identified so the ball type is read from
+  middle-overs bowling rather than from a whole ODI innings.
+
+**The middle-overs reel is the fifth kind**, keyed `mid`/`midL`/`midR`. It rescued exactly the
+bowlers the restriction hurt: Mokoena's own ODI balls are untracked, so no stock ball can be
+identified from them, but the footage plays — he has 40 middle-overs clips to right-handers
+against 1 wicket clip. Measured on the rebuild: every borrow that survived was a legal one
+(`death ← T20I` for Fortuin, Duan and Mokoena, `new_ball ← T20I powerplay` for Marco Jansen) and
+no stock or wicket reel borrowed anything.
+
+### h2h does not borrow either — and the gate cannot see it
+
+`build_h2h._FMT_ORDER` kept a comment claiming it followed `build_opponent_about._FMT_ORDER` long
+after that stopped being true: the latter was tightened on 09-04 and this table was left behind, so
+an ODI pack could still reach a Test meeting. It did, twice. The orders are now one format family
+each — `Test: [Test, FC]`, `ODI: [ODI, List A]`, `T20I: [T20I, T20, The Hundred, T10]` — which took
+South Africa from 146 pairings to 108. Jack Edwards' 29 balls against that squad are Major League
+Cricket and correctly no longer appear.
+
+🔴 **h2h reels are still UNAUDITED.** Their playlist keys are `hbat_`/`hbowl_`, and
+`audit_pack_hands.KEY_RE` collects only `stock|wkt|nb|dth|mid`, so they are never checked for hand
+or format — the "a gate only checks what it was built to check" failure again, and live: Zimbabwe
+carried one first-class h2h row and India A one-day nine, through a gate that reported clean. The
+fix was deliberately held because the audit also runs on the `--no-assemble` re-stamp path, and a
+stricter gate would have refused the Zimbabwe SAS re-stamp mid-series.
+
+### "No vision" must not be stated as "no meetings" (Tom, 2026-09-20)
+
+`had_meetings` is computed from the h2h file, and a pairing only reaches that file if its clip stem
+RESOLVED. So it is a footage test wearing a meetings label: it cannot tell "never met" from "we
+hold no vision", and the pack asserted the stronger of the two on 24 pages. Jack Edwards has bowled
+28 balls to this South Africa squad and would have been told he had never met them. The message now
+says what we know — no vision, which *may* mean no meeting or may mean we do not hold it.
+
+Two smaller things fixed with it: the verb was passed as a gerund into a perfect tense, so 27 pages
+read *"You have facing them in ODIs"*, and `_coded_type` now reads the bowler's type from their own
+deliveries when the store has no label and no override exists — a footage-only card opened on the
+bare word "Bowler" while the warehouse knew all along (Duan Jansen is coded left-arm fast on all
+496 of his deliveries, and Ernest Masuku's live Zimbabwe card still says "Bowler").
+
+### One bundle, two squads — and the config is part of the gate
+
+`publish_packs.BUNDLES["aus"]` carried a single `opp`/`slug` pair. A two-squad bundle audited that
+way resolves EVERY page against one squad's opposition and hands — the pooling error the gate
+exists to catch, committed by the gate, reporting clean. It now takes `squads: [...]` like `ausa`,
+and the audit runs once per squad subfolder. **When a bundle gains a squad, that config is the
+second thing to change.**
+
+⚠ **Nesting changes every URL.** A single-squad bundle serves `players/<player>.html`; the moment a
+second live squad is built into it, each nests under `players/<slug>/` and every previously
+published link 404s. That happened to the Zimbabwe packs on 2026-09-19, mid-series.
+
+### Reports take 7-14 MINUTES each here, not ~110 seconds
+
+The figure quoted elsewhere in this file is from a faster day and it cost an afternoon: a batch run
+with a 420-second per-report timeout killed 11 of 18 reports just past the line, and the pattern
+(thin records passing, big records "hanging") read exactly like a wedge. Measured 2026-09-19 on the
+South Africa set: successes 437-862 s, the slowest being Marco Jansen's bowling report. **Allow 20
+minutes per report** in any batch timeout. A real wedge still exists and looks different — one
+report sat for 22 hours at 1.8 s of CPU with no Chrome process alive at all. Judge by CPU
+accumulating and output-file mtimes, never by a silent log.
 
 **The fourth place is `audit_pack_hands`, and it is the one that matters.** That file has TWO
 regexes: `KEY_RE` decides what is **collected**, the classifier decides what each key *is*. A kind

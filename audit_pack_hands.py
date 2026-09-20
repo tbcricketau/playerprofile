@@ -30,7 +30,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # pattern does not match is never COLLECTED, so the reel is never audited and the publish gate
 # passes it in silence — the "a gate only checks what it was built to check" failure this file
 # exists to catch. `dth` (death overs) added 2026-09-13 with the reel itself, not after it.
-KEY_RE = r'-vision\.html#((?:stock|wkt|nb|dth)[A-Z]*_\d+)'
+KEY_RE = r'-vision\.html#((?:stock|wkt|nb|dth|mid)[A-Z]*_\d+)'
 
 
 def _base(u):
@@ -160,7 +160,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
     pages = set()
     for (ps, nm, k), ids in sorted(reels.items()):
         pages.add(ps)
-        km = re.match(r'^(stock|wkt|nb|dth)(X?)([LR])_', k)
+        km = re.match(r'^(stock|wkt|nb|dth|mid)(X?)([LR])_', k)
         if not km:
             pooled += 1
             print(f"  POOLED  {ps:<24} {k}  (not scoped to a hand)")
