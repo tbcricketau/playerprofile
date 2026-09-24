@@ -166,6 +166,44 @@ Every override (`--no-assemble`, `--no-hand-audit`, `--allow-combined-plans`, `-
 `--allow-duplicates`, `--revive`) is printed up front and appended to the commit message, so a push
 that skipped a gate can be told from one that passed it.
 
+### The clips live in a SIDECAR, not in the page (24-09-2026)
+
+A pack page used to inline every clip it could play — **over a megabyte of JSON**, at the very end
+of the document. The buttons render and are clickable long before that arrives, and until it does a
+click follows the anchor's `href` to the standalone vision page, which opens the player and then
+leaves the reader on a wall of playlists when they close it. It had behaved for months on GitHub
+Pages, which gzips (32 KB against 395 raw); behind our own app, which did not, the window was
+**twelve times wider** and Tom hit it immediately.
+
+| | before | after |
+|---|---|---|
+| pack page | 1,273,809 b | **35,103 b** |
+| vision page | ~1.2 MB | **7,803 b** |
+| clips | inline, in all three | one `<player>-clips.json`, fetched on the first click |
+
+`cricket_core.video.playlist_payload()` is the shape both players read; `inline_player_snippet()`
+and `build_player_html()` take `src=` (the file to fetch) and `write_to=` (where to write it), and
+with neither they inline exactly as before. `click_guard()` goes in the page head and holds a click
+until the data lands — falling through to the href after six seconds on a page with no player, so a
+button is never simply dead. `playerpacks` also gzips now (395 KB → 26 KB).
+
+**Three things had to learn to follow the data, and two of them caught real defects on the first
+run.** A sidecar is fetched by script, so *no href points at it* — the link checker could not have
+noticed one missing:
+
+- **`check_site`** resolves every `data-pl` key in the sidecar the page names, and errors when the
+  file is missing, unreadable, or lacks the key. It caught Rickelton's left-arm orthodox report:
+  no playable clips, so no sidecar was written, but its player page still referenced one. Fixed at
+  source — a report with nothing playable now references nothing.
+- **`audit_pack_hands`** reads the sidecar. Reading only the old inline shape found nothing, which
+  it reported as **1,023 unresolved reels** and refused on. That refusal only exists because of the
+  coverage check added earlier the same day; before it, the audit would have passed 1,023 reels it
+  had never looked at.
+- **`assemble_packs`** carries the sidecar into the bundle beside the report.
+
+A new page kind, or a new way of holding the clips, means teaching all three. That is the same
+lesson as `KEY_RE` and the `--only` clear: **a gate follows the data, or it quietly stops checking.**
+
 ### The audit opens every pack page and checks every button (24-09-2026, later the same day)
 
 Until then `audit_pack_hands` opened only `*-batting.html` and collected only the five reel kinds
@@ -419,11 +457,25 @@ Elsewhere in the pipeline, measured the same day:
 - `build_player_site --only` cleared the whole output and then built only the named players; it
   now rewrites those pages in place and keeps the full roster on the index.
 
-**Still open, measured but not changed:** the warehouse pull itself. Cummins' 14,793 balls resolve
-server-side in 7 s and take 297 s to *fetch*, because the cost is per text column (10 Lookups
-`description`s plus `season`, `venue_*` and a `CONCAT` name — ~6 s per column per 15k rows). The
-raw `*_id` columns are already selected; mapping them client-side through `cricket_core.lookups`
-would cut most of it. Time it on Cummins and Lyon before relying on the projection.
+**The warehouse pull now sends ids, not words — and the wall-clock win did NOT materialise.**
+`_warehouse_bowler_rows` used to resolve ten `Lookups.description` columns and five per-match
+columns (`season`, `venue_*`, `competition`, and a `CONCAT` match name ~40 characters long) **on
+every delivery**. They are now fetched once — the lookup vocabulary per process, the match columns
+once per match — and filled in here, which took the answer from the server to **62% of its size**
+(4.04 MB → 2.50 MB on Rabada's 11,839 balls).
+
+⚠ **Record what was measured, not what was hoped for.** The change was made on a projection of
+~6 s per text column per 15k rows, which implied minutes. Timed fairly — two comparable bowlers,
+each loader going first once — it is a **wash**: Rabada 18.0 s new vs 19.2 s old, Roach 16.1 vs
+16.1. The same call measured 304 s, then 37 s, then 16 s across one day, so **this loader's
+wall-clock is dominated by the link, not the payload**, and a saving only shows when the link is
+bad. The change is kept because it is strictly less data and the rows are identical, not because
+anything got faster.
+
+**"Identical" was proven, not assumed:** four bowlers, ~53,000 rows, every key and every value
+compared — **zero differences**. The new loader only *adds* five id columns (`bowler_pace_spin_id`,
+the four zone-group ids), which is useful: those are the columns the untracked-sentinel rule needs.
+A missing lookup reads `"None"`, exactly as a LEFT JOIN miss did.
 
 **The exit hang has a cause, not yet a fix.** A render that wrote every file and then sat for
 hours at flat CPU with no sockets and no Chrome was Python's own shutdown joining a **non-daemon
