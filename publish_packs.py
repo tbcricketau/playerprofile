@@ -41,6 +41,9 @@ BUNDLES = {
     "aus": {"assemble": "assemble_packs.py", "arg": "aus",
             "bundle": "player_pack_site",
             "repo": "https://github.com/tbcricketau/player-packs.git",
+            # `--target storage` uploads to the `packs` container under this prefix, for the
+            # hosted playerpacks app, with vision rewritten to app paths (no SAS in any page).
+            "prefix": "aus",
             "squads": ["south-africa-odi-away-2026"]},
     # Australia A in India, Sep-Oct 2026 — the first bundle carrying TWO squads, a four-day and a
     # one-day, on one landing page. `squads` replaces the single opp/slug pair: the hand audit is
@@ -135,6 +138,54 @@ def plan_scope_check(out, slug):
     return stale, missing, checked
 
 
+def publish_to_storage(out, prefix, overrides):
+    """Upload the gated bundle to the `packs` container for the hosted app, with every vision link
+    rewritten to the app's /vision/ route.
+
+    The gates ran on the bundle as built — signed links and all, since `check_site --deep` HEADs a
+    sample of them. The rewrite happens on a COPY in %TEMP% (an intermediate another process reads
+    must not sit inside the repo — root CLAUDE.md, the DLP rule), and the copy is refused if any
+    signed link survives it. The GitHub Pages bundle is untouched: it keeps its baked links until
+    that site is retired after the South Africa series."""
+    import re
+    import shutil
+    import tempfile
+    from cricket_core.video import rewrite_vision_links
+    tmp = tempfile.mkdtemp(prefix="packs_storage_")
+    dst = os.path.join(tmp, prefix)
+    shutil.copytree(out, dst, ignore=shutil.ignore_patterns(".git", ".github", "__pycache__"))
+    n_files = n_links = 0
+    for root, _d, files in os.walk(dst):
+        for f in files:
+            if not f.endswith((".html", ".json", ".js")):
+                continue
+            p = os.path.join(root, f)
+            text = open(p, encoding="utf-8", errors="replace").read()
+            new = rewrite_vision_links(text)
+            if new != text:
+                n_files += 1
+                n_links += len(re.findall(r"/vision/fairplay/", new)) - len(re.findall(r"/vision/fairplay/", text))
+                open(p, "w", encoding="utf-8").write(new)
+    left = [os.path.relpath(os.path.join(r, f), dst) for r, _d, fs in os.walk(dst) for f in fs
+            if f.endswith((".html", ".json", ".js"))
+            and "sig=" in open(os.path.join(r, f), encoding="utf-8", errors="replace").read()]
+    if left:
+        raise SystemExit(f"\nREFUSING TO UPLOAD: {len(left)} file(s) still carry a signed link after "
+                         f"the rewrite, e.g. {left[0]}. Nothing was uploaded.")
+    print(f"vision -> app paths: {n_links:,} links rewritten across {n_files:,} files, no signed "
+          f"link remains")
+    if overrides:
+        print("!! OVERRIDES ACTIVE: " + ", ".join("--" + o.replace("_", "-") for o in overrides))
+    up = os.path.join(HERE, "..", "playerpacks", "upload_packs.py")
+    r = subprocess.run([sys.executable, up, "--bundle", dst, "--prefix", prefix, "--apply"],
+                       capture_output=True, text=True)
+    print("\n".join("  " + ln for ln in r.stdout.strip().splitlines()[-4:]))
+    if r.returncode:
+        raise SystemExit(f"upload failed:\n{r.stderr[-2000:]}")
+    shutil.rmtree(tmp, ignore_errors=True)
+    print(f"published {os.path.basename(out)} -> packs/{prefix} (served by the playerpacks app)")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("bundle", choices=sorted(BUNDLES))
@@ -157,6 +208,11 @@ def main():
                          "filenames and this is the OLDER one (deliberate override only)")
     ap.add_argument("--dry-run", action="store_true",
                     help="run every gate and stop before git — nothing is committed or pushed")
+    ap.add_argument("--target", choices=("github", "storage"), default="github",
+                    help="github = push the bundle to its GitHub Pages repo (the default, signed "
+                         "vision links baked in). storage = upload it to our `packs` container for "
+                         "the hosted playerpacks app, with every vision link rewritten to the app's "
+                         "/vision/ route so nothing in a page expires. Same gates either way.")
     a = ap.parse_args()
     cfg = BUNDLES[a.bundle]
     if cfg.get("archived") and not a.revive:
@@ -333,6 +389,8 @@ def main():
     if a.dry_run:
         print("dry run — every gate passed; nothing committed or pushed")
         return
+    if a.target == "storage":
+        return publish_to_storage(out, cfg.get("prefix", a.bundle), overrides)
     msg = a.message or f"publish {datetime.datetime.now():%Y-%m-%d %H:%M}"
     if overrides:
         msg += " [overrides: " + ", ".join("--" + o.replace("_", "-") for o in overrides) + "]"
