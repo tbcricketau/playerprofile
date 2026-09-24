@@ -173,66 +173,6 @@
    ]
   },
   {
-   "slug": "zimbabwe-odi-away-2026",
-   "name": "Zimbabwe Away ODI Series 2026",
-   "subtitle": "Australia v Zimbabwe · ODIs · in Zimbabwe",
-   "target_country": "Zimbabwe",
-   "groups": [
-    {
-     "slug": "bowlers",
-     "name": "Zimbabwe Bowlers",
-     "format": "ODI",
-     "reports": [
-      {
-       "id": "1310087",
-       "tier": "xi",
-       "name": "Sikandar Raza"
-      },
-      {
-       "id": "3980005",
-       "tier": "xi",
-       "name": "Blessing Muzarabani"
-      },
-      {
-       "id": "5180206",
-       "tier": "xi",
-       "name": "Brad Evans"
-      },
-      {
-       "id": "3980017",
-       "tier": "xi",
-       "name": "Wellington Masakadza"
-      },
-      {
-       "id": "4354351",
-       "tier": "xi",
-       "name": "Graeme Cremer"
-      },
-      {
-       "id": "3550060",
-       "tier": "squad",
-       "name": "Wesley Madhevere"
-      },
-      {
-       "id": "2540092",
-       "tier": "squad",
-       "name": "Ryan Burl"
-      },
-      {
-       "id": "6380303",
-       "tier": "squad",
-       "name": "Newman Nyamhuri"
-      },
-      {
-       "id": "5460383",
-       "tier": "squad",
-       "name": "Ernest Masuku"
-      }
-     ]
-    }
-   ]
-  },
-  {
    "slug": "south-africa-odi-away-2026",
    "name": "South Africa Away ODI Series 2026",
    "subtitle": "Australia v South Africa · ODIs · in South Africa",
@@ -274,9 +214,9 @@
        "name": "Corbin Bosch"
       },
       {
-       "id": "4353399",
+       "id": "2220039",
        "tier": "squad",
-       "name": "Kwena Maphaka"
+       "name": "Lizaad Williams"
       },
       {
        "id": "4353804",

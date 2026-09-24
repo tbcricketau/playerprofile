@@ -809,13 +809,16 @@ def _build_player(P: dict, pdf_path: str) -> dict:
         from playlists import build_batting_playlists
         from cricket_core.video import build_player_html, write_playlists
         pls = build_batting_playlists(P, cap=8)
+        # Always write the sidecar, as report.py does: publish_site finds reports by it. Without
+        # one, a report with no footage was invisible to the site and the packs silently linked the
+        # combined report instead (Rickelton vs left-arm orthodox, 2026-09-22).
+        write_playlists(pdf_path[:-4] + ".playlists.json", pls or {},
+                        meta={"batter_id": str(P["batter_id"]), "batter": P["name"]})
         if not pls:
             return {"lists": {}}          # no clips: keep `lists` so the template guards work
         player_path = pdf_path[:-4] + ".player.html"
         sub = f"{P['name']} — batting scout" + (f" vs {P['group_label']}" if P.get("group") else "")
         build_player_html(pls, player_path, title=P["name"], subtitle=sub)
-        write_playlists(pdf_path[:-4] + ".playlists.json", pls,
-                        meta={"batter_id": str(P["batter_id"]), "batter": P["name"]})
         strokes = [d for d in (P.get("dims", {}).get("stroke") or []) if d["balls"] >= 30 and d.get("false_pct") is not None]
         stroke_name = max(strokes, key=lambda d: d["false_pct"])["bucket"] if strokes else None
         return {"player": _file_url(player_path), "lists": {k: True for k in pls},

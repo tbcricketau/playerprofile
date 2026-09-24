@@ -78,8 +78,30 @@ def _country_code(team: str) -> str:
     return _COUNTRY_CODE.get(key, "")
 
 
+_KALEIDO_SERVER = {"started": False}
+
+
+def _start_kaleido():
+    """One Chrome for the whole process. Without a running server, plotly 6 / kaleido 1 launches
+    and tears down a browser PER FIGURE — measured 2.5 s each against 0.10 s with the server, and a
+    bowling report draws ~22 figures. Fewer launches also means fewer chances for the exit hang
+    (choreographer's non-daemon stderr-reader thread, one per launch). Best effort: if the server
+    cannot start, to_image still works the slow way."""
+    if _KALEIDO_SERVER["started"]:
+        return
+    _KALEIDO_SERVER["started"] = True
+    try:
+        import kaleido
+        if not kaleido._global_server.is_running():
+            kaleido.start_sync_server(silence_warnings=True)
+    except Exception as e:                                        # noqa: BLE001
+        print(f"  ! kaleido server not started ({type(e).__name__}: {str(e)[:80]}) — "
+              f"figures will render one browser at a time")
+
+
 def _fig_uri(fig, w=680, h=430) -> str:
     """Plotly figure -> base64 PNG data URI (via kaleido)."""
+    _start_kaleido()
     png = fig.to_image(format="png", width=w, height=h, scale=2)
     return "data:image/png;base64," + base64.b64encode(png).decode()
 
@@ -1517,10 +1539,19 @@ def build_html(P: dict, video: dict = None, player_mode: bool = False) -> str:
     if P["beaten_df"]:
         miss_zone = zone_concentration(P["beaten_df"], P["line_zones"], P["length_zones"], "count")
 
+    # Rasterise the figures ONCE per profile. render_report calls build_html twice (coach cut,
+    # then player mode) and every _fig_uri ran twice — ~22 figures, the second pass pure waste.
+    # batting_report builds one context and varies only the template flags; this is the cheap
+    # equivalent for a function that builds its context inline.
+    if "_figs" not in P:
+        P["_figs"] = _figures(P)
+    if "_fingerprint_cards" not in P:
+        P["_fingerprint_cards"] = _fingerprint_cards(P)
+
     ctx = {
         "video": video or {},
         "P": P, "hand_label": _HAND_LABEL.get(hand, hand), "code": _country_code(P["team"]),
-        "photo_uri": photo_uri, "figs": _figures(P), "cards": _cards(P),
+        "photo_uri": photo_uri, "figs": P["_figs"], "cards": _cards(P),
         "vs_squad": None if player_mode else _vs_squad_ctx(P["bowler_id"]),
         "player_mode": player_mode,
         "threat_cards": _threat_cards(P), "danger_cards": _danger_cards(P),
@@ -1557,7 +1588,7 @@ def build_html(P: dict, video: dict = None, player_mode: bool = False) -> str:
         "crease_read": _crease_read(P),
         "crease_usage_rows": _crease_usage_rows(P),
         "crease_band_rows": _crease_band_rows(P),
-        "fingerprint_cards": _fingerprint_cards(P),
+        "fingerprint_cards": P["_fingerprint_cards"],
         "fingerprint_headline": _fingerprint_headline(P),
         "sequencing_rows": _sequencing_rows(P),
         "version": REPORT_VERSION,
@@ -1598,7 +1629,20 @@ def _find_chromium() -> str:
     raise RuntimeError("No Chromium/Edge/Chrome found for PDF export.")
 
 
+# PDFs are OFF (Tom, 2026-09-21): everyone reads the web version, so printing one was redundant
+# work on every render. It was also the expensive half by a wide margin — this function shells out
+# to headless Chromium and stages its `.src.html` INSIDE the repo, which is precisely the case
+# `c:\Projects\CLAUDE.md` warns about (IT's DLP agent intercepts a process reading a staged file
+# under c:\Projects\**). Reports were taking 7-14 minutes each and one wedged for 22 hours at
+# 1.8 s of CPU. Nothing links a PDF that does not exist: publish_site emits the PDF button only
+# when the file is there (`has_pdf`), and the player packs never linked one at all.
+# Set PLAYERPROFILE_PDF=1 to render them again.
+MAKE_PDFS = os.environ.get("PLAYERPROFILE_PDF", "").strip().lower() in ("1", "true", "yes")
+
+
 def _html_to_pdf(html: str, out_path: str) -> None:
+    if not MAKE_PDFS:
+        return
     exe = _find_chromium()
     tmp_html = out_path + ".src.html"
     with open(tmp_html, "w", encoding="utf-8") as f:

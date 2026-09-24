@@ -119,7 +119,10 @@ def main():
     for i, bid in enumerate(ids, 1):
         try:
             path = _render(bid)
-            print(f"  [{i}/{len(ids)}] {bid} -> {os.path.basename(path)}")
+            # The builders return the PDF path even though PDFs are off by default (report.MAKE_PDFS)
+            # — name the file that actually exists.
+            shown = path if os.path.exists(path) else path[:-4] + ".html"
+            print(f"  [{i}/{len(ids)}] {bid} -> {os.path.basename(shown)}")
             ok += 1
         except Exception as e:
             print(f"  [{i}/{len(ids)}] {bid} FAILED: {type(e).__name__}: {str(e)[:140]}")

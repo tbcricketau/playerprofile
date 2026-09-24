@@ -14,6 +14,8 @@ The format scope helpers are IMPORTED from data_loaders rather than redefined �
 already owns the T20 pooling rule (all major leagues, neutralised by league strength), and a second
 copy here would drift the moment that list changes.
 """
+import streamlit as st
+
 from cricket_core.warehouse import set_conn_cursor, run_query
 from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
 from data_loaders import _scope
@@ -88,6 +90,7 @@ def search_batters(term: str, fmt: str = "Test", level: str = "international") -
     return rows
 
 
+@st.cache_data(ttl=3600)
 def load_batter_info(batter_id: str, fmt: str = "Test",
                      level: str = "international") -> dict:
     """Name + primary team (most-faced batting team IN THIS FORMAT) for the header.
@@ -135,13 +138,20 @@ def load_batter_deliveries(batter_id: str, fmt: str = "Test",
         extra = c21_source.load_batter_deliveries(batter_id, fmt=fmt)
         if source == "c21":
             return extra
-        base = load_batter_deliveries(batter_id, fmt, level, "warehouse")
+        base = _warehouse_batter_rows(batter_id, fmt, level)
         # STATISTICS dedupe, CLIPS do not — see the same note in data_loaders. A match in both
         # sources counts once for the numbers, but its footage exists twice over and both copies
         # are worth showing, so clip builders pass dedupe=False.
         rows = c21_source.merge_with_warehouse(base, extra) if dedupe else base + extra
         return sorted(rows, key=lambda r: str(r.get("match_date") or ""))
-    """Every delivery faced by the batter in that format, with the fields the profile needs."""
+    return _warehouse_batter_rows(batter_id, fmt, level)
+
+
+@st.cache_data(ttl=3600)
+def _warehouse_batter_rows(batter_id: str, fmt: str, level: str) -> list:
+    """Every delivery faced by the batter in that format, with the fields the profile needs.
+    Cached per process like the bowling loader — batting_loaders had no caching at all, and
+    render_batting_report builds the profile three times per report."""
     conn, cur = set_conn_cursor()
     q = f"""
     SELECT
@@ -183,6 +193,7 @@ def load_batter_deliveries(batter_id: str, fmt: str = "Test",
     return rows
 
 
+@st.cache_data(ttl=3600)
 def load_batter_innings(batter_id: str, fmt: str = "Test",
                         level: str = "international") -> list:
     """Per-innings aggregation for the share-of-runs metric: the batter's off-bat runs
@@ -216,6 +227,7 @@ def load_batter_innings(batter_id: str, fmt: str = "Test",
     return rows
 
 
+@st.cache_data(ttl=3600)
 def load_batter_catch_positions(batter_id: str, fmt: str = "Test",
                                 level: str = "international") -> dict:
     """Where THIS batter's caught dismissals in that format were taken: {delivery_id: fielding_position_id}.

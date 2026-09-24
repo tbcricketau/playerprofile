@@ -139,8 +139,62 @@ actually gets served.
 ```powershell
 .\venv\Scripts\python.exe publish_packs.py aus      # assemble -> validate -> push (refuses if broken)
 .\venv\Scripts\python.exe publish_packs.py caxi --deep
+.\venv\Scripts\python.exe publish_packs.py aus --dry-run   # every gate, nothing committed or pushed
 .\venv\Scripts\python.exe check_site.py player_pack_site   # validate on its own
+.\venv\Scripts\python.exe squads.py --check south-africa-odi-away-2026   # the roster check alone
 ```
+
+### Three gates added 24-09-2026, each for a defect that had passed every earlier one
+
+- **Roster** (`squads.roster_check`, first thing the publish runs, offline): the pin, matchup
+  store, `opponent_about`, `h2h` and `series.json` must name the same opposition. A bowler swap
+  touches all five — Maphaka → Lizaad Williams on 23-09 missed `series.json` and the packs kept a
+  card linking a deleted report. It also flags a pinned player with no `opponent_about` entry, who
+  otherwise ships as a "Not enough data" card.
+- **Duplicate reports**: a player rendered under two spellings (`nishant_sindu_*` 07-09,
+  `nishant_sindhu_*` 11-09) gave one key two sidecars, and the maps kept whichever the glob returned
+  last — alphabetical, so the Australia A packs served the stale spelling for three of his four plans
+  while every link resolved. `_sidecar_map` and `_scouting_urls` now keep the **newest** render and
+  print the clash, and the gate refuses a bundle that serves the older one.
+- **Hand-audit coverage**: `run_audit` returns a dict and the gate refuses when any page's name
+  resolved to no hand (the h1 is HTML-escaped, so `O&#x27;Neill` never matched and was silently
+  skipped), when any reel resolved to no delivery (the count was returned and thrown away), when
+  the hands dict is empty, or when the squad's format is unknown. The summary line says what was
+  tested, not just "clean".
+
+Every override (`--no-assemble`, `--no-hand-audit`, `--allow-combined-plans`, `--no-roster-check`,
+`--allow-duplicates`, `--revive`) is printed up front and appended to the commit message, so a push
+that skipped a gate can be told from one that passed it.
+
+### The audit opens every pack page and checks every button (24-09-2026, later the same day)
+
+Until then `audit_pack_hands` opened only `*-batting.html` and collected only the five reel kinds
+it knew. **509 of the 1,123 buttons in the South Africa bundle** — every head-to-head reel, every
+scoring/dismissal reel on a bowling pack, the release cells — were never looked at while it printed
+"clean". It now collects *every* `-vision.html#key`, classifies it (`_classify`), and **refuses on a
+key it does not recognise**, so a new reel kind appears as a refusal rather than as silence. Each
+kind is held to what it is about:
+
+| kind | keys | scoped to |
+|---|---|---|
+| opposition bowler reel, batting pack | `stock/wkt/nb/dth/mid` + hand | that bowler (owner), the pack batter's hand, the pack's red/white format |
+| opposition batter reel, bowling pack | `sco/dsm` + type code | that batter (owner), the bowler type the key declares, the format |
+| head-to-head | `hbat_`/`hbowl_` | the pack player at one end, the named opponent at the other, the format |
+| own | `rel<i>`, `s<i>`, `c<i>p<j>` | the pack player |
+| manual / similar | `man_…`, `similar` | no delivery ids — counted as not checkable, never refused |
+
+A button whose text ends in `*` is the builder's **declared** fallback (a wider type or a
+neighbouring format, footnoted on the page) and is held to the family it fell back to; an
+unstarred reel is held to the exact type, so a pooled reel with no label still fails. Owner and
+type come from the warehouse per delivery, or from the Cricket-21 mirror via
+`c21_source.delivery_facts`, which now resolves striker, bowler and type through the player map.
+Head-to-head clips are indexed from `h2h_<opp>.json` and release cells from `release_detail.json`.
+
+Proven on both live bundles: South Africa 1,023 reels across 32 pages, 0 defects. Australia A
+one-day: **9 head-to-head reels carrying first-class clips in a one-day pack** — the h2h format
+gap this file had recorded as unaudited, and a live defect until that squad's h2h is rebuilt.
+Still outside every gate: the `data-field` field-map images (`check_site` does not see the
+attribute).
 
 `check_site.py` fails the build (exit 1) on: a dead internal href/src, a zero-byte target, a
 `#fragment` missing from the page it points at, or a play button whose playlist is absent or empty.
@@ -331,7 +385,57 @@ second thing to change.**
 second live squad is built into it, each nests under `players/<slug>/` and every previously
 published link 404s. That happened to the Zimbabwe packs on 2026-09-19, mid-series.
 
-### Reports take 7-14 MINUTES each here, not ~110 seconds
+### Where a render's time went, and what changed on 24-09-2026
+
+An ODI bowling report measured **2 min 5 s** after the changes below, from 8.5 min the same
+morning (7–14 min the week before, with PDFs). A stack dump every two minutes showed where the
+old time went, and none of it was report work:
+
+- **~5 min: one TLS handshake to `login.microsoftonline.com` that never completed.** The first
+  token request of the process sat in the handshake until the Azure SDK's 300 s connect timeout,
+  then the retry connected in under a second. Per connection, not per endpoint — a fresh process
+  got its token in 2 s while the render was still stuck — and the machine is on GlobalProtect.
+  `cricket_core.video` now passes `connection_timeout=20, read_timeout=120` to the credential and
+  both blob clients, so a stall costs 20 s and a retry, not five minutes.
+- **~1 min: a Chrome launch per figure.** plotly 6 / kaleido 1 starts and tears down a browser for
+  every `to_image` unless a server is running (2.5 s vs 0.10 s per figure), and `report.build_html`
+  ran every figure twice, once per cut. `report._fig_uri` starts `kaleido.start_sync_server()`
+  once per process and the figures are rasterised once per profile.
+- **PDFs are off** (`PLAYERPROFILE_PDF=1` to render them) — everyone reads the web version.
+
+Elsewhere in the pipeline, measured the same day:
+
+- `publish_site._refresh_playlists` resolved clips one stem at a time (~1.9 s each, a fresh TLS
+  handshake per probe), which is the whole of `inject_reports`' ~70 min for 116 reports. It now
+  warms the extension cache with one 16-wide `resolve_playlist` pass first: one report's 44 stems
+  in **14 s**, so the same inject projects to ~7 min.
+- `resolve_clip` probed `.mp4` before `.MP4`; 4,947 of the baked clips are `.MP4` against 924, so
+  84% of stems paid two serial handshakes. `.MP4` is now first.
+- `load_bowler_deliveries` is cached on `(id, dev_limit, fmt, level)` only. `dedupe` and `source`
+  used to be part of the key, so `build_opponent_about`'s clip pass (`dedupe=False`) re-ran the
+  ~300 s career pull the profile had just cached — twice per bowler across a full run.
+  `batting_loaders` had no caching at all and `render_batting_report` builds the profile three
+  times per report; its loaders are cached the same way now.
+- `build_player_site --only` cleared the whole output and then built only the named players; it
+  now rewrites those pages in place and keeps the full roster on the index.
+
+**Still open, measured but not changed:** the warehouse pull itself. Cummins' 14,793 balls resolve
+server-side in 7 s and take 297 s to *fetch*, because the cost is per text column (10 Lookups
+`description`s plus `season`, `venue_*` and a `CONCAT` name — ~6 s per column per 15k rows). The
+raw `*_id` columns are already selected; mapping them client-side through `cricket_core.lookups`
+would cut most of it. Time it on Cummins and Lyon before relying on the projection.
+
+**The exit hang has a cause, not yet a fix.** A render that wrote every file and then sat for
+hours at flat CPU with no sockets and no Chrome was Python's own shutdown joining a **non-daemon
+thread** that `logistro.getPipeLogger` starts to read Chrome's stderr (choreographer, under
+kaleido). `browser_async.close()` returns early if it loses a lock race with the second close the
+read loop posts, and skips `os.close()` on the pipe's write end — so our own process holds it and
+the reader never sees EOF. One Chrome per process (the server above) makes that ~20× rarer per
+report. Confirm on a wedged process with `py-spy dump`: MainThread in `threading._shutdown`, and
+`browser_procThread`s in `os.read`. The pack build's exit code 4 came from outside Python — nothing
+in `build_player_site` exits 4.
+
+### Reports take 7-14 MINUTES each here, not ~110 seconds (superseded above, kept for the wedge notes)
 
 The figure quoted elsewhere in this file is from a faster day and it cost an afternoon: a batch run
 with a 420-second per-report timeout killed 11 of 18 reports just past the line, and the pattern
@@ -611,7 +715,9 @@ Three smaller things worth knowing:
   documentation. A specialist bat who bowls a bit can stay `role: "Batter"` and still get both packs.
 - **The batter's hand comes from the matchup store's `we_bat` rows**, so a player missing there
   defaults to `rhb` and their batting pack links the wrong hand's bowler reports. Check they're
-  present before building — the hand audit will catch it at the publish gate either way.
+  present before building. ⚠ The hand audit does **not** catch this on its own: it reads the same
+  store, so a player missing there is a page it cannot test. Since 24-09 it counts those pages and
+  the gate refuses on any — that is the catch, not the hand test.
 - **Their attack card and h2h footage come from the matchup store too**, not from `squads.json`, so
   both are usually already built. `build_h2h.py` reads `we_bat` / `they_bat`, never the roster.
 

@@ -217,7 +217,6 @@ def search_bowlers(name_like: str) -> list:
     return result
 
 
-@st.cache_data(ttl=3600)
 def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test",
                            level: str = "international",
                            source: str = "warehouse", dedupe: bool = True) -> list:
@@ -233,6 +232,12 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
     re-sorts by date; the C21 rows carry `source='c21'` so a consumer can tell them apart.
 
     dev_limit: if > 0, caps rows returned (for fast local testing only).
+
+    The warehouse pull is cached on (id, dev_limit, fmt, level) ONLY — `_warehouse_bowler_rows`.
+    `dedupe` and `source` used to sit on the cached function, so a caller passing dedupe=False
+    for the clips missed the cache the profile had just filled and re-ran the same ~300 s query.
+    For a warehouse-only player the two calls are byte-identical; ~15 bowlers in a full
+    build_opponent_about run paid it twice (measured 24-09-2026).
     """
     if source not in ("warehouse", "c21", "both"):
         raise ValueError(f"unknown source {source!r} — warehouse | c21 | both")
@@ -241,7 +246,7 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
         extra = c21_source.load_bowler_deliveries(bowler_id, fmt=fmt)
         if source == "c21":
             return extra[:dev_limit] if dev_limit > 0 else extra
-        base = load_bowler_deliveries(bowler_id, dev_limit, fmt, level, "warehouse")
+        base = _warehouse_bowler_rows(bowler_id, dev_limit, fmt, level)
         # STATISTICS dedupe, CLIPS do not. A match held by both sources must count once or the
         # averages double (c21_source.merge_with_warehouse) — but the two sources hold DIFFERENT
         # footage of that match, and dropping one side throws playable clips away. Zimbabwe's C21
@@ -250,6 +255,13 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
         rows = c21_source.merge_with_warehouse(base, extra) if dedupe else base + extra
         both = sorted(rows, key=lambda r: str(r.get("match_date") or ""))
         return both[:dev_limit] if dev_limit > 0 else both
+    return _warehouse_bowler_rows(bowler_id, dev_limit, fmt, level)
+
+
+@st.cache_data(ttl=3600)
+def _warehouse_bowler_rows(bowler_id: str, dev_limit: int, fmt: str, level: str) -> list:
+    """The warehouse half of load_bowler_deliveries — see its docstring for why this is the
+    cached unit."""
     conn, cursor = set_conn_cursor()
     top_clause = f"TOP {dev_limit}" if dev_limit > 0 else ""
     query = f"""

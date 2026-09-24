@@ -333,9 +333,33 @@ def clip_ref(row, stem=None):
     return {}
 
 
+# bowler_type_simple -> the pack's bowler GROUP vocabulary (build_opponent_about._CLIP_GROUPS)
+_GROUP_OF = {"Right Fast": "right_pace", "Right Medium": "right_pace",
+             "Left Fast": "left_pace", "Left Medium": "left_pace",
+             "Off Spin": "off_spin", "Leg Break": "leg_spin",
+             "Left Orthodox": "left_orthodox", "Left Unorthodox": "left_unorthodox"}
+
+
+def _reverse_player_map():
+    """{('multiday'|'white', c21_id): warehouse_id}. A C21 id names a different person in each of
+    its two databases, so the reverse map is keyed by database as well as id."""
+    rev = {}
+    for wid, pm in player_map().items():
+        for key, db in (("c21_ids_multiday", "multiday"), ("c21_ids_white", "white")):
+            for cid in pm.get(key) or []:
+                rev[(db, str(int(cid)))] = str(wid)
+        for cid in pm.get("c21_ids") or []:          # unsplit legacy entries: either database
+            for db in ("multiday", "white"):
+                rev.setdefault((db, str(int(cid))), str(wid))
+    return rev
+
+
 def delivery_facts(delivery_ids):
-    """{delivery_id: (hand, format)} for C21 deliveries — what audit_pack_hands needs to check a
-    reel it cannot look up in the warehouse.
+    """{delivery_id: {hand, fmt, striker, bowler, group}} for C21 deliveries — everything
+    audit_pack_hands needs to check a reel it cannot look up in the warehouse. `striker` and
+    `bowler` are WAREHOUSE ids resolved through the player map (None when unmapped), `fmt` is the
+    coarse red/white word `audit_pack_hands._series_fmt` speaks, `group` the pack's bowler-group
+    vocabulary.
 
     Without this the hand audit sees a C21 clip, fails to resolve it, and either drops the reel
     (making an unscoped reel look clean) or refuses the publish. A gate that cannot see half the
@@ -343,23 +367,29 @@ def delivery_facts(delivery_ids):
     ids = [str(i) for i in delivery_ids if str(i).strip()]
     if not ids or not available():
         return {}
-    out = {}
+    out, rev = {}, _reverse_player_map()
     con = _connect()
     try:
         for i in range(0, len(ids), 800):
             chunk = ids[i:i + 800]
             marks = ",".join("?" * len(chunk))
-            q = (f"SELECT d.delivery_id, d.striker_hand, m.format, m.competition_name "
-                 f"FROM deliveries d JOIN matches m ON m.match_id = d.match_id "
+            q = (f"SELECT d.delivery_id, d.striker_hand, m.format, d.striker_id, d.bowler_id, "
+                 f"d.bowler_type FROM deliveries d JOIN matches m ON m.match_id = d.match_id "
                  f"WHERE d.delivery_id IN ({marks})")
-            for did, hand, fmt, comp in con.execute(q, chunk):
+            for did, hand, fmt, sid, bid, btype in con.execute(q, chunk):
                 lhb = str(hand or "").strip().upper().startswith("L")
                 f = str(fmt or "")
-                # Same red/white vocabulary audit_pack_hands._series_fmt speaks.
                 coarse = ("Test" if "class" in f.lower() or "Test" in f
                           else "ODI" if ("list a" in f.lower() or "ODI" in f or "One Day" in f)
                           else "T20" if "T20" in f else "")
-                out[str(did)] = ("lhb" if lhb else "rhb", coarse)
+                db = "multiday" if coarse == "Test" else "white"
+                simple = _BOWLER_TYPE.get(str(btype or "").strip())
+                out[str(did)] = {
+                    "hand": "lhb" if lhb else "rhb", "fmt": coarse,
+                    "striker": rev.get((db, str(sid))) if sid is not None else None,
+                    "bowler": rev.get((db, str(bid))) if bid is not None else None,
+                    "group": _GROUP_OF.get(simple),
+                }
     finally:
         con.close()
     return out

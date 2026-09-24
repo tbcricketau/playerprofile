@@ -496,6 +496,24 @@ def _scouting_urls(series_slug, up="../"):
         pass
 
     bowl, bat, bat_groups = {}, {}, {}
+    # One report per (player, hand/group) — and when two FILES claim the same one, the newer render
+    # wins and the clash is printed. Nishant Sindhu was rendered as `nishant_sindu_*` (07-09) and
+    # `nishant_sindhu_*` (11-09); the glob order (alphabetical) picked the stale spelling for three
+    # of his four plans, every link resolved, and every gate passed. Never pick by glob order.
+    seen = {}                                        # (kind, id, sub) -> (mtime, url)
+
+    def _keep(kind, bid, sub, url, sc_path):
+        mt = os.path.getmtime(sc_path)
+        prev = seen.get((kind, bid, sub))
+        if prev and prev[1] != url:
+            keep_new = mt > prev[0]
+            print(f"  !! DUPLICATE {kind} report for {bid} [{sub}]: keeping "
+                  f"{os.path.basename(url if keep_new else prev[1])} (newer), ignoring "
+                  f"{os.path.basename(prev[1] if keep_new else url)}")
+            if not keep_new:
+                return False
+        seen[(kind, bid, sub)] = (mt, url)
+        return True
     # Scan every format's output dir — the white-ball builders write to reports/odi and reports/t20,
     # so a glob of reports/ alone finds no ODI report at all.
     # …and only this series' LEVEL. An A-team pack must link the A-team report, not the senior
@@ -521,8 +539,9 @@ def _scouting_urls(series_slug, up="../"):
             # link the reduced PLAYER-MODE report (matchup verdicts stripped), not the coach cut
             variant = ".pmode.html" if os.path.exists(
                 os.path.join(_dir, f"{base}.pmode.html")) else ".html"
-            bowl.setdefault(bid, {})[hand] = \
-                f"{up}scouting/{series_slug}/{grp}/{base}{variant}"
+            url = f"{up}scouting/{series_slug}/{grp}/{base}{variant}"
+            if _keep("bowling", bid, hand, url, sc):
+                bowl.setdefault(bid, {})[hand] = url
 
     _bat_dir = _dirs["test"]        # batting reports render to the level's root folder
     for sc in glob.glob(os.path.join(_bat_dir, "*.playlists.json")):
@@ -538,8 +557,9 @@ def _scouting_urls(series_slug, up="../"):
                 os.path.join(_bat_dir, f"{base}.pmode.html")) else ".html"
             url = f"{up}scouting/{series_slug}/batters/{base}{variant}"
             if m:
-                bat_groups.setdefault(bid, {})[m.group(1)] = url
-            elif bid not in bat:
+                if _keep("batting", bid, m.group(1), url, sc):
+                    bat_groups.setdefault(bid, {})[m.group(1)] = url
+            elif _keep("batting", bid, "combined", url, sc):
                 bat[bid] = url                         # the combined overview (fallback link)
     return bowl, bat, bat_groups
 
@@ -1597,7 +1617,7 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
     return len(built)
 
 
-def build(out_dir, no_video=False, only=None, squad=None, include_archived=False):
+def build(out_dir, no_video=False, only=None, squad=None, include_archived=False, nest=False):
     squads = json.load(open(SQUADS, encoding="utf-8"))
     players = json.load(open(PLAYERS, encoding="utf-8"))
     cards = _load_cards()
@@ -1625,19 +1645,30 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
             f"finished one.")
     if skipped:
         print(f"  skipping archived squad(s): {', '.join(skipped)}  (--include-archived to build)")
-    single = len(slugs) == 1
+    # A one-squad build normally writes the packs flat at players/<player>.html; two or more nest
+    # each squad under its slug. `nest` forces the nested layout for a single squad, and exists for
+    # one reason: the layout IS the public URL. South Africa was published nested on 2026-09-19
+    # beside Zimbabwe, and when Zimbabwe was archived two days later the automatic flip back to
+    # flat would have 404'd every South Africa link a second time in three days.
+    single = len(slugs) == 1 and not nest
 
     os.makedirs(out_dir, exist_ok=True)
-    # clear (keep any .git)
-    for f in os.listdir(out_dir):
-        if f == ".git":
-            continue
-        p = os.path.join(out_dir, f)
-        if os.path.isdir(p):
-            import shutil
-            shutil.rmtree(p, ignore_errors=True)
-        else:
-            os.remove(p)
+    # clear (keep any .git) — unless this is an --only build, which rewrites the named players'
+    # pages in place and leaves everyone else's alone. It used to clear everything and then
+    # build only the named players, so a targeted run deleted every other pack — the same
+    # trap publish_site --only was fixed for on 2026-09-13.
+    if only:
+        print(f"  --only: rebuilding {len(only)} player(s) in place, other packs left as they are")
+    else:
+        for f in os.listdir(out_dir):
+            if f == ".git":
+                continue
+            p = os.path.join(out_dir, f)
+            if os.path.isdir(p):
+                import shutil
+                shutil.rmtree(p, ignore_errors=True)
+            else:
+                os.remove(p)
 
     if not no_video:                                   # prime a long read SAS so vision links don't
         try:                                           # die after the default 6 h (was the bug)
@@ -1655,15 +1686,19 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
         fmt = (meta.get("format") or "Test").strip()
         global _PACK_FMT
         _PACK_FMT = fmt
-        roster = [(pid, players.get(pid, {"name": pid, "role": "Unknown", "packs": ["batting"]}))
-                  for pid in meta.get("players", []) if not only or pid in only]
+        # The whole squad for the index and the photos; only the named players for the pages.
+        # With --only the index used to list just the named players, which is a roster page
+        # missing most of the roster.
+        roster_all = [(pid, players.get(pid, {"name": pid, "role": "Unknown", "packs": ["batting"]}))
+                      for pid in meta.get("players", [])]
+        roster = [(pid, rec) for pid, rec in roster_all if not only or pid in only]
         s_dir = out_dir if single else os.path.join(out_dir, slug)
         os.makedirs(s_dir, exist_ok=True)
         if IMG_MODE == "file":                       # copy each roster photo into the bundle once
             img_dir = os.path.join(s_dir, "img")
             os.makedirs(img_dir, exist_ok=True)
             import shutil
-            for pid, rec in roster:
+            for pid, rec in roster_all:
                 p = get_photo_path(pid, fmt=fmt, name=rec.get("name"))
                 if p:
                     shutil.copy(p, os.path.join(img_dir, f"{pid}.png"))
@@ -1687,7 +1722,7 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
                     print(f"  field maps copied: {n_f}")
         up = None if single else ("../index.html", "Series")
         open(os.path.join(s_dir, "index.html"), "w", encoding="utf-8").write(
-            _page(f"{meta.get('name','')} — player packs", _roster_body(meta, roster), up=up))
+            _page(f"{meta.get('name','')} — player packs", _roster_body(meta, roster_all), up=up))
         h2h = _load_h2h(slug)
         opp_names = _opp_names(slug)
         opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
@@ -1823,6 +1858,19 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
                 bt_report = {bid: ((bat_group_urls.get(bid, {}).get(grp) if grp else None)
                                    or bat_urls.get(bid))
                              for bid in opp_batters} if opp_batters else {}
+                # SAY SO WHEN THE FALLBACK FIRES (2026-09-21). The `or bat_urls.get(bid)` above is
+                # deliberate — a missing focused render must not break a build — but it was silent,
+                # so a pack serving plans pooled across every bowling type looked identical to a
+                # correct one. Zampa's South Africa pack linked reports with 0 mentions of leg spin
+                # and shipped twice. The publish gate now refuses this; this line is so the build
+                # itself says it, which is where it is cheapest to notice.
+                if opp_batters:
+                    _comb = [b for b in opp_batters
+                             if not (grp and bat_group_urls.get(b, {}).get(grp))]
+                    if _comb:
+                        print(f"  ! {name} ({grp or 'UNTYPED — no bowl_groups'}): "
+                              f"{len(_comb)}/{len(opp_batters)} batters link the COMBINED report "
+                              f"— plans pooled across all bowling types")
                 open(os.path.join(s_dir, bowl_href), "w", encoding="utf-8").write(
                     _page(f"{name} — bowling ({bt})",
                           _bowling_body(meta, pid, rec, opp_batters=opp_batters, about=about_bat,
@@ -1863,6 +1911,10 @@ def main():
     ap.add_argument("--include-archived", action="store_true",
                     help="also build squads marked `archived` (deliberate override — the series is "
                          "over and the packs for it have been taken offline)")
+    ap.add_argument("--nest", action="store_true",
+                    help="keep each squad under players/<slug>/ even when only one is built — the "
+                         "layout is the published URL, so use this when a bundle drops back to a "
+                         "single squad and its links must keep working")
     ap.add_argument("--squads", help="alternate squads file (default squads.json). Legacy: the CA XI "
                     "roster now lives in squads.json as its own slug, so prefer --squad.")
     args = ap.parse_args()
@@ -1871,7 +1923,7 @@ def main():
         SQUADS = os.path.join(HERE, args.squads)
     build(os.path.join(HERE, args.out), no_video=args.no_video,
           only=set(args.only) if args.only else None,
-          squad=args.squad, include_archived=args.include_archived)
+          squad=args.squad, include_archived=args.include_archived, nest=args.nest)
 
 
 if __name__ == "__main__":

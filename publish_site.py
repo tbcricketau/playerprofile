@@ -94,6 +94,15 @@ def _natural_name(nm):
 
 # ── SAS refresh ─────────────────────────────────────────────────────────────────
 def _refresh_playlists(pls, hk_sas):
+    # Warm the extension cache for every stem in one parallel pass first. This loop called
+    # resolve_clip one stem at a time — a fresh TLS handshake each, ~1.9 s on this network — so
+    # injecting 116 reports (1,226 distinct stems) took ~70 minutes. resolve_playlist probes
+    # 16-wide; after it every resolve_clip below is a dictionary lookup.
+    from cricket_core.video import resolve_playlist
+    stems = {it.get("clip_stem") for items in pls.values() if isinstance(items, list)
+             for it in items if isinstance(it, dict) and it.get("clip_stem")}
+    if len(stems) > 1:
+        resolve_playlist([{"clip_stem": s} for s in stems], drop_missing=False)
     for items in pls.values():
         if not isinstance(items, list):
             continue
@@ -158,6 +167,22 @@ def _opp_key_for(series):
         return str(series["slug"]).split("-")[0]
 
 
+# Report keys claimed by two different filenames in one scan — filled by _sidecar_map, read by the
+# publish gate. A player rendered under two spellings (nishant_sindu_* on 07-09, nishant_sindhu_* on
+# 11-09) produced two sidecars for one key, and the map kept whichever the glob returned last, which
+# is alphabetical: the Australia A packs served the four-day-stale spelling for three of his four
+# plans while every gate passed, because each link resolved. The map now keeps the NEWEST render and
+# records the collision, and publish_packs refuses a bundle that serves either half of one.
+_SIDECAR_COLLISIONS = []
+
+
+def sidecar_collisions():
+    """[(key, kept_name, dropped_name)] from the last _sidecar_map() scan (runs one if none has)."""
+    if not _SIDECAR_COLLISIONS:
+        _sidecar_map()
+    return list(_SIDECAR_COLLISIONS)
+
+
 def _sidecar_map():
     """{(player_id, hand_tag, kind, bowl_group, fmt, level): (src_dir, report_base_name)} from the
     rendered sidecars — bowling sidecars carry meta.bowler_id, batting sidecars meta.batter_id.
@@ -171,11 +196,13 @@ def _sidecar_map():
     write. meta.format is not trusted, because t20_report shares build_odi_playlists and every
     T20 sidecar was stamped "ODI" — keying off it silently filed Starc's T20 report as his ODI
     one and overwrote the real entry."""
-    out = {}
+    out, mtimes = {}, {}
+    _SIDECAR_COLLISIONS.clear()
     scopes = [(lvl, fmt, d) for lvl, dirs in _LEVEL_DIRS.items() for fmt, d in dirs.items()]
     for level, fmt, d in scopes:
         for sc in sorted(glob.glob(os.path.join(d, "*.playlists.json"))):
             name = os.path.basename(sc)[: -len(".playlists.json")]
+            mtime = os.path.getmtime(sc)
             try:
                 meta = json.load(open(sc, encoding="utf-8")).get("meta", {})
                 bid = str(meta.get("bowler_id") or meta.get("batter_id"))
@@ -204,7 +231,18 @@ def _sidecar_map():
                 fm = re.search(r"_batting_(test|odi|t20i|t20)_", name)
                 if fm:
                     rfmt = _fmt_key(fm.group(1))
-            out[(bid, hand, kind, group, rfmt, level)] = (d, name)
+            key = (bid, hand, kind, group, rfmt, level)
+            if key in out and out[key][1] != name:
+                # Two renders of one report under different names. Keep the newer file, and say
+                # so — silence here is how a stale spelling reached the Australia A packs.
+                old_name, old_mtime = out[key][1], mtimes[key]
+                keep, drop = (name, old_name) if mtime > old_mtime else (old_name, name)
+                _SIDECAR_COLLISIONS.append((key, keep, drop))
+                print(f"  !! DUPLICATE REPORT {key}: keeping {keep} (newer), ignoring {drop}")
+                if keep == old_name:
+                    continue
+            out[key] = (d, name)
+            mtimes[key] = mtime
     return out
 
 

@@ -116,6 +116,101 @@ def all_live_ids(path=None):
     return out
 
 
+def _opp_data_paths(slug, path=None):
+    """Every file that carries this series' OPPOSITION roster, by name."""
+    key = opp_key(slug, path)
+    try:
+        from cricket_core.config import project_path
+        mm = os.path.join(project_path("matchupmodel"), "data")
+    except Exception:
+        mm = os.path.join(HERE, "..", "matchupmodel", "data")
+    return {
+        "pin": os.path.join(mm, f"opp_squad_{key}.json"),
+        "store": os.path.join(mm, f"matchup_store_{key}.json"),
+        "about": os.path.join(HERE, "data", f"opponent_about_{key}.json"),
+        "h2h": os.path.join(HERE, "data", f"h2h_{key}.json"),
+        "series": os.path.join(HERE, "series.json"),
+    }
+
+
+def roster_check(slug, path=None):
+    """Problems, as strings, where the five files that describe one series' opposition disagree.
+    Empty means they agree. Pure file reads — no warehouse, milliseconds.
+
+    A bowler swap has to touch the pin, the store, opponent_about, h2h AND series.json, and nothing
+    checked that it had: swapping Maphaka for Lizaad Williams on 23-09 missed series.json, so the
+    packs kept Maphaka's card with a link to a report that had just been deleted. Two India A one-day
+    bowlers are pinned with no opponent_about entry and ship as "Not enough data" cards on every
+    batting pack. Both are set differences between files on disk. So this is the gate.
+
+    The rules, and why each direction is or is not an error:
+      store ⊆ pin        the store is a model artefact; a pinned player under the sim floor is
+                         absent from it BY DESIGN (footage-only card). A store player NOT in the
+                         pin is a stale export.
+      about == pin       an unpinned about entry is stale; a pinned player with no about entry is
+                         an empty card.
+      series == pin      series.json is the report roster; the packs union it into the opposition
+                         roster, so a name left here survives every other swap.
+      h2h ⊆ pin          a pairing for an unpinned player is a stale row.
+    """
+    p = _opp_data_paths(slug, path)
+    out = []
+
+    def _load(name):
+        try:
+            return json.load(open(p[name], encoding="utf-8"))
+        except FileNotFoundError:
+            out.append(f"{name}: missing — {p[name]}")
+        except Exception as e:                                   # noqa: BLE001
+            out.append(f"{name}: unreadable ({type(e).__name__}) — {p[name]}")
+        return None
+
+    pin, store, about, h2h, series = (_load(n) for n in ("pin", "store", "about", "h2h", "series"))
+    if pin is None:
+        return out
+    names = pin.get("names", {})
+    ids = lambda xs: {str(x) for x in xs}                       # noqa: E731
+    label = lambda s: ", ".join(f"{i} {names.get(i, '')}".strip() for i in sorted(s))  # noqa: E731
+    pin_bowl, pin_bat = ids(pin.get("bowlers", [])), ids(pin.get("batters", []))
+
+    if store is not None:
+        st_bowl = ids(c["bowler_id"] for c in store.get("we_bat", []))
+        st_bat = ids(c["batter_id"] for c in store.get("they_bat", []))
+        if st_bowl - pin_bowl:
+            out.append(f"store has bowler(s) not in the pin (stale export): {label(st_bowl - pin_bowl)}")
+        if st_bat - pin_bat:
+            out.append(f"store has batter(s) not in the pin (stale export): {label(st_bat - pin_bat)}")
+    if about is not None:
+        ab_bowl, ab_bat = ids(about.get("bowlers", {})), ids(about.get("batters", {}))
+        if pin_bowl - ab_bowl:
+            out.append(f"pinned bowler(s) with NO opponent_about entry (empty card): {label(pin_bowl - ab_bowl)}")
+        if ab_bowl - pin_bowl:
+            out.append(f"opponent_about bowler(s) not in the pin (stale entry): {label(ab_bowl - pin_bowl)}")
+        if pin_bat - ab_bat:
+            out.append(f"pinned batter(s) with NO opponent_about entry (empty card): {label(pin_bat - ab_bat)}")
+        if ab_bat - pin_bat:
+            out.append(f"opponent_about batter(s) not in the pin (stale entry): {label(ab_bat - pin_bat)}")
+    if series is not None:
+        entry = next((s for s in series.get("series", []) if s.get("slug") == slug), None)
+        if entry is None:
+            out.append(f"series.json has no entry for {slug}")
+        else:
+            se_bowl = ids(r["id"] for g in entry.get("groups", [])
+                          if "batter" not in g.get("slug", "") for r in g.get("reports", []))
+            if pin_bowl - se_bowl:
+                out.append(f"pinned bowler(s) missing from series.json (no report card): {label(pin_bowl - se_bowl)}")
+            if se_bowl - pin_bowl:
+                out.append(f"series.json bowler(s) not in the pin (stale roster line): {label(se_bowl - pin_bowl)}")
+    if h2h is not None:
+        h_bowl = ids(r["bowler_id"] for r in h2h.get("our_batting", []))
+        h_bat = ids(r["striker_id"] for r in h2h.get("our_bowling", []))
+        if h_bowl - pin_bowl:
+            out.append(f"h2h pairing(s) for bowler(s) not in the pin (stale rows): {label(h_bowl - pin_bowl)}")
+        if h_bat - pin_bat:
+            out.append(f"h2h pairing(s) for batter(s) not in the pin (stale rows): {label(h_bat - pin_bat)}")
+    return out
+
+
 def describe(path=None):
     """One line per squad, for a CLI to print."""
     out = []
@@ -127,4 +222,9 @@ def describe(path=None):
 
 
 if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 2 and sys.argv[1] == "--check":
+        probs = roster_check(sys.argv[2])
+        print("\n".join(f"  ! {p}" for p in probs) or f"  {sys.argv[2]}: rosters agree")
+        sys.exit(1 if probs else 0)
     print(describe())
