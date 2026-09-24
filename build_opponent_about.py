@@ -22,6 +22,7 @@ warnings.filterwarnings("ignore")
 
 from cricket_core.config import project_path, international_series_sql, series_sql
 from cricket_core.warehouse import set_conn_cursor, run_query
+from cricket_core.charts import is_tracked_length   # one estate-wide definition of "measured"
 from cricket_core.lookups import BOWLER_TYPE_OVERRIDE, BOWLER_TYPE_LABEL, bowler_type_label
 # The estate's phase vocabulary, so the over bands are defined once rather than restated here.
 # ⚠ As of 2026-09-17 these live in an UNCOMMITTED change to cricket-core (another session's work,
@@ -263,6 +264,21 @@ def _clips_from_rows(rows, cap):
 
 
 NEW_BALL_MIN_SHARE = 45   # only bowlers who open (new_ball_share ≥ this) get a New-ball playlist
+
+# How many TRACKED deliveries a stock-length/line sentence needs before it may be stated at all.
+# Below this the card simply omits it: a modal bucket off a handful of balls is not a stock ball,
+# and saying nothing beats saying "usually a full toss" (see allfmt_bowler_facts).
+MIN_TRACKED_FOR_LENGTH = 20
+
+
+def _tracked_length_row(r):
+    """Is this row's pitch_length a real measurement? ⚠ The column is MILLIMETRES and
+    `is_tracked_length` takes METRES — the estate's most expensive unit trap, so convert here
+    rather than at the call site. A missing or unparseable value is not tracked."""
+    try:
+        return is_tracked_length(float(r.get("plen")) / 1000)
+    except (TypeError, ValueError):
+        return False
 
 
 # Death overs, per odi_profile._phase (Powerplay <= 10, Death >= 41). Passed DOWN from the caller
@@ -892,7 +908,7 @@ def allfmt_bowler_facts(conn, cur, bid, type_label, LEN, LIN, scope_label="Test"
     No economy/average/wicket-rate (those don't translate across formats)."""
     rows = _q(conn, cur, f"""SELECT TRY_CONVERT(float, D.ball_speed) spd,
         D.pitch_length_group_pace_1_id len, D.pitch_line_group_pace_id lin,
-        D.bowler_pace_spin_id ps
+        D.bowler_pace_spin_id ps, TRY_CONVERT(float, D.pitch_length) plen
         FROM [{DATA_SCHEMA}].[Deliveries] D WHERE D.bowler_id='{bid}' AND D.legal_ball=1""")
     if len(rows) < 150:
         return None
@@ -903,9 +919,21 @@ def allfmt_bowler_facts(conn, cur, bid, type_label, LEN, LIN, scope_label="Test"
         facts.append(f"{type_label} — averages {sum(spds)/len(spds):.0f} km/h.")
     else:
         facts.append(f"{type_label}.")
-    ln, li = LEN.get(_mode(rows, "len")), LIN.get(_mode(rows, "lin"))
+    # THE GROUP COLUMNS INHERIT THE UNTRACKED SENTINEL, and this read them raw (Tom, 2026-09-21).
+    # An untracked delivery still gets a length group and it is always the FULLEST bucket, so a
+    # bowler whose record is thinly tracked is described as bowling full tosses for a stock ball.
+    # Measured on Nqobani Mokoena: 488 legal deliveries, 39% tracked, and all 297 untracked balls
+    # landed in "<1 m" — which outvoted everything and put "usually <1 m" on his card. On the 191
+    # tracked balls the answer is "6-8 m", a good length, which is what he actually bowls.
+    # `is_tracked_length` is the estate's one definition; filter the ROWS, then take the mode.
+    seen = [r for r in rows if _tracked_length_row(r)]
+    ln = li = None
+    if len(seen) >= MIN_TRACKED_FOR_LENGTH:
+        ln, li = LEN.get(_mode(seen, "len")), LIN.get(_mode(seen, "lin"))
     if ln and li:
-        facts.append(f"Usually {ln.lower()} {_line_phrase(li)}.")
+        # "pitching in line", not "in line" — the house rule is that a line is ambiguous unless it
+        # says whether it is where the ball PITCHED or where it passed the stumps (Tom, 2026-09-21).
+        facts.append(f"Usually {ln.lower()} pitching {_line_phrase(li)}.")
     facts.append(f"Limited {scope_label} record — the above is from all formats they've played.")
     return {"type": type_label, "is_pace": is_pace, "facts": facts, "order": len(rows), "source": "all-formats"}
 

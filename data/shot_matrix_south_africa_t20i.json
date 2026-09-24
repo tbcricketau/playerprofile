@@ -1,0 +1,204 @@
+{
+ "pace": [
+  {
+   "batter": "Quinton de Kock",
+   "bid": "2710003",
+   "balls": 1049,
+   "Conventional sweep": 0.8,
+   "Slog sweep": 0.2,
+   "Reverse sweep": 0.2,
+   "Paddle": 0.3,
+   "Ramp / scoop": 1.8,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "David Miller",
+   "bid": "1300073",
+   "balls": 938,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.1,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.2,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Aiden Markram",
+   "bid": "3760008",
+   "balls": 860,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.5,
+   "Paddle": 0.2,
+   "Ramp / scoop": 0.3,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Tristan Stubbs",
+   "bid": "4352508",
+   "balls": 443,
+   "Conventional sweep": 0.2,
+   "Slog sweep": 0.2,
+   "Reverse sweep": 1.8,
+   "Paddle": 1.1,
+   "Ramp / scoop": 1.1,
+   "Switch hit": 0.2
+  },
+  {
+   "batter": "Temba Bavuma",
+   "bid": "3080067",
+   "balls": 374,
+   "Conventional sweep": 0.5,
+   "Slog sweep": 0.3,
+   "Reverse sweep": 0.0,
+   "Paddle": 2.1,
+   "Ramp / scoop": 2.1,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Ryan Rickelton",
+   "bid": "4352600",
+   "balls": 286,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Marco Jansen",
+   "bid": "4352128",
+   "balls": 93,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 1.1,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Matthew Breetzke",
+   "bid": "4353843",
+   "balls": 66,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 1.5,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Tony de Zorzi",
+   "bid": "4353850",
+   "balls": 93,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 3.2,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Corbin Bosch",
+   "bid": "2540186",
+   "balls": 71,
+   "Conventional sweep": 0.0,
+   "Slog sweep": 0.0,
+   "Reverse sweep": 4.2,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  }
+ ],
+ "spin": [
+  {
+   "batter": "Quinton de Kock",
+   "bid": "2710003",
+   "balls": 706,
+   "Conventional sweep": 4.1,
+   "Slog sweep": 4.7,
+   "Reverse sweep": 5.7,
+   "Paddle": 0.1,
+   "Ramp / scoop": 0.3,
+   "Switch hit": 0.4
+  },
+  {
+   "batter": "David Miller",
+   "bid": "1300073",
+   "balls": 580,
+   "Conventional sweep": 3.8,
+   "Slog sweep": 1.9,
+   "Reverse sweep": 1.7,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.5
+  },
+  {
+   "batter": "Aiden Markram",
+   "bid": "3760008",
+   "balls": 470,
+   "Conventional sweep": 1.7,
+   "Slog sweep": 1.7,
+   "Reverse sweep": 1.7,
+   "Paddle": 0.2,
+   "Ramp / scoop": 0.6,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Tristan Stubbs",
+   "bid": "4352508",
+   "balls": 282,
+   "Conventional sweep": 2.5,
+   "Slog sweep": 4.6,
+   "Reverse sweep": 6.4,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.7,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Temba Bavuma",
+   "bid": "3080067",
+   "balls": 193,
+   "Conventional sweep": 9.3,
+   "Slog sweep": 1.6,
+   "Reverse sweep": 4.1,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.5
+  },
+  {
+   "batter": "Ryan Rickelton",
+   "bid": "4352600",
+   "balls": 204,
+   "Conventional sweep": 2.9,
+   "Slog sweep": 8.8,
+   "Reverse sweep": 2.9,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Marco Jansen",
+   "bid": "4352128",
+   "balls": 89,
+   "Conventional sweep": 3.4,
+   "Slog sweep": 5.6,
+   "Reverse sweep": 6.7,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  },
+  {
+   "batter": "Matthew Breetzke",
+   "bid": "4353843",
+   "balls": 68,
+   "Conventional sweep": 1.5,
+   "Slog sweep": 1.5,
+   "Reverse sweep": 0.0,
+   "Paddle": 0.0,
+   "Ramp / scoop": 0.0,
+   "Switch hit": 0.0
+  }
+ ]
+}

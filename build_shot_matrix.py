@@ -79,6 +79,10 @@ def _f(v):
 
 
 def build(opp, fmt="Test", level="international"):
+    # The format belongs in the FILENAME. Without it every format wrote to one file, so building
+    # a T20I matrix silently replaced the ODI one the presentation decks read - the same
+    # convention the other producers already use ("" for Test, "_odi", "_t20i").
+    suffix = "" if fmt == "Test" else f"_{fmt.lower()}"
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
     batters = about.get("batters", {})
     conn, cur = set_conn_cursor()
@@ -101,8 +105,8 @@ def build(opp, fmt="Test", level="international"):
                 entry[label] = round(_f(r.get(f"{tag}{sid}")) / balls * 100, 1)
             data[tw].append(entry)
         data[tw].sort(key=lambda e: -total.get(e["bid"], 0))     # most-faced batters first
-    json.dump(data, open(os.path.join(HERE, "data", f"shot_matrix_{opp}.json"), "w", encoding="utf-8"),
-              indent=1, ensure_ascii=False)
+    json.dump(data, open(os.path.join(HERE, "data", f"shot_matrix_{opp}{suffix}.json"), "w",
+                         encoding="utf-8"), indent=1, ensure_ascii=False)
 
     def _table(title, entries):
         head = "<tr><th class=rowh>Shot</th>" + "".join(
@@ -126,7 +130,7 @@ def build(opp, fmt="Test", level="international"):
             + _table("Spin shot options", data["spin"])
             + '<p class=note>Shots limited to those our stroke coding separates (no upper-cut or '
               'paddle-scoop/sweep split). Data since the ball-by-ball era.</p>')
-    out = os.path.join(HERE, "reports", f"shot_matrix_{opp}.html")
+    out = os.path.join(HERE, "reports", f"shot_matrix_{opp}{suffix}.html")
     open(out, "w", encoding="utf-8").write(_page("Unorthodox shot options", body, up=("index.html", "Series")))
     print(f"wrote {out} · pace {len(data['pace'])} batters, spin {len(data['spin'])} batters")
 

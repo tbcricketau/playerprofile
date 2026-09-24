@@ -308,8 +308,14 @@ def build(out_dir, sas_hours, only=None, stage_archive=True):
         if has_mx:
             shutil.copy(mx_src, os.path.join(s_dir, "matchups.html"))
         # series-level unorthodox-shot matrix (build_shot_matrix.py)
-        sm_src = os.path.join(REPORTS_DIR, f"shot_matrix_{s['slug'].split('-')[0]}.html")
-        has_sm = os.path.exists(sm_src)
+        # build_shot_matrix now puts the format in the filename ("_odi", "_t20i") so one format
+        # cannot overwrite another's; builds from before it have none. Take a format-suffixed
+        # file when one exists, else the bare name, so neither generation loses its link.
+        sm_stem = f"shot_matrix_{s['slug'].split('-')[0]}"
+        sm_src = next((os.path.join(REPORTS_DIR, n)
+                       for n in (f"{sm_stem}_odi.html", f"{sm_stem}_t20i.html", f"{sm_stem}.html")
+                       if os.path.exists(os.path.join(REPORTS_DIR, n))), None)
+        has_sm = bool(sm_src)
         if has_sm:
             shutil.copy(sm_src, os.path.join(s_dir, "shot-matrix.html"))
         # series-level meeting overviews, one per bowler type (build_overview.py) — plan + field
