@@ -110,7 +110,8 @@ def main():
             return render_odi_report(bid, out_dir=out_dir, target_country=target_country,
                                      level=args.level, source=args.source)
         from t20_report import render_t20_report
-        return render_t20_report(bid, out_dir=out_dir, target_country=target_country)
+        return render_t20_report(bid, out_dir=out_dir, target_country=target_country,
+                                 level=args.level, source=args.source)
 
     scope = f"hand={hand}, position={args.position}, spell={args.spell}" if fmt == "Test" else "both hands"
     print(f"Generating {len(ids)} {fmt} report(s) — {scope}, "

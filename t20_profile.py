@@ -104,8 +104,13 @@ def _phase_block(rows: list, nb: int) -> dict | None:
     return s
 
 
-def build_t20_profile(bowler_id: str) -> dict:
-    raw = process_rows(load_bowler_deliveries(str(bowler_id), fmt="T20"))
+def build_t20_profile(bowler_id: str, level: str = "international",
+                      source: str = "warehouse") -> dict:
+    """`level` and `source` reach the loaders, as they do for the Test and ODI reports.
+    `build_reports` has accepted `--source` since that axis landed and dropped it on this path —
+    the same defect fixed on the ODI path on 2026-09-13, where a bowler whose cricket is only in
+    Cricket-21 rendered on a fraction of his record (Ernest Masuku: 66 balls instead of 180)."""
+    raw = process_rows(load_bowler_deliveries(str(bowler_id), fmt="T20", level=level, source=source))
     if not raw:
         return {"bowler_id": str(bowler_id), "name": f"Bowler {bowler_id}", "empty": True}
 
@@ -120,7 +125,7 @@ def build_t20_profile(bowler_id: str) -> dict:
         r["lg_eff"] = info_lg["eff"] if info_lg else 0.0
         r["league"] = info_lg["league"] if info_lg else (r.get("competition") or "?")
 
-    info = load_bowler_info(str(bowler_id), fmt="T20I") or {}
+    info = load_bowler_info(str(bowler_id), fmt="T20I", level=level) or {}
     name = (info.get("player_name") or f"Bowler {bowler_id}").strip()
     team = (info.get("team_name") or "").strip()
     flag = team_flag(team)[0] if team else ""

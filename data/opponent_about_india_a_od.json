@@ -2983,6 +2983,215 @@
    "clip_format_stock_lhb": "ODI",
    "clip_format_wicket_lhb": "ODI",
    "clip_format_stock_rhb": "ODI"
+  },
+  "6380398": {
+   "name": "Naman Dhir",
+   "type": "Off spin",
+   "is_pace": null,
+   "facts": [
+    "Limited List A record — not enough balls to profile."
+   ],
+   "order": 0,
+   "source": "footage-only",
+   "stock_clips": [],
+   "wicket_clips": [],
+   "new_ball_clips": [],
+   "stock_clips_lhb": [
+    {
+     "delivery_id": "314738",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_205.MP4"
+    },
+    {
+     "delivery_id": "314739",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_206.MP4"
+    },
+    {
+     "delivery_id": "314740",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_207.MP4"
+    },
+    {
+     "delivery_id": "314741",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_208.MP4"
+    },
+    {
+     "delivery_id": "314742",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_209.MP4"
+    },
+    {
+     "delivery_id": "314743",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_210.MP4"
+    },
+    {
+     "delivery_id": "314750",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_217.MP4"
+    },
+    {
+     "delivery_id": "314751",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_218.MP4"
+    },
+    {
+     "delivery_id": "314752",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_219.MP4"
+    },
+    {
+     "delivery_id": "314753",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_220.MP4"
+    },
+    {
+     "delivery_id": "314754",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_221.MP4"
+    },
+    {
+     "delivery_id": "314755",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_222.MP4"
+    }
+   ],
+   "wicket_clips_lhb": [],
+   "new_ball_clips_lhb": [],
+   "middle_clips_lhb": [],
+   "death_clips_lhb": [],
+   "stock_clips_rhb": [
+    {
+     "delivery_id": "314738",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_205.MP4"
+    },
+    {
+     "delivery_id": "314739",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_206.MP4"
+    },
+    {
+     "delivery_id": "314740",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_207.MP4"
+    },
+    {
+     "delivery_id": "314741",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_208.MP4"
+    },
+    {
+     "delivery_id": "314742",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_209.MP4"
+    },
+    {
+     "delivery_id": "314743",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_210.MP4"
+    },
+    {
+     "delivery_id": "314750",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_217.MP4"
+    },
+    {
+     "delivery_id": "314751",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_218.MP4"
+    },
+    {
+     "delivery_id": "314752",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_219.MP4"
+    },
+    {
+     "delivery_id": "314753",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_220.MP4"
+    },
+    {
+     "delivery_id": "314754",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_221.MP4"
+    },
+    {
+     "delivery_id": "314755",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_222.MP4"
+    }
+   ],
+   "wicket_clips_rhb": [],
+   "new_ball_clips_rhb": [],
+   "middle_clips_rhb": [
+    {
+     "delivery_id": "314738",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_205.MP4"
+    },
+    {
+     "delivery_id": "314739",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_206.MP4"
+    },
+    {
+     "delivery_id": "314740",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_207.MP4"
+    },
+    {
+     "delivery_id": "314741",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_208.MP4"
+    },
+    {
+     "delivery_id": "314742",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_209.MP4"
+    },
+    {
+     "delivery_id": "314743",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_210.MP4"
+    },
+    {
+     "delivery_id": "314750",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_217.MP4"
+    },
+    {
+     "delivery_id": "314751",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_218.MP4"
+    },
+    {
+     "delivery_id": "314752",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_219.MP4"
+    },
+    {
+     "delivery_id": "314753",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_220.MP4"
+    },
+    {
+     "delivery_id": "314754",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_221.MP4"
+    },
+    {
+     "delivery_id": "314755",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_222.MP4"
+    },
+    {
+     "delivery_id": "314762",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_229.MP4"
+    },
+    {
+     "delivery_id": "314763",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_230.MP4"
+    },
+    {
+     "delivery_id": "314764",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_231.MP4"
+    },
+    {
+     "delivery_id": "314765",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_232.MP4"
+    },
+    {
+     "delivery_id": "314766",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_233.MP4"
+    },
+    {
+     "delivery_id": "314767",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_234.MP4"
+    },
+    {
+     "delivery_id": "314774",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_241.MP4"
+    },
+    {
+     "delivery_id": "314775",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_242.MP4"
+    },
+    {
+     "delivery_id": "314776",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/JANUARY%202026/Match%20Videos/Vijay%20Hazare%20Trophy%20Elite%20202526/Semi%20Final%202%20Saurashtra%20vs%20Punjab%2016.01.2026/2nd%20Innings/Saur%20Vs%20Pun%2016-01-262_243.MP4"
+    }
+   ],
+   "death_clips_rhb": [],
+   "clip_hand_stock_lhb": "rhb",
+   "clip_general_stock_lhb": true,
+   "clip_general_stock_rhb": true
   }
  },
  "batters": {

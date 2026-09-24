@@ -49,6 +49,7 @@ def group_heading(title, count, cls=""):
 
 SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1">
 <title>{{title}}</title>
+{{click_guard}}
 <style>
  :root{color-scheme:light}
  body{font:15px/1.5 Inter,-apple-system,Segoe UI,sans-serif;max-width:760px;margin:0 auto;padding:24px 16px 48px;color:#1a1a2e;background:#F5F7FA}
@@ -80,5 +81,13 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
 
 def page(title, body, up=None):
     crumb = f'<a href="{up[0]}">← {_html.escape(up[1])}</a>' if up else ""
-    return (SHELL.replace("{{title}}", _html.escape(title))
+    # The guard goes in the head so a play button clicked while the page is still downloading is
+    # held rather than followed — the player's data block is a megabyte of JSON at the end of the
+    # page, and until it lands the href leads to the standalone vision page (see click_guard).
+    try:
+        from cricket_core.video import click_guard
+        guard = click_guard()
+    except Exception:                                    # pragma: no cover - cosmetic only
+        guard = ""
+    return (SHELL.replace("{{title}}", _html.escape(title)).replace("{{click_guard}}", guard)
                  .replace("{{crumb}}", crumb).replace("{{body}}", body))

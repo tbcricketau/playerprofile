@@ -24,6 +24,9 @@ from collections import defaultdict
 
 _LINK = re.compile(r'(?:href|src)="([^"]+)"')
 _DATAPL = re.compile(r'data-pl="([^"]+)"')
+# The clips sidecar a page fetches by script (cricket_core.video): no href points at it, so
+# nothing else in this file would notice it missing.
+_CLIP_SRC = re.compile(r'const (?:VM_SRC|PL_SRC) = "([^"]+)"')
 # The query string is INSIDE the group. It used to sit outside, so --deep HEADed every Fairplay
 # clip with its SAS stripped off — which storage refuses whether the token is fresh or expired. The
 # check meant to catch an expired SAS could therefore never pass a Fairplay bundle at all, and it
@@ -40,8 +43,24 @@ def _pages(root):
                 yield os.path.join(dirpath, f)
 
 
+def _sidecar_keys(html, base, cache):
+    """The playlist keys a page can open from its clips sidecar, or None if it has no sidecar
+    (the clips are inline, and the caller falls back to searching the page text)."""
+    m = _CLIP_SRC.search(html)
+    if not m:
+        return None
+    path = os.path.normpath(os.path.join(base, urllib.parse.unquote(m.group(1))))
+    if path not in cache:
+        try:
+            cache[path] = set(json.load(open(path, encoding="utf-8")))
+        except Exception:
+            cache[path] = set()          # missing/unreadable is reported by rule 3, not here
+    return cache[path]
+
+
 def check(root, deep=False, sample=6):
     errors, warnings = [], []
+    _side_cache = {}
     pages = list(_pages(root))
     if not pages:
         return [f"no HTML found under {root}"], []
@@ -68,18 +87,50 @@ def check(root, deep=False, sample=6):
             linked_files.add(os.path.normpath(tgt))
             if os.path.isfile(tgt) and os.path.getsize(tgt) == 0:
                 errors.append(f"{rel_page}: links an EMPTY file -> {raw}")
-            # 2 — a #fragment must exist in the page it points at
+            # 2 — a #fragment must exist in the page it points at. A play-button fragment names a
+            #     playlist, which since 24-09-2026 lives in the page's clips sidecar rather than in
+            #     its text — so ask the sidecar where there is one.
             if frag and tgt.endswith(".html"):
                 tgt_html = open(tgt, encoding="utf-8", errors="replace").read()
-                if f'"{frag}"' not in tgt_html and f'id="{frag}"' not in tgt_html:
+                side_keys = _sidecar_keys(tgt_html, os.path.dirname(tgt), _side_cache)
+                if side_keys is not None:
+                    if frag not in side_keys and f'id="{frag}"' not in tgt_html:
+                        errors.append(f"{rel_page}: link -> {raw} but '{frag}' is in neither that "
+                                      f"page nor its clips file")
+                elif f'"{frag}"' not in tgt_html and f'id="{frag}"' not in tgt_html:
                     errors.append(f"{rel_page}: link -> {raw} but '{frag}' is not in that page")
 
-        # 3 — a play button must have a playlist behind it, and it must not be empty
-        for key in set(_DATAPL.findall(html)):
-            if f'"{key}"' not in html:
-                errors.append(f"{rel_page}: play button '{key}' has no playlist on the page")
-            elif re.search(rf'"{re.escape(key)}"\s*:\s*\[\s*\]', html):
-                errors.append(f"{rel_page}: play button '{key}' opens an EMPTY playlist")
+        # 3 — a play button must have a playlist behind it, and it must not be empty.
+        #     The clips live either inline or in a sidecar the page fetches by script — and a
+        #     script-fetched file is invisible to rule 1, so a missing one would be a page full of
+        #     dead buttons that nothing else here would notice.
+        keys = set(_DATAPL.findall(html))
+        m_src = _CLIP_SRC.search(html)
+        if m_src:
+            side = os.path.normpath(os.path.join(base, urllib.parse.unquote(m_src.group(1))))
+            if not os.path.exists(side):
+                errors.append(f"{rel_page}: clips file missing -> {m_src.group(1)} "
+                              f"({len(keys)} play button(s) dead)")
+            else:
+                linked_files.add(side)
+                try:
+                    data = json.load(open(side, encoding="utf-8"))
+                except Exception as exc:
+                    errors.append(f"{rel_page}: clips file unreadable -> {m_src.group(1)} "
+                                  f"({type(exc).__name__})")
+                    data = None
+                if data is not None:
+                    for key in sorted(keys):
+                        if key not in data:
+                            errors.append(f"{rel_page}: play button '{key}' is not in {m_src.group(1)}")
+                        elif not (data[key] or {}).get("items"):
+                            errors.append(f"{rel_page}: play button '{key}' opens an EMPTY playlist")
+        else:
+            for key in keys:
+                if f'"{key}"' not in html:
+                    errors.append(f"{rel_page}: play button '{key}' has no playlist on the page")
+                elif re.search(rf'"{re.escape(key)}"\s*:\s*\[\s*\]', html):
+                    errors.append(f"{rel_page}: play button '{key}' opens an EMPTY playlist")
 
     # 4 — pages nobody links to (an orphan is usually a leftover carrying a stale breadcrumb)
     entry = {os.path.normpath(os.path.join(root, "index.html")),

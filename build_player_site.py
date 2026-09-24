@@ -1134,12 +1134,20 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                 titles["similar"] = similar["title"]
                 similar_href = f"{page_slug}-vision.html#similar"
     snippet = ""
-    if playlists:
+    from cricket_core.video import playlist_payload
+    if playlists and playlist_payload(playlists, titles):
+        # The clips go in ONE sidecar file per player, which this player's batting page, bowling
+        # page and vision page all point at. Inlined, that JSON was over a megabyte in every one of
+        # them, and a play button did nothing until the whole page had arrived — so an early click
+        # followed the link to the vision page instead (24-09-2026). Fetched on the first click,
+        # and then cached by the browser across this player's three pages.
+        clips_file = f"{page_slug}-clips.json"
         build_player_html(playlists, os.path.join(dest_dir, f"{page_slug}-vision.html"),
                           title=f"{name} — vision", subtitle="dismissals + head-to-head",
-                          titles=titles)
+                          titles=titles, src=clips_file,
+                          write_to=os.path.join(dest_dir, clips_file))
         # in-page modal: injected into each of this player's pack pages so ▶ plays over the report
-        snippet = inline_player_snippet(playlists, titles)
+        snippet = inline_player_snippet(playlists, titles, src=clips_file)
     return (hrefs, h2h_links, h2h_map, cell_vision, opp_vision, snippet, similar_href,
             release_vision, manual_href)
 

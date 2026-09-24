@@ -46,7 +46,7 @@ def _rmtree(path):
 
 
 from cricket_core.video import (get_fairplay_sas, get_hawkeye_sas, resolve_clip,
-                                  inline_player_snippet, build_player_html)
+                                  inline_player_snippet, build_player_html, playlist_payload)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPORTS_DIR = os.path.join(HERE, "reports")
@@ -262,8 +262,17 @@ def _bake_report(name, dest_dir, hk_sas, src_dir=None):
     ptitles = meta.get("titles")            # per-bowler ball-type playlist names (bt_0..)
     page = open(html_path, encoding="utf-8").read()
     btype = (_TYPE_RE.search(page).group(1) if _TYPE_RE.search(page) else "")
+    # One sidecar of clips per report, shared by the coach cut, the player-mode cut and the
+    # standalone player — so a report page carries its charts and none of its video JSON.
+    # A report with nothing playable gets NO sidecar and must not reference one: Rickelton's
+    # left-arm orthodox report has no clips at all, and pointing its player page at a file that
+    # was never written is a page of dead buttons (caught by check_site on the first real run).
+    clips_file = (name + ".clips.json") if playlist_payload(pls, ptitles) else None
     snippet = ("<!--PLAYER_SNIPPET_START-->"
-               + inline_player_snippet(pls, titles=ptitles) + "<!--PLAYER_SNIPPET_END-->")
+               + inline_player_snippet(pls, titles=ptitles, src=clips_file,
+                                       write_to=(os.path.join(dest_dir, clips_file)
+                                                 if clips_file else None))
+               + "<!--PLAYER_SNIPPET_END-->")
     page = _SNIPPET_RE.sub(lambda m: snippet, page) if _SNIPPET_RE.search(page) \
         else page.replace("</body>", snippet + "</body>")
     page = _FILE_URL_RE.sub(lambda m: m.group(1), page)      # player href → relative (same folder)
@@ -281,7 +290,7 @@ def _bake_report(name, dest_dir, hk_sas, src_dir=None):
     build_player_html(pls, os.path.join(dest_dir, name + ".player.html"),
                       title=meta.get("bowler") or meta.get("batter") or name,
                       subtitle="bowling scout" if "_bowling_" in name else "batting scout",
-                      titles=ptitles)
+                      titles=ptitles, src=clips_file)
     has_pdf = os.path.exists(os.path.join(src_dir, name + ".pdf"))
     if has_pdf:
         shutil.copy(os.path.join(src_dir, name + ".pdf"), os.path.join(dest_dir, name + ".pdf"))

@@ -186,11 +186,20 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
         # unescape: the builder writes the name through html.escape, so an apostrophe arrives as
         # &#x27; and a raw comparison against players.json misses the player entirely.
         nm = _html.unescape(re.sub(r"<[^>]+>", "", h1.group(1))).strip().lower() if h1 else ""
-        vp = os.path.join(root, f"{ps}-vision.html")
+        # Where this page's clips are. Since 24-09-2026 they sit in a sidecar the page fetches
+        # rather than inline in the vision page — so read the sidecar first and keep the inline
+        # form as the fallback for a bundle built before that. Reading only the old shape found
+        # nothing, which this gate reports as 1,023 unresolved reels and refuses on (it did).
         pls = {}
-        if os.path.exists(vp):
-            m = re.search(r'PLAYLISTS\s*=\s*(\{.*?\});', open(vp, encoding="utf-8").read(), re.S)
-            pls = json.loads(m.group(1)) if m else {}
+        side = os.path.join(root, f"{ps}-clips.json")
+        if os.path.exists(side):
+            pls = json.load(open(side, encoding="utf-8"))
+        else:
+            vp = os.path.join(root, f"{ps}-vision.html")
+            if os.path.exists(vp):
+                m = re.search(r'PLAYLISTS\s*=\s*(\{.*?\});',
+                              open(vp, encoding="utf-8").read(), re.S)
+                pls = json.loads(m.group(1)) if m else {}
         # A button whose text ends in `*` is the builder's DECLARED fallback — the reel was built
         # from a wider bowler type or a neighbouring format than the pack asked for, and the page
         # footnotes it. It is held to the family it fell back to. An unstarred reel is held to the

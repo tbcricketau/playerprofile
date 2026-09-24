@@ -258,6 +258,68 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
     return _warehouse_bowler_rows(bowler_id, dev_limit, fmt, level)
 
 
+# Lookup types this loader resolves client-side, and the column each fills. Fetching the
+# `description` for every ball is what made this query slow: the SQL itself runs in about 7
+# seconds on a 15,000-ball career and the rows took another 297 to arrive, at roughly 6 seconds
+# per text column per 15,000 rows (measured 24-09-2026). The ids are a few bytes each and the
+# vocabulary is a few hundred rows, so the join belongs here, not on the wire.
+_LOOKUP_COLS = {
+    "stroke": (24, "stroke_id"),
+    "ball_movement": (2812, "ball_movement_id"),
+    "striker_hand": (10, "striker_hand_id"),
+    "bowler_pace_spin": (2805, "bowler_pace_spin_id"),
+    "pitch_length_group_pace": (2819, "pitch_length_group_pace_1_id"),
+    "pitch_length_group_pace_2": (2820, "pitch_length_group_pace_2_id"),
+    "pitch_line_group_pace": (2823, "pitch_line_group_pace_id"),
+    "pitch_length_group_spin": (2821, "pitch_length_group_spin_1_id"),
+    "pitch_line_group_spin": (2824, "pitch_line_group_spin_id"),
+}
+_lookup_cache: dict = {}
+
+
+def _lookups(conn, cursor) -> dict:
+    """{(lookup_type_id, id): description} for the types this loader needs, read once per process.
+    A missing id reads "None", which is what a LEFT JOIN miss gave and what every consumer of
+    these string rows already expects."""
+    if not _lookup_cache:
+        types = ", ".join(str(t) for t, _ in _LOOKUP_COLS.values())
+        rows = run_query(f"SELECT [lookup_type_id], [id], [description] FROM [{DATA_SCHEMA}].[Lookups] "
+                         f"WHERE [lookup_type_id] IN ({types})", conn, cursor)
+        for r in rows:
+            _lookup_cache[(r["lookup_type_id"], r["id"])] = r["description"]
+    return _lookup_cache
+
+
+def _match_facts(bowler_id, fmt, level, conn, cursor) -> dict:
+    """{match_id: {season, match_name, venue_country, venue_city, competition, …}} — the columns
+    that describe the MATCH, fetched once per match instead of once per ball. `match_name` alone
+    is ~40 characters repeated on every delivery."""
+    q = f"""
+    SELECT M.[match_id],
+           M.[match_length_id],
+           SR.[gender_id],
+           S.[name]  AS season,
+           CONCAT(L_ml.[description], ' ', TA.[team_name], ' v ', TB.[team_name], ' ',
+                  FORMAT(M.[match_date], 'dd-MM-yyyy')) AS match_name,
+           VC.[name] AS venue_country,
+           V.[city_name] AS venue_city,
+           SR.[name] AS competition
+    FROM [{DATA_SCHEMA}].[Matches] AS M
+    LEFT JOIN [{DATA_SCHEMA}].[Venues] AS V  ON M.[venue_id]  = V.[venue_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Countries] AS VC ON V.[country_id] = VC.[country_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Seasons] AS S ON M.[season_id] = S.[season_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Series] AS SR ON M.[series_id] = SR.[series_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Teams] AS TA  ON M.[team_a_id] = TA.[team_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Teams] AS TB  ON M.[team_b_id] = TB.[team_id]
+    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_ml
+        ON L_ml.[lookup_type_id] = 3 AND L_ml.[id] = M.[match_length_id]
+    WHERE M.[match_id] IN (SELECT DISTINCT D.[match_id] FROM [{DATA_SCHEMA}].[Deliveries] AS D
+                           JOIN [{DATA_SCHEMA}].[Matches] AS M2 ON D.[match_id] = M2.[match_id]
+                           WHERE D.[bowler_id] = '{bowler_id}' AND {_scope(fmt, 'M2', level)})
+    """
+    return {r["match_id"]: r for r in run_query(q, conn, cursor)}
+
+
 @st.cache_data(ttl=3600)
 def _warehouse_bowler_rows(bowler_id: str, dev_limit: int, fmt: str, level: str) -> list:
     """The warehouse half of load_bowler_deliveries — see its docstring for why this is the
@@ -271,14 +333,7 @@ def _warehouse_bowler_rows(bowler_id: str, dev_limit: int, fmt: str, level: str)
         D.[striker_id],
         D.[video_file_name],
         M.[match_length_id],
-        S.[name]                                     AS season,
-        SR.[gender_id],
         CONVERT(VARCHAR(10), M.[match_date], 120)   AS match_date,
-        CONCAT(
-            L_ml.[description], ' ',
-            TA.[team_name], ' v ', TB.[team_name], ' ',
-            FORMAT(M.[match_date], 'dd-MM-yyyy')
-        )                                            AS match_name,
         D.[match_innings],
         D.[over],
         D.[ball_in_over],
@@ -299,7 +354,6 @@ def _warehouse_bowler_rows(bowler_id: str, dev_limit: int, fmt: str, level: str)
         D.[how_out_id],
         D.[shot_quality_id],
         D.[stroke_id],
-        L_str.[description]                          AS stroke,
         D.[batter_missed_id],
         D.[ball_speed],
         D.[pitch_line],
@@ -313,12 +367,10 @@ def _warehouse_bowler_rows(bowler_id: str, dev_limit: int, fmt: str, level: str)
         D.[movement_in_air_group_swing_id],
         D.[movement_off_pitch_group_seam_id],
         D.[ball_movement_id],
-        L_bm.[description]                           AS ball_movement,
         D.[release_line_unmirrored],
         D.[release_height],
         D.[bounce_angle_delta],
         D.[striker_hand_id],
-        L_sh.[description]                           AS striker_hand,
         CASE
             WHEN D.[bowler_style_id] IN ('1','2') AND D.[bowler_hand_id] = '1' THEN 'Right Fast'
             WHEN D.[bowler_style_id] IN ('1','2') AND D.[bowler_hand_id] = '2' THEN 'Left Fast'
@@ -330,47 +382,30 @@ def _warehouse_bowler_rows(bowler_id: str, dev_limit: int, fmt: str, level: str)
             WHEN D.[bowler_style_id] = '5'        AND D.[bowler_hand_id] = '2' THEN 'Left Unorthodox'
             ELSE 'Other'
         END                                          AS bowler_type_simple,
-        L_bps.[description]                          AS bowler_pace_spin,
-        L_plgp1.[description]                        AS pitch_length_group_pace,
-        L_plgp2.[description]                        AS pitch_length_group_pace_2,
-        L_plgp.[description]                         AS pitch_line_group_pace,
-        L_plgs1.[description]                        AS pitch_length_group_spin,
-        L_plgs.[description]                         AS pitch_line_group_spin,
-        VC.[name]                                    AS venue_country,
-        V.[city_name]                                AS venue_city,
-        SR.[name]                                    AS competition
+        D.[bowler_pace_spin_id],
+        D.[pitch_length_group_pace_1_id],
+        D.[pitch_length_group_pace_2_id],
+        D.[pitch_line_group_pace_id],
+        D.[pitch_length_group_spin_1_id],
+        D.[pitch_line_group_spin_id]
     FROM [{DATA_SCHEMA}].[Deliveries] AS D
     JOIN [{DATA_SCHEMA}].[Matches]    AS M   ON D.[match_id]     = M.[match_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Venues] AS V  ON M.[venue_id]     = V.[venue_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Countries] AS VC ON V.[country_id] = VC.[country_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Seasons] AS S ON M.[season_id]    = S.[season_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Series] AS SR ON M.[series_id]    = SR.[series_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Teams] AS TA  ON M.[team_a_id]   = TA.[team_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Teams] AS TB  ON M.[team_b_id]   = TB.[team_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_ml
-        ON L_ml.[lookup_type_id]  = 3    AND L_ml.[id]  = M.[match_length_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_sh
-        ON L_sh.[lookup_type_id]  = 10   AND L_sh.[id]  = D.[striker_hand_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_str
-        ON L_str.[lookup_type_id] = 24   AND L_str.[id] = D.[stroke_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_bps
-        ON L_bps.[lookup_type_id] = 2805 AND L_bps.[id] = D.[bowler_pace_spin_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_plgp1
-        ON L_plgp1.[lookup_type_id] = 2819 AND L_plgp1.[id] = D.[pitch_length_group_pace_1_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_plgp2
-        ON L_plgp2.[lookup_type_id] = 2820 AND L_plgp2.[id] = D.[pitch_length_group_pace_2_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_plgp
-        ON L_plgp.[lookup_type_id]  = 2823 AND L_plgp.[id]  = D.[pitch_line_group_pace_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_plgs1
-        ON L_plgs1.[lookup_type_id] = 2821 AND L_plgs1.[id] = D.[pitch_length_group_spin_1_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_plgs
-        ON L_plgs.[lookup_type_id]  = 2824 AND L_plgs.[id]  = D.[pitch_line_group_spin_id]
-    LEFT JOIN [{DATA_SCHEMA}].[Lookups] AS L_bm
-        ON L_bm.[lookup_type_id]    = 2812 AND L_bm.[id]    = D.[ball_movement_id]
     WHERE D.[bowler_id]          = '{bowler_id}'
       AND {_scope(fmt, 'M', level)}
     ORDER BY M.[match_date], D.[match_innings], D.[over], D.[ball_in_over]
     """
     result = run_query(query, conn, cursor)
+    # Put back, from here, exactly what the LEFT JOINs used to send on every row: the lookup
+    # descriptions and the columns that describe the match. Same keys, same strings — verified
+    # row for row against the old query before this replaced it.
+    look = _lookups(conn, cursor)
+    facts = _match_facts(bowler_id, fmt, level, conn, cursor)
     conn.close()
+    for r in result:
+        for col, (type_id, id_col) in _LOOKUP_COLS.items():
+            r[col] = look.get((str(type_id), r.get(id_col)), "None")
+        m = facts.get(r["match_id"], {})
+        for col in ("season", "gender_id", "match_name", "venue_country", "venue_city",
+                    "competition"):
+            r[col] = m.get(col, "None")
     return result

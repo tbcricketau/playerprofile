@@ -62,6 +62,13 @@ def assemble(which):
         for a, b in ((".pmode.html", ".player.html"), (".player.html", ".pmode.html")):
             if rel.endswith(a):
                 wanted.add(rel[: -len(a)] + b)
+    # …and so does its clips sidecar, which is where the play buttons read from. Without it every
+    # ▶ on a report in the bundle is dead — and it is fetched by script, so no href points at it.
+    for rel in list(wanted):
+        for suffix in (".pmode.html", ".player.html", ".html"):
+            if rel.endswith(suffix):
+                wanted.add(rel[: -len(suffix)] + ".clips.json")
+                break
     print(f"series linked by packs: {sorted(ref_slugs)}")
 
     # Only what the packs link: site/ keeps every report ever baked, and copying the lot dragged

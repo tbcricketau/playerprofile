@@ -68,8 +68,9 @@ def _build_t20_player(P, pdf_path, subtitle, target_country=None):
 
 
 def render_t20_report(bowler_id: str, out_dir: str = "reports/t20",
-                      with_playlists: bool = True, target_country: str | None = "Australia") -> str:
-    P = build_t20_profile(str(bowler_id))
+                      with_playlists: bool = True, target_country: str | None = "Australia",
+                      level: str = "international", source: str = "warehouse") -> str:
+    P = build_t20_profile(str(bowler_id), level=level, source=source)
     if P.get("empty"):
         raise ValueError(f"No T20 data for bowler {bowler_id}")
 
