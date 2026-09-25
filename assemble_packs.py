@@ -17,6 +17,7 @@ import shutil
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "site")          # coach scouting site — source of the baked reports
+COACH = os.path.join(HERE, "coach_build", "coach")   # build_coach_site.py output
 
 BUNDLES = {
     "aus": {"player": "player_site", "out": "player_pack_site", "title": "Player packs"},
@@ -30,7 +31,13 @@ BUNDLES = {
 }
 
 
-def assemble(which):
+def assemble(which, coach=False):
+    """`coach=True` also copies the coach view (build_coach_site.py) in under `coach/`.
+
+    ⚠ OFF BY DEFAULT, AND THAT IS THE SAFETY. The `aus` bundle goes to a PUBLIC GitHub Pages site
+    as well as to the app, so a coach directory inside it would be served to anyone with the link,
+    unauthenticated — the simulated match-ups included. Only the storage target asks for it, and
+    `publish_packs` refuses a GitHub push of any bundle that contains it."""
     cfg = BUNDLES[which]
     player = os.path.join(HERE, cfg["player"])
     out = os.path.join(HERE, cfg["out"])
@@ -97,6 +104,15 @@ def assemble(which):
     # pack, so nothing links them, and their "← Series" breadcrumb points at a coach-site index that
     # doesn't exist here — an orphan carrying a dead link. They stay on the gated coach site.
 
+    n_coach = 0
+    if coach:
+        if not os.path.isdir(COACH):
+            raise SystemExit(f"--coach asked for but {os.path.relpath(COACH, HERE)} is not built "
+                             f"— run build_coach_site.py --slug <slug> first")
+        shutil.copytree(COACH, os.path.join(out, "coach"),
+                        ignore=shutil.ignore_patterns(".git"))
+        n_coach = sum(len(f) for _r, _dd, f in os.walk(os.path.join(out, "coach")))
+
     open(os.path.join(out, ".nojekyll"), "w").close()
     open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(
         '<!doctype html><meta charset="utf-8">'
@@ -107,14 +123,18 @@ def assemble(which):
     def _n(d):
         return sum(len(f) for _r, _dd, f in os.walk(d))
     print(f"assembled {out}: players {_n(os.path.join(out, 'players'))} files, "
-          f"scouting {_n(os.path.join(out, 'scouting'))} files ({n_reports} report pages)")
+          f"scouting {_n(os.path.join(out, 'scouting'))} files ({n_reports} report pages)"
+          + (f", coach {n_coach} files" if coach else ""))
     return out
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("bundle", choices=sorted(BUNDLES))
-    assemble(ap.parse_args().bundle)
+    ap.add_argument("--coach", action="store_true",
+                    help="include the coach view — STORAGE TARGET ONLY, never GitHub Pages")
+    a = ap.parse_args()
+    assemble(a.bundle, coach=a.coach)
 
 
 if __name__ == "__main__":

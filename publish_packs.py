@@ -213,7 +213,13 @@ def main():
                          "vision links baked in). storage = upload it to our `packs` container for "
                          "the hosted playerpacks app, with every vision link rewritten to the app's "
                          "/vision/ route so nothing in a page expires. Same gates either way.")
+    ap.add_argument("--coach", action="store_true",
+                    help="also build the coach view into the bundle (their squad + the FULL "
+                         "reports). STORAGE ONLY — a GitHub push of a bundle containing coach/ "
+                         "is refused, since Pages is public and has no sign-in.")
     a = ap.parse_args()
+    if a.coach and a.target != "storage":
+        raise SystemExit("--coach is storage-only: GitHub Pages is public and has no sign-in.")
     cfg = BUNDLES[a.bundle]
     if cfg.get("archived") and not a.revive:
         raise SystemExit(f"{a.bundle}: {cfg['archived']}")
@@ -249,8 +255,13 @@ def main():
 
     if not a.no_assemble:
         print(f"assembling {cfg['bundle']}…")
-        r = subprocess.run([sys.executable, os.path.join(HERE, cfg["assemble"]), cfg["arg"]],
-                           capture_output=True, text=True)
+        # The coach view goes to the app and NOWHERE else. Asking for it on the GitHub target
+        # would publish the opposition's full dossiers, simulated match-ups and all, to a public
+        # Pages site with no sign-in.
+        cmd = [sys.executable, os.path.join(HERE, cfg["assemble"]), cfg["arg"]]
+        if a.target == "storage" and a.coach:
+            cmd.append("--coach")
+        r = subprocess.run(cmd, capture_output=True, text=True)
         print("  " + (r.stdout.strip().splitlines() or ["(no output)"])[-1])
         if r.returncode:
             raise SystemExit(f"assemble failed:\n{r.stderr}")
@@ -385,6 +396,25 @@ def main():
                 f"anyway (deliberate override). Nothing was pushed.")
         note = f" ({len(missing)} pack(s) on combined plans, allowed)" if missing else ""
         print(f"  {slug}: clean — {checked} bowling packs type-scoped{note}")
+
+    # ── the coach view must never reach GitHub Pages ────────────────────────────────────────
+    # Checked against the ASSEMBLED BUNDLE rather than against the flags, because the bundle is
+    # what gets pushed: a directory left behind by an earlier `--target storage --coach` run, or
+    # placed by hand, would otherwise go public. `--no-assemble` makes that the normal case, not
+    # an exotic one. Pages has no sign-in, so this one fails closed with no override.
+    #
+    # ⚠ Before the --dry-run return, not after. A dry run exists to prove a real publish would
+    # pass, so a gate it skips is a gate that reports what it did not test.
+    coach_dir = os.path.join(out, "coach")
+    if a.target != "storage" and os.path.isdir(coach_dir):
+        n = sum(len(f) for _r, _dd, f in os.walk(coach_dir))
+        raise SystemExit(
+            f"REFUSING to push: {cfg['bundle']}/coach/ exists ({n} files) and this target is "
+            f"GitHub Pages, which is PUBLIC and has no sign-in. The coach view carries the full "
+            f"reports — the simulated match-ups a player is never shown. Remove it (or re-assemble "
+            f"without --coach) and push again; the app copy is published with --target storage.")
+    if a.target == "storage":
+        print(f"coach view: {'included' if os.path.isdir(coach_dir) else 'not in this bundle'}")
 
     if a.dry_run:
         print("dry run — every gate passed; nothing committed or pushed")
