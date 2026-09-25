@@ -38,6 +38,10 @@ Thumbs.db
 .vscode/
 site/
 player_site/
+# build_coach_site.py output: baked coach reports (28 MB) + the headshots it
+# writes. Rebuilt from reports/ and site/, and it must never be committed —
+# it is the coach cut, which the public GitHub Pages bundle must not carry.
+coach_build/
 photos/*.zip
 
 # ── Frozen series (archive_series.py freeze) ──────────────────────────────

@@ -230,6 +230,7 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     body = (f'<h1>{_html.escape(title)}</h1>'
             + (f'<p class="lead">{_html.escape(lead)}</p>' if lead else "")
             + f'<p class="lead">{note}</p>'
+            + _plans(slug, root)
             + "".join(sections))
     open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(
         SR.page(f"{title} — their squad", body, up=("../index.html", "Scouting")))
@@ -252,6 +253,64 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     print(f"coach view: {n_baked} report(s) baked -> {os.path.relpath(root, HERE)}"
           + (f" · {len(missing)} player(s) without one" if missing else ""))
     return n_baked, missing
+
+
+# ── the plans tab (step 2) ─────────────────────────────────────────────────────────────────────
+# Built pages, copied — not re-derived. `publish_site` already bakes the meeting overview per
+# bowler type, the match-ups grid and the unorthodox-shot options into site/<slug>/, and each is a
+# standalone page whose only link is the breadcrumb back to its series index. So the plans tab is a
+# copy with that one href repointed, which is why this step needs no warehouse and cannot disagree
+# with what the coach site shows.
+#
+# CONDITIONS AND ATTACKED-OUR-SQUAD ARE DELIBERATELY NOT COPIED (Tom, 25-09). Both are derived
+# against a Test benchmark — conditions measures against NZ/SA/ENG, the attack cards read Test
+# deliveries — and they are to get white-ball versions before they move. Named here rather than
+# left to an accident of which files exist, so a Test series cannot quietly bring them across.
+_PLAN_PAGES = ("matchups.html", "shot-matrix.html")
+_PLAN_GLOB = "overview-"
+_PLAN_HELD = ("conditions", "attack")
+
+_GROUP_LABEL = {"pace": "Pace", "spin": "Spin", "right-pace": "Right-arm pace",
+                "left-pace": "Left-arm pace", "off-spin": "Off spin", "leg-spin": "Leg spin",
+                "left-orthodox": "Left-arm orthodox", "left-unorthodox": "Left-arm wrist spin"}
+_PLAN_LABEL = {"matchups.html": "Match-ups grid",
+               "shot-matrix.html": "Unorthodox shot options"}
+
+
+def _plans(slug, root):
+    """Copy this series' plan pages in beside the squad. Returns the nav HTML, or '' if none."""
+    src = os.path.join(HERE, "site", slug)
+    if not os.path.isdir(src):
+        return ""
+    dest = os.path.join(root, "plans")
+    held, items = [], []
+    for f in sorted(os.listdir(src)):
+        if not f.endswith(".html"):
+            continue
+        if any(h in f for h in _PLAN_HELD):
+            held.append(f)
+            continue
+        if f in _PLAN_PAGES:
+            label = _PLAN_LABEL[f]
+        elif f.startswith(_PLAN_GLOB):
+            key = f[len(_PLAN_GLOB):-len(".html")]
+            label = _GROUP_LABEL.get(key, key.replace("-", " ").capitalize())
+        else:
+            continue
+        os.makedirs(dest, exist_ok=True)
+        text = open(os.path.join(src, f), encoding="utf-8").read()
+        # its one link is the breadcrumb to the series index, which is now a directory up
+        text = text.replace('href="index.html"', 'href="../index.html"')
+        open(os.path.join(dest, f), "w", encoding="utf-8").write(text)
+        items.append((label, f))
+    if held:
+        print(f"  held back (Test-only, awaiting a white-ball version): {', '.join(held)}")
+    if not items:
+        return ""
+    links = "".join(f'<li><a href="plans/{f}">{_html.escape(label)}</a></li>'
+                    for label, f in sorted(items))
+    return ('<h1>Plans</h1><p class="lead">The meeting overview for each bowling type, and the '
+            'options against them.</p><ul class="cards">' + links + "</ul>")
 
 
 def _write_index(out):
