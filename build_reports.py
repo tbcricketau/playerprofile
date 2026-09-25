@@ -136,3 +136,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # Leave without waiting on Chrome's stderr readers — see report.finish_rendering. A batch that
+    # has written every file it was asked for should not be able to hang for hours afterwards.
+    from report import finish_rendering
+    finish_rendering()

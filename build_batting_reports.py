@@ -85,3 +85,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # Leave without waiting on Chrome's stderr readers — see report.finish_rendering.
+    from report import finish_rendering
+    finish_rendering()

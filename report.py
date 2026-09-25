@@ -9,6 +9,7 @@ import base64
 import datetime
 import glob
 import os
+import sys
 import re
 import shutil
 import subprocess
@@ -97,6 +98,33 @@ def _start_kaleido():
     except Exception as e:                                        # noqa: BLE001
         print(f"  ! kaleido server not started ({type(e).__name__}: {str(e)[:80]}) — "
               f"figures will render one browser at a time")
+
+
+def finish_rendering(status: int = 0):
+    """End a rendering batch and leave, without waiting on threads that may never finish.
+
+    Every figure goes through a headless Chrome that `choreographer` starts, and for each one it
+    also starts a **non-daemon** thread reading that Chrome's stderr. Closing the browser races
+    with the read loop's own close; whichever call loses returns before closing its copy of the
+    pipe, so the thread never sees EOF and Python's shutdown waits on it for ever. A render that
+    had written every one of its files then sat for 22 hours at 1.8 s of CPU with no Chrome
+    process alive at all (2026-09-02), and again for two hours on 2026-09-24.
+
+    So a batch closes the browser it asked for, flushes what it has written, and exits. This is
+    deliberately only for a command-line batch — never call it from a library path or a server,
+    where the rest of interpreter shutdown still matters."""
+    try:
+        import kaleido
+        if kaleido._global_server.is_running():
+            kaleido.stop_sync_server(silence_warnings=True)
+    except Exception:                                    # pragma: no cover - best effort
+        pass
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.flush()
+        except Exception:                                # pragma: no cover
+            pass
+    os._exit(status)
 
 
 def _fig_uri(fig, w=680, h=430) -> str:
