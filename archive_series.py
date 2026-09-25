@@ -54,7 +54,14 @@ def restamp_sas(root, sas_by_container):
 
     `sas_by_container` maps container name -> '?<sas>' (see cricket_core.video.get_fairplay_sas /
     get_hawkeye_sas). A container with no entry is left alone rather than stripped, so a missing
-    Hawkeye login degrades to stale Hawkeye links instead of broken ones. Returns (files, urls)."""
+    Hawkeye login degrades to stale Hawkeye links instead of broken ones. Returns (files, urls).
+
+    ⚠ JSON counts, and from 24-09-2026 it is where most of the URLs are. The clips moved out of
+    the page into a `-clips.json` / `.clips.json` sidecar the page fetches, so an `.html`-only walk
+    re-stamps the handful of field images and reports success having left every clip on the old
+    token. That is the same shape as the gates that only checked what they were built to check —
+    a tool follows the data or it quietly stops working. A C21 clip URL is not a blob URL and
+    cannot match `_BLOB_RE`, so a sidecar carrying one is read and left alone."""
     n_files = n_urls = 0
 
     def _sub(m):
@@ -66,8 +73,10 @@ def restamp_sas(root, sas_by_container):
         return m.group(0).split("?", 1)[0] + sas
 
     for dirpath, _dd, files in os.walk(root):
+        if os.sep + ".git" in dirpath + os.sep:
+            continue
         for f in files:
-            if not f.endswith(".html"):
+            if not f.endswith((".html", ".json")):
                 continue
             p = os.path.join(dirpath, f)
             text = open(p, encoding="utf-8").read()

@@ -61,6 +61,7 @@ def _sidecar_keys(html, base, cache):
 def check(root, deep=False, sample=6):
     errors, warnings = [], []
     _side_cache = {}
+    sidecars = set()          # clips files the pages name — where the media urls now live
     pages = list(_pages(root))
     if not pages:
         return [f"no HTML found under {root}"], []
@@ -113,6 +114,7 @@ def check(root, deep=False, sample=6):
                               f"({len(keys)} play button(s) dead)")
             else:
                 linked_files.add(side)
+                sidecars.add(side)
                 try:
                     data = json.load(open(side, encoding="utf-8"))
                 except Exception as exc:
@@ -141,18 +143,26 @@ def check(root, deep=False, sample=6):
 
     # 5 — external media actually serves (catches an expired video SAS)
     if deep:
-        urls = []
-        for p in pages:
-            urls += _EXTERNAL.findall(open(p, encoding="utf-8", errors="replace").read())
-        seen, checked = set(), 0
+        # The clips sidecars are where the video urls live since 24-09-2026. Reading the pages
+        # alone still finds the field images, so --deep would report "checked 6 urls" and prove
+        # nothing about the footage — which is the one thing this rule exists for.
+        # Sampled per (source kind, host, extension), not off one flat list. A flat list stops on
+        # whichever urls come first, and the field images and the clips are on the SAME blob host —
+        # so a page-ordered sample could spend its whole budget on .png and report the footage
+        # clean without having asked for a single clip.
+        groups = {}
+        for kind, files in (("page", pages), ("clips", sorted(sidecars))):
+            for p in files:
+                for u in _EXTERNAL.findall(open(p, encoding="utf-8", errors="replace").read()):
+                    ext = u.split("?", 1)[0].rsplit(".", 1)[-1].lower()
+                    groups.setdefault((kind, urllib.parse.urlparse(u).netloc, ext), []).append(u)
+        urls, seen = [], set()
+        for key in sorted(groups):
+            urls += groups[key][:sample]
+            seen.add(key[1])
+        checked = 0
         for u in urls:
-            host = urllib.parse.urlparse(u).netloc
-            if host in seen and checked >= sample:
-                continue
-            seen.add(host)
             checked += 1
-            if checked > sample * max(len(seen), 1):
-                break
             try:
                 req = urllib.request.Request(u, method="HEAD")
                 with urllib.request.urlopen(req, timeout=25) as r:
@@ -164,7 +174,10 @@ def check(root, deep=False, sample=6):
                 code = getattr(e, "code", None)
                 errors.append(f"media unreachable ({type(e).__name__}{f' {code}' if code else ''}): "
                               f"{u.split('?', 1)[0][:110]}")
-        print(f"  checked {checked} external media urls across {len(seen)} host(s)")
+        print(f"  checked {checked} external media urls across {len(seen)} host(s), "
+              f"{len(groups)} kind(s): "
+              + ", ".join(f"{k[0]}/{k[2]} {min(len(v), sample)}/{len(v)}"
+                          for k, v in sorted(groups.items())))
 
     print(f"  {len(pages)} pages, {n_links} internal links")
     return errors, warnings
