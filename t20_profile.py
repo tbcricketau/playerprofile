@@ -23,7 +23,12 @@ from cricket_core.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE, team_flag)
 
 T20_PHASES = ("Powerplay", "Middle", "Death")
-_STRENGTH_CSV = r"c:\Projects\referencebuilder\data\t20_league_strength.csv"
+from cricket_core.config import project_path as _pp
+
+# Sibling-project path, not a hard-coded `c:\Projects\…` — see profile.py.
+_REF_DATA = _pp("referencebuilder", "data")
+
+_STRENGTH_CSV = str(_REF_DATA / "t20_league_strength.csv")
 _STRENGTH = None
 
 
@@ -43,7 +48,7 @@ def _league_effects() -> dict:
     return _STRENGTH
 
 
-_PHASE_NORM_CSV = r"c:\Projects\referencebuilder\data\bowler_t20_phase_profile.csv"
+_PHASE_NORM_CSV = str(_REF_DATA / "bowler_t20_phase_profile.csv")
 _PHASE_NORM = None
 
 

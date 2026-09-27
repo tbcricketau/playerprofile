@@ -39,7 +39,13 @@ from cricket_core.lookups import (
     team_flag,
 )
 
-_SPEED_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_speed_profile.csv"
+from cricket_core.config import project_path as _pp
+
+# referencebuilder's CSVs, by sibling-project path rather than a hard-coded `c:\Projects\…` — the
+# same location on a laptop, and the only form that resolves on the build machine (Linux).
+_REF_DATA = _pp("referencebuilder", "data")
+
+_SPEED_PROFILE_CSV = str(_REF_DATA / "bowler_speed_profile.csv")
 
 _SHORT_BUCKETS = {"8-9m", "9-10m", "10-11m", "11-12m", "12-13m", "13-14m", "14m+"}
 
@@ -151,10 +157,10 @@ def load_speed_profiles(fmt: str = "Test") -> dict:
     return _load_profile_csv(_SPEED_PROFILE_CSV, fmt)
 
 
-_MOVEMENT_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_movement_profile.csv"
-_REPEAT_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_repeatability_profile.csv"
-_CREASE_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_crease_profile.csv"
-_DISMISSAL_BASELINE_CSV = r"c:\Projects\referencebuilder\data\dismissal_baseline.csv"
+_MOVEMENT_PROFILE_CSV = str(_REF_DATA / "bowler_movement_profile.csv")
+_REPEAT_PROFILE_CSV = str(_REF_DATA / "bowler_repeatability_profile.csv")
+_CREASE_PROFILE_CSV = str(_REF_DATA / "bowler_crease_profile.csv")
+_DISMISSAL_BASELINE_CSV = str(_REF_DATA / "dismissal_baseline.csv")
 _DISMISSAL_BASELINE = None
 
 
@@ -175,7 +181,7 @@ def load_crease_profiles(fmt: str = "Test") -> dict:
     return _load_profile_csv(_CREASE_PROFILE_CSV, fmt)
 
 
-_PHASE_PROFILE_CSV = r"c:\Projects\referencebuilder\data\bowler_phase_profile.csv"
+_PHASE_PROFILE_CSV = str(_REF_DATA / "bowler_phase_profile.csv")
 _PHASE_PROFILES: dict = {}
 
 

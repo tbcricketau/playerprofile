@@ -204,7 +204,13 @@ def _narrative(P: dict) -> dict:
 import csv as _csv
 import os as _os
 
-_BAT_REF_CSV = r"c:\Projects\referencebuilder\data\batter_vulnerability_profile.csv"
+from cricket_core.config import project_path as _pp
+
+# referencebuilder's CSVs, by sibling-project path rather than a hard-coded `c:\Projects\…` — the
+# same location on a laptop, and the only form that resolves on the build machine (Linux).
+_REF_DATA = _pp("referencebuilder", "data")
+
+_BAT_REF_CSV = str(_REF_DATA / "batter_vulnerability_profile.csv")
 _BAT_REF = None
 
 
@@ -222,8 +228,8 @@ def _bat_ref():
 # Built by referencebuilder/scripts/build_batter_stroke_norms.py, keyed by format ×
 # bowler group (all / pace / spin / right_pace / … — the report's group vocabulary).
 # Shares are within stroke-coded balls only.
-_STROKE_NORMS_CSV = r"c:\Projects\referencebuilder\data\batter_stroke_norms.csv"
-_STROKE_COHORT_CSV = r"c:\Projects\referencebuilder\data\stroke_norms_cohort.csv"
+_STROKE_NORMS_CSV = str(_REF_DATA / "batter_stroke_norms.csv")
+_STROKE_COHORT_CSV = str(_REF_DATA / "stroke_norms_cohort.csv")
 _STROKE_NORMS = None
 _NORM_FAMS = ("Drive", "Cut", "Pull/Hook", "Sweep", "Work/Nudge", "Slog", "Ramp/Scoop")
 # The stroke norms are keyed by format and the CSVs carry test/odi/t20i rows. This was pinned to

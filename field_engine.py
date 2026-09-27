@@ -23,7 +23,11 @@ from collections import Counter, defaultdict
 
 from cricket_core.lookups import FIELD_POS, field_coords
 
-_REF = r"c:\Projects\referencebuilder\data"
+from cricket_core.config import project_path as _pp
+
+# Sibling-project path, not a hard-coded `c:\Projects\…`: the same location on a laptop, and the
+# only form that resolves on the build machine (Linux).
+_REF = str(_pp("referencebuilder", "data"))
 _COHORT_CSV = os.path.join(_REF, "catch_position_norms.csv")
 _PROFILE_CSV = os.path.join(_REF, "batter_field_profile.csv")
 

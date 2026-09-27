@@ -22,7 +22,11 @@ import json
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CSV = r"c:\Projects\presentationbuilder\data\bowlers_for_reports.csv"
+from cricket_core.config import project_path as _pp
+
+# Sibling-project path, not a hard-coded `c:\Projects\…` — the same location on a laptop, and the
+# only form that resolves on the build machine (Linux).
+CSV = str(_pp("presentationbuilder", "data", "bowlers_for_reports.csv"))
 SERIES_JSON = os.path.join(HERE, "series.json")
 TODAY = datetime.date(2026, 7, 6)
 RECENT_DAYS = 15 * 30            # ~15 months = "squad" window
