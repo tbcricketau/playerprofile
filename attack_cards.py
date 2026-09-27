@@ -22,6 +22,7 @@ from collections import Counter
 
 from config import DATA_SCHEMA
 from cricket_core.warehouse import set_conn_cursor, run_query
+from cricket_core.charts import is_tracked_length_mm
 from cricket_core.config import international_series_sql
 from cricket_core.video import clip_stem
 
@@ -95,7 +96,7 @@ def _player_balls(conn, cur, pid):
             D.stroke_id, D.shot_quality_id,
             D.pitch_line_group_pace_id lin, D.pitch_length_group_pace_1_id len,
             D.pitch_line_group_spin_id slin, D.pitch_length_group_spin_1_id slen,
-            D.over_the_wicket ow,
+            D.over_the_wicket ow, D.pitch_length,
             D.bowler_pace_spin_id ps, P.surname bowler, LH.description hand,
             D.video_file_name, M.match_length_id, S.name season, SR.gender_id
         FROM [{DATA_SCHEMA}].[Deliveries] D
@@ -110,6 +111,17 @@ def _player_balls(conn, cur, pid):
     """, conn, cur)
 
 
+def _mark_tracked(rows):
+    """Stamp `_tracked` on each ball: did tracking actually measure where it pitched?
+
+    Not a nicety. The warehouse gives an untracked delivery a length *group* regardless — always
+    the fullest — so without this every such ball reads as a yorker or a full toss. See
+    `cricket_core.charts.TRACKED_LENGTH_MM`."""
+    for r in rows:
+        r["_tracked"] = is_tracked_length_mm(r.get("pitch_length"))
+    return rows
+
+
 def _control_balls(conn, cur, pid, match_ids, hand_like):
     """Same matches, opposition (pace AND spin) to other same-hand top-7 batters — the control
     cohort. Split by `ps` (pace/spin) in build_card."""
@@ -118,7 +130,7 @@ def _control_balls(conn, cur, pid, match_ids, hand_like):
         SELECT D.match_id, D.bowler_pace_spin_id ps,
                D.pitch_line_group_pace_id lin, D.pitch_length_group_pace_1_id len,
                D.pitch_line_group_spin_id slin, D.pitch_length_group_spin_1_id slen,
-               D.over_the_wicket ow,
+               D.over_the_wicket ow, D.pitch_length,
                T.team_name opp
         FROM [{DATA_SCHEMA}].[Deliveries] D
         JOIN [{DATA_SCHEMA}].[Teams] T ON D.team_bowling_id = T.team_id
@@ -156,56 +168,84 @@ def _derive_series(balls):
     return list(reversed(series))
 
 
+# A cell is (label, predicate, needs_tracking). `needs_tracking` says the cell reads a
+# ball-tracking field — length or pitching line — so it must be counted over tracked deliveries
+# only, numerator AND denominator (see `_diet_cells`). The angle cell is the exception: over/round
+# the wicket is scored by hand, not tracked, so it is true of every ball.
 def _pace_defs(LEN, LIN):
     """Pace plan cells across three orthogonal axes — angle (over/round the wicket), length (3
     reader bands) and pitching line (disambiguated from the stump line) — plus two composite danger
     balls. Redesigned per ATTACK_CARDS_REDESIGN.md so the card answers 'how did they bowl to you'."""
     defs = [
-        # angle
-        ("round the wicket", lambda r: str(r.get("ow")) in _ROUND_VALS),
+        # angle — not a tracked field
+        ("round the wicket", lambda r: str(r.get("ow")) in _ROUND_VALS, False),
         # length — 3 bands
-        ("pitched up", lambda r: LEN.get(r["len"]) in LEN_UP),
-        ("a good length", lambda r: LEN.get(r["len"]) in LEN_GOOD),
-        ("short", lambda r: LEN.get(r["len"]) in LEN_SHORT),
+        ("pitched up", lambda r: LEN.get(r["len"]) in LEN_UP, True),
+        ("a good length", lambda r: LEN.get(r["len"]) in LEN_GOOD, True),
+        ("short", lambda r: LEN.get(r["len"]) in LEN_SHORT, True),
         # pitching line (where it bounced — NOT the stump line)
-        ("pitched in the channel", lambda r: LIN.get(r["lin"]) == "Channel"),
-        ("pitched at the stumps", lambda r: LIN.get(r["lin"]) == "In Line"),
-        ("pitched wide of off", lambda r: LIN.get(r["lin"]) == "Wide Outside Off"),
-        ("pitched at your pads", lambda r: LIN.get(r["lin"]) == "Outside Leg"),
+        ("pitched in the channel", lambda r: LIN.get(r["lin"]) == "Channel", True),
+        ("pitched at the stumps", lambda r: LIN.get(r["lin"]) == "In Line", True),
+        ("pitched wide of off", lambda r: LIN.get(r["lin"]) == "Wide Outside Off", True),
+        ("pitched at your pads", lambda r: LIN.get(r["lin"]) == "Outside Leg", True),
     ]
     # composite danger balls (kept — Tom likes the specificity)
     defs.append(("cut ball (short, wide off)",
                  lambda r: LEN.get(r["len"]) in LEN_SHORT
-                 and LIN.get(r["lin"]) in ("Channel", "Wide Outside Off")))
+                 and LIN.get(r["lin"]) in ("Channel", "Wide Outside Off"), True))
     defs.append(("full at the stumps",
-                 lambda r: LEN.get(r["len"]) in (LEN_UP | {"5-6 m", "6-8 m"}) and LIN.get(r["lin"]) == "In Line"))
+                 lambda r: LEN.get(r["len"]) in (LEN_UP | {"5-6 m", "6-8 m"})
+                 and LIN.get(r["lin"]) == "In Line", True))
     return defs
 
 
 def _spin_defs(SLEN, SLIN):
     defs = []
     for band in ("<4 m", "4-5 m", "5+ m"):
-        defs.append((SLEN_NAME.get(band, band), lambda r, b=band: SLEN.get(r["slen"]) == b))
+        defs.append((SLEN_NAME.get(band, band), lambda r, b=band: SLEN.get(r["slen"]) == b, True))
     for grp in ("Outside Off", "Mid and Off", "Leg and Mid", "Outside Leg"):
-        defs.append((SLIN_NAME.get(grp, grp), lambda r, g=grp: SLIN.get(r["slin"]) == g))
+        defs.append((SLIN_NAME.get(grp, grp), lambda r, g=grp: SLIN.get(r["slin"]) == g, True))
     defs.append(("tossed up outside off",
-                 lambda r: SLEN.get(r["slen"]) == "<4 m" and SLIN.get(r["slin"]) in ("Outside Off", "Mid and Off")))
+                 lambda r: SLEN.get(r["slen"]) == "<4 m"
+                 and SLIN.get(r["slin"]) in ("Outside Off", "Mid and Off"), True))
     defs.append(("into the pads",
-                 lambda r: SLIN.get(r["slin"]) in ("Leg and Mid", "Outside Leg") and SLEN.get(r["slen"]) in ("<4 m", "4-5 m")))
+                 lambda r: SLIN.get(r["slin"]) in ("Leg and Mid", "Outside Leg")
+                 and SLEN.get(r["slen"]) in ("<4 m", "4-5 m"), True))
     return defs
+
+
+MIN_TRACKED = 30     # balls with a measured length before a tracked cell is worth a number
 
 
 def _diet_cells(w_balls, c_balls, defs, floor_w=60, floor_c=120):
     """Plan table for one bowler family: pct vs the in-series control per cell, with a flag
     (more/less/even/thin). For 'more' cells it bakes a few example clip stems (recent, with video)
-    so the reader can watch where they went at them. Returns [] if the sample is too thin."""
+    so the reader can watch where they went at them. Returns [] if the sample is too thin.
+
+    **A cell that reads a tracked field counts only tracked balls, on both sides of the ratio.**
+    The warehouse gives an untracked delivery a length *group* anyway — always the fullest — so
+    counting them made "pitched up" and "tossed up" largely phantom (82.4% of the pace `<1 m`
+    bucket in Tests). Leaving them in the denominator instead would deflate every other zone, so
+    the share a tracked cell reports is "of the balls we could measure". Below `MIN_TRACKED`
+    measured balls a cell is dropped rather than shown thin — coverage varies enormously by
+    country (Australia 99.9%, Zimbabwe 33% in Tests), so this bites unevenly by where they played.
+    """
     out = []
-    nw, nc = len(w_balls), len(c_balls)
-    if nw < floor_w or nc < floor_c:
+    nw_all, nc_all = len(w_balls), len(c_balls)
+    if nw_all < floor_w or nc_all < floor_c:
         return out
-    for label, pred in defs:
-        matched = [r for r in w_balls if pred(r)]
-        cw, cc = len(matched), sum(1 for r in c_balls if pred(r))
+    w_tr = [r for r in w_balls if r.get("_tracked")]
+    c_tr = [r for r in c_balls if r.get("_tracked")]
+    for label, pred, needs_tracking in defs:
+        if needs_tracking:
+            src_w, src_c = w_tr, c_tr
+            if len(src_w) < MIN_TRACKED or len(src_c) < MIN_TRACKED:
+                continue
+        else:
+            src_w, src_c = w_balls, c_balls
+        nw, nc = len(src_w), len(src_c)
+        matched = [r for r in src_w if pred(r)]
+        cw, cc = len(matched), sum(1 for r in src_c if pred(r))
         p1, p2 = cw / nw, cc / nc
         z = _z(p1, nw, p2, nc)
         expected = cc * nw / nc
@@ -343,7 +383,7 @@ def _summary(cells, outs_detail, person="you"):
 
 
 def build_card(conn, cur, pid, name, LEN, LIN, STK, SLEN, SLIN, person="you"):
-    balls = _player_balls(conn, cur, pid)
+    balls = _mark_tracked(_player_balls(conn, cur, pid))
     if not balls:
         return None
     hand = Counter(str(r["hand"]) for r in balls).most_common(1)[0][0]
@@ -356,7 +396,7 @@ def build_card(conn, cur, pid, name, LEN, LIN, STK, SLEN, SLIN, person="you"):
         spin = [r for r in sb if r["ps"] == "2"]
         runs = sum(int(_f(r["bat_score"], 0)) for r in sb)
         outs = [r for r in sb if _is_out(r)]
-        ctrl = [r for r in _control_balls(conn, cur, pid, s["match_ids"], hand_like)
+        ctrl = [r for r in _mark_tracked(_control_balls(conn, cur, pid, s["match_ids"], hand_like))
                 if r["opp"] == s["opp"]]
         ctrl_pace = [r for r in ctrl if r["ps"] == "1"]
         ctrl_spin = [r for r in ctrl if r["ps"] == "2"]

@@ -17,7 +17,7 @@ from collections import Counter, defaultdict
 from data_loaders import load_bowler_deliveries, load_bowler_info
 import statistics
 from profile import (process_rows, _safe_float, _quantile, _SHORT_BUCKETS, _fingerprint, recent_fingerprint_vals,
-                    _pctl_of, load_phase_profiles, tracked_lengths)
+                    _pctl_of, load_phase_profiles, tracked_lengths, is_tracked_length)
 from cricket_core.lookups import (PACE_TYPES as _PACE_TYPES, SPIN_TYPES as _SPIN_TYPES,
                                    BOWLER_TYPE_OVERRIDE as _BT_OVERRIDE)
 from cricket_core.lookups import team_flag
@@ -428,7 +428,13 @@ def build_odi_profile(bowler_id: str, level: str = "international",
     _lengths = tracked_lengths(mech)
     avg_len_m = statistics.median(_lengths) if _lengths else None
     tracked_len_pct = 100.0 * len(_lengths) / len(mech) if mech else None
-    short_pct = (sum(1 for r in legal if r.get("pitch_length_group_m") in _SHORT_BUCKETS) / nb * 100) if nb else 0.0
+    # The denominator form of the sentinel trap: an untracked ball never lands in a SHORT bucket
+    # (it is filed as the fullest), so counting it in `nb` cannot inflate this — it deflates it,
+    # in proportion to how poorly the player's matches were tracked. Over tracked balls only, so
+    # the number reads "of the balls we could measure". See cricket_core.charts.TRACKED_LENGTH_MM.
+    _short_src = [r for r in legal if is_tracked_length(r.get("pitch_length_m"))]
+    short_pct = (sum(1 for r in _short_src if r.get("pitch_length_group_m") in _SHORT_BUCKETS)
+                 / len(_short_src) * 100) if _short_src else 0.0
     _kr = [r for r in legal if r.get("is_round") is not None]
     round_pct = sum(1 for r in _kr if r["is_round"]) / len(_kr) * 100 if _kr else None
     _rl = [r for r in _kr if r["is_lhb"]]
