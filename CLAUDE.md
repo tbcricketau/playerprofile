@@ -968,9 +968,44 @@ matchupmodel's zone grids bin on exactly those columns, so its fullest zone was 
 nobody measured — a "danger: full toss" plan largely fabricated. Fixed by `config.ZONE_TRACKED_SQL`
 in both `build_batter_response.py` and `build_bowler_delivery.py`.
 
-🔴 **The Test profile CSVs still carry it and are live** — the Bangladesh packs and the SA/NZ
-reports were produced from contaminated grids. Rebuilding them moves signed-off numbers, so it is
-a deliberate decision, not a side effect. See `ODI_PACKS_PLAN.md`.
+### And this project carried it independently, on the `_1_` columns (fixed 27-09-2026)
+
+`attack_cards.py` was the last raw reader — its plan cells bin on
+`pitch_length_group_pace_1_id` / `..._spin_1_id` (lookups 2819 / 2821), a **different, coarser**
+set from the `_2_` columns matchupmodel uses, and the contamination lands differently:
+
+| Test bucket | balls | untracked |
+|---|---|---|
+| pace `<1 m` (2819) | 49,921 | **82.4%** |
+| spin `<4 m` (2821) | 211,512 | **19.4%** |
+| every other bucket | — | 0.0% |
+
+Same ~41,000 phantom balls in each; the spin share is lower only because that bucket is wider. Do
+not assume a figure measured on `_2_` transfers to `_1_`.
+
+**What it did to a card.** Wiaan Mulder's `<1 m` bucket held **322 balls of which 4 were real**, so
+his card said *a quarter of the balls at him were pitched up* when the truth is 0.5%. Corbin Bosch:
+42 balls, 1 real.
+
+**The fix has three parts, and the second is the one that is easy to get wrong:**
+1. Filter — `_mark_tracked` stamps `_tracked` per ball from `charts.is_tracked_length_mm`.
+2. **Use the tracked balls as the DENOMINATOR too.** Filtering only the numerator deflates every
+   other zone instead, which is the same bug wearing a different hat. `odi_profile`'s `short%` had
+   exactly that form: an untracked ball is never short, but it was counted in the total.
+3. Drop a cell below `attack_cards.MIN_TRACKED` (30) measured balls rather than showing it thin.
+
+**Coverage decides who this hits, and it is wildly uneven.** Of the 2026 Test squads, every
+Australian is **99.7%+ tracked** and barely moves; four South Africans sit at Brevis 41%, Bosch 48%,
+Mulder 73%, Bedingham 88%. So a fix like this changes the *opposition* pages and leaves our own
+almost untouched — check coverage per player before assuming a rebuild is cosmetic.
+
+🔴 **Work shipped before these fixes still carries it, and stays as it is** (Tom, 27-09-2026): the
+Bangladesh packs (matchup store built 21-08, before matchupmodel's 01-09 fix) and the SA/NZ reports
+were produced from contaminated grids. They are archived or finished, so they are left alone rather
+than rebuilt — **but do not rebuild anything on those numbers, and do not cite them as a baseline.**
+The live South Africa ODI packs are not being reissued either; the code is fixed, so the next build
+of anything is clean. The South Africa matchup store was rebuilt 23-09, after the fix, so it is
+sound.
 
 **The general rule:** a pre-bucketed category is not evidence that a measurement exists. Filter on
 the underlying coordinate before trusting any zone, group or band derived from it.
