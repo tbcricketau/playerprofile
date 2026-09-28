@@ -1007,6 +1007,13 @@ The live South Africa ODI packs are not being reissued either; the code is fixed
 of anything is clean. The South Africa matchup store was rebuilt 23-09, after the fix, so it is
 sound.
 
+⚠ **"The store was rebuilt after the fix" is only half the check — the CSVs underneath it have
+their own date.** A store is exported from `batter_response.csv` / `bowler_delivery.csv`, so a
+rebuild on contaminated CSVs carries the contamination forward while looking current. Verified
+28-09 for the Test set: the fix is matchupmodel `0f2a2be` (**01-09**) and the live Test CSVs are
+dated **02-09**, so both the CSVs and every store exported from them since are clean. Check the
+CSV mtimes against that commit date, not just the store's.
+
 **The general rule:** a pre-bucketed category is not evidence that a measurement exists. Filter on
 the underlying coordinate before trusting any zone, group or band derived from it.
 

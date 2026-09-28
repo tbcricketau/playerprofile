@@ -35,8 +35,14 @@ is a module constant with no flag, so there is no supported no-vision mode. Chec
 
 **Two ways out, both needing Tom:**
 
-1. **Mint a SAS** — `playerprofile/mint_fairplay_sas.py` from his signed-in laptop. Lasts ≤7 days.
-   Fastest, and it unblocks today.
+1. **Mint a SAS** — `mint_fairplay_sas.py` from his signed-in laptop. Lasts ≤7 days. Fastest, and
+   it unblocks today. ⚠ The script is in **`livematchdashboard/`**, not `playerprofile/` (corrected
+   28-09). Run it without `--upload` to mint and print; **write it to a file rather than to a
+   terminal** — a SAS is a credential, and `sig=` in a blob URL is exactly what the estate's
+   secret-scan hook exists to catch.
+   ⚠ It signs in by **device code, which lapses in about 15 minutes** and fails with
+   `ClientAuthenticationError: Timed out waiting for user to authenticate`. Two codes went unanswered
+   on 28-09 and the build sat idle. Mint it when someone is **at the browser**, not before.
 2. **IT grant `Storage Blob Delegator`** at *account* scope on `auscricketfairplayase`. Permanent,
    and it is what lets a pack build run unattended on the build machine. See
    `cricket-core/docs/AZURE.md` — the cost of not having it is written up there.
@@ -51,10 +57,12 @@ prompt. See `cricket-core/docs/build-machine-CLAUDE.md`.
 | Thing | State | Where |
 |---|---|---|
 | Australia Test squad (16) | ✅ committed `8570399` | `squads.json` → `south-africa-test-away-2026` |
-| South Africa squad (16) | ✅ **PROVISIONAL** | `matchupmodel/data/opp_squad_south_africa_test.json` |
-| Test matchup store | ✅ 240 pairings, Test-scoped | `matchupmodel/data/matchup_store_south_africa_test.json` |
-| `h2h_south_africa_test.json` | ✅ 56 + 44 pairings | box: `~/projects/playerprofile/data/` |
-| 9 SA bowler Test reports | ✅ 8+1 succeeded, 0 failed | box: `~/projects/playerprofile/reports/` |
+| Neser + Kuhnemann registry entries | ✅ added 28-09 `753c645` | `players.json` — without them neither got a bowling page |
+| South Africa squad (18) | ✅ **ANNOUNCED, re-pinned 28-09** | `matchupmodel/data/opp_squad_south_africa_test.json` |
+| Test matchup store | ✅ **296 pairings** (120 + 176), rebuilt 28-09 | `matchupmodel/data/matchup_store_south_africa_test.json` |
+| `h2h_south_africa_test.json` | 🔴 **needs rebuilding** — built on the 16-name pin | box: `~/projects/playerprofile/data/` |
+| 9 SA bowler Test reports | ✅ 0 failed, but **2 short** (Nortje, Paterson) | box: `~/projects/playerprofile/reports/` |
+| Ackerman batting report + 48 focused | ⬜ not started — blocked with everything else | 12 batters × 4 bowler groups |
 | `opponent_about_south_africa_test.json` | 🔴 **BLOCKED** | — |
 | `series.json` entry | ⬜ not started | needs the above |
 | Bundle config | ✅ two squads | `publish_packs.py` → `BUNDLES["aus"]["squads"]` |
@@ -96,12 +104,28 @@ build failure — two Harare Tests in 2025 at 0.0% tracked cause nearly all of i
 fill them** (`referencebuilder/docs/TRACKING_DATA_GAP.md` — the cricviz supplement covers 1.4% and
 the mirror ends in 2024).
 
-**Open: the South Africa squad is a guess.** They had not named one. It is the XI from their most
-recent Test (**2025-11-22 — ten months old**) plus five with a clear claim since; four of them played
-the September ODIs, which is the strongest availability signal in the data. The file carries its own
-provenance note and a `provisional-2026-09-27` copy beside it. **Re-pin from the announced squad and
-rebuild the store before anything reaches a player** — a wrong name means a pack for a player who is
-not there.
+**Settled (28-09): the squad was announced, and the guess was 15 of 16.** Re-pinned from the team
+sheet. **Out:** Dewald Brevis. **In:** Marques Ackerman (4353762), Anrich Nortje (4090011), Dane
+Paterson (3200006) — each a *unique* surname match in the men's Players table, so no first-name or
+career-volume guess was involved. Store rebuilt on it (296 pairings); all 12 of their batters and
+all 11 bowlers are in it. The provisional pin and a timestamped `.bak` sit beside the live file.
+
+Three consequences:
+
+* **Two more bowler reports** (Nortje, Paterson) and **one more batting report** (Ackerman). Brevis's
+  renders are surplus, not harmful.
+* **`h2h_south_africa_test.json` must be rebuilt** — it was built against the 16-name pin, so it
+  cannot carry the three new players. No freeze needed: the Test h2h order is Test/FC only, so the
+  ODIs being played now cannot be pulled into it.
+* ⚠ **Ackerman is UNCAPPED in Tests** — zero balls in `International Tests M`; his record is 498
+  balls of `International 1st Class M` (a-team), 188 List A, some domestic T20. A Test-scope build
+  finds nothing, so he carries the thin all-formats card rather than a plan. Correct, not a failure.
+
+**Four bowler groups, not two** (measured 28-09, not assumed): `right_pace`, `left_pace` (Starc),
+`off_spin` (Lyon, Head, Renshaw), `left_orthodox` (Kuhnemann, Connolly). So the focused batter set is
+**12 × 4 = 48 renders**. The store types Cummins, Boland, Lyon and Starc itself; it does **not** type
+Connolly or Renshaw, who are part-timers with no sim profile and are carried by `players.json` alone
+— the silent-failure field, and both are covered.
 
 ## Traps
 
