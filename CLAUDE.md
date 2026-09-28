@@ -374,6 +374,18 @@ Three things make it work rather than merely restrict:
   and it slices the ROWS before the stock ball is identified so the ball type is read from
   middle-overs bowling rather than from a whole ODI innings.
 
+**The hand audit honours a declared, table-legal borrow — since 29-09-2026, not before.** Its format
+check was a bare red-vs-white test written on 02-09, two weeks before this rule, so the first Test
+packs built under it were refused: 14 reels, every one Gerald Coetzee's stock and wicket balls to
+left-handers, declared `clip_format_stock_lhb = 'ODI'`, starred and footnoted, and exactly the
+`Test stock/wicket ← ODI overs 11-40` row above. `audit_pack_hands._declared_borrow` now reads the
+builder's declaration for a **starred** reel and accepts the one format it declares **if `_borrow_for`
+lists it** for the pack's format and the reel's kind — read from `build_opponent_about` so there is
+one table, failing closed if it cannot be imported. The clips are still held to that declared
+format and nothing else, and the summary counts them (`declared cross-colour borrow N`) so an
+accepted borrow is on the record rather than invisible. Proven on the table's semantics eight ways
+and on the South Africa Test bundle.
+
 **The middle-overs reel is the fifth kind**, keyed `mid`/`midL`/`midR`. It rescued exactly the
 bowlers the restriction hurt: Mokoena's own ODI balls are untracked, so no stock ball can be
 identified from them, but the footage plays — he has 40 middle-overs clips to right-handers

@@ -267,22 +267,61 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
                 f"({type(e).__name__}: {str(e)[:100]}). Refusing rather than skipping them — "
                 f"an unchecked reel is what this gate exists to prevent.")
 
-    mixed = wrong = pooled = unres = offfmt = xhand = owner = typ = macro = 0
+    mixed = wrong = pooled = unres = offfmt = xhand = owner = typ = macro = borrowed = 0
     want_fmt = {"test": "Test", "odi": "ODI", "t20i": "T20", "t20": "T20"}.get(str(fmt or "").lower())
     red, white = {"Test"}, {"ODI", "T20"}
     pages, blind, unchecked = set(), set(), 0
 
-    def _fmt_check(fn, k, ids):
+    # The phase-matched borrow table (Tom, 17-09-2026): which SOURCE format a reel of this kind
+    # may legally be filled from when the pack's own record is thin — a Test stock/wicket reel from
+    # ODI overs 11-40, an ODI death reel from T20I overs 16-20. The builder records the borrow as
+    # `clip_format_{kind}_{hand}` in opponent_about and stars the button. Until 29-09 this audit
+    # knew only red-vs-white and refused every one of them: 14 legal Coetzee reels on the South
+    # Africa Test packs. Read from the builder so there is one table; fail CLOSED if it cannot be.
+    try:
+        from build_opponent_about import _borrow_for
+    except Exception as e:                                   # no table -> no borrow is legal
+        print(f"  (borrow table unavailable: {type(e).__name__} — declared borrows will be refused)")
+        _borrow_for = lambda fmt_, kind_: ()
+    _BORROW_KIND = {"stock": "stock", "wkt": "wicket", "nb": "new_ball", "dth": "death", "mid": "middle"}
+    _norm = lambda f: str(f or "").upper().replace("T20I", "T20")
+
+    def _declared_borrow(k, det):
+        """The one format this starred reel DECLARES it borrowed from, if the table permits that
+        borrow for the pack's format and the reel's kind — else None. Unstarred reels get none."""
+        if not det.get("starred") or not want_fmt:
+            return None
+        m = re.match(r"(stock|wkt|nb|dth|mid)X?[LR]_", k)
+        if not m:
+            return None
+        kind = _BORROW_KIND[m.group(1)]
+        declared = (about.get("bowlers", {}).get(str(det["them"])) or {}).get(
+            f"clip_format_{kind}_{det['hand']}")
+        if not declared:
+            return None
+        legal = {_norm(src) for src, _phase in _borrow_for(
+            {"Test": "Test", "ODI": "ODI", "T20": "T20I"}[want_fmt], kind)}
+        return _norm(declared) if _norm(declared) in legal else None
+
+    def _fmt_check(fn, k, ids, allow=None):
         # FORMAT. A reel may legitimately borrow a neighbouring white-ball format when the pack's
-        # own is thin (build_opponent_about steps ODI -> T20I -> T20), but a RED-ball clip in a
-        # white-ball pack is never right, and vice versa.
-        nonlocal offfmt
+        # own is thin (build_opponent_about steps ODI -> T20I -> T20), and a STARRED reel may carry
+        # the one cross-colour format it declares IF the borrow table permits it (`allow`). Any
+        # other clip from the wrong side of red/white is never right.
+        nonlocal offfmt, borrowed
         if want_fmt:
             fgot = {facts[i]["fmt"] for i in ids if i in facts and facts[i]["fmt"]}
             bad = (fgot & red) if want_fmt in white else (fgot & white)
+            if allow:
+                bad = bad - {allow}
             if bad:
                 offfmt += 1
-                print(f"  OFF-FORMAT {fn:<30} {k:<16} pack={want_fmt} reel={sorted(fgot)}")
+                print(f"  OFF-FORMAT {fn:<30} {k:<16} pack={want_fmt} reel={sorted(fgot)}"
+                      + (f" (declared {allow}, which does not cover {sorted(bad)})" if allow else ""))
+            elif allow and allow in fgot:
+                borrowed += 1
+                print(f"  BORROW  {fn:<30} {k:<16} pack={want_fmt} reel={sorted(fgot)} — declared "
+                      f"{allow}, legal per the borrow table")
 
     def _owner_check(fn, k, ids, side, who):
         # OWNER. Every clip must have `who` at the `side` end — a reel of the right hand and format
@@ -333,7 +372,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
                 wrong += 1
                 print(f"  WRONG   {fn:<30} {k:<16} pack={want} reel={next(iter(got))}")
             _owner_check(fn, k, ids, "bowler", det["them"])
-            _fmt_check(fn, k, ids)
+            _fmt_check(fn, k, ids, allow=_declared_borrow(k, det))
 
         elif kind == "opp_batter":
             if pkind != "bowling":
@@ -372,6 +411,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
     hist = " · ".join(f"{k} {v}" for k, v in sorted(kinds.items()))
     print(f"  {len(reels)} reels across {len(pages)} pack pages — "
           f"mixed {mixed} · wrong {wrong} · owner {owner} · type {typ} · off-format {offfmt} · "
+          f"declared cross-colour borrow {borrowed} · "
           f"unresolved {unres} · declared other-hand {xhand} · declared macro-type {macro}")
     print(f"  kinds — {hist}")
     print(f"  coverage — player resolved on {len(pages) - len(blind)} of {len(pages)} pages"
@@ -383,7 +423,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
             "type": typ, "macro": macro, "unres": unres, "blind": sorted(blind),
             "hands_empty": not hands, "fmt_checked": bool(want_fmt), "unknown": unknown,
             "unchecked": unchecked, "kinds": kinds, "n": len(reels), "pages": len(pages),
-            "xhand": xhand}
+            "xhand": xhand, "borrowed": borrowed}
 
 
 def main():
