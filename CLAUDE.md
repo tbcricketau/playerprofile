@@ -1316,6 +1316,17 @@ threshold and carries no plan, which is the honest answer.
   bowling reports, wrong for these — so a player's Test and ODI batting reports collided and the
   Test one won. It had never bitten because no two squads had shared a player across formats; these
   two share four (Gaikwad, Thakur, Kamboj, Badoni).
+- **…and the BOWLING side had the same hole, found 28-09-2026 the first time a senior player was in
+  two live squads.** `_scouting_urls` walked every format's report directory and gated bowling
+  reports only on "is this player in the series' groups"; the batting loop filtered on
+  `_batting_{fmt}_`, the bowling loop never did, and the 24-09 duplicate detector keyed on
+  `(id, hand)` without format. Markram, Bosch, Coetzee, Maharaj and Jansen are in both the ODI and
+  the Test squad, so each one's Test report and ODI report claimed one key and **the ODI packs were
+  built linking Test bowling reports**. No gate refused it — the link resolves, it is not a reel,
+  it is not a batter plan — it surfaced only because the detector prints its choice. The loop now
+  skips any directory whose format is not the squad's, and `publish_packs.report_format_check`
+  refuses a pack page linking a bowling report of another format — and refuses when it finds no
+  links at all, because its first version mangled the format key, matched nothing and said "clean".
 - **A multi-squad build nests packs under `players/<slug>/`, so `../scouting/` is one level short.**
   `_scouting_urls` takes `up=`. It also means adding a live squad silently re-homes every *other*
   live squad's packs — which is why Australia A builds into its own bundle (`ausa_player_site` →
