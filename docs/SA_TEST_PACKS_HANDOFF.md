@@ -88,7 +88,10 @@ anyway — mint once while at the browser (`livematchdashboard/mint_fairplay_sas
 `FAIRPLAY_SAS`), then:
 
 ```powershell
-.\venv\Scripts\python.exe publish_site.py --out site --only south-africa-test-away-2026
+# BOTH squads' coach bakes, not just the Test one: the scheduled refresh of 27-09 08:56 cleared
+# site/ and then died on the expired sign-in (task result 267014), so site/ holds only .git.
+.\venv\Scripts\python.exe publish_site.py --out site --only south-africa-odi-away-2026 south-africa-test-away-2026
+.\venv\Scripts\python.exe inject_reports.py --slug south-africa-odi-away-2026
 .\venv\Scripts\python.exe inject_reports.py --slug south-africa-test-away-2026
 .\venv\Scripts\python.exe build_player_site.py --squad south-africa-odi-away-2026 south-africa-test-away-2026 --nest
 .\venv\Scripts\python.exe build_coach_site.py --slug south-africa-test-away-2026      # Tom: yes, same as ODI
@@ -139,6 +142,29 @@ Connolly or Renshaw, who are part-timers with no sim profile and are carried by 
 
 ## Traps
 
+* **Do not run the overview groups in parallel on the box — measured 28-09.** Six
+  `build_overview` processes plus a re-render sat 25 minutes at **5 s of CPU each**, and a bare
+  `SELECT 1` from the box took **18.3 s**; with the six stopped the same probe took **0.4 s**. The
+  link was slow because it was loaded, not on its own. Two processes on it is the regime that ran
+  all evening; seven is what broke it. Sequentially a group is ~10 min with the link to itself.
+* **A wedged warehouse call never times out, and it looks like slow work.** `build_overview` sat
+  23 min on 10 s of CPU after a TCP blip, and a `build_reports` batch stalled at 6 of 9 the same way.
+  Judge by `ps -o etime,cputime` — CPU flat over minutes is the wedge — kill it, and re-run the
+  ids or group that were in flight. Every render that was re-run after a kill succeeded first time.
+* **`pkill -f <script>` kills the shell that runs it.** The remote `bash -c` command line contains
+  the script name, so `pkill -f build_overview.py` matched and killed the ssh session mid-script —
+  twice, the second time through the `[b]uild` bracket form, because the launch string later in the
+  same command still contained the literal name. Never put a `pkill` in the same command as a
+  launch; clean up with `tmux kill-session` and check with `pgrep -af "[b]uild_…" | grep -v "bash -c"`.
+* **The scheduled refresh clears `site/` BEFORE it needs the credential.** With the sign-in expired
+  it wipes every baked series and then hangs on the device code; the task is killed (267014) and
+  nothing is re-baked. After any expiry, assume `site/` is empty and re-bake every live slug before
+  assembling a bundle — the assemble copies from it, and `check_site` would refuse on dead links
+  rather than silently ship them, but only after the time was spent.
+* **The nine bowler reports rendered 27-09 had no vision and no sidecar.** The pre-mint raised
+  inside the `try` that builds the playlists, the block was skipped, and `.playlists.json` was never
+  written — so `_sidecar_map` could not see them at all. Re-rendered 28-09 in identity mode: 60–80
+  clips each. A report with no sidecar is invisible to the site, not merely vision-less.
 * **A length group is not evidence a length was measured.** The `_1_` columns this project uses
   (2819 / 2821) behave *differently* from the `_2_` ones matchupmodel uses — pace is worse (82.4%
   untracked, not 47.5%), spin much better (19.4%, not 79.6%). Do not carry a figure between them.
