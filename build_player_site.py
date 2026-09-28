@@ -521,6 +521,15 @@ def _scouting_urls(series_slug, up="../"):
     # separated by the folder they render into (reports/ vs reports/ateam/).
     _dirs = _LEVEL_DIRS[_slvl]
     for _fmt, _dir in _dirs.items():
+        # …and only this series' FORMAT. The batting loop below filters on `_batting_{fmt}_`; this
+        # loop did not, and gated only on "is the player in this series' groups" — so a player in
+        # two live squads (Markram, Bosch, Coetzee, Maharaj, Jansen on 28-09-2026: both the ODI and
+        # the Test squad) had his Test report and his ODI report claim ONE key, and `_keep` handed
+        # both packs whichever was rendered last. An ODI pack linking a Test bowling report resolves,
+        # carries no reel for the hand audit, and is not a batter plan for the scope gate: every
+        # gate passed it. It only surfaced because the duplicate detector prints its choice.
+        if _fmt != _sfmt:
+            continue
         for sc in glob.glob(os.path.join(_dir, "*.playlists.json")):
             base = os.path.basename(sc)[: -len(".playlists.json")]
             try:

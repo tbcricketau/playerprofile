@@ -102,6 +102,35 @@ def _run(args, cwd):
     return r.stdout.strip()
 
 
+def report_format_check(out, slug, fmt):
+    """Does every bowling-report link in this squad's packs point at a report of the PACK'S format?
+
+    The bowler reports for a player carry their format in the base name — `_test_all`/`_test_lhb`,
+    `_odi`, `_t20` — and a pack must link its own. On 28-09-2026 `_scouting_urls` handed the ODI
+    packs the TEST reports of the five players in both squads, because its duplicate detector keyed
+    bowling reports without format. The link resolved, there was no reel for the hand audit and no
+    batter plan for the scope gate, so nothing here would have refused it. Works off the bundle
+    alone. Returns (wrong, checked): `wrong` is [(pack page, linked report)]."""
+    import glob
+    import re
+    from publish_site import _fmt_key          # the one normaliser: Test/ODI/T20I -> test/odi/t20
+    want = {"test": "_test_", "odi": "_odi", "t20": "_t20"}.get(_fmt_key(fmt))
+    if not want:
+        raise SystemExit(f"report_format_check: squad {slug} has an unrecognised format {fmt!r}")
+    other = [t for t in ("_test_", "_odi", "_t20") if t != want]
+    wrong, checked = [], 0
+    pages = glob.glob(os.path.join(out, "players", slug, "*.html")) or \
+        glob.glob(os.path.join(out, "players", "*.html"))
+    for p in pages:
+        html = open(p, encoding="utf-8", errors="replace").read()
+        for link in re.findall(r'scouting/[^"]+/bowlers[^"]*/([^"/]+\.html)', html):
+            checked += 1
+            base = link.split(".")[0]
+            if want not in base and any(t in base for t in other):
+                wrong.append((os.path.relpath(p, out), link))
+    return wrong, checked
+
+
 def plan_scope_check(out, slug):
     """Does every bowling pack link batter reports scoped to its OWN bowler family?
 
@@ -384,6 +413,30 @@ def main():
 
     # PLAN SCOPING — the reels were guarded, the plans were not. Offline, so unlike the hand audit
     # it costs nothing and cannot be skipped by a dropped VPN.
+    # ── every bowling-report link must be the pack's own format ─────────────────────────────
+    # The one check that would have caught 28-09's defect: _scouting_urls handing the ODI packs
+    # five Test bowling reports. It resolves, it is not a reel, it is not a batter plan — no other
+    # gate looks at it. Works off the bundle; no override, because there is no legitimate case.
+    print(f"report format {cfg['bundle']}…")
+    for slug in (cfg.get("squads") or [cfg.get("slug", "")]):
+        wrong, checked = report_format_check(out, slug, _squad_fmt(slug))
+        if checked == 0:
+            # A gate that found nothing to check has not checked anything. The first version of
+            # this one mangled the format key, matched no link, and printed "clean" — caught only
+            # because its proof asserted checked > 0. Same principle as the hand audit's coverage.
+            raise SystemExit(
+                f"\nREFUSING TO PUBLISH: {slug} — the format gate found NO bowling-report links in "
+                f"its pack pages, so it could not check them. Either the packs are not where "
+                f"expected (players/{slug}/) or they link no reports at all; both are wrong.")
+        if wrong:
+            raise SystemExit(
+                f"\nREFUSING TO PUBLISH: {slug} is a {_squad_fmt(slug)} squad and {len(wrong)} pack "
+                f"page(s) link a bowling report of ANOTHER format, e.g. {wrong[0][0]} -> {wrong[0][1]}. "
+                f"A pack must link its own format's report — the numbers are a different game. "
+                f"Rebuild the player site (build_player_site filters on the squad's format since "
+                f"28-09). Nothing was pushed.")
+        print(f"  {slug}: clean — {checked} bowling-report links, all {_squad_fmt(slug)}")
+
     print(f"plan scope {cfg['bundle']}…")
     for slug in (cfg.get("squads") or [cfg.get("slug", "")]):
         stale, missing, checked = plan_scope_check(out, slug)
