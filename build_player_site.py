@@ -1810,15 +1810,20 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
         # opponent, so a single (me, them) dict would collide (wrong count vs a correct video).
         bat_rows = {(r["striker_id"], r["bowler_id"]): r for r in (h2h or {}).get("our_batting", [])}
         bowl_rows = {(r["bowler_id"], r["striker_id"]): r for r in (h2h or {}).get("our_bowling", [])}
-        # copy opposition photos (bowlers + batters)
+        # copy opposition photos (bowlers + batters). Deduped on the DESTINATION FILE, not the
+        # player id: `img/` is per squad folder when squads nest, and a module-level set of ids
+        # meant the second squad built skipped every opponent the first had already copied. On
+        # 28-09-2026 that was the nine South Africans in both the ODI and the Test squad — 353 dead
+        # headshot links on the Test packs, caught by check_site at the dry run.
         if IMG_MODE == "file":
             import shutil
             for oid, (onm, _t) in list(opp_bowlers.items()) + list(opp_batters.items()):
-                if str(oid) in _SITE_IMGS:
+                target = os.path.join(s_dir, "img", f"{oid}.png")
+                if os.path.exists(target):
                     continue
                 p = get_photo_path(oid, fmt=fmt, name=onm)
                 if p:
-                    shutil.copy(p, os.path.join(s_dir, "img", f"{oid}.png"))
+                    shutil.copy(p, target)
                     _SITE_IMGS.add(str(oid))
         for pid, rec in roster:
             name = rec.get("name", pid)
