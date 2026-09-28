@@ -165,6 +165,16 @@ Connolly or Renshaw, who are part-timers with no sim profile and are carried by 
   inside the `try` that builds the playlists, the block was skipped, and `.playlists.json` was never
   written — so `_sidecar_map` could not see them at all. Re-rendered 28-09 in identity mode: 60–80
   clips each. A report with no sidecar is invisible to the site, not merely vision-less.
+* **`build_overview` writes TWO things, and `publish_site` reads the one you did not sync.** The
+  JSON in `data/` feeds the packs' inline plan; the coach site's meeting-overview pages are copied
+  from **`reports/overview_<group>_<opp>.html`** (`publish_site.py:383`), pre-rendered by the same
+  run. Pulling `data/overview_*.json` off the box and a `reports/*_test_*` tar left the Test coach
+  view with no plans tab, because `overview_pace_south_africa_test.html` ends in `_test.html` and
+  matches no `*_test_*`. Sync both, and glob on the opponent key, not the format token.
+* **Two squads in one build: anything deduped on player id alone is wrong.** Nine South Africans are
+  in both squads. The opposition-headshot copy skipped them for the second squad (`_SITE_IMGS`,
+  353 dead `img/` links, refused at the dry run) and `_scouting_urls` handed the ODI packs their
+  Test bowling reports (no gate saw it). Both fixed 28-09; the pattern is the thing to remember.
 * **A length group is not evidence a length was measured.** The `_1_` columns this project uses
   (2819 / 2821) behave *differently* from the `_2_` ones matchupmodel uses — pace is worse (82.4%
   untracked, not 47.5%), spin much better (19.4%, not 79.6%). Do not carry a figure between them.
