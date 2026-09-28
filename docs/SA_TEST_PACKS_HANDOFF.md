@@ -12,28 +12,18 @@ packs, they'll sit alongside"*). That is the two-squad shape `ausa` already prov
 --nest` writes a series selector and puts each squad under its own slug. Tom also wants the **new
 site** (`playerpacks.cricketanalyticshub.com`) carrying the same content so he can compare.
 
-## 🔴 The blocker — read this first
+## ✅ The blocker is gone (28-09) — the box builds without a SAS
 
-**`build_opponent_about.py` cannot run**, and nothing downstream of it can either:
+`build_opponent_about.py` aborted on the box because the managed identity **cannot sign** a link,
+and every builder read "cannot sign" as "cannot probe". The guard was right — on 13-09 a credential
+failure silently rewrote reels shorter (Raza's wicket balls to left-handers 14 → 3) — but the
+premise was too narrow: the identity **can read**, and a clip's existence is a read. The fix is in
+`cricket_core.video.prime_vision` and `CLAUDE.md` § *A credential that can read but not sign*.
+Proven the same day on this squad: about built in **12 min** with full reels, h2h and 62 renders
+behind it, no token anywhere. The two routes below are kept for the GitHub Pages copy, which still
+needs signed links at **publish** time — and for the laptop, which has no identity.
 
-```
-ABORTING: no Fairplay SAS (RuntimeError: The managed identity cannot sign a link: a user
-delegation key is an account-level operation and our grant is on the container …). Every
-Fairplay clip would read as missing and the reels would be written SHORTER than they are
-now. Nothing was changed — fix the credential and re-run.
-```
-
-That guard is **right** and must not be worked around — it exists because on 13-09 a credential
-failure silently rewrote reels shorter (Raza's wicket balls to left-handers 14 → 3). `PROBE_CLIPS`
-is a module constant with no flag, so there is no supported no-vision mode. Checked and confirmed:
-
-* the **managed identity cannot sign** (container-scoped grant; `can_sign_links: False`),
-* **no pre-minted SAS** exists in any reachable environment (`FAIRPLAY_SAS` unset locally; the Ludis
-  copy no longer fetches),
-* **Tom's own sign-in has expired** (`auth_report()` → `credential: user SSO`, `can_read: False`,
-  and a device-code prompt that nobody answers).
-
-**Two ways out, both needing Tom:**
+**What still needs Tom, and when:**
 
 1. **Mint a SAS** — `mint_fairplay_sas.py` from his signed-in laptop. Lasts ≤7 days. Fastest, and
    it unblocks today. ⚠ The script is in **`livematchdashboard/`**, not `playerprofile/` (corrected
@@ -70,26 +60,46 @@ prompt. See `cricket-core/docs/build-machine-CLAUDE.md`.
 The store and both squad pins are in the media store, so any machine can fetch them:
 `py cricket-core/scripts/shared_data.py pull packs`.
 
-## Resume, in order
+## Resume, in order — two machines, and which does what
 
-On the **build machine** (`ssh -i C:\Users\<you>\.ssh\ca_builder azureuser@20.70.69.5`, then `cc`
-for a tmux session that survives a dropped phone connection):
+**The box does the unattended heavy steps and needs no token.** Run 28-09 in tmux sessions
+(`ssh -i C:\Users\<you>\.ssh\ca_builder azureuser@20.70.69.5`, logs in `~/build_logs/`):
 
 ```bash
 . ~/.ca_env && cd ~/projects/playerprofile
-export FAIRPLAY_SAS='?sv=…'                       # step 1 above; or skip once IT grants the role
-venv/bin/python build_opponent_about.py --opp south_africa_test --fmt Test
-venv/bin/python squads.py --check south-africa-test-away-2026     # must come back clean
-venv/bin/python build_player_site.py --squad south-africa-test-away-2026 --nest
-venv/bin/python publish_packs.py aus --dry-run                    # every gate, nothing pushed
-venv/bin/python publish_packs.py aus                              # only when the dry run is clean
+venv/bin/python build_opponent_about.py --opp south_africa_test --fmt Test      # 12 min, done
+venv/bin/python build_h2h.py --opp south_africa_test --fmt Test                  # done, freeze-verified
+venv/bin/python build_reports.py --format Test --hand all --ids 4090011 3200006 --target-country "South Africa"
+venv/bin/python build_batting_reports.py --ids <12 batters> --fmt Test --mode combined
+venv/bin/python build_batting_reports.py --ids <12 batters> --fmt Test --mode focused --group <G>   # x4
+venv/bin/python build_overview.py --opp south_africa_test --fmt Test --group <G>  # pace spin right_pace left_pace off_spin left_orthodox
+venv/bin/python squads.py --check south-africa-test-away-2026                    # "rosters agree"
 ```
 
-`squads.py --check` is the roster gate and it will tell you exactly what is missing — when this was
-left it reported `about: missing`, `h2h: missing` (now built) and `series.json has no entry`.
+⚠ **Do NOT run `build_player_site` or `publish_packs` on the box.** It holds no ODI reports and no
+baked `site/`, so a bundle assembled there carries the Test squad alone and `publish_packs aus`
+force-pushes it over the live ODI packs. The laptop has the ODI state.
 
-⚠ **`publish_packs.py aus` force-pushes over the live SA ODI packs repo.** The two-squad config is
-what keeps the ODI packs alive; verify the bundle contains *both* slugs before pushing.
+**The laptop assembles both squads and publishes, with one sign-in.** Sync the Test outputs down
+first (`reports/*_test_*` with their `.pmode/.player/.playlists` sidecars, `data/opponent_about_
+south_africa_test.json`, `data/h2h_south_africa_test.json`, `data/overview_*_south_africa_test.json`).
+The laptop has no identity, so its probing needs a SAS, and the GitHub push needs signed links
+anyway — mint once while at the browser (`livematchdashboard/mint_fairplay_sas.py`, to a file, into
+`FAIRPLAY_SAS`), then:
+
+```powershell
+.\venv\Scripts\python.exe publish_site.py --out site --only south-africa-test-away-2026
+.\venv\Scripts\python.exe inject_reports.py --slug south-africa-test-away-2026
+.\venv\Scripts\python.exe build_player_site.py --squad south-africa-odi-away-2026 south-africa-test-away-2026 --nest
+.\venv\Scripts\python.exe build_coach_site.py --slug south-africa-test-away-2026      # Tom: yes, same as ODI
+.\venv\Scripts\python.exe publish_packs.py aus --dry-run                                # every gate
+.\venv\Scripts\python.exe publish_packs.py aus                                          # GitHub Pages
+.\venv\Scripts\python.exe publish_packs.py aus --target storage --coach                 # the app
+```
+
+`--nest` keeps the ODI packs at `players/south-africa-odi-away-2026/…` — they were already nested
+as the only squad precisely so adding this one would not move a published link (the Zimbabwe 404s
+of 19-09). **Verify the bundle contains both slugs before either push.**
 
 ## Decisions — one settled, one open
 

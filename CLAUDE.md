@@ -561,9 +561,47 @@ hand), and every other reel to the pack's hand as before. The entry keys are
 `_store_hand_reels`. The old whole-bowler `clip_format` stamp is no longer written — it starred every
 button whatever format each came from.
 
-Probing means `build_opponent_about` needs Fairplay access (`PROBE_CLIPS = False` turns it off). The
-all-formats fallback branch for **batters** now builds clips as well: it wrote facts only, so Brad
-Evans had no batting vision in any of the eleven bowling packs.
+Probing means `build_opponent_about` needs a credential that can **tell whether a clip exists** —
+which since 28-09-2026 is either a SAS *or* a managed-identity read (`PROBE_CLIPS = False` turns
+probing off). The all-formats fallback branch for **batters** now builds clips as well: it wrote
+facts only, so Brad Evans had no batting vision in any of the eleven bowling packs.
+
+### A credential that can read but not sign can still probe — the build machine needs no SAS (28-09-2026)
+
+Two credentials can answer "is this clip in storage" and only one of them can sign a link. The
+build machine's managed identity reads Fairplay fine and **cannot sign** (container-scoped grant),
+and every builder read "cannot sign" as "cannot probe": `resolve_clip` returned None for every
+stem, `build_opponent_about` aborted (correctly — a builder that cannot probe rewrites reels
+*shorter*), and the six "best-effort" pre-mints in the report and pack builders, each sitting
+inside the `try` that builds the playlists, **rendered every report on the box with no vision and
+reported success**. A SAS had to be minted by a person at a browser and shuttled over every seven
+days, and on 28-09 two device codes went unanswered and the build sat idle.
+
+`cricket_core.video.prime_vision(ttl_hours)` settles the mode once per process — `sas`, `identity`
+or `None` — and every builder calls it where it used to mint. In identity mode `resolve_clip`
+probes with `exists()` and returns the **unsigned** url with the right extension. Measured on the
+box: `exists()` **0.02 s** against ~1.9 s for the signed HEAD it replaces; `build_opponent_about`
+for the South Africa Test squad **12 min** (the handoff had it at ~40), reels full (Rabada 30/40
+wicket balls, 40/40 new-ball); two Test bowling reports **87 s for both**; combined batting
+reports ~28 s each. Only `None` stops a build.
+
+**An unsigned url is what both consumers already want.** The app rewrites it to `/vision/` and
+serves the bytes; `restamp_sas` matches an unsigned url and appends a token for a GitHub Pages
+copy. So the signing moves from the build, where nobody is at a browser, to the publish, where
+someone is. Two consequences:
+
+- **`--target storage` needs no token at all.** The box can run every app-targeted build
+  unattended, forever. IT's `Storage Blob Delegator` grant becomes a convenience, not a dependency.
+- **`--target github` refuses a bundle carrying an unsigned Fairplay url** — every play button on
+  Pages would be dead. `check_site --deep` would catch a *sample*; this catches all of them and
+  names the fix: `restamp_sas` with a minted SAS, then push with `--no-assemble`.
+
+The laptop has no identity and only Tom's SSO, which lapses after ~90 days of disuse; when it has,
+`prime_vision` drops to a device-code prompt that **times out in ~15 minutes** unanswered. So the
+shape that works: the box does the unattended heavy steps (about, h2h, renders, overviews), the
+laptop assembles and publishes with **one** sign-in while someone is at the browser. The box
+cannot assemble the `aus` bundle itself — it holds no ODI reports and no baked `site/`, and a
+bundle built there would carry the Test squad alone and the push would kill the ODI packs.
 
 **Verify the built pages, not the source data — and the publish gate now does.** `audit_pack_hands.py`
 follows every play button in every batting pack through to its playlist, maps each clip back to a
