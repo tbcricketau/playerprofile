@@ -705,5 +705,35 @@
   "packs": [
    "batting"
   ]
+ },
+ "2750002": {
+  "name": "Michael Neser",
+  "role": "All-rounder",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "pace"
+  ],
+  "bowl_groups": {
+   "pace": "right_pace"
+  }
+ },
+ "3630006": {
+  "name": "Matthew Kuhnemann",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "prefs": "base",
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "left_orthodox"
+  }
  }
 }
