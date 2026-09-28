@@ -50,12 +50,15 @@ prompt. See `cricket-core/docs/build-machine-CLAUDE.md`.
 | Neser + Kuhnemann registry entries | ✅ added 28-09 `753c645` | `players.json` — without them neither got a bowling page |
 | South Africa squad (18) | ✅ **ANNOUNCED, re-pinned 28-09** | `matchupmodel/data/opp_squad_south_africa_test.json` |
 | Test matchup store | ✅ **296 pairings** (120 + 176), rebuilt 28-09 | `matchupmodel/data/matchup_store_south_africa_test.json` |
-| `h2h_south_africa_test.json` | 🔴 **needs rebuilding** — built on the 16-name pin | box: `~/projects/playerprofile/data/` |
-| 9 SA bowler Test reports | ✅ 0 failed, but **2 short** (Nortje, Paterson) | box: `~/projects/playerprofile/reports/` |
-| Ackerman batting report + 48 focused | ⬜ not started — blocked with everything else | 12 batters × 4 bowler groups |
-| `opponent_about_south_africa_test.json` | 🔴 **BLOCKED** | — |
-| `series.json` entry | ⬜ not started | needs the above |
+| `h2h_south_africa_test.json` | ✅ rebuilt 28-09, freeze-verified (100 identical, 18 added) | box + laptop `data/` |
+| 11 SA bowler Test reports | ✅ all with sidecars, 60–80 clips each (9 re-rendered — the 27-09 ones had none) | box + laptop `reports/` |
+| 12 combined + 48 focused batting reports | ✅ 62 renders, **27 min** on the box, 1 transient retry | box + laptop `reports/` |
+| 6 Test overviews (JSON + HTML) | ✅ built on the box; **both** files synced | `data/` + `reports/overview_*_south_africa_test.html` |
+| `opponent_about_south_africa_test.json` | ✅ **12 min in identity mode**, full reels | box + laptop `data/` |
+| `series.json` entry | ✅ `01d6be2` — every bowler at `squad` until Tom names the XI | — |
 | Bundle config | ✅ two squads | `publish_packs.py` → `BUNDLES["aus"]["squads"]` |
+| **GitHub Pages** | ✅ **LIVE 29-09 01:41**, both squads nested, ODI URLs unchanged; 1,778 reels / 0 defects | `tbcricketau/player-packs` `1b9191f` |
+| App (storage) + both coach views | see the board — pushed after this table was written | `packs/aus` |
 
 The store and both squad pins are in the media store, so any machine can fetch them:
 `py cricket-core/scripts/shared_data.py pull packs`.
