@@ -228,6 +228,80 @@
    ]
   },
   {
+   "slug": "south-africa-test-away-2026",
+   "name": "South Africa Away Test Series 2026",
+   "subtitle": "Australia v South Africa — Tests — in South Africa",
+   "target_country": "South Africa",
+   "format": "Test",
+   "level": "international",
+   "_note": "Squad ANNOUNCED and pinned 28-09-2026 (matchupmodel/data/opp_squad_south_africa_test.json). TIERS: every bowler is 'squad' on purpose. The only data-derived XI is Nov 2025 in India (three spinners, no Rabada) and would mislead at home to Australia - Tom sets the XI; change tier to 'xi' per id. The older entry south-africa-away-2026 is a July guess at this same tour and is superseded by this one; retiring it is a decision, not a side effect.",
+   "groups": [
+    {
+     "slug": "bowlers",
+     "name": "South Africa Bowlers",
+     "format": "Test",
+     "kind": "bowling",
+     "reports": [
+      {
+       "id": "3760008",
+       "tier": "squad",
+       "name": "Aiden Markram"
+      },
+      {
+       "id": "3110056",
+       "tier": "squad",
+       "name": "Wiaan Mulder"
+      },
+      {
+       "id": "4352128",
+       "tier": "squad",
+       "name": "Marco Jansen"
+      },
+      {
+       "id": "3080070",
+       "tier": "squad",
+       "name": "Keshav Maharaj"
+      },
+      {
+       "id": "3550469",
+       "tier": "squad",
+       "name": "Senuran Muthusamy"
+      },
+      {
+       "id": "1310113",
+       "tier": "squad",
+       "name": "Simon Harmer"
+      },
+      {
+       "id": "2730017",
+       "tier": "squad",
+       "name": "Kagiso Rabada"
+      },
+      {
+       "id": "2540186",
+       "tier": "squad",
+       "name": "Corbin Bosch"
+      },
+      {
+       "id": "5460045",
+       "tier": "squad",
+       "name": "Gerald Coetzee"
+      },
+      {
+       "id": "4090011",
+       "tier": "squad",
+       "name": "Anrich Nortje"
+      },
+      {
+       "id": "3200006",
+       "tier": "squad",
+       "name": "Dane Paterson"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "slug": "south-africa-away-2026",
    "name": "South Africa Away Test Series 2026",
    "subtitle": "Australia v South Africa · in South Africa",
