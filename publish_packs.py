@@ -423,6 +423,37 @@ def main():
     if a.target == "storage":
         print(f"coach view: {'included' if os.path.isdir(coach_dir) else 'not in this bundle'}")
 
+    # ── an UNSIGNED clip url must never reach GitHub Pages ───────────────────────────────────
+    # A build on the box resolves clips through the managed identity, which can read but not
+    # sign, so every clip url comes out without a token (cricket_core.video.prime_vision). The
+    # app rewrites those to /vision/ and serves the bytes itself; a public Pages site cannot, and
+    # every play button on it would be dead. `check_site --deep` would catch a SAMPLE of them —
+    # this catches all of them, and says what to do: restamp with a minted SAS, then push.
+    if a.target != "storage":
+        import re as _re
+        _unsigned = _re.compile(r'https://auscricketfairplayase\.blob\.core\.windows\.net/fairplay/'
+                                r'[^"\s<>?]+"')
+        bad = []
+        for r_, _d, fs in os.walk(out):
+            if os.sep + ".git" in r_ + os.sep:
+                continue
+            for f in fs:
+                if f.endswith((".json", ".html")):
+                    p = os.path.join(r_, f)
+                    txt = open(p, encoding="utf-8", errors="replace").read()
+                    n = len(_unsigned.findall(txt))
+                    if n:
+                        bad.append((os.path.relpath(p, out), n))
+        if bad:
+            total = sum(n for _p, n in bad)
+            raise SystemExit(
+                f"REFUSING to push: {total:,} UNSIGNED Fairplay clip url(s) across {len(bad)} file(s) "
+                f"(e.g. {bad[0][0]}) and this target is GitHub Pages, which cannot serve them — "
+                f"every play button would be dead. This is what a build on the build machine "
+                f"produces (identity mode). Restamp with a minted SAS "
+                f"(archive_series.restamp_sas over the bundle) and push again with --no-assemble; "
+                f"the app copy needs no token: publish with --target storage.")
+
     if a.dry_run:
         print("dry run — every gate passed; nothing committed or pushed")
         return

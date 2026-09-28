@@ -30,7 +30,7 @@ from cricket_core.charts import (
     fingerprint_strip, speed_violin, innings_violin, day_violin, zone_concentration,
     LENGTH_ZONES_1M, LENGTH_ZONES_05M,
 )
-from cricket_core.video import first_example as _first_example, get_fairplay_sas as _get_fairplay_sas
+from cricket_core.video import first_example as _first_example, prime_vision as _prime_vision
 
 # ── Opta light theme (mirrors theme.py / CLAUDE.md) ─────────────────────────────
 BG_PAGE, BG_PANEL = "#F5F7FA", "#FFFFFF"
@@ -1476,7 +1476,8 @@ def _examples(P: dict) -> dict:
     """One playable example clip per key insight (stock ball, a wicket) for 'watch' PDF links.
     Best-effort; empty if video is unavailable."""
     try:
-        _get_fairplay_sas(ttl_hours=72)   # long-lived SAS so baked PDF links last a few days
+        if not _prime_vision(ttl_hours=72):   # long-lived SAS baked in where one can be minted
+            return {}
     except Exception:
         return {}
     df = P.get("df") or []
@@ -1722,7 +1723,8 @@ def _build_player(P: dict, pdf_path: str, subtitle: str, target_country: str | N
     and return {player: file-url, keys: {...}} for the report's ▶ links. Best-effort.
     `target_country` orders clips by like-for-like conditions (see build_playlists)."""
     try:
-        _get_fairplay_sas(ttl_hours=72)          # long-lived SAS baked into the player
+        if not _prime_vision(ttl_hours=72):      # long-lived SAS baked in where one can be minted
+            raise RuntimeError("no credential can probe a clip")
         from playlists import build_playlists
         from cricket_core.video import build_player_html, write_playlists
         built = build_playlists(P, cap=8, target_country=target_country)

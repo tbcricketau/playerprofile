@@ -1564,10 +1564,11 @@ def render_attack_section(dest_dir, slug=None, no_video=False):
     os.makedirs(os.path.join(dest_dir, "img"), exist_ok=True)
     if not no_video:
         try:
-            from cricket_core.video import get_fairplay_sas
-            get_fairplay_sas(ttl_hours=156)
+            from cricket_core.video import prime_vision
+            if not prime_vision(ttl_hours=156):
+                raise RuntimeError("no credential can probe a clip")
         except Exception as e:
-            print(f"  ! attack-section SAS prime failed ({e})")
+            print(f"  ! attack-section vision prime failed ({e})")
     opp = _short_opp(meta)
     built = []
     for pid in meta.get("players", []):
@@ -1680,10 +1681,15 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
 
     if not no_video:                                   # prime a long read SAS so vision links don't
         try:                                           # die after the default 6 h (was the bug)
-            from cricket_core.video import get_fairplay_sas
-            get_fairplay_sas(ttl_hours=156)
+            from cricket_core.video import prime_vision
+            mode = prime_vision(ttl_hours=156)
+            if not mode:
+                raise RuntimeError("no credential can probe a clip")
+            if mode == "identity":
+                print("  vision: identity mode — clips resolve UNSIGNED; storage target only, or "
+                      "restamp_sas before a GitHub push")
         except Exception as e:
-            print(f"  ! SAS prime failed ({e}) — vision links may be short-lived")
+            print(f"  ! vision prime failed ({e}) — vision links may be short-lived or absent")
 
     for slug in slugs:
         meta = squads[slug]

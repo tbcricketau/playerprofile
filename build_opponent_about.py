@@ -194,16 +194,20 @@ def _require_fairplay():
     SHORTER than they went in: Sikandar Raza's wicket balls to left-handers 14 -> 3, Brad Evans
     14 -> 4, and all 51 dropped clips played when probed a few minutes later. A vision rebuild must
     never quietly remove vision, so this fails closed like the publish gate's hand audit."""
-    from cricket_core.video import get_fairplay_sas
+    from cricket_core.video import prime_vision
     try:
-        if get_fairplay_sas(ttl_hours=6):
+        # 'sas' or 'identity' can both probe a clip; only None cannot. The managed identity on the
+        # build machine cannot SIGN, and until 28-09 that was read as "cannot probe" — it aborted
+        # every build there while exists() through the same identity answers in 0.02 s.
+        if prime_vision(ttl_hours=6):
             return
     except Exception as e:
         raise SystemExit(
-            f"ABORTING: no Fairplay SAS ({type(e).__name__}: {str(e)[:140]}). Every Fairplay clip "
-            f"would read as missing and the reels would be written SHORTER than they are now. "
-            f"Nothing was changed — fix the credential and re-run.")
-    raise SystemExit("ABORTING: no Fairplay SAS (empty token). Nothing was changed.")
+            f"ABORTING: no credential can probe Fairplay ({type(e).__name__}: {str(e)[:140]}). "
+            f"Every Fairplay clip would read as missing and the reels would be written SHORTER "
+            f"than they are now. Nothing was changed — fix the credential and re-run.")
+    raise SystemExit("ABORTING: no credential can probe Fairplay (neither a SAS nor an identity "
+                     "read). Nothing was changed.")
 
 
 def _plays(ref):

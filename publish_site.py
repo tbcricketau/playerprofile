@@ -45,7 +45,7 @@ def _rmtree(path):
             shutil.rmtree(path, onerror=lambda f, p, e: (_onexc(f, p, e)))
 
 
-from cricket_core.video import (get_fairplay_sas, get_hawkeye_sas, resolve_clip,
+from cricket_core.video import (get_fairplay_sas, prime_vision, get_hawkeye_sas, resolve_clip,
                                   inline_player_snippet, build_player_html, playlist_payload)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -331,7 +331,13 @@ def build(out_dir, sas_hours, only=None, stage_archive=True):
               f"(every other series left as it was)")
 
     print(f"Priming a {sas_hours}h (~{sas_hours/24:.1f}-day) read SAS…")
-    get_fairplay_sas(ttl_hours=sas_hours)
+    _mode = prime_vision(ttl_hours=sas_hours)
+    if not _mode:
+        raise SystemExit("no credential can probe a Fairplay clip — a bake that cannot resolve "
+                         "vision would write every play button dead. Nothing was changed.")
+    if _mode == "identity":
+        print("  vision: identity mode — clips resolve UNSIGNED. Fine for the app (rewritten to "
+              "/vision/); a GitHub Pages copy must be restamped with a minted SAS first.")
     try:
         hk_sas = get_hawkeye_sas(ttl_hours=sas_hours)
     except Exception:

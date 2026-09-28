@@ -21,7 +21,7 @@ from batter_profile import (build_batter_profile, BOWLER_GROUPS, MACRO_GROUPS,
 import field_engine as fe
 from photos import get_photo_data_uri
 from cricket_core.charts import wagon_wheel_zones, fingerprint_strip
-from cricket_core.video import first_example, get_fairplay_sas
+from cricket_core.video import first_example, prime_vision
 from report import (
     _fig_uri, _html_to_pdf, _country_code,
     BG_PAGE, BG_PANEL, TEXT_PRI, TEXT_SEC, ACCENT, DANGER, BORDER,
@@ -811,7 +811,8 @@ def _build_player(P: dict, pdf_path: str) -> dict:
     """Build batting playlists, write a self-contained modal video player next to the PDF, and
     return {player, keys, stroke_name} for the report's ▶ links. Best-effort."""
     try:
-        get_fairplay_sas(ttl_hours=72)
+        if not prime_vision(ttl_hours=72):      # long-lived SAS baked in where one can be minted
+            raise RuntimeError("no credential can probe a clip")
         from playlists import build_batting_playlists
         from cricket_core.video import build_player_html, write_playlists
         pls = build_batting_playlists(P, cap=8)

@@ -52,9 +52,10 @@ def _build_t20_player(P, pdf_path, subtitle, target_country=None):
     white-ball builder + clip resolver; writes a modal player + returns {player, lists, playlists}.
     Best-effort — never breaks the report if video/SSO is unavailable."""
     try:
-        from cricket_core.video import get_fairplay_sas, build_player_html, write_playlists
+        from cricket_core.video import prime_vision, build_player_html, write_playlists
         from playlists import build_odi_playlists          # white-ball generic (T20 phase names match)
-        get_fairplay_sas(ttl_hours=72)
+        if not prime_vision(ttl_hours=72):      # long-lived SAS baked in where one can be minted
+            raise RuntimeError("no credential can probe a clip")
         built = build_odi_playlists(P, cap=8, target_country=target_country, fmt="T20I")
         pls, meta = built["playlists"], built.get("meta")
         write_playlists(pdf_path[:-4] + ".playlists.json", pls, meta=meta)
