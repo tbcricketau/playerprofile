@@ -22,7 +22,11 @@ import urllib.parse
 import urllib.request
 from collections import defaultdict
 
-_LINK = re.compile(r'(?:href|src)="([^"]+)"')
+# data-field is the field-map image a plan chip opens in the overlay (build_player_site). It is
+# loaded by script on click, so no href or src names it — and on 29-09-2026 every chip on the
+# South Africa Test packs opened a broken image while this file reported the bundle clean: the
+# PNGs were rendered on the build machine and never copied across, and nothing here looked.
+_LINK = re.compile(r'(?:href|src|data-field)="([^"]+)"')
 _DATAPL = re.compile(r'data-pl="([^"]+)"')
 # The clips sidecar a page fetches by script (cricket_core.video): no href points at it, so
 # nothing else in this file would notice it missing.

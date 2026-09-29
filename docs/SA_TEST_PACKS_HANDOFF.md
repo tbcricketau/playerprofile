@@ -60,6 +60,16 @@ prompt. See `cricket-core/docs/build-machine-CLAUDE.md`.
 | **GitHub Pages** | ✅ **LIVE 29-09 01:41**, both squads nested, ODI URLs unchanged; 1,778 reels / 0 defects | `tbcricketau/player-packs` `1b9191f` |
 | App (storage) + both coach views | ✅ **LIVE 29-09 02:04**, 411 files uploaded; verified in the container: both squads under `players/`, both coach views (Test 46 report links + 6 plans, ODI 38 + 7, every target present), Smith's Test sidecar 2,371 `/vision/` paths and **0 signed**, 0 signed links in 40 sampled pages | `packs/aus` (`playerpacks.cricketanalyticshub.com`) |
 
+⚠ **Field maps (fixed 29-09 08:16, GitHub `79874dd` + storage).** Tom opened a plan chip on
+Cummins' Test pack and got a broken image. `build_overview` writes the Suggested-Field PNGs to
+`reports/fields/south_africa_test/<group>/` (138 files, 11 MB) — built on the box, and not in the
+`reports/*_test_*` tar that brought the reports and overview HTML over, so `build_player_site`
+found no source dir and copied nothing. `check_site` never read `data-field`; it does now, and
+refused the live bundle with 316 dead links / 82 images before the images landed. **Anything a
+Test render produces on the box lives in three places: `reports/`, `reports/overview_*.html` and
+`reports/fields/<opp>/` — pull all three.** The republish also proved the gate fails closed
+without the warehouse: the first run refused both targets when the VPN dropped mid-chain.
+
 ⚠ The container still holds `players/zimbabwe-odi-away-2026` (73 blobs) and `scouting/zimbabwe-odi-away-2026` (105) from an earlier upload — `upload_packs.py` adds and replaces by hash and never deletes, so a squad that leaves the bundle stays served at its old path. Left as it is on 29-09 (nothing links it, and deleting was not asked for); a `--prune` on the uploader is the fix when one is wanted.
 
 The store and both squad pins are in the media store, so any machine can fetch them:

@@ -231,8 +231,14 @@ Head-to-head clips are indexed from `h2h_<opp>.json` and release cells from `rel
 Proven on both live bundles: South Africa 1,023 reels across 32 pages, 0 defects. Australia A
 one-day: **9 head-to-head reels carrying first-class clips in a one-day pack** — the h2h format
 gap this file had recorded as unaudited, and a live defect until that squad's h2h is rebuilt.
-Still outside every gate: the `data-field` field-map images (`check_site` does not see the
-attribute).
+The `data-field` field-map images were the last thing outside every gate, and it cost a live
+defect: on 29-09-2026 every plan chip on the South Africa Test packs opened a broken image.
+`build_overview` had rendered the PNGs on the build machine (`reports/fields/<opp>/<group>/`), the
+folder never came across with the Test renders, `build_player_site` found no source and silently
+copied nothing, and `check_site` reported the bundle clean because no href or src names a chip's
+image. `_LINK` now matches `data-field` too — proven on the live bundle (**316 dead links, 82
+images**) before the fix and clean after. **When Test renders move between machines,
+`reports/fields/<opp>/` moves with them**; the handoff's resume block lists it.
 
 `check_site.py` fails the build (exit 1) on: a dead internal href/src, a zero-byte target, a
 `#fragment` missing from the page it points at, or a play button whose playlist is absent or empty.
