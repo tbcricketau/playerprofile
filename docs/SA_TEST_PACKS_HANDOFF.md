@@ -58,7 +58,9 @@ prompt. See `cricket-core/docs/build-machine-CLAUDE.md`.
 | `series.json` entry | ✅ `01d6be2` — every bowler at `squad` until Tom names the XI | — |
 | Bundle config | ✅ two squads | `publish_packs.py` → `BUNDLES["aus"]["squads"]` |
 | **GitHub Pages** | ✅ **LIVE 29-09 01:41**, both squads nested, ODI URLs unchanged; 1,778 reels / 0 defects | `tbcricketau/player-packs` `1b9191f` |
-| App (storage) + both coach views | see the board — pushed after this table was written | `packs/aus` |
+| App (storage) + both coach views | ✅ **LIVE 29-09 02:04**, 411 files uploaded; verified in the container: both squads under `players/`, both coach views (Test 46 report links + 6 plans, ODI 38 + 7, every target present), Smith's Test sidecar 2,371 `/vision/` paths and **0 signed**, 0 signed links in 40 sampled pages | `packs/aus` (`playerpacks.cricketanalyticshub.com`) |
+
+⚠ The container still holds `players/zimbabwe-odi-away-2026` (73 blobs) and `scouting/zimbabwe-odi-away-2026` (105) from an earlier upload — `upload_packs.py` adds and replaces by hash and never deletes, so a squad that leaves the bundle stays served at its old path. Left as it is on 29-09 (nothing links it, and deleting was not asked for); a `--prune` on the uploader is the fix when one is wanted.
 
 The store and both squad pins are in the media store, so any machine can fetch them:
 `py cricket-core/scripts/shared_data.py pull packs`.
