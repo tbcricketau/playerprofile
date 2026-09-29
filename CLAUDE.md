@@ -1383,6 +1383,15 @@ Headshots live in the **estate-wide store** `cricket-core/headshots/` via `crick
 (cricket.com.au source, format-aware kit variants, auto-resolve by name, page-scan for the newest
 ids — full pipeline in that module's docstring; the old SharePoint/Graph backend is retired).
 This project's `photos.py` wraps it, checking the local `photos/` folder FIRST (hand-collected
-opposition photos + per-player overrides). **Report builders pass `name=` so a brand-new player's
+opposition photos + per-player overrides — Marques Ackerman's is from Tom, 29-09-2026, since
+cricket.com.au has no South Africa A players).
+
+⚠ **A report rendered on the build box has no photo unless the store was pulled there first.** The
+PNGs are gitignored and the box cannot reach cricket.com.au, so every render there fell back to the
+🏏 placeholder without an error — 195 pages across 21 players on 29-09, every South African among
+them. `cricket-core/scripts/shared_data.py pull headshots` before a box render; `push headshots`
+from the laptop after resolving a new squad. The pages already shipped were filled in place (the
+placeholder span swapped for the `<img>` the template writes, with the same `fmt` each builder
+passes), across `reports/`, `site/` and `coach_build/`, then republished. **Report builders pass `name=` so a brand-new player's
 headshot fetches itself at render time.** Bulk tooling for a new squad: `fetch_photos.py`
 (`--resolve` · `--scan-new` · `--force`).
