@@ -877,6 +877,40 @@ def _scope_label(fmt="Test", level="international"):
     return {"Test": "Test", "ODI": "ODI", "T20I": "T20I"}.get(fmt, fmt)
 
 
+def c21_only_note(conn, cur, bid, role, fmt, level, source):
+    """The line a card must carry when a SENIOR pack's player has no record at this level and every
+    number and clip on the card came from Cricket-21 — or None.
+
+    Added 2026-09-30 for Marques Ackerman, uncapped in the South Africa Test squad. Built with
+    --source both, his card showed first-class figures with nothing saying so and his clips scoped
+    'Test:right_pace', so a coach reading "averages 56 vs pace" would take it for Test cricket. An
+    a-team pack needs no such line: first-class IS its level."""
+    if source == "warehouse" or level != "international":
+        return None
+    if _test_balls(conn, cur, bid, role, fmt=fmt, level=level, source="warehouse") > 0:
+        return None
+    import c21_source
+    rows = c21_source.domestic_rows(c21_source.load_batter_deliveries(bid, fmt=fmt) if role == "bat"
+                                    else c21_source.load_bowler_deliveries(bid, fmt=fmt))
+    if not rows:
+        return None                    # nothing, or C21's own internationals — no label owed
+    return (f"No {_scope_label(fmt, level)} record — these figures and clips are "
+            f"{c21_source.record_phrase(rows)}, from Cricket-21.")
+
+
+def mark_c21_only(entry, note, fmt):
+    """Put the note first on every fact list and flag every clip scope as not the pack's own
+    cricket, so the card's reels are starred and footnoted like any other fallback."""
+    entry["record_note"] = note
+    for k in [k for k in entry if k == "facts" or k.startswith("facts_")]:
+        facts = [f for f in (entry.get(k) or []) if f != note]
+        entry[k] = [note] + facts
+    for k in [k for k in entry if k.startswith("clip_scope_")]:
+        v = entry.get(k) or ""
+        if v.startswith(f"{fmt}:"):
+            entry[k] = "C21:" + v.split(":", 1)[1]
+
+
 def _override_type(bid):
     """The hand-checked bowler type, for a player the matchup store has no label for.
 
@@ -1260,6 +1294,10 @@ def main():
                 tag = f" [{fb.get('source')} · sco {len(sc)} dsm {len(ds)}]"
             out["batters"][bid]["role"] = batter_role(conn, cur, bid, fmt=args.fmt,
                                                       level=args.level)   # opener/top/middle/lower
+            _note = c21_only_note(conn, cur, bid, "bat", args.fmt, args.level, args.source)
+            if _note:
+                mark_c21_only(out["batters"][bid], _note, args.fmt)
+                tag += " · C21-only record, labelled"
             print(f"  batter {nm}: {len(out['batters'][bid]['facts'])} facts{tag}")
         except Exception as e:
             n_err += 1

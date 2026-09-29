@@ -214,16 +214,6 @@
    }
   },
   {
-   "bid": "4353762",
-   "name": "Marques Ackerman",
-   "sub": "LHB",
-   "balls": 0,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": null
-  },
-  {
    "bid": "4352508",
    "name": "Tristan Stubbs",
    "sub": "RHB · Top order",
@@ -328,6 +318,24 @@
     "area": "leg (55% of runs)",
     "short": null,
     "top_out": null
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 123,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 123,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 11.363636363636363,
+    "area": null,
+    "short": null,
+    "top_out": "Bowled (67%)"
    }
   }
  ]

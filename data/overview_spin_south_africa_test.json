@@ -222,16 +222,6 @@
    }
   },
   {
-   "bid": "4353762",
-   "name": "Marques Ackerman",
-   "sub": "LHB",
-   "balls": 0,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": null
-  },
-  {
    "bid": "4352508",
    "name": "Tristan Stubbs",
    "sub": "RHB · Top order",
@@ -353,6 +343,37 @@
     "area": "leg (42% of runs)",
     "short": null,
     "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 380,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4353762_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4353762_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 380,
+    "n_out": 7,
+    "bpd": 54.285714285714285,
+    "false_pct": 15.140845070422536,
+    "area": null,
+    "short": null,
+    "top_out": "Caught (57%)"
    }
   }
  ]

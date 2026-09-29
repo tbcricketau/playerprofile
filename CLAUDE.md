@@ -787,6 +787,18 @@ first-name signal) and any alternate it could plausibly have picked. Always read
 `--format Test|ODI|T20I` records what the squad was picked for; nothing in `series.json` carries
 format, so it cannot be inferred and defaults to Test.
 
+### Opposition tiers — `series.json`, and batters need the `tiers` map (2026-09-30)
+
+A tier (`xi` / `squad` / `fringe`) groups the opposition cards on the packs and the coach view.
+It used to live only on each group's `reports` entries, and a group bakes **bowling** reports — so
+only bowlers could carry one, and every opposition batter read "In the squad" whatever the coaches
+had decided. A series entry now takes a squad-wide `tiers: {id: tier}` map, read by both
+`build_player_site._opp_tiers` and `build_coach_site._tiers`. **Keep the group tiers and the map in
+step** — the group entries win in the coach view, the map fills everyone else. Never list a batter
+in a group's `reports` to tier them: that bakes a bowling report for them. South Africa Test, set by
+Tom 30-09: XI Markram, de Zorzi, Stubbs, Bavuma, Bedingham, Mulder, Verreynne, Jansen, Harmer,
+Maharaj, Rabada.
+
 ### The field that fails silently: `bowl_groups`
 
 `_our_bowl_groups()` types each of our bowlers from the **matchup store's `they_bat` rows**. A
@@ -1233,6 +1245,35 @@ competition prefix, not a substring) and `"SA20"`. The mirror gained SA A's 2025
 2026 England A tours (`bulk_import.py --comps 1748,1676`) and the SA white-ball competitions
 (`--white`); CSA 4-Day 2025/26 and 2026/27 are **still uncoded** on the portal, so his last two
 domestic seasons are in neither source. Survey figures: `cricket21/docs/SA_DOMESTIC.md`.
+
+**A senior pack must SAY when a player's record is not senior cricket (2026-09-30).** Built with
+`--source both --only-batters`, Ackerman's first card and report presented 1,291 runs of CSA 4-Day
+and South Africa A cricket under *"Batting profile (Test)"* — team "None", clips scoped
+`Test:right_pace` and so unstarred. Nothing was wrong with the data; everything was wrong with what
+it claimed to be. Now, at `level="international"` only (first-class *is* an a-team pack's level):
+
+- `c21_source.domestic_rows(rows)` picks the C21 rows that are domestic or A-team — each row carries
+  the mirror's own `c21_format`, because C21 also holds genuine internationals (Zimbabwe's ODIs),
+  which need no label. `record_phrase(rows)` names them: *first-class cricket (CSA 4-Day, South
+  Africa A tours)*.
+- **Card** — `build_opponent_about.c21_only_note` fires when the player has **no warehouse balls at
+  the pack's level** and domestic C21 rows exist. `mark_c21_only` puts the note first on every fact
+  list and rescopes each clip `C21:<group>`, which stars the buttons; the pack footnote gains a
+  clause when any card on the page is starred that way.
+- **Report** — `batting_report._record_label` prints a second sub-line: *"No Test record — every
+  figure here is …, from Cricket-21"*, or *"N of M balls here are …"* when mixed.
+
+⚠ **Never run a whole squad with `--source both` at senior level.** `SERVED_COMPETITIONS` now serves
+CSA and SA A cricket, so a squad-wide run would fold every South African's domestic four-day balls
+into their Test figures. Use `--only-batters <id>` for the uncapped player, and say so in the
+series `_note` (the South Africa Test entry does).
+
+**C21 rows no longer claim to be in India.** `_to_warehouse` stamped `venue_country: "India"` on
+every row — true when the mirror held only Indian domestic cricket, false since Zimbabwe and South
+Africa joined, and wrong even for India A's tours of England and Sri Lanka. `venue_country()` reads
+the host from the competition name ("X in Y …", or a domestic prefix: CSA/SA20, Ranji/Duleep/Irani/
+Vijay Hazare, BCL/NCL) and returns `"None"` rather than guessing for a tri-series or world event.
+It feeds the clip labels in `playlists.py`.
 
 **A window report is a different file, not the career one with fewer rows (`--since`, 2026-09-29).**
 `build_batting_reports.py --since YYYY-MM-DD` cuts the record to matches on or after that day.

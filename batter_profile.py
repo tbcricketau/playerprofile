@@ -360,6 +360,8 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
 
     name = (info.get("player_name") or f"Batter {batter_id}").strip()
     team = (info.get("team_name") or "").strip()
+    if team in ("None", "none", "nan"):         # the driver's null — the header read "Ackerman, Marques None"
+        team = ""
     flag = team_flag(team)
 
     legal = [r for r in raw if r["is_legal"]]

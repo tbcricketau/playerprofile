@@ -234,7 +234,27 @@
    "target_country": "South Africa",
    "format": "Test",
    "level": "international",
-   "_note": "Squad ANNOUNCED and pinned 28-09-2026 (matchupmodel/data/opp_squad_south_africa_test.json). TIERS: every bowler is 'squad' on purpose. The only data-derived XI is Nov 2025 in India (three spinners, no Rabada) and would mislead at home to Australia - Tom sets the XI; change tier to 'xi' per id. The older entry south-africa-away-2026 is a July guess at this same tour and is superseded by this one; retiring it is a decision, not a side effect.",
+   "_note": "Squad ANNOUNCED and pinned 28-09-2026 (matchupmodel/data/opp_squad_south_africa_test.json). TIERS set by Tom 30-09-2026: likely XI Markram, de Zorzi, Stubbs, Bavuma, Bedingham, Mulder, Verreynne, Jansen, Harmer, Maharaj, Rabada; the other seven 'squad'. `tiers` covers the whole squad, batters included - the group `reports` tiers only reach the bowlers, since a batter listed there would be baked as a bowling report. Keep the two in step. The older entry south-africa-away-2026 is a July guess at this same tour and is superseded by this one; retiring it is a decision, not a side effect. Marques Ackerman's card and reports are built with --source both (Cricket-21 first-class: CSA 4-Day and SA A tours), --only-batters 4353762 - never run the whole squad with it, since that would fold every South African's CSA cricket into a Test profile.",
+   "tiers": {
+    "3760008": "xi",
+    "4353096": "xi",
+    "2730017": "xi",
+    "3080070": "xi",
+    "4090013": "xi",
+    "4352128": "xi",
+    "1310113": "xi",
+    "3080067": "xi",
+    "4353850": "xi",
+    "4352508": "xi",
+    "3110056": "xi",
+    "4090011": "squad",
+    "2540186": "squad",
+    "3200006": "squad",
+    "5460045": "squad",
+    "4353762": "squad",
+    "4352600": "squad",
+    "3550469": "squad"
+   },
    "groups": [
     {
      "slug": "bowlers",
@@ -244,22 +264,22 @@
      "reports": [
       {
        "id": "3760008",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Aiden Markram"
       },
       {
        "id": "3110056",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Wiaan Mulder"
       },
       {
        "id": "4352128",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Marco Jansen"
       },
       {
        "id": "3080070",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Keshav Maharaj"
       },
       {
@@ -269,12 +289,12 @@
       },
       {
        "id": "1310113",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Simon Harmer"
       },
       {
        "id": "2730017",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Kagiso Rabada"
       },
       {

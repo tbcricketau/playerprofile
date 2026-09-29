@@ -834,6 +834,27 @@ def _build_player(P: dict, pdf_path: str) -> dict:
         return {"lists": {}}
 
 
+def _record_label(rows, fmt="Test", level="international"):
+    """The line a SENIOR report must carry when its record is not senior cricket (2026-09-30).
+
+    `--source both` folds Cricket-21 rows in at the pack's own step, so an uncapped player's
+    'Batting profile (Test)' was entirely CSA 4-Day and South Africa A cricket, and nothing on the
+    page said so — Marques Ackerman's read 1,291 runs at 56.1 under a Test heading. An a-team
+    report needs no line: first-class is its level."""
+    if level != "international":
+        return ""
+    import c21_source
+    c21 = c21_source.domestic_rows(rows)       # C21's own internationals need no label
+    if not c21:
+        return ""
+    fw = {"test": "Test", "odi": "ODI", "t20i": "T20I", "t20": "T20"}.get(str(fmt).lower(), fmt)
+    what = c21_source.record_phrase(c21)
+    if len(c21) == len(rows):
+        return f"No {fw} record — every figure here is {what}, from Cricket-21."
+    return (f"{len(c21):,} of {len(rows):,} balls here are {what} from Cricket-21, "
+            f"not {fw} cricket.")
+
+
 def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None,
                           render_pdf: bool = True, fmt: str = "Test",
                           level: str = "international",
@@ -971,6 +992,7 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
             str(P.get("fmt", "Test")).lower(), "Test"),
         # day-first for the reader (root CLAUDE.md); the ISO form stays in the filename
         "since_label": (f"since {since[8:10]}-{since[5:7]}-{since[:4]}" if since else ""),
+        "record_label": _record_label(raw_all, fmt, level),
         "cards": _cards(P, card_recent), "impact_read": _impact_read(P),
         "vs_rows": _vs_rows(P), "vs_read": _vs_read(P),
         "shot_rows": _shot_rows(P), "dir_read": _dir_read(P),
@@ -1086,7 +1108,8 @@ _TEMPLATE = r"""
     <div>
       <h1>{{P.name}} {% if code %}<span class="flag">{{code}}</span>{% endif %}
         {% if P.group %}<span class="tag">vs {{P.group_label}}</span>{% endif %}</h1>
-      <div class="sub">{{P.team}} · {{hand_label}} · {% if P.group %}How to exploit — {{P.group_label}} plan{% else %}Batting profile ({{fmt_label}}){% endif %}{% if since_label %} · <b>{{since_label}}</b>{% endif %}</div>
+      <div class="sub">{% if P.team %}{{P.team}} · {% endif %}{{hand_label}} · {% if P.group %}How to exploit — {{P.group_label}} plan{% else %}Batting profile ({{fmt_label}}){% endif %}{% if since_label %} · <b>{{since_label}}</b>{% endif %}</div>
+      {% if record_label %}<div class="sub"><b>{{record_label}}</b></div>{% endif %}
     </div>
     <div class="ver">v{{version}}<br>{{build_date}}</div>
   </div>

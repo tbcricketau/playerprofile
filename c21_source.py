@@ -52,6 +52,7 @@ consumer must use the RANGE, never `is not None` and never an equality check. No
 """
 import json
 import os
+import re
 import sqlite3
 
 from cricket_core.config import project_path
@@ -239,6 +240,60 @@ def _rows(pid, role, fmt):
         con.close()
 
 
+# Where a Cricket-21 match was played, from its competition name. The mirror carries a ground
+# but no country, and every row used to be stamped "India" — true when the mirror held only Indian
+# domestic cricket, false since it gained Zimbabwe (09-13) and South Africa (09-29): Ackerman's CSA
+# clips were labelled as played in India. A tour reads "X in Y …" (Y is the host; "England A" is
+# played in England); a domestic competition is recognised by its prefix. Anything else is left
+# unknown rather than guessed — a tri-series or a world event names no host.
+_DOMESTIC_COUNTRY = (("CSA ", "South Africa"), ("SA20", "South Africa"),
+                     ("Ranji", "India"), ("Duleep", "India"), ("Irani", "India"),
+                     ("Vijay Hazare", "India"),
+                     ("Bangladesh Cricket League", "Bangladesh"),
+                     ("National Cricket League", "Bangladesh"),
+                     ("Zimbabwe Twenty20", "Zimbabwe"))
+_TOUR_HOST = re.compile(r"\bin ([A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*?)(?: A)?"
+                        r"(?= unofficial| Test| ODI| T20I| T20| Series| \d|$)")
+
+
+def venue_country(competition_name):
+    """The host country of a Cricket-21 competition, or 'None' when the name does not say."""
+    n = str(competition_name or "").strip()
+    for prefix, country in _DOMESTIC_COUNTRY:
+        if n.startswith(prefix):
+            return country
+    m = _TOUR_HOST.search(n)
+    return m.group(1) if m else "None"
+
+
+def competition_names(rows):
+    """Short reader-facing names for the competitions a player's C21 rows come from, most balls
+    first: "CSA 4-Day", "South Africa A tours", "Ranji Trophy"."""
+    from collections import Counter
+    c = Counter()
+    for r in rows:
+        n = str(r.get("competition") or "")
+        if " A in " in n:
+            n = n.split(" in ", 1)[0] + " tours"
+        elif n.startswith("CSA ") and "Day" in n:
+            n = "CSA 4-Day"
+        else:
+            n = re.sub(r"\s+(Division\s+\w+\s+)?\d{4}(/\d{2})?$", "", n).strip()
+        c[n] += 1
+    return [n for n, _ in c.most_common() if n]
+
+
+def record_phrase(rows):
+    """'first-class cricket (CSA 4-Day, South Africa A tours)' — what a body of C21 rows IS, for a
+    card or report that has to say so because the pack's own level holds nothing for the player."""
+    from collections import Counter
+    fm = Counter(str(r.get("c21_format") or "") for r in rows).most_common(1)
+    kind = {"First Class": "first-class", "List A": "List A", "T20": "domestic T20"}.get(
+        fm[0][0] if fm else "", "domestic")
+    comps = competition_names(rows)
+    return f"{kind} cricket" + (f" ({', '.join(comps[:3])})" if comps else "")
+
+
 def _to_warehouse(r):
     """One mirror row -> the warehouse row shape the loaders return (all values strings).
 
@@ -300,13 +355,26 @@ def _to_warehouse(r):
         "pitch_line_group_spin": "None", "pitch_length_group_pace_1_id": "None",
         "pitch_length_group_pace_2_id": "None", "pitch_line_group_pace_id": "None",
         "pitch_length_group_spin_1_id": "None", "pitch_line_group_spin_id": "None",
-        "venue_country": "India", "venue_city": _s(r.get("m_venue")),
+        "venue_country": venue_country(r.get("competition_name")), "venue_city": _s(r.get("m_venue")),
         "competition": _s(r.get("competition_name")),
         # C21 serves its own clips directly; there is no Fairplay blob for this cricket, so the
         # clip_stem path must not be given something that looks resolvable.
         "video_file_name": "None", "c21_video_url": _s(r.get("video_url")),
         "source": "c21",
+        # the mirror's own format — "First Class" / "List A" / "T20" are domestic or A-team, while
+        # "Test" / "ODI" / "T20I" are internationals C21 happens to hold (Zimbabwe's). A senior
+        # pack must say so only for the former (see domestic_rows).
+        "c21_format": _s(r.get("m_format")),
     }
+
+
+_INTERNATIONAL = ("Test", "ODI", "T20I", "WODI", "WT20I")
+
+
+def domestic_rows(rows):
+    """The C21 rows that are NOT international cricket — the ones a senior pack has to label."""
+    return [r for r in rows if r.get("source") == "c21"
+            and str(r.get("c21_format") or "") not in _INTERNATIONAL]
 
 
 def load_bowler_deliveries(bowler_id, fmt="Test"):

@@ -71,10 +71,10 @@ def _fmt_level(entry):
 
 
 def _tiers(entry):
-    """{player id: tier} from the series groups — the one thing series.json adds that nothing else
-    carries. Absent for a player with no group entry (every opposition BATTER today), and an absent
-    tier prints no chip rather than a guessed one."""
-    out = {}
+    """{player id: tier} from series.json — the one thing it adds that nothing else carries. The
+    group reports tier the bowlers; the entry's `tiers` map covers the whole squad, batters
+    included (30-09-2026). A player in neither prints no chip rather than a guessed one."""
+    out = {str(k): str(v) for k, v in (entry.get("tiers") or {}).items() if v}
     for g in entry.get("groups", []):
         for r in g.get("reports", []):
             if r.get("id") and r.get("tier"):
@@ -208,8 +208,8 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
                 body.append('<ul class="reports">' + "".join(rows[tier]) + "</ul>")
                 listed += len(rows[tier])
         if rows.get(""):
-            # No tier on these — every opposition BATTER today, since series.json carries tiers
-            # only on the groups it builds (bowlers). Say so rather than inventing a chip.
+            # No tier on these — the batters of any series whose entry has no `tiers` map, since
+            # the group reports tier only the bowlers. Say so rather than inventing a chip.
             body.append(SR.group_heading(heading, len(rows[""])))
             body.append('<ul class="reports">' + "".join(rows[""]) + "</ul>")
             listed += len(rows[""])

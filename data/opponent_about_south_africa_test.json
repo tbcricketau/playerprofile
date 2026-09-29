@@ -17253,49 +17253,1201 @@
    "name": "Marques Ackerman",
    "hand": "LHB",
    "facts": [
+    "No Test record — these figures and clips are first-class cricket (CSA 4-Day, South Africa A tours), from Cricket-21.",
     "Main scoring shot is the drive.",
-    "Plays spin more securely — more false shots against pace.",
-    "Limited Test record — the above is from all formats they've played."
+    "Most often out caught (57% of dismissals)."
    ],
-   "order": 817,
-   "source": "all-formats",
+   "order": 1291,
    "facts_pace": [
-    "Main scoring shot is the drive.",
-    "Plays spin more securely — more false shots against pace.",
-    "Limited Test record — the above is from all formats they've played."
+    "No Test record — these figures and clips are first-class cricket (CSA 4-Day, South Africa A tours), from Cricket-21.",
+    "Vs pace: averages 56 at a strike rate of 86, false-shot 14%.",
+    "Main scoring shot is the drive."
    ],
    "facts_spin": [
-    "Main scoring shot is the drive.",
-    "Plays spin more securely — more false shots against pace.",
-    "Limited Test record — the above is from all formats they've played."
+    "No Test record — these figures and clips are first-class cricket (CSA 4-Day, South Africa A tours), from Cricket-21.",
+    "Vs spin: averages 56 at a strike rate of 102, false-shot 15%.",
+    "Main scoring shot is the drive."
    ],
-   "scoring_clips_pace": [],
-   "dismissal_clips_pace": [],
-   "clip_scope_pace": "",
-   "scoring_clips_spin": [],
-   "dismissal_clips_spin": [],
-   "clip_scope_spin": "",
-   "scoring_clips_right_pace": [],
-   "dismissal_clips_right_pace": [],
-   "clip_scope_right_pace": "",
-   "scoring_clips_left_pace": [],
-   "dismissal_clips_left_pace": [],
-   "clip_scope_left_pace": "",
-   "scoring_clips_off_spin": [],
-   "dismissal_clips_off_spin": [],
-   "clip_scope_off_spin": "",
-   "scoring_clips_left_orthodox": [],
-   "dismissal_clips_left_orthodox": [],
-   "clip_scope_left_orthodox": "",
-   "scoring_clips_leg_spin": [],
+   "scoring_clips_pace": [
+    {
+     "delivery_id": "362215",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_62.MP4"
+    },
+    {
+     "delivery_id": "362220",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_67.MP4"
+    },
+    {
+     "delivery_id": "362235",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_82.MP4"
+    },
+    {
+     "delivery_id": "362242",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_89.MP4"
+    },
+    {
+     "delivery_id": "362243",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_90.MP4"
+    },
+    {
+     "delivery_id": "362273",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_120.MP4"
+    },
+    {
+     "delivery_id": "362299",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_146.MP4"
+    },
+    {
+     "delivery_id": "362300",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_147.MP4"
+    },
+    {
+     "delivery_id": "362301",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_148.MP4"
+    },
+    {
+     "delivery_id": "362302",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_149.MP4"
+    },
+    {
+     "delivery_id": "362304",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_151.MP4"
+    },
+    {
+     "delivery_id": "362328",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_175.MP4"
+    },
+    {
+     "delivery_id": "362406",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_253.MP4"
+    },
+    {
+     "delivery_id": "362407",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_254.MP4"
+    },
+    {
+     "delivery_id": "362413",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_260.MP4"
+    },
+    {
+     "delivery_id": "362419",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_266.MP4"
+    },
+    {
+     "delivery_id": "362428",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_275.MP4"
+    },
+    {
+     "delivery_id": "362435",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_282.MP4"
+    },
+    {
+     "delivery_id": "362470",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_317.MP4"
+    },
+    {
+     "delivery_id": "362471",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_318.MP4"
+    },
+    {
+     "delivery_id": "362473",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_320.MP4"
+    },
+    {
+     "delivery_id": "362474",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_321.MP4"
+    },
+    {
+     "delivery_id": "362475",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_322.MP4"
+    },
+    {
+     "delivery_id": "332113",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_68.MP4"
+    },
+    {
+     "delivery_id": "332172",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_127.MP4"
+    },
+    {
+     "delivery_id": "332185",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_140.MP4"
+    },
+    {
+     "delivery_id": "332230",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_185.MP4"
+    },
+    {
+     "delivery_id": "332231",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_186.MP4"
+    },
+    {
+     "delivery_id": "332263",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_218.MP4"
+    },
+    {
+     "delivery_id": "332265",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_220.MP4"
+    },
+    {
+     "delivery_id": "332266",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_221.MP4"
+    },
+    {
+     "delivery_id": "332267",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_222.MP4"
+    },
+    {
+     "delivery_id": "332268",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_223.MP4"
+    },
+    {
+     "delivery_id": "332304",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_259.MP4"
+    },
+    {
+     "delivery_id": "332321",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_276.MP4"
+    },
+    {
+     "delivery_id": "332322",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_277.MP4"
+    },
+    {
+     "delivery_id": "333359",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_489.MP4"
+    },
+    {
+     "delivery_id": "333361",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_491.MP4"
+    },
+    {
+     "delivery_id": "333365",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_495.MP4"
+    },
+    {
+     "delivery_id": "333368",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_498.MP4"
+    }
+   ],
+   "dismissal_clips_pace": [
+    {
+     "delivery_id": "363974",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/2nd%20Match%20England%20Lions%20vs%20South%20Africa%20A%2029.05.2026/2nd%20Innings/EL%20Vs%20SAA%2029-05-262_183.MP4"
+    },
+    {
+     "delivery_id": "332318",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_273.MP4"
+    },
+    {
+     "delivery_id": "333373",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_503.MP4"
+    },
+    {
+     "delivery_id": "366728",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2008-06-252_176.MP4"
+    },
+    {
+     "delivery_id": "365446",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_491.MP4"
+    },
+    {
+     "delivery_id": "193596",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/17th%20Match%20Dolphins%20vs%20Warriors%2020.12.2023/2nd%20Innings/Dolp%20Vs%20Warr%2020-12-232_281.MP4"
+    },
+    {
+     "delivery_id": "189610",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_425.MP4"
+    },
+    {
+     "delivery_id": "190632",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/3rd%20innings/Dolp%20Vs%20Lions%2014-12-233_132.MP4"
+    },
+    {
+     "delivery_id": "200858",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_432.MP4"
+    },
+    {
+     "delivery_id": "142404",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/2nd%20Innings/Warr%20Vs%20Dolp%2017-11-222_166.MP4"
+    },
+    {
+     "delivery_id": "143577",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/4th%20Innings/Warr%20Vs%20Dolp%2017-11-224_108.MP4"
+    },
+    {
+     "delivery_id": "137953",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/2nd%20Innings/Dolp%20Vs%20Warr%2027-01-222_528.MP4"
+    },
+    {
+     "delivery_id": "135561",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/2nd%20Innings/Dolp%20Vs%20Lions%2013-01-222_138.MP4"
+    }
+   ],
+   "clip_scope_pace": "C21:pace",
+   "scoring_clips_spin": [
+    {
+     "delivery_id": "362309",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_156.MP4"
+    },
+    {
+     "delivery_id": "362320",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_167.MP4"
+    },
+    {
+     "delivery_id": "362348",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_195.MP4"
+    },
+    {
+     "delivery_id": "362349",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_196.MP4"
+    },
+    {
+     "delivery_id": "362351",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_198.MP4"
+    },
+    {
+     "delivery_id": "362457",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_304.MP4"
+    },
+    {
+     "delivery_id": "362466",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_313.MP4"
+    },
+    {
+     "delivery_id": "332134",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_89.MP4"
+    },
+    {
+     "delivery_id": "332143",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_98.MP4"
+    },
+    {
+     "delivery_id": "332249",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_204.MP4"
+    },
+    {
+     "delivery_id": "332250",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_205.MP4"
+    },
+    {
+     "delivery_id": "332257",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_212.MP4"
+    },
+    {
+     "delivery_id": "332258",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_213.MP4"
+    },
+    {
+     "delivery_id": "332294",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_249.MP4"
+    },
+    {
+     "delivery_id": "332314",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_269.MP4"
+    },
+    {
+     "delivery_id": "332315",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_270.MP4"
+    },
+    {
+     "delivery_id": "330168",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/1st%20Innings/INDA%20Vs%20SAA%2030-10-251_245.MP4"
+    },
+    {
+     "delivery_id": "365171",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_216.MP4"
+    },
+    {
+     "delivery_id": "365218",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_263.MP4"
+    },
+    {
+     "delivery_id": "365219",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_264.MP4"
+    },
+    {
+     "delivery_id": "365222",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_267.MP4"
+    },
+    {
+     "delivery_id": "365242",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_287.MP4"
+    },
+    {
+     "delivery_id": "365264",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_309.MP4"
+    },
+    {
+     "delivery_id": "365395",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_440.MP4"
+    },
+    {
+     "delivery_id": "195731",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_158.MP4"
+    },
+    {
+     "delivery_id": "195963",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/3rd%20Innings/WP%20Vs%20Dolp%2021-02-243_58.MP4"
+    },
+    {
+     "delivery_id": "193506",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/17th%20Match%20Dolphins%20vs%20Warriors%2020.12.2023/2nd%20Innings/Dolp%20Vs%20Warr%2020-12-232_191.MP4"
+    },
+    {
+     "delivery_id": "189260",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_75.MP4"
+    },
+    {
+     "delivery_id": "189274",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_89.MP4"
+    },
+    {
+     "delivery_id": "189285",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_100.MP4"
+    },
+    {
+     "delivery_id": "189286",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_101.MP4"
+    },
+    {
+     "delivery_id": "189287",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_102.MP4"
+    },
+    {
+     "delivery_id": "189594",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_409.MP4"
+    },
+    {
+     "delivery_id": "190608",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/3rd%20innings/Dolp%20Vs%20Lions%2014-12-233_108.MP4"
+    },
+    {
+     "delivery_id": "190610",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/3rd%20innings/Dolp%20Vs%20Lions%2014-12-233_110.MP4"
+    },
+    {
+     "delivery_id": "200776",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_350.MP4"
+    },
+    {
+     "delivery_id": "200789",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_363.MP4"
+    },
+    {
+     "delivery_id": "200803",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_377.MP4"
+    },
+    {
+     "delivery_id": "142379",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/2nd%20Innings/Warr%20Vs%20Dolp%2017-11-222_141.MP4"
+    },
+    {
+     "delivery_id": "142382",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/2nd%20Innings/Warr%20Vs%20Dolp%2017-11-222_144.MP4"
+    }
+   ],
+   "dismissal_clips_spin": [
+    {
+     "delivery_id": "362484",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_331.MP4"
+    },
+    {
+     "delivery_id": "332326",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_281.MP4"
+    },
+    {
+     "delivery_id": "330192",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/1st%20Innings/INDA%20Vs%20SAA%2030-10-251_269.MP4"
+    },
+    {
+     "delivery_id": "331005",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/3rd%20Innings/INDA%20Vs%20SAA%2030-10-253_167.MP4"
+    },
+    {
+     "delivery_id": "195733",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_160.MP4"
+    },
+    {
+     "delivery_id": "196025",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/3rd%20Innings/WP%20Vs%20Dolp%2021-02-243_120.MP4"
+    },
+    {
+     "delivery_id": "131989",
+     "url": "https://hdvod.cricket-21.com/Volume3/2021/OCTOBER%202021/Match%20videos/CSA%204%20Day%20Franchise%20Series%202021%202022/Dolphins%20v%20Western%20Province%2029.10.2021/1st%20Innings/WP%20Vs%20Dolp%2029-10-211_236.MP4"
+    }
+   ],
+   "clip_scope_spin": "C21:spin",
+   "scoring_clips_right_pace": [
+    {
+     "delivery_id": "362215",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_62.MP4"
+    },
+    {
+     "delivery_id": "362220",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_67.MP4"
+    },
+    {
+     "delivery_id": "362235",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_82.MP4"
+    },
+    {
+     "delivery_id": "362242",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_89.MP4"
+    },
+    {
+     "delivery_id": "362243",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_90.MP4"
+    },
+    {
+     "delivery_id": "362273",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_120.MP4"
+    },
+    {
+     "delivery_id": "362328",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_175.MP4"
+    },
+    {
+     "delivery_id": "362406",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_253.MP4"
+    },
+    {
+     "delivery_id": "362407",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_254.MP4"
+    },
+    {
+     "delivery_id": "362419",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_266.MP4"
+    },
+    {
+     "delivery_id": "362428",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_275.MP4"
+    },
+    {
+     "delivery_id": "362470",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_317.MP4"
+    },
+    {
+     "delivery_id": "362471",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_318.MP4"
+    },
+    {
+     "delivery_id": "362473",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_320.MP4"
+    },
+    {
+     "delivery_id": "362474",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_321.MP4"
+    },
+    {
+     "delivery_id": "362475",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_322.MP4"
+    },
+    {
+     "delivery_id": "332113",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_68.MP4"
+    },
+    {
+     "delivery_id": "332172",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_127.MP4"
+    },
+    {
+     "delivery_id": "332185",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_140.MP4"
+    },
+    {
+     "delivery_id": "332230",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_185.MP4"
+    },
+    {
+     "delivery_id": "332231",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_186.MP4"
+    },
+    {
+     "delivery_id": "332263",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_218.MP4"
+    },
+    {
+     "delivery_id": "332265",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_220.MP4"
+    },
+    {
+     "delivery_id": "332266",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_221.MP4"
+    },
+    {
+     "delivery_id": "332267",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_222.MP4"
+    },
+    {
+     "delivery_id": "332268",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_223.MP4"
+    },
+    {
+     "delivery_id": "332304",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_259.MP4"
+    },
+    {
+     "delivery_id": "332321",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_276.MP4"
+    },
+    {
+     "delivery_id": "332322",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_277.MP4"
+    },
+    {
+     "delivery_id": "333359",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_489.MP4"
+    },
+    {
+     "delivery_id": "333361",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_491.MP4"
+    },
+    {
+     "delivery_id": "333365",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_495.MP4"
+    },
+    {
+     "delivery_id": "333368",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_498.MP4"
+    },
+    {
+     "delivery_id": "330173",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/1st%20Innings/INDA%20Vs%20SAA%2030-10-251_250.MP4"
+    },
+    {
+     "delivery_id": "366656",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2008-06-252_104.MP4"
+    },
+    {
+     "delivery_id": "366670",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2008-06-252_118.MP4"
+    },
+    {
+     "delivery_id": "366673",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2008-06-252_121.MP4"
+    },
+    {
+     "delivery_id": "367576",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/4th%20Innings/WI%20A%20Vs%20SAA%2008-06-254_45.MP4"
+    },
+    {
+     "delivery_id": "367606",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/4th%20Innings/WI%20A%20Vs%20SAA%2008-06-254_75.MP4"
+    },
+    {
+     "delivery_id": "367607",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/4th%20Innings/WI%20A%20Vs%20SAA%2008-06-254_76.MP4"
+    }
+   ],
+   "dismissal_clips_right_pace": [
+    {
+     "delivery_id": "363974",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/2nd%20Match%20England%20Lions%20vs%20South%20Africa%20A%2029.05.2026/2nd%20Innings/EL%20Vs%20SAA%2029-05-262_183.MP4"
+    },
+    {
+     "delivery_id": "332318",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_273.MP4"
+    },
+    {
+     "delivery_id": "333373",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_503.MP4"
+    },
+    {
+     "delivery_id": "366728",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2008-06-252_176.MP4"
+    },
+    {
+     "delivery_id": "365446",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_491.MP4"
+    },
+    {
+     "delivery_id": "193596",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/17th%20Match%20Dolphins%20vs%20Warriors%2020.12.2023/2nd%20Innings/Dolp%20Vs%20Warr%2020-12-232_281.MP4"
+    },
+    {
+     "delivery_id": "189610",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_425.MP4"
+    },
+    {
+     "delivery_id": "190632",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/3rd%20innings/Dolp%20Vs%20Lions%2014-12-233_132.MP4"
+    },
+    {
+     "delivery_id": "200858",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_432.MP4"
+    },
+    {
+     "delivery_id": "142404",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/2nd%20Innings/Warr%20Vs%20Dolp%2017-11-222_166.MP4"
+    },
+    {
+     "delivery_id": "143577",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/4th%20Innings/Warr%20Vs%20Dolp%2017-11-224_108.MP4"
+    },
+    {
+     "delivery_id": "135561",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/2nd%20Innings/Dolp%20Vs%20Lions%2013-01-222_138.MP4"
+    }
+   ],
+   "clip_scope_right_pace": "C21:right_pace",
+   "scoring_clips_left_pace": [
+    {
+     "delivery_id": "362299",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_146.MP4"
+    },
+    {
+     "delivery_id": "362300",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_147.MP4"
+    },
+    {
+     "delivery_id": "362301",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_148.MP4"
+    },
+    {
+     "delivery_id": "362302",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_149.MP4"
+    },
+    {
+     "delivery_id": "362304",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_151.MP4"
+    },
+    {
+     "delivery_id": "362413",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_260.MP4"
+    },
+    {
+     "delivery_id": "362435",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_282.MP4"
+    },
+    {
+     "delivery_id": "195676",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_103.MP4"
+    },
+    {
+     "delivery_id": "195688",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_115.MP4"
+    },
+    {
+     "delivery_id": "195717",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_144.MP4"
+    },
+    {
+     "delivery_id": "195930",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/3rd%20Innings/WP%20Vs%20Dolp%2021-02-243_25.MP4"
+    },
+    {
+     "delivery_id": "137788",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/2nd%20Innings/Dolp%20Vs%20Warr%2027-01-222_363.MP4"
+    },
+    {
+     "delivery_id": "137932",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/2nd%20Innings/Dolp%20Vs%20Warr%2027-01-222_507.MP4"
+    }
+   ],
+   "dismissal_clips_left_pace": [
+    {
+     "delivery_id": "137953",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/2nd%20Innings/Dolp%20Vs%20Warr%2027-01-222_528.MP4"
+    }
+   ],
+   "clip_scope_left_pace": "C21:left_pace",
+   "scoring_clips_off_spin": [
+    {
+     "delivery_id": "362348",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_195.MP4"
+    },
+    {
+     "delivery_id": "362349",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_196.MP4"
+    },
+    {
+     "delivery_id": "362351",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_198.MP4"
+    },
+    {
+     "delivery_id": "330168",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/1st%20Innings/INDA%20Vs%20SAA%2030-10-251_245.MP4"
+    },
+    {
+     "delivery_id": "365264",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_309.MP4"
+    },
+    {
+     "delivery_id": "200776",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_350.MP4"
+    },
+    {
+     "delivery_id": "200789",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_363.MP4"
+    },
+    {
+     "delivery_id": "200803",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_377.MP4"
+    },
+    {
+     "delivery_id": "143555",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/4th%20Innings/Warr%20Vs%20Dolp%2017-11-224_86.MP4"
+    },
+    {
+     "delivery_id": "143559",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/4th%20Innings/Warr%20Vs%20Dolp%2017-11-224_90.MP4"
+    },
+    {
+     "delivery_id": "137723",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/2nd%20Innings/Dolp%20Vs%20Warr%2027-01-222_298.MP4"
+    },
+    {
+     "delivery_id": "136648",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_178.MP4"
+    },
+    {
+     "delivery_id": "136672",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_202.MP4"
+    },
+    {
+     "delivery_id": "136717",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_247.MP4"
+    },
+    {
+     "delivery_id": "136718",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_248.MP4"
+    },
+    {
+     "delivery_id": "136719",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_249.MP4"
+    }
+   ],
+   "dismissal_clips_off_spin": [
+    {
+     "delivery_id": "362484",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_331.MP4"
+    },
+    {
+     "delivery_id": "330192",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/1st%20Innings/INDA%20Vs%20SAA%2030-10-251_269.MP4"
+    },
+    {
+     "delivery_id": "331005",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/3rd%20Innings/INDA%20Vs%20SAA%2030-10-253_167.MP4"
+    }
+   ],
+   "clip_scope_off_spin": "C21:off_spin",
+   "scoring_clips_left_orthodox": [
+    {
+     "delivery_id": "362309",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_156.MP4"
+    },
+    {
+     "delivery_id": "362320",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_167.MP4"
+    },
+    {
+     "delivery_id": "362457",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_304.MP4"
+    },
+    {
+     "delivery_id": "362466",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_313.MP4"
+    },
+    {
+     "delivery_id": "332314",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_269.MP4"
+    },
+    {
+     "delivery_id": "332315",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_270.MP4"
+    },
+    {
+     "delivery_id": "365171",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_216.MP4"
+    },
+    {
+     "delivery_id": "365218",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_263.MP4"
+    },
+    {
+     "delivery_id": "365219",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_264.MP4"
+    },
+    {
+     "delivery_id": "365222",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_267.MP4"
+    },
+    {
+     "delivery_id": "365242",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_287.MP4"
+    },
+    {
+     "delivery_id": "365395",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_440.MP4"
+    },
+    {
+     "delivery_id": "195731",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_158.MP4"
+    },
+    {
+     "delivery_id": "195963",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/3rd%20Innings/WP%20Vs%20Dolp%2021-02-243_58.MP4"
+    },
+    {
+     "delivery_id": "193506",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/17th%20Match%20Dolphins%20vs%20Warriors%2020.12.2023/2nd%20Innings/Dolp%20Vs%20Warr%2020-12-232_191.MP4"
+    },
+    {
+     "delivery_id": "189260",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_75.MP4"
+    },
+    {
+     "delivery_id": "189274",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_89.MP4"
+    },
+    {
+     "delivery_id": "189285",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_100.MP4"
+    },
+    {
+     "delivery_id": "189286",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_101.MP4"
+    },
+    {
+     "delivery_id": "189287",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_102.MP4"
+    },
+    {
+     "delivery_id": "189594",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_409.MP4"
+    },
+    {
+     "delivery_id": "190608",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/3rd%20innings/Dolp%20Vs%20Lions%2014-12-233_108.MP4"
+    },
+    {
+     "delivery_id": "190610",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/3rd%20innings/Dolp%20Vs%20Lions%2014-12-233_110.MP4"
+    },
+    {
+     "delivery_id": "142379",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/2nd%20Innings/Warr%20Vs%20Dolp%2017-11-222_141.MP4"
+    },
+    {
+     "delivery_id": "142382",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/2nd%20Innings/Warr%20Vs%20Dolp%2017-11-222_144.MP4"
+    },
+    {
+     "delivery_id": "136572",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_102.MP4"
+    },
+    {
+     "delivery_id": "136761",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_291.MP4"
+    }
+   ],
+   "dismissal_clips_left_orthodox": [
+    {
+     "delivery_id": "332326",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_281.MP4"
+    },
+    {
+     "delivery_id": "195733",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_160.MP4"
+    },
+    {
+     "delivery_id": "196025",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/3rd%20Innings/WP%20Vs%20Dolp%2021-02-243_120.MP4"
+    },
+    {
+     "delivery_id": "131989",
+     "url": "https://hdvod.cricket-21.com/Volume3/2021/OCTOBER%202021/Match%20videos/CSA%204%20Day%20Franchise%20Series%202021%202022/Dolphins%20v%20Western%20Province%2029.10.2021/1st%20Innings/WP%20Vs%20Dolp%2029-10-211_236.MP4"
+    }
+   ],
+   "clip_scope_left_orthodox": "C21:left_orthodox",
+   "scoring_clips_leg_spin": [
+    {
+     "delivery_id": "136757",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/4th%20Innings/Dolp%20Vs%20Lions%2013-01-224_287.MP4"
+    }
+   ],
    "dismissal_clips_leg_spin": [],
-   "clip_scope_leg_spin": "",
-   "scoring_clips_left_unorthodox": [],
+   "clip_scope_leg_spin": "C21:leg_spin",
+   "scoring_clips_left_unorthodox": [
+    {
+     "delivery_id": "332134",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_89.MP4"
+    },
+    {
+     "delivery_id": "332143",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_98.MP4"
+    },
+    {
+     "delivery_id": "332249",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_204.MP4"
+    },
+    {
+     "delivery_id": "332250",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_205.MP4"
+    },
+    {
+     "delivery_id": "332257",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_212.MP4"
+    },
+    {
+     "delivery_id": "332258",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_213.MP4"
+    },
+    {
+     "delivery_id": "332294",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_249.MP4"
+    }
+   ],
    "dismissal_clips_left_unorthodox": [],
-   "clip_scope_left_unorthodox": "",
-   "scoring_clips": [],
-   "dismissal_clips": [],
-   "role": null
+   "clip_scope_left_unorthodox": "C21:left_unorthodox",
+   "scoring_clips": [
+    {
+     "delivery_id": "362215",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_62.MP4"
+    },
+    {
+     "delivery_id": "362220",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_67.MP4"
+    },
+    {
+     "delivery_id": "362235",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_82.MP4"
+    },
+    {
+     "delivery_id": "362242",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_89.MP4"
+    },
+    {
+     "delivery_id": "362243",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_90.MP4"
+    },
+    {
+     "delivery_id": "362273",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_120.MP4"
+    },
+    {
+     "delivery_id": "362299",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_146.MP4"
+    },
+    {
+     "delivery_id": "362300",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_147.MP4"
+    },
+    {
+     "delivery_id": "362301",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_148.MP4"
+    },
+    {
+     "delivery_id": "362302",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_149.MP4"
+    },
+    {
+     "delivery_id": "362304",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_151.MP4"
+    },
+    {
+     "delivery_id": "362309",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_156.MP4"
+    },
+    {
+     "delivery_id": "362320",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_167.MP4"
+    },
+    {
+     "delivery_id": "362328",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_175.MP4"
+    },
+    {
+     "delivery_id": "362348",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_195.MP4"
+    },
+    {
+     "delivery_id": "362349",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_196.MP4"
+    },
+    {
+     "delivery_id": "362351",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_198.MP4"
+    },
+    {
+     "delivery_id": "362406",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_253.MP4"
+    },
+    {
+     "delivery_id": "362407",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_254.MP4"
+    },
+    {
+     "delivery_id": "362413",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_260.MP4"
+    },
+    {
+     "delivery_id": "362419",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_266.MP4"
+    },
+    {
+     "delivery_id": "362428",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_275.MP4"
+    },
+    {
+     "delivery_id": "362435",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_282.MP4"
+    },
+    {
+     "delivery_id": "362457",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_304.MP4"
+    },
+    {
+     "delivery_id": "362466",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_313.MP4"
+    },
+    {
+     "delivery_id": "362470",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_317.MP4"
+    },
+    {
+     "delivery_id": "362471",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_318.MP4"
+    },
+    {
+     "delivery_id": "362473",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_320.MP4"
+    },
+    {
+     "delivery_id": "362474",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_321.MP4"
+    },
+    {
+     "delivery_id": "362475",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_322.MP4"
+    },
+    {
+     "delivery_id": "332113",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_68.MP4"
+    },
+    {
+     "delivery_id": "332134",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_89.MP4"
+    },
+    {
+     "delivery_id": "332143",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_98.MP4"
+    },
+    {
+     "delivery_id": "332172",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_127.MP4"
+    },
+    {
+     "delivery_id": "332185",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_140.MP4"
+    },
+    {
+     "delivery_id": "332230",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_185.MP4"
+    },
+    {
+     "delivery_id": "332231",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_186.MP4"
+    },
+    {
+     "delivery_id": "332249",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_204.MP4"
+    },
+    {
+     "delivery_id": "332250",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_205.MP4"
+    },
+    {
+     "delivery_id": "332257",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_212.MP4"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "363974",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/2nd%20Match%20England%20Lions%20vs%20South%20Africa%20A%2029.05.2026/2nd%20Innings/EL%20Vs%20SAA%2029-05-262_183.MP4"
+    },
+    {
+     "delivery_id": "362484",
+     "url": "https://hdvod.cricket-21.com/Volume7/2026/MAY%202026/Match%20Videos/South%20Africa%20A%20in%20England%20A%20unofficial%20Test%20Series%202026/1st%20Match%20England%20Lions%20vs%20South%20Africa%20A%2022.05.2026/2nd%20Innings/EL%20Vs%20SAA%2022-05-262_331.MP4"
+    },
+    {
+     "delivery_id": "332318",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_273.MP4"
+    },
+    {
+     "delivery_id": "332326",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/2nd%20Innings/INDA%20Vs%20SAA%2006-11-252_281.MP4"
+    },
+    {
+     "delivery_id": "333373",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/NOVEMBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/2nd%20Match%20India%20A%20vs%20South%20Africa%20A%2006.11.2025/4th%20Innings/INDA%20Vs%20SAA%2006-11-254_503.MP4"
+    },
+    {
+     "delivery_id": "330192",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/1st%20Innings/INDA%20Vs%20SAA%2030-10-251_269.MP4"
+    },
+    {
+     "delivery_id": "331005",
+     "url": "https://hdvod.cricket-21.com/Volume7/2025/OCTOBER%202025/Match%20Videos/South%20Africa%20A%20in%20India%20unofficial%20Test%20Series%202025/1st%20Match%20India%20A%20vs%20South%20Africa%20A%2030.10.2025/3rd%20Innings/INDA%20Vs%20SAA%2030-10-253_167.MP4"
+    },
+    {
+     "delivery_id": "366728",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/2nd%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2008.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2008-06-252_176.MP4"
+    },
+    {
+     "delivery_id": "365446",
+     "url": "https://hdvod.cricket-21.com/Volume6/2025/JUNE_2025/Match%20Videos/South%20Africa%20A%20in%20West%20Indies%20unofficial%20Test%20Series%202025/1st%20Match%20West%20Indies%20A%20vs%20South%20Africa%20A%2001.06.2025/2nd%20Innings/WI%20A%20Vs%20SAA%2001-06-252_491.MP4"
+    },
+    {
+     "delivery_id": "195733",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/2nd%20Innings/WP%20Vs%20Dolp%2021-02-242_160.MP4"
+    },
+    {
+     "delivery_id": "196025",
+     "url": "https://hdvod.cricket-21.com/Volume4/2024/FEBRUARY%202024/Match%20Videos/CSA%204%20Day%20Series%20Division%201%202024/26th%20Match%20Western%20Province%20vs%20Dolphins/3rd%20Innings/WP%20Vs%20Dolp%2021-02-243_120.MP4"
+    },
+    {
+     "delivery_id": "193596",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/17th%20Match%20Dolphins%20vs%20Warriors%2020.12.2023/2nd%20Innings/Dolp%20Vs%20Warr%2020-12-232_281.MP4"
+    },
+    {
+     "delivery_id": "189610",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/1st%20Innings/Dolp%20Vs%20Lions%2014-12-231_425.MP4"
+    },
+    {
+     "delivery_id": "190632",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/Dolphins%20vs%20Lions%2014.12.2023/3rd%20innings/Dolp%20Vs%20Lions%2014-12-233_132.MP4"
+    },
+    {
+     "delivery_id": "200858",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/NOVEMBER%202023/Match%20Videos/CSA%204%20Day%20Series%20Division%201%20202324/1st%20Match%20Dolphins%20vs%20Tuskers%2004.11.2023/1st%20Innings/Dolp%20Vs%20KZIN%2004-11-231_432.MP4"
+    },
+    {
+     "delivery_id": "142404",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/2nd%20Innings/Warr%20Vs%20Dolp%2017-11-222_166.MP4"
+    },
+    {
+     "delivery_id": "143577",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/4th%20Innings/Warr%20Vs%20Dolp%2017-11-224_108.MP4"
+    },
+    {
+     "delivery_id": "137953",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/2nd%20Innings/Dolp%20Vs%20Warr%2027-01-222_528.MP4"
+    },
+    {
+     "delivery_id": "135561",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Lions%2013.01.2022/2nd%20Innings/Dolp%20Vs%20Lions%2013-01-222_138.MP4"
+    },
+    {
+     "delivery_id": "131989",
+     "url": "https://hdvod.cricket-21.com/Volume3/2021/OCTOBER%202021/Match%20videos/CSA%204%20Day%20Franchise%20Series%202021%202022/Dolphins%20v%20Western%20Province%2029.10.2021/1st%20Innings/WP%20Vs%20Dolp%2029-10-211_236.MP4"
+    }
+   ],
+   "role": null,
+   "record_note": "No Test record — these figures and clips are first-class cricket (CSA 4-Day, South Africa A tours), from Cricket-21."
   }
  }
 }

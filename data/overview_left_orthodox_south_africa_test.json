@@ -222,16 +222,6 @@
    }
   },
   {
-   "bid": "4353762",
-   "name": "Marques Ackerman",
-   "sub": "LHB",
-   "balls": 0,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": null
-  },
-  {
    "bid": "4352508",
    "name": "Tristan Stubbs",
    "sub": "RHB · Top order",
@@ -327,6 +317,33 @@
     "area": "off (47% of runs)",
     "short": null,
     "top_out": "Bowled (50%)"
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 215,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching wide outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Once set",
+     "file": "left_orthodox_4353762_0.png"
+    }
+   ],
+   "threat": {
+    "balls": 215,
+    "n_out": 4,
+    "bpd": 53.75,
+    "false_pct": 14.743589743589743,
+    "area": null,
+    "short": null,
+    "top_out": "Caught (75%)"
    }
   }
  ]

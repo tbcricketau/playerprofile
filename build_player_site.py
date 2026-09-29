@@ -1350,6 +1350,7 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
         ordered.sort(key=lambda kv: _bat_rank((about.get(kv[0]) or {}).get("role"),
                                               (about.get(kv[0]) or {}).get("order", 0)))
         starred = set()
+        c21_starred = set()          # starred because the player has no record at this level
 
         def _card(bid, meta_):
             nm, hnd = meta_
@@ -1387,6 +1388,8 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
                     ov.pop((bid, _k), None)
             if lim:
                 starred.add(bid)
+                if (scope or "").startswith("C21:"):
+                    c21_starred.add(bid)
             fh = _manual_for(manual_href, bid, group)
             if fh:
                 ov[(bid, "footage")] = fh
@@ -1409,7 +1412,10 @@ def _bowling_body(meta, pid, rec, opp_batters=None, about=None, report_urls=None
             _fw = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
             inner += (f'<p class="vfoot">* limited vision — no footage of them against this exact '
                       f'bowling type in {_fw}, so the reel widens to a near-enough type or to '
-                      'another format.</p>')
+                      'another format.'
+                      + (f' A player with no {fmt} record at all is shown from their domestic and '
+                         'A-team cricket, which their card says.' if c21_starred else '')
+                      + '</p>')
         body.append(_pack_section(f"The {opp} batters",
                                   "Grouped by how likely they are to play. Tap a batter to see their "
                                   "summary and get links to vision.",
@@ -1548,6 +1554,11 @@ def _opp_tiers(slug):
         for g in match.get("groups", []):
             for r in g.get("reports", []):
                 out.setdefault(str(r["id"]), r.get("tier", "squad"))
+        # `tiers` covers the whole squad, batters included (30-09-2026). The group reports only
+        # reach the players a group bakes — the bowlers — so every opposition batter card read as
+        # "In the squad" whatever the coaches had decided.
+        for pid, tier in (match.get("tiers") or {}).items():
+            out.setdefault(str(pid), tier)
         return out
     return {}
 

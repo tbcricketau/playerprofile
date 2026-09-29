@@ -258,16 +258,6 @@
    }
   },
   {
-   "bid": "4353762",
-   "name": "Marques Ackerman",
-   "sub": "LHB",
-   "balls": 0,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": null
-  },
-  {
    "bid": "4352508",
    "name": "Tristan Stubbs",
    "sub": "RHB · Top order",
@@ -397,6 +387,41 @@
     "area": "off (45% of runs)",
     "short": null,
     "top_out": "Caught behind (50%)"
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 961,
+   "plan": "Plan for right-arm pace: bowl <b>back of a length pitching around leg</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "right_pace_4353762_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "right_pace_4353762_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "right_pace_4353762_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 961,
+    "n_out": 14,
+    "bpd": 68.64285714285714,
+    "false_pct": 13.848631239935587,
+    "area": null,
+    "short": null,
+    "top_out": "Caught (57%)"
    }
   }
  ]
