@@ -1,0 +1,359 @@
+{
+ "opp": "south_africa_test",
+ "group": "spin",
+ "label": "spin",
+ "min_balls": 60,
+ "rows": [
+  {
+   "bid": "3760008",
+   "name": "Aiden Markram",
+   "sub": "RHB · Opener",
+   "balls": 1499,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b> while <b>turning away / drifting in</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Fine leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_3760008_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_3760008_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 1499,
+    "n_out": 21,
+    "bpd": 71.38095238095238,
+    "false_pct": 12.992700729927007,
+    "area": "off (39% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (29%)"
+   }
+  },
+  {
+   "bid": "3080067",
+   "name": "Temba Bavuma",
+   "sub": "RHB · Top order",
+   "balls": 2393,
+   "plan": "Plan for spin: bowl <b>good length pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Leg slip",
+    "spare": "Leg slip"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_3080067_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_3080067_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 2393,
+    "n_out": 29,
+    "bpd": 82.51724137931035,
+    "false_pct": 10.089686098654708,
+    "area": "leg (46% of runs)",
+    "short": null,
+    "top_out": "Caught behind (31%)"
+   }
+  },
+  {
+   "bid": "3110056",
+   "name": "Wiaan Mulder",
+   "sub": "RHB · Middle order",
+   "balls": 975,
+   "plan": "Plan for spin: bowl <b>full pitching outside off</b> while <b>turning away / drifting in</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": ""
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_3110056_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_3110056_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 975,
+    "n_out": 14,
+    "bpd": 69.64285714285714,
+    "false_pct": 12.876427829698859,
+    "area": "off (39% of runs)",
+    "short": null,
+    "top_out": "Caught behind (36%)"
+   }
+  },
+  {
+   "bid": "4090013",
+   "name": "Kyle Verreynne",
+   "sub": "RHB · Middle order",
+   "balls": 739,
+   "plan": "Plan for spin: bowl <b>good length pitching wide outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4090013_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4090013_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 739,
+    "n_out": 12,
+    "bpd": 61.583333333333336,
+    "false_pct": 13.079019073569482,
+    "area": "leg (40% of runs)",
+    "short": null,
+    "top_out": "Caught behind (33%)"
+   }
+  },
+  {
+   "bid": "4353850",
+   "name": "Tony de Zorzi",
+   "sub": "LHB · Opener",
+   "balls": 866,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Short leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4353850_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4353850_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 866,
+    "n_out": 12,
+    "bpd": 72.16666666666667,
+    "false_pct": 15.668202764976959,
+    "area": "off (43% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (42%)"
+   }
+  },
+  {
+   "bid": "4352600",
+   "name": "Ryan Rickelton",
+   "sub": "LHB · Middle order",
+   "balls": 817,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Backward point"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4352600_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4352600_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 817,
+    "n_out": 9,
+    "bpd": 90.77777777777777,
+    "false_pct": 15.59074299634592,
+    "area": "leg (41% of runs)",
+    "short": null,
+    "top_out": "Caught behind (56%)"
+   }
+  },
+  {
+   "bid": "4353096",
+   "name": "David Bedingham",
+   "sub": "RHB · Middle order",
+   "balls": 509,
+   "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Long-off, Backward square leg",
+    "spare": "Backward square leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4353096_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4353096_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 509,
+    "n_out": 7,
+    "bpd": 72.71428571428571,
+    "false_pct": 8.15450643776824,
+    "area": "leg (37% of runs)",
+    "short": null,
+    "top_out": "Caught behind (43%)"
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 0,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": null
+  },
+  {
+   "bid": "4352508",
+   "name": "Tristan Stubbs",
+   "sub": "RHB · Top order",
+   "balls": 912,
+   "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Fine leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4352508_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4352508_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 912,
+    "n_out": 10,
+    "bpd": 91.2,
+    "false_pct": 20.727673649393605,
+    "area": "off (45% of runs)",
+    "short": null,
+    "top_out": "Caught behind (60%)"
+   }
+  },
+  {
+   "bid": "4352128",
+   "name": "Marco Jansen",
+   "sub": "RHB · Lower order",
+   "balls": 305,
+   "plan": "Plan for spin: bowl <b>good length pitching outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Backward point"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4352128_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4352128_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 305,
+    "n_out": 8,
+    "bpd": 38.125,
+    "false_pct": 18.360655737704917,
+    "area": "leg (53% of runs)",
+    "short": null,
+    "top_out": "LBW (38%)"
+   }
+  },
+  {
+   "bid": "3550469",
+   "name": "Senuran Muthusamy",
+   "sub": "LHB · Middle order",
+   "balls": 571,
+   "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Deep backward square leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_3550469_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_3550469_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 571,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 16.28721541155867,
+    "area": "leg (49% of runs)",
+    "short": null,
+    "top_out": "LBW (67%)"
+   }
+  },
+  {
+   "bid": "2540186",
+   "name": "Corbin Bosch",
+   "sub": "RHB · Lower order",
+   "balls": 179,
+   "plan": null,
+   "field": {
+    "set": "stock field",
+    "move": "Deep square leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_2540186_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_2540186_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 179,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 20.11173184357542,
+    "area": "leg (42% of runs)",
+    "short": null,
+    "top_out": "Bowled (50%)"
+   }
+  }
+ ]
+}
