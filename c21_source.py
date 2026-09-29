@@ -74,7 +74,13 @@ PLAYER_MAP = os.path.join(HERE, "data", "c21_player_map.json")
 # pulled for the VISION (the published numbers were deliberately left alone). These patterns cover
 # the 22 competitions that came with them: home series ("... in Zimbabwe"), tours ("Zimbabwe in
 # ..."), the A-team fixtures, the domestic tri-series and the T20 World Cup legs they played.
-SERVED_COMPETITIONS = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South Africa A in India",
+# South Africa widened 2026-09-29 for Marques Ackerman (SA Test squad, no Test record): every
+# "South Africa A in ..." tour (India, West Indies, England — unofficial Tests and ODIs), the CSA
+# domestic competitions ("CSA " with the trailing space, so it is the competition prefix and not a
+# substring of another word) and the SA20. The warehouse holds his SA A tours untracked and none
+# of his domestic cricket; C21 has coordinates on nearly every ball.
+SERVED_COMPETITIONS = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South Africa A in",
+                       "CSA ", "SA20",
                        "in Zimbabwe", "Zimbabwe in", "Zimbabwe A", "Zimbabwe Twenty20",
                        # "ICC Mens ...", not "T20 World Cup" and not "Mens T20 World Cup": a bare
                        # "T20 World Cup" matched the ICC Womens T20 World Cup 2024 match pulled for

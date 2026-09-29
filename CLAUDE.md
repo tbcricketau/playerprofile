@@ -1223,6 +1223,25 @@ when nothing plays either. Masuku went from absent in all 15 packs to a card wit
 reels including 30 death clips, carrying *"Limited ODI record — not enough balls to profile"*
 instead of a fabricated plan: he genuinely fails the 300-ball floor at 262.
 
+**`c21_source.SERVED_COMPETITIONS` is an allow-list, and a player whose cricket is not on it reads
+as having none (widened for South Africa 2026-09-29).** Marques Ackerman was in the SA Test squad
+with no Test record: the warehouse holds his SA A tours **untracked** (0 of 258 balls) and none of
+his domestic cricket, while C21 has every SA A tour since 2025 with coordinates and a real clip on
+every ball (12 of 12 sampled, 8.8–26 MB). None of it was served because the list carried only
+"South Africa A in India". It now carries `"South Africa A in"`, `"CSA "` (trailing space — the
+competition prefix, not a substring) and `"SA20"`. The mirror gained SA A's 2025 West Indies and
+2026 England A tours (`bulk_import.py --comps 1748,1676`) and the SA white-ball competitions
+(`--white`); CSA 4-Day 2025/26 and 2026/27 are **still uncoded** on the portal, so his last two
+domestic seasons are in neither source. Survey figures: `cricket21/docs/SA_DOMESTIC.md`.
+
+**A window report is a different file, not the career one with fewer rows (`--since`, 2026-09-29).**
+`build_batting_reports.py --since YYYY-MM-DD` cuts the record to matches on or after that day.
+Three things keep it from being mistaken for the full record: the sub-line reads *since
+dd-mm-yyyy*, the filename carries `_since<yyyymmdd>` (which breaks `_sidecar_map`'s
+`_(all|lhb|rhb)(_vs_group)?$` match), and it is written under `<out>/since-<date>/`, a folder the
+sidecar glob never reads. The 3-year change overlay is skipped when the window sits inside it — it
+would restate the whole report. Built for Ackerman's last two years; it applies to any batter.
+
 **So a squad pin whose players are C21-only must say `--source both` in its note.** Tripurana Vijay
 has 12 warehouse bowling balls and 348 in C21; without the flag he is a footage-only card, with it
 he is a full profile. `opp_squad_india_a_4day.json` records that requirement where the next person

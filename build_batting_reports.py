@@ -48,7 +48,18 @@ def main():
                     help="where the ball record comes from. 'both' adds Cricket-21 "
                          "Indian domestic cricket, which the warehouse does not hold at "
                          "all — see c21_source and cricket21/docs/INDIA_DOMESTIC.md")
+    ap.add_argument("--since", default=None, metavar="YYYY-MM-DD",
+                    help="cut the record to matches on or after this date — a window report, "
+                         "stamped on the page, suffixed in the filename and written under "
+                         "<out>/since-<date>/ so the pack pipeline never mistakes it for the "
+                         "career report")
     args = ap.parse_args()
+    if args.since:
+        import datetime as _dt
+        try:
+            args.since = _dt.date.fromisoformat(args.since).isoformat()
+        except ValueError:
+            sys.exit(f"--since wants YYYY-MM-DD, got {args.since!r}")
 
     # LEVEL LIVES IN THE PATH, like format does. A player can hold both an A-team and a senior
     # record — Anshul Kamboj has 366 A-team first-class balls and 108 Test ones — and the filename
@@ -56,6 +67,8 @@ def main():
     # silently overwrite the first and publish_site would bake whichever won. The same reasoning as
     # "format comes from the DIRECTORY, never from meta.format" in CLAUDE.md.
     out_dir = args.out or ("reports/ateam" if args.level == "a-team" else "reports")
+    if args.since:
+        out_dir = os.path.join(out_dir, f"since-{args.since}")
 
     ids = _ids_from_args(args.ids)
     if not ids:
@@ -74,7 +87,7 @@ def main():
     for i, (bid, group) in enumerate(jobs, 1):
         try:
             path = render_batting_report(bid, out_dir=out_dir, group=group, fmt=args.fmt,
-                                         level=args.level, source=args.source)
+                                         level=args.level, source=args.source, since=args.since)
             print(f"  [{i}/{len(jobs)}] {bid}{' vs ' + group if group else ''} -> {os.path.basename(path)}")
             ok += 1
         except Exception as e:

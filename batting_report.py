@@ -837,12 +837,25 @@ def _build_player(P: dict, pdf_path: str) -> dict:
 def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None,
                           render_pdf: bool = True, fmt: str = "Test",
                           level: str = "international",
-                          source: str = "warehouse") -> str:
+                          source: str = "warehouse", since: str | None = None) -> str:
     """Combined overview (group=None) or a focused per-bowler-type exploit report (e.g.
     group='right_pace'). Same engine; the focused one filters to that bowler group + adds a plan.
-    `render_pdf=False` writes the .html + .pmode.html only (fast web iteration, skips the slow print)."""
+    `render_pdf=False` writes the .html + .pmode.html only (fast web iteration, skips the slow print).
+
+    `since` (ISO date) cuts the record to matches on or after that day — a window report, not the
+    career one. It is stamped on the page, in the filename and (by build_batting_reports) in its
+    own folder, so `publish_site._sidecar_map` can never take it for the full-record report a pack
+    links. Added 2026-09-29 for Marques Ackerman, whose last two years were the question."""
+    if since is not None:
+        import datetime as _dt
+        since = _dt.date.fromisoformat(str(since)).isoformat()      # ValueError on a bad date
     raw_all = process_batting_rows(load_batter_deliveries(batter_id, fmt=fmt, level=level,
                                                           source=source))
+    if since:
+        n_all = len(raw_all)
+        raw_all = [r for r in raw_all if (r.get("match_date") or "") >= since]
+        if not raw_all:
+            raise ValueError(f"no deliveries for {batter_id} since {since} ({n_all} before the cut)")
     P = build_batter_profile(batter_id, raw=raw_all, group=group, fmt=fmt, level=level,
                              source=source)
 
@@ -857,6 +870,8 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     import datetime as _dt
     _cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
     _rec = [r for r in raw_all if (r.get("match_date") or "") >= _cut]
+    if since and since >= _cut:
+        _rec = []                     # the window IS the record — an overlay would restate it
     if sum(1 for r in _rec if r.get("is_legal")) >= 300:    # floor — a thin window isn't a real change
         Pr = build_batter_profile(batter_id, raw=_rec)
         Pg = build_batter_profile(batter_id, raw=_rec, group=group) if group else Pr
@@ -954,6 +969,8 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         # the header said "Batting profile (Test)" whatever format it held
         "fmt_label": {"test": "Test", "odi": "ODI", "t20i": "T20I", "t20": "T20"}.get(
             str(P.get("fmt", "Test")).lower(), "Test"),
+        # day-first for the reader (root CLAUDE.md); the ISO form stays in the filename
+        "since_label": (f"since {since[8:10]}-{since[5:7]}-{since[:4]}" if since else ""),
         "cards": _cards(P, card_recent), "impact_read": _impact_read(P),
         "vs_rows": _vs_rows(P), "vs_read": _vs_read(P),
         "shot_rows": _shot_rows(P), "dir_read": _dir_read(P),
@@ -990,7 +1007,10 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     # ..._batting_test_rhb_vs_pace -- claiming Test data while holding ODI, and colliding with the
     # real Test report for the same batter and group. Test keeps its existing filenames.
     ftag = {"test": "test", "odi": "odi", "t20i": "t20", "t20": "t20"}.get(str(fmt).lower(), "test")
-    out_path = os.path.abspath(os.path.join(out_dir, f"{who}_batting_{ftag}_{hand_tag}{gtag}.pdf"))
+    # A window cut carries its date so it can never be read as the career report: the suffix breaks
+    # _sidecar_map's `_(all|lhb|rhb)(_vs_group)?$` match, and the folder keeps it out of the glob.
+    stag = f"_since{since.replace('-', '')}" if since else ""
+    out_path = os.path.abspath(os.path.join(out_dir, f"{who}_batting_{ftag}_{hand_tag}{gtag}{stag}.pdf"))
     os.makedirs(out_dir, exist_ok=True)
 
     ctx["video"] = _build_player(P, out_path)
@@ -1066,7 +1086,7 @@ _TEMPLATE = r"""
     <div>
       <h1>{{P.name}} {% if code %}<span class="flag">{{code}}</span>{% endif %}
         {% if P.group %}<span class="tag">vs {{P.group_label}}</span>{% endif %}</h1>
-      <div class="sub">{{P.team}} · {{hand_label}} · {% if P.group %}How to exploit — {{P.group_label}} plan{% else %}Batting profile ({{fmt_label}}){% endif %}</div>
+      <div class="sub">{{P.team}} · {{hand_label}} · {% if P.group %}How to exploit — {{P.group_label}} plan{% else %}Batting profile ({{fmt_label}}){% endif %}{% if since_label %} · <b>{{since_label}}</b>{% endif %}</div>
     </div>
     <div class="ver">v{{version}}<br>{{build_date}}</div>
   </div>

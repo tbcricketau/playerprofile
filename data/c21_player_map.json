@@ -908,5 +908,20 @@
    32229
   ],
   "confidence": "name matched in the C21 mirror's Indian domestic competitions (Ranji, Duleep); multi-day database inferred from match format; NO dob check (2026-09-14)"
+ },
+ "4353762": {
+  "name": "Marques Ackerman",
+  "c21_ids": [
+   3389,
+   4011
+  ],
+  "c21_name": "Marques Ackerman",
+  "c21_ids_multiday": [
+   3389
+  ],
+  "c21_ids_white": [
+   4011
+  ],
+  "confidence": "dob 1996-03-01 matched to warehouse, per database; Cricket21PlayerID 5810 (hand-mapped 2026-09-29)"
  }
 }
