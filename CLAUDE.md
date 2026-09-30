@@ -110,6 +110,16 @@ else sees it. `batter_profile` never fills `hit_y_n`, so batting rows are polar-
 mix both sources per delivery, which is why the normalisation is per row. `charts.wagon_sector(r,
 is_lhb)` exposes the bucketing so the stroke cross-tab can be re-run without a figure.
 
+**A zero `hit_to_length` means no placement was recorded**, and the angle is then 0 too — which
+reads as a perfect straight drive. It is **~16% of scoring balls**, whole series at a time (Bavuma
+259 of 1,631, mostly 2021-22 and 2022-23; de Zorzi 87 of 514), nearly all singles. The wheel, both
+`_hit_side`s and `field_engine._br_angle` now skip them; before, they filled Mid-On/Mid-Off
+(Bavuma's Mid-On 539 → 243) and every "scores mainly down the ground" fact. 🔴 **Not yet fixed:**
+`referencebuilder/scripts/build_field_trigger_norms.py` buckets the same zeros as `straight`, so
+the R3 down-ground trigger's `straight_share` and its percentile are inflated — for the batter and
+the cohort alike, so the percentile is roughly self-consistent, but a batter whose record is heavy
+in unplaced series ranks falsely high. Needs `hit_to_length > 0` in its sector CASE and a rebuild.
+
 **Cricket-21 rows had no placement at all** — `calibrate.py` never fitted `WagonWheelX/Y` (the
 warehouse physical pair is empty in the overlap matches), so Ackerman's wheel rendered "no hit
 data". `c21_source._wagon_polar` maps C21's 600 px ground image (striker at 300,233, bowler down

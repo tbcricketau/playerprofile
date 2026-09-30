@@ -413,8 +413,11 @@ def _hit_side(r) -> str | None:
     hand — DATAWAREHOUSE.md, verified on coded strokes 30-09-2026), so it is read as-is.
     Only the fallback, hit_x (absolute: +ve = a RHB's off), is mirrored for a left-hander.
     'straight' = the down-the-ground V only (|angle| ≤ 22.5°); balls behind square keep
-    their off/leg side."""
+    their off/leg side. A zero length is "no placement recorded" (angle 0 too) and is
+    skipped, not read as straight."""
     ha = r.get("hit_ang_n")
+    if ha is not None and r.get("hit_len_n") == 0:
+        ha = None
     if ha is not None:
         if abs(ha) <= 22.5:
             return "straight"

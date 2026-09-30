@@ -103,7 +103,12 @@ def _br_angle(r, is_lhb):
     IS batter-relative for either hand (DATAWAREHOUSE.md, verified on coded strokes 30-09-2026),
     so it is returned as-is. Until then this negated it for a left-hander, which mirrored every
     left-hander's run flow — the stock-variant fit and the floating fielder were chosen on the
-    wrong side while the diagram (which mirrors correctly) looked right."""
+    wrong side while the diagram (which mirrors correctly) looked right.
+
+    A zero length is "no placement recorded" (angle 0 too): None, so it is not piled into the
+    straight sector."""
+    if r.get("hit_len_n") == 0:
+        return None
     return r.get("hit_ang_n")
 
 

@@ -165,9 +165,12 @@ def _hit_side(r):
     """off / leg / straight for a scoring shot. `hit_to_angle` is BATTER-RELATIVE (0 = straight
     down the ground, +ve = the batter's off side for either hand — DATAWAREHOUSE.md, and verified
     on the coded strokes 30-09-2026), so there is nothing to flip for a left-hander. Until then
-    this XOR-ed the sign with the hand and read every left-hander's off side as leg."""
+    this XOR-ed the sign with the hand and read every left-hander's off side as leg.
+
+    Length 0 means no placement was recorded (the angle is then 0 too) — ~16% of scoring balls,
+    whole series at a time. Counted, they all read as "straight"; they are skipped instead."""
     a = r.get("hit_ang_n")
-    if a is None:
+    if a is None or r.get("hit_len_n") == 0:
         return None
     if abs(a) <= 22.5:
         return "straight"
