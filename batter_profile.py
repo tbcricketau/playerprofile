@@ -110,8 +110,12 @@ def process_batting_rows(rows: list) -> list:
         # aliases so the shared bowling charts (wagon wheel etc.) work on batting rows
         r["bat_score_n"] = r["runs"]
         r["is_wicket"] = r["is_out"]
-        r["wide_runs_n"] = _safe_float(r.get("wide_runs")) or 0.0
-        r["noball_runs_n"] = _safe_float(r.get("noball_runs")) or 0.0
+        # Zero on purpose: the shared wagon wheel adds these to a ball's runs, which is right for a
+        # bowler (runs conceded) and wrong for a batter — a no-ball hit for four is four of THEIR
+        # runs, not five. Until 30-09-2026 the batting wheel counted the penalty, so it disagreed
+        # with presentationbuilder's individual packs (bat runs only) by a run per no-ball.
+        r["wide_runs_n"] = 0.0
+        r["noball_runs_n"] = 0.0
         r["hit_y_n"] = None
         r["ball_speed_n"] = (lambda v: v if (v is not None and 60 <= v <= 170) else None)(_safe_float(r.get("ball_speed")))
         r["pitch_line_m"] = (lambda v: -v / 1000 if v is not None else None)(_safe_float(r.get("pitch_line")))
