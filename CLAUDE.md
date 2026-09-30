@@ -114,11 +114,16 @@ is_lhb)` exposes the bucketing so the stroke cross-tab can be re-run without a f
 reads as a perfect straight drive. It is **~16% of scoring balls**, whole series at a time (Bavuma
 259 of 1,631, mostly 2021-22 and 2022-23; de Zorzi 87 of 514), nearly all singles. The wheel, both
 `_hit_side`s and `field_engine._br_angle` now skip them; before, they filled Mid-On/Mid-Off
-(Bavuma's Mid-On 539 → 243) and every "scores mainly down the ground" fact. 🔴 **Not yet fixed:**
-`referencebuilder/scripts/build_field_trigger_norms.py` buckets the same zeros as `straight`, so
-the R3 down-ground trigger's `straight_share` and its percentile are inflated — for the batter and
-the cohort alike, so the percentile is roughly self-consistent, but a batter whose record is heavy
-in unplaced series ranks falsely high. Needs `hit_to_length > 0` in its sector CASE and a rebuild.
+(Bavuma's Mid-On 539 → 243) and every "scores mainly down the ground" fact.
+`referencebuilder/scripts/build_field_trigger_norms.py` bucketed the same zeros as `straight`; since
+30-09 its shares are of **placed** runs (`placed_runs` in the CSV). It moved real decisions: in Tests
+124 batter cells newly trip R3 and 132 stop (de Zorzi and Verreynne vs pace stop; Markram vs spin and
+Bosch vs pace start), and the Test straight-share medians fell 2–5 points.
+
+**The build machine had never had `field_trigger_norms.csv`**, and `field_engine._load_csv` read a
+missing file as an empty table — so R2, R3 and R6 silently never fired on any Suggested Field the box
+rendered, every South Africa Test report since 29-09 included. The file is now in `shared_data.py`'s
+`packs` set, and a missing field reference file raises instead.
 
 **Fixing a LIVE pack mid-series: `--before`, and a fact-only card patch.** The South Africa ODI
 cards were built 23-09 and ODIs were played 24-09 and 27-09, so a plain rebuild would have re-pointed
