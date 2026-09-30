@@ -176,9 +176,12 @@ def _threat(P):
     }
 
 
-def build(opp, group, only=None, fmt="Test", level="international", source="warehouse"):
+def build(opp, group, only=None, fmt="Test", level="international", source="warehouse",
+          before=None):
     """`only` = batter ids to (re)build, merging into the existing overview and leaving every other
-    row as it was. Adding one player to a squad shouldn't re-profile the whole opposition."""
+    row as it was. Adding one player to a squad shouldn't re-profile the whole opposition.
+    `before` (ISO date) profiles every batter as they stood before that day — see
+    `build_batter_profile`; for a mid-series fix that must not pull in the games just played."""
     about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
     batters = about.get("batters", {})
     label = (MACRO_GROUPS.get(group) or BOWLER_GROUPS.get(group) or (None, group))[1]
@@ -199,7 +202,7 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
         for attempt in range(3):
             try:
                 P = build_batter_profile(bid, group=group, fmt=fmt, level=level,
-                                         source=source)
+                                         source=source, before=before)
                 break
             except Exception as e:
                 err = f"{type(e).__name__}: {str(e)[:60]}"
@@ -220,7 +223,7 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
         if group in _SPIN_SUBS and not thin:
             try:
                 baseline = build_batter_profile(bid, group="spin", fmt=fmt, level=level,
-                                                source=source).get("dims")
+                                                source=source, before=before).get("dims")
             except Exception as e:
                 print(f"     ! spin baseline for {name}: {type(e).__name__}")
         rows.append({"bid": bid, "name": name,
@@ -238,7 +241,7 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
         if t and not t["short"] and group in _PACE_SUBS:
             try:
                 s = _short_read(build_batter_profile(bid, group="pace", fmt=fmt, level=level,
-                                                     source=source))
+                                                     source=source, before=before))
                 if s:
                     t["short"] = f"{s} — vs all pace"
             except Exception:
@@ -377,9 +380,12 @@ def main():
                     help="where the ball record comes from. 'both' adds Cricket-21 "
                          "Indian domestic cricket, which the warehouse does not hold at "
                          "all — see c21_source and cricket21/docs/INDIA_DOMESTIC.md")
+    ap.add_argument("--before", default=None, metavar="YYYY-MM-DD",
+                    help="profile every batter as they stood before this date — for a mid-series "
+                         "fix that must not pull in the games just played")
     a = ap.parse_args()
     build(a.opp, a.group, only=[x.strip() for x in a.only.split(",") if x.strip()] or None,
-          fmt=a.fmt, level=a.level, source=a.source)
+          fmt=a.fmt, level=a.level, source=a.source, before=a.before)
 
 
 if __name__ == "__main__":

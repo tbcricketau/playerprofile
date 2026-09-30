@@ -318,16 +318,23 @@ def _annotate_batter_catches(batter_id, raw, fmt="Test", level="international"):
 
 def build_batter_profile(batter_id: str, raw: list | None = None, group: str | None = None,
                          fmt: str = "Test", level: str = "international",
-                         source: str = "warehouse") -> dict:
+                         source: str = "warehouse", before: str | None = None) -> dict:
     """`fmt` scopes every warehouse read to that format (Test / ODI / T20) and `level` to that
     standard of cricket ("international" or "a-team"). Both default to the senior international
     case, so existing callers are unchanged. When `raw` is supplied the caller has already scoped
     it — fmt and level then only affect the innings/info/catch lookups, so pass the SAME pair you
     loaded `raw` with or the share-of-runs denominator will come from a different body of
-    cricket."""
+    cricket.
+
+    `before` (ISO date) drops every match on or after that day, deliveries AND innings — the
+    profile as it stood then. For re-rendering a live pack mid-series without pulling in the games
+    just played (30-09-2026: the South Africa ODI packs, fixed for shot direction, cut at 24-09 so
+    the 24-09 and 27-09 ODIs changed nothing else)."""
     if raw is None:
         raw = process_batting_rows(load_batter_deliveries(batter_id, fmt=fmt, level=level,
                                                           source=source))
+    if before:
+        raw = [r for r in raw if (r.get("match_date") or "") < before]
     # correct known warehouse hand errors for the profiled batter (all his deliveries)
     _hov = _HAND_OVERRIDE.get(str(batter_id))
     if _hov:
@@ -337,6 +344,9 @@ def build_batter_profile(batter_id: str, raw: list | None = None, group: str | N
     # dismissal-evidence rule (was he caught at a specific catcher, e.g. Carey's leg slip?).
     _catch_pos = _annotate_batter_catches(batter_id, raw, fmt=fmt, level=level)
     innings = load_batter_innings(batter_id, fmt=fmt, level=level)
+    if before:                                  # innings rows carry no date — keep the cut's matches
+        _kept = {str(r.get("match_id")) for r in raw}
+        innings = [i for i in innings if str(i.get("match_id")) in _kept]
     info = load_batter_info(batter_id, fmt=fmt, level=level)
 
     # Optional bowler-group filter (focused report). Headline + dimensions then reflect only

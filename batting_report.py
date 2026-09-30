@@ -858,7 +858,8 @@ def _record_label(rows, fmt="Test", level="international"):
 def render_batting_report(batter_id: str, out_dir: str = "reports", group: str | None = None,
                           render_pdf: bool = True, fmt: str = "Test",
                           level: str = "international",
-                          source: str = "warehouse", since: str | None = None) -> str:
+                          source: str = "warehouse", since: str | None = None,
+                          before: str | None = None) -> str:
     """Combined overview (group=None) or a focused per-bowler-type exploit report (e.g.
     group='right_pace'). Same engine; the focused one filters to that bowler group + adds a plan.
     `render_pdf=False` writes the .html + .pmode.html only (fast web iteration, skips the slow print).
@@ -866,10 +867,17 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     `since` (ISO date) cuts the record to matches on or after that day — a window report, not the
     career one. It is stamped on the page, in the filename and (by build_batting_reports) in its
     own folder, so `publish_site._sidecar_map` can never take it for the full-record report a pack
-    links. Added 2026-09-29 for Marques Ackerman, whose last two years were the question."""
+    links. Added 2026-09-29 for Marques Ackerman, whose last two years were the question.
+
+    `before` (ISO date) is the other end: every match on or after that day is dropped — the report
+    as it stood then. It KEEPS the normal filename, because its job is to replace a live pack's
+    report mid-series without pulling in the games just played; the page says "record to
+    dd-mm-yyyy" so the cut is never silent. Added 2026-09-30 for the South Africa ODI packs."""
+    import datetime as _dt
     if since is not None:
-        import datetime as _dt
         since = _dt.date.fromisoformat(str(since)).isoformat()      # ValueError on a bad date
+    if before is not None:
+        before = _dt.date.fromisoformat(str(before)).isoformat()
     raw_all = process_batting_rows(load_batter_deliveries(batter_id, fmt=fmt, level=level,
                                                           source=source))
     if since:
@@ -877,8 +885,12 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         raw_all = [r for r in raw_all if (r.get("match_date") or "") >= since]
         if not raw_all:
             raise ValueError(f"no deliveries for {batter_id} since {since} ({n_all} before the cut)")
+    if before:
+        raw_all = [r for r in raw_all if (r.get("match_date") or "") < before]
+        if not raw_all:
+            raise ValueError(f"no deliveries for {batter_id} before {before}")
     P = build_batter_profile(batter_id, raw=raw_all, group=group, fmt=fmt, level=level,
-                             source=source)
+                             source=source, before=before)
 
     # a type-scoped player report (group set) keeps the fingerprint/impact but shows only the
     # traits + numbers for that bowling type. focus = pace/spin picks which fingerprint cards stay.
@@ -888,14 +900,17 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     # OVERALL 3yr (Pr); the top cards' avg/SR are vs-this-type, so their recency is the type 3yr (Pg).
     fp_recent = {}
     card_recent = {}
-    import datetime as _dt
-    _cut = (_dt.date.today() - _dt.timedelta(days=int(365.25 * 3))).isoformat()
+    _ref = _dt.date.fromisoformat(before) if before else _dt.date.today()
+    _cut = (_ref - _dt.timedelta(days=int(365.25 * 3))).isoformat()
     _rec = [r for r in raw_all if (r.get("match_date") or "") >= _cut]
     if since and since >= _cut:
         _rec = []                     # the window IS the record — an overlay would restate it
     if sum(1 for r in _rec if r.get("is_legal")) >= 300:    # floor — a thin window isn't a real change
-        Pr = build_batter_profile(batter_id, raw=_rec)
-        Pg = build_batter_profile(batter_id, raw=_rec, group=group) if group else Pr
+        # Same fmt/level/source as the report: without them the overlay's share-of-runs came from
+        # TEST innings on an ODI report (fixed 30-09-2026).
+        _kw = dict(fmt=fmt, level=level, source=source, before=before)
+        Pr = build_batter_profile(batter_id, raw=_rec, **_kw)
+        Pg = build_batter_profile(batter_id, raw=_rec, group=group, **_kw) if group else Pr
         vp, vs = (Pr.get("vs") or {}).get("pace") or {}, (Pr.get("vs") or {}).get("spin") or {}
         _sr = Pr.get("share") or {}                    # share is innings-based → overall, not type
         if (Pr.get("n_out") or 0) >= 6:
@@ -991,7 +1006,10 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
         "fmt_label": {"test": "Test", "odi": "ODI", "t20i": "T20I", "t20": "T20"}.get(
             str(P.get("fmt", "Test")).lower(), "Test"),
         # day-first for the reader (root CLAUDE.md); the ISO form stays in the filename
-        "since_label": (f"since {since[8:10]}-{since[5:7]}-{since[:4]}" if since else ""),
+        "since_label": (f"since {since[8:10]}-{since[5:7]}-{since[:4]}" if since else "")
+                       + ((" · " if since else "") + "record to "
+                          + (_dt.date.fromisoformat(before) - _dt.timedelta(days=1)).strftime("%d-%m-%Y")
+                          if before else ""),
         "record_label": _record_label(raw_all, fmt, level),
         "cards": _cards(P, card_recent), "impact_read": _impact_read(P),
         "vs_rows": _vs_rows(P), "vs_read": _vs_read(P),

@@ -53,13 +53,20 @@ def main():
                          "stamped on the page, suffixed in the filename and written under "
                          "<out>/since-<date>/ so the pack pipeline never mistakes it for the "
                          "career report")
+    ap.add_argument("--before", default=None, metavar="YYYY-MM-DD",
+                    help="drop every match on or after this date — the report as it stood then. "
+                         "Keeps the normal filename and folder (it REPLACES the pack-linked "
+                         "report) and stamps 'record to dd-mm-yyyy' on the page. For fixing a live "
+                         "pack mid-series without pulling in the games just played")
     args = ap.parse_args()
-    if args.since:
-        import datetime as _dt
-        try:
-            args.since = _dt.date.fromisoformat(args.since).isoformat()
-        except ValueError:
-            sys.exit(f"--since wants YYYY-MM-DD, got {args.since!r}")
+    import datetime as _dt
+    for _flag in ("since", "before"):
+        _v = getattr(args, _flag)
+        if _v:
+            try:
+                setattr(args, _flag, _dt.date.fromisoformat(_v).isoformat())
+            except ValueError:
+                sys.exit(f"--{_flag} wants YYYY-MM-DD, got {_v!r}")
 
     # LEVEL LIVES IN THE PATH, like format does. A player can hold both an A-team and a senior
     # record — Anshul Kamboj has 366 A-team first-class balls and 108 Test ones — and the filename
@@ -87,7 +94,8 @@ def main():
     for i, (bid, group) in enumerate(jobs, 1):
         try:
             path = render_batting_report(bid, out_dir=out_dir, group=group, fmt=args.fmt,
-                                         level=args.level, source=args.source, since=args.since)
+                                         level=args.level, source=args.source, since=args.since,
+                                         before=args.before)
             print(f"  [{i}/{len(jobs)}] {bid}{' vs ' + group if group else ''} -> {os.path.basename(path)}")
             ok += 1
         except Exception as e:
