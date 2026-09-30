@@ -120,8 +120,8 @@ def process_batting_rows(rows: list) -> list:
         r["at_stumps_height_m"] = (lambda v: v / 1000 if v is not None else None)(_safe_float(r.get("at_stumps_height")))
         r["off_bat_angle_n"] = _safe_float(r.get("off_bat_angle"))
         r["off_bat_speed_n"] = _safe_float(r.get("off_bat_speed"))
-        # off_bat_angle is effectively empty — hit_to_angle is the real shot direction
-        # (100% coverage, absolute: 0 = straight, sign = physical side, +ve = a RHB's off).
+        # off_bat_angle is effectively empty — hit_to_angle is the real shot direction (~100%
+        # of scoring balls; BATTER-RELATIVE: 0 = straight, +ve = the batter's off side, either hand).
         r["hit_ang_n"] = _safe_float(r.get("hit_to_angle"))
         r["hit_x_n"] = _safe_float(r.get("hit_to_x_physical"))
         r["hit_len_n"] = _safe_float(r.get("hit_to_length"))

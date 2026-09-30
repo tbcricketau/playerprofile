@@ -79,6 +79,47 @@ The `_process_rows()` function in `app.py` handles all this enrichment and adds 
 - After negation: **negative = off side** (left on chart for RHB, right for LHB)
 - For LHB views (`flip_x=True`), zone boundaries are mirrored in the sidebar sliders
 
+## Shot direction: `hit_to_angle` is BATTER-RELATIVE, and half the readers assumed it wasn't (30-09-2026)
+
+Tom asked whether the left-handers' wagon wheels in the Test packs had off and leg the right way
+round. They did. **Every right-hander's was inverted**, and had been since the wheel was written.
+
+`hit_to_angle` / `hit_to_length` is batter-relative: 0 = straight down the ground, **positive = the
+batter's off side for either hand**. `cricket_core.charts.wagon_wheel_zones` bucketed positive as a
+right-hander's *leg* side, and the LHB label set happens to put off-side names on positive x — so
+left-handers came out right by accident. Proven on the coded stroke names (a pull must land on the
+leg side, a cut on the off) rather than by eye, because a wheel with the sides swapped looks exactly
+as plausible as the right one:
+
+| | before | after |
+|---|---|---|
+| Bavuma (RHB) drives | Mid-Wicket 163 · Mid-On 138 | Cover · Mid-Off |
+| Bavuma pulls / glances | Cover 37 · Third Man 25 | Square Leg · Fine Leg |
+| de Zorzi (LHB) drives / pulls | Mid-Off 49, Cover 48 / Square Leg 9 | unchanged |
+
+Four other readers made the opposite mistake — treating the angle as absolute and **negating it for
+a left-hander**, which inverted the left-handers instead: `batter_profile._hit_side` and
+`profile._hit_side` (the off/leg run split in the facts and phase text), `report._off_leg_runs` (the
+wagon read line) and `field_engine._br_angle`, which mirrored every left-hander's **run flow**, so
+the stock-variant fit and the floating fielder in Suggested Fields were chosen on the wrong side
+while the diagram — which mirrors correctly — looked right. All read the angle as-is now.
+
+The one place a mirror IS needed is the absolute physical pair `hit_to_x_physical` (+ve = a
+right-hander's off), which `charts.wagon_xy_relative` negates for a left-hand **row** before anything
+else sees it. `batter_profile` never fills `hit_y_n`, so batting rows are polar-only; bowling rows
+mix both sources per delivery, which is why the normalisation is per row. `charts.wagon_sector(r,
+is_lhb)` exposes the bucketing so the stroke cross-tab can be re-run without a figure.
+
+**Cricket-21 rows had no placement at all** — `calibrate.py` never fitted `WagonWheelX/Y` (the
+warehouse physical pair is empty in the overlap matches), so Ackerman's wheel rendered "no hit
+data". `c21_source._wagon_polar` maps C21's 600 px ground image (striker at 300,233, bowler down
+the image, right-hander's off on the viewer's left, mirrored for a left-hander) to the batter-relative
+polar pair. Verified per stroke across the whole mirror and on Ackerman's own rows.
+
+Everything the South Africa Test packs show was re-rendered after the fix. **Earlier packs and
+reports (Bangladesh, Zimbabwe, India A, Australia A) carry the inverted right-hander wheels and stay
+as they are** — finished or archived, same rule as the sentinel fix; do not cite their wheels.
+
 ## Charts (charts.py)
 
 ### `pitch_scatter_map(data, line_zones, length_zones, value, title, min_balls, flip_x)`

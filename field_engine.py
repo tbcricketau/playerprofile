@@ -15,7 +15,9 @@ Output: an ordered field (keeper + 9) where each fielder has a role (catch/save)
 one-line justification, plus a backtest ("under N of his M caught dismissals vs this group").
 
 Batter-relative angle convention (matches cricket_core.lookups.field_coords):
-  br_angle = hit_to_angle if RHB else -hit_to_angle ;  +ve = OFF side, 0 = straight.
+  br_angle = hit_to_angle, as stored — the warehouse column is already batter-relative for either
+  hand;  +ve = OFF side, 0 = straight. (Negating it for a left-hander, as this file did until
+  30-09-2026, mirrors their run flow.)
 """
 import csv
 import os
