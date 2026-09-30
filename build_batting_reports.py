@@ -102,6 +102,9 @@ def main():
             print(f"  [{i}/{len(jobs)}] {bid} FAILED: {type(e).__name__}: {str(e)[:100]}")
             fail += 1
     print(f"Done: {ok} succeeded, {fail} failed. Output in: {os.path.abspath(out_dir)}")
+    # Non-zero on ANY failure. It exited 0 until 30-09-2026, so a batch that lost one report to a
+    # dropped warehouse connection read as clean to every chain script that ran it.
+    sys.exit(1 if fail else 0)
 
 
 if __name__ == "__main__":

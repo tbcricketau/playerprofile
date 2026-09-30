@@ -120,6 +120,24 @@ the R3 down-ground trigger's `straight_share` and its percentile are inflated �
 the cohort alike, so the percentile is roughly self-consistent, but a batter whose record is heavy
 in unplaced series ranks falsely high. Needs `hit_to_length > 0` in its sector CASE and a rebuild.
 
+**Fixing a LIVE pack mid-series: `--before`, and a fact-only card patch.** The South Africa ODI
+cards were built 23-09 and ODIs were played 24-09 and 27-09, so a plain rebuild would have re-pointed
+every batter reel at those games (the h2h hazard below, on the card reels) and moved every figure.
+`build_batter_profile`, `render_batting_report`, `build_batting_reports` and `build_overview` take
+`before` (ISO date): every match on or after it is dropped, deliveries and innings (innings rows
+carry no date, so they are kept to the cut's match ids). It keeps the normal filename and stamps
+*"record to dd-mm-yyyy"* on the page. Proven before use: de Kock's plan row cut at 24-09 reproduced
+the stored balls, dismissals, BPD and false-shot rate exactly; only the scoring area moved. The ODI
+**cards** were not rebuilt at all — each card's facts were re-derived as of 24-09, every non-area fact
+had to match the stored card, and only the "Scores mainly …" fact was swapped (a four-line diff). An
+all-formats fallback card ("Limited ODI record …") states no side and is skipped.
+
+**`build_overview --only` rendered a page of only the rebuilt batters** (fixed 30-09-2026). The
+merge with the kept rows ran after the page was built, so the JSON (which the packs read) was whole
+while the page (which the coach site and the coach view's `plans/` serve) listed just the players
+the run had rebuilt — the South Africa Test coach view showed Ackerman alone in all six plan tables
+after his merge. The merge now happens first, and `--html-only` re-renders a page from its JSON.
+
 **Cricket-21 rows had no placement at all** — `calibrate.py` never fitted `WagonWheelX/Y` (the
 warehouse physical pair is empty in the overlap matches), so Ackerman's wheel rendered "no hit
 data". `c21_source._wagon_polar` maps C21's 600 px ground image (striker at 300,233, bowler down
