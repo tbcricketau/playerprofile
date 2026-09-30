@@ -5,6 +5,95 @@
  "min_balls": 60,
  "rows": [
   {
+   "bid": "4353850",
+   "name": "Tony de Zorzi",
+   "sub": "LHB · Opener",
+   "balls": 76,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 76,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 22.36842105263158,
+    "area": "off (69% of runs)",
+    "short": null,
+    "top_out": "Caught behind (50%)"
+   }
+  },
+  {
+   "bid": "4352600",
+   "name": "Ryan Rickelton",
+   "sub": "LHB · Middle order",
+   "balls": 196,
+   "plan": "Plan for left-arm pace: bowl <b>good length pitching wide outside off</b> while <b>seaming away</b>.",
+   "field": {
+    "set": "off-side / square stock field",
+    "move": "",
+    "spare": "Mid-on"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_pace_4352600_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_pace_4352600_1.png"
+    },
+    {
+     "label": "Bouncer plan",
+     "file": "left_pace_4352600_2.png"
+    }
+   ],
+   "threat": {
+    "balls": 196,
+    "n_out": 5,
+    "bpd": 39.2,
+    "false_pct": 18.37837837837838,
+    "area": "off (48% of runs)",
+    "short": null,
+    "top_out": "Caught behind (80%)"
+   }
+  },
+  {
+   "bid": "3550469",
+   "name": "Senuran Muthusamy",
+   "sub": "LHB · Middle order",
+   "balls": 31,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 31,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 32.25806451612903,
+    "area": "off (62% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 83,
+   "plan": null,
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 83,
+    "n_out": 2,
+    "bpd": null,
+    "false_pct": 20.0,
+    "area": "off (58% of runs)",
+    "short": null,
+    "top_out": "Caught (50%)"
+   }
+  },
+  {
    "bid": "3760008",
    "name": "Aiden Markram",
    "sub": "RHB · Opener",
@@ -69,7 +158,7 @@
     "n_out": 9,
     "bpd": 79.66666666666667,
     "false_pct": 19.12751677852349,
-    "area": "off (65% of runs)",
+    "area": "off (66% of runs)",
     "short": "7% false (41 balls) — vs all pace",
     "top_out": "Caught behind (56%)"
    }
@@ -87,7 +176,7 @@
     "n_out": 3,
     "bpd": null,
     "false_pct": 23.076923076923077,
-    "area": "leg (50% of runs)",
+    "area": "leg (55% of runs)",
     "short": null,
     "top_out": "LBW (33%)"
    }
@@ -122,62 +211,9 @@
     "n_out": 2,
     "bpd": null,
     "false_pct": 13.839285714285714,
-    "area": "off (59% of runs)",
+    "area": "off (68% of runs)",
     "short": null,
     "top_out": "Caught behind (50%)"
-   }
-  },
-  {
-   "bid": "4353850",
-   "name": "Tony de Zorzi",
-   "sub": "LHB · Opener",
-   "balls": 76,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 76,
-    "n_out": 2,
-    "bpd": null,
-    "false_pct": 22.36842105263158,
-    "area": "leg (69% of runs)",
-    "short": null,
-    "top_out": "Caught behind (50%)"
-   }
-  },
-  {
-   "bid": "4352600",
-   "name": "Ryan Rickelton",
-   "sub": "LHB · Middle order",
-   "balls": 196,
-   "plan": "Plan for left-arm pace: bowl <b>good length pitching wide outside off</b> while <b>seaming away</b>.",
-   "field": {
-    "set": "leg-side stock field",
-    "move": "",
-    "spare": "Fine leg"
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "left_pace_4352600_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "left_pace_4352600_1.png"
-    },
-    {
-     "label": "Bouncer plan",
-     "file": "left_pace_4352600_2.png"
-    }
-   ],
-   "threat": {
-    "balls": 196,
-    "n_out": 5,
-    "bpd": 39.2,
-    "false_pct": 18.37837837837838,
-    "area": "leg (45% of runs)",
-    "short": null,
-    "top_out": "Caught behind (80%)"
    }
   },
   {
@@ -193,7 +229,7 @@
     "n_out": 0,
     "bpd": null,
     "false_pct": 16.666666666666668,
-    "area": "leg (41% of runs)",
+    "area": "leg (46% of runs)",
     "short": "14% false (41 balls) — vs all pace",
     "top_out": null
    }
@@ -242,27 +278,9 @@
     "n_out": 3,
     "bpd": null,
     "false_pct": 23.529411764705884,
-    "area": "straight (40% of runs)",
+    "area": "leg (37% of runs)",
     "short": "11% false (42 balls) — vs all pace",
     "top_out": "Caught behind (33%)"
-   }
-  },
-  {
-   "bid": "3550469",
-   "name": "Senuran Muthusamy",
-   "sub": "LHB · Middle order",
-   "balls": 31,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 31,
-    "n_out": 0,
-    "bpd": null,
-    "false_pct": 32.25806451612903,
-    "area": "leg (62% of runs)",
-    "short": null,
-    "top_out": null
    }
   },
   {
@@ -274,24 +292,6 @@
    "field": null,
    "fields": [],
    "threat": null
-  },
-  {
-   "bid": "4353762",
-   "name": "Marques Ackerman",
-   "sub": "LHB",
-   "balls": 83,
-   "plan": null,
-   "field": null,
-   "fields": [],
-   "threat": {
-    "balls": 83,
-    "n_out": 2,
-    "bpd": null,
-    "false_pct": 20.0,
-    "area": null,
-    "short": null,
-    "top_out": "Caught (50%)"
-   }
   }
  ]
 }

@@ -5,6 +5,126 @@
  "min_balls": 60,
  "rows": [
   {
+   "bid": "4353850",
+   "name": "Tony de Zorzi",
+   "sub": "LHB · Opener",
+   "balls": 422,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Fine leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_4353850_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_4353850_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 422,
+    "n_out": 12,
+    "bpd": 35.166666666666664,
+    "false_pct": 13.711583924349881,
+    "area": "leg (43% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (42%)"
+   }
+  },
+  {
+   "bid": "4352600",
+   "name": "Ryan Rickelton",
+   "sub": "LHB · Middle order",
+   "balls": 380,
+   "plan": "Plan for left-arm orthodox: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Fine leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_4352600_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_4352600_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 380,
+    "n_out": 5,
+    "bpd": 76.0,
+    "false_pct": 17.1875,
+    "area": "off (48% of runs)",
+    "short": null,
+    "top_out": "Caught behind (40%)"
+   }
+  },
+  {
+   "bid": "3550469",
+   "name": "Senuran Muthusamy",
+   "sub": "LHB · Middle order",
+   "balls": 249,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching around leg</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Deep backward square leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "left_orthodox_3550469_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "left_orthodox_3550469_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 249,
+    "n_out": 1,
+    "bpd": null,
+    "false_pct": 14.056224899598394,
+    "area": "leg (49% of runs)",
+    "short": null,
+    "top_out": "LBW (100%)"
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 215,
+   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching wide outside off</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Once set",
+     "file": "left_orthodox_4353762_0.png"
+    }
+   ],
+   "threat": {
+    "balls": 215,
+    "n_out": 4,
+    "bpd": 53.75,
+    "false_pct": 14.743589743589743,
+    "area": "leg (57% of runs)",
+    "short": null,
+    "top_out": "Caught (75%)"
+   }
+  },
+  {
    "bid": "3760008",
    "name": "Aiden Markram",
    "sub": "RHB · Opener",
@@ -30,7 +150,7 @@
     "n_out": 18,
     "bpd": 35.5,
     "false_pct": 15.03875968992248,
-    "area": "leg (36% of runs)",
+    "area": "leg (38% of runs)",
     "short": null,
     "top_out": "Caught in the field (28%)"
    }
@@ -61,7 +181,7 @@
     "n_out": 12,
     "bpd": 85.08333333333333,
     "false_pct": 9.9609375,
-    "area": "leg (46% of runs)",
+    "area": "leg (53% of runs)",
     "short": null,
     "top_out": "LBW (33%)"
    }
@@ -92,7 +212,7 @@
     "n_out": 6,
     "bpd": 90.33333333333333,
     "false_pct": 12.316176470588236,
-    "area": "leg (40% of runs)",
+    "area": "leg (42% of runs)",
     "short": null,
     "top_out": "Caught behind (50%)"
    }
@@ -123,71 +243,9 @@
     "n_out": 8,
     "bpd": 45.25,
     "false_pct": 14.285714285714286,
-    "area": "leg (44% of runs)",
+    "area": "leg (51% of runs)",
     "short": null,
     "top_out": "Caught behind (38%)"
-   }
-  },
-  {
-   "bid": "4353850",
-   "name": "Tony de Zorzi",
-   "sub": "LHB · Opener",
-   "balls": 422,
-   "plan": "Plan for left-arm orthodox: bowl <b>full pitching on the stumps</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "",
-    "spare": ""
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "left_orthodox_4353850_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "left_orthodox_4353850_1.png"
-    }
-   ],
-   "threat": {
-    "balls": 422,
-    "n_out": 12,
-    "bpd": 35.166666666666664,
-    "false_pct": 13.711583924349881,
-    "area": "off (39% of runs)",
-    "short": null,
-    "top_out": "Caught in the field (42%)"
-   }
-  },
-  {
-   "bid": "4352600",
-   "name": "Ryan Rickelton",
-   "sub": "LHB · Middle order",
-   "balls": 380,
-   "plan": "Plan for left-arm orthodox: bowl <b>full pitching on the stumps</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "",
-    "spare": "Backward point"
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "left_orthodox_4352600_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "left_orthodox_4352600_1.png"
-    }
-   ],
-   "threat": {
-    "balls": 380,
-    "n_out": 5,
-    "bpd": 76.0,
-    "false_pct": 17.1875,
-    "area": "leg (44% of runs)",
-    "short": null,
-    "top_out": "Caught behind (40%)"
    }
   },
   {
@@ -216,7 +274,7 @@
     "n_out": 7,
     "bpd": 49.857142857142854,
     "false_pct": 8.262108262108262,
-    "area": "leg (34% of runs)",
+    "area": "leg (38% of runs)",
     "short": null,
     "top_out": "Caught behind (43%)"
    }
@@ -247,7 +305,7 @@
     "n_out": 8,
     "bpd": 75.0,
     "false_pct": 19.601328903654483,
-    "area": "off (46% of runs)",
+    "area": "off (51% of runs)",
     "short": null,
     "top_out": "Caught behind (50%)"
    }
@@ -265,40 +323,9 @@
     "n_out": 3,
     "bpd": null,
     "false_pct": 19.753086419753085,
-    "area": "leg (71% of runs)",
+    "area": "leg (73% of runs)",
     "short": null,
     "top_out": "LBW (67%)"
-   }
-  },
-  {
-   "bid": "3550469",
-   "name": "Senuran Muthusamy",
-   "sub": "LHB · Middle order",
-   "balls": 249,
-   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching around leg</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "Deep backward square leg",
-    "spare": "Mid-off"
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "left_orthodox_3550469_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "left_orthodox_3550469_1.png"
-    }
-   ],
-   "threat": {
-    "balls": 249,
-    "n_out": 1,
-    "bpd": null,
-    "false_pct": 14.056224899598394,
-    "area": "off (49% of runs)",
-    "short": null,
-    "top_out": "LBW (100%)"
    }
   },
   {
@@ -317,33 +344,6 @@
     "area": "off (47% of runs)",
     "short": null,
     "top_out": "Bowled (50%)"
-   }
-  },
-  {
-   "bid": "4353762",
-   "name": "Marques Ackerman",
-   "sub": "LHB",
-   "balls": 215,
-   "plan": "Plan for left-arm orthodox: bowl <b>good length pitching wide outside off</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "",
-    "spare": ""
-   },
-   "fields": [
-    {
-     "label": "Once set",
-     "file": "left_orthodox_4353762_0.png"
-    }
-   ],
-   "threat": {
-    "balls": 215,
-    "n_out": 4,
-    "bpd": 53.75,
-    "false_pct": 14.743589743589743,
-    "area": null,
-    "short": null,
-    "top_out": "Caught (75%)"
    }
   }
  ]
