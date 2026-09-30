@@ -17,7 +17,7 @@
     "n_out": 15,
     "bpd": 50.666666666666664,
     "false_pct": 19.667170953101362,
-    "area": "off (44% of runs)",
+    "area": "leg (47% of runs)",
     "short": "16% false (47 balls) — vs all pace",
     "top_out": "Caught (33%)"
    }
@@ -35,7 +35,7 @@
     "n_out": 13,
     "bpd": 30.846153846153847,
     "false_pct": 19.122257053291538,
-    "area": "off (37% of runs)",
+    "area": "leg (42% of runs)",
     "short": "18% false (66 balls) — vs all pace",
     "top_out": "Bowled (31%)"
    }
@@ -53,7 +53,7 @@
     "n_out": 11,
     "bpd": 33.0,
     "false_pct": 18.313953488372093,
-    "area": "off (49% of runs)",
+    "area": "off (55% of runs)",
     "short": "34% false (52 balls) — vs all pace",
     "top_out": "Caught in the field (45%)"
    }
@@ -71,7 +71,7 @@
     "n_out": 7,
     "bpd": 35.57142857142857,
     "false_pct": 17.88617886178862,
-    "area": "leg (44% of runs)",
+    "area": "leg (51% of runs)",
     "short": null,
     "top_out": "Caught behind (43%)"
    }
@@ -107,7 +107,7 @@
     "n_out": 5,
     "bpd": 36.4,
     "false_pct": 30.36649214659686,
-    "area": "off (54% of runs)",
+    "area": "leg (55% of runs)",
     "short": null,
     "top_out": "Caught behind (40%)"
    }
@@ -143,7 +143,7 @@
     "n_out": 1,
     "bpd": null,
     "false_pct": 24.390243902439025,
-    "area": "leg (38% of runs)",
+    "area": "off (38% of runs)",
     "short": null,
     "top_out": "Caught behind (100%)"
    }
@@ -161,7 +161,7 @@
     "n_out": 3,
     "bpd": null,
     "false_pct": 24.675324675324674,
-    "area": "leg (41% of runs)",
+    "area": "leg (46% of runs)",
     "short": null,
     "top_out": "Caught in the field (67%)"
    }

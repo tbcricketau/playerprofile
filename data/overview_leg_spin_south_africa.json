@@ -17,7 +17,7 @@
     "n_out": 5,
     "bpd": 68.0,
     "false_pct": 9.15032679738562,
-    "area": "off (46% of runs)",
+    "area": "leg (52% of runs)",
     "short": null,
     "top_out": "LBW (40%)"
    }
@@ -35,7 +35,7 @@
     "n_out": 5,
     "bpd": 69.0,
     "false_pct": 14.950166112956811,
-    "area": "off (49% of runs)",
+    "area": "leg (53% of runs)",
     "short": null,
     "top_out": "Caught in the field (40%)"
    }
@@ -53,7 +53,7 @@
     "n_out": 11,
     "bpd": 31.0,
     "false_pct": 16.257668711656443,
-    "area": "off (54% of runs)",
+    "area": "off (62% of runs)",
     "short": null,
     "top_out": "Caught in the field (64%)"
    }
@@ -71,7 +71,7 @@
     "n_out": 6,
     "bpd": 52.0,
     "false_pct": 15.96958174904943,
-    "area": "leg (42% of runs)",
+    "area": "leg (53% of runs)",
     "short": null,
     "top_out": "Caught in the field (50%)"
    }
@@ -107,7 +107,7 @@
     "n_out": 3,
     "bpd": null,
     "false_pct": 42.42424242424242,
-    "area": "off (64% of runs)",
+    "area": "leg (75% of runs)",
     "short": null,
     "top_out": "Caught behind (33%)"
    }
@@ -125,7 +125,7 @@
     "n_out": 4,
     "bpd": 31.25,
     "false_pct": 26.436781609195403,
-    "area": "leg (50% of runs)",
+    "area": "leg (51% of runs)",
     "short": null,
     "top_out": "Caught in the field (50%)"
    }
@@ -143,7 +143,7 @@
     "n_out": 2,
     "bpd": null,
     "false_pct": 24.56140350877193,
-    "area": "off (50% of runs)",
+    "area": "leg (50% of runs)",
     "short": null,
     "top_out": "LBW (50%)"
    }
@@ -161,7 +161,7 @@
     "n_out": 3,
     "bpd": null,
     "false_pct": 17.28395061728395,
-    "area": "off (41% of runs)",
+    "area": "off (44% of runs)",
     "short": null,
     "top_out": "Caught behind (33%)"
    }

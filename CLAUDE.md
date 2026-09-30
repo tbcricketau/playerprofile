@@ -138,6 +138,17 @@ while the page (which the coach site and the coach view's `plans/` serve) listed
 the run had rebuilt — the South Africa Test coach view showed Ackerman alone in all six plan tables
 after his merge. The merge now happens first, and `--html-only` re-renders a page from its JSON.
 
+**The warehouse renamed two players between renders, and the filename follows the name.** On 30-09
+the box rendered `david_bedingham_*` and `pieter_mulder_*` where 29-09's renders were
+`david_guy_bedingham_*` and `pieter_willem_adriaan_mulder_*` — `Players.name` had been shortened.
+The duplicate gate refused the publish. The pack pages linked **both** spellings — some paths take
+the newest render, others did not — so the fix had two halves: the new renders were renamed to the
+old filenames (self-references rewritten) and the pack pages' 42 new-spelling links rewritten to
+match, with the link check proving the result. No published URL moved; the pre-fix renders and 12
+orphaned coach-view copies are parked in the session scratchpad. **The next render of either player
+will clash again**; the gate will say so, and the fix is the same two halves or a full pack rebuild
+onto the new spelling.
+
 **Cricket-21 rows had no placement at all** — `calibrate.py` never fitted `WagonWheelX/Y` (the
 warehouse physical pair is empty in the overlap matches), so Ackerman's wheel rendered "no hit
 data". `c21_source._wagon_polar` maps C21's 600 px ground image (striker at 300,233, bowler down

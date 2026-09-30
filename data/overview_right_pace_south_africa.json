@@ -17,7 +17,7 @@
     "n_out": 47,
     "bpd": 48.191489361702125,
     "false_pct": 17.939871858058158,
-    "area": "off (49% of runs)",
+    "area": "leg (51% of runs)",
     "short": "16% false (47 balls) — vs all pace",
     "top_out": "Caught in the field (34%)"
    }
@@ -35,7 +35,7 @@
     "n_out": 30,
     "bpd": 41.46666666666667,
     "false_pct": 20.651068158697864,
-    "area": "off (46% of runs)",
+    "area": "leg (49% of runs)",
     "short": "18% false (52 balls)",
     "top_out": "Caught in the field (37%)"
    }
@@ -53,7 +53,7 @@
     "n_out": 29,
     "bpd": 42.58620689655172,
     "false_pct": 18.786857624262847,
-    "area": "off (44% of runs)",
+    "area": "off (46% of runs)",
     "short": "33% false (40 balls)",
     "top_out": "Caught in the field (48%)"
    }
@@ -71,7 +71,7 @@
     "n_out": 22,
     "bpd": 49.54545454545455,
     "false_pct": 18.435754189944134,
-    "area": "leg (41% of runs)",
+    "area": "leg (48% of runs)",
     "short": null,
     "top_out": "Caught in the field (45%)"
    }
@@ -107,7 +107,7 @@
     "n_out": 3,
     "bpd": null,
     "false_pct": 37.65822784810127,
-    "area": "leg (35% of runs)",
+    "area": "off (41% of runs)",
     "short": null,
     "top_out": "Caught in the field (100%)"
    }
@@ -125,7 +125,7 @@
     "n_out": 7,
     "bpd": 53.42857142857143,
     "false_pct": 26.027397260273972,
-    "area": "off (46% of runs)",
+    "area": "off (51% of runs)",
     "short": null,
     "top_out": "LBW (43%)"
    }
@@ -143,7 +143,7 @@
     "n_out": 13,
     "bpd": 35.84615384615385,
     "false_pct": 32.06349206349206,
-    "area": "straight (47% of runs)",
+    "area": "off (44% of runs)",
     "short": null,
     "top_out": "Caught behind (38%)"
    }
@@ -161,7 +161,7 @@
     "n_out": 8,
     "bpd": 26.375,
     "false_pct": 18.91891891891892,
-    "area": "leg (38% of runs)",
+    "area": "leg (39% of runs)",
     "short": null,
     "top_out": "Bowled (50%)"
    }
@@ -179,7 +179,7 @@
     "n_out": 6,
     "bpd": 42.333333333333336,
     "false_pct": 28.0,
-    "area": "leg (49% of runs)",
+    "area": "leg (50% of runs)",
     "short": null,
     "top_out": "Caught behind (50%)"
    }
