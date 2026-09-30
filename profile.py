@@ -409,15 +409,16 @@ def _mean(vals):
 
 def _hit_side(r) -> str | None:
     """Where a scoring shot went: 'off' / 'leg' / 'straight' (down-ground V).
-    hit_to_angle is absolute (0 = straight, sign like hit_x: +ve = a RHB's off),
-    so the off side is (angle>0) XOR left-hander.  Falls back to hit_x when the
-    angle is missing.  'straight' = the down-the-ground V only (|angle| ≤ 22.5°);
-    balls behind square keep their off/leg side."""
+    hit_to_angle is BATTER-RELATIVE (0 = straight, +ve = the batter's off side for either
+    hand — DATAWAREHOUSE.md, verified on coded strokes 30-09-2026), so it is read as-is.
+    Only the fallback, hit_x (absolute: +ve = a RHB's off), is mirrored for a left-hander.
+    'straight' = the down-the-ground V only (|angle| ≤ 22.5°); balls behind square keep
+    their off/leg side."""
     ha = r.get("hit_ang_n")
     if ha is not None:
         if abs(ha) <= 22.5:
             return "straight"
-        return "off" if ((ha > 0) != r["is_lhb"]) else "leg"
+        return "off" if ha > 0 else "leg"
     hx = r.get("hit_x_n")
     if hx is not None:
         return "off" if ((hx > 0) != r["is_lhb"]) else "leg"

@@ -97,10 +97,12 @@ def _batter_field(batter_id, group):
 
 
 def _br_angle(r, is_lhb):
-    a = r.get("hit_ang_n")
-    if a is None:
-        return None
-    return a if not is_lhb else -a
+    """The shot's batter-relative angle for `_SECTORS` (+ve = off side). `hit_to_angle` already
+    IS batter-relative for either hand (DATAWAREHOUSE.md, verified on coded strokes 30-09-2026),
+    so it is returned as-is. Until then this negated it for a left-hander, which mirrored every
+    left-hander's run flow — the stock-variant fit and the floating fielder were chosen on the
+    wrong side while the diagram (which mirrors correctly) looked right."""
+    return r.get("hit_ang_n")
 
 
 def _sector_of(angle):

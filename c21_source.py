@@ -51,6 +51,7 @@ consumer must use the RANGE, never `is not None` and never an equality check. No
 `c21_adv_length`, which stamps those balls "Full toss" exactly as the warehouse stamps them 10999.
 """
 import json
+import math
 import os
 import re
 import sqlite3
@@ -294,6 +295,30 @@ def record_phrase(rows):
     return f"{kind} cricket" + (f" ({', '.join(comps[:3])})" if comps else "")
 
 
+# Cricket-21's wagon wheel is a 600 px ground image with the striker at (300, 233) and the bowler
+# down the image — straight drives land at y ≈ 584, square shots at y ≈ 233 (median of 1,960
+# and 13,030 coded strokes), and a right-hander's cuts and cover drives sit at x < 300 while
+# pulls and glances sit at x > 300, mirrored for a left-hander. (0, 0) is "no shot plotted"
+# (9,087 scoring balls). `calibrate.py` never fitted these against the warehouse (the physical
+# pair is empty in the overlapping matches), so every C21 row shipped with no placement and
+# Ackerman's wagon wheel rendered "no hit data". Mapped here to the warehouse's BATTER-RELATIVE
+# polar pair instead: 0° toward the bowler, +ve = the batter's off side, length as a share of
+# the ground radius. Verified per stroke on the whole mirror, 30-09-2026.
+_WW_CX, _WW_CY, _WW_R = 300.0, 233.0, 300.0
+
+
+def _wagon_polar(r, lhb):
+    x, y = r.get("c21_wagonwheel_x"), r.get("c21_wagonwheel_y")
+    if x is None or y is None or (x == 0 and y == 0):
+        return None, None
+    dx, dy = float(x) - _WW_CX, float(y) - _WW_CY
+    img = math.degrees(math.atan2(dx, dy))          # 0 = down the image = toward the bowler
+    ang = img if lhb else -img                        # viewer's left is a right-hander's off side
+    if ang <= -180:
+        ang += 360
+    return round(ang, 1), round(min(110.0, math.hypot(dx, dy) / _WW_R * 100), 1)
+
+
 def _to_warehouse(r):
     """One mirror row -> the warehouse row shape the loaders return (all values strings).
 
@@ -308,6 +333,7 @@ def _to_warehouse(r):
     dismissed = str(r.get("dismissal") or "") == "1"
     lhb = str(r.get("striker_hand") or "").strip().upper().startswith("L")
     otw = str(r.get("over_or_round") or "")
+    ww_ang, ww_len = _wagon_polar(r, lhb)
     return {
         "match_id": _s(r.get("match_id")), "delivery_id": _s(r.get("delivery_id")),
         "striker_id": _s(r.get("striker_id")), "bowler_id": _s(r.get("bowler_id")),
@@ -324,7 +350,7 @@ def _to_warehouse(r):
         "legal_ball": "0" if (wide or nb) else "1",
         "wide_runs": _s(wide), "noball_runs": _s(nb), "bat_score": _s(r.get("bat_score") or 0),
         "hit_to_x_physical": _s(r.get("hit_to_x")), "hit_to_y_physical": _s(r.get("hit_to_y")),
-        "hit_to_length": "None", "hit_to_angle": "None",
+        "hit_to_length": _s(ww_len), "hit_to_angle": _s(ww_ang),
         "bowler_dismissal": "1" if (dismissed and how in _BOWLER_OUT) else "0",
         "striker_dismissed": "1" if dismissed else "0",
         "how_out_id": _s(how),

@@ -26,7 +26,7 @@ from profile import build_profile, fmt as _fmt
 from photos import get_photo_data_uri
 from report_style import REPORT_CSS, headline_cards
 from cricket_core.charts import (
-    pitch_scatter_map, pitch_heatmap, beehive, wagon_wheel_zones, release_map,
+    pitch_scatter_map, pitch_heatmap, beehive, wagon_wheel_zones, wagon_xy_relative, release_map,
     fingerprint_strip, speed_violin, innings_violin, day_violin, zone_concentration,
     LENGTH_ZONES_1M, LENGTH_ZONES_05M,
 )
@@ -511,13 +511,12 @@ def _off_leg_runs(rows):
         runs = r.get("bat_score_n") or 0
         if not runs:
             continue
-        hx = r.get("hit_x_n")
-        if hx is None:   # same fallback the wagon uses: polar hit_len × angle
-            hl, ha = r.get("hit_len_n"), r.get("hit_ang_n")
-            hx = hl * math.sin(math.radians(ha)) if (hl is not None and ha is not None) else None
-        if hx is None:
+        # Same resolution the wagon wheel uses: polar first (batter-relative, +x = off for
+        # either hand), then the absolute physical pair mirrored for a left-hander.
+        xy = wagon_xy_relative(r, r.get("is_lhb") or False)
+        if xy is None:
             continue
-        if (hx > 0) != r["is_lhb"]:   # batter-relative off side (hit_x is absolute)
+        if xy[0] > 0:
             off += runs
         else:
             leg += runs

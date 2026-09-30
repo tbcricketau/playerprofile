@@ -162,14 +162,16 @@ def process_batting_rows(rows: list) -> list:
 
 
 def _hit_side(r):
-    """off / leg / straight for a scoring shot (hit_to_angle is absolute: 0 = straight
-    down the ground, sign = physical side, +ve = a RHB's off; flip for LHB)."""
+    """off / leg / straight for a scoring shot. `hit_to_angle` is BATTER-RELATIVE (0 = straight
+    down the ground, +ve = the batter's off side for either hand — DATAWAREHOUSE.md, and verified
+    on the coded strokes 30-09-2026), so there is nothing to flip for a left-hander. Until then
+    this XOR-ed the sign with the hand and read every left-hander's off side as leg."""
     a = r.get("hit_ang_n")
     if a is None:
         return None
     if abs(a) <= 22.5:
         return "straight"
-    return "off" if ((a > 0) != r["is_lhb"]) else "leg"
+    return "off" if a > 0 else "leg"
 
 
 def _bat_share(innings: list) -> dict | None:
