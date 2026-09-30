@@ -56,12 +56,18 @@ _CACHE = {}
 
 
 def _load_csv(path):
+    """A missing reference file is an ERROR, not an empty table. Until 30-09-2026 it returned [],
+    so on the build machine — which had never been given field_trigger_norms.csv — every rule that
+    reads it (R2 square early, R3 straight boundary, R6 edge-prone starter) silently never fired,
+    on every Suggested Field it rendered. Fetch with `cricket-core/scripts/shared_data.py pull packs`."""
     if path not in _CACHE:
-        rows = []
-        if os.path.exists(path):
-            with open(path, encoding="utf-8", newline="") as f:
-                rows = list(csv.DictReader(f))
-        _CACHE[path] = rows
+        if not os.path.exists(path):
+            raise FileNotFoundError(
+                f"field_engine reference file missing: {path} — run "
+                f"`py -3.12 cricket-core/scripts/shared_data.py pull packs`, or build it with the "
+                f"referencebuilder script named in referencebuilder/RUNBOOK.md")
+        with open(path, encoding="utf-8", newline="") as f:
+            _CACHE[path] = list(csv.DictReader(f))
     return _CACHE[path]
 
 
