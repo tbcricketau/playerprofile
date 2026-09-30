@@ -249,6 +249,34 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
         print(f"  {name:22} balls={balls:5} plan={'y' if rows[-1]['plan'] else '-'} "
               f"field={'y' if rows[-1]['field'] else '-'}")
 
+    # Don't let a bad run replace a good file. A warehouse drop mid-build fails every remaining
+    # profile, and writing that over a previously-good dataset turns a transient outage into
+    # persistent wrong data — which is how a good left_orthodox set was lost on 2026-08-04.
+    n_err = sum(1 for r in rows if r.get("error"))
+    if n_err and (only or n_err >= max(2, len(rows) // 3)):
+        # in merge mode ANY failure aborts — one player is the whole run, so a failure is total
+        raise SystemExit(
+            f"ABORTING: {n_err}/{len(rows)} profile builds failed — almost certainly the warehouse "
+            f"dropped, not a real absence of data. overview_{group}_{opp}.json left as it was; "
+            f"re-run when the connection is back.")
+    if only:
+        # Merge BEFORE rendering. Until 30-09-2026 the page was built from the rebuilt rows alone and
+        # the merge happened after, so every --only run wrote a page listing only the batters it had
+        # just rebuilt while the JSON was complete: the South Africa Test coach view showed Ackerman
+        # alone in all six plan tables after his merge. Sorted like a full build (career balls).
+        order = {b: (m.get("order") or 0) for b, m in about.get("batters", {}).items()}
+        rows = sorted(kept + rows, key=lambda r: -order.get(r.get("bid"), 0))
+
+    # structured rows so the packs can render the same content inline (with headshots) rather than
+    # linking out to this page
+    json.dump({"opp": opp, "group": group, "label": label, "min_balls": MIN_BALLS, "rows": rows},
+              open(os.path.join(HERE, "data", f"overview_{group}_{opp}.json"), "w", encoding="utf-8"),
+              indent=1, ensure_ascii=False)
+    write_page(opp, group, label, rows)
+
+
+def write_page(opp, group, label, rows):
+    """Render the meeting-overview page from its rows (all of them — see the merge note in build)."""
     body = [f'<h1>{html.escape(label.capitalize())} meeting overview'
             f'<span class="sub">One row per batter — the plan against {html.escape(label)}, and the '
             f'field placements it implies. Same numbers as each batter\'s own report.</span></h1>',
@@ -338,30 +366,19 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
                     print(f"  !! {r['name']}: 0 balls vs {group} but {mb} vs {macro} — "
                           f"suspect a failed build, NOT a real absence")
 
-    # Don't let a bad run replace a good file. A warehouse drop mid-build fails every remaining
-    # profile, and writing that over a previously-good dataset turns a transient outage into
-    # persistent wrong data — which is how a good left_orthodox set was lost on 2026-08-04.
-    n_err = sum(1 for r in rows if r.get("error"))
-    if n_err and (only or n_err >= max(2, len(rows) // 3)):
-        # in merge mode ANY failure aborts — one player is the whole run, so a failure is total
-        raise SystemExit(
-            f"ABORTING: {n_err}/{len(rows)} profile builds failed — almost certainly the warehouse "
-            f"dropped, not a real absence of data. overview_{group}_{opp}.json left as it was; "
-            f"re-run when the connection is back.")
-    if only:
-        rows = kept + rows          # merge; build_player_site sorts by batting order at render
-
-    # structured rows so the packs can render the same content inline (with headshots) rather than
-    # linking out to this page
-    json.dump({"opp": opp, "group": group, "label": label, "min_balls": MIN_BALLS, "rows": rows},
-              open(os.path.join(HERE, "data", f"overview_{group}_{opp}.json"), "w", encoding="utf-8"),
-              indent=1, ensure_ascii=False)
-
     out = os.path.join(HERE, "reports", f"overview_{group}_{opp}.html")
     open(out, "w", encoding="utf-8").write(
         _page(f"{label.capitalize()} meeting overview", _CSS + "".join(body),
               up=("index.html", "Series")))
     print(f"wrote {out} · {len(rows)} batters, {sum(1 for r in rows if r['plan'])} with a plan")
+
+
+def render_only(opp, group):
+    """Re-render the page from the existing JSON — no warehouse, no profiling."""
+    d = json.load(open(os.path.join(HERE, "data", f"overview_{group}_{opp}.json"), encoding="utf-8"))
+    about = json.load(open(os.path.join(HERE, "data", f"opponent_about_{opp}.json"), encoding="utf-8"))
+    order = {b: (m.get("order") or 0) for b, m in about.get("batters", {}).items()}
+    write_page(opp, group, d["label"], sorted(d["rows"], key=lambda r: -order.get(r.get("bid"), 0)))
 
 
 def main():
@@ -383,7 +400,12 @@ def main():
     ap.add_argument("--before", default=None, metavar="YYYY-MM-DD",
                     help="profile every batter as they stood before this date — for a mid-series "
                          "fix that must not pull in the games just played")
+    ap.add_argument("--html-only", action="store_true",
+                    help="re-render the page from the existing JSON (no warehouse)")
     a = ap.parse_args()
+    if a.html_only:
+        render_only(a.opp, a.group)
+        return
     build(a.opp, a.group, only=[x.strip() for x in a.only.split(",") if x.strip()] or None,
           fmt=a.fmt, level=a.level, source=a.source, before=a.before)
 
