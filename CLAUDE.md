@@ -125,6 +125,18 @@ missing file as an empty table — so R2, R3 and R6 silently never fired on any 
 rendered, every South Africa Test report since 29-09 included. The file is now in `shared_data.py`'s
 `packs` set, and a missing field reference file raises instead.
 
+**Two more wheel rules, found 01-10-2026 when Tom compared de Zorzi's report with
+presentationbuilder's individual pack** (which redraws the wheel with the same function from its
+own query, on the laptop). The data on both machines was identical ball for ball; the wheels still
+differed by four runs.
+- **A boundary shot goes to the wedge nearer straight, for either hand** (`charts._sector_for`).
+  Angles are whole degrees, so shots sit exactly on a 45° line routinely, and the sin/cos/atan2
+  round trip made 45 into 44.999… on Linux and 45.0 on Windows — the box and the laptop disagreed —
+  while the half-open test gave a 45° shot to Cover for a left-hander and Mid-Off for a
+  right-hander. Same convention as `lookups.field_sector`.
+- **A batter's wheel counts their own runs.** The shared wheel adds wide and no-ball runs, which is
+  right for a bowler's runs conceded; `batter_profile` now zeroes those two aliases.
+
 **Fixing a LIVE pack mid-series: `--before`, and a fact-only card patch.** The South Africa ODI
 cards were built 23-09 and ODIs were played 24-09 and 27-09, so a plain rebuild would have re-pointed
 every batter reel at those games (the h2h hazard below, on the card reels) and moved every figure.
