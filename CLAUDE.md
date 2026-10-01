@@ -361,6 +361,25 @@ builder runs, so no reel can move.
 
 `publish_site.deploy_github()` runs the same check before the coach site goes out.
 
+### The Pages packs play VIEWING COPIES where one exists (01-10-2026)
+
+From South Africa a Fairplay clip took 1.8 s to its first byte and read at 0.3-0.5 MB/s, and it is
+1080p with its index at the end. `publish_packs.use_viewing_copies` (github target only, before the
+gates) rewrites every clip link that has a 720p copy in our South African store to that copy — under
+0.1 s to the first byte, 6-7 MB/s. Store, token, how copies are made and how to extend or withdraw
+them: `cricket_core.viewcopies` and cricket-core `docs/HOSTING.md` §Viewing copies.
+
+- **A rebuild brings new clips with no copy.** They stay on Fairplay and still play; the publish
+  prints `!! viewing copies: N clip(s) have no copy yet` and writes their list to `%TEMP%`. Make them
+  with `provision_viewcopies.py job <list>` + `vm` from the build machine, then publish again with
+  `--no-assemble`.
+- **Needs `PACKVISION_SAS`** in the publishing machine's user environment. Without it the publish
+  warns and every clip goes out on Fairplay — the packs work, slowly.
+- **`restamp_sas` leaves copy links alone** (it keys on the `fairplay` container), and the copies'
+  token never expires on its own: its life is the store's `pages-read` policy.
+- **`--target storage` reverses it** (`viewcopies.to_fairplay`) before its `/vision/` rewrite, since
+  a bundle last pushed to Pages carries signed copy links and the upload refuses any signed link.
+
 ### Bake only the series you named — `--only` (2026-09-13)
 
 `build()` cleared its whole output and re-baked every series in `series.json`, which is right for

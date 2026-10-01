@@ -174,6 +174,43 @@ def plan_scope_check(out, slug):
     return stale, missing, checked
 
 
+def use_viewing_copies(out):
+    """Point every clip that has a viewing copy at it — GitHub Pages only.
+
+    A Fairplay clip is 1080p with its index at the end, in Sydney, and plays slowly from South
+    Africa (0.4-1.0 MB/s measured 01-10-2026). `cricket_core.viewcopies` keeps 720p copies with the
+    index first in southafricanorth, under the same relpath, signed with one policy-bound token that
+    never needs re-stamping. This rewrites the bundle IN PLACE before the gates run, so `check_site
+    --deep` HEADs the links that will actually be served and the hand audit reads the same clips
+    (it identifies a clip by basename, which the copy keeps).
+
+    A clip with no copy stays on Fairplay and still plays — so a missing token or a short manifest
+    is a warning with the fix named, never a refusal. Make the missing copies with
+    `cricket-core/scripts/provision_viewcopies.py` (job + vm), then publish again."""
+    import tempfile
+    from cricket_core import viewcopies as VC
+    tok = VC.token()
+    if not tok:
+        print(f"!! viewing copies: {VC.TOKEN_ENV} is not set on this machine — every clip stays on "
+              f"Fairplay (1080p from Sydney, slow outside Australia). See cricket_core.viewcopies.")
+        return
+    try:
+        have = VC.manifest(tok)
+    except Exception as e:
+        print(f"!! viewing copies: could not read the manifest ({type(e).__name__}) — clips stay "
+              f"on Fairplay")
+        return
+    files, links, missing = VC.rewrite_tree(out, have, tok)
+    print(f"viewing copies: {links:,} clip links across {files:,} files now play the 720p copy in "
+          f"South Africa ({len(have):,} copies made)")
+    if missing:
+        fd, path = tempfile.mkstemp(prefix="viewcopies_missing_", suffix=".txt")
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            fh.write("\n".join(sorted(missing)) + "\n")
+        print(f"!! viewing copies: {len(missing):,} clip(s) have no copy yet and stay on Fairplay — "
+              f"listed in {path}; make them with provision_viewcopies.py job <that file> + vm")
+
+
 def publish_to_storage(out, prefix, overrides):
     """Upload the gated bundle to the `packs` container for the hosted app, with every vision link
     rewritten to the app's /vision/ route.
@@ -187,6 +224,7 @@ def publish_to_storage(out, prefix, overrides):
     import shutil
     import tempfile
     from cricket_core.video import rewrite_vision_links
+    from cricket_core.viewcopies import to_fairplay
     tmp = tempfile.mkdtemp(prefix="packs_storage_")
     dst = os.path.join(tmp, prefix)
     shutil.copytree(out, dst, ignore=shutil.ignore_patterns(".git", ".github", "__pycache__"))
@@ -197,7 +235,10 @@ def publish_to_storage(out, prefix, overrides):
                 continue
             p = os.path.join(root, f)
             text = open(p, encoding="utf-8", errors="replace").read()
-            new = rewrite_vision_links(text)
+            # A bundle last published to Pages carries viewing-copy links (use_viewing_copies),
+            # signed — turn them back into the Fairplay clip they were made from, which the app
+            # serves itself, before the signed-link refusal below sees them.
+            new = rewrite_vision_links(to_fairplay(text))
             if new != text:
                 n_files += 1
                 n_links += len(re.findall(r"/vision/fairplay/", new)) - len(re.findall(r"/vision/fairplay/", text))
@@ -301,6 +342,10 @@ def main():
         print("  " + (r.stdout.strip().splitlines() or ["(no output)"])[-1])
         if r.returncode:
             raise SystemExit(f"assemble failed:\n{r.stderr}")
+
+    # Before the gates, so they check the links that will be served.
+    if a.target == "github":
+        use_viewing_copies(out)
 
     print(f"validating {cfg['bundle']}…")
     errors, warnings = check_site(out, deep=a.deep)
