@@ -15,6 +15,7 @@ import html
 import json
 import os
 import re
+import sys
 
 from site_render import page as _page, TIER_CHIP, TIER_META
 from photos import get_photo_data_uri, get_photo_path
@@ -1963,6 +1964,14 @@ def main():
     build(os.path.join(HERE, args.out), no_video=args.no_video,
           only=set(args.only) if args.only else None,
           squad=args.squad, include_archived=args.include_archived, nest=args.nest)
+    # A clip storage could not answer for (after retries) is dropped from its reel, and a reel
+    # with none left disappears — on 01-10-2026 that was 47 head-to-head reels whose clips all
+    # existed, through a build that reported success. Refuse to call that a finished build.
+    from cricket_core.video import probe_errors
+    if not args.no_video and probe_errors():
+        sys.exit(f"REFUSING: {probe_errors()} clip(s) got no answer from storage (network), so "
+                 f"their reels may be short or missing. The pages are written but must not be "
+                 f"published — re-run the build.")
 
 
 if __name__ == "__main__":
