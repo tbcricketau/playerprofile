@@ -137,6 +137,14 @@ differed by four runs.
 - **A batter's wheel counts their own runs.** The shared wheel adds wide and no-ball runs, which is
   right for a bowler's runs conceded; `batter_profile` now zeroes those two aliases.
 
+**A network blip used to erase clips for a whole build** (fixed 01-10-2026). `cricket_core.video`
+read any exception from a clip probe as "not in storage" and cached it, so the 01-10 pack build
+silently dropped **47 head-to-head reels** whose clips all resolve — the gates passed, because a
+reel that isn't there has nothing wrong with it; the tell was the reel count (1,804 → 1,757). Now
+only a 404 is "missing"; anything else is retried, never cached, and counted in
+`video.probe_errors()`, and `build_player_site` exits non-zero if that count is not zero. **Compare
+the reel count with the last publish** — a drop with no data change is this, or something like it.
+
 **Fixing a LIVE pack mid-series: `--before`, and a fact-only card patch.** The South Africa ODI
 cards were built 23-09 and ODIs were played 24-09 and 27-09, so a plain rebuild would have re-pointed
 every batter reel at those games (the h2h hazard below, on the card reels) and moved every figure.
