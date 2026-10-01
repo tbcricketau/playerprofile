@@ -5,130 +5,6 @@
  "min_balls": 60,
  "rows": [
   {
-   "bid": "4353850",
-   "name": "Tony de Zorzi",
-   "sub": "LHB · Opener",
-   "balls": 866,
-   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "Short leg",
-    "spare": "Mid-off"
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "spin_4353850_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "spin_4353850_1.png"
-    }
-   ],
-   "threat": {
-    "balls": 866,
-    "n_out": 12,
-    "bpd": 72.16666666666667,
-    "false_pct": 15.668202764976959,
-    "area": "leg (47% of runs)",
-    "short": null,
-    "top_out": "Caught in the field (42%)"
-   }
-  },
-  {
-   "bid": "4352600",
-   "name": "Ryan Rickelton",
-   "sub": "LHB · Middle order",
-   "balls": 817,
-   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "",
-    "spare": "Square leg"
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "spin_4352600_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "spin_4352600_1.png"
-    }
-   ],
-   "threat": {
-    "balls": 817,
-    "n_out": 9,
-    "bpd": 90.77777777777777,
-    "false_pct": 15.59074299634592,
-    "area": "off (46% of runs)",
-    "short": null,
-    "top_out": "Caught behind (56%)"
-   }
-  },
-  {
-   "bid": "3550469",
-   "name": "Senuran Muthusamy",
-   "sub": "LHB · Middle order",
-   "balls": 571,
-   "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "Deep backward square leg",
-    "spare": "Mid-off"
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "spin_3550469_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "spin_3550469_1.png"
-    }
-   ],
-   "threat": {
-    "balls": 571,
-    "n_out": 3,
-    "bpd": null,
-    "false_pct": 16.28721541155867,
-    "area": "off (49% of runs)",
-    "short": null,
-    "top_out": "LBW (67%)"
-   }
-  },
-  {
-   "bid": "4353762",
-   "name": "Marques Ackerman",
-   "sub": "LHB",
-   "balls": 380,
-   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
-   "field": {
-    "set": "stock field",
-    "move": "",
-    "spare": "Mid-off"
-   },
-   "fields": [
-    {
-     "label": "Early — first 30 balls",
-     "file": "spin_4353762_0.png"
-    },
-    {
-     "label": "Once set",
-     "file": "spin_4353762_1.png"
-    }
-   ],
-   "threat": {
-    "balls": 380,
-    "n_out": 7,
-    "bpd": 54.285714285714285,
-    "false_pct": 15.140845070422536,
-    "area": "leg (52% of runs)",
-    "short": null,
-    "top_out": "Caught (57%)"
-   }
-  },
-  {
    "bid": "3760008",
    "name": "Aiden Markram",
    "sub": "RHB · Opener",
@@ -188,6 +64,37 @@
     "area": "leg (51% of runs)",
     "short": null,
     "top_out": "Caught behind (31%)"
+   }
+  },
+  {
+   "bid": "4353762",
+   "name": "Marques Ackerman",
+   "sub": "LHB",
+   "balls": 380,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4353762_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4353762_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 380,
+    "n_out": 7,
+    "bpd": 54.285714285714285,
+    "false_pct": 15.140845070422536,
+    "area": "leg (52% of runs)",
+    "short": null,
+    "top_out": "Caught (57%)"
    }
   },
   {
@@ -253,6 +160,68 @@
    }
   },
   {
+   "bid": "4353850",
+   "name": "Tony de Zorzi",
+   "sub": "LHB · Opener",
+   "balls": 866,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Short leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4353850_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4353850_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 866,
+    "n_out": 12,
+    "bpd": 72.16666666666667,
+    "false_pct": 15.668202764976959,
+    "area": "leg (47% of runs)",
+    "short": null,
+    "top_out": "Caught in the field (42%)"
+   }
+  },
+  {
+   "bid": "4352600",
+   "name": "Ryan Rickelton",
+   "sub": "LHB · Middle order",
+   "balls": 817,
+   "plan": "Plan for spin: bowl <b>full pitching on the stumps</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Long-off",
+    "spare": "Square leg"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_4352600_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_4352600_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 817,
+    "n_out": 9,
+    "bpd": 90.77777777777777,
+    "false_pct": 15.59074299634592,
+    "area": "off (46% of runs)",
+    "short": null,
+    "top_out": "Caught behind (56%)"
+   }
+  },
+  {
    "bid": "4353096",
    "name": "David Bedingham",
    "sub": "RHB · Middle order",
@@ -291,7 +260,7 @@
    "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
    "field": {
     "set": "stock field",
-    "move": "",
+    "move": "Long-off",
     "spare": "Fine leg"
    },
    "fields": [
@@ -322,7 +291,7 @@
    "plan": "Plan for spin: bowl <b>good length pitching outside off</b>.",
    "field": {
     "set": "stock field",
-    "move": "",
+    "move": "Long-off",
     "spare": "Backward point"
    },
    "fields": [
@@ -343,6 +312,37 @@
     "area": "leg (55% of runs)",
     "short": null,
     "top_out": "LBW (38%)"
+   }
+  },
+  {
+   "bid": "3550469",
+   "name": "Senuran Muthusamy",
+   "sub": "LHB · Middle order",
+   "balls": 571,
+   "plan": "Plan for spin: bowl <b>full pitching in the channel</b>.",
+   "field": {
+    "set": "stock field",
+    "move": "Deep backward square leg",
+    "spare": "Mid-off"
+   },
+   "fields": [
+    {
+     "label": "Early — first 30 balls",
+     "file": "spin_3550469_0.png"
+    },
+    {
+     "label": "Once set",
+     "file": "spin_3550469_1.png"
+    }
+   ],
+   "threat": {
+    "balls": 571,
+    "n_out": 3,
+    "bpd": null,
+    "false_pct": 16.28721541155867,
+    "area": "off (49% of runs)",
+    "short": null,
+    "top_out": "LBW (67%)"
    }
   },
   {
