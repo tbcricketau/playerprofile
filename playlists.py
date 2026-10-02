@@ -72,8 +72,23 @@ def _c21_url(r):
 
 def _has_clip(r):
     """Does this delivery point at footage from either source? Filtering on `clip_stem` alone
-    dropped every Cricket-21 ball before it reached a report playlist (2026-09-12)."""
-    return bool(r.get("clip_stem") or _c21_url(r))
+    dropped every Cricket-21 ball before it reached a report playlist (2026-09-12). A C21 url must
+    also SERVE: the vendor answers a missing clip with a stub or a 404 (02-10-2026) — call
+    `_warm_c21` on the rows first, so the probes run in parallel rather than one per row."""
+    if r.get("clip_stem"):
+        return True
+    u = _c21_url(r)
+    if not u:
+        return False
+    import c21_source
+    return c21_source.url_plays(u)
+
+
+def _warm_c21(rows):
+    """Probe every Cricket-21 url on these rows at once (cached), before a `_has_clip` filter."""
+    import c21_source
+    c21_source.probe_urls([_c21_url(r) for r in rows if not r.get("clip_stem") and _c21_url(r)])
+    return rows
 
 
 def _with_url(it, r):
@@ -158,7 +173,7 @@ def build_playlists(P: dict, cap: int = 10, target_country: str | None = None) -
     series). When set, clips are ordered by LIKE-FOR-LIKE conditions first — same country,
     then the same conditions bucket (AUS↔SA/NZ etc.), then the rest — and by recency within
     each tier. When None, pure recency (coverage is better on recent matches anyway)."""
-    df = [r for r in P["df"] if _has_clip(r)]
+    df = [r for r in _warm_c21(P["df"]) if _has_clip(r)]
     is_spin, is_pace = P["is_spin"], P["is_pace"]
     out, counts = {}, {}
 
@@ -270,7 +285,7 @@ def build_odi_playlists(P: dict, cap: int = 8, target_country: str | None = None
     `fmt` labels the sidecar. It used to be hardcoded "ODI", and t20_report calls this same
     builder, so every T20 sidecar claimed to be an ODI one — which made the publish step serve a
     T20 report wherever an ODI report was asked for."""
-    df = [r for r in (P.get("raw") or []) if _has_clip(r)]
+    df = [r for r in _warm_c21(P.get("raw") or []) if _has_clip(r)]
     is_spin, is_pace = P["is_spin"], P["is_pace"]
     off_pace = P.get("off_pace_kph")
     out, counts = {}, {}
@@ -361,7 +376,7 @@ def _bat_take(rows, cap):
 def build_batting_playlists(P: dict, cap: int = 8) -> dict:
     """{key: [resolved items]} for a batter profile: the danger ball, his risky stroke's false
     shots, dismissals — recent/illustrative first, only deliveries whose clip is in storage."""
-    raw = [r for r in (P.get("raw") or []) if _has_clip(r)]
+    raw = [r for r in _warm_c21(P.get("raw") or []) if _has_clip(r)]
     out = {}
 
     def add(key, rows):

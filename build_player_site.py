@@ -956,8 +956,18 @@ def _clip_item(e, caption="", meta=None):
 
 
 def _playable(e):
-    """Does this entry point at a clip at all, from either source?"""
-    return bool(e.get("clip_stem") or e.get("url"))
+    """Does this entry point at a clip that plays, from either source? A Cricket-21 url is probed
+    (cached, `c21_source.url_plays`): the vendor answers a missing clip with a stub or a 404, and
+    until 02-10-2026 every one reached a reel. `_load_about` warms the probes in parallel."""
+    if e.get("clip_stem"):
+        return True
+    u = e.get("url")
+    if not u:
+        return False
+    if "cricket-21.com" in u:
+        import c21_source
+        return c21_source.url_plays(u)
+    return True
 
 
 def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, similar=None,
@@ -1438,6 +1448,10 @@ def _load_about(slug):
     if not os.path.exists(p):
         return {}, {}
     d = json.load(open(p, encoding="utf-8"))
+    # Probe every Cricket-21 clip the cards name, in parallel, before `_playable` asks one at a time.
+    import c21_source
+    c21_source.probe_urls(re.findall(r'https://hdvod\.cricket-21\.com/[^"\s]+',
+                                     json.dumps(d, ensure_ascii=False)))
     return d.get("bowlers", {}), d.get("batters", {})
 
 

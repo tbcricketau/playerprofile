@@ -211,10 +211,17 @@ def _require_fairplay():
 
 
 def _plays(ref):
-    """Does this clip reference serve footage? A Cricket-21 url does (the vendor hosts it, nothing
-    to resolve); a Fairplay stem is HEAD-probed once per stem, and a match whose first few clips are
-    all missing is treated as unclipped without probing the rest of it."""
-    if not PROBE_CLIPS or ref.get("url"):
+    """Does this clip reference serve footage? A Cricket-21 url is probed for its size (the vendor
+    answers a missing clip with a stub or a 404 — 16 dead clips reached Ackerman's reels before
+    02-10-2026, when this read every url as playing); a Fairplay stem is HEAD-probed once per stem,
+    and a match whose first few clips are all missing is treated as unclipped without probing the
+    rest of it."""
+    if not PROBE_CLIPS:
+        return True
+    if ref.get("url"):
+        if "cricket-21.com" in ref["url"]:
+            import c21_source
+            return c21_source.url_plays(ref["url"])
         return True
     stem = ref.get("clip_stem") or ""
     _head, _sep, tail = stem.partition("/fairplay/")

@@ -413,6 +413,60 @@ def load_batter_deliveries(batter_id, fmt="Test"):
     return [_to_warehouse(r) for r in _rows(batter_id, "striker", fmt)]
 
 
+# ── Is a Cricket-21 clip actually there? ──────────────────────────────────────────
+# The vendor path is CONSTRUCTED from the mirror, never confirmed, and the host answers a missing
+# clip with a valid ~1.5 KB stub (sometimes behind a redirect) or a 404 rather than an error a
+# browser would explain. Every builder took a C21 url on trust until 02-10-2026: Marques Ackerman's
+# reels in the South Africa Test packs carried 16 dead clips across 83 reels — five of twelve in
+# some dismissal reels — and Tom found them by clicking. A Fairplay stem was always probed; a C21
+# url never was.
+STUB_BYTES = 5000          # the stub is ~1.5 KB; the smallest real clip seen is ~1 MB (11 s, 720p)
+_URL_PLAYS: dict = {}
+
+
+def url_plays(url, tries=3):
+    """Does this Cricket-21 clip url serve footage? Asks for two bytes, follows redirects, and reads
+    the total size. A 404/410 or a body under STUB_BYTES is a definite no and is remembered. Any
+    other failure is retried and then RAISED — a network blip must not quietly erase footage from
+    a build (the same rule `cricket_core.video` follows for Fairplay since 01-10-2026)."""
+    if url in _URL_PLAYS:
+        return _URL_PLAYS[url]
+    import time
+    import urllib.error
+    import urllib.request
+    err = None
+    for i in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={"Range": "bytes=0-1",
+                                                       "User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=40) as r:
+                total = (r.headers.get("Content-Range") or "").rsplit("/", 1)[-1]
+                size = int(total) if total.isdigit() else int(r.headers.get("Content-Length") or 0)
+            _URL_PLAYS[url] = size >= STUB_BYTES
+            return _URL_PLAYS[url]
+        except urllib.error.HTTPError as e:
+            if e.code in (404, 410):
+                _URL_PLAYS[url] = False
+                return False
+            err = e
+        except Exception as e:
+            err = e
+        time.sleep(2 * (i + 1))
+    raise RuntimeError(f"Cricket-21 gave no answer for a clip after {tries} tries "
+                       f"({type(err).__name__}: {str(err)[:80]}) — not read as missing")
+
+
+def probe_urls(urls, workers=16):
+    """Answer `url_plays` for many urls at once, so a filter over hundreds of rows costs seconds,
+    not one round trip each. Non-C21 urls are ignored."""
+    todo = [u for u in dict.fromkeys(urls) if u and "cricket-21.com" in u and u not in _URL_PLAYS]
+    if todo:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(workers) as ex:
+            list(ex.map(url_plays, todo))
+    return len(todo)
+
+
 def clip_ref(row, stem=None):
     """What a playlist item should carry for this delivery: {"clip_stem": …} or {"url": …} or {}.
 
