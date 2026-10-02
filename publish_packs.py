@@ -175,7 +175,8 @@ def plan_scope_check(out, slug):
 
 
 def use_viewing_copies(out):
-    """Point every clip that has a viewing copy at it — GitHub Pages only.
+    """Point every clip that has a viewing copy at it, and drop clips their source has lost. On
+    the GitHub target the copy links are what ships; the storage target reverses them at upload.
 
     A Fairplay clip is 1080p with its index at the end, in Sydney, and plays slowly from South
     Africa (0.4-1.0 MB/s measured 01-10-2026). `cricket_core.viewcopies` keeps 720p copies with the
@@ -203,6 +204,25 @@ def use_viewing_copies(out):
     files, links, missing = VC.rewrite_tree(out, have, tok)
     print(f"viewing copies: {links:,} clip links across {files:,} files now play the 720p copy in "
           f"South Africa ({len(have):,} copies made)")
+    # A Cricket-21 clip with no copy is checked again here, not only at build time: on 02-10-2026
+    # the vendor took a whole innings offline within an hour of the build probing it. A clip that
+    # is gone comes out of its reels rather than shipping as a dead play button.
+    c21_missing = [u for u in missing if u.startswith("https://hdvod.cricket-21.com/")]
+    if c21_missing:
+        import c21_source
+        try:
+            c21_source.probe_urls(c21_missing)
+            dead = {u for u in c21_missing if not c21_source.url_plays(u)}
+        except Exception as e:
+            dead = set()
+            print(f"!! viewing copies: could not re-check {len(c21_missing)} Cricket-21 clip(s) "
+                  f"({type(e).__name__}) — they ship as they are")
+        if dead:
+            f2, n2, kept = VC.drop_items(out, dead)
+            missing -= dead
+            print(f"!! viewing copies: {len(dead)} Cricket-21 clip(s) are gone from the vendor — "
+                  f"{n2} item(s) dropped from reels in {f2} file(s)"
+                  + (f"; {kept} reel(s) would have been left empty and were kept" if kept else ""))
     if missing:
         fd, path = tempfile.mkstemp(prefix="viewcopies_missing_", suffix=".txt")
         with os.fdopen(fd, "w", encoding="utf-8") as fh:
@@ -344,9 +364,10 @@ def main():
         if r.returncode:
             raise SystemExit(f"assemble failed:\n{r.stderr}")
 
-    # Before the gates, so they check the links that will be served.
-    if a.target == "github":
-        use_viewing_copies(out)
+    # Before the gates, so they check the links that will be served. Both targets: the storage
+    # upload turns copy links back into their source links (publish_to_storage), so for the app
+    # what this contributes is the drop of clips the source no longer serves.
+    use_viewing_copies(out)
 
     print(f"validating {cfg['bundle']}…")
     errors, warnings = check_site(out, deep=a.deep)

@@ -379,6 +379,12 @@ them: `cricket_core.viewcopies` and cricket-core `docs/HOSTING.md` §Viewing cop
   token never expires on its own: its life is the store's `pages-read` policy.
 - **`--target storage` reverses it** (`viewcopies.to_fairplay`) before its `/vision/` rewrite, since
   a bundle last pushed to Pages carries signed copy links and the upload refuses any signed link.
+- **Cricket-21 clips get copies too (02-10-2026)**, under `c21/` — and a C21 clip with no copy is
+  re-checked AT PUBLISH and dropped from its reels if the vendor no longer serves it
+  (`viewcopies.drop_items`; a reel that would go empty is kept and counted). Needed because the
+  vendor took a whole innings of a 2023 match offline within an hour of the build probing it. This
+  runs on both targets. The app still serves C21 clips straight from the vendor (slow) and Fairplay
+  through its own `/vision/` route; it does not read the copies yet.
 
 ### Bake only the series you named — `--only` (2026-09-13)
 
