@@ -1097,6 +1097,12 @@ so reviving means rebuilding from source, never re-pushing the tag.
 - **AUS player packs — 2026-08-31.** Bangladesh home Tests. Pages off on `tbcricketau/player-packs`,
   tag `archived-2026-08-31`. Coach-side copy frozen at `archive/bangladesh-home-2026` and still
   served, gated, with live vision. The bundle's own SAS expired 2026-08-27.
+- **South Africa ODI packs — 2026-10-02.** Taken off the `aus` bundle, which now carries the Test
+  squad alone (still nested, so no Test link moved); the last two-squad state is tagged
+  `archived-south-africa-odi-2026-10-02` on `tbcricketau/player-packs`. Coach copy frozen at
+  `archive/south-africa-odi-away-2026` after re-injecting the 117 batter reports (596 files); squad
+  archived in `squads.json`. Its Fairplay links expire 05-10-2026, so a revival means rebuilding.
+  The app container keeps its old ODI blobs (`upload_packs.py` never deletes), unlinked.
 - **CA XI packs — 2026-08-10.** Pages off on `tbcricketau/caxi-player-packs`, tag
   `archived-2026-08-10`. **These predate the 2026-08-10 fixes** — wrong-hand bowler reels and
   pooled-spin batter reels — so reviving means rebuilding from source.
@@ -1441,9 +1447,17 @@ the footage away without a word:
   (C21 ids are 6 digits, warehouse 16 — they cannot collide today, but that is an observation about
   two independent id spaces, not a guarantee).
 
-**Probe before trusting a C21 clip URL.** The vendor path is *constructed*, not confirmed, and the
-host answers a missing clip with a valid ~1.5 KB stub rather than a 404 — check the size, not the
-status. Six sampled on 2026-09-07 returned 12–20 MB of `video/mp4`.
+**Probe before trusting a C21 clip URL — and since 02-10-2026 the builders do.** The vendor path is
+*constructed*, not confirmed, and the host answers a missing clip with a ~1.5 KB stub (sometimes
+behind a redirect) or a 404. Every builder probed a Fairplay stem and took a C21 url on trust, so
+Ackerman's reels in the South Africa Test packs carried **16 dead clips across 83 reels** — five of
+twelve in some dismissal reels — until Tom clicked through them. `c21_source.url_plays` asks for two
+bytes, follows redirects and reads the total size (under 5 KB or 404 = dead, cached; any other
+failure retried, then raised — never read as missing); `probe_urls` warms many in parallel (114 in
+20 s from South Africa). It sits in `build_opponent_about._plays` (reels refill from clips that
+play), `playlists._has_clip` (report playlists) and `build_player_site._playable`. The live clips
+were slow too — 0.38 MB/s, index at the end — and now get viewing copies like Fairplay's
+(`cricket_core.viewcopies`, under `c21/`).
 
 **C21 has its own sentinel.** An untracked ball has LengthY at or near 0, which the calibration
 maps to a CLUSTER around its per-hand intercept — about **−1810 mm for a right-hander, −2195 for a

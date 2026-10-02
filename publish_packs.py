@@ -207,8 +207,9 @@ def use_viewing_copies(out):
         fd, path = tempfile.mkstemp(prefix="viewcopies_missing_", suffix=".txt")
         with os.fdopen(fd, "w", encoding="utf-8") as fh:
             fh.write("\n".join(sorted(missing)) + "\n")
-        print(f"!! viewing copies: {len(missing):,} clip(s) have no copy yet and stay on Fairplay — "
-              f"listed in {path}; make them with provision_viewcopies.py job <that file> + vm")
+        print(f"!! viewing copies: {len(missing):,} clip(s) have no copy yet and stay on their "
+              f"source (Fairplay or Cricket-21) — listed in {path}; make them with "
+              f"provision_viewcopies.py job <that file> + vm")
 
 
 def publish_to_storage(out, prefix, overrides):
