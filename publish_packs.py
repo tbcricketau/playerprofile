@@ -44,14 +44,14 @@ BUNDLES = {
             # `--target storage` uploads to the `packs` container under this prefix, for the
             # hosted playerpacks app, with vision rewritten to app paths (no SAS in any page).
             "prefix": "aus",
-            # TWO squads from 27-09-2026 — the ODI packs stay up and the Test packs land beside
-            # them (Tom: "won't be replacing the ODI packs, they'll sit alongside"), the shape
-            # `ausa` already proved. `build_player_site --nest` writes a series selector and puts
-            # each squad under its own slug, so the landing page offers both.
-            # ⚠ The Test squad's OPPOSITION is a likely XI, not an announced one — see
-            # matchupmodel/data/opp_squad_south_africa_test.json. Re-pin and rebuild when South
-            # Africa names theirs.
-            "squads": ["south-africa-odi-away-2026", "south-africa-test-away-2026"]},
+            # The Test squad alone from 02-10-2026: the ODI packs came off when that series
+            # finished (Tom: "we can archive the sa odi packs as we no longer need them up").
+            # The last published two-squad state is tagged archived-south-africa-odi-2026-10-02 on
+            # the repo, the coach copy is frozen at archive/south-africa-odi-away-2026, and the
+            # squad is archived in squads.json. Still built with `--nest`: the Test packs were
+            # published under players/south-africa-test-away-2026/, and flattening would move
+            # every link players already hold (the Zimbabwe 404s of 19-09).
+            "squads": ["south-africa-test-away-2026"]},
     # Australia A in India, Sep-Oct 2026 — the first bundle carrying TWO squads, a four-day and a
     # one-day, on one landing page. `squads` replaces the single opp/slug pair: the hand audit is
     # per squad (it resolves our batters' hands from that squad's matchup store) and each squad's
