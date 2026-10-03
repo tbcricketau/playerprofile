@@ -383,8 +383,10 @@ them: `cricket_core.viewcopies` and cricket-core `docs/HOSTING.md` §Viewing cop
   re-checked AT PUBLISH and dropped from its reels if the vendor no longer serves it
   (`viewcopies.drop_items`; a reel that would go empty is kept and counted). Needed because the
   vendor took a whole innings of a 2023 match offline within an hour of the build probing it. This
-  runs on both targets. The app still serves C21 clips straight from the vendor (slow) and Fairplay
-  through its own `/vision/` route; it does not read the copies yet.
+  runs on both targets. **Since 03-10-2026 the hosted app plays the copies too** — it points every
+  clip that has one at it as it serves the page (`viewcopies.app_to_copies`; cricket-core HOSTING.md
+  §Viewing copies). A clip with no copy still plays through `/vision/` (Fairplay) or from the vendor
+  (Cricket-21), so new clips after a rebuild want copies made for both targets' sake.
 
 ### Bake only the series you named — `--only` (2026-09-13)
 
