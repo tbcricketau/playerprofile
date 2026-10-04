@@ -1119,6 +1119,12 @@ Built by `build_coach_site.py --slug <slug>` into `coach_build/coach/<slug>/`, a
   suggested field's `fielders` as angle and radius beside the PNG. The planner's notes and saved
   fields are fetched when the page opens (`/fields/<planner_series>/api/fields?pack=<group>`), from
   the series' `planner_series` in `series.json`; without it the cards show the engine's field only.
+- **Fixes after use (04-10-2026)**: the packs show the techniques only — Pace is Right-arm / Left-arm,
+  Spin is Off spin / Left-arm orthodox (no All); a field panel reads the same for a coaches' field
+  and an auto-generated one (label and tags on top, the options as chips underneath, then the
+  spare); of set / move / spare only the spare is shown — `build_overview._field_images` names one
+  per auto field (`spare`, `spare_name`; none for the bouncer plan, a set field) and coaches set one
+  in the planner; the Spin pack has no short-ball figure; the planner tab is Set Field Plans.
 - **Their batters came off the series page**; every batter is a card in the packs with the report
   link. The batting reports are still baked under `reports/` for those links. **Their bowlers** is
   a grid of tiles (`site_render.bowler_tile`), the tile opening the coach cut of the report.

@@ -92,26 +92,71 @@ row. On the players' side the planner stops being a bar button too and becomes a
 index ("Field plans — the fields the coaches have set"), beside the squad list. The hub bar then
 carries only the crumb trail, which is what it is for.
 
-### Batting plans for our batters (Tom, 04-10-2026 — to plan next)
+### Batting plans and bowling plans (Tom, 04-10-2026 — plan and draft, not built)
 
-The coach view today is one-sided: plans for bowling *at them*. The same page needs the other half,
-how *our* batters play *their* attack. What exists to build it from:
+**Navigation.** After choosing a series, the top row is two tabs: **Batting plans** and **Bowling
+plans**. Each has its own second row:
 
-| | source | state |
-|---|---|---|
-| how their attack has bowled to each of our batters (Test) | `attack_cards.py` → `attacked-our-squad` | built, Test only |
-| their bowlers' stock ball, wicket ball, new-ball footage, scoped to our batter's hand | the batting pack's opposition-bowler cards (`build_opponent_about`) | built, per pack |
-| simulated match-ups, our batter v their bowler | matchup store `we_bat` rows, `render_matchups` | built |
-| real meetings | `h2h_<opp>.json` | built |
-| coaches' batting notes per batter | nothing yet — the field planner's notes are their batters' | **new** |
+| Batting plans (their bowlers, for our batters) | Bowling plans (their batters, for our bowlers) |
+|---|---|
+| **Their bowlers** — a card per bowler, with a **vs RHB / vs LHB** switch | **Pace** — as built |
+| **Set Field Plans** — the planner, for their bowlers | **Spin** — as built |
+| Match-ups (where built) | **Set Field Plans** — the planner, as built |
+| | Unorthodox shots (where built) |
 
-Proposed shape, to be drafted after the Pace and Spin packs: a **Batting** tab in the same row, a
-card per *our* batter (headshot, hand, role) with a technique switch of their own — their pace ·
-their spin, sub-types where the attack has them — carrying: how that attack bowls to them (length
-and line, from the attack cards), the simulated read against each of their bowlers of that type, the
-real-meeting reel, and **coaches' notes** kept the way the planner keeps their batters' notes (one
-store, versioned, edited on the card). The white-ball attack cards are the gap the REPLACEMENT_PLAN
-§7a names; a Test series can be built first.
+The series page opens on Batting plans → Their bowlers, which replaces today's bowlers grid. The
+crumb above both rows goes back to Scouting.
+
+**Their bowlers — the mirror of the Pace and Spin cards.** A card per bowler, grouped Most likely XI ·
+In the squad · Fringe, with the hand switch at the top of the page (vs right-handers / vs
+left-handers, with the balls behind each). On each card, for the chosen hand:
+
+- **Who**: headshot, name, type, tier chip.
+- **How to play them**: the bowling report's `how_to_play` lines for that hand (what to respect,
+  where to attack, what to watch) — the batting twin of the bowling plan sentence.
+- **Coaches' notes**: from the planner, kept per bowler per hand.
+- **Figures**: balls to that hand, average, economy, Bowl SR, pace (average and p99 top speed; spin
+  shows none), short % for pace, round-the-wicket %.
+- **The field they are likely to set**, by **category**: the categories each bowler gets come from
+  their record — **New ball** when they take it (Rabada 57% of new-ball overs, Paterson 23%;
+  threshold to settle, 20% in the draft), **Old ball** for every pace bowler, **Bouncer plan** for
+  pace; spinners get **Attacking** and **Holding**. Chips under the field switch between them, the
+  same as the bowling cards, with the spare named underneath.
+- **Vision and the report**: their stock-ball and wicket reels to that hand, and the coach report.
+
+**Where the fields come from.** We hold no record of the fields South Africa actually set, so the
+auto-generated field is **our best estimate of theirs**, built in two steps:
+
+1. The stock field for the bowler's type, our batter's hand and the phase — the same GPS-corrected
+   stock the bowling-side engine starts from (`cricket_core.fields.gps_corrected_field`), and the
+   bouncer field (`fields.SHORT_BALL`). **The draft shows this step only.**
+2. **(build)** Adjusted to the bowler: where they concede runs to that hand (their run flow) and
+   where their catches have gone (their caught positions), with the spare — the
+   `field_engine.build_field` logic run on the bowler's deliveries instead of a batter's. The engine
+   reads batter-shaped rows (early/set, false shots, run flow), so this needs a bowler adapter, and
+   it is the one piece of new analysis here. It should say so on the card until it is checked against
+   real fields we can watch on vision.
+
+**Set Field Plans for their bowlers.** The same planner, a second side: a page per batter hand
+(vs RHB, vs LHB) with a card per bowler — notes, the field (Option 1 from the auto-generated field,
+editable, renameable, more options added), arrows, the spare. Tags for this side: **New ball, Old
+ball, Second new ball, Bouncer plan, vs Tail, Over the wicket, Round the wicket, Reverse swing, Into
+the wind, Day 1, Day 4-5, Attacking, Holding**, and coaches add their own as on the bowling side. The
+store is the planner's: a field belongs to a series, a page and a player, so their bowlers fit it by
+using the hand as the page (`vs_rhb`, `vs_lhb`) and the bowler as the player.
+
+**What is new to build**: the bowler field adapter (step 2); an export of their bowlers for the
+planner (headshot, notes start empty, the categories and their fields, runs-conceded wheels per
+hand); the Batting plans pages; the planner's second side and tags. What exists: the per-hand
+profile (`profile.build_profile(hand="vs RHB")`), `how_to_play`, the per-hand reels in
+`opponent_about`, the coach reports, the planner and its store.
+
+**Draft (04-10-2026): https://claude.ai/artifact/YCgoD5tduq54s4UzMpFJet** — four bowlers (Rabada, Jansen, Maharaj, Harmer), real per-hand figures from the build machine, the two tab rows, the hand switch, stock fields per category, and an example coaches' field on Rabada vs right-handers. It showed one defect to fix in the build: `profile._how_to_play` writes he/his/him, which reader-facing text may not (the draft rewrites the lines; the bowling reports carry the same lines).
+
+**Questions for Tom** — (1) the new-ball threshold (20% of new-ball overs in the draft); (2) spinners'
+categories: Attacking and Holding, or something else (into the rough, vs tail); (3) whether the
+series opens on Batting plans or Bowling plans; (4) whether the players' packs get the bowler-side
+fields too, as they get the batter-side planner.
 
 ### What does not change
 
@@ -163,3 +208,8 @@ sentence and figures already exist for ODI squads (Zimbabwe, SA ODI overviews).
    browser checks locally (fields drawn, the switch, the planner's field and notes arriving) and
    the live check in both regions.
 4. Later, with the ODI phases in the planner: the same packs for a white-ball series.
+5. ✅ **Fixes after use (04-10)**: Pace and Spin show the techniques only (no All); one field panel
+   for both kinds (label and tags on top, options underneath, the spare); set/move gone, spare kept
+   (the engine names one per auto field, coaches set one in the planner); no short-ball figure on
+   Spin; the planner tab is Set Field Plans and the planner page is light like the rest.
+6. **Batting plans** — plan above, draft out; build on Tom's word.
