@@ -31,6 +31,7 @@ from cricket_core.charts import (
     LENGTH_ZONES_1M, LENGTH_ZONES_05M,
 )
 from cricket_core.video import first_example as _first_example, prime_vision as _prime_vision
+from cricket_core import stumps as _stumps
 
 # ── Opta light theme (mirrors theme.py / CLAUDE.md) ─────────────────────────────
 BG_PAGE, BG_PANEL = "#F5F7FA", "#FFFFFF"
@@ -399,6 +400,22 @@ def _threat_cards(P: dict) -> list:
     return cards
 
 
+def stumps_read(rows, fmt: str = "Test") -> str | None:
+    """How often a bowler's balls were on course to hit the stumps, against an average bowler of
+    the same type in the same countries and to the same batters' hands (cricket_core.stumps — the
+    norms are referencebuilder's stumps_norms.csv). None below the tracked-ball floor or with no
+    norms, so a report without them simply omits the line."""
+    s = _stumps.bowler_vs_type(rows, fmt=fmt)
+    if not s:
+        return None
+    word = {"above": "more often than", "below": "less often than"}.get(s["verdict"], "about as often as")
+    cov = (f", tracked on {s['tracked_pct']:.0f}% of balls"
+           if s["tracked_pct"] is not None and s["tracked_pct"] < 80 else "")
+    return (f"<b>Hitting the stumps.</b> {s['rate']:.1f}% of tracked balls were on course to hit the "
+            f"stumps ({s['hits']:,} of {s['tracked']:,}{cov}) — {word} an average {s['label']} bowler "
+            f"in {fmt}s in the same countries ({s['expected']:.1f}%).")
+
+
 def _dismissal_rows(P: dict) -> list:
     """Normalised dismissal mix: (type, his %, base %, index text, colour). Caught
     dominates for everyone, so we index each type against the peer base rate and
@@ -537,7 +554,9 @@ def _chart_reads(P: dict) -> dict:
     if wz:
         extra = f", but strikes most often pitching {_LINE_PHRASE.get(dl['line'], dl['line'].lower())}" if dl else ""
         I["pitch_wkts"] = f"Wickets come mostly from balls pitched {_ball_phrase(wz['length'], wz['line'])}{extra}."
-    asz, pz = _modal_zone(wk, lz, "at_stumps_line_m"), _modal_zone(wk, lz, "pitch_line_m")
+    # tracked at the stumps only: an untracked ball carries line 0 and would read as "on the stumps"
+    wk_at = [r for r in wk if (r.get("at_stumps_height_m") or 0) > 0]
+    asz, pz = _modal_zone(wk_at, lz, "at_stumps_line_m"), _modal_zone(wk, lz, "pitch_line_m")
     if asz:
         nb = f" — pitches around {pz.lower()} and moves it back" if (pz and pz != asz) else ""
         I["beehive"] = f"Wicket balls pass the stumps mostly at {asz.lower()}{nb}."
@@ -1583,6 +1602,7 @@ def build_html(P: dict, video: dict = None, player_mode: bool = False) -> str:
         "vs_squad": None if player_mode else _vs_squad_ctx(P["bowler_id"]),
         "player_mode": player_mode,
         "threat_cards": _threat_cards(P), "danger_cards": _danger_cards(P),
+        "stumps_read": stumps_read(P["df"], "Test"),
         "dismissal_rows": _dismissal_rows(P), "dismissal_peer": _dismissal_peer_label(P),
         "unmapped_wkts": (P["n_wkts"] - int(P["wkt_zone"]["total"])) if P.get("wkt_zone") else 0,
         "narrative": _narrative(P), "miss_zone": miss_zone,
@@ -1877,6 +1897,7 @@ _TEMPLATE = r"""
       <div class="csub">{{csub}}</div></div>
     {% endfor %}
   </div>
+  {% if stumps_read %}<div class="read" style="margin-top:6px">{{stumps_read|safe}}</div>{% endif %}
   {% if dismissal_rows %}
   <div class="grid2 avoid" style="margin-top:8px;align-items:start">
     <div>

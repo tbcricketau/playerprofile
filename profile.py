@@ -655,10 +655,11 @@ def classify_balls(df: list, is_pace: bool, is_spin: bool) -> dict | None:
             a["shot_n"] += 1
             if r.get("is_false_shot"):
                 a["false"] += 1
+        # Untracked at the stumps is (line 0, height -1 mm), not None — without the height test every
+        # untracked ball joined the medians as a ball at the base of middle stump.
         asl, ash = r.get("at_stumps_line_m"), r.get("at_stumps_height_m")
-        if asl is not None:
+        if asl is not None and ash is not None and ash > 0:
             a["asl"].append(asl)
-        if ash is not None:
             a["ash"].append(ash)
         # Magnitude from the raw degrees; DIRECTION from the coder label (batter-relative,
         # already hand-adjusted) — cleaner than a raw-sign + 0.3° gate.

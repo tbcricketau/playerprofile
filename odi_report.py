@@ -18,7 +18,8 @@ from odi_profile import build_odi_profile
 from profile import build_line_zones
 from photos import get_photo_data_uri
 from cricket_core.charts import pitch_heatmap, beehive
-from report import _fig_uri, _html_to_pdf, _country_code, _fingerprint_cards, _fingerprint_headline, _file_url
+from report import (_fig_uri, _html_to_pdf, _country_code, _fingerprint_cards, _fingerprint_headline, _file_url,
+                    stumps_read)
 from report_style import REPORT_CSS, theme_ctx, card, headline_cards, f_speed, f_econ, f_avg, f_int, TEXT_SEC
 
 REPORT_VERSION = "odi-1.2"
@@ -155,6 +156,8 @@ def render_odi_report(bowler_id: str, out_dir: str = "reports/odi",
         "phase_read": _phase_read(P), "variation_read": _variation_read(P),
         "var_tables": _variation_tables(P) if P["is_pace"] else None,
         "fingerprint_cards": _fingerprint_cards(P), "fingerprint_headline": _fingerprint_headline(P), "video": video,
+        # ODI balls only — never the T20 mechanics supplement, which is a different body of cricket
+        "stumps_read": stumps_read(P["raw"], "ODI"),
         "version": REPORT_VERSION, "build_date": datetime.date.today().strftime("%d %b %Y"),
         "css": REPORT_CSS, "c": theme_ctx(),
     }
@@ -282,6 +285,7 @@ _TEMPLATE = r"""
   {% endif %}
 
   <h2>Where They Bowl <span class="sub" style="font-weight:400">(pitch map + beehive · over vs round · stock vs slower)</span></h2>
+  {% if stumps_read %}<div class="read">{{stumps_read|safe}}</div>{% endif %}
   {% for plabel, pk in [("On pace (stock speed)", "on"), ("Off pace (slower balls)", "off")] %}
   <div style="font-weight:700;font-size:10px;margin:8px 0 2px;color:{{c.ACCENT}}">{{plabel}}</div>
   {% if not figs[pk~"_any"] %}

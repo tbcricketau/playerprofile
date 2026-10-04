@@ -229,6 +229,8 @@ def _bouncer_line_band(m):
 def _line_bands(balls, band_fn, key, order, min_show=6, thin_below=15):
     """Generic stump/pitch-line split of a ball set (yorker line, bouncer line)."""
     vals = [r for r in balls if r["is_legal"] and r.get(key) is not None]
+    if key.startswith("at_stumps"):   # untracked at the stumps = line 0, height -1 mm, not None
+        vals = [r for r in vals if (r.get("at_stumps_height_m") or 0) > 0]
     n = len(vals)
     c = Counter(band_fn(r[key]) for r in vals)
     top = max(c.items(), key=lambda kv: kv[1])[0] if c else None
