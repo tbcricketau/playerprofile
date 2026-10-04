@@ -228,7 +228,8 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
             plan = re.sub(r"^Plan for [^:]+: ", "", r.get("plan") or "")
             per[g] = {"balls": r.get("balls") or 0, "plan": (plan[:1].upper() + plan[1:]) if plan else "",
                       "field": r.get("field"), "threat": r.get("threat"), "error": bool(r.get("error")),
-                      "fields": [{"label": f["label"].replace(" — ", " · "), "fielders": f.get("fielders") or []}
+                      "fields": [{"label": f["label"].replace(" — ", " · "), "fielders": f.get("fielders") or [],
+                                  "spare": f.get("spare"), "spare_name": f.get("spare_name") or ""}
                                  for f in (r.get("fields") or [])]}
         tier = tiers.get(pid, "")
         out.append({"id": pid, "name": name, "hand": hand, "role": role, "tier": tier,
