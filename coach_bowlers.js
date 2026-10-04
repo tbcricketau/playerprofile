@@ -109,12 +109,15 @@
     let read;
     if (!balls) read = `<p class="plan"><span class="thin">No Test balls to ${word(state.h)}.</span></p>`;
     else read = (balls < BK.minBalls ? `<p class="plan"><span class="thin">Only ${n(balls)} balls to ${word(state.h)} — read the figures with care.</span></p>` : "") + htp(x);
+    if (!read) read = '<p class="none">Nothing in their record to this hand stands out.</p>';
+    // name, the figures, the coaches' notes, then the scouting notes the build writes - the same order
+    // as the Pace and Spin cards (Tom, 04-10-2026)
     return `<article class="pcard" data-b="${esc(b.id)}" id="b${esc(b.id)}">
       <div>
         <div class="who">${head}<div><h3>${esc(b.name)}${b.tier ? `<span class="tier ${esc(b.tier)}">${esc(b.chip)}</span>` : ""}</h3><div class="t">${esc(b.type)}</div></div></div>
-        ${read}
-        <div class="notes"><span class="lbl">Coaches' notes · vs ${word(state.h)}</span>${notes ? `<ul>${notes.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` : `<p class="none">None yet${BK.planner ? " — add them in the planner." : "."}</p>`}</div>
         ${balls ? figures(b, x) : ""}
+        <div class="notes"><span class="lbl">Coaches' notes · vs ${word(state.h)}</span>${notes ? `<ul>${notes.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` : `<p class="none">None yet${BK.planner ? " — add them in the planner." : "."}</p>`}</div>
+        <div class="scout"><span class="lbl">Scouting notes</span>${read}</div>
         <div class="acts">${reels(b)}${b.report ? `<a class="solid" href="${esc(b.report)}">View report</a>` : ""}</div>
       </div>
       <div class="fieldp">${fieldPanel(b, x)}</div>

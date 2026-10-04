@@ -101,12 +101,14 @@
     else if (thin) plan = `<span class="thin">Only ${n(row.balls)} balls faced vs ${esc(labelOf(g))} — too little to set a plan from.</span>`;
     else plan = row.plan || `<span class="thin">No clear length or line target.</span>`;
     const head = b.head ? `<img src="${esc(b.head)}" alt="" loading="lazy">` : `<span class="rav">${esc(b.initials)}</span>`;
+    // name, the figures, the coaches' notes, then the scouting notes the build writes (Tom, 04-10-2026:
+    // the coaches' notes matter most, so they sit above the generated ones)
     return `<article class="pcard" data-b="${esc(b.id)}" id="b${esc(b.id)}">
       <div>
         <div class="who">${head}<div><h3>${esc(b.name)}${b.tier ? `<span class="tier ${esc(b.tier)}">${esc(b.chip)}</span>` : ""}</h3><div class="hand">${esc(b.hand)}${b.role ? " · " + esc(b.role) : ""}</div></div></div>
-        <p class="plan">${plan}</p>
-        <div class="notes"><span class="lbl">Coaches' notes</span>${notes ? `<ul>${notes.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="none">None yet${PK.planner ? " — add them in the planner." : "."}</p>`}</div>
         ${figures(row.threat, thin, g)}
+        <div class="notes"><span class="lbl">Coaches' notes</span>${notes ? `<ul>${notes.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="none">None yet${PK.planner ? " — add them in the planner." : "."}</p>`}</div>
+        <div class="scout"><span class="lbl">Scouting notes</span><p class="plan">${plan}</p></div>
         <div class="acts">${b.vision && row.balls && !thin ? `<a href="${esc(b.vision)}">${PLAY} Vision</a>` : ""}${b.report ? `<a class="solid" href="${esc(b.report)}">View report</a>` : ""}</div>
       </div>
       <div class="fieldp">${fieldPanel(b, g, row)}</div>

@@ -177,9 +177,10 @@ def _overview(slug, group):
 
 
 def _nav(slug, have, planner):
-    """The two rows of tabs (Tom, 04-10-2026): [(side, label, [(key, label, href)])] — Batting plans
-    (their bowlers, for our batters) and Bowling plans (their batters, for our bowlers), each with
-    only the pages this build produced. The planner's own page reads the same rows from nav.json."""
+    """The two rows of tabs (Tom, 04-10-2026): [(side, label, [(key, label, href)])] — Bowling plans
+    (their batters, for our bowlers) first, then Batting plans (their bowlers, for our batters), each
+    with only the pages this build produced. A series opens on the first page of the first side. The
+    planner's own page reads the same rows from nav.json."""
     base = f"/coach/{slug}"
     bat = [("bowlers", "Their bowlers", f"{base}/batting/index.html")]
     if planner and have.get("bowler_plans"):
@@ -191,7 +192,7 @@ def _nav(slug, have, planner):
         bowl.append(("fields", "Set Field Plans", f"/fields/{planner}/"))
     if "shot-matrix.html" in have:
         bowl.append(("shots", "Unorthodox shots", f"{base}/plans/shot-matrix.html"))
-    return [("bat", "Batting plans", bat), ("bowl", "Bowling plans", bowl)]
+    return [("bowl", "Bowling plans", bowl), ("bat", "Batting plans", bat)]
 
 
 # ── Batting plans: their bowlers, a card each, switched by our batter's hand ──────────────────────
@@ -274,22 +275,15 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
     return body
 
 
-def _overview_page(title, lead, sides, n_bowlers, n_batters):
-    """index.html: the series on one screen — the two sides as large links (Tom, 04-10-2026)."""
-    def card(side, kind, head, desc):
-        items = next((i for k, _l, i in sides if k == side), [])
-        if not items:
-            return ""
-        pages = " · ".join(_html.escape(lab) for _k, lab, _h in items)
-        return (f'<a href="{_html.escape(items[0][2])}"><span class="k">{kind}</span><b>{head}</b>'
-                f'<span class="d">{desc}</span><span class="pg">{pages}</span></a>')
-    bowl_desc = (f"The plan for each of their {n_batters} batters against pace and spin, the figures behind "
-                 "it, and our fields — auto-generated, or set by the coaches.")
-    bat_desc = (f"How each of their {n_bowlers} bowlers goes at right- and left-handers, how to play them, "
-                "and the field they are likely to set — new ball, old ball, bouncer plan.")
-    return (f"<h1>{_html.escape(title)}</h1>" + (f'<p class="lead">{_html.escape(lead)}</p>' if lead else "")
-            + '<div class="sides">' + card("bat", "Batting plans", "Their bowlers", bat_desc)
-            + card("bowl", "Bowling plans", "Their batters", bowl_desc) + "</div>")
+def _landing(title, href):
+    """index.html: straight on to the series' first page (Tom, 04-10-2026, after seeing an overview
+    with the two sides as links — it was a click with nothing on it). The Scouting list and every
+    older link name index.html, so it stays, as a redirect."""
+    h = _html.escape(href)
+    return (f'<!doctype html><meta charset=utf8><title>{_html.escape(title)}</title>'
+            f'<meta http-equiv="refresh" content="0; url={h}">'
+            f'<script>location.replace({json.dumps(href)})</script>'
+            f'<p><a href="{h}">{_html.escape(title)}</a></p>')
 
 
 def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planner, heads):
@@ -434,7 +428,8 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     have["bowler_plans"] = bool(plans)
     sides = _nav(slug, have, planner)
     nav_for = lambda side, key: SR.series_nav(sides, side, key)        # noqa: E731
-    crumb = [("/coach/index.html", "Scouting"), (f"/coach/{slug}/index.html", title)]
+    home = next(items[0][2] for _s, _l, items in sides if items)     # where the series opens
+    crumb = [("/coach/index.html", "Scouting"), (home, title)]
     if any(k in have for k in ("pace", "spin")):
         shutil_copy(PACK_JS, os.path.join(out, "coach", "pack.js"))
     for f, side, key in (("matchups.html", "bat", "matchups"), ("shot-matrix.html", "bowl", "shots")):
@@ -467,12 +462,10 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     open(os.path.join(root, "batting", "index.html"), "w", encoding="utf-8").write(
         SR.page(f"Their bowlers — {title}", body, up=crumb, tabs=nav_for("bat", "bowlers"), wide=True))
 
-    # the series' own page: an overview with the two sides as large links (Tom, 04-10-2026)
-    body = _overview_page(title, entry.get("subtitle") or "", sides, len(bowlers), len(batters))
-    open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(
-        SR.page(title, body, up=("/coach/index.html", "Scouting"), tabs=nav_for(None, None)))
+    # the series' own address opens its first page (Bowling plans → Pace)
+    open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(_landing(title, home))
     # the same rows for the field planner's page, which the app renders itself
-    json.dump({"series": title, "index": f"/coach/{slug}/index.html",
+    json.dump({"series": title, "index": home,
                "sides": [{"key": s, "label": lab, "pages": [{"key": k, "label": l, "href": h} for k, l, h in items]}
                          for s, lab, items in sides]},
               open(os.path.join(root, "nav.json"), "w", encoding="utf-8"), indent=1)

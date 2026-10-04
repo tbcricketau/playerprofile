@@ -81,12 +81,6 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  /* two rows since Batting plans (Tom, 04-10-2026): the side, then that side's pages */
  .snav{margin:-4px 0 18px} .snav nav.stabs{margin:0} .snav nav.l1 a{font-size:15px;padding:10px 13px} .snav nav.l2{border-bottom:0} .snav nav.l2 a{font-size:12.5px;padding:8px 10px}
  .crumb .dot{color:#9ca3af;margin:0 6px}
- /* the series overview: the two sides as large links */
- .sides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:6px 0 0}
- .sides a{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px 22px;text-decoration:none;color:#1a1a2e;box-shadow:0 1px 3px rgba(0,0,0,.04)}
- .sides a:hover{border-color:#003087} .sides .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6b7280}
- .sides b{font-size:26px;line-height:1.05;color:#003087} .sides .d{font-size:15px} .sides .pg{font-size:13px;color:#003087;font-weight:600;margin-top:4px}
- @media(max-width:700px){.sides{grid-template-columns:1fr}}
  /* a bowler card's how-to-play rows and the field's estimate line */
  .pcard .htp{margin:12px 0 0;display:grid;gap:6px} .pcard .htp .row{display:grid;grid-template-columns:74px minmax(0,1fr);gap:10px;align-items:baseline}
  .pcard .htp .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280} .pcard .htp ul{margin:0;padding-left:16px} .pcard .htp li{font-size:14.5px} .pcard .htp b{color:#003087}
@@ -114,6 +108,9 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  .pcard .plan{font-size:16px;line-height:1.45;margin:10px 0 0} .pcard .plan b{color:#003087} .pcard .thin{color:#6b7280;font-style:italic;font-size:14px}
  .pcard .notes{margin:10px 0 0;padding:9px 12px;background:#eef1f6;border-radius:6px} .pcard .notes .lbl{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-weight:700;margin-bottom:2px}
  .pcard .notes ul{margin:0;padding-left:18px;display:block} .pcard .notes li{font-weight:600;font-size:14px} .pcard .notes .none{color:#6b7280;font-style:italic;margin:0}
+ /* the generated lines, under the coaches' notes (Tom, 04-10-2026) */
+ .pcard .scout{margin:12px 0 0;padding:2px 0 2px 12px;border-left:3px solid #e5e7eb} .pcard .scout .lbl{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-weight:700;margin-bottom:2px}
+ .pcard .scout .plan{margin:0} .pcard .scout .plan+.htp{margin-top:6px} .pcard .scout .htp{margin:2px 0 0} .pcard .scout .none{color:#6b7280;font-style:italic;margin:0}
  .pcard .figs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:12px 0 0} .pcard .figs.f5{grid-template-columns:repeat(5,minmax(0,1fr))}
  .pcard .fig{border-top:2px solid #e5e7eb;padding-top:5px;min-width:0} .pcard .fig .v{font-size:20px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums} .pcard .fig .v.sm{font-size:13.5px;font-weight:600;line-height:1.25;margin-top:3px}
  .pcard .fig .k{display:block;color:#6b7280;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;margin-top:2px} .pcard .fig .muted{color:#6b7280;font-style:italic;font-weight:500}
@@ -146,8 +143,8 @@ def series_tabs(items, active):
 
 def series_nav(sides, side, active):
     """The two rows every page of a series carries since Batting plans (Tom, 04-10-2026): the sides,
-    then the pages of the one open. `sides` is [(key, label, [(key, label, href)])]; the overview
-    passes side=None and gets the top row alone, with neither side marked."""
+    then the pages of the one open. `sides` is [(key, label, [(key, label, href)])], in the order
+    the top row shows them."""
     top = "".join(f'<a href="{_html.escape(items[0][2])}"{" class=\"on\"" if key == side else ""}>{_html.escape(label)}</a>'
                   for key, label, items in sides if items)
     rows = next((items for key, _l, items in sides if key == side), [])
