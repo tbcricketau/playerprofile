@@ -1100,6 +1100,24 @@ player-mode pages, so keep them.
 Say in the note what the archive does *not* carry. Both archived bundles have a dead SAS baked in,
 so reviving means rebuilding from source, never re-pushing the tag.
 
+### The hub half — the Scouting page's Archive (04-10-2026)
+
+The hub's Scouting index (`coach/index.html`, written by `build_coach_site._write_index`) lists the
+series being played or coming up under **Active** and every finished one under an **Archive** that
+is collapsed until opened. A series is archived when its squad is (`squads.json`), and the archive
+list is sorted newest first with the date. Two kinds of page sit behind it:
+
+- a series that had a hub coach view stays at `coach/<slug>/` as built (South Africa ODI);
+- an older series with only a frozen portal copy is served from the same place with
+  `build_coach_site.py --frozen <slug>` — it copies `archive/<slug>` in under `coach/<slug>/`,
+  relabels the breadcrumb, and rewrites the index. Nothing is re-derived; the app dresses the pages
+  and relays their Fairplay links through `/vision/`, so the baked SAS does not matter there.
+
+`--index-only` rewrites the list from what is built. Upload with
+`playerpacks/upload_packs.py --bundle coach_build --prefix aus --apply` (it sends only changed
+files and never deletes). Bangladesh and Zimbabwe went up this way (541 files, 221 MB). The CA XI
+series has no scouting pages anywhere, so it is not listed.
+
 ### Archived so far
 
 - **AUS player packs — 2026-08-31.** Bangladesh home Tests. Pages off on `tbcricketau/player-packs`,
