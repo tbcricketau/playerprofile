@@ -176,19 +176,120 @@ def _overview(slug, group):
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
 
 
-def _tab_items(slug, have, planner):
-    """[(key, label, href)] for the series' tab row — only the pages this build produced."""
+def _nav(slug, have, planner):
+    """The two rows of tabs (Tom, 04-10-2026): [(side, label, [(key, label, href)])] — Batting plans
+    (their bowlers, for our batters) and Bowling plans (their batters, for our bowlers), each with
+    only the pages this build produced. The planner's own page reads the same rows from nav.json."""
     base = f"/coach/{slug}"
-    items = [("index", "Their bowlers", f"{base}/index.html")]
-    for key, label in (("pace", "Pace"), ("spin", "Spin")):
-        if key in have:
-            items.append((key, label, f"{base}/plans/{key}.html"))
+    bat = [("bowlers", "Their bowlers", f"{base}/batting/index.html")]
+    if planner and have.get("bowler_plans"):
+        bat.append(("bfields", "Set Field Plans", f"/fields/{planner}/?pack=vs_rhb"))
+    if "matchups.html" in have:
+        bat.append(("matchups", "Match-ups", f"{base}/plans/matchups.html"))
+    bowl = [(key, label, f"{base}/plans/{key}.html") for key, label in (("pace", "Pace"), ("spin", "Spin")) if key in have]
     if planner:
-        items.append(("fields", "Set Field Plans", f"/fields/{planner}/"))
-    for f, key, label in (("matchups.html", "matchups", "Match-ups"), ("shot-matrix.html", "shots", "Unorthodox shots")):
-        if f in have:
-            items.append((key, label, f"{base}/plans/{f}"))
-    return items
+        bowl.append(("fields", "Set Field Plans", f"/fields/{planner}/"))
+    if "shot-matrix.html" in have:
+        bowl.append(("shots", "Unorthodox shots", f"{base}/plans/shot-matrix.html"))
+    return [("bat", "Batting plans", bat), ("bowl", "Bowling plans", bowl)]
+
+
+# ── Batting plans: their bowlers, a card each, switched by our batter's hand ──────────────────────
+BOWLERS_JS = os.path.join(HERE, "coach_bowlers.js")
+_REELS = (("stock", "Stock ball"), ("wicket", "Wicket balls"), ("new_ball", "New ball"))
+
+
+def _bowler_plans(slug):
+    p = os.path.join(DATA, f"bowler_plans_{_opp_key(slug)}.json")
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
+
+
+def _bowler_vision(root, bid, name, about):
+    """One vision page per bowler with their reels to each hand — stock ball, wicket balls, new
+    ball — keyed stockR, wktL and so on for the card's buttons. Returns {hand: {kind: n clips}}."""
+    from cricket_core.video import build_player_html, playlist_item, resolve_playlist
+    keys = {"stock": "stock", "wicket": "wkt", "new_ball": "nb"}
+    playlists, titles, counts = {}, {}, {"RHB": {}, "LHB": {}}
+    for h, word in (("RHB", "right-handers"), ("LHB", "left-handers")):
+        for kind, title in _REELS:
+            clips = [e for e in (about.get(f"{kind}_clips_{h.lower()}") or []) if e.get("clip_stem") or e.get("url")]
+            if not clips:
+                continue
+            items = []
+            for i, e in enumerate(clips):
+                it = playlist_item(e.get("delivery_id"), e.get("clip_stem"), caption=f"{title} to {word} · {i + 1} of {len(clips)}")
+                if not e.get("clip_stem") and e.get("url"):
+                    it["url"] = e["url"]
+                items.append(it)
+            resolved, avail, _n = resolve_playlist(items)
+            if avail:
+                key = keys[kind] + h[0]
+                playlists[key] = resolved
+                titles[key] = f"{title} to {word}"
+                counts[h][kind] = avail
+    if playlists:
+        os.makedirs(os.path.join(root, "vision"), exist_ok=True)
+        build_player_html(playlists, os.path.join(root, "vision", f"{bid}.html"), title=name,
+                          subtitle="Their deliveries to each hand", titles=titles)
+    return counts if playlists else {}
+
+
+def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planner):
+    """batting/index.html: a card per bowler for the chosen hand — how to play them, the coaches'
+    notes, the figures, their reels and report, and the field they are likely to set by category.
+    The cards are drawn by coach_bowlers.js from window.BK; the planner's notes and saved fields
+    arrive when the page opens, as on the Pace and Spin packs."""
+    out, n_vis = [], 0
+    order = sorted(plans["bowlers"].items(),
+                   key=lambda kv: (-int(kv[1].get("order") or 0), kv[1].get("name") or ""))
+    for bid, b in order:
+        if b.get("error"):
+            continue
+        tier = tiers.get(bid, b.get("tier") or "")
+        reels = _bowler_vision(root, bid, b["name"], about.get(bid) or {})
+        n_vis += bool(reels)
+        out.append({"id": bid, "name": b["name"], "type": b.get("type") or "", "pace": bool(b.get("pace")),
+                    "tier": tier, "chip": SR.TIER_CHIP.get(tier, ""), "initials": _initials(b["name"]),
+                    "head": ("../" + heads[bid]) if heads.get(bid) else "",
+                    "report": f"../reports/{reports[bid]}.html" if reports.get(bid) else "",
+                    "vision": f"../vision/{bid}.html" if reels else "", "reels": reels,
+                    "hands": b["hands"]})
+    tot = {h: sum((b["hands"].get(h) or {}).get("n_balls") or 0 for b in out) for h in ("RHB", "LHB")}
+    data = {"series": entry.get("name") or slug, "planner": planner, "minBalls": 120,
+            "hands": [{"key": "RHB", "label": "vs right-handers", "page": "vs_rhb", "balls": tot["RHB"]},
+                      {"key": "LHB", "label": "vs left-handers", "page": "vs_lhb", "balls": tot["LHB"]}],
+            "bowlers": out}
+    seg = "".join(f'<button type="button" data-h="{h["key"]}"{" class=\"on\"" if k == 0 else ""}>{h["label"]}'
+                  f'<small>{h["balls"]:,} balls from their {len(out)} bowlers</small></button>'
+                  for k, h in enumerate(data["hands"]))
+    who = entry.get("target_country") or "the opposition"
+    lead = (f"How {_html.escape(who)}'s bowlers go at each hand, how to play them, and the field they are "
+            "likely to set. Same numbers as each bowler's own report.")
+    body = (f"<h1>Their bowlers</h1><p class=\"lead\">{lead}</p>"
+            f'<div class="seg" role="tablist" aria-label="Batter\'s hand">{seg}</div><div id="bk-cards"></div>'
+            f"<script>window.BK={json.dumps(data, separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')};</script>"
+            f'<script src="/static/fields.js?v={_fields_js_version()}"></script>'
+            f'<script src="/coach/bowlers.js?v={_file_version(BOWLERS_JS)}"></script>')
+    print(f"  their bowlers: {len(out)} cards, vision for {n_vis}")
+    return body
+
+
+def _overview_page(title, lead, sides, n_bowlers, n_batters):
+    """index.html: the series on one screen — the two sides as large links (Tom, 04-10-2026)."""
+    def card(side, kind, head, desc):
+        items = next((i for k, _l, i in sides if k == side), [])
+        if not items:
+            return ""
+        pages = " · ".join(_html.escape(lab) for _k, lab, _h in items)
+        return (f'<a href="{_html.escape(items[0][2])}"><span class="k">{kind}</span><b>{head}</b>'
+                f'<span class="d">{desc}</span><span class="pg">{pages}</span></a>')
+    bowl_desc = (f"The plan for each of their {n_batters} batters against pace and spin, the figures behind "
+                 "it, and our fields — auto-generated, or set by the coaches.")
+    bat_desc = (f"How each of their {n_bowlers} bowlers goes at right- and left-handers, how to play them, "
+                "and the field they are likely to set — new ball, old ball, bouncer plan.")
+    return (f"<h1>{_html.escape(title)}</h1>" + (f'<p class="lead">{_html.escape(lead)}</p>' if lead else "")
+            + '<div class="sides">' + card("bat", "Batting plans", "Their bowlers", bat_desc)
+            + card("bowl", "Bowling plans", "Their batters", bowl_desc) + "</div>")
 
 
 def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planner, heads):
@@ -287,6 +388,7 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     # for nine of this squad's nineteen reports.
     coach_only = set()
     heads = {}                    # player id -> headshot href, shared by the grid and the packs
+    report_of = {}                # bowler id -> report base, for the Their bowlers cards
     tiles = {t: [] for t, _h, _c in SR.TIER_META}
     tiles[""] = []
 
@@ -315,48 +417,65 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
                                        != open(os.path.join(reports, f"{base}.html"), "rb").read()):
                 coach_only.add(kind)
             if kind == "bowling":
+                report_of[str(pid)] = base
                 tier = tiers.get(str(pid), "")
                 tiles.setdefault(tier, []).append(SR.bowler_tile(
-                    name, btype or meta.get("type") or "Bowler", f"reports/{base}.html",
+                    name, btype or meta.get("type") or "Bowler", f"../reports/{base}.html",
                     badge=SR.TIER_CHIP.get(tier), badge_class=tier or "squad",
-                    photo=heads.get(str(pid)), initials=_initials(name)))
+                    photo=("../" + heads[str(pid)]) if heads.get(str(pid)) else None, initials=_initials(name)))
 
     if not any(tiles.values()):
         raise SystemExit(f"no reports resolved for {slug} at {fmt}/{level} — nothing to serve")
 
-    # the plan pages, and the tab row every page of the series carries
-    have = _plans(slug, root, entry, batters, tiers, smap, fmt, level, planner, heads)
-    items = _tab_items(slug, have, planner)
-    tabs_for = lambda key: SR.series_tabs(items, key)        # noqa: E731
-    if have:
-        shutil_copy(PACK_JS, os.path.join(out, "coach", "pack.js"))
-        for f in ("matchups.html", "shot-matrix.html"):
-            if f in have:
-                _insert_tabs(os.path.join(root, "plans", f), tabs_for({"matchups.html": "matchups", "shot-matrix.html": "shots"}[f]))
-        for key in ("pace", "spin"):
-            if key in have:
-                open(os.path.join(root, "plans", f"{key}.html"), "w", encoding="utf-8").write(
-                    SR.page(f"{_PACKS[key][0]} — {entry.get('name') or slug}", have[key],
-                            up=(f"/coach/{slug}/index.html", entry.get("name") or slug), tabs=tabs_for(key), wide=True))
-
+    # the plan pages, and the two rows of tabs every page of the series carries
     title = entry.get("name") or slug
-    lead = entry.get("subtitle") or ""
-    note = ("Their bowlers — the coach report on each of them"
-            + (", with how they match up against our squad, which a player is not shown."
-               if "bowling" in coach_only else "."))
-    grid = []
-    for tier, head, _chip in SR.TIER_META:
-        if tiles.get(tier):
-            grid.append(SR.group_heading(head, len(tiles[tier]), tier))
-            grid.append('<ul class="bgrid">' + "".join(tiles[tier]) + "</ul>")
-    if tiles.get(""):
-        grid.append(SR.group_heading("Their bowlers", len(tiles[""])))
-        grid.append('<ul class="bgrid">' + "".join(tiles[""]) + "</ul>")
-    body = (f'<h1>{_html.escape(title)}</h1>'
-            + (f'<p class="lead">{_html.escape(lead)}</p>' if lead else "")
-            + f'<p class="lead">{note}</p>' + "".join(grid))
+    have = _plans(slug, root, entry, batters, tiers, smap, fmt, level, planner, heads)
+    plans = _bowler_plans(slug)
+    have["bowler_plans"] = bool(plans)
+    sides = _nav(slug, have, planner)
+    nav_for = lambda side, key: SR.series_nav(sides, side, key)        # noqa: E731
+    crumb = [("/coach/index.html", "Scouting"), (f"/coach/{slug}/index.html", title)]
+    if any(k in have for k in ("pace", "spin")):
+        shutil_copy(PACK_JS, os.path.join(out, "coach", "pack.js"))
+    for f, side, key in (("matchups.html", "bat", "matchups"), ("shot-matrix.html", "bowl", "shots")):
+        if f in have:
+            _insert_tabs(os.path.join(root, "plans", f), nav_for(side, key))
+    for key in ("pace", "spin"):
+        if key in have:
+            open(os.path.join(root, "plans", f"{key}.html"), "w", encoding="utf-8").write(
+                SR.page(f"{_PACKS[key][0]} — {title}", have[key], up=crumb, tabs=nav_for("bowl", key), wide=True))
+
+    # Batting plans → Their bowlers: the cards where the bowler plans are built, else the grid
+    os.makedirs(os.path.join(root, "batting"), exist_ok=True)
+    if plans:
+        shutil_copy(BOWLERS_JS, os.path.join(out, "coach", "bowlers.js"))
+        body = _bowlers_page(slug, root, entry, plans, bowlers, tiers, heads, report_of, planner)
+    else:
+        print(f"  no bowler plans (data/bowler_plans_{_opp_key(slug)}.json) — Their bowlers is the report grid")
+        note = ("The coach report on each of them"
+                + (", with how they match up against our squad, which a player is not shown."
+                   if "bowling" in coach_only else "."))
+        grid = []
+        for tier, head, _chip in SR.TIER_META:
+            if tiles.get(tier):
+                grid.append(SR.group_heading(head, len(tiles[tier]), tier))
+                grid.append('<ul class="bgrid">' + "".join(tiles[tier]) + "</ul>")
+        if tiles.get(""):
+            grid.append(SR.group_heading("Their bowlers", len(tiles[""])))
+            grid.append('<ul class="bgrid">' + "".join(tiles[""]) + "</ul>")
+        body = f'<h1>Their bowlers</h1><p class="lead">{note}</p>' + "".join(grid)
+    open(os.path.join(root, "batting", "index.html"), "w", encoding="utf-8").write(
+        SR.page(f"Their bowlers — {title}", body, up=crumb, tabs=nav_for("bat", "bowlers"), wide=True))
+
+    # the series' own page: an overview with the two sides as large links (Tom, 04-10-2026)
+    body = _overview_page(title, entry.get("subtitle") or "", sides, len(bowlers), len(batters))
     open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(
-        SR.page(f"{title} — their squad", body, up=("../index.html", "Scouting"), tabs=tabs_for("index"), wide=True))
+        SR.page(title, body, up=("/coach/index.html", "Scouting"), tabs=nav_for(None, None)))
+    # the same rows for the field planner's page, which the app renders itself
+    json.dump({"series": title, "index": f"/coach/{slug}/index.html",
+               "sides": [{"key": s, "label": lab, "pages": [{"key": k, "label": l, "href": h} for k, l, h in items]}
+                         for s, lab, items in sides]},
+              open(os.path.join(root, "nav.json"), "w", encoding="utf-8"), indent=1)
 
     # PDFs are retired (Tom, 25-09) and nothing here links one, but `_bake_report` copies a
     # `<name>.pdf` whenever it finds one beside the render — 11 MB of the South Africa build, all
@@ -406,10 +525,12 @@ def shutil_copy(src, dst):
 
 
 def _insert_tabs(path, tabs):
-    """Put the series' tab row under the breadcrumb of a copied plan page (once)."""
+    """Put the series' tab rows under the breadcrumb of a copied plan page (once)."""
     text = open(path, encoding="utf-8").read()
-    if 'class="stabs"' in text:
-        text = re.sub(r'<nav class="stabs".*?</nav>', tabs, text, count=1, flags=re.S)
+    if 'class="snav"' in text:
+        text = re.sub(r'<div class="snav">.*?</div>', lambda _m: tabs, text, count=1, flags=re.S)
+    elif 'class="stabs"' in text:
+        text = re.sub(r'<nav class="stabs".*?</nav>', lambda _m: tabs, text, count=1, flags=re.S)
     else:
         text = text.replace("</div>", "</div>" + tabs, 1) if text.find('<div class="crumb">') >= 0 else tabs + text
     open(path, "w", encoding="utf-8").write(text)

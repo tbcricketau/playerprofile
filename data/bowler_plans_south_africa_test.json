@@ -1,0 +1,3513 @@
+{
+ "slug": "south-africa-test-away-2026",
+ "series": "South Africa Away Test Series 2026",
+ "format": "Test",
+ "built": "2026-10-04",
+ "new_ball_min": 10,
+ "bowlers": {
+  "3760008": {
+   "name": "Aiden Markram",
+   "type": "Off-spin",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 627,
+   "tier": "xi",
+   "hands": {
+    "RHB": {
+     "n_balls": 333,
+     "n_wkts": 4,
+     "runs": 173,
+     "economy": 3.1171171171171173,
+     "bowl_avg": 43.25,
+     "strike_rate": 83.25,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 23.723723723723726,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>full</b> — their most threatening length (1.5 wickets per 100)."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (42%) — their main scoring release.",
+       "Cash in when they go <b>full wide outside off</b> (economy 5.3, beats the bat only 9%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        }
+       ],
+       "spare": 7,
+       "spare_name": "Midwicket",
+       "adjusted": true,
+       "balls": 333,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 2,
+       "spare_name": "Backward point",
+       "adjusted": true,
+       "balls": 333,
+       "notes": []
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 294,
+     "n_wkts": 2,
+     "runs": 142,
+     "economy": 2.8979591836734695,
+     "bowl_avg": 71.0,
+     "strike_rate": 147.0,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 95.578231292517,
+     "how_to_play": {
+      "respect": [],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (53%) — their main scoring release.",
+       "Cash in when they go <b>full down the leg side</b> (economy 3.7, beats the bat only 18%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "spare": 1,
+       "spare_name": "Silly point",
+       "adjusted": true,
+       "balls": 294,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 7,
+       "spare_name": "Square leg",
+       "adjusted": true,
+       "balls": 294,
+       "notes": []
+      }
+     ]
+    }
+   },
+   "group": "off_spin"
+  },
+  "3110056": {
+   "name": "Wiaan Mulder",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 0.0,
+   "order": 2022,
+   "tier": "xi",
+   "hands": {
+    "RHB": {
+     "n_balls": 1387,
+     "n_wkts": 21,
+     "runs": 598,
+     "economy": 2.5868781542898343,
+     "bowl_avg": 28.476190476190474,
+     "strike_rate": 66.04761904761905,
+     "avg_spd": 128.01648531951642,
+     "max_spd_99": 136.9673,
+     "short_pct": 20.115356885364093,
+     "round_pct": 0.8651766402307137,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length 6th stump</b> — their wicket ball (1.8 wickets per 100, 6 off 313)."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (53%) — their main scoring release.",
+       "Cash in when they go <b>full outside off</b> (economy 4.4, beats the bat only 11%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        }
+       ],
+       "spare": 6,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 732,
+       "notes": [
+        "An extra fielder square on the off: 48% of the runs off them to right-handers go square and through the off, 28% through the leg side."
+       ]
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 635,
+     "n_wkts": 17,
+     "runs": 315,
+     "economy": 2.9763779527559056,
+     "bowl_avg": 18.529411764705884,
+     "strike_rate": 37.35294117647059,
+     "avg_spd": 128.67173719376393,
+     "max_spd_99": 136.2116,
+     "short_pct": 19.68503937007874,
+     "round_pct": 57.95275590551181,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length 6th stump</b> — their wicket ball (4.0 wickets per 100, 3 off 44)."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (44%) — their main scoring release."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 264,
+       "notes": [
+        "An extra fielder square on the off: 41% of the runs off them to left-handers go square and through the off, 33% through the leg side."
+       ]
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    }
+   },
+   "group": "right_pace"
+  },
+  "4352128": {
+   "name": "Marco Jansen",
+   "type": "Left pace",
+   "pace": true,
+   "new_ball": 10.526315789473683,
+   "order": 3408,
+   "tier": "xi",
+   "hands": {
+    "RHB": {
+     "n_balls": 2198,
+     "n_wkts": 65,
+     "runs": 1144,
+     "economy": 3.1228389444949958,
+     "bowl_avg": 17.6,
+     "strike_rate": 33.815384615384616,
+     "avg_spd": 134.79649441340783,
+     "max_spd_99": 143.40010000000004,
+     "short_pct": 31.665150136487718,
+     "round_pct": 47.99818016378526,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>full 4th stump</b> — their wicket ball (4.5 wickets per 100, 4 off 62).",
+       "Watch the short ball — 23 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (56%) — their main scoring release.",
+       "Cash in when they go <b>full wide outside off</b> (economy 5.5, beats the bat only 25%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 144.0,
+         "radius": 0.4,
+         "label": "Slip 3"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 1124,
+       "notes": [
+        "Third slip in for mid-on: 4 of the 18 catches off them to right-handers with a recorded position were taken there."
+       ]
+      },
+      {
+       "slot": "c2",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 1074,
+       "notes": [
+        "An extra fielder square on the off: 44% of the runs off them to right-handers go square and through the off, 32% through the leg side."
+       ]
+      },
+      {
+       "slot": "c3",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 1210,
+     "n_wkts": 24,
+     "runs": 663,
+     "economy": 3.287603305785124,
+     "bowl_avg": 27.625,
+     "strike_rate": 50.416666666666664,
+     "avg_spd": 134.8181670929241,
+     "max_spd_99": 143.4156,
+     "short_pct": 33.14049586776859,
+     "round_pct": 6.694214876033058,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>back of length Wide of 6th</b> — their wicket ball (4.6 wickets per 100, 4 off 42).",
+       "Watch the short ball — 11 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (45%) — their main scoring release.",
+       "Cash in when they go <b>back of a length outside off</b> (economy 4.4, beats the bat only 10%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 144.0,
+         "radius": 0.4,
+         "label": "Slip 3"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 7,
+       "spare_name": "Mid-on",
+       "adjusted": true,
+       "balls": 564,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 4,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 646,
+       "notes": [
+        "A squarer leg-side ring: 41% of the runs off them to left-handers go through the leg side, 31% through the off."
+       ]
+      },
+      {
+       "slot": "c3",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    }
+   },
+   "group": "left_pace"
+  },
+  "3080070": {
+   "name": "Keshav Maharaj",
+   "type": "Left-arm orthodox",
+   "pace": false,
+   "new_ball": 4.9504950495049505,
+   "order": 11508,
+   "tier": "xi",
+   "hands": {
+    "RHB": {
+     "n_balls": 7630,
+     "n_wkts": 131,
+     "runs": 3732,
+     "economy": 2.9347313237221493,
+     "bowl_avg": 28.48854961832061,
+     "strike_rate": 58.2442748091603,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 96.29095674967235,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length Wide of 6th</b> — their wicket ball (3.5 wickets per 100, 3 off 43)."
+      ],
+      "attack": [
+       "Most of the runs off them leak through the leg side (44%) — their main scoring release.",
+       "Cash in when they go <b>full down the leg side</b> (economy 4.1, beats the bat only 12%)."
+      ],
+      "watch": [
+       "Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball."
+      ]
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "spare": 1,
+       "spare_name": "Silly point",
+       "adjusted": true,
+       "balls": 7630,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": true,
+       "balls": 7630,
+       "notes": []
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 3878,
+     "n_wkts": 67,
+     "runs": 2264,
+     "economy": 3.5028365136668382,
+     "bowl_avg": 33.791044776119406,
+     "strike_rate": 57.88059701492537,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 16.580711707065497,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length 6th stump</b> — their wicket ball (3.0 wickets per 100, 6 off 164)."
+      ],
+      "attack": [
+       "Most of the runs off them leak through the leg side (49%) — their main scoring release.",
+       "Cash in when they go <b>full wide outside off</b> (economy 4.5, beats the bat only 19%)."
+      ],
+      "watch": [
+       "Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball."
+      ]
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 3878,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 4,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 3878,
+       "notes": []
+      }
+     ]
+    }
+   },
+   "group": "left_orthodox"
+  },
+  "3550469": {
+   "name": "Senuran Muthusamy",
+   "type": "Left-arm orthodox",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 960,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 622,
+     "n_wkts": 11,
+     "runs": 345,
+     "economy": 3.327974276527331,
+     "bowl_avg": 31.363636363636363,
+     "strike_rate": 56.54545454545455,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 93.56913183279742,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>full</b> — their most threatening length (2.1 wickets per 100)."
+      ],
+      "attack": [
+       "Most of the runs off them leak through the leg side (43%) — their main scoring release.",
+       "Cash in when they go <b>full outside off</b> (economy 4.2, beats the bat only 16%)."
+      ],
+      "watch": [
+       "Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball."
+      ]
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "spare": 6,
+       "spare_name": "Mid-on",
+       "adjusted": true,
+       "balls": 622,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": true,
+       "balls": 622,
+       "notes": []
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 338,
+     "n_wkts": 12,
+     "runs": 250,
+     "economy": 4.437869822485207,
+     "bowl_avg": 20.833333333333332,
+     "strike_rate": 28.166666666666668,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 45.26627218934911,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>full</b> — their most threatening length (5.3 wickets per 100)."
+      ],
+      "attack": [
+       "Most of the runs off them leak through the leg side (40%) — their main scoring release.",
+       "Cash in when they go <b>good length down the leg side</b> (economy 5.7, beats the bat only 9%)."
+      ],
+      "watch": [
+       "Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball."
+      ]
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        }
+       ],
+       "spare": 2,
+       "spare_name": "Silly point",
+       "adjusted": true,
+       "balls": 338,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": true,
+       "balls": 338,
+       "notes": []
+      }
+     ]
+    }
+   },
+   "group": "left_orthodox"
+  },
+  "1310113": {
+   "name": "Simon Harmer",
+   "type": "Off-spin",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 1986,
+   "tier": "xi",
+   "hands": {
+    "RHB": {
+     "n_balls": 981,
+     "n_wkts": 21,
+     "runs": 505,
+     "economy": 3.08868501529052,
+     "bowl_avg": 24.047619047619047,
+     "strike_rate": 46.714285714285715,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 42.303771661569826,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>full Stumps</b> — their wicket ball (3.0 wickets per 100, 5 off 146)."
+      ],
+      "attack": [
+       "Most of the runs off them leak through the leg side (53%) — their main scoring release.",
+       "Cash in when they go <b>full wide outside off</b> (economy 4.1, beats the bat only 16%)."
+      ],
+      "watch": [
+       "Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball."
+      ]
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 981,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 4,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 981,
+       "notes": []
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 1005,
+     "n_wkts": 28,
+     "runs": 406,
+     "economy": 2.4238805970149255,
+     "bowl_avg": 14.5,
+     "strike_rate": 35.892857142857146,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 98.80597014925372,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length 5th stump</b> — their wicket ball (4.1 wickets per 100, 3 off 48)."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (41%) — their main scoring release.",
+       "Cash in when they go <b>full outside off</b> (economy 3.3, beats the bat only 26%)."
+      ],
+      "watch": [
+       "Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball."
+      ]
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.1,
+         "label": "Silly point"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "spare": 1,
+       "spare_name": "Silly point",
+       "adjusted": true,
+       "balls": 1005,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Set batter",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": true,
+       "balls": 1005,
+       "notes": []
+      }
+     ]
+    }
+   },
+   "group": "off_spin"
+  },
+  "2730017": {
+   "name": "Kagiso Rabada",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 56.52173913043478,
+   "order": 11627,
+   "tier": "xi",
+   "hands": {
+    "RHB": {
+     "n_balls": 7299,
+     "n_wkts": 193,
+     "runs": 3655,
+     "economy": 3.0045211672831895,
+     "bowl_avg": 18.93782383419689,
+     "strike_rate": 37.818652849740936,
+     "avg_spd": 136.37852916735915,
+     "max_spd_99": 145.99040000000002,
+     "short_pct": 34.51157692834635,
+     "round_pct": 1.3015481572818195,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>yorker/full Stumps</b> — their wicket ball (4.9 wickets per 100, 4 off 45).",
+       "Watch the short ball — 61 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (51%) — their main scoring release.",
+       "Cash in when they go <b>full outside off</b> (economy 4.0, beats the bat only 22%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 144.0,
+         "radius": 0.4,
+         "label": "Slip 3"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 7,
+       "spare_name": "Mid-on",
+       "adjusted": true,
+       "balls": 3340,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 3959,
+       "notes": []
+      },
+      {
+       "slot": "c3",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 4328,
+     "n_wkts": 106,
+     "runs": 2432,
+     "economy": 3.3715341959334566,
+     "bowl_avg": 22.943396226415093,
+     "strike_rate": 40.83018867924528,
+     "avg_spd": 136.97118032786886,
+     "max_spd_99": 147.52,
+     "short_pct": 30.730129390018483,
+     "round_pct": 48.84473197781885,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>yorker/full Stumps</b> — their wicket ball (5.8 wickets per 100, 6 off 58).",
+       "Watch the short ball — 30 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (48%) — their main scoring release."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": 6,
+       "spare_name": "Mid-on",
+       "adjusted": true,
+       "balls": 2281,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-on",
+       "adjusted": true,
+       "balls": 2047,
+       "notes": []
+      },
+      {
+       "slot": "c3",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    }
+   },
+   "group": "right_pace"
+  },
+  "2540186": {
+   "name": "Corbin Bosch",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 0.0,
+   "order": 520,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 292,
+     "n_wkts": 10,
+     "runs": 150,
+     "economy": 3.082191780821918,
+     "bowl_avg": 15.0,
+     "strike_rate": 29.2,
+     "avg_spd": 140.29929577464787,
+     "max_spd_99": 146.1054,
+     "short_pct": 20.205479452054796,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "respect": [],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (49%) — their main scoring release.",
+       "Cash in when they go <b>back of a length wide outside off</b> (economy 9.1, beats the bat only 38%).",
+       "Their short ball is scoreable (economy 4.8, 0 wkts off 59)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        }
+       ],
+       "spare": 6,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 163,
+       "notes": [
+        "An extra fielder square on the off: 62% of the runs off them to right-handers go square and through the off, 36% through the leg side."
+       ]
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 228,
+     "n_wkts": 6,
+     "runs": 149,
+     "economy": 3.9210526315789473,
+     "bowl_avg": 24.833333333333332,
+     "strike_rate": 38.0,
+     "avg_spd": 138.5990625,
+     "max_spd_99": 143.9075,
+     "short_pct": 14.912280701754385,
+     "round_pct": 47.368421052631575,
+     "how_to_play": {
+      "respect": [],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (58%) — their main scoring release."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": 117,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    }
+   },
+   "group": "right_pace"
+  },
+  "5460045": {
+   "name": "Gerald Coetzee",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 0.0,
+   "order": 462,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 371,
+     "n_wkts": 10,
+     "runs": 276,
+     "economy": 4.463611859838275,
+     "bowl_avg": 27.6,
+     "strike_rate": 37.1,
+     "avg_spd": 139.30805929919137,
+     "max_spd_99": 150.456,
+     "short_pct": 45.55256064690027,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length 5th stump</b> — their wicket ball (4.4 wickets per 100, 3 off 38).",
+       "Watch the short ball — 4 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (50%) — their main scoring release.",
+       "Cash in when they go <b>back of a length wide outside off</b> (economy 6.8, beats the bat only 32%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        }
+       ],
+       "spare": 7,
+       "spare_name": "Mid-on",
+       "adjusted": true,
+       "balls": 190,
+       "notes": [
+        "An extra fielder square on the off: 56% of the runs off them to right-handers go square and through the off, 35% through the leg side."
+       ]
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 91,
+     "n_wkts": 4,
+     "runs": 51,
+     "economy": 3.3626373626373627,
+     "bowl_avg": 12.75,
+     "strike_rate": 22.75,
+     "avg_spd": 141.6201098901099,
+     "max_spd_99": 152.162,
+     "short_pct": 37.362637362637365,
+     "round_pct": 38.46153846153847,
+     "how_to_play": {
+      "respect": [],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (77%) — their main scoring release."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": 32,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    }
+   },
+   "group": "right_pace"
+  },
+  "4090011": {
+   "name": "Anrich Nortje",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 0.0,
+   "order": 3057,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 2092,
+     "n_wkts": 43,
+     "runs": 1190,
+     "economy": 3.413001912045889,
+     "bowl_avg": 27.674418604651162,
+     "strike_rate": 48.651162790697676,
+     "avg_spd": 142.2669651086241,
+     "max_spd_99": 152.271,
+     "short_pct": 46.749521988527725,
+     "round_pct": 5.25812619502868,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>back of length Wide of 6th</b> — their wicket ball (2.9 wickets per 100, 7 off 218).",
+       "Watch the short ball — 21 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (49%) — their main scoring release.",
+       "Cash in when they go <b>full outside off</b> (economy 5.7, beats the bat only 10%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 4,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 1171,
+       "notes": [
+        "A squarer leg-side ring: 42% of the runs off them to right-handers go through the leg side, 31% through the off."
+       ]
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 965,
+     "n_wkts": 26,
+     "runs": 602,
+     "economy": 3.74300518134715,
+     "bowl_avg": 23.153846153846153,
+     "strike_rate": 37.11538461538461,
+     "avg_spd": 142.3794495412844,
+     "max_spd_99": 154.0468,
+     "short_pct": 46.32124352331606,
+     "round_pct": 48.29015544041451,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length Wide of 6th</b> — their wicket ball (3.0 wickets per 100, 3 off 88).",
+       "Watch the short ball — 11 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (57%) — their main scoring release.",
+       "Cash in when they go <b>good length wide outside off</b> (economy 3.9, beats the bat only 22%)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": 4,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 549,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    }
+   },
+   "group": "right_pace"
+  },
+  "3200006": {
+   "name": "Dane Paterson",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 23.076923076923077,
+   "order": 1318,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 896,
+     "n_wkts": 17,
+     "runs": 409,
+     "economy": 2.7388392857142856,
+     "bowl_avg": 24.058823529411764,
+     "strike_rate": 52.705882352941174,
+     "avg_spd": 126.859453125,
+     "max_spd_99": 136.91299999999998,
+     "short_pct": 18.861607142857142,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length Wide of 6th</b> — their wicket ball (2.3 wickets per 100, 7 off 289).",
+       "Watch the short ball — 4 of their wickets come from it."
+      ],
+      "attack": [
+       "Most of the runs off them leak square/through the off side (57%) — their main scoring release."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 144.0,
+         "radius": 0.4,
+         "label": "Slip 3"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 6,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 399,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 497,
+       "notes": []
+      },
+      {
+       "slot": "c3",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 422,
+     "n_wkts": 8,
+     "runs": 217,
+     "economy": 3.085308056872038,
+     "bowl_avg": 27.125,
+     "strike_rate": 52.75,
+     "avg_spd": 126.21281990521327,
+     "max_spd_99": 134.53750000000002,
+     "short_pct": 16.113744075829384,
+     "round_pct": 55.92417061611374,
+     "how_to_play": {
+      "respect": [
+       "Respect the <b>good length</b> — their most threatening length (1.8 wickets per 100)."
+      ],
+      "attack": [
+       "Most of the runs off them leak through the leg side (52%) — their main scoring release.",
+       "Cash in when they go <b>full on the stumps</b> (economy 4.4, beats the bat only 24%).",
+       "Their short ball is scoreable (economy 4.1, 1 wkts off 68)."
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "slot": "option1",
+       "label": "New ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35,
+         "label": "Slip 2"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-off",
+       "adjusted": true,
+       "balls": 210,
+       "notes": []
+      },
+      {
+       "slot": "c2",
+       "label": "Old ball",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        }
+       ],
+       "spare": 5,
+       "spare_name": "Mid-on",
+       "adjusted": true,
+       "balls": 212,
+       "notes": [
+        "A squarer leg-side ring: 44% of the runs off them to left-handers go through the leg side, 24% through the off."
+       ]
+      },
+      {
+       "slot": "c3",
+       "label": "Bouncer plan",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "balls": null,
+       "notes": [
+        "The standard bouncer field: one slip, a catcher in front of square, and the two leg-side riders the Laws allow."
+       ]
+      }
+     ]
+    }
+   },
+   "group": "right_pace"
+  }
+ }
+}

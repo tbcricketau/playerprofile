@@ -78,6 +78,23 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  nav.stabs{display:flex;gap:2px;margin:-4px 0 18px;border-bottom:1px solid #e5e7eb;overflow-x:auto;scrollbar-width:none}
  nav.stabs a{position:relative;padding:9px 11px;text-decoration:none;color:#6b7280;white-space:nowrap;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
  nav.stabs a.on{color:#003087} nav.stabs a.on::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:3px;background:#003087}
+ /* two rows since Batting plans (Tom, 04-10-2026): the side, then that side's pages */
+ .snav{margin:-4px 0 18px} .snav nav.stabs{margin:0} .snav nav.l1 a{font-size:15px;padding:10px 13px} .snav nav.l2{border-bottom:0} .snav nav.l2 a{font-size:12.5px;padding:8px 10px}
+ .crumb .dot{color:#9ca3af;margin:0 6px}
+ /* the series overview: the two sides as large links */
+ .sides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:6px 0 0}
+ .sides a{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:20px 22px;text-decoration:none;color:#1a1a2e;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+ .sides a:hover{border-color:#003087} .sides .k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6b7280}
+ .sides b{font-size:26px;line-height:1.05;color:#003087} .sides .d{font-size:15px} .sides .pg{font-size:13px;color:#003087;font-weight:600;margin-top:4px}
+ @media(max-width:700px){.sides{grid-template-columns:1fr}}
+ /* a bowler card's how-to-play rows and the field's estimate line */
+ .pcard .htp{margin:12px 0 0;display:grid;gap:6px} .pcard .htp .row{display:grid;grid-template-columns:74px minmax(0,1fr);gap:10px;align-items:baseline}
+ .pcard .htp .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280} .pcard .htp ul{margin:0;padding-left:16px} .pcard .htp li{font-size:14.5px} .pcard .htp b{color:#003087}
+ .pcard .who .t{color:#6b7280;font-size:13px;font-weight:600} .pcard .est{color:#6b7280;font-size:12.5px;margin:8px 0 0;padding-left:16px} .pcard .est li{margin:2px 0}
+ .pcard .fig .v small{font-size:13px;font-weight:600;color:#6b7280} .pcard .fhead a{color:#003087}
+ .pcard .figs.fn{grid-template-columns:repeat(var(--n,6),minmax(0,1fr))}
+ @media(max-width:860px){.pcard .figs.fn{grid-template-columns:repeat(4,minmax(0,1fr))}}
+ @media(max-width:860px){.pcard .htp .row{grid-template-columns:1fr;gap:0}}
  /* their bowlers as a grid of tiles */
  ul.bgrid{list-style:none;padding:0;margin:0 0 6px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
  ul.bgrid a{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a2e;box-shadow:0 1px 3px rgba(0,0,0,.04)}
@@ -127,6 +144,19 @@ def series_tabs(items, active):
                       for key, label, href in items) + "</nav>")
 
 
+def series_nav(sides, side, active):
+    """The two rows every page of a series carries since Batting plans (Tom, 04-10-2026): the sides,
+    then the pages of the one open. `sides` is [(key, label, [(key, label, href)])]; the overview
+    passes side=None and gets the top row alone, with neither side marked."""
+    top = "".join(f'<a href="{_html.escape(items[0][2])}"{" class=\"on\"" if key == side else ""}>{_html.escape(label)}</a>'
+                  for key, label, items in sides if items)
+    rows = next((items for key, _l, items in sides if key == side), [])
+    second = ('<nav class="stabs l2" aria-label="Pages">'
+              + "".join(f'<a href="{_html.escape(href)}"{" class=\"on\"" if key == active else ""}>{_html.escape(label)}</a>'
+                        for key, label, href in rows) + "</nav>") if rows else ""
+    return f'<div class="snav"><nav class="stabs l1" aria-label="Plans">{top}</nav>{second}</div>'
+
+
 def bowler_tile(name, btype, href, badge=None, badge_class="squad", photo=None, initials=""):
     """One tile of the bowlers grid: headshot, name, type, tier chip; the whole tile opens the report."""
     av = (f'<img class="rav" src="{photo}" alt="" loading="lazy">' if photo
@@ -137,8 +167,11 @@ def bowler_tile(name, btype, href, badge=None, badge_class="squad", photo=None, 
 
 
 def page(title, body, up=None, tabs="", wide=False):
-    """`wide` widens the shell for a page of cards with a field beside each (the plan packs)."""
-    crumb = f'<a href="{up[0]}">← {_html.escape(up[1])}</a>' if up else ""
+    """`wide` widens the shell for a page of cards with a field beside each (the plan packs). `up` is
+    one (href, label) or a list of them — a series page's crumb is Scouting, then the series."""
+    trail = [up] if up and isinstance(up[0], str) else list(up or [])
+    crumb = '<span class="dot">·</span>'.join(
+        f'<a href="{href}">{"← " if k == 0 else ""}{_html.escape(label)}</a>' for k, (href, label) in enumerate(trail))
     if wide:
         tabs = "<style>body{max-width:1120px}</style>" + (tabs or "")
     # The guard goes in the head so a play button clicked while the page is still downloading is
