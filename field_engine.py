@@ -673,7 +673,24 @@ def build_field(P, group, phase):
 # R1-R8 read one batter's strokes against the cohort's norms and have no bowler equivalent, so they
 # are not run. Nothing here has been checked against fields seen on vision yet; the cards say so.
 _SPIN_GROUPS = ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox", "spin")
-_DIS_KEY = {v: k for k, v in _DIS_SITU.items()}
+# R9 posts a catcher for a BATTER on two catches at one spot - one batter's habit. A bowler's catches
+# come from every batter they have bowled to, and two of thirty-one at leg gully (Jansen to
+# right-handers) is not a field anyone sets. So the bowler side asks for three, and a tenth of their
+# catches with a recorded position.
+_BOWLER_DIS_MIN, _BOWLER_DIS_SHARE = 3, 0.10
+
+
+def _bowler_catcher(caught, names):
+    """(position, catches there, catches located) for the situational catcher their record asks
+    for and the field lacks, or None."""
+    total = sum(caught.values())
+    best = None
+    for key, pos in _DIS_SITU.items():
+        n = caught.get(key, 0)
+        if pos not in names and n >= _BOWLER_DIS_MIN and total and n / total >= _BOWLER_DIS_SHARE \
+                and (best is None or n > best[1]):
+            best = (pos, n, total)
+    return best
 
 
 def bowler_field(rows, group, is_lhb, stock_phase, min_legal=120):
@@ -709,15 +726,14 @@ def bowler_field(rows, group, is_lhb, stock_phase, min_legal=120):
         exp, _d, _f = expected_catches(rows, group)
         caught = Counter(r["catch_position"] for r in rows
                          if r.get("is_wicket") and r.get("how_out") == "Caught" and r.get("catch_position"))
-        r9 = _dismissal_evidence(caught, names)
-        if r9:
-            add = r9["add"][0]
+        hit = _bowler_catcher(caught, names)
+        if hit:
+            add, n_at, n_all = hit
             floating = [f["position"] for f in _floating(names, flow, exp)]
             drop = _pick_drop(names, flow, floating, False, add)
             cand = [add if n == drop else n for n in names]
             if drop and drop != add and _legal(cand, stock_phase):
                 names = cand
-                n_at, n_all = caught.get(_DIS_KEY.get(add), 0), sum(caught.values())
                 notes.append(f"{_DIS_FRIENDLY.get(add, add).capitalize()} in for {pretty_position(drop).lower()}: "
                              f"{n_at} of the {n_all} catches off them to {hands} with a recorded position "
                              f"were taken there.")
