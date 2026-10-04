@@ -153,6 +153,23 @@ _SWITCH = {"pace": ("All pace", "right- and left-arm"), "spin": ("All spin", "ev
 PACK_JS = os.path.join(HERE, "coach_pack.js")
 
 
+def _file_version(path):
+    """A file's content hash, for the URL that loads it: a changed script gets a new URL, so no
+    browser can run yesterday's copy against today's page (04-10-2026)."""
+    import hashlib
+    try:
+        return hashlib.sha1(open(path, "rb").read()).hexdigest()[:10]
+    except OSError:
+        return "0"
+
+
+def _fields_js_version():
+    """The field planner's script, as the playerpacks app serves it (sibling clone). It must match
+    `fieldplanner.script_version()` to share the browser's cached copy; a mismatch only costs a
+    second download, never a stale script."""
+    return _file_version(os.path.join(HERE, "..", "playerpacks", "static", "fields.js"))
+
+
 def _overview(slug, group):
     p = os.path.join(DATA, f"overview_{group}_{_opp_key(slug)}.json")
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
@@ -236,7 +253,8 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
     body = (f"<h1>{_html.escape(title)}</h1><p class=\"lead\">{lead}</p>"
             f'<div class="seg" role="tablist" aria-label="Bowling technique">{seg}</div><div id="pk-cards"></div>'
             f"<script>window.PK={json.dumps(data, separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')};</script>"
-            '<script src="/static/fields.js"></script><script src="/coach/pack.js"></script>')
+            f'<script src="/static/fields.js?v={_fields_js_version()}"></script>'
+            f'<script src="/coach/pack.js?v={_file_version(PACK_JS)}"></script>')
     return body
 
 
