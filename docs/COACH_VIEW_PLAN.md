@@ -1,6 +1,6 @@
 # Coach view — Plans and Their players
 
-Status: **plan, for Tom to read (04-10-2026). Nothing built.** Asked for after the field planner
+Status: **built and live (04-10-2026)** — Pace and Spin packs, the tab row, the bowlers grid; the Batting tab for our batters is the next piece. Asked for after the field planner
 went live: the series page of the coach view (Scouting → a series) "feels a bit messy" and repeats
 the player packs. First the Plans section, then Their players. A draft mock-up follows once the
 shape here is agreed.
@@ -155,6 +155,11 @@ sentence and figures already exist for ODI squads (Zimbabwe, SA ODI overviews).
    the planner's, so a page mixes two field styles. The fix is to export the engine's fielders as
    angle/radius beside the images and draw both with the planner's code — a small change to
    `build_overview._field_images`.
-3. Build both packs and the bowlers grid; screenshot-check desktop and phone; deploy to both
-   regions; the pack pages are unchanged.
+3. ✅ **Built and live (04-10).** `build_coach_site.py` writes `plans/pace.html` and `plans/spin.html`
+   (`coach_pack.js` + the planner's `/static/fields.js` draw every field, engine's and coaches'),
+   the series page is the bowlers grid under the tab row, the planner carries the same row, and
+   the packs index gets a Field plans card. The six SA Test overviews were rebuilt on the box so
+   each suggested field carries its fielders (rows, plans and figures unchanged). Checked: 12
+   browser checks locally (fields drawn, the switch, the planner's field and notes arriving) and
+   the live check in both regions.
 4. Later, with the ODI phases in the planner: the same packs for a white-ball series.
