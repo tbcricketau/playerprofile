@@ -78,8 +78,40 @@ sub-type's plan, one click away on the same page.
 - A bowler who bats (Jansen, Mulder, Maharaj) appears once in the bowlers grid and as a batter card
   in the packs; today they are in both lists.
 
-🔴 **Call for Tom:** dropping Their batters from the series page, or keeping it as a one-line
-"Their batters: Markram · de Zorzi · …" that jumps to the cards.
+**Decided (Tom, 04-10-2026): Their batters comes off the series page.** The Pace and Spin packs are
+where the batters live.
+
+### One way to move around a series (Tom, 04-10-2026)
+
+Today a series has two navigations: "Field plans" is a button in the top bar, everything else is a
+link on the page. The draft shows one: **a row of tabs in the series band** — Their bowlers · Pace ·
+Spin · Field plans · Match-ups · Unorthodox shots — on every page of the series, with the crumb above
+it back to Scouting, and **no button in the top bar**. The field planner is already per series
+(`/fields/<series>/`), so it is a tab like the others, and its bowler-type tabs become its own second
+row. On the players' side the planner stops being a bar button too and becomes a card on the packs
+index ("Field plans — the fields the coaches have set"), beside the squad list. The hub bar then
+carries only the crumb trail, which is what it is for.
+
+### Batting plans for our batters (Tom, 04-10-2026 — to plan next)
+
+The coach view today is one-sided: plans for bowling *at them*. The same page needs the other half,
+how *our* batters play *their* attack. What exists to build it from:
+
+| | source | state |
+|---|---|---|
+| how their attack has bowled to each of our batters (Test) | `attack_cards.py` → `attacked-our-squad` | built, Test only |
+| their bowlers' stock ball, wicket ball, new-ball footage, scoped to our batter's hand | the batting pack's opposition-bowler cards (`build_opponent_about`) | built, per pack |
+| simulated match-ups, our batter v their bowler | matchup store `we_bat` rows, `render_matchups` | built |
+| real meetings | `h2h_<opp>.json` | built |
+| coaches' batting notes per batter | nothing yet — the field planner's notes are their batters' | **new** |
+
+Proposed shape, to be drafted after the Pace and Spin packs: a **Batting** tab in the same row, a
+card per *our* batter (headshot, hand, role) with a technique switch of their own — their pace ·
+their spin, sub-types where the attack has them — carrying: how that attack bowls to them (length
+and line, from the attack cards), the simulated read against each of their bowlers of that type, the
+real-meeting reel, and **coaches' notes** kept the way the planner keeps their batters' notes (one
+store, versioned, edited on the card). The white-ball attack cards are the gap the REPLACEMENT_PLAN
+§7a names; a Test series can be built first.
 
 ### What does not change
 
@@ -116,9 +148,13 @@ sentence and figures already exist for ODI squads (Zimbabwe, SA ODI overviews).
 
 ## Sequence
 
-1. Tom reads this and says yes / change / no on the shape and the Their batters call.
-2. **Draft mock-up** of the Pace pack with three real batters (Markram RHB, de Zorzi LHB, Bavuma),
-   the technique switch working, one card with a saved planner field and one with the engine's.
+1. ✅ Tom read this (04-10): yes to the shape, Their batters dropped.
+2. ✅ **Draft mock-up** of the Pace pack — https://claude.ai/artifact/T1iFV27g72grZLbsypfQex (five real batters, the switch
+   working, Markram with a planner field, the rest with the engine's, the thin cases). One thing it
+   shows that the plan did not: the engine's suggested fields are PNGs in a different drawing from
+   the planner's, so a page mixes two field styles. The fix is to export the engine's fielders as
+   angle/radius beside the images and draw both with the planner's code — a small change to
+   `build_overview._field_images`.
 3. Build both packs and the bowlers grid; screenshot-check desktop and phone; deploy to both
    regions; the pack pages are unchanged.
 4. Later, with the ODI phases in the planner: the same packs for a white-ball series.
