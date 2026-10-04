@@ -313,34 +313,109 @@ def _plans(slug, root):
             'options against them.</p><ul class="cards">' + links + "</ul>")
 
 
+def _day_first(iso):
+    return f"{iso[8:10]}-{iso[5:7]}-{iso[:4]}" if iso and len(iso) >= 10 else (iso or "")
+
+
+def _series_meta(slug, cfg, frozen, sq):
+    """Name, subtitle and the date the series was archived, from whichever file still carries it:
+    series.json while live, the archive manifest once frozen, squads.json for the roster's date."""
+    e = cfg.get(slug) or frozen.get(slug) or {}
+    m = sq.get(slug) or {}
+    return (e.get("name") or m.get("name") or slug, e.get("subtitle") or "",
+            m.get("archived") or e.get("archived") or "")
+
+
 def _write_index(out):
-    """The scouting landing page — every series with a coach view built in this bundle."""
+    """The scouting landing page: the series being played or coming up, then every old series in a
+    list that opens on request (Tom, 04-10-2026). A series is archived when its squad is
+    (squads.json) — the one notion of "over" the rest of the estate uses."""
+    import squads
     root = os.path.join(out, "coach")
     slugs = sorted(d for d in os.listdir(root)
                    if os.path.exists(os.path.join(root, d, "index.html")))
     cfg = {s.get("slug"): s for s in json.load(open(SERIES_JSON, encoding="utf-8")).get("series", [])}
-    cards = []
+    try:
+        import archive_series
+        frozen = {m["slug"]: m for m in archive_series.manifests()}
+    except Exception:
+        frozen = {}
+    sq = squads.load()
+
+    def card(slug, name, sub, when):
+        return (f'<li><a href="{slug}/index.html"><b>{_html.escape(name)}</b>'
+                + (f'<span class="sub">{_html.escape(sub)}</span>' if sub else "") + "</a>"
+                + (f'<span class="n">archived {_day_first(when)}</span>' if when else "") + "</li>")
+
+    active, old = [], []
     for s in slugs:
-        e = cfg.get(s) or {}
-        cards.append(f'<li><a href="{s}/index.html">{_html.escape(e.get("name") or s)}</a>'
-                     + (f'<span>{_html.escape(e.get("subtitle") or "")}</span>' if e.get("subtitle") else "")
-                     + "</li>")
+        name, sub, when = _series_meta(s, cfg, frozen, sq)
+        (old if when else active).append((when, card(s, name, sub, when)))
+    old.sort(key=lambda t: t[0], reverse=True)
     body = ('<h1>Scouting</h1><p class="lead">The opposition, series by series — their squad and '
-            'the full report on each player.</p><ul class="cards">' + "".join(cards) + "</ul>")
+            'the full report on each player.</p>'
+            '<h2 class="sect">Active</h2>'
+            + ('<ul class="cards">' + "".join(c for _w, c in active) + "</ul>" if active
+               else '<p class="empty">No series on at the moment.</p>')
+            + (f'<details class="archive"><summary>Archive <span class="n">{len(old)} series</span></summary>'
+               '<p class="sub">Finished series, as they stood at the end. The pages do not change.</p>'
+               '<ul class="cards">' + "".join(c for _w, c in old) + "</ul></details>" if old else ""))
     open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(
         SR.page("Scouting", body, up=("../players/index.html", "Player packs")))
+    print(f"scouting index: {len(active)} active, {len(old)} archived")
+
+
+def adopt_frozen(slug, out):
+    """Serve a series frozen into archive/ (archive_series.py) from the hub too: its built pages are
+    copied in under coach/<slug>/, where the app dresses them and relays their vision. Nothing is
+    re-derived, so they cannot disagree with the portal's copy. An existing copy is renamed aside."""
+    import datetime
+    import shutil
+    src = os.path.join(HERE, "archive", slug)
+    if not os.path.exists(os.path.join(src, "index.html")):
+        raise SystemExit(f"{slug} is not frozen in archive/ — archive_series.py freeze it first")
+    dst = os.path.join(out, "coach", slug)
+    if os.path.isdir(dst):
+        aside = f"{dst}.bak-{datetime.datetime.now():%Y%m%d-%H%M%S}"
+        os.rename(dst, aside)
+        print(f"  existing coach/{slug} renamed to {os.path.basename(aside)}")
+    shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".git", ".archive.json"))
+    _recrumb(os.path.join(dst, "index.html"))
+    n = sum(len(f) for _r, _d, f in os.walk(dst))
+    print(f"  frozen {slug}: {n} files -> coach/{slug}")
+
+
+def _recrumb(index_path):
+    """The frozen index's breadcrumb names the portal it was built for; under the hub the same
+    href is the Scouting list, so it says so. Only that label changes."""
+    text = open(index_path, encoding="utf-8").read()
+    new = re.sub(r'(<div class="crumb"><a href="\.\./index\.html">← )[^<]*(</a>)', r"\1Scouting\2", text, count=1)
+    if new != text:
+        open(index_path, "w", encoding="utf-8").write(new)
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--slug", required=True, help="the squad slug, as in series.json")
+    ap.add_argument("--slug", help="the squad slug, as in series.json")
+    ap.add_argument("--frozen", action="append", default=[], metavar="SLUG",
+                    help="copy a series frozen in archive/ in under coach/, for the Archive list")
+    ap.add_argument("--index-only", action="store_true",
+                    help="rewrite coach/index.html from what is already built, baking nothing")
     ap.add_argument("--out", default="coach_build",
                     help="build directory; assemble_packs copies its coach/ into the bundle")
     ap.add_argument("--sas-hours", type=int, default=DEFAULT_SAS_HOURS)
     a = ap.parse_args()
+    if not (a.slug or a.frozen or a.index_only):
+        ap.error("give --slug, --frozen or --index-only")
     out = a.out if os.path.isabs(a.out) else os.path.join(HERE, a.out)
-    _n, missing = build(a.slug, out, a.sas_hours)
+    for slug in a.frozen:
+        adopt_frozen(slug, out)
+    missing = []
+    if a.slug:
+        _n, missing = build(a.slug, out, a.sas_hours)     # writes the index itself
+    elif a.frozen or a.index_only:
+        _write_index(out)
     return 1 if missing else 0
 
 

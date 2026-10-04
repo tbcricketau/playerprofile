@@ -73,6 +73,13 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  ul.reports a.btn.ghost{background:#eef1f6;color:#003087;border:1px solid #d5dced}
  @media(max-width:520px){ul.reports li{flex-wrap:wrap} ul.reports .rinfo{flex:1 0 100%;margin-bottom:6px}}
  .empty{color:#6b7280;font-style:italic} .note{color:#9ca3af;font-size:12px;margin-top:22px}
+ h2.sect{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;margin:18px 0 6px}
+ details.archive{margin-top:26px;border-top:1px solid #e5e7eb}
+ details.archive>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:12px 0 4px;font-weight:700;font-size:15px;color:#1a1a2e}
+ details.archive>summary::-webkit-details-marker{display:none}
+ details.archive>summary::before{content:"";width:7px;height:7px;border:solid #6b7280;border-width:0 2px 2px 0;transform:rotate(-45deg);margin:0 4px 0 2px;transition:transform .15s}
+ details.archive[open]>summary::before{transform:rotate(45deg);margin-top:-3px}
+ details.archive>.sub{margin:0 0 6px}
 </style>
 <div class="crumb">{{crumb}}</div>
 {{body}}
