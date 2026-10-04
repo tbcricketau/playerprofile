@@ -86,15 +86,22 @@ def _field_images(P, group, img_dir, bid, fmt="Test"):
     os.makedirs(img_dir, exist_ok=True)
     out = []
     for i, (title, field) in enumerate(wanted):
+        # The positions themselves, batter-relative (angle from straight, + = off side; radius 0 at
+        # the bat, 1 at the rope) — the field planner's convention, so the coach view draws the
+        # engine's field and a coach's with one piece of code (04-10-2026). The keeper is the
+        # diagram's own cue, as it is in the planner.
+        fielders = [{"angle": round(float(f["angle"]), 1), "radius": round(float(f["radius"]), 3),
+                     "label": f.get("position", ""), "tag": f.get("tag", "")}
+                    for f in field if f.get("position") != "Keeper"]
+        fn = f"{group}_{bid}_{i}.png"       # group-qualified: the pack flattens all groups into one dir
         try:
             png = field_engine.field_diagram(field, P.get("is_lhb"), title="").to_image(
                 format="png", width=340, height=340, scale=2)
+            open(os.path.join(img_dir, fn), "wb").write(png)
         except Exception as e:
             print(f"     ! field image {title}: {type(e).__name__}: {str(e)[:40]}")
-            continue
-        fn = f"{group}_{bid}_{i}.png"       # group-qualified: the pack flattens all groups into one dir
-        open(os.path.join(img_dir, fn), "wb").write(png)
-        out.append({"label": title, "file": fn})
+            fn = None
+        out.append({"label": title, "file": fn, "fielders": fielders})
     return out
 
 
