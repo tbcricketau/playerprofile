@@ -1122,6 +1122,10 @@ Built by `build_coach_site.py --slug <slug>` into `coach_build/coach/<slug>/`, a
 - **Their batters came off the series page**; every batter is a card in the packs with the report
   link. The batting reports are still baked under `reports/` for those links. **Their bowlers** is
   a grid of tiles (`site_render.bowler_tile`), the tile opening the coach cut of the report.
+- **Scripts load by content hash** (`fields.js?v=…`, `pack.js?v=…`; `_file_version`). On 04-10-2026
+  browsers kept the previous day's `fields.js` under a one-day cache and ran it against the new
+  planner page, which drew no field and no Edit button until a Ctrl+F5. The app's `/static/` now
+  revalidates too (cricket-core `webserver._static`), but a page that adds a script should version it.
 - A coach page can be worked on locally with sign-in off: `FIELDPLANNER_DEV_USER=coach` stands in
   at the coach gate too, and `PACKS_DIR` points the app at a bundle (give it the long path — the
   gate resolves paths, and an 8.3 short path used to 404 every file).
