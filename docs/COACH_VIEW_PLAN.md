@@ -153,10 +153,7 @@ profile (`profile.build_profile(hand="vs RHB")`), `how_to_play`, the per-hand re
 
 **Draft (04-10-2026): https://claude.ai/artifact/YCgoD5tduq54s4UzMpFJet** — four bowlers (Rabada, Jansen, Maharaj, Harmer), real per-hand figures from the build machine, the two tab rows, the hand switch, stock fields per category, and an example coaches' field on Rabada vs right-handers. It showed one defect to fix in the build: `profile._how_to_play` writes he/his/him, which reader-facing text may not (the draft rewrites the lines; the bowling reports carry the same lines).
 
-**Questions for Tom** — (1) the new-ball threshold (20% of new-ball overs in the draft); (2) spinners'
-categories: Attacking and Holding, or something else (into the rough, vs tail); (3) whether the
-series opens on Batting plans or Bowling plans; (4) whether the players' packs get the bowler-side
-fields too, as they get the batter-side planner.
+**Decided (Tom, 04-10-2026)** — (1) **New ball** for any pace bowler who takes it **10% of the time or more** (Rabada 57%, Paterson 23%, Jansen 11%); (2) spinners' categories are **New batter** and **Set batter**; (3) a series opens on a short **overview** with the two sides as large links, the series name in the crumb coming back to it; (4) the bowler-side fields are **coach-only for now** — whether players see them is decided once it has been used. The draft shows all four.
 
 ### What does not change
 
