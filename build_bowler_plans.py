@@ -172,6 +172,8 @@ def _planner_export(slug, entry, out, root):
     line, the runs-off-them wheel, and the categories' fields as the options it starts from)."""
     from cricket_core.charts import wagon_wheel_zones
     from photos import get_photo_bytes
+    from report import _start_kaleido
+    _start_kaleido()            # one Chrome for every wheel: a browser per figure hung on the second
     series = entry.get("planner_series")
     if not series:
         raise SystemExit(f"{slug} has no planner_series in series.json — nothing to export the planner to")
@@ -227,6 +229,9 @@ def main():
     ap.add_argument("--only", action="append", default=[], metavar="ID", help="just these bowlers (repeatable)")
     a = ap.parse_args()
     build(a.slug, a.planner_out, set(a.only) or None)
+    if a.planner_out:                   # the wheels went through kaleido: leave without its exit hang
+        from report import finish_rendering
+        finish_rendering(0)
     return 0
 
 
