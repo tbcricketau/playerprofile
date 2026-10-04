@@ -18,15 +18,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_3760008_0.png"
+     "file": "pace_3760008_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_3760008_1.png"
+     "file": "pace_3760008_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_3760008_2.png"
+     "file": "pace_3760008_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -53,15 +221,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_3080067_0.png"
+     "file": "pace_3080067_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_3080067_1.png"
+     "file": "pace_3080067_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_3080067_2.png"
+     "file": "pace_3080067_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -88,15 +424,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_4353762_0.png"
+     "file": "pace_4353762_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 150.0,
+       "radius": 0.5,
+       "label": "Third man",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_4353762_1.png"
+     "file": "pace_4353762_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_4353762_2.png"
+     "file": "pace_4353762_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -123,19 +627,243 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_3110056_0.png"
+     "file": "pace_3110056_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Early — first 30 balls — alternative",
-     "file": "pace_3110056_1.png"
+     "file": "pace_3110056_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.9,
+       "label": "Deep point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_3110056_2.png"
+     "file": "pace_3110056_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_3110056_3.png"
+     "file": "pace_3110056_3.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -162,23 +890,303 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_4090013_0.png"
+     "file": "pace_4090013_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.9,
+       "label": "Deep point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Early — first 30 balls — alternative",
-     "file": "pace_4090013_1.png"
+     "file": "pace_4090013_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_4090013_2.png"
+     "file": "pace_4090013_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.9,
+       "label": "Deep point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set — alternative",
-     "file": "pace_4090013_3.png"
+     "file": "pace_4090013_3.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_4090013_4.png"
+     "file": "pace_4090013_4.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -205,15 +1213,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_4353850_0.png"
+     "file": "pace_4353850_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.52,
+       "label": "Backward square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 150.0,
+       "radius": 0.5,
+       "label": "Third man",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_4353850_1.png"
+     "file": "pace_4353850_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.52,
+       "label": "Backward square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": 150.0,
+       "radius": 0.5,
+       "label": "Third man",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_4353850_2.png"
+     "file": "pace_4353850_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -240,15 +1416,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_4352600_0.png"
+     "file": "pace_4352600_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 150.0,
+       "radius": 0.5,
+       "label": "Third man",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_4352600_1.png"
+     "file": "pace_4352600_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": 150.0,
+       "radius": 0.5,
+       "label": "Third man",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_4352600_2.png"
+     "file": "pace_4352600_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -275,15 +1619,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_4353096_0.png"
+     "file": "pace_4353096_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_4353096_1.png"
+     "file": "pace_4353096_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_4353096_2.png"
+     "file": "pace_4353096_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -310,15 +1822,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_4352508_0.png"
+     "file": "pace_4352508_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.52,
+       "label": "Backward square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_4352508_1.png"
+     "file": "pace_4352508_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.52,
+       "label": "Backward square leg",
+       "tag": "change"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_4352508_2.png"
+     "file": "pace_4352508_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -345,15 +2025,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_4352128_0.png"
+     "file": "pace_4352128_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 144.0,
+       "radius": 0.4,
+       "label": "Slip 3",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_4352128_1.png"
+     "file": "pace_4352128_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_4352128_2.png"
+     "file": "pace_4352128_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -380,15 +2228,183 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "pace_3550469_0.png"
+     "file": "pace_3550469_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 153.0,
+       "radius": 0.35,
+       "label": "Slip 2",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 150.0,
+       "radius": 0.5,
+       "label": "Third man",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "pace_3550469_1.png"
+     "file": "pace_3550469_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": 150.0,
+       "radius": 0.5,
+       "label": "Third man",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_3550469_2.png"
+     "file": "pace_3550469_2.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -415,11 +2431,123 @@
    "fields": [
     {
      "label": "Once set",
-     "file": "pace_2540186_0.png"
+     "file": "pace_2540186_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Bouncer plan",
-     "file": "pace_2540186_1.png"
+     "file": "pace_2540186_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "change"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      },
+      {
+       "angle": 143.0,
+       "radius": 0.34,
+       "label": "Gully",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "change"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "change"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "change"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "change"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.9,
+       "label": "Deep fine leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {

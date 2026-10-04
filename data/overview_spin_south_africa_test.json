@@ -18,11 +18,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_3760008_0.png"
+     "file": "spin_3760008_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_3760008_1.png"
+     "file": "spin_3760008_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -49,11 +161,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_3080067_0.png"
+     "file": "spin_3080067_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -165.0,
+       "radius": 0.26,
+       "label": "Leg slip",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_3080067_1.png"
+     "file": "spin_3080067_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": -165.0,
+       "radius": 0.26,
+       "label": "Leg slip",
+       "tag": "change"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -80,11 +304,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4353762_0.png"
+     "file": "spin_4353762_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_4353762_1.png"
+     "file": "spin_4353762_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 45.0,
+       "radius": 0.55,
+       "label": "Extra cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -111,11 +447,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_3110056_0.png"
+     "file": "spin_3110056_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_3110056_1.png"
+     "file": "spin_3110056_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -142,11 +590,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4090013_0.png"
+     "file": "spin_4090013_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_4090013_1.png"
+     "file": "spin_4090013_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -173,11 +733,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4353850_0.png"
+     "file": "spin_4353850_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_4353850_1.png"
+     "file": "spin_4353850_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 45.0,
+       "radius": 0.55,
+       "label": "Extra cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "change"
+      }
+     ]
     }
    ],
    "threat": {
@@ -204,11 +876,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4352600_0.png"
+     "file": "spin_4352600_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_4352600_1.png"
+     "file": "spin_4352600_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 45.0,
+       "radius": 0.55,
+       "label": "Extra cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 18.0,
+       "radius": 0.92,
+       "label": "Long-off",
+       "tag": "change"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -235,11 +1019,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4353096_0.png"
+     "file": "spin_4353096_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.52,
+       "label": "Backward square leg",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "change"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_4353096_1.png"
+     "file": "spin_4353096_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 18.0,
+       "radius": 0.92,
+       "label": "Long-off",
+       "tag": "change"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.52,
+       "label": "Backward square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -266,11 +1162,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4352508_0.png"
+     "file": "spin_4352508_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_4352508_1.png"
+     "file": "spin_4352508_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 18.0,
+       "radius": 0.92,
+       "label": "Long-off",
+       "tag": "change"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -297,11 +1305,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_4352128_0.png"
+     "file": "spin_4352128_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_4352128_1.png"
+     "file": "spin_4352128_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.17,
+       "label": "Short leg",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 18.0,
+       "radius": 0.92,
+       "label": "Long-off",
+       "tag": "change"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -328,11 +1448,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_3550469_0.png"
+     "file": "spin_3550469_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square leg",
+       "tag": "change"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_3550469_1.png"
+     "file": "spin_3550469_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 45.0,
+       "radius": 0.55,
+       "label": "Extra cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -105.0,
+       "radius": 0.9,
+       "label": "Deep backward square leg",
+       "tag": "change"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
@@ -359,11 +1591,123 @@
    "fields": [
     {
      "label": "Early — first 30 balls",
-     "file": "spin_2540186_0.png"
+     "file": "spin_2540186_0.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "change"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.1,
+       "label": "Silly point",
+       "tag": "stock"
+      },
+      {
+       "angle": 90.0,
+       "radius": 0.5,
+       "label": "Point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -24.0,
+       "radius": 0.5,
+       "label": "Mid-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.5,
+       "label": "Midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      }
+     ]
     },
     {
      "label": "Once set",
-     "file": "spin_2540186_1.png"
+     "file": "spin_2540186_1.png",
+     "fielders": [
+      {
+       "angle": 162.0,
+       "radius": 0.3,
+       "label": "Slip 1",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.9,
+       "label": "Deep square leg",
+       "tag": "change"
+      },
+      {
+       "angle": 105.0,
+       "radius": 0.52,
+       "label": "Backward point",
+       "tag": "stock"
+      },
+      {
+       "angle": 55.0,
+       "radius": 0.5,
+       "label": "Cover",
+       "tag": "stock"
+      },
+      {
+       "angle": 24.0,
+       "radius": 0.5,
+       "label": "Mid-off",
+       "tag": "stock"
+      },
+      {
+       "angle": -18.0,
+       "radius": 0.92,
+       "label": "Long-on",
+       "tag": "stock"
+      },
+      {
+       "angle": -58.0,
+       "radius": 0.9,
+       "label": "Deep midwicket",
+       "tag": "stock"
+      },
+      {
+       "angle": -90.0,
+       "radius": 0.5,
+       "label": "Square leg",
+       "tag": "stock"
+      },
+      {
+       "angle": -145.0,
+       "radius": 0.5,
+       "label": "Fine leg",
+       "tag": "stock"
+      }
+     ]
     }
    ],
    "threat": {
