@@ -27,6 +27,9 @@ from collections import defaultdict
 # South Africa Test packs opened a broken image while this file reported the bundle clean: the
 # PNGs were rendered on the build machine and never copied across, and nothing here looked.
 _LINK = re.compile(r'(?:href|src|data-field)="([^"]+)"')
+# The coach view's cards are drawn by script from data on the page (window.PK, window.BK), so their
+# report, vision and headshot links are JSON values, not hrefs - and were checked by nothing.
+_DATA_LINK = re.compile(r'"(?:report|vision|head)":"([^"]+)"')
 _DATAPL = re.compile(r'data-pl="([^"]+)"')
 # The clips sidecar a page fetches by script (cricket_core.video): no href points at it, so
 # nothing else in this file would notice it missing.
@@ -37,6 +40,11 @@ _CLIP_SRC = re.compile(r'const (?:VM_SRC|PL_SRC) = "([^"]+)"')
 # refused the Zimbabwe packs on 2026-09-11 with a token that served 200 when probed directly.
 _EXTERNAL = re.compile(r'"(https://[^"]+?\.(?:mp4|MP4|png|jpg|jpeg)(?:\?[^"]*)?)"')
 _SKIP = ("http://", "https://", "data:", "#", "mailto:", "javascript:")
+# The coach view (04-10-2026) links by path from the site root - /coach/<slug>/plans/pace.html - since
+# its pages sit at different depths and the planner, which the app renders itself, links back to them.
+# Those resolve against the bundle. These first segments are the app's own routes, not files in any
+# bundle: the planner, its script, the clip relay.
+_APP_ROUTES = ("static", "fields", "vision")
 
 
 def _pages(root):
@@ -77,7 +85,7 @@ def check(root, deep=False, sample=6):
         base = os.path.dirname(p)
 
         # 1 — every internal href/src resolves to a real file
-        for raw in _LINK.findall(html):
+        for raw in _LINK.findall(html) + _DATA_LINK.findall(html):
             if raw.startswith(_SKIP) or not raw.strip():
                 continue
             n_links += 1
@@ -85,7 +93,12 @@ def check(root, deep=False, sample=6):
             rel = urllib.parse.unquote(raw.split("#")[0].split("?")[0])
             if not rel:
                 continue
-            tgt = os.path.normpath(os.path.join(base, rel))
+            if rel.startswith("/"):
+                if rel.lstrip("/").split("/", 1)[0] in _APP_ROUTES:
+                    continue
+                tgt = os.path.normpath(os.path.join(root, rel.lstrip("/")))
+            else:
+                tgt = os.path.normpath(os.path.join(base, rel))
             if not os.path.exists(tgt):
                 errors.append(f"{rel_page}: dead link -> {raw}")
                 continue
@@ -154,9 +167,15 @@ def check(root, deep=False, sample=6):
         # whichever urls come first, and the field images and the clips are on the SAME blob host —
         # so a page-ordered sample could spend its whole budget on .png and report the footage
         # clean without having asked for a single clip.
+        # Not under coach/: the app rewrites every Fairplay link there as it serves the page (to
+        # /vision/, or a viewing copy), so a token baked into it is never used - and the frozen
+        # archive copies carry long-expired ones, which refused every coach publish (04-10-2026).
+        coach = os.path.join(os.path.normpath(root), "coach") + os.sep
         groups = {}
         for kind, files in (("page", pages), ("clips", sorted(sidecars))):
             for p in files:
+                if os.path.normpath(p).startswith(coach):
+                    continue
                 for u in _EXTERNAL.findall(open(p, encoding="utf-8", errors="replace").read()):
                     ext = u.split("?", 1)[0].rsplit(".", 1)[-1].lower()
                     groups.setdefault((kind, urllib.parse.urlparse(u).netloc, ext), []).append(u)
