@@ -78,21 +78,27 @@ def _field_images(P, group, img_dir, bid, fmt="Test"):
         if not fs:
             continue
         short_ball = short_ball or fs.get("short_ball")
-        wanted.append((title, fs["field"]))
+        # the spare: the fielder returning least, the first to move if one is wanted elsewhere
+        # (Tom, 04-10-2026: of set / move / spare, the spare is the part a coach uses)
+        spare = ((fs.get("floating") or [{}])[0]).get("position")
+        wanted.append((title, fs["field"], spare))
         if fs.get("alt"):
-            wanted.append((f"{title} — alternative", fs["alt"]["field"]))
+            alt = fs["alt"]["field"]
+            wanted.append((f"{title} — alternative", alt,
+                           spare if any(f.get("position") == spare for f in alt) else None))
     if short_ball:
-        wanted.append(("Bouncer plan", short_ball["field"]))
+        wanted.append(("Bouncer plan", short_ball["field"], None))   # a set field, no run flow behind it
     os.makedirs(img_dir, exist_ok=True)
     out = []
-    for i, (title, field) in enumerate(wanted):
+    for i, (title, field, spare) in enumerate(wanted):
         # The positions themselves, batter-relative (angle from straight, + = off side; radius 0 at
         # the bat, 1 at the rope) — the field planner's convention, so the coach view draws the
         # engine's field and a coach's with one piece of code (04-10-2026). The keeper is the
         # diagram's own cue, as it is in the planner.
+        kept = [f for f in field if f.get("position") != "Keeper"]
         fielders = [{"angle": round(float(f["angle"]), 1), "radius": round(float(f["radius"]), 3),
-                     "label": f.get("position", ""), "tag": f.get("tag", "")}
-                    for f in field if f.get("position") != "Keeper"]
+                     "label": f.get("position", ""), "tag": f.get("tag", "")} for f in kept]
+        spare_i = next((k for k, f in enumerate(kept) if spare and f.get("position") == spare), None)
         fn = f"{group}_{bid}_{i}.png"       # group-qualified: the pack flattens all groups into one dir
         try:
             png = field_engine.field_diagram(field, P.get("is_lhb"), title="").to_image(
@@ -101,7 +107,8 @@ def _field_images(P, group, img_dir, bid, fmt="Test"):
         except Exception as e:
             print(f"     ! field image {title}: {type(e).__name__}: {str(e)[:40]}")
             fn = None
-        out.append({"label": title, "file": fn, "fielders": fielders})
+        out.append({"label": title, "file": fn, "fielders": fielders, "spare": spare_i,
+                    "spare_name": field_engine.pretty_position(spare) if spare_i is not None else ""})
     return out
 
 
@@ -289,7 +296,8 @@ def write_page(opp, group, label, rows):
             f'field placements it implies. Same numbers as each batter\'s own report.</span></h1>',
             '<div class=owrap><table class=ov>',
             f'<tr><th>Batter</th><th>Plan for {html.escape(label)}</th>'
-            f'<th>Field options</th></tr>']
+            f'<th>Spare fielder</th></tr>']
+    spin = group == "spin" or group in _SPIN_SUBS      # the short ball is a pace question
     for r in rows:
         if r["balls"] < MIN_BALLS:
             if r.get("error"):
@@ -306,12 +314,13 @@ def write_page(opp, group, label, rows):
             if pl and pl.startswith(pre):
                 pl = pl[len(pre):]
                 pl = pl[:1].upper() + pl[1:]
+            # Only the spare (Tom, 04-10-2026): set and move were the engine describing its own
+            # field; the spare is the decision a captain makes with it.
             fp = r.get("field")
-            if fp:
-                fcell = "".join(
-                    f'<div class=fl><span class=k>{k}</span><span class=v>{html.escape(v)}</span></div>'
-                    for k, v in (("Set", fp.get("set")), ("Move", fp.get("move")),
-                                 ("Spare", fp.get("spare"))) if v)
+            if fp and fp.get("spare"):
+                fcell = f'<div class=fl><span class=v>{html.escape(fp["spare"])}</span></div>'
+            elif fp:
+                fcell = '<span class=thin>None stands out.</span>'
             else:
                 fcell = '<span class=thin>Too few balls to set a field.</span>'
             cell = (f'<td>{pl or "<span class=thin>No clear length/line target.</span>"}</td>'
@@ -327,16 +336,17 @@ def write_page(opp, group, label, rows):
                 f'that the raw count is shown instead.</p>'
                 '<div class=owrap><table class=ov>'
                 '<tr><th>Batter</th><th>Balls</th><th>BPD</th><th>False shot</th>'
-                '<th>Scores mostly</th><th>Vs the short ball</th><th>Most often out</th></tr>')
+                '<th>Scores mostly</th>' + ('' if spin else '<th>Vs the short ball</th>')
+                + '<th>Most often out</th></tr>')
     for r in rows:
         t = r["threat"]
         if not t:
             body.append(f'<tr><td class=bat>{html.escape(r["name"])}</td>'
-                        f'<td colspan=6 class=thin>No record vs {html.escape(label)}.</td></tr>')
+                        f'<td colspan={5 if spin else 6} class=thin>No record vs {html.escape(label)}.</td></tr>')
             continue
         if r["balls"] < MIN_BALLS:            # rates off a handful of balls would read as fact
             body.append(f'<tr><td class=bat>{html.escape(r["name"])}</td><td>{t["balls"]}</td>'
-                        f'<td colspan=5 class=thin>Too few balls vs {html.escape(label)} to rate.</td></tr>')
+                        f'<td colspan={4 if spin else 5} class=thin>Too few balls vs {html.escape(label)} to rate.</td></tr>')
             continue
         bpd = f'{t["bpd"]:.0f}' if t["bpd"] else f'<span class=thin>{t["n_out"]} out</span>'
         body.append(
@@ -344,14 +354,12 @@ def write_page(opp, group, label, rows):
             f'<td>{t["balls"]}</td><td>{bpd}</td>'
             f'<td>{f"{t['false_pct']:.1f}%" if t["false_pct"] is not None else "<span class=thin>—</span>"}</td>'
             f'<td>{html.escape(t["area"]) if t["area"] else "<span class=thin>—</span>"}</td>'
-            f'<td>{html.escape(t["short"]) if t["short"] else "<span class=thin>too few</span>"}</td>'
-            f'<td>{html.escape(t["top_out"]) if t["top_out"] else "<span class=thin>—</span>"}</td></tr>')
+            + ('' if spin else f'<td>{html.escape(t["short"]) if t["short"] else "<span class=thin>too few</span>"}</td>')
+            +             f'<td>{html.escape(t["top_out"]) if t["top_out"] else "<span class=thin>—</span>"}</td></tr>')
     body.append('</table></div>')
 
-    body.append('<p class=note><b>Set</b> — the orthodox field for this bowling type and phase. '
-                '<b>Move</b> — the one change their record supports, from where their catches have '
-                'actually been taken. <b>Spare</b> — the fielder returning least, so the first to '
-                'relocate if you need someone elsewhere.</p>')
+    body.append('<p class=note><b>Spare fielder</b> — the fielder returning least in the suggested '
+                'field, so the first to relocate if you need someone elsewhere.</p>')
     body.append(f'<p class=note>Plan and field come from the same functions as the individual reports. '
                 f'A batter needs {MIN_BALLS}+ balls vs {html.escape(label)} to carry a plan. '
                 f'Field placements are the evidenced moves off the stock field — the reasoning behind '
