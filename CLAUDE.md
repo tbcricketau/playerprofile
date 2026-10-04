@@ -1136,6 +1136,40 @@ Built by `build_coach_site.py --slug <slug>` into `coach_build/coach/<slug>/`, a
   at the coach gate too, and `PACKS_DIR` points the app at a bundle (give it the long path — the
   gate resolves paths, and an 8.3 short path used to 404 every file).
 
+### Batting plans and Bowling plans (built 04-10-2026)
+
+Tom's shape (`docs/COACH_VIEW_PLAN.md` § Batting plans and bowling plans) supersedes the single tab
+row above:
+
+- **A series opens on an overview** (`coach/<slug>/index.html`, `_overview_page`): the two sides as
+  large links. Every page under it carries **two rows of tabs** (`site_render.series_nav`, from
+  `_nav`): **Batting plans** (Their bowlers · Set Field Plans · Match-ups) and **Bowling plans** (Pace ·
+  Spin · Set Field Plans · Unorthodox shots), only the pages built. The crumb is Scouting · the
+  series. `coach/<slug>/nav.json` carries the same rows for the field planner, which renders its own
+  page and reads them from the bundle.
+- **Their bowlers** (`batting/index.html`, script `coach_bowlers.js` → `/coach/bowlers.js`): a
+  vs right-handers / vs left-handers switch, then a card per bowler — how to play them (the bowling
+  report's `how_to_play`, now they/them at source), the coaches' notes, the figures to that hand
+  (pace adds km/h average/p99 and short %), their reels to that hand and the report, and the field
+  they are likely to set **by category**: pace **New ball** (when they take it 10% of the time or
+  more), **Old ball**, **Bouncer plan**; spin **New batter**, **Set batter**. Each category shows the
+  coaches' version where one is saved in the planner, the auto-generated one otherwise. The reels are
+  a vision page per bowler (`vision/<bid>.html`, keys `stockR`, `wktL`, `nbR`…) built from
+  `opponent_about`'s per-hand clip lists. Without `data/bowler_plans_<opp>.json` the page falls back
+  to the report grid.
+- **The data is `build_bowler_plans.py`** — two profiles per bowler, so **run it on the build
+  machine**: `venv/bin/python build_bowler_plans.py --slug <slug> --planner-out ~/fp_bowlers`, copy
+  `data/bowler_plans_<opp>.json` back (it is committed) and upload `~/fp_bowlers` (the planner's
+  bowler side) with `playerpacks/upload_packs.py --bundle <copy> --prefix aus --apply`. Test-only, as
+  `field_engine` is. `--only <id>` rebuilds one bowler into the existing file.
+- **The fields are `field_engine.bowler_field`** — an estimate, said so on every card: the
+  GPS-corrected stock for the type, our batter's hand and the phase (new ball = the first 30 overs,
+  the bowling report's own split); the orthodox variant that fits where the runs off them go (pace,
+  old ball); a situational catcher where their catches to that hand were taken, on **three catches
+  and a tenth of the located ones** (a bowler's catches come from every batter they have bowled to, so
+  the batter rule's two is noise there — it posted Jansen a leg gully on 2 of 31); the spare.
+  R1–R8 read one batter's strokes and are not run.
+
 ### The hub half — the Scouting page's Archive (04-10-2026)
 
 The hub's Scouting index (`coach/index.html`, written by `build_coach_site._write_index`) lists the
@@ -1276,6 +1310,34 @@ CSV mtimes against that commit date, not just the store's.
 
 **The general rule:** a pre-bucketed category is not evidence that a measurement exists. Filter on
 the underlying coordinate before trusting any zone, group or band derived from it.
+
+## Hitting the stumps — a bowler against their type, venue-matched (04-10-2026)
+
+Tom asked for how often an opposition bowler hits the stumps, and whether that is more or less
+than the average for their type. `report.stumps_read(rows, fmt)` writes one line under the Test
+report's Threat Profile cards and at the head of the ODI report's Where They Bowl:
+
+> 7.9% of tracked balls were on course to hit the stumps (263 of 3,320) — less often than an
+> average left-arm pace bowler in Tests in the same countries (10.7%).
+
+- **The definition lives in `cricket_core.stumps`**, and so does the comparison
+  (`bowler_vs_type`). A ball hits when its centre is within a ball radius of the stumps or bails.
+  The norms are referencebuilder's `stumps_norms.csv` (`build_stumps_norms.py`, built from the same
+  `sql_hit()`), pulled with `shared_data.py pull packs`. Without the file the line is omitted.
+- **Venue-matched, because venue moves it as much as type.** All Test bowlers since 2017:
+  Australia 12%, England 15%, South Africa 13–16%, against India 28%, Pakistan 27%, Bangladesh 27%.
+  Each tracked ball is scored at the type's rate for that host country and batter's hand, and the
+  expectation is the sum. "More / less often" needs twice the sampling spread, else "about as
+  often as". Omitted below 300 tracked balls (Bosch, 520 legal at ~48% tracked).
+- **The ODI line reads ODI balls only**, never the T20 mechanics supplement. **The T20 report is
+  not wired**: it reads league cricket and the norms are T20 internationals.
+- South Africa Test attack, career: Paterson 16.0% against 9.7% (above). Below: Rabada 8.5 against
+  10.3, Jansen 7.9 / 10.7, Maharaj 32.2 / 34.3, Harmer 27.6 / 30.3, Muthusamy 31.1 / 35.5. In line:
+  Mulder, Nortje, Coetzee and Markram.
+
+The same day, three readers were found taking the untracked `(line 0, height -1 mm)` sentinel as a
+ball at middle stump — the ball-type "passing …" medians, the beehive read and the ODI bouncer
+line. All filter on height > 0 now. The beehive chart itself was safe (−1 mm is outside every zone).
 
 ## White-ball reports, and the format-aware publish path
 

@@ -92,7 +92,7 @@ row. On the players' side the planner stops being a bar button too and becomes a
 index ("Field plans — the fields the coaches have set"), beside the squad list. The hub bar then
 carries only the crumb trail, which is what it is for.
 
-### Batting plans and bowling plans (Tom, 04-10-2026 — plan and draft, not built)
+### Batting plans and bowling plans (Tom, 04-10-2026 — built and live the same day)
 
 **Navigation.** After choosing a series, the top row is two tabs: **Batting plans** and **Bowling
 plans**. Each has its own second row:
@@ -118,10 +118,10 @@ left-handers, with the balls behind each). On each card, for the chosen hand:
 - **Figures**: balls to that hand, average, economy, Bowl SR, pace (average and p99 top speed; spin
   shows none), short % for pace, round-the-wicket %.
 - **The field they are likely to set**, by **category**: the categories each bowler gets come from
-  their record — **New ball** when they take it (Rabada 57% of new-ball overs, Paterson 23%;
-  threshold to settle, 20% in the draft), **Old ball** for every pace bowler, **Bouncer plan** for
-  pace; spinners get **Attacking** and **Holding**. Chips under the field switch between them, the
-  same as the bowling cards, with the spare named underneath.
+  their record — **New ball** when they take it 10% of the time or more (Rabada 57%, Paterson 23%,
+  Jansen 11%), **Old ball** for every pace bowler, **Bouncer plan** for pace; spinners get **New
+  batter** and **Set batter** (Tom's decisions below). Chips under the field switch between them,
+  the same as the bowling cards, with the spare named underneath.
 - **Vision and the report**: their stock-ball and wicket reels to that hand, and the coach report.
 
 **Where the fields come from.** We hold no record of the fields South Africa actually set, so the
@@ -209,4 +209,15 @@ sentence and figures already exist for ODI squads (Zimbabwe, SA ODI overviews).
    for both kinds (label and tags on top, options underneath, the spare); set/move gone, spare kept
    (the engine names one per auto field, coaches set one in the planner); no short-ball figure on
    Spin; the planner tab is Set Field Plans and the planner page is light like the rest.
-6. **Batting plans** — plan above, draft out; build on Tom's word.
+6. ✅ **Batting plans — built and live (04-10)**, as drafted with Tom's four answers. The overview, the
+   two rows of tabs, Their bowlers (`coach_bowlers.js`, `data/bowler_plans_<opp>.json` from
+   `build_bowler_plans.py` on the box, a vision page per bowler), and the planner's bowler side
+   (playerpacks: `?pack=vs_rhb|vs_lhb`, coach-only; each category a seeded option that saves like
+   Option 1). The fields are `field_engine.bowler_field` — stock, the variant that fits their run
+   flow, a catcher where their catches have gone (three and a tenth), the spare; marked on every card
+   as an estimate not yet checked against vision. Running it: `CLAUDE.md` § Batting plans. Checked:
+   54 browser checks locally (overview, rows, cards, both hands, reels, a category saved in the
+   planner showing in the coach view, phone width) and the store's seeded slots against the real
+   database from the box.
+7. Next, once used: check a few auto fields against vision; decide whether players see the bowler
+   side; a white-ball version once `field_engine` has one.
