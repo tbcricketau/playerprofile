@@ -74,6 +74,40 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  @media(max-width:520px){ul.reports li{flex-wrap:wrap} ul.reports .rinfo{flex:1 0 100%;margin-bottom:6px}}
  .empty{color:#6b7280;font-style:italic} .note{color:#9ca3af;font-size:12px;margin-top:22px}
  h2.sect{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;margin:18px 0 6px}
+ /* one row of tabs for everything in a series (coach view, 04-10-2026) */
+ nav.stabs{display:flex;gap:2px;margin:-4px 0 18px;border-bottom:1px solid #e5e7eb;overflow-x:auto;scrollbar-width:none}
+ nav.stabs a{position:relative;padding:9px 11px;text-decoration:none;color:#6b7280;white-space:nowrap;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+ nav.stabs a.on{color:#003087} nav.stabs a.on::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:3px;background:#003087}
+ /* their bowlers as a grid of tiles */
+ ul.bgrid{list-style:none;padding:0;margin:0 0 6px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+ ul.bgrid a{display:flex;align-items:center;gap:11px;padding:10px 12px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;text-decoration:none;color:#1a1a2e;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+ ul.bgrid a:hover{border-color:#003087} ul.bgrid .rav{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#9aa4b2}
+ ul.bgrid .bi{min-width:0;flex:1} ul.bgrid .bi b{display:block;font-size:14.5px;line-height:1.2} ul.bgrid .bi span.t{display:block;color:#6b7280;font-size:12.5px;margin-top:1px}
+ ul.bgrid .tier{margin-left:0}
+ /* a plan pack: the technique switch, then a card per batter */
+ .seg{display:flex;margin:0 0 16px;border:1px solid #cbd5e1;border-radius:6px;width:max-content;max-width:100%;overflow:hidden;background:#fff}
+ .seg button{background:transparent;border:0;color:#1a1a2e;padding:8px 14px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase;display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;cursor:pointer}
+ .seg button+button{border-left:1px solid #e5e7eb} .seg button.on{background:#003087;color:#fff}
+ .seg small{font-weight:500;font-size:11.5px;letter-spacing:0;text-transform:none;opacity:.85}
+ h2.tier{font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin:16px 0 8px;padding-left:8px;border-left:3px solid #15803d;display:flex;align-items:center;gap:8px}
+ h2.tier span{font-size:12px;font-weight:600;color:#6b7280;background:#eef1f6;border-radius:999px;padding:1px 8px} h2.tier.squad{border-left-color:#94a3b8}
+ .pcard{background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);padding:16px 18px;margin:0 0 12px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:14px 26px;align-items:start}
+ .pcard .who{display:flex;align-items:center;gap:12px} .pcard .who img,.pcard .who .rav{width:56px;height:56px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;color:#9aa4b2}
+ .pcard .who h3{margin:0;font-size:21px;line-height:1.1;display:flex;align-items:center;gap:8px;flex-wrap:wrap} .pcard .hand{color:#6b7280;font-size:13px;font-weight:600}
+ .pcard .plan{font-size:16px;line-height:1.45;margin:10px 0 0} .pcard .plan b{color:#003087} .pcard .thin{color:#6b7280;font-style:italic;font-size:14px}
+ .pcard .notes{margin:10px 0 0;padding:9px 12px;background:#eef1f6;border-radius:6px} .pcard .notes .lbl{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-weight:700;margin-bottom:2px}
+ .pcard .notes ul{margin:0;padding-left:18px;display:block} .pcard .notes li{font-weight:600;font-size:14px} .pcard .notes .none{color:#6b7280;font-style:italic;margin:0}
+ .pcard .figs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:12px 0 0}
+ .pcard .fig{border-top:2px solid #e5e7eb;padding-top:5px;min-width:0} .pcard .fig .v{font-size:20px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums} .pcard .fig .v.sm{font-size:13.5px;font-weight:600;line-height:1.25;margin-top:3px}
+ .pcard .fig .k{display:block;color:#6b7280;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;margin-top:2px} .pcard .fig .muted{color:#6b7280;font-style:italic;font-weight:500}
+ .pcard .acts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0} .pcard .acts a{font-size:13px;font-weight:600;text-decoration:none;padding:7px 13px;border-radius:7px;background:#eef1f6;color:#003087;border:1px solid #d5dced} .pcard .acts a.solid{background:#003087;color:#fff;border-color:#003087}
+ .pcard .fieldp{border-left:1px solid #e5e7eb;padding-left:22px;min-width:0}
+ .pcard .fhead{display:flex;align-items:baseline;justify-content:space-between;gap:6px 12px;flex-wrap:wrap;margin-bottom:6px} .pcard .fhead .lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#003087} .pcard .fhead .by{color:#6b7280;font-size:12px} .pcard .fhead a{font-size:12.5px;font-weight:600;white-space:nowrap}
+ .pcard .fieldp svg{width:100%;height:auto;display:block}
+ .pcard .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0} .pcard .chips button{background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:5px 10px;font:inherit;font-size:12.5px;color:#6b7280;cursor:pointer} .pcard .chips button.on{border-color:#003087;color:#003087;font-weight:600;box-shadow:0 0 0 2px rgba(0,48,135,.12)}
+ .pcard .setline{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-size:12.5px} .pcard .setline b{letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-size:11px;margin-right:4px}
+ .pcard .fnone{color:#6b7280;font-style:italic;font-size:13.5px;margin:0} .pcard .tags{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 0} .pcard .tag{background:#eef1f6;color:#003087;border-radius:4px;padding:2px 8px;font-size:12px;font-weight:600}
+ @media(max-width:860px){.pcard{grid-template-columns:1fr} .pcard .fieldp{border-left:0;padding-left:0;border-top:1px solid #e5e7eb;padding-top:12px} .pcard .figs{grid-template-columns:repeat(3,minmax(0,1fr))}}
  details.archive{margin-top:26px;border-top:1px solid #e5e7eb}
  details.archive>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:12px 0 4px;font-weight:700;font-size:15px;color:#1a1a2e}
  details.archive>summary::-webkit-details-marker{display:none}
@@ -82,12 +116,31 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  details.archive>.sub{margin:0 0 6px}
 </style>
 <div class="crumb">{{crumb}}</div>
-{{body}}
+{{tabs}}{{body}}
 """
 
 
-def page(title, body, up=None):
+def series_tabs(items, active):
+    """The row of tabs every page of a series carries: [(key, label, href)], one marked `active`."""
+    return ('<nav class="stabs" aria-label="This series">'
+            + "".join(f'<a href="{href}"{" class=\"on\"" if key == active else ""}>{_html.escape(label)}</a>'
+                      for key, label, href in items) + "</nav>")
+
+
+def bowler_tile(name, btype, href, badge=None, badge_class="squad", photo=None, initials=""):
+    """One tile of the bowlers grid: headshot, name, type, tier chip; the whole tile opens the report."""
+    av = (f'<img class="rav" src="{photo}" alt="" loading="lazy">' if photo
+          else f'<span class="rav">{_html.escape(initials)}</span>')
+    chip = f'<span class="tier {badge_class}">{_html.escape(badge)}</span>' if badge else ""
+    return (f'<li><a href="{href}">{av}<span class="bi"><b>{_html.escape(name)}</b>'
+            + (f'<span class="t">{_html.escape(btype)}</span>' if btype else "") + f'</span>{chip}</a></li>')
+
+
+def page(title, body, up=None, tabs="", wide=False):
+    """`wide` widens the shell for a page of cards with a field beside each (the plan packs)."""
     crumb = f'<a href="{up[0]}">← {_html.escape(up[1])}</a>' if up else ""
+    if wide:
+        tabs = "<style>body{max-width:1120px}</style>" + (tabs or "")
     # The guard goes in the head so a play button clicked while the page is still downloading is
     # held rather than followed — the player's data block is a megabyte of JSON at the end of the
     # page, and until it lands the href leads to the standalone vision page (see click_guard).
@@ -97,4 +150,4 @@ def page(title, body, up=None):
     except Exception:                                    # pragma: no cover - cosmetic only
         guard = ""
     return (SHELL.replace("{{title}}", _html.escape(title)).replace("{{click_guard}}", guard)
-                 .replace("{{crumb}}", crumb).replace("{{body}}", body))
+                 .replace("{{crumb}}", crumb).replace("{{tabs}}", tabs or "").replace("{{body}}", body))

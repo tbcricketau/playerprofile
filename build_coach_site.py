@@ -139,12 +139,114 @@ def _pick(smap, pid, kind, fmt, level):
     return None
 
 
+# ── the plan packs: one for pace, one for spin (Tom, 04-10-2026) ──────────────────────────────
+# Each pack is one page with a technique switch in place of a page per bowling type: South Africa's
+# record against pace is 87% right-arm, and the Pace and Right-arm pace pages gave the same plan for
+# 8 of 12 batters. The sub-type stays a click away on the same page. Groups are listed only when
+# their overview exists for the series; the macro group comes first and is the default.
+_PACKS = {"pace": ("Pace", "pace", ["right_pace", "left_pace"]),
+          "spin": ("Spin", "spin", ["off_spin", "left_orthodox", "leg_spin", "left_unorthodox"])}
+_SWITCH = {"pace": ("All pace", "right- and left-arm"), "spin": ("All spin", "every type"),
+           "right_pace": ("Right-arm", ""), "left_pace": ("Left-arm", ""), "off_spin": ("Off spin", ""),
+           "left_orthodox": ("Left-arm orthodox", ""), "leg_spin": ("Leg spin", ""),
+           "left_unorthodox": ("Left-arm wrist spin", "")}
+PACK_JS = os.path.join(HERE, "coach_pack.js")
+
+
+def _overview(slug, group):
+    p = os.path.join(DATA, f"overview_{group}_{_opp_key(slug)}.json")
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
+
+
+def _tab_items(slug, have, planner):
+    """[(key, label, href)] for the series' tab row — only the pages this build produced."""
+    base = f"/coach/{slug}"
+    items = [("index", "Their bowlers", f"{base}/index.html")]
+    for key, label in (("pace", "Pace"), ("spin", "Spin")):
+        if key in have:
+            items.append((key, label, f"{base}/plans/{key}.html"))
+    if planner:
+        items.append(("fields", "Field plans", f"/fields/{planner}/"))
+    for f, key, label in (("matchups.html", "matchups", "Match-ups"), ("shot-matrix.html", "shots", "Unorthodox shots")):
+        if f in have:
+            items.append((key, label, f"{base}/plans/{f}"))
+    return items
+
+
+def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planner, heads):
+    """Write plans/<pack>.html from the group overviews. Returns False when the series has no
+    overview for the pack's macro group (a white-ball squad with no spin plan, say)."""
+    title, macro, sub_keys = _PACKS[pack]
+    groups = [(macro, _overview(slug, macro))] + [(g, _overview(slug, g)) for g in sub_keys]
+    groups = [(g, d) for g, d in groups if d]
+    if not groups or groups[0][0] != macro:
+        return False
+    min_balls = groups[0][1].get("min_balls", 150)
+    rows = {g: {r["bid"]: r for r in d["rows"]} for g, d in groups}
+    long_label = {g: d.get("label") or g for g, d in groups}
+    # the overview's own order: `order` is the career record, largest first
+    order = sorted(batters.items(), key=lambda kv: (-int(kv[1].get("order") or 0), kv[1].get("name") or ""))
+    out = []
+    for pid, meta in order:
+        pid = str(pid)
+        name = meta.get("name") or pid
+        base = rows[macro].get(pid) or {}
+        sub = (base.get("sub") or meta.get("hand") or "").split(" · ")
+        hand, role = sub[0], (sub[1] if len(sub) > 1 else (meta.get("role") or ""))
+        hit = _pick(smap, pid, "batting", fmt, level)
+        report = vision = ""
+        if hit:
+            b = hit[1]
+            if os.path.exists(os.path.join(root, "reports", f"{b}.html")):
+                report = f"../reports/{b}.html"
+            if os.path.exists(os.path.join(root, "reports", f"{b}.player.html")):
+                vision = f"../reports/{b}.player.html"
+        per = {}
+        for g, _d in groups:
+            r = rows[g].get(pid)
+            if not r:
+                continue
+            plan = re.sub(r"^Plan for [^:]+: ", "", r.get("plan") or "")
+            per[g] = {"balls": r.get("balls") or 0, "plan": (plan[:1].upper() + plan[1:]) if plan else "",
+                      "field": r.get("field"), "threat": r.get("threat"), "error": bool(r.get("error")),
+                      "fields": [{"label": f["label"].replace(" — ", " · "), "fielders": f.get("fielders") or []}
+                                 for f in (r.get("fields") or [])]}
+        tier = tiers.get(pid, "")
+        out.append({"id": pid, "name": name, "hand": hand, "role": role, "tier": tier,
+                    "chip": SR.TIER_CHIP.get(tier, ""), "initials": _initials(name),
+                    "head": ("../" + heads[pid]) if heads.get(pid) else "", "report": report, "vision": vision,
+                    "groups": per})
+    data = {"pack": pack, "label": title, "series": entry.get("name") or slug, "planner": planner,
+            "minBalls": min_balls,
+            "groups": [{"key": g, "label": _SWITCH.get(g, (g, ""))[0], "sub": _SWITCH.get(g, (g, ""))[1],
+                        "long": long_label[g], "macro": g == macro,
+                        "balls": sum((rows[g].get(b["id"]) or {}).get("balls") or 0 for b in out)}
+                       for g, _d in groups],
+            "batters": out}
+    all_balls = data["groups"][0]["balls"] or 1
+
+    def seg_button(g):
+        small = g["sub"] if g["macro"] else f"{g['balls']:,} balls · {round(g['balls'] / all_balls * 100)}% of their {pack}"
+        on = ' class="on"' if g["macro"] else ""
+        return (f'<button type="button" data-g="{_html.escape(g["key"])}"{on}>{_html.escape(g["label"])}'
+                f'<small>{_html.escape(small)}</small></button>')
+    seg = "".join(seg_button(g) for g in data["groups"])
+    lead = (f"The plan against {pack} for every {_html.escape(entry.get('target_country') or 'opposition')} batter, "
+            "the field it implies, and the coaches' field where one is set. Same numbers as each batter's own report.")
+    body = (f"<h1>{_html.escape(title)}</h1><p class=\"lead\">{lead}</p>"
+            f'<div class="seg" role="tablist" aria-label="Bowling technique">{seg}</div><div id="pk-cards"></div>'
+            f"<script>window.PK={json.dumps(data, separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')};</script>"
+            '<script src="/static/fields.js"></script><script src="/coach/pack.js"></script>')
+    return body
+
+
 def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     entry = _series(slug)
     fmt, level = _fmt_level(entry)
     tiers = _tiers(entry)
     bowlers, batters = _about(slug)
     smap = _sidecar_map()
+    planner = entry.get("planner_series") or ""        # the field planner's key for this series
 
     try:
         from publish_site import get_hawkeye_sas
@@ -157,21 +259,25 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     reports = os.path.join(root, "reports")
     os.makedirs(reports, exist_ok=True)
 
-    sections, n_baked, missing = [], 0, []
+    n_baked, missing = 0, []
     # Which kinds actually carry something a player is not shown. Measured per report rather than
     # asserted: an ODI/T20 BOWLING report has no coach-only section at all, so its player-mode cut
     # is byte-identical, and a page claiming the coach sees the simulated match-ups would be wrong
     # for nine of this squad's nineteen reports.
     coach_only = set()
+    heads = {}                    # player id -> headshot href, shared by the grid and the packs
+    tiles = {t: [] for t, _h, _c in SR.TIER_META}
+    tiles[""] = []
 
-    for kind, people, heading in (("bowling", bowlers, "Their bowlers"),
-                                  ("batting", batters, "Their batters")):
-        rows = {t: [] for t, _h, _c in SR.TIER_META}
-        rows[""] = []
+    # Both kinds are baked: the bowlers for the grid on this page, the batters for the cards in
+    # the Pace and Spin packs, which carry each batter's report link (Tom, 04-10-2026 — the
+    # batters' own list came off this page, since the packs show every one of them).
+    for kind, people in (("bowling", bowlers), ("batting", batters)):
         ordered = sorted(people.items(),
                          key=lambda kv: (int(kv[1].get("order") or 99), kv[1].get("name") or ""))
         for pid, meta in ordered:
             name = meta.get("name") or pid
+            heads.setdefault(str(pid), _photo(pid, name, fmt, os.path.join(root, "img")))
             hit = _pick(smap, pid, kind, fmt, level)
             if not hit:
                 missing.append(f"{name} ({kind})")
@@ -187,53 +293,49 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
             if os.path.exists(pm) and (open(pm, "rb").read()
                                        != open(os.path.join(reports, f"{base}.html"), "rb").read()):
                 coach_only.add(kind)
-            tier = tiers.get(str(pid), "")
-            sub = btype or meta.get("type") or ("Batter" if kind == "batting" else "Bowler")
-            rows.setdefault(tier, []).append(SR.report_card(
-                name, sub,
-                f"reports/{base}.html",
-                pdf_href=None,                       # PDFs are gone (Tom, 25-09) — print the page
-                vision_href=(f"reports/{base}.player.html"
-                             if os.path.exists(os.path.join(reports, f"{base}.player.html"))
-                             else None),
-                badge=SR.TIER_CHIP.get(tier), badge_class=tier or "squad",
-                photo=_photo(pid, name, fmt, os.path.join(root, "img")),
-                initials=_initials(name)))
+            if kind == "bowling":
+                tier = tiers.get(str(pid), "")
+                tiles.setdefault(tier, []).append(SR.bowler_tile(
+                    name, btype or meta.get("type") or "Bowler", f"reports/{base}.html",
+                    badge=SR.TIER_CHIP.get(tier), badge_class=tier or "squad",
+                    photo=heads.get(str(pid)), initials=_initials(name)))
 
-        body = []
-        listed = 0
-        for tier, head, _chip in SR.TIER_META:
-            if rows.get(tier):
-                body.append(SR.group_heading(head, len(rows[tier]), tier))
-                body.append('<ul class="reports">' + "".join(rows[tier]) + "</ul>")
-                listed += len(rows[tier])
-        if rows.get(""):
-            # No tier on these — the batters of any series whose entry has no `tiers` map, since
-            # the group reports tier only the bowlers. Say so rather than inventing a chip.
-            body.append(SR.group_heading(heading, len(rows[""])))
-            body.append('<ul class="reports">' + "".join(rows[""]) + "</ul>")
-            listed += len(rows[""])
-        if listed:
-            sections.append(f"<h1>{_html.escape(heading)}</h1>" + "".join(body))
-
-    if not sections:
+    if not any(tiles.values()):
         raise SystemExit(f"no reports resolved for {slug} at {fmt}/{level} — nothing to serve")
+
+    # the plan pages, and the tab row every page of the series carries
+    have = _plans(slug, root, entry, batters, tiers, smap, fmt, level, planner, heads)
+    items = _tab_items(slug, have, planner)
+    tabs_for = lambda key: SR.series_tabs(items, key)        # noqa: E731
+    if have:
+        shutil_copy(PACK_JS, os.path.join(out, "coach", "pack.js"))
+        for f in ("matchups.html", "shot-matrix.html"):
+            if f in have:
+                _insert_tabs(os.path.join(root, "plans", f), tabs_for({"matchups.html": "matchups", "shot-matrix.html": "shots"}[f]))
+        for key in ("pace", "spin"):
+            if key in have:
+                open(os.path.join(root, "plans", f"{key}.html"), "w", encoding="utf-8").write(
+                    SR.page(f"{_PACKS[key][0]} — {entry.get('name') or slug}", have[key],
+                            up=(f"/coach/{slug}/index.html", entry.get("name") or slug), tabs=tabs_for(key), wide=True))
 
     title = entry.get("name") or slug
     lead = entry.get("subtitle") or ""
-    extra = {"batting": "how attacks have bowled to them, and our simulated best options",
-             "bowling": "how they match up against our squad"}
-    adds = [extra[k] for k in ("batting", "bowling") if k in coach_only]
-    note = ("The coach report for each of them"
-            + (" — adding " + " and ".join(adds) + ", which a player is not shown."
-               if adds else ". No section here is withheld from the players in this format."))
+    note = ("Their bowlers — the coach report on each of them"
+            + (", with how they match up against our squad, which a player is not shown."
+               if "bowling" in coach_only else "."))
+    grid = []
+    for tier, head, _chip in SR.TIER_META:
+        if tiles.get(tier):
+            grid.append(SR.group_heading(head, len(tiles[tier]), tier))
+            grid.append('<ul class="bgrid">' + "".join(tiles[tier]) + "</ul>")
+    if tiles.get(""):
+        grid.append(SR.group_heading("Their bowlers", len(tiles[""])))
+        grid.append('<ul class="bgrid">' + "".join(tiles[""]) + "</ul>")
     body = (f'<h1>{_html.escape(title)}</h1>'
             + (f'<p class="lead">{_html.escape(lead)}</p>' if lead else "")
-            + f'<p class="lead">{note}</p>'
-            + _plans(slug, root)
-            + "".join(sections))
+            + f'<p class="lead">{note}</p>' + "".join(grid))
     open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(
-        SR.page(f"{title} — their squad", body, up=("../index.html", "Scouting")))
+        SR.page(f"{title} — their squad", body, up=("../index.html", "Scouting"), tabs=tabs_for("index"), wide=True))
 
     # PDFs are retired (Tom, 25-09) and nothing here links one, but `_bake_report` copies a
     # `<name>.pdf` whenever it finds one beside the render — 11 MB of the South Africa build, all
@@ -277,40 +379,58 @@ _PLAN_LABEL = {"matchups.html": "Match-ups grid",
                "shot-matrix.html": "Unorthodox shot options"}
 
 
-def _plans(slug, root):
-    """Copy this series' plan pages in beside the squad. Returns the nav HTML, or '' if none."""
-    src = os.path.join(HERE, "site", slug)
-    if not os.path.isdir(src):
-        return ""
+def shutil_copy(src, dst):
+    import shutil
+    shutil.copyfile(src, dst)
+
+
+def _insert_tabs(path, tabs):
+    """Put the series' tab row under the breadcrumb of a copied plan page (once)."""
+    text = open(path, encoding="utf-8").read()
+    if 'class="stabs"' in text:
+        text = re.sub(r'<nav class="stabs".*?</nav>', tabs, text, count=1, flags=re.S)
+    else:
+        text = text.replace("</div>", "</div>" + tabs, 1) if text.find('<div class="crumb">') >= 0 else tabs + text
+    open(path, "w", encoding="utf-8").write(text)
+
+
+def _plans(slug, root, entry, batters, tiers, smap, fmt, level, planner, heads):
+    """The series' plan pages under plans/: the Pace and Spin packs written from the group
+    overviews, and the match-ups grid and unorthodox-shot options copied from the coach site.
+    Returns {key: body or True} for what exists. The per-type overview pages are no longer copied —
+    the packs carry every type behind the switch (Tom, 04-10-2026)."""
     dest = os.path.join(root, "plans")
-    held, items = [], []
-    for f in sorted(os.listdir(src)):
-        if not f.endswith(".html"):
-            continue
-        if any(h in f for h in _PLAN_HELD):
-            held.append(f)
-            continue
-        if f in _PLAN_PAGES:
-            label = _PLAN_LABEL[f]
-        elif f.startswith(_PLAN_GLOB):
-            key = f[len(_PLAN_GLOB):-len(".html")]
-            label = _GROUP_LABEL.get(key, key.replace("-", " ").capitalize())
+    os.makedirs(dest, exist_ok=True)
+    have = {}
+    for key in ("pace", "spin"):
+        body = _pack_page(slug, root, key, entry, batters, tiers, smap, fmt, level, planner, heads)
+        if body:
+            have[key] = body
         else:
-            continue
-        os.makedirs(dest, exist_ok=True)
-        text = open(os.path.join(src, f), encoding="utf-8").read()
-        # its one link is the breadcrumb to the series index, which is now a directory up
-        text = text.replace('href="index.html"', 'href="../index.html"')
-        open(os.path.join(dest, f), "w", encoding="utf-8").write(text)
-        items.append((label, f))
+            print(f"  no {key} pack: no overview_{_PACKS[key][1]}_{_opp_key(slug)}.json")
+    src = os.path.join(HERE, "site", slug)
+    held = []
+    if os.path.isdir(src):
+        for f in sorted(os.listdir(src)):
+            if not f.endswith(".html"):
+                continue
+            if any(h in f for h in _PLAN_HELD):
+                held.append(f)
+                continue
+            if f not in _PLAN_PAGES:
+                continue
+            text = open(os.path.join(src, f), encoding="utf-8").read()
+            # its one link is the breadcrumb to the series index, which is now a directory up
+            text = text.replace('href="index.html"', 'href="../index.html"')
+            open(os.path.join(dest, f), "w", encoding="utf-8").write(text)
+            have[f] = True
     if held:
         print(f"  held back (Test-only, awaiting a white-ball version): {', '.join(held)}")
-    if not items:
-        return ""
-    links = "".join(f'<li><a href="plans/{f}">{_html.escape(label)}</a></li>'
-                    for label, f in sorted(items))
-    return ('<h1>Plans</h1><p class="lead">The meeting overview for each bowling type, and the '
-            'options against them.</p><ul class="cards">' + links + "</ul>")
+    # the per-type overview copies of the earlier layout, if a previous build left them
+    for f in os.listdir(dest):
+        if f.startswith(_PLAN_GLOB) and f.endswith(".html"):
+            os.remove(os.path.join(dest, f))
+    return have
 
 
 def _day_first(iso):

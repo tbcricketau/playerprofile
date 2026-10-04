@@ -1100,6 +1100,32 @@ player-mode pages, so keep them.
 Say in the note what the archive does *not* carry. Both archived bundles have a dead SAS baked in,
 so reviving means rebuilding from source, never re-pushing the tag.
 
+### The coach view's series page: a tab row, two plan packs, the bowlers grid (04-10-2026)
+
+Built by `build_coach_site.py --slug <slug>` into `coach_build/coach/<slug>/`, after Tom's read of
+`docs/COACH_VIEW_PLAN.md`:
+
+- **One row of tabs on every page of a series** (`site_render.series_tabs`): Their bowlers · Pace ·
+  Spin · Field plans · Match-ups · Unorthodox shots — only the pages the build produced. The field
+  planner shows the same row above its bowler-type tabs when its export carries `coach_slug`
+  (presentationbuilder's deck config). The hub bar carries the crumb trail only; players reach the
+  planner from a Field plans card the app adds to the packs index as it serves it.
+- **Plans are two packs, `plans/pace.html` and `plans/spin.html`** (`_pack_page`), written from the
+  group overviews (`data/overview_<group>_<opp>.json`): a technique switch (the macro group, then
+  every sub-type whose overview exists), a card per batter with headshot, plan, figures, the
+  coaches' notes and the field. The page's script is `coach_pack.js` (copied to `coach/pack.js`),
+  and the fields are drawn by the planner's own `/static/fields.js`, so an engine field and a
+  coach's field share one drawing — which is why `build_overview._field_images` now writes each
+  suggested field's `fielders` as angle and radius beside the PNG. The planner's notes and saved
+  fields are fetched when the page opens (`/fields/<planner_series>/api/fields?pack=<group>`), from
+  the series' `planner_series` in `series.json`; without it the cards show the engine's field only.
+- **Their batters came off the series page**; every batter is a card in the packs with the report
+  link. The batting reports are still baked under `reports/` for those links. **Their bowlers** is
+  a grid of tiles (`site_render.bowler_tile`), the tile opening the coach cut of the report.
+- A coach page can be worked on locally with sign-in off: `FIELDPLANNER_DEV_USER=coach` stands in
+  at the coach gate too, and `PACKS_DIR` points the app at a bundle (give it the long path — the
+  gate resolves paths, and an 8.3 short path used to 404 every file).
+
 ### The hub half — the Scouting page's Archive (04-10-2026)
 
 The hub's Scouting index (`coach/index.html`, written by `build_coach_site._write_index`) lists the
