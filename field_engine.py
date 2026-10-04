@@ -695,7 +695,9 @@ def bowler_field(rows, group, is_lhb, stock_phase, min_legal=120):
     notes, flow, exp = [], {}, {}
     adjusted = legal >= min_legal
     if adjusted:
-        flow, _n = run_flow(rows, is_lhb)
+        # run_flow reads a batter row's `runs`; a bowler row carries the bat's runs as bat_score_n
+        flow, _n = run_flow([{"is_legal": r.get("is_legal"), "runs": r.get("bat_score_n") or 0.0,
+                              "hit_len_n": r.get("hit_len_n"), "hit_ang_n": r.get("hit_ang_n")} for r in rows], is_lhb)
         fit = _select_variant(fields.scenario(btype, hand), stock_phase, flow, names)
         if fit and _legal(fit["field"], stock_phase):
             names = list(fit["field"])
