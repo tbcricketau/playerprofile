@@ -74,7 +74,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Once set",
@@ -134,7 +136,9 @@
        "label": "Midwicket",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Bouncer plan",
@@ -194,7 +198,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -277,7 +283,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 7,
+     "spare_name": "Mid-on"
     },
     {
      "label": "Once set",
@@ -337,7 +345,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Bouncer plan",
@@ -397,7 +407,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -480,7 +492,9 @@
        "label": "Third man",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-on"
     },
     {
      "label": "Once set",
@@ -540,7 +554,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 4,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Bouncer plan",
@@ -600,7 +616,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -683,7 +701,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Early — first 30 balls — alternative",
@@ -743,7 +763,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Once set",
@@ -803,7 +825,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     },
     {
      "label": "Bouncer plan",
@@ -863,7 +887,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -946,7 +972,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Early — first 30 balls — alternative",
@@ -1006,7 +1034,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     },
     {
      "label": "Once set",
@@ -1066,7 +1096,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Mid-on"
     },
     {
      "label": "Once set — alternative",
@@ -1126,7 +1158,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Mid-on"
     },
     {
      "label": "Bouncer plan",
@@ -1186,7 +1220,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -1269,7 +1305,9 @@
        "label": "Third man",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Once set",
@@ -1329,7 +1367,9 @@
        "label": "Third man",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Bouncer plan",
@@ -1389,7 +1429,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -1472,7 +1514,9 @@
        "label": "Third man",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 7,
+     "spare_name": "Fine leg"
     },
     {
      "label": "Once set",
@@ -1532,7 +1576,9 @@
        "label": "Third man",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 7,
+     "spare_name": "Midwicket"
     },
     {
      "label": "Bouncer plan",
@@ -1592,7 +1638,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -1675,7 +1723,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 8,
+     "spare_name": "Fine leg"
     },
     {
      "label": "Once set",
@@ -1735,7 +1785,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 8,
+     "spare_name": "Fine leg"
     },
     {
      "label": "Bouncer plan",
@@ -1795,7 +1847,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -1878,7 +1932,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Cover"
     },
     {
      "label": "Once set",
@@ -1938,7 +1994,9 @@
        "label": "Backward square leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": 4,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Bouncer plan",
@@ -1998,7 +2056,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -2081,7 +2141,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 7,
+     "spare_name": "Mid-on"
     },
     {
      "label": "Once set",
@@ -2141,7 +2203,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     },
     {
      "label": "Bouncer plan",
@@ -2201,7 +2265,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -2284,7 +2350,9 @@
        "label": "Third man",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 4,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Bouncer plan",
@@ -2344,7 +2412,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -2427,7 +2497,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 4,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Bouncer plan",
@@ -2487,7 +2559,9 @@
        "label": "Deep fine leg",
        "tag": "change"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {

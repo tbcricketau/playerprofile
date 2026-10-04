@@ -74,7 +74,9 @@
        "label": "Square leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 3,
+     "spare_name": "Point"
     },
     {
      "label": "Once set",
@@ -134,7 +136,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 8,
+     "spare_name": "Fine leg"
     }
    ],
    "threat": {
@@ -217,7 +221,9 @@
        "label": "Square leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-on"
     },
     {
      "label": "Once set",
@@ -277,7 +283,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": null,
+     "spare_name": ""
     }
    ],
    "threat": {
@@ -378,7 +386,9 @@
        "label": "Square leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 8,
+     "spare_name": "Square leg"
     },
     {
      "label": "Once set",
@@ -438,7 +448,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 7,
+     "spare_name": "Square leg"
     }
    ],
    "threat": {
@@ -521,7 +533,9 @@
        "label": "Square leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Once set",
@@ -581,7 +595,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 4,
+     "spare_name": "Mid-off"
     }
    ],
    "threat": {
@@ -664,7 +680,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 8,
+     "spare_name": "Fine leg"
     }
    ],
    "threat": {
@@ -747,7 +765,9 @@
        "label": "Deep square leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 3,
+     "spare_name": "Backward point"
     },
     {
      "label": "Once set",
@@ -807,7 +827,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 1,
+     "spare_name": "Backward point"
     }
    ],
    "threat": {
@@ -890,7 +912,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 2,
+     "spare_name": "Backward square leg"
     }
    ],
    "threat": {
@@ -973,7 +997,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 8,
+     "spare_name": "Fine leg"
     }
    ],
    "threat": {
@@ -1056,7 +1082,9 @@
        "label": "Square leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 6,
+     "spare_name": "Mid-on"
     },
     {
      "label": "Once set",
@@ -1116,7 +1144,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 2,
+     "spare_name": "Backward point"
     }
    ],
    "threat": {
@@ -1199,7 +1229,9 @@
        "label": "Deep square leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 5,
+     "spare_name": "Mid-off"
     },
     {
      "label": "Once set",
@@ -1259,7 +1291,9 @@
        "label": "Fine leg",
        "tag": "stock"
       }
-     ]
+     ],
+     "spare": 4,
+     "spare_name": "Mid-off"
     }
    ],
    "threat": {
