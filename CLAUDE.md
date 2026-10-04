@@ -1141,12 +1141,21 @@ Built by `build_coach_site.py --slug <slug>` into `coach_build/coach/<slug>/`, a
 Tom's shape (`docs/COACH_VIEW_PLAN.md` § Batting plans and bowling plans) supersedes the single tab
 row above:
 
-- **A series opens on an overview** (`coach/<slug>/index.html`, `_overview_page`): the two sides as
-  large links. Every page under it carries **two rows of tabs** (`site_render.series_nav`, from
-  `_nav`): **Batting plans** (Their bowlers · Set Field Plans · Match-ups) and **Bowling plans** (Pace ·
-  Spin · Set Field Plans · Unorthodox shots), only the pages built. The crumb is Scouting · the
-  series. `coach/<slug>/nav.json` carries the same rows for the field planner, which renders its own
-  page and reads them from the bundle.
+- **A series opens on Bowling plans → Pace** (Tom, 04-10-2026, after an overview page with the two
+  sides as links proved a click with nothing on it): `coach/<slug>/index.html` is a redirect
+  (`_landing`) to the first page of the first side, kept because the Scouting list and older links
+  name it, and the crumb's series link goes straight there. Every page carries **two rows of tabs**
+  (`site_render.series_nav`, from `_nav`): **Bowling plans** first (Pace · Spin · Set Field Plans ·
+  Unorthodox shots), then **Batting plans** (Their bowlers · Set Field Plans · Match-ups), only the
+  pages built. `coach/<slug>/nav.json` carries the same rows for the field planner, which renders its
+  own page and reads them from the bundle.
+- **A card reads name, figures, coaches' notes, then Scouting notes** (Tom, 04-10-2026: the coaches'
+  notes matter most) — on the Pace and Spin packs the scouting notes are the generated plan line, on
+  Their bowlers the respect / attack / watch lines.
+- **`check_site` and the coach view**: its links run from the site root (`/coach/...`), so the check
+  resolves those against the bundle and skips the app's own routes (`/static/`, `/fields/`, `/vision/`);
+  it also checks the report, vision and headshot links in a card's data (`window.PK`, `window.BK`), and
+  `--deep` does not HEAD clip links under `coach/`, which the app rewrites as it serves them.
 - **Their bowlers** (`batting/index.html`, script `coach_bowlers.js` → `/coach/bowlers.js`): a
   vs right-handers / vs left-handers switch, then a card per bowler — how to play them (the bowling
   report's `how_to_play`, now they/them at source), the coaches' notes, the figures to that hand
