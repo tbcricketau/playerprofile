@@ -97,17 +97,17 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  .pcard .plan{font-size:16px;line-height:1.45;margin:10px 0 0} .pcard .plan b{color:#003087} .pcard .thin{color:#6b7280;font-style:italic;font-size:14px}
  .pcard .notes{margin:10px 0 0;padding:9px 12px;background:#eef1f6;border-radius:6px} .pcard .notes .lbl{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-weight:700;margin-bottom:2px}
  .pcard .notes ul{margin:0;padding-left:18px;display:block} .pcard .notes li{font-weight:600;font-size:14px} .pcard .notes .none{color:#6b7280;font-style:italic;margin:0}
- .pcard .figs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:12px 0 0}
+ .pcard .figs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:12px 0 0} .pcard .figs.f5{grid-template-columns:repeat(5,minmax(0,1fr))}
  .pcard .fig{border-top:2px solid #e5e7eb;padding-top:5px;min-width:0} .pcard .fig .v{font-size:20px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums} .pcard .fig .v.sm{font-size:13.5px;font-weight:600;line-height:1.25;margin-top:3px}
  .pcard .fig .k{display:block;color:#6b7280;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;margin-top:2px} .pcard .fig .muted{color:#6b7280;font-style:italic;font-weight:500}
  .pcard .acts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0} .pcard .acts a{font-size:13px;font-weight:600;text-decoration:none;padding:7px 13px;border-radius:7px;background:#eef1f6;color:#003087;border:1px solid #d5dced} .pcard .acts a.solid{background:#003087;color:#fff;border-color:#003087}
  .pcard .fieldp{border-left:1px solid #e5e7eb;padding-left:22px;min-width:0}
- .pcard .fhead{display:flex;align-items:baseline;justify-content:space-between;gap:6px 12px;flex-wrap:wrap;margin-bottom:6px} .pcard .fhead .lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#003087} .pcard .fhead .by{color:#6b7280;font-size:12px} .pcard .fhead a{font-size:12.5px;font-weight:600;white-space:nowrap}
+ .pcard .fhead{display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;margin-bottom:6px} .pcard .fhead .ftags{display:flex;flex-wrap:wrap;gap:5px;flex:1 1 auto;min-width:0} .pcard .fhead .ftags .tag{font-size:11.5px;padding:2px 7px} .pcard .fhead a{margin-left:auto} .pcard .fhead .lbl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#003087} .pcard .fhead .by{color:#6b7280;font-size:12px} .pcard .fhead a{font-size:12.5px;font-weight:600;white-space:nowrap}
  .pcard .fieldp svg{width:100%;height:auto;display:block}
  .pcard .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0} .pcard .chips button{background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:5px 10px;font:inherit;font-size:12.5px;color:#6b7280;cursor:pointer} .pcard .chips button.on{border-color:#003087;color:#003087;font-weight:600;box-shadow:0 0 0 2px rgba(0,48,135,.12)}
  .pcard .setline{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-size:12.5px} .pcard .setline b{letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-size:11px;margin-right:4px}
  .pcard .fnone{color:#6b7280;font-style:italic;font-size:13.5px;margin:0} .pcard .tags{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 0} .pcard .tag{background:#eef1f6;color:#003087;border-radius:4px;padding:2px 8px;font-size:12px;font-weight:600}
- @media(max-width:860px){.pcard{grid-template-columns:1fr} .pcard .fieldp{border-left:0;padding-left:0;border-top:1px solid #e5e7eb;padding-top:12px} .pcard .figs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+ @media(max-width:860px){.pcard{grid-template-columns:1fr} .pcard .fieldp{border-left:0;padding-left:0;border-top:1px solid #e5e7eb;padding-top:12px} .pcard .figs,.pcard .figs.f5{grid-template-columns:repeat(3,minmax(0,1fr))}}
  details.archive{margin-top:26px;border-top:1px solid #e5e7eb}
  details.archive>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:12px 0 4px;font-weight:700;font-size:15px;color:#1a1a2e}
  details.archive>summary::-webkit-details-marker{display:none}

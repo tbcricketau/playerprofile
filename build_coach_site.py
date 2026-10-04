@@ -143,7 +143,8 @@ def _pick(smap, pid, kind, fmt, level):
 # Each pack is one page with a technique switch in place of a page per bowling type: South Africa's
 # record against pace is 87% right-arm, and the Pace and Right-arm pace pages gave the same plan for
 # 8 of 12 batters. The sub-type stays a click away on the same page. Groups are listed only when
-# their overview exists for the series; the macro group comes first and is the default.
+# their overview exists for the series. The "All pace / All spin" option went too (Tom, 04-10-2026):
+# with the sub-types side by side it only repeated them, so a pack opens on its first technique.
 _PACKS = {"pace": ("Pace", "pace", ["right_pace", "left_pace"]),
           "spin": ("Spin", "spin", ["off_spin", "left_orthodox", "leg_spin", "left_unorthodox"])}
 _SWITCH = {"pace": ("All pace", "right- and left-arm"), "spin": ("All spin", "every type"),
@@ -183,7 +184,7 @@ def _tab_items(slug, have, planner):
         if key in have:
             items.append((key, label, f"{base}/plans/{key}.html"))
     if planner:
-        items.append(("fields", "Field plans", f"/fields/{planner}/"))
+        items.append(("fields", "Set Field Plans", f"/fields/{planner}/"))
     for f, key, label in (("matchups.html", "matchups", "Match-ups"), ("shot-matrix.html", "shots", "Unorthodox shots")):
         if f in have:
             items.append((key, label, f"{base}/plans/{f}"))
@@ -194,12 +195,13 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
     """Write plans/<pack>.html from the group overviews. Returns False when the series has no
     overview for the pack's macro group (a white-ball squad with no spin plan, say)."""
     title, macro, sub_keys = _PACKS[pack]
-    groups = [(macro, _overview(slug, macro))] + [(g, _overview(slug, g)) for g in sub_keys]
-    groups = [(g, d) for g, d in groups if d]
-    if not groups or groups[0][0] != macro:
+    groups = [(g, d) for g, d in ((g, _overview(slug, g)) for g in sub_keys) if d]
+    if not groups:
         return False
     min_balls = groups[0][1].get("min_balls", 150)
     rows = {g: {r["bid"]: r for r in d["rows"]} for g, d in groups}
+    whole = _overview(slug, macro)            # only for each technique's share of the balls
+    whole_rows = {r["bid"]: r for r in whole["rows"]} if whole else {}
     long_label = {g: d.get("label") or g for g, d in groups}
     # the overview's own order: `order` is the career record, largest first
     order = sorted(batters.items(), key=lambda kv: (-int(kv[1].get("order") or 0), kv[1].get("name") or ""))
@@ -207,7 +209,7 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
     for pid, meta in order:
         pid = str(pid)
         name = meta.get("name") or pid
-        base = rows[macro].get(pid) or {}
+        base = whole_rows.get(pid) or next((rows[g][pid] for g, _d in groups if pid in rows[g]), {})
         sub = (base.get("sub") or meta.get("hand") or "").split(" · ")
         hand, role = sub[0], (sub[1] if len(sub) > 1 else (meta.get("role") or ""))
         hit = _pick(smap, pid, "batting", fmt, level)
@@ -235,19 +237,19 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
                     "groups": per})
     data = {"pack": pack, "label": title, "series": entry.get("name") or slug, "planner": planner,
             "minBalls": min_balls,
-            "groups": [{"key": g, "label": _SWITCH.get(g, (g, ""))[0], "sub": _SWITCH.get(g, (g, ""))[1],
-                        "long": long_label[g], "macro": g == macro,
+            "groups": [{"key": g, "label": _SWITCH.get(g, (g, ""))[0], "long": long_label[g],
                         "balls": sum((rows[g].get(b["id"]) or {}).get("balls") or 0 for b in out)}
                        for g, _d in groups],
             "batters": out}
-    all_balls = data["groups"][0]["balls"] or 1
+    all_balls = (sum((whole_rows.get(b["id"]) or {}).get("balls") or 0 for b in out)
+                 or sum(g["balls"] for g in data["groups"]) or 1)
 
-    def seg_button(g):
-        small = g["sub"] if g["macro"] else f"{g['balls']:,} balls · {round(g['balls'] / all_balls * 100)}% of their {pack}"
-        on = ' class="on"' if g["macro"] else ""
+    def seg_button(k, g):
+        small = f"{g['balls']:,} balls · {round(g['balls'] / all_balls * 100)}% of their {pack}"
+        on = ' class="on"' if k == 0 else ""
         return (f'<button type="button" data-g="{_html.escape(g["key"])}"{on}>{_html.escape(g["label"])}'
                 f'<small>{_html.escape(small)}</small></button>')
-    seg = "".join(seg_button(g) for g in data["groups"])
+    seg = "".join(seg_button(k, g) for k, g in enumerate(data["groups"]))
     lead = (f"The plan against {pack} for every {_html.escape(entry.get('target_country') or 'opposition')} batter, "
             "the field it implies, and the coaches' field where one is set. Same numbers as each batter's own report.")
     body = (f"<h1>{_html.escape(title)}</h1><p class=\"lead\">{lead}</p>"
