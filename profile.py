@@ -1170,18 +1170,18 @@ def _wicket_setup(raw: list) -> dict | None:
 def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, matchups,
                  seq_patterns, wicket_setup, ball_types, sb_econ, sb_wkts, sb_n,
                  repeatability, common_len_band) -> dict:
-    """Counter-strategy synthesis — the 'what do I do about him' section players want.
+    """Counter-strategy synthesis — the 'what do I do about them' section players want.
     Every line is drawn from a computed number; only asserts when the data supports it."""
     respect, attack, watch = [], [], []
 
-    # RESPECT — his wicket ball (danger cell / length)
+    # RESPECT — their wicket ball (danger cell / length)
     if danger_cell and danger_cell.get("adj_rate"):
         respect.append(
             f"Respect the <b>{danger_cell['length'].lower()} {danger_cell['line']}</b> — "
-            f"his wicket ball ({danger_cell['adj_rate']:.1f} wickets per 100, "
+            f"their wicket ball ({danger_cell['adj_rate']:.1f} wickets per 100, "
             f"{danger_cell['wickets']} off {danger_cell['balls']}).")
     elif danger_length and danger_length.get("adj_rate"):
-        respect.append(f"Respect the <b>{danger_length['length'].lower()}</b> — his most threatening length "
+        respect.append(f"Respect the <b>{danger_length['length'].lower()}</b> — their most threatening length "
                        f"({danger_length['adj_rate']:.1f} wickets per 100).")
 
     # ATTACK — scoring direction + the least-threatening length to cash in on
@@ -1191,8 +1191,8 @@ def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, match
         side = {"off": "square/through the off side", "leg": "through the leg side",
                 "straight": "straight down the ground"}.get(top)
         if side and d.get(top):
-            attack.append(f"Most of his runs leak {side} ({d[top]:.0f}%) — his main scoring release.")
-    # a scoreable ball type: highest econ among his common types with low beaten%
+            attack.append(f"Most of the runs off them leak {side} ({d[top]:.0f}%) — their main scoring release.")
+    # a scoreable ball type: highest econ among their common types with low beaten%
     if ball_types and ball_types.get("types"):
         cand = [t for t in ball_types["types"]
                 if t.get("econ") is not None and (t.get("pct") or 0) >= 8]
@@ -1200,16 +1200,16 @@ def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, match
             loose = max(cand, key=lambda t: t["econ"])
             if loose["econ"] and loose["econ"] >= 3.3:
                 attack.append(
-                    f"Cash in when he goes <b>{loose['band'].lower()} {loose['region']}</b> "
+                    f"Cash in when they go <b>{loose['band'].lower()} {loose['region']}</b> "
                     f"(economy {loose['econ']:.1f}{', beats the bat only ' + format(loose['beaten_pct'], '.0f') + '%' if loose.get('beaten_pct') is not None else ''}).")
     # short ball (pace)
     if is_pace and sb_n and sb_n >= 40 and sb_econ is not None:
         if sb_econ >= 4.0 and sb_wkts <= max(1, sb_n // 60):
-            attack.append(f"His short ball is scoreable (economy {sb_econ:.1f}, {sb_wkts} wkts off {sb_n}).")
+            attack.append(f"Their short ball is scoreable (economy {sb_econ:.1f}, {sb_wkts} wkts off {sb_n}).")
         elif sb_wkts and sb_wkts >= 3:
-            respect.append(f"Watch the short ball — {sb_wkts} of his wickets come from it.")
+            respect.append(f"Watch the short ball — {sb_wkts} of their wickets come from it.")
 
-    # WATCH — his setups (sequencing + the ball-before-the-wicket numbers)
+    # WATCH — their setups (sequencing + the ball-before-the-wicket numbers)
     sp = seq_patterns or {}
     if sp.get("wk_with_prev", 0) >= 15:
         if sp.get("wk_fuller_pct") and sp["wk_fuller_pct"] >= 45:
@@ -1217,21 +1217,21 @@ def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, match
         elif sp.get("wk_shorter_pct") and sp["wk_shorter_pct"] >= 45:
             watch.append(f"The wicket ball is usually <b>shorter</b> than the one before ({sp['wk_shorter_pct']:.0f}%) — beware the ball that pushes you back.")
         if sp.get("wk_straighter_pct") and sp["wk_straighter_pct"] >= 45:
-            watch.append(f"He tends to <b>straighten his line</b> for the wicket ball ({sp['wk_straighter_pct']:.0f}%).")
+            watch.append(f"They tend to <b>straighten their line</b> for the wicket ball ({sp['wk_straighter_pct']:.0f}%).")
     if wicket_setup and wicket_setup.get("wk_spd") and wicket_setup.get("prev_spd"):
         dv = wicket_setup["wk_spd"] - wicket_setup["prev_spd"]
         if abs(dv) >= 3:
             watch.append(f"The wicket ball is ~{abs(dv):.0f} km/h {'quicker' if dv > 0 else 'slower'} than the ball before it — a change of pace sets it up.")
 
     # spin: repeatability → use feet / disrupt length. length_sd_pctl is the percentile of
-    # his length standard deviation among peers, so LOW = tight/metronomic.
+    # their length standard deviation among peers, so LOW = tight/metronomic.
     if is_spin and isinstance(repeatability, dict):
         try:
             rp = float(repeatability.get("length_sd_pctl"))
         except (TypeError, ValueError):
             rp = None
         if rp is not None and rp <= 35:
-            watch.append("Very repeatable with his length — using your feet to change his length is more effective than waiting for a loose ball.")
+            watch.append("Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball.")
 
     # MATCH-UP — is one hand markedly safer?
     mh = (matchups or {}).get("hand", {})
@@ -1239,13 +1239,13 @@ def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, match
         l, r = mh["vs LHB"], mh["vs RHB"]
         if l.get("avg") and r.get("avg"):
             if l["avg"] >= r["avg"] * 1.3:
-                attack.append(f"Left-handers fare better against him (avg {l['avg']:.0f} vs {r['avg']:.0f} for RHB).")
+                attack.append(f"Left-handers fare better against them (avg {l['avg']:.0f} vs {r['avg']:.0f} for RHB).")
             elif r["avg"] >= l["avg"] * 1.3:
-                attack.append(f"Right-handers fare better against him (avg {r['avg']:.0f} vs {l['avg']:.0f} for LHB).")
+                attack.append(f"Right-handers fare better against them (avg {r['avg']:.0f} vs {l['avg']:.0f} for LHB).")
 
     summary = None
     if respect and attack:
-        summary = "Respect his wicket ball, cash in on his release ball — the plan is patience for the threat length and intent for the loose one."
+        summary = "Respect their wicket ball, cash in on their release ball — the plan is patience for the threat length and intent for the loose one."
     return {"respect": respect, "attack": attack, "watch": watch, "summary": summary}
 
 

@@ -660,6 +660,74 @@ def build_field(P, group, phase):
             "backtest": _backtest(names, base_names, flow, exp, observed)}
 
 
+# ── Their field: the bowler's side (Batting plans, Tom 04-10-2026) ─────────────────────────────
+# For our batters facing their bowlers: the field THEY are likely to set. We hold no record of the
+# fields an opposition sets, so this is an estimate in the engine's own terms, from the bowler's
+# deliveries to one hand instead of one batter's innings:
+#   1. the GPS-corrected stock field for the bowler's type, our batter's hand and the phase;
+#   2. the orthodox variant that fits where the runs off this bowler go (pace, old ball — the only
+#      cells _STOCK_VARIANTS has);
+#   3. a situational catcher where their catches to that hand have been taken — R9's rule, read on
+#      the bowler's record (Maharaj's short leg, say);
+#   4. the spare: the ring fielder in the area batters score least off them (_floating).
+# R1-R8 read one batter's strokes against the cohort's norms and have no bowler equivalent, so they
+# are not run. Nothing here has been checked against fields seen on vision yet; the cards say so.
+_SPIN_GROUPS = ("off_spin", "leg_spin", "left_orthodox", "left_unorthodox", "spin")
+_DIS_KEY = {v: k for k, v in _DIS_SITU.items()}
+
+
+def bowler_field(rows, group, is_lhb, stock_phase, min_legal=120):
+    """The field a bowler's captain is likely to set to one hand. `rows` are the bowler's deliveries
+    (profile.build_profile's `raw`, catches annotated), any hand — this keeps `is_lhb`'s. Returns
+    {field:[{position, angle, radius, role}], spare, legal, adjusted, notes:[...]} or None when the
+    type has no stock field. Under `min_legal` balls it is the stock field, unadjusted."""
+    from cricket_core import fields
+    is_spin = group in _SPIN_GROUPS
+    hand = "LHB" if is_lhb else "RHB"
+    hands = "left-handers" if is_lhb else "right-handers"
+    btype = _GROUP_TO_TYPE.get(group, "Off Spin" if is_spin else "Right Fast")
+    names = fields.gps_corrected_field(_FMT, btype, hand, stock_phase)
+    if not names:
+        return None
+    names = list(names)
+    rows = [r for r in rows if bool(r.get("is_lhb")) == bool(is_lhb)]
+    legal = sum(1 for r in rows if r.get("is_legal"))
+    notes, flow, exp = [], {}, {}
+    adjusted = legal >= min_legal
+    if adjusted:
+        flow, _n = run_flow(rows, is_lhb)
+        fit = _select_variant(fields.scenario(btype, hand), stock_phase, flow, names)
+        if fit and _legal(fit["field"], stock_phase):
+            names = list(fit["field"])
+            off, leg, _st = fit["axes"]
+            notes.append(f"A squarer leg-side ring: {leg:.0f}% of the runs off them to {hands} go through "
+                         f"the leg side, {off:.0f}% through the off." if fit["name"] == "leg-side" else
+                         f"An extra fielder square on the off: {off:.0f}% of the runs off them to {hands} "
+                         f"go square and through the off, {leg:.0f}% through the leg side.")
+        exp, _d, _f = expected_catches(rows, group)
+        caught = Counter(r["catch_position"] for r in rows
+                         if r.get("is_wicket") and r.get("how_out") == "Caught" and r.get("catch_position"))
+        r9 = _dismissal_evidence(caught, names)
+        if r9:
+            add = r9["add"][0]
+            floating = [f["position"] for f in _floating(names, flow, exp)]
+            drop = _pick_drop(names, flow, floating, False, add)
+            cand = [add if n == drop else n for n in names]
+            if drop and drop != add and _legal(cand, stock_phase):
+                names = cand
+                n_at, n_all = caught.get(_DIS_KEY.get(add), 0), sum(caught.values())
+                notes.append(f"{_DIS_FRIENDLY.get(add, add).capitalize()} in for {pretty_position(drop).lower()}: "
+                             f"{n_at} of the {n_all} catches off them to {hands} with a recorded position "
+                             f"were taken there.")
+    floating = _floating(names, flow, exp) if flow else []
+    field = []
+    for nm in names:
+        c = FIELD_POS.get(nm) or field_coords(nm)
+        field.append({"position": nm, "angle": c["angle"], "radius": c["radius"], "role": c["role"]})
+    return {"field": field, "spare": floating[0]["position"] if floating else None, "legal": legal,
+            "adjusted": adjusted, "notes": notes}
+
+
 def _stock_why(name, base_changes):
     """Orthodoxy line for a stock fielder; flag if it came from the GPS correction."""
     if base_changes and base_changes not in ("none", "") and name in base_changes:
