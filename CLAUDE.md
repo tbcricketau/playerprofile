@@ -1151,14 +1151,17 @@ row above:
   own page and reads them from the bundle.
 - **A card reads name, figures, coaches' notes, then Scouting notes** (Tom, 04-10-2026: the coaches'
   notes matter most) — on the Pace and Spin packs the scouting notes are the generated plan line, on
-  Their bowlers the respect / attack / watch lines.
+  Their bowlers the labelled facts (`how_to_play.facts`: Wicket ball, Short ball, Runs, Most
+  expensive…). Since 06-10-2026 generated text states facts and never tells a player what to do; a
+  `bowler_plans` file built before then still carries Respect / Attack / Watch, which
+  `coach_bowlers.js` shows until the file is rebuilt.
 - **`check_site` and the coach view**: its links run from the site root (`/coach/...`), so the check
   resolves those against the bundle and skips the app's own routes (`/static/`, `/fields/`, `/vision/`);
   it also checks the report, vision and headshot links in a card's data (`window.PK`, `window.BK`), and
   `--deep` does not HEAD clip links under `coach/`, which the app rewrites as it serves them.
 - **Their bowlers** (`batting/index.html`, script `coach_bowlers.js` → `/coach/bowlers.js`): a
-  vs right-handers / vs left-handers switch, then a card per bowler — how to play them (the bowling
-  report's `how_to_play`, now they/them at source), the coaches' notes, the figures to that hand
+  vs right-handers / vs left-handers switch, then a card per bowler — the facts from the bowling
+  report's `how_to_play`, the coaches' notes, the figures to that hand
   (pace adds km/h average/p99 and short %), their reels to that hand and the report, and the field
   they are likely to set **by category**: pace **New ball** (when they take it 10% of the time or
   more), **Old ball**, **Bouncer plan**; spin **New batter**, **Set batter**. Each category shows the
@@ -1178,6 +1181,43 @@ row above:
   and a tenth of the located ones** (a bowler's catches come from every batter they have bowled to, so
   the batter rule's two is noise there — it posted Jansen a leg gully on 2 of 31); the spare.
   R1–R8 read one batter's strokes and are not run.
+
+### The hub's player packs — `build_hub_packs.py` (first build 06-10-2026, at `/packs/`, unlinked)
+
+The players' version for the Coaches Hub, redesigned from the Pages packs (`docs/PLAYER_PACK_REDESIGN.md`
+holds the audit, Tom's decisions and the build status). The Pages packs are untouched: this writes its
+own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/packs/<slug>/`.
+
+```powershell
+.\venv\Scripts\python.exe build_pack_extras.py --slug <slug> [--before <first Test>]   # ~17 min, warehouse
+.\venv\Scripts\python.exe build_hub_packs.py --slug <slug>                             # seconds, offline
+.\venv\Scripts\python.exe check_site.py hub_pack_site --with player_pack_site
+.\venv\Scripts\python.exe audit_pack_hands.py --site hub_pack_site --with player_pack_site --opp <opp> --slug <slug> --fmt Test
+```
+
+- **A card**: the coaches' notes, the facts, four to six figures, the field, the pictures, the vision.
+  The likely XI as cards (new-ball bowlers first on a batting pack, batting order on a bowling pack),
+  the rest of the squad as rows that open into the same card. No report link.
+- **Built from**: `pack_extras_<opp>.json` (facts, figures, stumps, zones, pictures — the only new
+  data), `bowler_plans_<opp>.json` and `overview_<group>_<opp>.json` (the estimated fields), the
+  about file (order, types, clip scopes) and the Pages packs' clip sidecars, fetched at
+  `/players/<slug>/<p>-clips.json`. So the Pages packs must be built (and uploaded) for the reels to play.
+- **From the planner when the page opens**, shared only: the card notes and fields (`vs_rhb`/`vs_lhb` for
+  their bowlers, the group key for their batters) and the note at the top (`us_bat`/`us_bowl`, keyed by
+  our player). A coach edits the top note in place; card notes and fields are edited in the planner.
+- **The page carries `<!--hub-bar-->`**, which `hubstyle.dress` fills with the hub's bar and does
+  nothing else to — so it must never carry `<div class="crumb">`, `@page` or the vision gallery's
+  background, or the old-page restyle would be laid over it.
+- **Reels are full-width rows**, one per reel with the clip count on the right (Tom, 06-10-2026:
+  buttons sized by their labels did not line up). A declared fallback reel ends in `*` with a one-line
+  footnote ("* ODI footage", "* First-class footage"), the Pages packs' convention, which is how
+  `audit_pack_hands` tells it from a pooled reel — so the play mark and the count (`data-n`) are CSS
+  and the link text stays plain for that test.
+- **Upload**: `playerpacks/upload_packs.py --bundle hub_pack_site --prefix aus --apply` (changed files
+  only). The app caches pages in memory, so a re-upload shows after its next restart or deploy.
+- **Phone screenshots**: headless Edge will not lay out narrower than 540 px, so a `--window-size=390`
+  shot is a cropped 540-px page. Pin the body to 390 px in a same-origin copy instead (the app sends
+  `X-Frame-Options: DENY`, so an iframe will not do).
 
 ### The hub half — the Scouting page's Archive (04-10-2026)
 
