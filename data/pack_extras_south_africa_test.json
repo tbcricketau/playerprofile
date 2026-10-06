@@ -1,0 +1,2678 @@
+{
+ "slug": "south-africa-test-away-2026",
+ "opp": "south_africa_test",
+ "format": "Test",
+ "level": "international",
+ "bowlers": {
+  "3760008": {
+   "name": "Aiden Markram",
+   "hands": {
+    "RHB": {
+     "n_balls": 333,
+     "n_wkts": 4,
+     "bowl_avg": 43.25,
+     "economy": 3.1171171171171173,
+     "strike_rate": 83.25,
+     "avg_spd": 86.7456506849315,
+     "top_spd": 95.27969999999996,
+     "spd_lo": 79.1,
+     "spd_hi": 91.8,
+     "short_pct": null,
+     "round_pct": 23.723723723723726,
+     "stumps": null,
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>full</b> · 1.5 per 100 balls"
+      },
+      {
+       "label": "Runs",
+       "text": "42% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full wide outside off</b> · 5.3 an over, beats the bat 9%"
+      }
+     ],
+     "n_wkt_balls": 4,
+     "pics": {}
+    },
+    "LHB": {
+     "n_balls": 294,
+     "n_wkts": 2,
+     "bowl_avg": 71.0,
+     "economy": 2.8979591836734695,
+     "strike_rate": 147.0,
+     "avg_spd": 87.63073529411764,
+     "top_spd": 97.0372,
+     "spd_lo": 79.1,
+     "spd_hi": 91.8,
+     "short_pct": null,
+     "round_pct": 95.578231292517,
+     "stumps": null,
+     "facts": [
+      {
+       "label": "Runs",
+       "text": "53% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full down the leg side</b> · 3.7 an over, beats the bat 18%"
+      }
+     ],
+     "n_wkt_balls": 2,
+     "pics": {}
+    }
+   }
+  },
+  "3110056": {
+   "name": "Wiaan Mulder",
+   "hands": {
+    "RHB": {
+     "n_balls": 1387,
+     "n_wkts": 21,
+     "bowl_avg": 28.476190476190474,
+     "economy": 2.5868781542898343,
+     "strike_rate": 66.04761904761905,
+     "avg_spd": 128.01648531951642,
+     "top_spd": 136.9673,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 20.115356885364093,
+     "round_pct": 0.8651766402307137,
+     "stumps": {
+      "rate": 10.708117443868739,
+      "expected": 11.697741136405867,
+      "verdict": "in line",
+      "label": "right-arm pace",
+      "tracked": 1158
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length on the 6th stump</b> · 1.8 per 100 balls (6 in 313)"
+      },
+      {
+       "label": "Runs",
+       "text": "53% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full outside off</b> · 4.4 an over, beats the bat 11%"
+      }
+     ],
+     "n_wkt_balls": 21,
+     "pics": {
+      "pitch": "bowl_3110056_rhb_pitch.png",
+      "bee": "bowl_3110056_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 635,
+     "n_wkts": 17,
+     "bowl_avg": 18.529411764705884,
+     "economy": 2.9763779527559056,
+     "strike_rate": 37.35294117647059,
+     "avg_spd": 128.67173719376393,
+     "top_spd": 136.2116,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 19.68503937007874,
+     "round_pct": 57.95275590551181,
+     "stumps": {
+      "rate": 11.804008908685969,
+      "expected": 10.33587150621691,
+      "verdict": "in line",
+      "label": "right-arm pace",
+      "tracked": 449
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length on the 6th stump</b> · 4.0 per 100 balls (3 in 44)"
+      },
+      {
+       "label": "Runs",
+       "text": "44% through the off side"
+      }
+     ],
+     "n_wkt_balls": 17,
+     "pics": {
+      "pitch": "bowl_3110056_lhb_pitch.png",
+      "bee": "bowl_3110056_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "4352128": {
+   "name": "Marco Jansen",
+   "hands": {
+    "RHB": {
+     "n_balls": 2198,
+     "n_wkts": 65,
+     "bowl_avg": 17.6,
+     "economy": 3.1228389444949958,
+     "strike_rate": 33.815384615384616,
+     "avg_spd": 134.79649441340783,
+     "top_spd": 143.40010000000004,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 31.665150136487718,
+     "round_pct": 47.99818016378526,
+     "stumps": {
+      "rate": 6.846762925011644,
+      "expected": 9.3129311153394,
+      "verdict": "below",
+      "label": "left-arm pace",
+      "tracked": 2147
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>full in the 4th-stump channel</b> · 4.5 per 100 balls (4 in 62)"
+      },
+      {
+       "label": "Short ball",
+       "text": "23 of 65 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "56% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full wide outside off</b> · 5.5 an over, beats the bat 25%"
+      }
+     ],
+     "n_wkt_balls": 65,
+     "pics": {
+      "pitch": "bowl_4352128_rhb_pitch.png",
+      "bee": "bowl_4352128_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 1210,
+     "n_wkts": 24,
+     "bowl_avg": 27.625,
+     "economy": 3.287603305785124,
+     "strike_rate": 50.416666666666664,
+     "avg_spd": 134.8181670929241,
+     "top_spd": 143.4156,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 33.14049586776859,
+     "round_pct": 6.694214876033058,
+     "stumps": {
+      "rate": 9.88917306052856,
+      "expected": 13.272604030394925,
+      "verdict": "below",
+      "label": "left-arm pace",
+      "tracked": 1173
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>back of a length wide outside off</b> · 4.6 per 100 balls (4 in 42)"
+      },
+      {
+       "label": "Short ball",
+       "text": "11 of 24 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "45% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>back of a length outside off</b> · 4.4 an over, beats the bat 10%"
+      }
+     ],
+     "n_wkt_balls": 24,
+     "pics": {
+      "pitch": "bowl_4352128_lhb_pitch.png",
+      "bee": "bowl_4352128_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "3080070": {
+   "name": "Keshav Maharaj",
+   "hands": {
+    "RHB": {
+     "n_balls": 7630,
+     "n_wkts": 131,
+     "bowl_avg": 28.48854961832061,
+     "economy": 2.9347313237221493,
+     "strike_rate": 58.2442748091603,
+     "avg_spd": 81.42178487212044,
+     "top_spd": 89.9864,
+     "spd_lo": 74.1,
+     "spd_hi": 87.7,
+     "short_pct": null,
+     "round_pct": 96.29095674967235,
+     "stumps": {
+      "rate": 33.80836302268892,
+      "expected": 35.78982097995508,
+      "verdict": "below",
+      "label": "left-arm orthodox",
+      "tracked": 5333
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length wide outside off</b> · 3.5 per 100 balls (3 in 43)"
+      },
+      {
+       "label": "Runs",
+       "text": "44% through the leg side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full down the leg side</b> · 4.1 an over, beats the bat 12%"
+      },
+      {
+       "label": "Length",
+       "text": "more consistent than 91% of spinners"
+      }
+     ],
+     "n_wkt_balls": 131,
+     "pics": {
+      "pitch": "bowl_3080070_rhb_pitch.png",
+      "bee": "bowl_3080070_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 3878,
+     "n_wkts": 67,
+     "bowl_avg": 33.791044776119406,
+     "economy": 3.5028365136668382,
+     "strike_rate": 57.88059701492537,
+     "avg_spd": 81.90555600649351,
+     "top_spd": 90.2759,
+     "spd_lo": 74.1,
+     "spd_hi": 87.7,
+     "short_pct": null,
+     "round_pct": 16.580711707065497,
+     "stumps": {
+      "rate": 28.43683083511777,
+      "expected": 30.78140799598885,
+      "verdict": "below",
+      "label": "left-arm orthodox",
+      "tracked": 2335
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length on the 6th stump</b> · 3.0 per 100 balls (6 in 164)"
+      },
+      {
+       "label": "Runs",
+       "text": "49% through the leg side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full wide outside off</b> · 4.5 an over, beats the bat 19%"
+      },
+      {
+       "label": "Length",
+       "text": "more consistent than 91% of spinners"
+      }
+     ],
+     "n_wkt_balls": 67,
+     "pics": {
+      "pitch": "bowl_3080070_lhb_pitch.png",
+      "bee": "bowl_3080070_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "3550469": {
+   "name": "Senuran Muthusamy",
+   "hands": {
+    "RHB": {
+     "n_balls": 622,
+     "n_wkts": 11,
+     "bowl_avg": 31.363636363636363,
+     "economy": 3.327974276527331,
+     "strike_rate": 56.54545454545455,
+     "avg_spd": 82.80398058252428,
+     "top_spd": 87.95519999999999,
+     "spd_lo": 77.9,
+     "spd_hi": 87.5,
+     "short_pct": null,
+     "round_pct": 93.56913183279742,
+     "stumps": {
+      "rate": 27.508090614886733,
+      "expected": 36.32755962826354,
+      "verdict": "below",
+      "label": "left-arm orthodox",
+      "tracked": 309
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>full</b> · 2.1 per 100 balls"
+      },
+      {
+       "label": "Runs",
+       "text": "43% through the leg side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full outside off</b> · 4.2 an over, beats the bat 16%"
+      },
+      {
+       "label": "Length",
+       "text": "more consistent than 81% of spinners"
+      }
+     ],
+     "n_wkt_balls": 11,
+     "pics": {
+      "pitch": "bowl_3550469_rhb_pitch.png",
+      "bee": "bowl_3550469_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 338,
+     "n_wkts": 12,
+     "bowl_avg": 20.833333333333332,
+     "economy": 4.437869822485207,
+     "strike_rate": 28.166666666666668,
+     "avg_spd": 84.32159817351598,
+     "top_spd": 90.16139999999999,
+     "spd_lo": 77.9,
+     "spd_hi": 87.5,
+     "short_pct": null,
+     "round_pct": 45.26627218934911,
+     "stumps": null,
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>full</b> · 5.3 per 100 balls"
+      },
+      {
+       "label": "Runs",
+       "text": "40% through the leg side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>good length down the leg side</b> · 5.7 an over, beats the bat 9%"
+      },
+      {
+       "label": "Length",
+       "text": "more consistent than 81% of spinners"
+      }
+     ],
+     "n_wkt_balls": 12,
+     "pics": {
+      "pitch": "bowl_3550469_lhb_pitch.png",
+      "bee": "bowl_3550469_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "1310113": {
+   "name": "Simon Harmer",
+   "hands": {
+    "RHB": {
+     "n_balls": 981,
+     "n_wkts": 21,
+     "bowl_avg": 24.047619047619047,
+     "economy": 3.08868501529052,
+     "strike_rate": 46.714285714285715,
+     "avg_spd": 83.93496432212028,
+     "top_spd": 94.532,
+     "spd_lo": 75.7,
+     "spd_hi": 91.7,
+     "short_pct": null,
+     "round_pct": 42.303771661569826,
+     "stumps": {
+      "rate": 28.950050968399594,
+      "expected": 29.536669003220066,
+      "verdict": "in line",
+      "label": "off spin",
+      "tracked": 981
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>full on the stumps</b> · 3.0 per 100 balls (5 in 146)"
+      },
+      {
+       "label": "Runs",
+       "text": "53% through the leg side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full wide outside off</b> · 4.1 an over, beats the bat 16%"
+      },
+      {
+       "label": "Length",
+       "text": "more consistent than 94% of spinners"
+      }
+     ],
+     "n_wkt_balls": 21,
+     "pics": {
+      "pitch": "bowl_1310113_rhb_pitch.png",
+      "bee": "bowl_1310113_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 1005,
+     "n_wkts": 28,
+     "bowl_avg": 14.5,
+     "economy": 2.4238805970149255,
+     "strike_rate": 35.892857142857146,
+     "avg_spd": 84.61420895522389,
+     "top_spd": 93.86120000000001,
+     "spd_lo": 75.7,
+     "spd_hi": 91.7,
+     "short_pct": null,
+     "round_pct": 98.80597014925372,
+     "stumps": {
+      "rate": 26.368159203980102,
+      "expected": 31.07673270819818,
+      "verdict": "below",
+      "label": "off spin",
+      "tracked": 1005
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length on the 5th stump</b> · 4.1 per 100 balls (3 in 48)"
+      },
+      {
+       "label": "Runs",
+       "text": "41% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full outside off</b> · 3.3 an over, beats the bat 26%"
+      },
+      {
+       "label": "Length",
+       "text": "more consistent than 94% of spinners"
+      }
+     ],
+     "n_wkt_balls": 28,
+     "pics": {
+      "pitch": "bowl_1310113_lhb_pitch.png",
+      "bee": "bowl_1310113_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "2730017": {
+   "name": "Kagiso Rabada",
+   "hands": {
+    "RHB": {
+     "n_balls": 7299,
+     "n_wkts": 193,
+     "bowl_avg": 18.93782383419689,
+     "economy": 3.0045211672831895,
+     "strike_rate": 37.818652849740936,
+     "avg_spd": 136.37852916735915,
+     "top_spd": 145.99040000000002,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 34.51157692834635,
+     "round_pct": 1.3015481572818195,
+     "stumps": {
+      "rate": 8.281893004115226,
+      "expected": 11.00902146738095,
+      "verdict": "below",
+      "label": "right-arm pace",
+      "tracked": 5832
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>full on the stumps</b> · 4.9 per 100 balls (4 in 45)"
+      },
+      {
+       "label": "Short ball",
+       "text": "61 of 193 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "51% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full outside off</b> · 4.0 an over, beats the bat 22%"
+      }
+     ],
+     "n_wkt_balls": 193,
+     "pics": {
+      "pitch": "bowl_2730017_rhb_pitch.png",
+      "bee": "bowl_2730017_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 4328,
+     "n_wkts": 106,
+     "bowl_avg": 22.943396226415093,
+     "economy": 3.3715341959334566,
+     "strike_rate": 40.83018867924528,
+     "avg_spd": 136.97118032786886,
+     "top_spd": 147.52,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 30.730129390018483,
+     "round_pct": 48.84473197781885,
+     "stumps": {
+      "rate": 9.011060507482108,
+      "expected": 8.923570501371003,
+      "verdict": "in line",
+      "label": "right-arm pace",
+      "tracked": 3074
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>full on the stumps</b> · 5.8 per 100 balls (6 in 58)"
+      },
+      {
+       "label": "Short ball",
+       "text": "30 of 106 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "48% through the off side"
+      }
+     ],
+     "n_wkt_balls": 106,
+     "pics": {
+      "pitch": "bowl_2730017_lhb_pitch.png",
+      "bee": "bowl_2730017_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "2540186": {
+   "name": "Corbin Bosch",
+   "hands": {
+    "RHB": {
+     "n_balls": 292,
+     "n_wkts": 10,
+     "bowl_avg": 15.0,
+     "economy": 3.082191780821918,
+     "strike_rate": 29.2,
+     "avg_spd": 140.29929577464787,
+     "top_spd": 146.1054,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 20.205479452054796,
+     "round_pct": 0.0,
+     "stumps": null,
+     "facts": [
+      {
+       "label": "Short ball",
+       "text": "4.8 an over, 0 wickets in 59 balls"
+      },
+      {
+       "label": "Runs",
+       "text": "49% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>back of a length wide outside off</b> · 9.1 an over, beats the bat 38%"
+      }
+     ],
+     "n_wkt_balls": 10,
+     "pics": {
+      "pitch": "bowl_2540186_rhb_pitch.png",
+      "bee": "bowl_2540186_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 228,
+     "n_wkts": 6,
+     "bowl_avg": 24.833333333333332,
+     "economy": 3.9210526315789473,
+     "strike_rate": 38.0,
+     "avg_spd": 138.5990625,
+     "top_spd": 143.9075,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 14.912280701754385,
+     "round_pct": 47.368421052631575,
+     "stumps": null,
+     "facts": [
+      {
+       "label": "Runs",
+       "text": "58% through the off side"
+      }
+     ],
+     "n_wkt_balls": 6,
+     "pics": {
+      "pitch": "bowl_2540186_lhb_pitch.png",
+      "bee": "bowl_2540186_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "5460045": {
+   "name": "Gerald Coetzee",
+   "hands": {
+    "RHB": {
+     "n_balls": 371,
+     "n_wkts": 10,
+     "bowl_avg": 27.6,
+     "economy": 4.463611859838275,
+     "strike_rate": 37.1,
+     "avg_spd": 139.30805929919137,
+     "top_spd": 150.456,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 45.55256064690027,
+     "round_pct": 0.0,
+     "stumps": {
+      "rate": 9.703504043126685,
+      "expected": 10.303936569759324,
+      "verdict": "in line",
+      "label": "right-arm pace",
+      "tracked": 371
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length on the 5th stump</b> · 4.4 per 100 balls (3 in 38)"
+      },
+      {
+       "label": "Short ball",
+       "text": "4 of 10 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "50% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>back of a length wide outside off</b> · 6.8 an over, beats the bat 32%"
+      }
+     ],
+     "n_wkt_balls": 10,
+     "pics": {
+      "pitch": "bowl_5460045_rhb_pitch.png",
+      "bee": "bowl_5460045_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 91,
+     "n_wkts": 4,
+     "bowl_avg": 12.75,
+     "economy": 3.3626373626373627,
+     "strike_rate": 22.75,
+     "avg_spd": 141.6201098901099,
+     "top_spd": 152.162,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 37.362637362637365,
+     "round_pct": 38.46153846153847,
+     "stumps": null,
+     "facts": [
+      {
+       "label": "Runs",
+       "text": "77% through the off side"
+      }
+     ],
+     "n_wkt_balls": 4,
+     "pics": {}
+    }
+   }
+  },
+  "4090011": {
+   "name": "Anrich Nortje",
+   "hands": {
+    "RHB": {
+     "n_balls": 2092,
+     "n_wkts": 43,
+     "bowl_avg": 27.674418604651162,
+     "economy": 3.413001912045889,
+     "strike_rate": 48.651162790697676,
+     "avg_spd": 142.2669651086241,
+     "top_spd": 152.271,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 46.749521988527725,
+     "round_pct": 5.25812619502868,
+     "stumps": {
+      "rate": 10.269914417379855,
+      "expected": 10.344539509067872,
+      "verdict": "in line",
+      "label": "right-arm pace",
+      "tracked": 1519
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>back of a length wide outside off</b> · 2.9 per 100 balls (7 in 218)"
+      },
+      {
+       "label": "Short ball",
+       "text": "21 of 43 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "49% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full outside off</b> · 5.7 an over, beats the bat 10%"
+      }
+     ],
+     "n_wkt_balls": 43,
+     "pics": {
+      "pitch": "bowl_4090011_rhb_pitch.png",
+      "bee": "bowl_4090011_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 965,
+     "n_wkts": 26,
+     "bowl_avg": 23.153846153846153,
+     "economy": 3.74300518134715,
+     "strike_rate": 37.11538461538461,
+     "avg_spd": 142.3794495412844,
+     "top_spd": 154.0468,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 46.32124352331606,
+     "round_pct": 48.29015544041451,
+     "stumps": {
+      "rate": 6.946264744429882,
+      "expected": 8.508802389270707,
+      "verdict": "in line",
+      "label": "right-arm pace",
+      "tracked": 763
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length wide outside off</b> · 3.0 per 100 balls (3 in 88)"
+      },
+      {
+       "label": "Short ball",
+       "text": "11 of 26 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "57% through the off side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>good length wide outside off</b> · 3.9 an over, beats the bat 22%"
+      }
+     ],
+     "n_wkt_balls": 26,
+     "pics": {
+      "pitch": "bowl_4090011_lhb_pitch.png",
+      "bee": "bowl_4090011_lhb_bee.png"
+     }
+    }
+   }
+  },
+  "3200006": {
+   "name": "Dane Paterson",
+   "hands": {
+    "RHB": {
+     "n_balls": 896,
+     "n_wkts": 17,
+     "bowl_avg": 24.058823529411764,
+     "economy": 2.7388392857142856,
+     "strike_rate": 52.705882352941174,
+     "avg_spd": 126.859453125,
+     "top_spd": 136.91299999999998,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 18.861607142857142,
+     "round_pct": 0.0,
+     "stumps": {
+      "rate": 16.071428571428573,
+      "expected": 10.118142173549959,
+      "verdict": "above",
+      "label": "right-arm pace",
+      "tracked": 896
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length wide outside off</b> · 2.3 per 100 balls (7 in 289)"
+      },
+      {
+       "label": "Short ball",
+       "text": "4 of 17 wickets"
+      },
+      {
+       "label": "Runs",
+       "text": "57% through the off side"
+      }
+     ],
+     "n_wkt_balls": 17,
+     "pics": {
+      "pitch": "bowl_3200006_rhb_pitch.png",
+      "bee": "bowl_3200006_rhb_bee.png"
+     }
+    },
+    "LHB": {
+     "n_balls": 422,
+     "n_wkts": 8,
+     "bowl_avg": 27.125,
+     "economy": 3.085308056872038,
+     "strike_rate": 52.75,
+     "avg_spd": 126.21281990521327,
+     "top_spd": 134.53750000000002,
+     "spd_lo": null,
+     "spd_hi": null,
+     "short_pct": 16.113744075829384,
+     "round_pct": 55.92417061611374,
+     "stumps": {
+      "rate": 15.876777251184834,
+      "expected": 8.66392727806849,
+      "verdict": "above",
+      "label": "right-arm pace",
+      "tracked": 422
+     },
+     "facts": [
+      {
+       "label": "Wicket ball",
+       "text": "<b>a good length</b> · 1.8 per 100 balls"
+      },
+      {
+       "label": "Short ball",
+       "text": "4.1 an over, 1 wickets in 68 balls"
+      },
+      {
+       "label": "Runs",
+       "text": "52% through the leg side"
+      },
+      {
+       "label": "Most expensive",
+       "text": "<b>full on the stumps</b> · 4.4 an over, beats the bat 24%"
+      }
+     ],
+     "n_wkt_balls": 8,
+     "pics": {
+      "pitch": "bowl_3200006_lhb_pitch.png",
+      "bee": "bowl_3200006_lhb_bee.png"
+     }
+    }
+   }
+  }
+ },
+ "batters": {
+  "3080067": {
+   "name": "Temba Bavuma",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 1021,
+     "average": 40.416666666666664,
+     "n_out": 12,
+     "bpd": 85.08333333333333,
+     "false_pct": 9.9609375,
+     "off_pct": 37.64988009592326,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 24.1 · <b>pitching on the stumps</b> 23.0 (overall 40.4)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length on the stumps</b> · 2.9 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "LBW 33%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 109.0,
+      "Cover": 84.0,
+      "Mid-Off": 45.0,
+      "Mid-On": 39.0,
+      "Fine Leg": 37.0,
+      "Square Leg": 55.0,
+      "Cover Point": 37.0,
+      "Third Man": 8.0
+     },
+     "n_dismissals": 12,
+     "pics": {
+      "pitch": "bat_3080067_left_orthodox_pitch.png",
+      "bee": "bat_3080067_left_orthodox_bee.png",
+      "wheel": "bat_3080067_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 717,
+     "average": 42.666666666666664,
+     "n_out": 9,
+     "bpd": 79.66666666666667,
+     "false_pct": 19.12751677852349,
+     "off_pct": 66.31016042780749,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 22.8 · <b>pitching on the stumps</b> 12.4 (overall 42.7)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming in</b> 24.0 (straight 81.0) · <b>swinging in</b> 19.5 (straight 54.3)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length on the stumps</b> · 4.1 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 56%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 47.0,
+      "Cover": 100.0,
+      "Fine Leg": 24.0,
+      "Cover Point": 81.0,
+      "Square Leg": 27.0,
+      "Third Man": 40.0,
+      "Mid-On": 15.0,
+      "Mid-Off": 38.0
+     },
+     "n_dismissals": 9,
+     "pics": {
+      "pitch": "bat_3080067_left_pace_pitch.png",
+      "bee": "bat_3080067_left_pace_bee.png",
+      "wheel": "bat_3080067_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 1055,
+     "average": 39.857142857142854,
+     "n_out": 14,
+     "bpd": 75.35714285714286,
+     "false_pct": 10.123734533183352,
+     "off_pct": 37.60162601626016,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 37.5 · <b>pitching in the channel</b> 17.0 (overall 39.9)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length in the channel</b> · 4.0 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught in the field 29%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 111.0,
+      "Cover": 96.0,
+      "Cover Point": 38.0,
+      "Square Leg": 98.0,
+      "Mid-On": 68.0,
+      "Mid-Off": 35.0,
+      "Third Man": 30.0,
+      "Fine Leg": 16.0
+     },
+     "n_dismissals": 14,
+     "pics": {
+      "pitch": "bat_3080067_off_spin_pitch.png",
+      "bee": "bat_3080067_off_spin_bee.png",
+      "wheel": "bat_3080067_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 3064,
+     "average": 35.36585365853659,
+     "n_out": 41,
+     "bpd": 74.73170731707317,
+     "false_pct": 15.949367088607595,
+     "off_pct": 55.38342370255616,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 23.6 · <b>pitching outside off</b> 24.0 (overall 35.4)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming away</b> 20.5 (straight 63.1) · <b>swinging away</b> 29.4 (straight 48.9)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>back of a length outside off</b> · 2.4 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 51%"
+      }
+     ],
+     "zones": {
+      "Cover": 371.0,
+      "Square Leg": 147.0,
+      "Fine Leg": 112.0,
+      "Mid-Wicket": 189.0,
+      "Cover Point": 205.0,
+      "Mid-On": 93.0,
+      "Mid-Off": 77.0,
+      "Third Man": 89.0
+     },
+     "n_dismissals": 41,
+     "pics": {
+      "pitch": "bat_3080067_right_pace_pitch.png",
+      "bee": "bat_3080067_right_pace_bee.png",
+      "wheel": "bat_3080067_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "3760008": {
+   "name": "Aiden Markram",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 639,
+     "average": 19.61111111111111,
+     "n_out": 18,
+     "bpd": 35.5,
+     "false_pct": 15.03875968992248,
+     "off_pct": 34.954407294832826,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 16.2 · <b>pitching on the stumps</b> 10.5 (overall 19.6)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>turning away</b> 23.6 (straight 44.0) · <b>drifting in</b> 26.2 (straight 51.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full on the stumps</b> · 5.6 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught in the field 28%"
+      }
+     ],
+     "zones": {
+      "Cover": 49.0,
+      "Mid-Wicket": 50.0,
+      "Mid-Off": 74.0,
+      "Mid-On": 96.0,
+      "Square Leg": 14.0,
+      "Fine Leg": 13.0,
+      "Cover Point": 18.0,
+      "Third Man": 10.0
+     },
+     "n_dismissals": 18,
+     "pics": {
+      "pitch": "bat_3760008_left_orthodox_pitch.png",
+      "bee": "bat_3760008_left_orthodox_bee.png",
+      "wheel": "bat_3760008_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 677,
+     "average": 41.1,
+     "n_out": 10,
+     "bpd": 67.7,
+     "false_pct": 14.59016393442623,
+     "off_pct": 58.333333333333336,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 29.0 · <b>pitching wide outside off</b> 21.8 (overall 41.1)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming in</b> 22.8 (straight 100.0) · <b>swinging in</b> 31.0 (straight 41.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full wide outside off</b> · 12.1 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Mid-Off": 68.0,
+      "Cover": 124.0,
+      "Square Leg": 20.0,
+      "Mid-Wicket": 81.0,
+      "Cover Point": 29.0,
+      "Third Man": 39.0,
+      "Mid-On": 26.0,
+      "Fine Leg": 20.0
+     },
+     "n_dismissals": 10,
+     "pics": {
+      "pitch": "bat_3760008_left_pace_pitch.png",
+      "bee": "bat_3760008_left_pace_bee.png",
+      "wheel": "bat_3760008_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 658,
+     "average": 115.66666666666667,
+     "n_out": 3,
+     "bpd": 219.33333333333334,
+     "false_pct": 11.342155009451796,
+     "off_pct": 45.794392523364486,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 109.0 · <b>pitching outside off</b> 62.5 (overall 115.7)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length outside off</b> · 0.9 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 33%"
+      }
+     ],
+     "zones": {
+      "Mid-On": 74.0,
+      "Cover": 80.0,
+      "Square Leg": 23.0,
+      "Mid-Off": 57.0,
+      "Mid-Wicket": 44.0,
+      "Cover Point": 19.0,
+      "Fine Leg": 11.0,
+      "Third Man": 13.0
+     },
+     "n_dismissals": 3,
+     "pics": {
+      "wheel": "bat_3760008_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 2973,
+     "average": 32.982142857142854,
+     "n_out": 56,
+     "bpd": 53.089285714285715,
+     "false_pct": 14.780342516753537,
+     "off_pct": 56.869565217391305,
+     "short_false": 12.76595744680851,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 24.8 · <b>pitching outside off</b> 23.5 (overall 33.0)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming in</b> 18.8 (straight 73.2) · <b>swinging in</b> 26.4 (straight 35.9)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full on the stumps</b> · 5.9 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 38%"
+      }
+     ],
+     "zones": {
+      "Mid-On": 219.0,
+      "Mid-Wicket": 252.0,
+      "Mid-Off": 131.0,
+      "Fine Leg": 92.0,
+      "Cover": 583.0,
+      "Square Leg": 108.0,
+      "Cover Point": 242.0,
+      "Third Man": 74.0
+     },
+     "n_dismissals": 56,
+     "pics": {
+      "pitch": "bat_3760008_right_pace_pitch.png",
+      "bee": "bat_3760008_right_pace_bee.png",
+      "wheel": "bat_3760008_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "4353850": {
+   "name": "Tony de Zorzi",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 422,
+     "average": 22.583333333333332,
+     "n_out": 12,
+     "bpd": 35.166666666666664,
+     "false_pct": 13.711583924349881,
+     "off_pct": 42.44897959183673,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 21.4 · <b>pitching on the stumps</b> 7.8 (overall 22.6)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full on the stumps</b> · 4.9 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught in the field 42%"
+      }
+     ],
+     "zones": {
+      "Cover": 31.0,
+      "Square Leg": 41.0,
+      "Cover Point": 30.0,
+      "Mid-Wicket": 54.0,
+      "Mid-On": 42.0,
+      "Third Man": 18.0,
+      "Mid-Off": 26.0,
+      "Fine Leg": 3.0
+     },
+     "n_dismissals": 12,
+     "pics": {
+      "pitch": "bat_4353850_left_orthodox_pitch.png",
+      "bee": "bat_4353850_left_orthodox_bee.png",
+      "wheel": "bat_4353850_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 76,
+     "average": 18.0,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 22.36842105263158,
+     "off_pct": 69.44444444444444,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Third Man": 8.0,
+      "Cover": 8.0,
+      "Square Leg": 4.0,
+      "Cover Point": 4.0,
+      "Mid-On": 1.0,
+      "Fine Leg": 5.0,
+      "Mid-Wicket": 1.0,
+      "Mid-Off": 5.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_4353850_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 380,
+     "average": null,
+     "n_out": 0,
+     "bpd": null,
+     "false_pct": 14.960629921259843,
+     "off_pct": 34.285714285714285,
+     "short_false": null,
+     "facts": [],
+     "zones": {
+      "Mid-Wicket": 68.0,
+      "Cover Point": 15.0,
+      "Cover": 36.0,
+      "Square Leg": 23.0,
+      "Mid-Off": 21.0,
+      "Mid-On": 30.0,
+      "Third Man": 7.0,
+      "Fine Leg": 10.0
+     },
+     "n_dismissals": 0,
+     "pics": {
+      "wheel": "bat_4353850_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 728,
+     "average": 21.25,
+     "n_out": 16,
+     "bpd": 45.5,
+     "false_pct": 21.00271002710027,
+     "off_pct": 65.03496503496503,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 16.5 · <b>pitching on the stumps</b> 13.7 (overall 21.2)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming in</b> 8.6 (straight 39.4) · <b>swinging away</b> 15.2 (straight 44.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length in the channel</b> · 4.0 per 100 balls"
+      },
+      {
+       "label": "First 30 balls",
+       "text": "out every 39 balls, then every 56"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Third Man": 40.0,
+      "Cover": 84.0,
+      "Fine Leg": 27.0,
+      "Mid-Wicket": 28.0,
+      "Square Leg": 28.0,
+      "Cover Point": 48.0,
+      "Mid-Off": 24.0,
+      "Mid-On": 7.0
+     },
+     "n_dismissals": 16,
+     "pics": {
+      "pitch": "bat_4353850_right_pace_pitch.png",
+      "bee": "bat_4353850_right_pace_bee.png",
+      "wheel": "bat_4353850_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": true
+  },
+  "4352600": {
+   "name": "Ryan Rickelton",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 380,
+     "average": 36.4,
+     "n_out": 5,
+     "bpd": 76.0,
+     "false_pct": 17.1875,
+     "off_pct": 48.19277108433735,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 30.0 · <b>pitching on the stumps</b> 13.5 (overall 36.4)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full outside off</b> · 2.2 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 40%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 23.0,
+      "Cover": 25.0,
+      "Mid-On": 45.0,
+      "Mid-Off": 34.0,
+      "Square Leg": 5.0,
+      "Cover Point": 16.0,
+      "Third Man": 14.0,
+      "Fine Leg": 2.0
+     },
+     "n_dismissals": 5,
+     "pics": {
+      "pitch": "bat_4352600_left_orthodox_pitch.png",
+      "bee": "bat_4352600_left_orthodox_bee.png",
+      "wheel": "bat_4352600_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 196,
+     "average": 19.0,
+     "n_out": 5,
+     "bpd": 39.2,
+     "false_pct": 18.37837837837838,
+     "off_pct": 47.77777777777778,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 13.0 · <b>pitching wide outside off</b> 11.0 (overall 19.0)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming away</b> 8.0 (straight 53.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length wide outside off</b> · 3.7 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 80%"
+      }
+     ],
+     "zones": {
+      "Mid-Off": 16.0,
+      "Cover": 31.0,
+      "Cover Point": 9.0,
+      "Mid-On": 16.0,
+      "Mid-Wicket": 10.0,
+      "Fine Leg": 6.0,
+      "Square Leg": 2.0
+     },
+     "n_dismissals": 5,
+     "pics": {
+      "pitch": "bat_4352600_left_pace_pitch.png",
+      "bee": "bat_4352600_left_pace_bee.png",
+      "wheel": "bat_4352600_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 414,
+     "average": 97.5,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 12.801932367149758,
+     "off_pct": 44.252873563218394,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 63.0 · <b>pitching on the stumps</b> 49.0 (overall 97.5)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full on the stumps</b> · 1.0 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 100%"
+      }
+     ],
+     "zones": {
+      "Cover Point": 7.0,
+      "Mid-Wicket": 22.0,
+      "Square Leg": 11.0,
+      "Cover": 34.0,
+      "Mid-Off": 30.0,
+      "Mid-On": 32.0,
+      "Fine Leg": 16.0,
+      "Third Man": 22.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_4352600_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 677,
+     "average": 41.8,
+     "n_out": 10,
+     "bpd": 67.7,
+     "false_pct": 16.023738872403563,
+     "off_pct": 60.62176165803109,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 38.2 · <b>pitching in the channel</b> 21.5 (overall 41.8)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming away</b> 15.2 (straight 122.0) · <b>swinging in</b> 24.0 (straight 60.2)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full in the channel</b> · 4.0 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Mid-Off": 70.0,
+      "Square Leg": 42.0,
+      "Cover": 103.0,
+      "Cover Point": 66.0,
+      "Third Man": 29.0,
+      "Mid-Wicket": 30.0,
+      "Mid-On": 23.0,
+      "Fine Leg": 15.0
+     },
+     "n_dismissals": 10,
+     "pics": {
+      "pitch": "bat_4352600_right_pace_pitch.png",
+      "bee": "bat_4352600_right_pace_bee.png",
+      "wheel": "bat_4352600_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": true
+  },
+  "4352508": {
+   "name": "Tristan Stubbs",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 600,
+     "average": 30.75,
+     "n_out": 8,
+     "bpd": 75.0,
+     "false_pct": 19.601328903654483,
+     "off_pct": 50.66666666666667,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 27.5 · <b>pitching in the channel</b> 8.4 (overall 30.8)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length in the channel</b> · 6.1 per 100 balls"
+      },
+      {
+       "label": "First 30 balls",
+       "text": "out every 38 balls, then every 137"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 21.0,
+      "Square Leg": 12.0,
+      "Mid-On": 18.0,
+      "Mid-Off": 69.0,
+      "Cover Point": 22.0,
+      "Fine Leg": 9.0,
+      "Third Man": 31.0,
+      "Cover": 43.0
+     },
+     "n_dismissals": 8,
+     "pics": {
+      "pitch": "bat_4352508_left_orthodox_pitch.png",
+      "bee": "bat_4352508_left_orthodox_bee.png",
+      "wheel": "bat_4352508_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 143,
+     "average": 30.0,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 24.81203007518797,
+     "off_pct": 53.333333333333336,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 22.5 · <b>pitching wide outside off</b> 19.0 (overall 30.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length outside off</b> · 3.2 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Bowled 100%"
+      }
+     ],
+     "zones": {
+      "Fine Leg": 4.0,
+      "Mid-On": 4.0,
+      "Mid-Wicket": 10.0,
+      "Cover": 12.0,
+      "Square Leg": 5.0,
+      "Third Man": 12.0,
+      "Mid-Off": 6.0,
+      "Cover Point": 7.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_4352508_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 234,
+     "average": 172.0,
+     "n_out": 1,
+     "bpd": null,
+     "false_pct": 22.90748898678414,
+     "off_pct": 47.674418604651166,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 82.0 · <b>pitching wide outside off</b> 27.0 (overall 172.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full wide outside off</b> · 2.1 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 100%"
+      }
+     ],
+     "zones": {
+      "Cover Point": 14.0,
+      "Mid-Off": 60.0,
+      "Mid-On": 29.0,
+      "Cover": 29.0,
+      "Mid-Wicket": 23.0,
+      "Fine Leg": 4.0,
+      "Third Man": 7.0,
+      "Square Leg": 6.0
+     },
+     "n_dismissals": 1,
+     "pics": {
+      "wheel": "bat_4352508_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 571,
+     "average": 21.272727272727273,
+     "n_out": 11,
+     "bpd": 51.90909090909091,
+     "false_pct": 23.18840579710145,
+     "off_pct": 45.23809523809524,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 14.9 · <b>pitching wide outside off</b> 13.3 (overall 21.3)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming away</b> 12.8 (straight 43.7)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full wide outside off</b> · 6.5 per 100 balls"
+      },
+      {
+       "label": "First 30 balls",
+       "text": "out every 43 balls, then every 63"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 55%"
+      }
+     ],
+     "zones": {
+      "Mid-Off": 29.0,
+      "Cover": 29.0,
+      "Cover Point": 22.0,
+      "Mid-On": 21.0,
+      "Mid-Wicket": 50.0,
+      "Square Leg": 31.0,
+      "Third Man": 23.0,
+      "Fine Leg": 4.0
+     },
+     "n_dismissals": 11,
+     "pics": {
+      "pitch": "bat_4352508_right_pace_pitch.png",
+      "bee": "bat_4352508_right_pace_bee.png",
+      "wheel": "bat_4352508_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "4090013": {
+   "name": "Kyle Verreynne",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 362,
+     "average": 27.25,
+     "n_out": 8,
+     "bpd": 45.25,
+     "false_pct": 14.285714285714286,
+     "off_pct": 37.89473684210527,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 13.0 · <b>pitching in the channel</b> 22.0 (overall 27.2)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length in the channel</b> · 5.0 per 100 balls"
+      },
+      {
+       "label": "First 30 balls",
+       "text": "out every 34 balls, then every 64"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 38%"
+      }
+     ],
+     "zones": {
+      "Cover": 19.0,
+      "Mid-Wicket": 61.0,
+      "Third Man": 16.0,
+      "Cover Point": 19.0,
+      "Mid-Off": 30.0,
+      "Square Leg": 30.0,
+      "Mid-On": 10.0,
+      "Fine Leg": 5.0
+     },
+     "n_dismissals": 8,
+     "pics": {
+      "pitch": "bat_4090013_left_orthodox_pitch.png",
+      "bee": "bat_4090013_left_orthodox_bee.png",
+      "wheel": "bat_4090013_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 226,
+     "average": 66.5,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 13.839285714285714,
+     "off_pct": 68.42105263157895,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 33.0 · <b>pitching wide outside off</b> 30.0 (overall 66.5)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length outside off</b> · 3.2 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Cover": 40.0,
+      "Cover Point": 22.0,
+      "Third Man": 8.0,
+      "Fine Leg": 4.0,
+      "Mid-Wicket": 20.0,
+      "Square Leg": 12.0,
+      "Mid-Off": 8.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_4090013_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 312,
+     "average": 36.25,
+     "n_out": 4,
+     "bpd": 78.0,
+     "false_pct": 8.524590163934427,
+     "off_pct": 41.605839416058394,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 29.7 · <b>pitching wide outside off</b> 27.0 (overall 36.2)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full wide outside off</b> · 2.7 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught in the field 50%"
+      }
+     ],
+     "zones": {
+      "Third Man": 8.0,
+      "Fine Leg": 1.0,
+      "Mid-On": 34.0,
+      "Square Leg": 9.0,
+      "Cover": 24.0,
+      "Cover Point": 23.0,
+      "Mid-Wicket": 36.0,
+      "Mid-Off": 2.0
+     },
+     "n_dismissals": 4,
+     "pics": {
+      "wheel": "bat_4090013_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 1220,
+     "average": 26.333333333333332,
+     "n_out": 27,
+     "bpd": 45.18518518518518,
+     "false_pct": 16.832504145936984,
+     "off_pct": 46.332737030411444,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 13.8 · <b>pitching outside off</b> 16.6 (overall 26.3)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming in</b> 12.6 (straight 56.3)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length outside off</b> · 3.4 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 56%"
+      }
+     ],
+     "zones": {
+      "Cover Point": 114.0,
+      "Square Leg": 84.0,
+      "Cover": 96.0,
+      "Mid-Off": 39.0,
+      "Mid-On": 48.0,
+      "Fine Leg": 42.0,
+      "Mid-Wicket": 102.0,
+      "Third Man": 28.0
+     },
+     "n_dismissals": 27,
+     "pics": {
+      "pitch": "bat_4090013_right_pace_pitch.png",
+      "bee": "bat_4090013_right_pace_bee.png",
+      "wheel": "bat_4090013_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "3110056": {
+   "name": "Wiaan Mulder",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 542,
+     "average": 48.333333333333336,
+     "n_out": 6,
+     "bpd": 90.33333333333333,
+     "false_pct": 12.316176470588236,
+     "off_pct": 41.39194139194139,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 19.0 · <b>pitching in the channel</b> 9.0 (overall 48.3)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>turning away</b> 25.0 (straight 33.0) · <b>drifting in</b> 21.8 (straight 37.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length in the channel</b> · 3.8 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 47.0,
+      "Square Leg": 24.0,
+      "Mid-On": 37.0,
+      "Cover": 66.0,
+      "Mid-Off": 57.0,
+      "Cover Point": 5.0,
+      "Fine Leg": 28.0,
+      "Third Man": 9.0
+     },
+     "n_dismissals": 6,
+     "pics": {
+      "pitch": "bat_3110056_left_orthodox_pitch.png",
+      "bee": "bat_3110056_left_orthodox_bee.png",
+      "wheel": "bat_3110056_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 95,
+     "average": 14.666666666666666,
+     "n_out": 3,
+     "bpd": 31.666666666666668,
+     "false_pct": 23.076923076923077,
+     "off_pct": 42.5,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "LBW 33%"
+      }
+     ],
+     "zones": {
+      "Mid-Off": 1.0,
+      "Cover Point": 4.0,
+      "Mid-On": 2.0,
+      "Mid-Wicket": 16.0,
+      "Third Man": 5.0,
+      "Fine Leg": 4.0,
+      "Cover": 6.0,
+      "Square Leg": 1.0
+     },
+     "n_dismissals": 3,
+     "pics": {
+      "wheel": "bat_3110056_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 271,
+     "average": 48.0,
+     "n_out": 4,
+     "bpd": 67.75,
+     "false_pct": 12.84046692607004,
+     "off_pct": 37.142857142857146,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 30.3 · <b>pitching outside off</b> 19.0 (overall 48.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full outside off</b> · 5.1 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught in the field 50%"
+      }
+     ],
+     "zones": {
+      "Cover": 24.0,
+      "Fine Leg": 13.0,
+      "Mid-On": 52.0,
+      "Cover Point": 24.0,
+      "Mid-Off": 25.0,
+      "Third Man": 8.0,
+      "Mid-Wicket": 26.0,
+      "Square Leg": 3.0
+     },
+     "n_dismissals": 4,
+     "pics": {
+      "wheel": "bat_3110056_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 1090,
+     "average": 34.5,
+     "n_out": 18,
+     "bpd": 60.55555555555556,
+     "false_pct": 18.473138548539115,
+     "off_pct": 44.58259325044405,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 12.6 · <b>pitching outside off</b> 11.9 (overall 34.5)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming away</b> 10.3 (straight 24.6) · <b>swinging in</b> 13.9 (straight 24.8)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full outside off</b> · 4.3 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 61%"
+      }
+     ],
+     "zones": {
+      "Cover": 134.0,
+      "Mid-Wicket": 99.0,
+      "Mid-Off": 70.0,
+      "Fine Leg": 50.0,
+      "Mid-On": 54.0,
+      "Square Leg": 62.0,
+      "Third Man": 32.0,
+      "Cover Point": 62.0
+     },
+     "n_dismissals": 18,
+     "pics": {
+      "pitch": "bat_3110056_right_pace_pitch.png",
+      "bee": "bat_3110056_right_pace_bee.png",
+      "wheel": "bat_3110056_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "4352128": {
+   "name": "Marco Jansen",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 81,
+     "average": 21.666666666666668,
+     "n_out": 3,
+     "bpd": 27.0,
+     "false_pct": 19.753086419753085,
+     "off_pct": 6.349206349206349,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "LBW 67%"
+      }
+     ],
+     "zones": {
+      "Mid-On": 21.0,
+      "Square Leg": 5.0,
+      "Cover": 3.0,
+      "Fine Leg": 1.0,
+      "Mid-Wicket": 32.0,
+      "Third Man": 1.0
+     },
+     "n_dismissals": 3,
+     "pics": {
+      "wheel": "bat_4352128_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 118,
+     "average": 24.0,
+     "n_out": 3,
+     "bpd": 39.333333333333336,
+     "false_pct": 23.529411764705884,
+     "off_pct": 32.25806451612903,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 14.0 · <b>pitching around leg</b> 27.0 (overall 24.0)"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 33%"
+      }
+     ],
+     "zones": {
+      "Square Leg": 5.0,
+      "Mid-Off": 14.0,
+      "Cover Point": 4.0,
+      "Cover": 8.0,
+      "Mid-Wicket": 16.0,
+      "Mid-On": 11.0,
+      "Third Man": 4.0
+     },
+     "n_dismissals": 3,
+     "pics": {
+      "wheel": "bat_4352128_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 200,
+     "average": 21.333333333333332,
+     "n_out": 3,
+     "bpd": 66.66666666666667,
+     "false_pct": 17.0,
+     "off_pct": 28.333333333333332,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 3.7 · <b>pitching outside off</b> 10.0 (overall 21.3)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length outside off</b> · 6.9 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught in the field 33%"
+      }
+     ],
+     "zones": {
+      "Cover Point": 5.0,
+      "Mid-Wicket": 4.0,
+      "Third Man": 1.0,
+      "Mid-On": 18.0,
+      "Square Leg": 15.0,
+      "Fine Leg": 4.0,
+      "Cover": 5.0,
+      "Mid-Off": 8.0
+     },
+     "n_dismissals": 3,
+     "pics": {
+      "wheel": "bat_4352128_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 678,
+     "average": 25.533333333333335,
+     "n_out": 15,
+     "bpd": 45.2,
+     "false_pct": 23.589001447178003,
+     "off_pct": 38.95705521472393,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 11.1 · <b>pitching outside off</b> 15.1 (overall 25.5)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming away</b> 8.0 (straight 49.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length outside off</b> · 4.5 per 100 balls"
+      },
+      {
+       "label": "First 30 balls",
+       "text": "out every 38 balls, then every 59"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 40%"
+      }
+     ],
+     "zones": {
+      "Cover Point": 45.0,
+      "Mid-On": 43.0,
+      "Mid-Wicket": 50.0,
+      "Cover": 39.0,
+      "Mid-Off": 65.0,
+      "Square Leg": 48.0,
+      "Fine Leg": 21.0,
+      "Third Man": 14.0
+     },
+     "n_dismissals": 15,
+     "pics": {
+      "pitch": "bat_4352128_right_pace_pitch.png",
+      "bee": "bat_4352128_right_pace_bee.png",
+      "wheel": "bat_4352128_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "3550469": {
+   "name": "Senuran Muthusamy",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 249,
+     "average": 106.0,
+     "n_out": 1,
+     "bpd": null,
+     "false_pct": 14.056224899598394,
+     "off_pct": 40.56603773584906,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 43.0 · <b>pitching around leg</b> 27.0 (overall 106.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>good length down the leg side</b> · 1.3 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "LBW 100%"
+      }
+     ],
+     "zones": {
+      "Mid-On": 4.0,
+      "Mid-Off": 16.0,
+      "Square Leg": 23.0,
+      "Cover": 16.0,
+      "Mid-Wicket": 25.0,
+      "Third Man": 6.0,
+      "Fine Leg": 4.0,
+      "Cover Point": 12.0
+     },
+     "n_dismissals": 1,
+     "pics": {
+      "wheel": "bat_3550469_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 31,
+     "thin": true
+    },
+    "off_spin": {
+     "balls": 280,
+     "average": 61.0,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 19.285714285714285,
+     "off_pct": 57.377049180327866,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 35.5 · <b>pitching in the channel</b> 8.0 (overall 61.0)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full in the channel</b> · 3.3 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Third Man": 5.0,
+      "Cover Point": 15.0,
+      "Square Leg": 13.0,
+      "Cover": 30.0,
+      "Mid-Wicket": 21.0,
+      "Mid-Off": 21.0,
+      "Fine Leg": 10.0,
+      "Mid-On": 7.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_3550469_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 208,
+     "average": 23.75,
+     "n_out": 4,
+     "bpd": 52.0,
+     "false_pct": 17.61904761904762,
+     "off_pct": 53.93258426966292,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 46.0 · <b>pitching around leg</b> 15.7 (overall 23.8)"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 16.0,
+      "Cover Point": 19.0,
+      "Cover": 15.0,
+      "Mid-On": 4.0,
+      "Mid-Off": 1.0,
+      "Square Leg": 19.0,
+      "Third Man": 13.0,
+      "Fine Leg": 1.0
+     },
+     "n_dismissals": 4,
+     "pics": {
+      "wheel": "bat_3550469_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": true
+  },
+  "2540186": {
+   "name": "Corbin Bosch",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 93,
+     "average": 25.5,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 24.731182795698924,
+     "off_pct": 47.05882352941176,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "Bowled 50%"
+      }
+     ],
+     "zones": {
+      "Cover": 16.0,
+      "Cover Point": 4.0,
+      "Square Leg": 10.0,
+      "Mid-On": 8.0,
+      "Mid-Wicket": 7.0,
+      "Third Man": 4.0,
+      "Mid-Off": 2.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_2540186_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 0,
+     "thin": true
+    },
+    "off_spin": {
+     "balls": 48,
+     "thin": true
+    },
+    "right_pace": {
+     "balls": 139,
+     "average": 57.0,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 29.285714285714285,
+     "off_pct": 44.73684210526316,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 15.0,
+      "Cover": 27.0,
+      "Mid-On": 17.0,
+      "Third Man": 8.0,
+      "Cover Point": 14.0,
+      "Mid-Off": 10.0,
+      "Fine Leg": 10.0,
+      "Square Leg": 13.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_2540186_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "4353096": {
+   "name": "David Bedingham",
+   "source": "warehouse",
+   "groups": {
+    "left_orthodox": {
+     "balls": 349,
+     "average": 32.57142857142857,
+     "n_out": 7,
+     "bpd": 49.857142857142854,
+     "false_pct": 8.262108262108262,
+     "off_pct": 35.294117647058826,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>full</b> 23.4 · <b>pitching in the channel</b> 10.5 (overall 32.6)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>full in the channel</b> · 4.3 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 43%"
+      }
+     ],
+     "zones": {
+      "Square Leg": 15.0,
+      "Cover": 35.0,
+      "Third Man": 4.0,
+      "Mid-Wicket": 40.0,
+      "Cover Point": 21.0,
+      "Mid-Off": 28.0,
+      "Mid-On": 55.0,
+      "Fine Leg": 2.0
+     },
+     "n_dismissals": 7,
+     "pics": {
+      "pitch": "bat_4353096_left_orthodox_pitch.png",
+      "bee": "bat_4353096_left_orthodox_bee.png",
+      "wheel": "bat_4353096_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 60,
+     "average": null,
+     "n_out": 0,
+     "bpd": null,
+     "false_pct": 16.666666666666668,
+     "off_pct": 39.130434782608695,
+     "short_false": null,
+     "facts": [],
+     "zones": {
+      "Cover": 7.0,
+      "Mid-Off": 13.0,
+      "Mid-On": 12.0,
+      "Mid-Wicket": 8.0,
+      "Cover Point": 2.0,
+      "Square Leg": 1.0,
+      "Third Man": 3.0
+     },
+     "n_dismissals": 0,
+     "pics": {
+      "wheel": "bat_4353096_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 145,
+     "average": null,
+     "n_out": 0,
+     "bpd": null,
+     "false_pct": 7.0,
+     "off_pct": 20.28985507246377,
+     "short_false": null,
+     "facts": [],
+     "zones": {
+      "Mid-Wicket": 22.0,
+      "Fine Leg": 8.0,
+      "Mid-Off": 15.0,
+      "Cover": 7.0,
+      "Mid-On": 12.0,
+      "Square Leg": 2.0,
+      "Third Man": 2.0,
+      "Cover Point": 1.0
+     },
+     "n_dismissals": 0,
+     "pics": {
+      "wheel": "bat_4353096_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 652,
+     "average": 28.4375,
+     "n_out": 16,
+     "bpd": 40.75,
+     "false_pct": 20.168067226890756,
+     "off_pct": 46.26168224299065,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 23.4 · <b>pitching outside off</b> 23.8 (overall 28.4)"
+      },
+      {
+       "label": "Movement",
+       "text": "<b>seaming away</b> 21.5 (straight 32.5)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>back of a length outside off</b> · 3.2 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught behind 50%"
+      }
+     ],
+     "zones": {
+      "Third Man": 38.0,
+      "Mid-Wicket": 94.0,
+      "Cover": 99.0,
+      "Square Leg": 47.0,
+      "Mid-On": 57.0,
+      "Mid-Off": 37.0,
+      "Cover Point": 41.0,
+      "Fine Leg": 14.0
+     },
+     "n_dismissals": 16,
+     "pics": {
+      "pitch": "bat_4353096_right_pace_pitch.png",
+      "bee": "bat_4353096_right_pace_bee.png",
+      "wheel": "bat_4353096_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
+  },
+  "4353762": {
+   "name": "Marques Ackerman",
+   "source": "both",
+   "groups": {
+    "left_orthodox": {
+     "balls": 215,
+     "average": 53.75,
+     "n_out": 4,
+     "bpd": 53.75,
+     "false_pct": 14.743589743589743,
+     "off_pct": 27.56756756756757,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>good length</b> 80.0 · <b>pitching wide outside off</b> 34.0 (overall 53.8)"
+      },
+      {
+       "label": "How out",
+       "text": "Caught 75%"
+      }
+     ],
+     "zones": {
+      "Cover": 12.0,
+      "Mid-Wicket": 53.0,
+      "Fine Leg": 19.0,
+      "Mid-On": 40.0,
+      "Mid-Off": 4.0,
+      "Cover Point": 28.0,
+      "Third Man": 9.0,
+      "Square Leg": 20.0
+     },
+     "n_dismissals": 4,
+     "pics": {
+      "wheel": "bat_4353762_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 83,
+     "average": 42.5,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 20.0,
+     "off_pct": 58.139534883720934,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "Caught 50%"
+      }
+     ],
+     "zones": {
+      "Mid-Wicket": 9.0,
+      "Square Leg": 4.0,
+      "Cover": 8.0,
+      "Third Man": 12.0,
+      "Fine Leg": 5.0,
+      "Cover Point": 5.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_4353762_left_pace_wheel.png"
+     }
+    },
+    "off_spin": {
+     "balls": 123,
+     "average": 42.666666666666664,
+     "n_out": 3,
+     "bpd": 41.0,
+     "false_pct": 11.363636363636363,
+     "off_pct": 38.38383838383838,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "Bowled 67%"
+      }
+     ],
+     "zones": {
+      "Cover": 18.0,
+      "Mid-Off": 5.0,
+      "Fine Leg": 16.0,
+      "Mid-Wicket": 21.0,
+      "Cover Point": 15.0,
+      "Square Leg": 3.0,
+      "Mid-On": 21.0
+     },
+     "n_dismissals": 3,
+     "pics": {
+      "wheel": "bat_4353762_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 961,
+     "average": 58.357142857142854,
+     "n_out": 14,
+     "bpd": 68.64285714285714,
+     "false_pct": 13.848631239935587,
+     "off_pct": 47.5,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>back of a length</b> 45.0 · <b>pitching around leg</b> 43.7 (overall 58.4)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>back of a length down the leg side</b> · 7.4 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "Caught 57%"
+      }
+     ],
+     "zones": {
+      "Cover": 154.0,
+      "Mid-Off": 52.0,
+      "Fine Leg": 66.0,
+      "Square Leg": 98.0,
+      "Cover Point": 87.0,
+      "Mid-On": 35.0,
+      "Mid-Wicket": 118.0,
+      "Third Man": 59.0
+     },
+     "n_dismissals": 14,
+     "pics": {
+      "pitch": "bat_4353762_right_pace_pitch.png",
+      "bee": "bat_4353762_right_pace_bee.png",
+      "wheel": "bat_4353762_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": true
+  }
+ },
+ "built": "2026-10-06",
+ "before": null,
+ "groups": [
+  "left_orthodox",
+  "left_pace",
+  "off_spin",
+  "right_pace"
+ ]
+}

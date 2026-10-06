@@ -1,0 +1,164 @@
+/* The hub's player packs (build_hub_packs.py): phone first, two columns per card from a laptop up.
+   Laid over cricket_core.webcharts.CSS (the hub's tokens and type). Sizes are set so a picture and
+   the text beside it read at the same scale — the old packs' main complaint. */
+[hidden] { display:none !important }
+body.hp { background:var(--page) }
+.hp a { text-decoration:none }
+.hp a:focus-visible, .hp button:focus-visible, .hp summary:focus-visible { outline:2px solid var(--gold); outline-offset:2px }
+
+/* the player's header: back to the squad, the photo and name, the pack tabs */
+.ph { background:#fff; border-bottom:1px solid var(--line) }
+.ph .in { max-width:1120px; margin:0 auto; padding:12px 16px 0; display:flex; flex-direction:column; gap:10px }
+.ph .back { font-size:13.5px; font-weight:600; color:var(--accent) }
+.ph .who { display:flex; align-items:center; gap:12px; padding-bottom:12px }
+.ph h1 { font-family:var(--font-d); font-weight:700; font-size:30px; line-height:1; color:var(--band); margin:0 }
+.ph .sb { font-size:14px; color:var(--muted); margin-top:3px }
+.ph .ptabs { display:flex; gap:22px; margin-top:-4px }
+.ph .ptabs a { font-family:var(--font-d); font-weight:700; font-size:16px; letter-spacing:.06em; text-transform:uppercase;
+               color:var(--muted); padding:6px 0 8px; border-bottom:3px solid transparent }
+.ph .ptabs a.on { color:var(--band); border-bottom-color:var(--gold) }
+.ph .ptabs a:hover { color:var(--ink) }
+
+.av { width:52px; height:52px; border-radius:50%; object-fit:cover; background:#dcebdd; flex:none; display:block }
+.av.lg { width:64px; height:64px }
+.av.sm { width:40px; height:40px }
+.av.ini { display:flex; align-items:center; justify-content:center; font-family:var(--font-d); font-weight:700;
+          color:var(--band); font-size:18px }
+
+.hpw { max-width:1120px; margin:0 auto; padding:14px 16px 32px; display:flex; flex-direction:column; gap:14px }
+
+/* the coach's note to this player — only when one is written */
+.band-note { background:var(--accent); color:#fff; border-radius:8px; padding:14px 16px; display:flex;
+             flex-direction:column; gap:6px }
+.band-note .t { display:flex; justify-content:space-between; align-items:baseline; gap:10px }
+.band-note .t b { font-family:var(--font-d); font-weight:700; font-size:14px; letter-spacing:.08em;
+                  text-transform:uppercase; color:var(--gold) }
+.band-note p { margin:0; font-size:16px; line-height:1.45 }
+.band-note.empty { background:#fff; color:var(--muted); border:1px dashed var(--line-strong) }
+.band-note.empty .t b { color:var(--muted) }
+.hp .lnk { background:none; border:0; padding:0; font:600 13px var(--font-b); letter-spacing:0; text-transform:none;
+           color:inherit; text-decoration:underline; cursor:pointer; min-height:0 }
+.hp .lnk:hover { background:none }
+.band-note textarea, .cn textarea { width:100%; min-height:96px; font:15px/1.45 var(--font-b); color:var(--ink);
+           border:1px solid var(--line-strong); border-radius:4px; padding:8px 10px; box-sizing:border-box }
+.ed-row { display:flex; gap:8px; align-items:center; flex-wrap:wrap }
+.ed-row .msg { font-size:13px }
+.band-note .ed-row .msg { color:#fff }
+.hp .ed-row button { font:600 13px var(--font-b); text-transform:none; letter-spacing:0; padding:7px 12px; min-height:34px }
+.hp .ed-row button.ghost { background:#fff; color:var(--accent); border:1px solid var(--line-strong) }
+
+h2.sec { margin:6px 0 0; font-family:var(--font-d); font-weight:700; font-size:17px; letter-spacing:.08em;
+         text-transform:uppercase; color:var(--accent); border-bottom:1px solid var(--line-strong); padding-bottom:4px }
+h2.sec span { font-weight:600; letter-spacing:.04em; color:var(--muted); font-size:13px }
+.jump { display:flex; gap:8px; flex-wrap:wrap }
+.jump a { font-size:13px; font-weight:600; color:var(--accent); background:#fff; border:1px solid rgba(13,59,42,.2);
+          border-radius:999px; padding:7px 12px }
+
+/* a card: one column on a phone, in the order of the `oN` classes; two from 900 px */
+.pc { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; display:flex;
+      flex-direction:column; gap:18px; scroll-margin-top:12px; min-width:0 }
+.pc .cl, .pc .cr { display:contents }
+.o1{order:1} .o2{order:2} .o3{order:3} .o4{order:4} .o5{order:5} .o6{order:6} .o7{order:7} .o8{order:8}
+.lbl { font-family:var(--font-d); font-weight:700; font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+       color:var(--muted) }
+.cap { font-size:13px; color:var(--muted); line-height:1.4 }
+.thin { margin:0; color:var(--muted); font-size:15px }
+
+.hd { display:flex; align-items:center; gap:12px }
+.hd .nm { display:flex; align-items:center; gap:8px; flex-wrap:wrap }
+.hd .nm span:first-child { font-family:var(--font-d); font-weight:700; font-size:24px; line-height:1; color:var(--ink) }
+.hd .sb { font-size:14px; color:var(--muted); margin-top:3px }
+.chip { font-size:11px; font-weight:700; letter-spacing:.06em; color:#fff; background:var(--accent); border-radius:3px;
+        padding:2px 6px }
+.chip.squad, .chip.fringe { background:#fff; color:var(--muted); border:1px solid var(--line-strong) }
+
+.cn { background:var(--accent-soft); border-radius:6px; padding:12px 14px; display:flex; flex-direction:column; gap:4px }
+.cn .t { display:flex; justify-content:space-between; align-items:baseline; gap:10px }
+.cn .t b { font-family:var(--font-d); font-weight:700; font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+           color:var(--accent) }
+.cn .t a { font-size:12.5px; font-weight:600; color:var(--accent); text-decoration:underline }
+.cn p { margin:0; font-size:16px; line-height:1.45; color:var(--ink) }
+
+.facts { display:grid; grid-template-columns:104px minmax(0,1fr); gap:7px 10px; margin-top:8px }
+.facts .k { font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); padding-top:2px }
+.facts .v { font-size:15px; line-height:1.4; color:var(--ink) }
+
+.figs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px 10px }
+.fg { border-top:2px solid var(--accent); padding-top:6px; min-width:0 }
+.fg .v { font-family:var(--font-d); font-weight:700; font-size:24px; line-height:1; color:var(--ink);
+         font-variant-numeric:tabular-nums }
+.fg .v small { font-family:var(--font-d); font-size:14px; color:var(--muted); font-weight:600 }
+.fg .k { font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-top:4px; line-height:1.25 }
+
+/* field, wheel: a label with its toggles, then the drawing */
+.fb, .wb { display:flex; flex-direction:column; gap:8px }
+.fb .row, .wb .row { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap }
+.tg { display:flex; flex-wrap:wrap; gap:4px }
+.hp .tg button { font:600 13px var(--font-b); letter-spacing:0; text-transform:none; color:var(--accent); background:#fff;
+                 border:1px solid rgba(13,59,42,.3); border-radius:4px; padding:7px 10px; min-height:34px; cursor:pointer }
+.hp .tg button.on { color:#fff; background:var(--accent); border-color:var(--accent) }
+.fb svg { width:100%; max-width:340px; aspect-ratio:1; display:block; margin:0 auto; font-family:var(--font-b) }
+.wb .zw, .wb .sp { width:100%; max-width:340px; aspect-ratio:1; display:block; margin:0 auto; font-family:var(--font-b) }
+.fnone { margin:0; font-size:14px; color:var(--muted) }
+
+.pics { display:flex; gap:10px; align-items:flex-start; margin-top:8px }
+.pics .pm { width:40%; height:auto; border-radius:6px; display:block }
+.pics > div { flex:1; min-width:0; display:flex; flex-direction:column; gap:6px }
+.pics .bh { width:100%; height:auto; border-radius:6px; display:block }
+
+/* one row per reel, the same size whatever the label; the count sits on the right (data-n, CSS, so
+   the link text stays plain for audit_pack_hands' `*` test). Your head-to-head is the green row. */
+.reels { display:flex; flex-direction:column; margin-top:8px; border:1px solid var(--accent); border-radius:6px;
+         overflow:hidden }
+.rl { display:flex; align-items:center; gap:10px; min-height:46px; padding:0 14px; font-size:15px; font-weight:700;
+      color:var(--accent); background:#fff; border-top:1px solid var(--line) }
+.rl:first-child { border-top:0 }
+.rl::before { content:""; flex:none; width:0; height:0; border-left:9px solid currentColor;
+              border-top:6px solid transparent; border-bottom:6px solid transparent }
+.rl::after { content:attr(data-n) "\a0\a0›"; margin-left:auto; padding-left:12px; font-weight:600; color:var(--muted);
+             font-variant-numeric:tabular-nums; white-space:nowrap }
+.rl:hover { background:var(--accent-soft) }
+.rl.h2h { color:#fff; background:var(--accent); border-top-color:var(--accent) }
+.rl.h2h::after { color:rgba(255,255,255,.85) }
+.rl.h2h:hover { background:var(--accent-deep) }
+.o8 .cap { margin-top:8px }
+
+/* the rest of the squad: a row each, the card behind it */
+.mores { display:flex; flex-direction:column; gap:6px }
+.more > summary { list-style:none; display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line);
+                  border-radius:8px; padding:10px 14px; min-height:44px; cursor:pointer }
+.more > summary::-webkit-details-marker { display:none }
+.more > summary .t { flex:1; display:flex; flex-direction:column; min-width:0 }
+.more > summary .t b { font-size:15px; font-weight:600; color:var(--ink) }
+.more > summary .t span { font-size:13px; color:var(--muted) }
+.more > summary .ch { font-size:20px; color:var(--muted); transition:transform .15s }
+.more[open] > summary { border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-color:transparent }
+.more[open] > summary .ch { transform:rotate(90deg) }
+.more > .pc { border-top-left-radius:0; border-top-right-radius:0; border-top:0 }
+
+/* the squad index */
+.tiles { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:8px }
+.tile { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line); border-radius:8px;
+        padding:10px 14px; min-height:44px; color:var(--ink) }
+.tile:hover { border-color:var(--line-strong) }
+.tile > span { display:flex; flex-direction:column; min-width:0 }
+.tile b { font-size:15px; font-weight:600 }
+.tile > span > span { font-size:13px; color:var(--muted) }
+
+@media (min-width:900px) {
+  .ph .in { padding:16px 24px 0 }
+  .ph h1 { font-size:36px }
+  .av.lg { width:72px; height:72px }
+  .ph .back { display:none }
+  .hpw { padding:18px 24px 40px; gap:16px }
+  .pc { flex-direction:row; flex-wrap:wrap; padding:22px; gap:28px }
+  .pc .cl, .pc .cr { display:flex; flex-direction:column; gap:18px; min-width:0 }
+  .pc .cl { flex:1 1 440px }
+  .pc .cr { flex:0 1 470px; min-width:300px }
+  .facts { grid-template-columns:120px minmax(0,1fr) }
+  .figs { grid-template-columns:repeat(6,minmax(0,1fr)) }
+  .hd .av { width:60px; height:60px }
+  .hd .nm span:first-child { font-size:28px }
+  .fb svg, .wb .zw, .wb .sp { max-width:360px }
+}
+@media print { .tg, .reels, .ph .ptabs, .ph .back { display:none } .pc { break-inside:avoid } }

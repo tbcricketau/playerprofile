@@ -123,7 +123,7 @@ def _pack_pages(site):
                 yield root, fn, "bowling", fn.split("-bowling-")[0]
 
 
-def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, fmt=None):
+def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, fmt=None, also=()):
     """A dict of counts — mixed / wrong / pooled / offfmt are defects; unres, blind, hands_empty
     and fmt_checked say how much of the bundle the audit could actually see. Raises if the
     warehouse is unreachable.
@@ -192,6 +192,12 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
         # nothing, which this gate reports as 1,023 unresolved reels and refuses on (it did).
         pls = {}
         side = os.path.join(root, f"{ps}-clips.json")
+        m_src = re.search(r'const VM_SRC = "(/[^"]+)"', page)
+        if not os.path.exists(side) and m_src:
+            # the hub's packs (build_hub_packs.py) name the Pages packs' sidecar by its path from the
+            # site root, served beside them from the same storage prefix
+            side = next((p for p in (os.path.join(r, m_src.group(1).lstrip("/")) for r in (site,) + tuple(also))
+                         if os.path.exists(p)), side)
         if os.path.exists(side):
             pls = json.load(open(side, encoding="utf-8"))
         else:
@@ -433,8 +439,12 @@ def main():
     ap.add_argument("--slug", default="bangladesh-home-2026")
     ap.add_argument("--fmt", default=None, help="pack format (Test/ODI/T20I) — also checks that no "
                                                 "clip comes from the wrong side of red/white ball")
+    ap.add_argument("--with", dest="also", nargs="*", default=[],
+                    help="bundles served beside --site, where a page's root-absolute clips file lives "
+                         "(--site hub_pack_site --with player_pack_site)")
     a = ap.parse_args()
-    r = run_audit(a.site, a.opp, a.slug, fmt=a.fmt)
+    also = tuple(p if os.path.isabs(p) else os.path.join(HERE, p) for p in a.also)
+    r = run_audit(a.site, a.opp, a.slug, fmt=a.fmt, also=also)
     return 1 if (r["mixed"] or r["wrong"] or r["pooled"] or r["offfmt"] or r["owner"] or r["type"]
                  or r["unres"] or r["blind"] or r["hands_empty"] or r["unknown"]) else 0
 

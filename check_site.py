@@ -55,13 +55,32 @@ def _pages(root):
                 yield os.path.join(dirpath, f)
 
 
-def _sidecar_keys(html, base, cache):
+def _resolver(root, also=()):
+    """A link's file on disk. Root-absolute links resolve against the bundle, or against a bundle
+    served beside it from the same storage prefix (`also`): the hub's packs (build_hub_packs.py)
+    play the clips the Pages packs carry, at /players/…, and are uploaded as a separate tree. The
+    app's own routes are not files anywhere, and resolve to None."""
+    def resolve(rel, base):
+        if rel.startswith("/"):
+            if rel.lstrip("/").split("/", 1)[0] in _APP_ROUTES:
+                return None
+            for r in (root,) + tuple(also):
+                tgt = os.path.normpath(os.path.join(r, rel.lstrip("/")))
+                if os.path.exists(tgt):
+                    return tgt
+            return os.path.normpath(os.path.join(root, rel.lstrip("/")))
+        return os.path.normpath(os.path.join(base, rel))
+    return resolve
+
+
+def _sidecar_keys(html, base, cache, resolve=None):
     """The playlist keys a page can open from its clips sidecar, or None if it has no sidecar
     (the clips are inline, and the caller falls back to searching the page text)."""
     m = _CLIP_SRC.search(html)
     if not m:
         return None
-    path = os.path.normpath(os.path.join(base, urllib.parse.unquote(m.group(1))))
+    rel = urllib.parse.unquote(m.group(1))
+    path = (resolve(rel, base) if resolve else None) or os.path.normpath(os.path.join(base, rel))
     if path not in cache:
         try:
             cache[path] = set(json.load(open(path, encoding="utf-8")))
@@ -70,9 +89,10 @@ def _sidecar_keys(html, base, cache):
     return cache[path]
 
 
-def check(root, deep=False, sample=6):
+def check(root, deep=False, sample=6, also=()):
     errors, warnings = [], []
     _side_cache = {}
+    resolve = _resolver(root, also)
     sidecars = set()          # clips files the pages name — where the media urls now live
     pages = list(_pages(root))
     if not pages:
@@ -93,12 +113,9 @@ def check(root, deep=False, sample=6):
             rel = urllib.parse.unquote(raw.split("#")[0].split("?")[0])
             if not rel:
                 continue
-            if rel.startswith("/"):
-                if rel.lstrip("/").split("/", 1)[0] in _APP_ROUTES:
-                    continue
-                tgt = os.path.normpath(os.path.join(root, rel.lstrip("/")))
-            else:
-                tgt = os.path.normpath(os.path.join(base, rel))
+            tgt = resolve(rel, base)
+            if tgt is None:
+                continue
             if not os.path.exists(tgt):
                 errors.append(f"{rel_page}: dead link -> {raw}")
                 continue
@@ -110,7 +127,7 @@ def check(root, deep=False, sample=6):
             #     its text — so ask the sidecar where there is one.
             if frag and tgt.endswith(".html"):
                 tgt_html = open(tgt, encoding="utf-8", errors="replace").read()
-                side_keys = _sidecar_keys(tgt_html, os.path.dirname(tgt), _side_cache)
+                side_keys = _sidecar_keys(tgt_html, os.path.dirname(tgt), _side_cache, resolve)
                 if side_keys is not None:
                     if frag not in side_keys and f'id="{frag}"' not in tgt_html:
                         errors.append(f"{rel_page}: link -> {raw} but '{frag}' is in neither that "
@@ -125,7 +142,7 @@ def check(root, deep=False, sample=6):
         keys = set(_DATAPL.findall(html))
         m_src = _CLIP_SRC.search(html)
         if m_src:
-            side = os.path.normpath(os.path.join(base, urllib.parse.unquote(m_src.group(1))))
+            side = resolve(urllib.parse.unquote(m_src.group(1)), base) or ""
             if not os.path.exists(side):
                 errors.append(f"{rel_page}: clips file missing -> {m_src.group(1)} "
                               f"({len(keys)} play button(s) dead)")
@@ -153,7 +170,8 @@ def check(root, deep=False, sample=6):
 
     # 4 — pages nobody links to (an orphan is usually a leftover carrying a stale breadcrumb)
     entry = {os.path.normpath(os.path.join(root, "index.html")),
-             os.path.normpath(os.path.join(root, "players", "index.html"))}
+             os.path.normpath(os.path.join(root, "players", "index.html")),
+             os.path.normpath(os.path.join(root, "packs", "index.html"))}
     for p in pages:
         if os.path.normpath(p) not in linked_files and os.path.normpath(p) not in entry:
             warnings.append(f"orphan page, nothing links it: {os.path.relpath(p, root)}")
@@ -211,11 +229,15 @@ def main():
     ap.add_argument("bundle", help="assembled bundle dir, e.g. player_pack_site")
     ap.add_argument("--deep", action="store_true", help="also HEAD a sample of media urls")
     ap.add_argument("--sample", type=int, default=6, help="media urls to test per host")
+    ap.add_argument("--with", dest="also", nargs="*", default=[],
+                    help="bundles served beside this one from the same storage prefix: root-absolute "
+                         "links may resolve there (hub_pack_site --with player_pack_site)")
     a = ap.parse_args()
-    root = a.bundle if os.path.isabs(a.bundle) else os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), a.bundle)
-    print(f"checking {root}")
-    errors, warnings = check(root, deep=a.deep, sample=a.sample)
+    here = os.path.dirname(os.path.abspath(__file__))
+    root = a.bundle if os.path.isabs(a.bundle) else os.path.join(here, a.bundle)
+    also = [p if os.path.isabs(p) else os.path.join(here, p) for p in a.also]
+    print(f"checking {root}" + (f" (with {', '.join(also)})" if also else ""))
+    errors, warnings = check(root, deep=a.deep, sample=a.sample, also=also)
     for w in warnings:
         print(f"  WARN  {w}")
     for e in errors:

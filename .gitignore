@@ -42,6 +42,9 @@ player_site/
 # writes. Rebuilt from reports/ and site/, and it must never be committed —
 # it is the coach cut, which the public GitHub Pages bundle must not carry.
 coach_build/
+# build_hub_packs.py output: the hub's player packs (pages, headshots, pictures), uploaded to the
+# app's storage beside the Pages bundle. Rebuilt from data/ and reports/pics/.
+hub_pack_site/
 photos/*.zip
 
 # ── Frozen series (archive_series.py freeze) ──────────────────────────────
