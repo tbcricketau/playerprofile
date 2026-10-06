@@ -22,7 +22,7 @@ from collections import Counter
 from jinja2 import Template
 
 from version import REPORT_VERSION
-from profile import build_profile, fmt as _fmt
+from profile import build_profile, fmt as _fmt, ball_phrase as _ball_phrase, _LEN_PHRASE, _LINE_PHRASE
 from photos import get_photo_data_uri
 from report_style import REPORT_CSS, headline_cards
 from cricket_core.charts import (
@@ -42,24 +42,8 @@ BORDER = "rgba(0,0,0,0.10)"
 _HAND_LABEL = {"All": "All batters", "vs LHB": "vs left-handers", "vs RHB": "vs right-handers"}
 _BATTER_DESC = {"vs LHB": "left-hand batters", "vs RHB": "right-hand batters", "All": "the batter"}
 
-# Natural cricket phrasing for a (length-zone, line-zone) pair — replaces the
-# terse "Full / Stumps" slash notation with commentary-style language.
-_LEN_PHRASE = {
-    "Yorker/Full": "full", "Full": "full", "Good Length": "a good length",
-    "Back of Length": "back of a length", "Short": "short",
-}
-_LINE_PHRASE = {
-    "Wide of 6th": "wide outside off", "6th stump": "on the 6th stump",
-    "5th stump": "on the 5th stump", "4th stump": "in the 4th-stump channel",
-    "Stumps": "on the stumps", "Down leg": "down the leg side",
-}
-
-
-def _ball_phrase(length: str | None, line: str | None) -> str:
-    """e.g. ('Good Length', '4th stump') -> 'a good length in the 4th-stump channel'."""
-    lp = _LEN_PHRASE.get(length, (length or "").lower()) if length else ""
-    lnp = _LINE_PHRASE.get(line, (f"on a {line.lower()} line" if line else "")) if line else ""
-    return f"{lp} {lnp}".strip()
+# The length × line phrasing (_LEN_PHRASE, _LINE_PHRASE, _ball_phrase) lives in profile.py, which the
+# facts it builds share with this report.
 
 
 def _cap(s: str) -> str:
@@ -281,8 +265,8 @@ def _narrative(P: dict) -> dict:
         expose.append(f"Short ball: {_pct(P['short_pct'])} of deliveries, "
                       f"economy {_fmt(P['sb_econ'])} — {P['sb_wkts']} wkts from {P['sb_n']} short balls.")
     if P["danger_length"]:
-        expose.append(f"Away from {P['danger_length']['length'].lower()}, the wicket threat drops off — "
-                      f"look to score in the less-productive lengths.")
+        expose.append(f"Away from {_LEN_PHRASE.get(P['danger_length']['length'], P['danger_length']['length'].lower())}, "
+                      f"the wicket threat drops off.")
 
     # Fold the counter-strategy ("How to Play Him") into the three boxes: what to score off →
     # Areas to Exploit; his set-ups/traps → Biggest Threats. (Respect items duplicate the danger

@@ -34,7 +34,7 @@ from cricket_core.video import clip_stem
 from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
 from report import build_profile
 from batter_profile import build_batter_profile
-from batting_report import card_summary
+from batting_report import card_summary, early_line
 from profile import _LEN_ADJ, _LINE_REGION, _LEN_BAND, _zone_lbl, LENGTH_ZONES_PACE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -80,7 +80,7 @@ def distil_bowler(P, type_label):
         where = f", around {dline['line'].lower()}" if dline and dline.get("line") else ""
         facts.append(f"Takes most of their wickets {dlen['length'].lower()}{where}.")
     if P.get("is_pace") and st and (st.get("swing_mag") or 0) >= 0.6:
-        facts.append("Gets the ball to swing — watch the ball in the air.")
+        facts.append(f"Swings the stock ball — {st['swing_mag']:.1f}° on average.")
     nb = P.get("new_ball_share")
     if P.get("is_pace") and nb is not None:
         if nb >= 45:
@@ -107,10 +107,13 @@ def distil_batter(P, hand):
         else:
             facts.append(f"Main scoring shot is the {top}.")
     w = P.get("weakness")
+    vsx = P.get("vs") or {}
+    pa, sa = (vsx.get("pace") or {}).get("avg"), (vsx.get("spin") or {}).get("avg")
+    nums = f": averages {sa:.0f} against spin, {pa:.0f} against pace" if (pa and sa) else ""
     if w == "spin":
-        facts.append("Weaker against spin than pace.")
+        facts.append(f"Weaker against spin{nums}.")
     elif w == "pace":
-        facts.append("Handles spin well — pace is the more likely way through.")
+        facts.append(f"Weaker against pace{nums}.")
     dis = P.get("dismissals")
     n = P.get("n_dismissals") or 0
     if dis and n:
@@ -120,7 +123,7 @@ def distil_batter(P, hand):
     e, s = ph.get("early"), ph.get("set")
     if e and s and e.get("dismissal_per100") and s.get("dismissal_per100"):
         if e["dismissal_per100"] >= 1.4 * s["dismissal_per100"]:
-            facts.append("Vulnerable early — worth attacking in their first 30 balls.")
+            facts.append(early_line(e, s))
 
     # type-scoped facts (a pace bowler's pack shows only pace; a spinner's only spin)
     vs = P.get("vs") or {}

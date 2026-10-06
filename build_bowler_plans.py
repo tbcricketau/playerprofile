@@ -142,7 +142,10 @@ def build(slug, planner_out=None, only=None):
                 "max_spd_99": P.get("max_spd_99") if P.get("is_pace") else None,
                 "short_pct": P.get("short_pct") if P.get("is_pace") else None,
                 "round_pct": P.get("round_pct"),
-                "how_to_play": {k: _they(htp.get(k)) for k in ("respect", "attack", "watch")},
+                # labelled facts (Tom, 06-10-2026: generated text states facts, the coaches instruct);
+                # the grouped keys stay for anything still reading them
+                "how_to_play": {"facts": list(htp.get("facts") or [])[:6],
+                                **{k: _they(htp.get(k)) for k in ("respect", "attack", "watch")}},
                 "fields": cats}
             if planner_out:
                 b["hands"][h]["_wheel_df"] = P.get("df")       # for the planner's wheel, dropped before writing

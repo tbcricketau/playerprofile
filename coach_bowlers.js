@@ -72,6 +72,12 @@
     return `<div class="figs fn" style="--n:${parts.length}">${parts.join("")}</div>`;
   }
   function htp(x) {
+    // labelled facts since 06-10-2026 ("Wicket ball", "Runs", "Most expensive" …); a file built
+    // before then carries the old Respect / Attack / Watch groups instead
+    const facts = (x.how_to_play || {}).facts || [];
+    if (facts.length)
+      return `<div class="htp">${facts.map(f => `<div class="row"><span class="k">${esc(f.label)}</span>`
+        + `<span class="v">${rich(f.text)}</span></div>`).join("")}</div>`;
     const rows = [["respect", "Respect"], ["attack", "Attack"], ["watch", "Watch"]].filter(([k]) => ((x.how_to_play || {})[k] || []).length);
     return rows.length ? `<div class="htp">${rows.map(([k, lab]) => `<div class="row"><span class="k">${lab}</span><ul>`
       + x.how_to_play[k].map(l => `<li>${rich(l)}</li>`).join("") + "</ul></div>").join("")}</div>` : "";

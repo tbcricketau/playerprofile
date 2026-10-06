@@ -82,8 +82,8 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  .snav{margin:-4px 0 18px} .snav nav.stabs{margin:0} .snav nav.l1 a{font-size:15px;padding:10px 13px} .snav nav.l2{border-bottom:0} .snav nav.l2 a{font-size:12.5px;padding:8px 10px}
  .crumb .dot{color:#9ca3af;margin:0 6px}
  /* a bowler card's how-to-play rows and the field's estimate line */
- .pcard .htp{margin:12px 0 0;display:grid;gap:6px} .pcard .htp .row{display:grid;grid-template-columns:74px minmax(0,1fr);gap:10px;align-items:baseline}
- .pcard .htp .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280} .pcard .htp ul{margin:0;padding-left:16px} .pcard .htp li{font-size:14.5px} .pcard .htp b{color:#003087}
+ .pcard .htp{margin:12px 0 0;display:grid;gap:6px} .pcard .htp .row{display:grid;grid-template-columns:108px minmax(0,1fr);gap:10px;align-items:baseline}
+ .pcard .htp .k{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280} .pcard .htp ul{margin:0;padding-left:16px} .pcard .htp li,.pcard .htp .v{font-size:14.5px} .pcard .htp b{color:#003087}
  .pcard .who .t{color:#6b7280;font-size:13px;font-weight:600} .pcard .est{color:#6b7280;font-size:12.5px;margin:8px 0 0;padding-left:16px} .pcard .est li{margin:2px 0}
  .pcard .fig .v small{font-size:13px;font-weight:600;color:#6b7280} .pcard .fhead a{color:#003087}
  .pcard .figs.fn{grid-template-columns:repeat(var(--n,6),minmax(0,1fr))}

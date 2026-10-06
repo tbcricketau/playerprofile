@@ -320,7 +320,10 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
             r = rows[g].get(pid)
             if not r:
                 continue
-            plan = re.sub(r"^Plan for [^:]+: ", "", r.get("plan") or "")
+            # the pack is already one type, so the line drops it ("Lowest average v right-arm pace: …"
+            # → "Lowest average: …"); files built before 06-10-2026 say "Plan for X: bowl …"
+            plan = re.sub(r"^Lowest average v [^:]+: ", "Lowest average: ", r.get("plan") or "")
+            plan = re.sub(r"^Plan for [^:]+: ", "", plan)
             per[g] = {"balls": r.get("balls") or 0, "plan": (plan[:1].upper() + plan[1:]) if plan else "",
                       "field": r.get("field"), "threat": r.get("threat"), "error": bool(r.get("error")),
                       "fields": [{"label": f["label"].replace(" — ", " · "), "fielders": f.get("fielders") or [],

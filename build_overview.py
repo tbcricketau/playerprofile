@@ -17,7 +17,7 @@ import os
 import time
 
 from batter_profile import build_batter_profile, BOWLER_GROUPS, MACRO_GROUPS
-from batting_report import plan_sentence
+from batting_report import plan_sentence, plan_facts
 import field_engine
 
 _warned_fmts = set()
@@ -244,6 +244,8 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
                      "sub": " · ".join(x for x in (meta.get("hand"), meta.get("role")) if x),
                      "balls": balls,
                      "plan": None if thin else plan_sentence(P, baseline=baseline),
+                     # the same line as labelled facts, for pages that set them out as rows
+                     "facts": [] if thin else plan_facts(P, baseline=baseline),
                      "field": None if thin else _field_parts(P, group, fmt),
                      "fields": [] if thin else _field_images(
                          P, group, os.path.join(HERE, "reports", "fields", opp, group), bid, fmt),
@@ -295,7 +297,7 @@ def write_page(opp, group, label, rows):
             f'<span class="sub">One row per batter — the plan against {html.escape(label)}, and the '
             f'field placements it implies. Same numbers as each batter\'s own report.</span></h1>',
             '<div class=owrap><table class=ov>',
-            f'<tr><th>Batter</th><th>Plan for {html.escape(label)}</th>'
+            f'<tr><th>Batter</th><th>Lowest average v {html.escape(label)}</th>'
             f'<th>Spare fielder</th></tr>']
     spin = group == "spin" or group in _SPIN_SUBS      # the short ball is a pace question
     for r in rows:
@@ -309,11 +311,12 @@ def write_page(opp, group, label, rows):
             else:
                 cell = f'<td colspan=2 class=thin>No record vs {html.escape(label)}.</td>'
         else:
-            pre = f"Plan for {label}: "          # the header names the type — don't repeat it per row
+            # the header names the type — don't repeat it per row (older files say "Plan for X: ")
             pl = r["plan"]
-            if pl and pl.startswith(pre):
-                pl = pl[len(pre):]
-                pl = pl[:1].upper() + pl[1:]
+            for pre in (f"Lowest average v {label}: ", f"Plan for {label}: "):
+                if pl and pl.startswith(pre):
+                    pl = pl[len(pre):]
+                    pl = pl[:1].upper() + pl[1:]
             # Only the spare (Tom, 04-10-2026): set and move were the engine describing its own
             # field; the spare is the decision a captain makes with it.
             fp = r.get("field")

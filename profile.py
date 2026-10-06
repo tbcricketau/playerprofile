@@ -1168,86 +1168,108 @@ def _wicket_setup(raw: list) -> dict | None:
     }
 
 
+# Natural cricket phrasing for a (length-zone, line-zone) pair — "a good length in the 4th-stump
+# channel", not "Good Length / 4th stump". Shared by the report and the facts below.
+_LEN_PHRASE = {
+    "Yorker/Full": "full", "Full": "full", "Good Length": "a good length",
+    "Back of Length": "back of a length", "Short": "short",
+}
+_LINE_PHRASE = {
+    "Wide of 6th": "wide outside off", "6th stump": "on the 6th stump",
+    "5th stump": "on the 5th stump", "4th stump": "in the 4th-stump channel",
+    "Stumps": "on the stumps", "Down leg": "down the leg side",
+}
+
+
+def ball_phrase(length: str | None, line: str | None) -> str:
+    """e.g. ('Good Length', '4th stump') -> 'a good length in the 4th-stump channel'."""
+    lp = _LEN_PHRASE.get(length, (length or "").lower()) if length else ""
+    lnp = _LINE_PHRASE.get(line, (f"on a {line.lower()} line" if line else "")) if line else ""
+    return f"{lp} {lnp}".strip()
+
+
 def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, matchups,
                  seq_patterns, wicket_setup, ball_types, sb_econ, sb_wkts, sb_n,
-                 repeatability, common_len_band) -> dict:
-    """Counter-strategy synthesis — the 'what do I do about them' section players want.
-    Every line is drawn from a computed number; only asserts when the data supports it."""
-    respect, attack, watch = [], [], []
+                 repeatability, common_len_band, n_wkts=None) -> dict:
+    """What the record says about facing them, as labelled FACTS: `facts` is [{label, text}], each
+    line a computed number and what it is of. It never tells a player what to do — instructions come
+    from the coaches, in their notes (Tom, 06-10-2026: "our job is to be factual"). Only asserts
+    when the data supports it.
 
-    # RESPECT — their wicket ball (danger cell / length)
+    The old keys stay for the readers that group lines: `respect` (where the wickets come from),
+    `attack` (where the runs come from) and `watch` (how a wicket is set up, length control), each
+    holding the same factual text as the matching facts."""
+    facts, respect, attack, watch = [], [], [], []
+
+    def add(group, label, text):
+        facts.append({"label": label, "text": text})
+        group.append(f"{label}: {text}")
+
+    # where the wickets come from — the danger cell, else the danger length
     if danger_cell and danger_cell.get("adj_rate"):
-        respect.append(
-            f"Respect the <b>{danger_cell['length'].lower()} {danger_cell['line']}</b> — "
-            f"their wicket ball ({danger_cell['adj_rate']:.1f} wickets per 100, "
-            f"{danger_cell['wickets']} off {danger_cell['balls']}).")
+        add(respect, "Wicket ball",
+            f"<b>{ball_phrase(danger_cell['length'], danger_cell['line'])}</b> · "
+            f"{danger_cell['adj_rate']:.1f} per 100 balls ({danger_cell['wickets']} in {danger_cell['balls']})")
     elif danger_length and danger_length.get("adj_rate"):
-        respect.append(f"Respect the <b>{danger_length['length'].lower()}</b> — their most threatening length "
-                       f"({danger_length['adj_rate']:.1f} wickets per 100).")
+        add(respect, "Wicket ball", f"<b>{_LEN_PHRASE.get(danger_length['length'], danger_length['length'].lower())}</b> · "
+                                    f"{danger_length['adj_rate']:.1f} per 100 balls")
+    # short ball (pace)
+    if is_pace and sb_n and sb_n >= 40 and sb_econ is not None:
+        if sb_econ >= 4.0 and sb_wkts <= max(1, sb_n // 60):
+            add(attack, "Short ball", f"{sb_econ:.1f} an over, {sb_wkts} wickets in {sb_n} balls")
+        elif sb_wkts and sb_wkts >= 3:
+            add(respect, "Short ball", f"{sb_wkts} of {n_wkts} wickets" if n_wkts else f"{sb_wkts} wickets")
 
-    # ATTACK — scoring direction + the least-threatening length to cash in on
+    # where the runs come from — scoring direction, then their most expensive common ball
     if scoring and scoring.get("dir_pct"):
         d = scoring["dir_pct"]
         top = max(d, key=lambda k: d[k]) if d else None
-        side = {"off": "square/through the off side", "leg": "through the leg side",
+        side = {"off": "through the off side", "leg": "through the leg side",
                 "straight": "straight down the ground"}.get(top)
         if side and d.get(top):
-            attack.append(f"Most of the runs off them leak {side} ({d[top]:.0f}%) — their main scoring release.")
-    # a scoreable ball type: highest econ among their common types with low beaten%
+            add(attack, "Runs", f"{d[top]:.0f}% {side}")
     if ball_types and ball_types.get("types"):
         cand = [t for t in ball_types["types"]
                 if t.get("econ") is not None and (t.get("pct") or 0) >= 8]
         if cand:
             loose = max(cand, key=lambda t: t["econ"])
             if loose["econ"] and loose["econ"] >= 3.3:
-                attack.append(
-                    f"Cash in when they go <b>{loose['band'].lower()} {loose['region']}</b> "
-                    f"(economy {loose['econ']:.1f}{', beats the bat only ' + format(loose['beaten_pct'], '.0f') + '%' if loose.get('beaten_pct') is not None else ''}).")
-    # short ball (pace)
-    if is_pace and sb_n and sb_n >= 40 and sb_econ is not None:
-        if sb_econ >= 4.0 and sb_wkts <= max(1, sb_n // 60):
-            attack.append(f"Their short ball is scoreable (economy {sb_econ:.1f}, {sb_wkts} wkts off {sb_n}).")
-        elif sb_wkts and sb_wkts >= 3:
-            respect.append(f"Watch the short ball — {sb_wkts} of their wickets come from it.")
+                beat = (f", beats the bat {loose['beaten_pct']:.0f}%" if loose.get("beaten_pct") is not None else "")
+                add(attack, "Most expensive", f"<b>{loose['band'].lower()} {loose['region']}</b> · "
+                                              f"{loose['econ']:.1f} an over{beat}")
 
-    # WATCH — their setups (sequencing + the ball-before-the-wicket numbers)
+    # how a wicket is set up (sequencing + the ball-before-the-wicket numbers)
     sp = seq_patterns or {}
     if sp.get("wk_with_prev", 0) >= 15:
         if sp.get("wk_fuller_pct") and sp["wk_fuller_pct"] >= 45:
-            watch.append(f"The wicket ball is usually <b>fuller</b> than the one before ({sp['wk_fuller_pct']:.0f}%) — beware the ball that draws you forward.")
+            add(watch, "Set-up", f"the wicket ball is <b>fuller</b> than the one before {sp['wk_fuller_pct']:.0f}% of the time")
         elif sp.get("wk_shorter_pct") and sp["wk_shorter_pct"] >= 45:
-            watch.append(f"The wicket ball is usually <b>shorter</b> than the one before ({sp['wk_shorter_pct']:.0f}%) — beware the ball that pushes you back.")
+            add(watch, "Set-up", f"the wicket ball is <b>shorter</b> than the one before {sp['wk_shorter_pct']:.0f}% of the time")
         if sp.get("wk_straighter_pct") and sp["wk_straighter_pct"] >= 45:
-            watch.append(f"They tend to <b>straighten their line</b> for the wicket ball ({sp['wk_straighter_pct']:.0f}%).")
+            add(watch, "Line", f"the wicket ball is <b>straighter</b> than the one before {sp['wk_straighter_pct']:.0f}% of the time")
     if wicket_setup and wicket_setup.get("wk_spd") and wicket_setup.get("prev_spd"):
         dv = wicket_setup["wk_spd"] - wicket_setup["prev_spd"]
         if abs(dv) >= 3:
-            watch.append(f"The wicket ball is ~{abs(dv):.0f} km/h {'quicker' if dv > 0 else 'slower'} than the ball before it — a change of pace sets it up.")
+            add(watch, "Pace", f"the wicket ball is {abs(dv):.0f} km/h {'quicker' if dv > 0 else 'slower'} than the one before")
 
-    # spin: repeatability → use feet / disrupt length. length_sd_pctl is the percentile of
-    # their length standard deviation among peers, so LOW = tight/metronomic.
+    # spin: length control. length_sd_pctl is the percentile of their length standard deviation
+    # among peers, so LOW = tight / metronomic.
     if is_spin and isinstance(repeatability, dict):
         try:
             rp = float(repeatability.get("length_sd_pctl"))
         except (TypeError, ValueError):
             rp = None
         if rp is not None and rp <= 35:
-            watch.append("Very repeatable with their length — using your feet to change their length is more effective than waiting for a loose ball.")
+            add(watch, "Length", f"more consistent than {100 - rp:.0f}% of spinners")
 
-    # MATCH-UP — is one hand markedly safer?
+    # by hand — only when one hand's average is clearly higher
     mh = (matchups or {}).get("hand", {})
     if "vs LHB" in mh and "vs RHB" in mh:
         l, r = mh["vs LHB"], mh["vs RHB"]
-        if l.get("avg") and r.get("avg"):
-            if l["avg"] >= r["avg"] * 1.3:
-                attack.append(f"Left-handers fare better against them (avg {l['avg']:.0f} vs {r['avg']:.0f} for RHB).")
-            elif r["avg"] >= l["avg"] * 1.3:
-                attack.append(f"Right-handers fare better against them (avg {r['avg']:.0f} vs {l['avg']:.0f} for LHB).")
+        if l.get("avg") and r.get("avg") and (l["avg"] >= r["avg"] * 1.3 or r["avg"] >= l["avg"] * 1.3):
+            add(attack, "By hand", f"left-handers average {l['avg']:.0f}, right-handers {r['avg']:.0f}")
 
-    summary = None
-    if respect and attack:
-        summary = "Respect their wicket ball, cash in on their release ball — the plan is patience for the threat length and intent for the loose one."
-    return {"respect": respect, "attack": attack, "watch": watch, "summary": summary}
+    return {"facts": facts, "respect": respect, "attack": attack, "watch": watch, "summary": None}
 
 
 def build_profile(
@@ -1532,7 +1554,7 @@ def build_profile(
         is_pace=is_pace, is_spin=is_spin, danger_cell=_danger_cell, danger_length=_danger_length,
         scoring=_scoring, matchups=matchups, seq_patterns=_seq_patterns, wicket_setup=wicket_setup,
         ball_types=_ball_types, sb_econ=sb_econ, sb_wkts=sb_wkts, sb_n=len(short_balls),
-        repeatability=_repeat, common_len_band=common_len_band)
+        repeatability=_repeat, common_len_band=common_len_band, n_wkts=n_wkts)
 
     return {
         # identity

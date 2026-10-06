@@ -92,11 +92,10 @@ def _vs_read(P: dict) -> str:
     if not (p["avg"] and s["avg"]):
         return ""
     if P["weakness"] == "spin":
-        return (f"Noticeably weaker against spin (averages {s['avg']:.0f} vs {p['avg']:.0f} against pace; "
-                f"falser shot {s['false_pct']:.0f}% vs {p['false_pct']:.0f}%) — attack them with spin.")
+        return (f"Weaker against spin: averages {s['avg']:.0f} against spin, {p['avg']:.0f} against pace "
+                f"(false shot {s['false_pct']:.0f}% and {p['false_pct']:.0f}%).")
     if P["weakness"] == "pace":
-        return (f"Stronger against spin ({s['avg']:.0f}) than pace ({p['avg']:.0f}); "
-                f"pace — especially the quicks — is the more productive line of attack.")
+        return f"Stronger against spin ({s['avg']:.0f}) than pace ({p['avg']:.0f})."
     return f"Handles both similarly (pace {p['avg']:.0f}, spin {s['avg']:.0f})."
 
 
@@ -584,59 +583,33 @@ def _fingerprint_type(cards: list) -> str | None:
 
 
 def _plan_read(P: dict) -> str:
-    """Focused report: a concise 'how to bowl to him' plan for the bowler group."""
+    """Focused report: where this batter's record against the bowler group is weakest, as facts —
+    the lowest-average length, line and movement, the danger ball and the usual dismissal."""
     if not P.get("group"):
         return ""
-    dims, is_spin, gl = P["dims"], P["is_spin_group"], P["group_label"]
-    bits = []
-    wl, ln = _worst(dims.get("length", [])), _worst(dims.get("line", []))
-    moves = []
-    for dk in ("seam", "swing"):
-        mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
-              and d["balls"] >= 60 and d["avg"] is not None]
-        straight = next((d for d in dims.get(dk, []) if d["bucket"] == "straight"), None)
-        if mv and straight and straight["avg"]:
-            worst = min(mv, key=lambda d: d["avg"])
-            if worst["avg"] < straight["avg"] * 0.8:
-                m = _move_gerund(worst["bucket"], dk + "_dir", is_spin)
-                if m:
-                    moves.append(m)
-    if wl and ln:
-        hunt = f"hunt a <b>{wl['bucket'].lower()} pitching {_pitch_line(ln['bucket'])}</b>"
-        if moves:
-            hunt += f" while <b>{_join_moves(moves)}</b>"
-        bits.append(hunt)
-    elif moves:
-        bits.append(f"get it <b>{_join_moves(moves)}</b>")
-    plan = f"Plan for {gl}: " + ("; ".join(bits) if bits else "few clear structural weaknesses")
+    bits = [f["text"] for f in plan_facts(P)]
     g = P.get("grid_danger")
     if g:
-        plan += (f". Danger ball: balls that are <b>{g['length_band'].lower()} and {g['line_region']}</b> "
-                 f"({g['dismissal_per100']:.1f} outs/100, avg {g['avg']:.0f})")
+        bits.append(f"out most often to balls that are <b>{g['length_band'].lower()} and {g['line_region']}</b> "
+                    f"({g['dismissal_per100']:.1f} per 100 balls, average {g['avg']:.0f})")
     if P["dismissals"]:
         top = P["dismissals"].most_common(1)[0]
-        plan += f"; they're most often out <b>{top[0].lower()}</b> to this attack"
-    return plan + "."
+        bits.append(f"most often out <b>{top[0].lower()}</b>")
+    if not bits:
+        return f"Against {P['group_label']}: no length, line or movement stands out."
+    return f"Against {P['group_label']}: " + "; ".join(bits) + "."
 
 
-def plan_sentence(P: dict, baseline: dict = None) -> str | None:
-    """The "where to bowl" plan for a TYPE-SCOPED profile — "Plan for {type}: bowl {length}
-    pitching {line} while {seaming in}." Returns None for a combined (untyped) profile, or when
-    the length/line evidence is too thin to name a target. Shared by the report's summary and the
-    per-batter overview tables so both quote the same plan.
+def _moves(P: dict, baseline: dict = None) -> list:
+    """[(gerund, avg, straight_avg)] — the movement each way (seam, then swing) whose average is
+    under 80% of the average when the ball goes straight on.
 
     `baseline` is a wider dims dict to take the STRAIGHT comparator from when the scoped profile has
     none of its own. A spin sub-type usually doesn't: the ball that goes straight on is the arm ball,
     flipper, top-spinner or undercutter, and those are ~2% of spin, so once split per type the bucket
     vanishes and the movement clause silently never fires. Direction still comes from the scoped
     profile — only the "what does it do when it DOESN'T deviate" reference is pooled."""
-    if not P.get("group"):
-        return None
-    dims, is_spin = P["dims"], P["is_spin_group"]
-    wl, ln = _worst(dims.get("length", [])), _worst(dims.get("line", []))
-    if not (wl and ln):
-        return None
-    moves = []
+    dims, is_spin, out = P["dims"], P["is_spin_group"], []
     for dk in ("seam", "swing"):
         mv = [d for d in dims.get(dk, []) if d["bucket"] in ("in", "away", "out")
               and d["balls"] >= 60 and d["avg"] is not None]
@@ -649,10 +622,45 @@ def plan_sentence(P: dict, baseline: dict = None) -> str | None:
             if worst["avg"] < straight["avg"] * 0.8:
                 m = _move_gerund(worst["bucket"], dk + "_dir", is_spin)
                 if m:
-                    moves.append(m)
-    return (f"Plan for {P['group_label']}: bowl <b>{wl['bucket'].lower()} pitching "
-            f"{_pitch_line(ln['bucket'])}</b>"
-            + (f" while <b>{_join_moves(moves)}</b>" if moves else "") + ".")
+                    out.append((m, worst["avg"], straight["avg"]))
+    return out
+
+
+def plan_facts(P: dict, baseline: dict = None) -> list:
+    """[{label, text}] — where a TYPE-SCOPED record is weakest: the lowest-average length and
+    pitching line (each at least 40 balls) against the batter's overall average for the type, and
+    any movement that lowers it. Facts, never an instruction (Tom, 06-10-2026). Empty for a combined
+    profile, or when the length/line evidence is too thin."""
+    if not P.get("group"):
+        return []
+    dims = P["dims"]
+    wl, ln = _worst(dims.get("length", [])), _worst(dims.get("line", []))
+    out = []
+    if wl and ln:
+        overall = f" (overall {P['average']:.1f})" if P.get("average") else ""
+        out.append({"label": "Lowest average",
+                    "text": f"<b>{wl['bucket'].lower()}</b> {wl['avg']:.1f} · "
+                            f"<b>pitching {_pitch_line(ln['bucket'])}</b> {ln['avg']:.1f}{overall}"})
+    mv = _moves(P, baseline)
+    if mv:
+        out.append({"label": "Movement",
+                    "text": " · ".join(f"<b>{m}</b> {a:.1f} (straight {s:.1f})" for m, a, s in mv)})
+    return out
+
+
+def plan_sentence(P: dict, baseline: dict = None) -> str | None:
+    """The one-line form of `plan_facts` for a TYPE-SCOPED profile — "Lowest average v {type}: a
+    good length 24.8 · pitching outside off 23.5 (overall 33.0) · seaming in 18.8 (straight 73.2)."
+    None for a combined (untyped) profile, or when the length/line evidence is too thin. Shared by
+    the report's summary and the per-batter overview tables so both quote the same line.
+
+    It used to read "Plan for {type}: bowl {length} pitching {line} while {seaming in}" — an
+    instruction built on the same numbers. Generated text states facts; the plan is the coaches'."""
+    facts = plan_facts(P, baseline)
+    if not facts or facts[0]["label"] != "Lowest average":
+        return None
+    rest = "".join(f" · {f['text']}" for f in facts[1:])
+    return f"Lowest average v {P['group_label']}: {facts[0]['text']}{rest}."
 
 
 def _summary_points(P: dict, fp_type: str = None, include_matchup: bool = True) -> list:
@@ -686,8 +694,15 @@ def _summary_points(P: dict, fp_type: str = None, include_matchup: bool = True) 
     e, s = ph.get("early"), ph.get("set")
     if (e and s and e.get("dismissal_per100") and s.get("dismissal_per100")
             and e["dismissal_per100"] >= 1.4 * s["dismissal_per100"]):
-        pts.append("Vulnerable early — get at them hard in their first 30 balls.")
+        pts.append(early_line(e, s))
     return pts[:6]
+
+
+def early_line(e: dict, s: dict) -> str:
+    """The first-30-balls fact, as balls per dismissal: 'First 30 balls: out every 39 balls, then
+    every 57.' Was 'Vulnerable early — get at them hard', an instruction on the same two rates."""
+    return (f"First 30 balls: out every {100 / e['dismissal_per100']:.0f} balls, "
+            f"then every {100 / s['dismissal_per100']:.0f}.")
 
 
 def card_summary(batter_id: str, group: str | None = None, include_matchup: bool = False) -> list:
