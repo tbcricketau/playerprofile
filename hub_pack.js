@@ -32,7 +32,16 @@
     const st = state.cards || {};
     return (st.saved || []).filter(f => f.batter_id === bid && !f.private);
   }
-  const coachOpt = f => ({ name: f.name, plan: f.plan, cap: ["Coaches' field"].concat(f.phase ? [f.phase] : [], f.tags || []).join(" · ") });
+  function dayFirst(iso) {
+    if (!iso) return "";
+    const d = new Date(iso.endsWith("Z") ? iso : iso + "Z");
+    if (isNaN(d)) return "";
+    const p = n => String(n).padStart(2, "0");
+    return `${p(d.getDate())}-${p(d.getMonth() + 1)}-${d.getFullYear()}`;
+  }
+  // a field the coaches set is marked as theirs: on its toggle and under the drawing (11-10-2026)
+  const coachOpt = f => ({ name: f.name, plan: f.plan, set: true,
+    cap: ["Set by the coaches"].concat(f.phase ? [f.phase] : [], f.tags || [], dayFirst(f.updated_utc) ? [dayFirst(f.updated_utc)] : []).join(" · ") });
   const autoOpt = c => ({ name: c.name, plan: { fielders: c.fielders, arrows: [], spare: c.spare }, cap: EST });
 
   /* Their bowlers' fields come in categories (new ball, old ball, bouncer…): a coaches' field saved
@@ -71,12 +80,13 @@
       const key = box.dataset.fb, i = Math.min(state.pick[key] || 0, opts.length - 1), o = opts[i];
       if (opts.length > 1) {
         const tg = document.createElement("div"); tg.className = "tg";
-        tg.innerHTML = opts.map((c, k) => `<button type="button" class="${k === i ? "on" : ""}" data-k="${k}">${esc(c.name)}</button>`).join("");
+        tg.innerHTML = opts.map((c, k) => `<button type="button" class="${k === i ? "on" : ""}${c.set ? " set" : ""}" data-k="${k}">${esc(c.name)}</button>`).join("");
         tg.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { state.pick[key] = +b.dataset.k; drawFields(); }));
         row.appendChild(tg);
       }
-      body.innerHTML = `<svg viewBox="-1.12 -1.12 2.24 2.24" role="img" aria-label="${esc(o.name)}"></svg><div class="cap">${esc(o.cap)}</div>`;
-      if (FP) FP.drawField(body.querySelector("svg"), o.plan, box.dataset.hand);
+      body.innerHTML = `<svg viewBox="-1.12 -1.12 2.24 2.24" role="img" aria-label="${esc(o.name)}"></svg><div class="cap${o.set ? " set" : ""}">${esc(o.cap)}</div>`;
+      // labels a size up from the planner's: at 340 px wide its .05 is 7 px
+      if (FP) FP.drawField(body.querySelector("svg"), o.plan, box.dataset.hand, { labelSize: 0.066 });
       else body.innerHTML = '<p class="fnone">The field could not be drawn.</p>';
     });
   }
@@ -88,14 +98,21 @@
     const lines = saved ? saved.notes : (st && st.deck && st.deck[bid]);
     return (lines || []).filter(l => String(l).trim());
   }
+  /* A player sees the coaches' notes only when some are written. A coach sees a pencil on every card
+     (into the planner) and, where nothing is written yet, a dashed box saying so (11-10-2026). */
   function drawNotes() {
-    const st = state.cards;
+    const st = state.cards, coach = !!(st && st.canEdit);
+    document.querySelectorAll("[data-pen]").forEach(a => {
+      a.hidden = !coach;
+      if (coach) a.href = editHref(a.dataset.pen);
+    });
     document.querySelectorAll("[data-notes]").forEach(el => {
       const bid = el.dataset.notes, lines = notesOf(st, bid);
-      const edit = st && st.canEdit ? `<a href="${editHref(bid)}">Edit in the planner</a>` : "";
-      if (!lines.length && !edit) { el.hidden = true; return; }
-      el.innerHTML = `<div class="t"><b>Coaches' notes</b>${edit}</div>`
-        + (lines.length ? lines.map(l => `<p>${esc(l)}</p>`).join("") : '<p class="cap">None yet.</p>');
+      if (!lines.length && !coach) { el.hidden = true; return; }
+      el.classList.toggle("empty", !lines.length);
+      el.innerHTML = `<div class="t"><b>Coaches' notes</b></div>`
+        + (lines.length ? lines.map(l => `<p>${esc(l)}</p>`).join("")
+           : `<p>None yet. <a href="${editHref(bid)}">Add notes in the planner</a></p>`);
       el.hidden = false;
     });
   }

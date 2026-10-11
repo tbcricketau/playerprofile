@@ -110,10 +110,19 @@ def _avatar(pid, name, img, cls="av"):
     return f'<span class="{cls} ini">{E(ini)}</span>'
 
 
-def _head(pid, name, img, tier, sub):
+_PEN = ('<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/>'
+        '<path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>')
+
+
+def _head(pid, name, img, tier, sub, sample=""):
+    """Photo, name, the XI chip, the type line, and the sample the card's figures rest on ("Tests ·
+    193 wickets to right-handers") — so every card states its basis before any number (round 2,
+    11-10-2026). The pencil is filled in for a coach by the script (a link into the planner)."""
     chip = f'<span class="chip {E(tier)}">{_TIER_CHIP[tier]}</span>' if tier in _TIER_CHIP else ""
-    return (f'<div class="hd o1">{_avatar(pid, name, img)}<div><div class="nm"><span>{E(name)}</span>{chip}'
-            f'</div><div class="sb">{E(sub)}</div></div></div>')
+    smp = f'<div class="smp">{E(sample)}</div>' if sample else ""
+    return (f'<header class="hd o1">{_avatar(pid, name, img)}<div class="hdt"><div class="nm"><span>{E(name)}</span>{chip}'
+            f'</div><div class="sb">{E(sub)}</div>{smp}</div>'
+            f'<a class="pen" data-pen="{E(pid)}" hidden aria-label="Edit notes and fields in the planner">{_PEN}</a></header>')
 
 
 def _label(t):
@@ -130,7 +139,7 @@ def _facts(facts):
         return ""
     rows = "".join(f'<span class="k">{E(f.get("label", ""))}</span><span class="v">{_rich(f.get("text"))}</span>'
                    for f in facts)
-    return f'<div class="o3">{_label("The numbers")}<div class="facts">{rows}</div></div>'
+    return f'<div class="fx o5">{_label("The numbers")}<div class="facts">{rows}</div></div>'
 
 
 def _figures(items):
@@ -146,7 +155,7 @@ def _field(bid, title, opts, hand, kind):
     coaches' one share a drawing; the coaches' fields are merged in when the page has fetched them."""
     # `data-fb`, not `data-field`: check_site reads data-field as a field-map image to resolve
     data = json.dumps(opts, ensure_ascii=False, separators=(",", ":"))
-    return (f'<div class="fb o5" data-fb="{E(bid)}" data-kind="{kind}" data-hand="{hand}" '
+    return (f'<div class="fb o3" data-fb="{E(bid)}" data-kind="{kind}" data-hand="{hand}" '
             f"data-opts='{E(data)}'>{_label(title)}<div class=\"fbody\"></div></div>")
 
 
@@ -198,10 +207,11 @@ def _pics(title, x, caption, pics_url):
     pics = x.get("pics") or {}
     if not (pics.get("pitch") and pics.get("bee")):
         return ""
-    return (f'<div class="o7">{_label(title)}<div class="pics">'
+    cap = f'<div class="cap">{E(caption)}</div>' if caption else ""
+    return (f'<div class="px o7">{_label(title)}<div class="pics">'
             f'<img class="pm" src="{E(pics_url + pics["pitch"])}" alt="Pitch map: where they pitched" loading="lazy">'
             f'<div><img class="bh" src="{E(pics_url + pics["bee"])}" alt="Beehive: where they passed the stumps" loading="lazy">'
-            f'<div class="cap">{E(caption)}</div></div></div></div>')
+            f'{cap}</div></div></div>')
 
 
 def _vision(buttons, h2h, none_text, star_note=""):
@@ -216,14 +226,17 @@ def _vision(buttons, h2h, none_text, star_note=""):
         k, href, t, n = h2h
         b += f'<a class="vlink rl h2h" data-pl="{E(k)}" data-n="{n}" href="{E(href)}">{E(t)}</a>'
     tail = "".join(f'<div class="cap">{E(t)}</div>' for t in (star_note, none_text) if t)
-    return f'<div class="o8">{_label("Vision")}<div class="reels">{b}</div>{tail}</div>' if (b or tail) else ""
+    reels = f'<div class="reels">{b}</div>' if b else ""
+    return f'<div class="vis o8">{_label("Vision")}{reels}{tail}</div>' if (b or tail) else ""
 
 
-def _card(anchor, left, right):
-    """Two columns from a laptop up (facts beside the field and pictures); on a phone the `oN`
-    classes put every block in one column in the order the mock-ups set."""
-    return (f'<article class="pc" id="{E(anchor)}"><div class="cl">{"".join(left)}</div>'
-            f'<div class="cr">{"".join(right)}</div></article>')
+def _card(anchor, head, plan, nums):
+    """Two halves (Tom, 11-10-2026): the plan — the coaches' notes, the field, the vision — and the
+    numbers — figures, facts, pictures. On a phone the plan comes first, every block in one column
+    in the order of the `oN` classes; from a laptop up the plan is the left half and the numbers the
+    right, under a header that spans both."""
+    return (f'<article class="pc" id="{E(anchor)}">{head}<div class="plan">{"".join(plan)}</div>'
+            f'<div class="nums">{"".join(nums)}</div></article>')
 
 
 def _more(anchor, name, sub, img, card_html):
@@ -339,15 +352,17 @@ def _bowler_sub(meta, plan, hand, new_ball_min):
 def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_min, fmt, opp_short):
     word = "left-handers" if hand == "LHB" else "right-handers"
     sub = _bowler_sub(meta, plan, hand, new_ball_min)
-    left = [_head(bid, meta["name"], img, tier, sub), _notes_slot(bid)]
-    right = []
-    if not (x or {}).get("n_balls"):
-        left.append(f'<p class="thin o3">No {fmt} balls to {word}.</p>')
-    else:
+    fmt_pl = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
+    n_w = (x or {}).get("n_wkts") or 0
+    sample = (f"{fmt_pl} · {n_w:,} wicket{'s' if n_w != 1 else ''} to {word}" if (x or {}).get("n_balls")
+              else f"No {fmt} balls to {word}")
+    plan_half = [_notes_slot(bid)]
+    nums = []
+    if (x or {}).get("n_balls"):
         spin = x.get("spd_lo") is not None or not plan.get("pace", True)
-        left.append(_facts(x.get("facts")))
         st = x.get("stumps") or {}
-        stumps = ((f'{st["rate"]:.1f}%', f'Hit the stumps · type {st["expected"]:.1f}')
+        # the type's rate rides inside the value: as a label it wrapped to three lines (11-10-2026)
+        stumps = ((f'{st["rate"]:.1f}%<small class="ln">type {st["expected"]:.1f}</small>', "Hit the stumps")
                   if st.get("rate") is not None and st.get("expected") is not None else (None, ""))
         if spin:
             spd = (f'{x["avg_spd"]:.0f}<small> {x["spd_lo"]:.0f}–{x["spd_hi"]:.0f}</small>'
@@ -361,11 +376,11 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
                     (_num(x.get("economy"), 2), "Economy"), (_pct(x.get("short_pct")), "Short balls"), stumps]
             if figs[4][0] is None:
                 figs[4] = (_num(x.get("n_wkts"), 0), "Wickets")
-        left.append(_figures(figs))
-        n_w = x.get("n_wkts") or 0
-        right.append(_pics("Their wicket balls", x, f"{n_w:,} wicket{'s' if n_w != 1 else ''} to {word}", pics_url))
+        nums.append(_figures(figs))
+        nums.append(_facts(x.get("facts")))
+        nums.append(_pics("Their wicket balls", x, "", pics_url))
     opts = _bowler_field_opts((plan.get("hands") or {}).get(hand))
-    right.insert(0, _field(bid, "Their field", opts, hand, "bowler"))
+    plan_half.append(_field(bid, "Their field", opts, hand, "bowler"))
     reels, note = _bowler_reels(clips, bid, hand, meta)
     h2h = clips.button(f"hbat_{bid}", f"You v {opp_short}")
     none = None
@@ -373,8 +388,8 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
         none = "No available footage."
     elif not h2h:
         none = f"You v {opp_short}: no available footage."
-    left.append(_vision(reels, h2h, none, note))
-    return _card(f"b{bid}", left, right)
+    plan_half.append(_vision(reels, h2h, none, note))
+    return _card(f"b{bid}", _head(bid, meta["name"], img, tier, sub, sample), plan_half, nums)
 
 
 def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_short, source):
@@ -385,13 +400,14 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
                      + (["figures from first-class cricket"] if source == "both" else []))
     hand = "LHB" if lhb else "RHB"
     glabel = _GROUP_LABEL.get(group, group)
-    left = [_head(bid, meta["name"], img, tier, sub), _notes_slot(bid)]
-    right = [_field(bid, "Your field", _batter_field_opts(row), hand, "batter")]
-    if not x or x.get("thin") or not x.get("balls"):
-        n = (x or {}).get("balls") or 0
-        left.append(f'<p class="thin o3">{"Only " + format(n, ",") if n else "No"} {fmt} balls against {glabel}.</p>')
-    else:
-        left.append(_facts(x.get("facts")))
+    fmt_pl = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
+    n = (x or {}).get("balls") or 0
+    thin = not x or x.get("thin") or not x.get("balls")
+    sample = (f"{fmt_pl} · {n:,} balls v {glabel}" if not thin
+              else f"{'Only ' + format(n, ',') if n else 'No'} {fmt} balls v {glabel}")
+    plan_half = [_notes_slot(bid), _field(bid, "Your field", _batter_field_opts(row), hand, "batter")]
+    nums = []
+    if not thin:
         # under three dismissals there is no balls-per-dismissal figure; the count says why
         bpd = ((f'{x["bpd"]:.0f}', "Balls per dismissal") if x.get("bpd")
                else (f'{int(x.get("n_out") or 0)}', "Dismissals"))
@@ -399,10 +415,11 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
                 (_pct(x.get("false_pct"), 1), "False shots"), (_pct(x.get("off_pct")), "Runs off side")]
         if group.endswith("pace") and x.get("short_false") is not None:
             figs.append((_pct(x["short_false"]), "False v short ball"))
-        left.append(_figures(figs))
-        right.append(_wheel(bid, x, lhb, pics_url))
+        nums.append(_figures(figs))
+        nums.append(_facts(x.get("facts")))
+        nums.append(_wheel(bid, x, lhb, pics_url))
         n_d = x.get("n_dismissals") or 0
-        right.append(_pics("Their dismissals", x, f"{n_d:,} dismissal{'s' if n_d != 1 else ''} v {glabel}", pics_url))
+        nums.append(_pics("Their dismissals", x, f"{n_d:,} dismissal{'s' if n_d != 1 else ''}", pics_url))
     reels, note = _batter_reels(clips, bid, group, meta, fmt)
     h2h = clips.button(f"hbowl_{bid}", f"You to {opp_short}")
     none = None
@@ -410,8 +427,8 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
         none = "No available footage."
     elif not h2h:
         none = f"You to {opp_short}: no available footage."
-    left.append(_vision(reels, h2h, none, note))
-    return _card(f"b{bid}", left, right)
+    plan_half.append(_vision(reels, h2h, none, note))
+    return _card(f"b{bid}", _head(bid, meta["name"], img, tier, sub, sample), plan_half, nums)
 
 
 # ── pages ─────────────────────────────────────────────────────────────────────────────────────
@@ -432,19 +449,30 @@ def _page(title, body, hp=None, js_v="0", fields_v="0", snippet=""):
             f"{click_guard() if snippet else ''}</head><body class='hp'><!--hub-bar-->{body}{data}{snippet}</body></html>")
 
 
-def _player_head(name, img, sub, tabs, index_href):
+def _player_head(name, img, sub, tabs, back_href, back_label):
+    """The way back is always on show, laptop included, and says where it goes (11-10-2026)."""
     t = "".join(f'<a href="{E(h)}" class="{"on" if on else ""}">{E(lbl)}</a>' for lbl, h, on in tabs)
-    return (f'<header class="ph"><div class="in"><a class="back" href="{E(index_href)}">‹ Squad</a>'
+    return (f'<header class="ph"><div class="in"><a class="back" href="{E(back_href)}">‹ {E(back_label)}</a>'
             f'<div class="who">{_avatar("", name, img, "av lg")}<div><h1>{E(name)}</h1><div class="sb">{E(sub)}</div></div></div>'
             f'<nav class="ptabs">{t}</nav></div></header>')
 
 
-def _section(title, sub, chips, xi_cards, more_cards):
-    ch = ("<nav class='jump'>" + "".join(f'<a href="#{E(a)}">{E(n)}</a>' for n, a in chips) + "</nav>") if chips else ""
+def _jump(chips, more):
+    """The opposition as a strip that stays put while the cards scroll, with a Squad chip for the
+    rest of them (11-10-2026). Written outside <main> so it can stick to the top of the page."""
+    if not chips:
+        return ""
+    a = "".join(f'<a href="#{E(a)}">{E(n)}</a>' for n, a in chips)
+    if more:
+        a += '<a class="rest" href="#also">Squad</a>'
+    return f"<nav class='jump'><div class='in'>{a}</div></nav>"
+
+
+def _section(title, sub, xi_cards, more_cards):
     s = f' <span>{E(sub)}</span>' if sub else ""
-    out = f"<h2 class='sec'>{E(title)}{s}</h2>{ch}{''.join(xi_cards)}"
+    out = f"<h2 class='sec'>{E(title)}{s}</h2>{''.join(xi_cards)}"
     if more_cards:
-        out += f"<h2 class='sec'>Also in the squad</h2><div class='mores'>{''.join(more_cards)}</div>"
+        out += f"<h2 class='sec' id='also'>Also in the squad</h2><div class='mores'>{''.join(more_cards)}</div>"
     return out
 
 
@@ -569,11 +597,12 @@ def build(slug, out_root, only=None, clips_root=None):
                                   img(bid, meta.get("name")), c))
         hp = {"series": planner, "kind": "bat", "pid": str(pid), "hand": hand, "first": name.split()[0],
               "cardPack": f"vs_{hand.lower()}", "bandPack": "us_bat", "bandTitle": "From the batting coach"}
-        body = (_player_head(name, my_img, f"{hand_word} · {series_name}",
-                             [(lbl, h, h == bat_href) for lbl, h in tab_list], "index.html")
+        body = (_player_head(name, my_img, f"{hand_word} · Batting pack",
+                             [(lbl, h, h == bat_href) for lbl, h in tab_list], "index.html", series_name)
+                + _jump(chips, more)
                 + "<main class='wrap hpw'><section class='band-note' hidden></section>"
                 + _section("Their attack", f"{fmt_pl} · to {'left' if hand == 'LHB' else 'right'}-handers",
-                           chips, xi, more) + "</main>")
+                           xi, more) + "</main>")
         open(os.path.join(s_dir, bat_href), "w", encoding="utf-8").write(
             _page(f"{name} — batting", body, hp, js_v, fields_v, snippet))
         pages += 1
@@ -601,10 +630,11 @@ def build(slug, out_root, only=None, clips_root=None):
                     more.append(_more(bid, meta.get("name") or bid, sub, img(bid, meta.get("name")), c))
             hp = {"series": planner, "kind": "bowl", "pid": str(pid), "group": group, "first": name.split()[0],
                   "cardPack": group, "bandPack": "us_bowl", "bandTitle": "From the bowling coach"}
-            body = (_player_head(name, my_img, f"{glabel[:1].upper() + glabel[1:]} · {series_name}",
-                                 [(lbl, h, h == href) for lbl, h in tab_list], "index.html")
+            body = (_player_head(name, my_img, f"{glabel[:1].upper() + glabel[1:]} · Bowling pack",
+                                 [(lbl, h, h == href) for lbl, h in tab_list], "index.html", series_name)
+                    + _jump(chips, more)
                     + "<main class='wrap hpw'><section class='band-note' hidden></section>"
-                    + _section("Their batters", f"{fmt_pl} · v {glabel}", chips, xi, more) + "</main>")
+                    + _section("Their batters", f"{fmt_pl} · v {glabel}", xi, more) + "</main>")
             open(os.path.join(s_dir, href), "w", encoding="utf-8").write(
                 _page(f"{name} — bowling ({bt})", body, hp, js_v, fields_v, snippet))
             pages += 1
@@ -628,7 +658,8 @@ def build(slug, out_root, only=None, clips_root=None):
                     f'<span><b>{E(nm)}</b><span>{E(" · ".join(packs))}</span></span></a>')
         items = "".join(tile(*r) for r in rows)
         tiles.append(f"<h2 class='sec'>{E(head)}</h2><div class='tiles'>{items}</div>")
-    idx = (f"<header class='ph'><div class='in'><div class='who'><div><h1>{E(series_name)}</h1>"
+    idx = (f"<header class='ph'><div class='in'><a class='back' href='../index.html'>‹ Series</a>"
+           f"<div class='who'><div><h1>{E(series_name)}</h1>"
            f"<div class='sb'>{E(entry.get('subtitle') or '')}</div></div></div></div></header>"
            f"<main class='wrap hpw'>{''.join(tiles)}</main>")
     open(os.path.join(s_dir, "index.html"), "w", encoding="utf-8").write(_page(f"{series_name} — player packs", idx))

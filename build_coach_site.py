@@ -618,8 +618,9 @@ def _write_index(out):
             + (f'<details class="archive"><summary>Archive <span class="n">{len(old)} series</span></summary>'
                '<p class="sub">Finished series, as they stood at the end. The pages do not change.</p>'
                '<ul class="cards">' + "".join(c for _w, c in old) + "</ul></details>" if old else ""))
-    open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(
-        SR.page("Scouting", body, up=("../players/index.html", "Player packs")))
+    # No crumb: the bar is the way back, and a crumb into Player Packs sent coaches to the players'
+    # side (Tom, 11-10-2026). The empty crumb div stays — the packs app tells a site page by it.
+    open(os.path.join(root, "index.html"), "w", encoding="utf-8").write(SR.page("Scouting", body))
     print(f"scouting index: {len(active)} active, {len(old)} archived")
 
 

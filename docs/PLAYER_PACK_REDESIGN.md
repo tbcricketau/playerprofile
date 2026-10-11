@@ -204,6 +204,70 @@ players reading `vs_*` notes) — blocked on Tom's Azure admin sign-in, which ex
 rule; point the hub's Player Packs tile at `/packs/` when the players move over; wire the two gates
 into a publish step rather than running them by hand.
 
+## Round 2 — audit of the 06-10 build and the next layout (11-10-2026)
+
+Tom opened the live packs (the `/players/` series list with its Field plans card) and asked for the
+packs to carry the scouting into the player's page. The 06-10 build already does; it had not been looked
+at. The audit of that build, the second-round layout drawn with its real cards, and the shared bar and
+menu for every hub app: https://claude.ai/artifact/XHNL4ZjJZsxUdbtuWorZXq (private). Nothing is built
+from it yet. In short:
+
+- **Layout**: the squad is the landing page (series behind a switcher); each card is two halves, the
+  plan (coaches' notes, field, vision) before the numbers (figures, facts, pictures); a coaches' field is
+  marked with a gold dot and "Set by the coaches · tags · date"; the sample moves into the card header;
+  the opposition chips stay pinned while the cards scroll; empty notes show to coaches only, as a dashed
+  box and a pencil; "Hit the stumps · type 11.0" becomes a value with the type's rate inside it; fielder
+  labels a size up (a label-size option in `fields.js`); the back link stays on a laptop and goes to the
+  squad.
+- **Navigation** (the hub and the packs app): one bar on every page with a menu of the sections the
+  account holds (the hub's catalogue filtered by grant and role, served per session), Sign out in it; an
+  app's second row never links to another app; the bar's app name follows the tile the person came
+  through; the Field plans card comes off the players' index; `/packs/` becomes the tile's target;
+  reports and galleries get the bar. The dead ends found: Scouting's home crumb reads "← Player packs",
+  the planner names its bar by role, two Player Packs homes, no bar on reports and galleries, sign out
+  on the hub and planner only.
+- **Order**: the round-2 pack in `build_hub_packs.py`; the shared bar and menu in `cricket_core.webcharts`
+  with the hub serving the menu; the crumb and tab clean-up; then the tile switch and a redeploy of the
+  packs app in both regions.
+
+### Decisions (Tom, 11-10-2026)
+
+1. **The tile keeps opening the series list**, minus the Field plans card; the squad is one tap in. The
+   series switcher in the mockup's squad header is dropped.
+2. **Plan first on every card**: coaches' notes, the field, vision; then figures, facts, pictures. Left
+   half and right half on a laptop.
+3. **A pack carries only its own coach's note** (batting coach on the batting pack, bowling coach on the
+   bowling pack), as built.
+4. **The A4 scouting reports are in the redesign too**: Baggy green with the cricviz pictures, all four
+   kinds. Supersedes the 06-10 line that the reports stay Opta coach documents. The GitHub Pages copy is
+   still untouched.
+5. **Build order**: the round-2 pack and the navigation (shared bar and menu, crumb clean-up, tile
+   switch) first; the report mockup follows once those are live, and the reports are built after it is
+   agreed.
+6. **The planner's bar says Scouting for a coach wherever they came from** (a pack card's pencil
+   included), Player Packs for anyone else; the menu is the way between sections. The origin is not
+   carried. Deploys run from the build machine on Tom's word, no browser sign-in needed from him.
+
+### Built (11-10-2026) — uploaded, not yet deployed
+
+- **The round-2 pack**: `build_hub_packs.py`, `hub_pack.css`, `hub_pack.js` as decided (two halves,
+  the sample in the header, the pencil, the marked coaches' field, the pinned chips, "Hit the stumps"
+  with the type's rate inside the value, the back link on every width); `labelSize` in the planner's
+  `fields.js`. Rebuilt and uploaded to `/packs/` (34 files). `check_site`: 33 pages, 2,131 links
+  clean. `audit_pack_hands`: 0 defects (mixed, wrong, owner, type), but 780 of 817 reels unresolved —
+  the untouched Pages bundle gives the same 779 from this laptop, so it is the warehouse's answer here,
+  not the pages; rerun on the box before the next publish.
+- **The bar and menu**: `cricket_core.webcharts.top_bar` grew the menu button, the panel and
+  `MENU_JS`; `BAR_CSS` stands alone so the dressed Opta pages can carry it. The hub answers
+  `/menu.json` and inlines the menu on its own pages. `hubstyle.dress` puts the bar on every kind —
+  site pages get their column moved from `<body>` to a wrapper so the bar runs full width; reports and
+  galleries get it after `<body>`; the planner card is gone. Scouting's index lost its crumb (rebuilt,
+  copied into `player_pack_site/coach/`, not yet uploaded). The planner's viewer crumb and the
+  "Coaches only" page point at `/packs/`. The tile points at `/packs/index.html`.
+- **To go live**: deploy coachhub and playerpacks in both regions (cricket-core's `webcharts` is
+  copied into each image), and upload the Pages bundle for the Scouting index. Needs Tom's admin
+  sign-in. Until then the live packs app serves the uploaded `/packs/` pages with the old bar.
+
 ## Checked, for the record
 
 - Store contents 05-10: `fieldstore.list_fields` / `list_notes` return nothing for every pack of

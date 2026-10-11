@@ -1182,7 +1182,7 @@ row above:
   the batter rule's two is noise there — it posted Jansen a leg gully on 2 of 31); the spare.
   R1–R8 read one batter's strokes and are not run.
 
-### The hub's player packs — `build_hub_packs.py` (first build 06-10-2026, at `/packs/`, unlinked)
+### The hub's player packs — `build_hub_packs.py` (06-10-2026; round 2 11-10-2026, the tile's target)
 
 The players' version for the Coaches Hub, redesigned from the Pages packs (`docs/PLAYER_PACK_REDESIGN.md`
 holds the audit, Tom's decisions and the build status). The Pages packs are untouched: this writes its
@@ -1195,9 +1195,15 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
 .\venv\Scripts\python.exe audit_pack_hands.py --site hub_pack_site --with player_pack_site --opp <opp> --slug <slug> --fmt Test
 ```
 
-- **A card**: the coaches' notes, the facts, four to six figures, the field, the pictures, the vision.
-  The likely XI as cards (new-ball bowlers first on a batting pack, batting order on a bowling pack),
-  the rest of the squad as rows that open into the same card. No report link.
+- **A card is two halves** (Tom, 11-10-2026): the plan — the coaches' notes, the field, the vision —
+  first on a phone and on the left on a laptop; the numbers — four to six figures, the facts, the
+  pictures — after. The header carries the sample ("Tests · 193 wickets to right-handers"), and a
+  pencil into the planner for a coach. A field the coaches set is marked (gold dot, "Set by the
+  coaches · tags · date"); an estimate says "Estimated from the data". The opposition chips stay
+  pinned under the bar while the cards scroll. The likely XI as cards (new-ball bowlers first on a
+  batting pack, batting order on a bowling pack), the rest of the squad as rows that open into the
+  same card. No report link. Fielder labels are drawn a size up (`labelSize` in the planner's
+  `fields.js`): the planner's 7 px at 340 px wide was unreadable.
 - **Built from**: `pack_extras_<opp>.json` (facts, figures, stumps, zones, pictures — the only new
   data), `bowler_plans_<opp>.json` and `overview_<group>_<opp>.json` (the estimated fields), the
   about file (order, types, clip scopes) and the Pages packs' clip sidecars, fetched at
