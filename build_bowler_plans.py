@@ -9,8 +9,8 @@ plan**; spin: **New batter**, **Set batter**. The fields are `field_engine.bowle
 for the type, our batter's hand and the phase, adjusted to the bowler's own record, with the spare.
 
 Writes `data/bowler_plans_<opp>.json`, which build_coach_site.py reads. With --planner-out it also
-writes the field planner's second side — `fieldplanner/<planner series>/bowlers.json`, a headshot and a
-runs-off-them wheel per hand — to upload with `playerpacks/upload_packs.py --bundle <dir> --apply`.
+writes the field planner's second side — `fieldplanner/<planner series>/bowlers.json`, a headshot, and a
+runs-off-them wheel and a shot spider per hand — to upload with `playerpacks/upload_packs.py --bundle <dir> --apply`.
 
 Two profiles per bowler from the warehouse (one delivery query, shared): run it on the build machine.
 """
@@ -90,6 +90,55 @@ def _webp(png_bytes, width):
     buf = io.BytesIO()
     im.save(buf, "WEBP", quality=85)
     return buf.getvalue()
+
+
+WHEEL_PX = 560          # the batters' side export's wheel size (presentationbuilder export_field_planner MAX_PX)
+
+
+def _zones_png(rows, is_lhb):
+    """The runs-off-them wheel drawn as the batters' side draws theirs (presentationbuilder
+    build_individual_packs.zones_wagon): a square 600 figure, labels at 1.25, cropped to the ink with
+    a 16 px margin. Until 11-10-2026 it went out at 500x430 uncropped, which squares the plot to a
+    430-wide circle with dead white round it, so on the card it drew at about 60% of a batter's wheel."""
+    from PIL import Image, ImageChops
+    from cricket_core.charts import wagon_wheel_zones
+    fig = wagon_wheel_zones(rows, metric="runs", title="", n_sectors=8, is_lhb=is_lhb,
+                            width=600, height=600, font_scale=1.25)
+    im = Image.open(io.BytesIO(fig.to_image(format="png", width=600, height=600, scale=2))).convert("RGB")
+    box = ImageChops.difference(im, Image.new("RGB", im.size, (255, 255, 255))).getbbox()
+    if box:
+        pad = 16
+        im = im.crop((max(0, box[0] - pad), max(0, box[1] - pad),
+                      min(im.width, box[2] + pad), min(im.height, box[3] + pad)))
+    buf = io.BytesIO()
+    im.save(buf, "PNG")
+    return buf.getvalue()
+
+
+def _spider_png(rows, is_lhb):
+    """Every scoring shot off them as a line (cricket_core.cricviz, as the batters' side spider), to
+    that batter hand. Their wickets are the red lines: cricviz reads `striker_dismissed`, which the
+    bowler query does not carry, so the bowler's own dismissals stand in (a run-out is not theirs)."""
+    import subprocess
+    import tempfile
+    from cricket_core import cricviz
+    marked = [dict(r, striker_dismissed="1" if r.get("is_wicket") else "0") for r in rows]
+    fd, path = tempfile.mkstemp(suffix=".png", prefix="bowler_spider_")     # %TEMP%, never the repo
+    os.close(fd)
+    try:
+        for attempt in range(3):            # a headless Chrome hangs now and then; the decks retry too
+            try:
+                cricviz.render("wagon_wheel", marked, path, lhb=is_lhb, width=700)
+                break
+            except subprocess.TimeoutExpired:
+                if attempt == 2:
+                    raise
+        return open(path, "rb").read()
+    finally:
+        try:
+            os.remove(path)
+        except OSError:
+            pass
 
 
 def build(slug, planner_out=None, only=None):
@@ -172,8 +221,7 @@ def build(slug, planner_out=None, only=None):
 
 def _planner_export(slug, entry, out, root):
     """The field planner's second side: a page per batter hand, a card per bowler (headshot, sample
-    line, the runs-off-them wheel, and the categories' fields as the options it starts from)."""
-    from cricket_core.charts import wagon_wheel_zones
+    line, the runs-off-them wheel and the spider, and the categories' fields as the options it starts from)."""
     from photos import get_photo_bytes
     from report import _start_kaleido
     _start_kaleido()            # one Chrome for every wheel: a browser per figure hung on the second
@@ -199,18 +247,25 @@ def _planner_export(slug, entry, out, root):
         hands = {}
         for h, _hand, word in HANDS:
             x = b["hands"][h]
-            wheel = ""
+            wheel = spider = ""
             if x.get("n_balls"):
-                try:
-                    fig = wagon_wheel_zones(x["_wheel_df"], metric="runs", title="", n_sectors=8, is_lhb=(h == "LHB"))
-                    png = fig.to_image(format="png", width=500, height=430, scale=2)
-                    open(os.path.join(img, f"bowler_{bid}_{h.lower()}.webp"), "wb").write(_webp(png, 640))
-                    wheel = f"img/bowler_{bid}_{h.lower()}.webp"
-                except Exception as e:
-                    print(f"  ! wheel {b['name']} {h}: {type(e).__name__}: {str(e)[:60]}")
+                # the batters' cards' pair, at their size (11-10-2026): runs by area, then the spider.
+                # New names, not the old bowler_<id>_<hand>.webp: the app lets a browser keep an
+                # image for a day, so a redrawn wheel under the old name could show the old one.
+                for kind, draw in (("wheel", _zones_png), ("spider", _spider_png)):
+                    name = f"bowler_{bid}_{h.lower()}_" + ("area" if kind == "wheel" else "spider") + ".webp"
+                    try:
+                        png = draw(x["_wheel_df"], h == "LHB")
+                        open(os.path.join(img, name), "wb").write(_webp(png, WHEEL_PX))
+                        if kind == "wheel":
+                            wheel = f"img/{name}"
+                        else:
+                            spider = f"img/{name}"
+                    except Exception as e:
+                        print(f"  ! {kind} {b['name']} {h}: {type(e).__name__}: {str(e)[:60]}")
             n, w = x.get("n_balls") or 0, x.get("n_wkts") or 0
             hands[h] = {"sample": f"Tests to {word}, career · {w:,} wickets off {n:,} balls" if n else "",
-                        "wheel": wheel, "wheel_note": f"No Test balls to {word}",
+                        "wheel": wheel, "spider": spider, "wheel_note": f"No Test balls to {word}",
                         "fields": [{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
                                     "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
                                    for c in x["fields"] if len(c["fielders"]) == 9]}

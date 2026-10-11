@@ -1173,7 +1173,9 @@ row above:
   machine**: `venv/bin/python build_bowler_plans.py --slug <slug> --planner-out ~/fp_bowlers`, copy
   `data/bowler_plans_<opp>.json` back (it is committed) and upload `~/fp_bowlers` (the planner's
   bowler side) with `playerpacks/upload_packs.py --bundle <copy> --prefix aus --apply`. Test-only, as
-  `field_engine` is. `--only <id>` rebuilds one bowler into the existing file.
+  `field_engine` is. `--only <id>` rebuilds one bowler into the existing file. The planner export
+  draws two wheels per hand, as the batters' cards carry (11-10-2026): runs off them by area, drawn
+  and cropped as the decks draw theirs, and the `cricviz` spider; both 560 px WebP.
 - **The fields are `field_engine.bowler_field`** — an estimate, said so on every card: the
   GPS-corrected stock for the type, our batter's hand and the phase (new ball = the first 30 overs,
   the bowling report's own split); the orthodox variant that fits where the runs off them go (pace,
