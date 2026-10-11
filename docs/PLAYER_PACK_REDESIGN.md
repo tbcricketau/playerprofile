@@ -248,7 +248,7 @@ from it yet. In short:
    included), Player Packs for anyone else; the menu is the way between sections. The origin is not
    carried. Deploys run from the build machine on Tom's word, no browser sign-in needed from him.
 
-### Built (11-10-2026) — uploaded, not yet deployed
+### Built and live (11-10-2026) — deployed from the build machine, both regions
 
 - **The round-2 pack**: `build_hub_packs.py`, `hub_pack.css`, `hub_pack.js` as decided (two halves,
   the sample in the header, the pencil, the marked coaches' field, the pinned chips, "Hit the stumps"
@@ -264,9 +264,14 @@ from it yet. In short:
   galleries get it after `<body>`; the planner card is gone. Scouting's index lost its crumb (rebuilt,
   copied into `player_pack_site/coach/`, not yet uploaded). The planner's viewer crumb and the
   "Coaches only" page point at `/packs/`. The tile points at `/packs/index.html`.
-- **To go live**: deploy coachhub and playerpacks in both regions (cricket-core's `webcharts` is
-  copied into each image), and upload the Pages bundle for the Scouting index. Needs Tom's admin
-  sign-in. Until then the live packs app serves the uploaded `/packs/` pages with the old bar.
+- **Live**: coachhub and playerpacks deployed in both regions from the build machine
+  (`~/deploy_on_box.py`, its cached admin sign-in; ~1.5 min each), the Scouting index uploaded on
+  its own (`mediastore.put_file`, since the Pages bundle on this laptop differs from storage in 158
+  other files that are not this session's to publish). Checked live as the test account in both
+  regions (`~/check_bar.py` on the box, 18 of 18): the hub's bar and inline menu, `/menu.json`
+  answering the packs origin and refusing a foreign one, the bar with the menu on `/packs/`, a
+  round-2 pack page, the players' index without the planner card, a report, a gallery, and a
+  viewer at Scouting sent to `/packs/`.
 
 ## Checked, for the record
 
