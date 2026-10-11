@@ -244,6 +244,17 @@ from it yet. In short:
 5. **Build order**: the round-2 pack and the navigation (shared bar and menu, crumb clean-up, tile
    switch) first; the report mockup follows once those are live, and the reports are built after it is
    agreed.
+7. **The A4 reports become web pages** (Tom, 11-10-2026, later the same day): phone first, two columns
+   on a laptop, the packs' card language, a print stylesheet for Ctrl+P. The first mockup covers the
+   Test bowling report and the Test batting report (Rabada to right-handers, Markram v right-arm pace);
+   ODI and T20 follow the agreed pattern. Reports stay coach documents (no player card links one).
+   **Mockup** (11-10): https://claude.ai/artifact/459wknQN5a2NP7XMZbFgRb (private). Three calls in it:
+   the scope switch (All / a hand; All / a bowler type) in place of separate files, the sections it
+   drops, and the planner's coaches' notes at the top of each report.
+8. **Field plans: all six on Player Packs already hold the coach role** (set on People and access
+   10-10): McDonald, Vettori, Wade and Franklin (coaches), Bailey and Dodemaide (national selectors,
+   who keep the coach role and its editing, Tom's call). Five have never signed in. Account creation
+   keeps no welcome email (Tom).
 6. **The planner's bar says Scouting for a coach wherever they came from** (a pack card's pencil
    included), Player Packs for anyone else; the menu is the way between sections. The origin is not
    carried. Deploys run from the build machine on Tom's word, no browser sign-in needed from him.
