@@ -248,9 +248,16 @@ from it yet. In short:
    on a laptop, the packs' card language, a print stylesheet for Ctrl+P. The first mockup covers the
    Test bowling report and the Test batting report (Rabada to right-handers, Markram v right-arm pace);
    ODI and T20 follow the agreed pattern. Reports stay coach documents (no player card links one).
-   **Mockup** (11-10): https://claude.ai/artifact/459wknQN5a2NP7XMZbFgRb (private). Three calls in it:
-   the scope switch (All / a hand; All / a bowler type) in place of separate files, the sections it
-   drops, and the planner's coaches' notes at the top of each report.
+   **Mockup** (11-10): https://claude.ai/artifact/459wknQN5a2NP7XMZbFgRb (private). Tom's calls on it:
+   - **One page per player with a scope switch** at the top (All / right-handers / left-handers on a
+     bowling report; All / one bowler type on a batting report) that narrows every figure and table.
+     Markram's five batting files become one page; Rabada's gains a hand switch. The four narrowed
+     files stop being built once the GitHub Pages packs retire.
+   - **Sections**: keep the release point, restyled to sit with the cricviz pictures; over and round
+     the wicket as cricviz pitch maps, with the heat maps kept as the fallback if they read better;
+     keep the play-and-miss grid, restyled; Current form and the ball 1-6 table lose their own
+     sections but keep more than a one-line summary.
+   - **The planner's shared coaches' notes at the top of each report**, as on the packs.
 8. **Field plans: all six on Player Packs already hold the coach role** (set on People and access
    10-10): McDonald, Vettori, Wade and Franklin (coaches), Bailey and Dodemaide (national selectors,
    who keep the coach role and its editing, Tom's call). Five have never signed in. Account creation
