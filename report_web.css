@@ -1,0 +1,115 @@
+/* The scouting reports as web pages (report_web.py), laid over cricket_core.webcharts.CSS and hub_pack.css.
+   One section per card; the numbers read at the same size as the pictures beside them. Phone first,
+   two columns inside a section from 900 px. */
+
+/* the scope switch under the name, and the build stamp */
+.seg { display:inline-flex; border:1px solid var(--line-strong); border-radius:4px; overflow:hidden; background:#fff; max-width:100% }
+.hp .seg button { font:600 13px var(--font-b); letter-spacing:0; text-transform:none; border:0; border-radius:0; background:#fff;
+                  color:var(--accent); padding:7px 11px; min-height:34px; cursor:pointer; white-space:nowrap;
+                  border-left:1px solid var(--line) }
+.hp .seg button:first-child { border-left:0 }
+.hp .seg button.on { background:var(--accent); color:#fff }
+.hp .seg button:hover:not(.on) { background:var(--accent-soft) }
+.ph .ctl { display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; padding-bottom:12px }
+.ph .ctl .k { font-size:12.5px; font-weight:600; color:var(--muted) }
+.ph .stamp { font-size:12.5px; color:var(--muted) }
+.ph .seg { overflow-x:auto }
+
+/* a scope pane: a flex item of main, so it needs min-width:0 or a wide table widens the page */
+.scope { min-width:0; display:flex; flex-direction:column; gap:12px }
+.scope[hidden] { display:none }
+
+/* a section */
+.sx { background:#fff; border:1px solid var(--line); border-radius:8px; padding:16px; display:flex; flex-direction:column;
+      gap:14px; scroll-margin-top:56px; min-width:0 }
+.sx > header { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap }
+.sx h2 { margin:0; font-family:var(--font-d); font-weight:700; font-size:19px; letter-spacing:.06em; text-transform:uppercase;
+         color:var(--band) }
+.sx h2 span { font-family:var(--font-b); font-weight:500; font-size:13px; letter-spacing:0; text-transform:none; color:var(--muted);
+              margin-left:6px }
+.sx .lead { margin:0; font-size:15px; line-height:1.45 }
+.sx .note { margin:0; font-size:12.5px; color:var(--muted); line-height:1.4 }
+.sx .thin { margin:0 }
+.sim { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--band); background:#f3e9c4;
+       border-radius:3px; padding:2px 6px }
+.two { display:grid; grid-template-columns:1fr; gap:16px }
+.two > * { min-width:0 }
+.col { display:flex; flex-direction:column; gap:10px; min-width:0 }
+.bar-row { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap }
+.notes2 { display:grid; grid-template-columns:1fr; gap:10px }
+
+/* percentile strips: a bar from 0 to 100 with the career mark and the last-three-years mark */
+.pcts { display:grid; grid-template-columns:1fr; gap:10px 24px }
+.pr { display:grid; grid-template-columns:118px minmax(0,1fr); gap:2px 10px; align-items:center }
+.pr .n { font-size:13px; font-weight:600 }
+.pr .w { font-size:12.5px; color:var(--muted); grid-column:2 }
+.pr .bar { position:relative; height:10px; border-radius:5px; background:linear-gradient(90deg,#e8ede9,#cfdcd3) }
+.pr .bar i { position:absolute; top:-4px; width:3px; height:18px; background:var(--band); border-radius:1px; transform:translateX(-1px) }
+.pr .bar i.r { background:transparent; border-left:3px dotted var(--gold); width:0 }
+.pr .v { font-family:var(--font-d); font-weight:700; font-size:18px; color:var(--band); line-height:1 }
+
+/* tables scroll in a box of their own, never the page */
+.tw { overflow-x:auto; border:1px solid var(--line); border-radius:6px }
+table.t { border-collapse:collapse; width:100%; font-size:13.5px; font-variant-numeric:tabular-nums; min-width:420px; margin:0;
+          max-width:none }
+table.t.narrow { min-width:0 }
+table.t th { font-family:var(--font-d); font-weight:700; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase;
+             color:var(--muted); text-align:right; padding:7px 9px; border-bottom:1px solid var(--line-strong); background:#f7f9f7;
+             white-space:nowrap; vertical-align:middle }
+table.t td { text-align:right; padding:7px 9px; border-bottom:1px solid var(--line); white-space:nowrap; vertical-align:middle }
+table.t th:first-child, table.t td:first-child { text-align:left; white-space:normal }
+table.t tr.hi td { background:#fbf4dc }
+table.t tr.hi td:first-child { font-weight:700; color:var(--band) }
+table.t tr:last-child td { border-bottom:0 }
+table.t td.wrap { white-space:normal; text-align:left }
+table.t .wrap { white-space:normal; display:block; min-width:150px; text-align:left }
+table.t td:first-child { min-width:120px }
+table.t.narrow td:first-child { min-width:0 }
+.cn .t a { white-space:nowrap }
+
+/* zone cards: where the wickets and the runs come from */
+.zc { display:grid; grid-template-columns:1fr; gap:8px }
+.z { border:1px solid var(--line); border-radius:6px; padding:10px 12px; border-left:4px solid var(--accent) }
+.z.w { border-left-color:#b5452f }
+.z .k { font-family:var(--font-d); font-weight:700; font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted) }
+.z .v { font-size:16px; font-weight:700; color:var(--ink); margin-top:2px }
+.z .s { font-size:12.5px; color:var(--muted) }
+
+/* pictures */
+.chart svg { width:100%; height:auto; display:block }
+.pics2 { display:flex; gap:10px; align-items:flex-start }
+.pics2 > .pm { width:40%; flex:none }
+.pics2 > .bh { flex:1; min-width:0 }
+.pics2 svg, .pics2 img { width:100%; height:auto; display:block; border-radius:6px }
+.angle { display:grid; grid-template-columns:1fr 1fr; gap:12px }
+.angle figure { margin:0; display:flex; flex-direction:column; gap:6px; min-width:0 }
+.angle figure > div, .angle figure > img { width:100%; max-width:380px; margin:0 auto }
+.angle svg, .angle img { width:100%; height:auto; display:block; border-radius:6px }
+.angle figcaption { font-family:var(--font-d); font-weight:700; font-size:13px; letter-spacing:.06em; text-transform:uppercase;
+                    color:var(--muted); text-align:center }
+.angle .none { font-size:13px; color:var(--muted); align-self:center; text-align:center; padding:24px 8px;
+               border:1px dashed var(--line-strong); border-radius:6px }
+.wheelbox svg, .wheelbox img { width:100%; max-width:340px; display:block; margin:0 auto }
+.hand-pane[hidden], .pane[hidden] { display:none !important }
+.speed { max-width:620px }
+.bar-row > .lbl:empty { flex:1 }
+/* figures in a half-width column: as many across as fit, never six squeezed in */
+.col .figs, .two .figs { grid-template-columns:repeat(auto-fit,minmax(92px,1fr)) }
+
+@media (min-width:900px) {
+  .sx { padding:22px }
+  .two { grid-template-columns:1fr 1fr; gap:24px }
+  .two.wide-l { grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) }
+  .pcts { grid-template-columns:1fr 1fr }
+  .zc { grid-template-columns:repeat(3,1fr) }
+  .zc.two-up { grid-template-columns:1fr 1fr }
+  .notes2 { grid-template-columns:1fr 1fr }
+  .angle { gap:24px }
+}
+
+/* printed: every scope pane but the one on screen stays hidden; the switches go */
+@media print {
+  .seg, .jump, .reels, .tg, .ph .back { display:none !important }
+  .sx { break-inside:avoid; border:0; padding:8px 0 }
+  body.hp { background:#fff }
+}

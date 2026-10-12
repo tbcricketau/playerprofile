@@ -258,6 +258,12 @@ from it yet. In short:
      keep the play-and-miss grid, restyled; Current form and the ball 1-6 table lose their own
      sections but keep more than a one-line summary.
    - **The planner's shared coaches' notes at the top of each report**, as on the packs.
+   - **Round 2 agreed (12-10):** over and round the wicket show the cricviz pitch map with a Density
+     toggle beside it (the restyled heat map), as the wheels switch Zones / Spider. **Build go-ahead:**
+     the Test bowling and batting reports first, served beside the current ones at a new address for
+     Tom's look before Scouting links them; then ODI and T20.
+   - **The planner's bowler list stays on the 04-10 figures until the series ends** (Tom, 12-10); the
+     regenerated list from the wheel fix is held, not uploaded.
 8. **Field plans: all six on Player Packs already hold the coach role** (set on People and access
    10-10): McDonald, Vettori, Wade and Franklin (coaches), Bailey and Dodemaide (national selectors,
    who keep the coach role and its editing, Tom's call). Five have never signed in. Account creation
@@ -290,6 +296,35 @@ from it yet. In short:
   answering the packs origin and refusing a foreign one, the bar with the menu on `/packs/`, a
   round-2 pack page, the players' index without the planner card, a report, a gallery, and a
   viewer at Scouting sent to `/packs/`.
+
+### The web reports, Tests (12-10-2026) — built, served at `coach/<slug>/web/`, not linked yet
+
+`report_web.py` (with `report_web.css` and `report_web.js`) writes a page per player into the coach
+build: `python report_web.py south-africa-test-away-2026` gives `coach/<slug>/web/bowling_<id>.html`,
+`batting_<id>.html`, an `index.html` listing them, and the over/round pictures in `web/pics/`. Coach
+only, because it sits under `coach/`. Scouting does not link it yet.
+
+- **Numbers** come from the A4 builders (`profile.build_profile`, `batter_profile.build_batter_profile`
+  and report.py's row helpers), so the two never disagree. The words are new: the A4 reads say "he" and
+  "his" and some still advise, so the page writes its own lines from the figures.
+- **Scope switch**: a pane per scope, all written by the build. Bowling: all batters, right-handers,
+  left-handers. Batting: all bowling, then each type our attack carries (right-arm pace, left-arm pace,
+  off spin, left-arm orthodox; a type needs 300 balls). `?scope=lhb` opens a scope; the jump strip goes
+  to the open scope and hides chips for sections that scope lacks. Career-wide figures inside a hand
+  scope (current form, the fingerprint, the crease, the release point) say "all batters".
+- **Pictures**: wicket pitch maps and beehives, the batter's dismissal maps and spider are CricViz SVG
+  in the page. Over/round maps: the dots are a WebP per hand and angle (every ball is too many dots
+  for SVG), Density is `density_svg` (a 10 cm grid, blurred, as a tiny PNG inside the SVG, 9 KB). The
+  release point and the play-and-miss grid are drawn in the CricViz flat look. A drawing shared by
+  several scopes is defined once (`Defs`), which took Rabada's page from 661 KB to 358 KB.
+- **Planner**: notes and fields fetched as the packs do. A bowler's packs are `vs_rhb` / `vs_lhb`; a
+  batter's are the bowler-type groups. On all bowling, a type's notes box shows only when written.
+- **Match-ups**: the store is chosen by the series (`matchup_store_<opp>.json`). The A4 builders take
+  the first store that names the player, and `matchup_store_south_africa.json` (ODI) sorts before
+  `_test`, so an A4 Test report built where both exist can show white-ball match-ups. Not changed in
+  the A4 builders.
+- **Batting uses BPD** (balls per dismissal) where the A4 report has dismissals per 100 balls.
+- **Timing** on this laptop: ~50 s a bowler, ~2 min a batter (the attack card's query is most of it).
 
 ## Checked, for the record
 
