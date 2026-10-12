@@ -322,17 +322,20 @@ def release_svg(rows, left_arm=False):
     return "".join(p), n_all
 
 
-_LINE_ORDER = ("wide outside off", "channel", "in line", "outside leg")
+_LINE_ORDER = ("wide outside off", "outside off", "channel", "mid and off", "in line", "leg and mid", "outside leg")
 _LINE_WORDS = {"wide outside off": "Wide outside off", "channel": "The channel", "in line": "In line",
-               "outside leg": "Outside leg"}
+               "outside leg": "Outside leg", "outside off": "Outside off", "mid and off": "Middle and off",
+               "leg and mid": "Leg and middle"}
 
 
-def beaten_grid(beaten):
+def beaten_grid(beaten, spin=False):
     """The play-and-miss grid: pitch length in metres down, pitching line across, each cell the
-    count and share, shaded on one green ramp, the busiest cell outlined in gold."""
+    count and share, shaded on one green ramp, the busiest cell outlined in gold. A spinner's lines
+    are the spin groups (outside off, middle and off, leg and middle, outside leg)."""
+    col = "pitch_line_group_spin" if spin else "pitch_line_group_pace"
     cells = {}
     for r in beaten:
-        L, g = r.get("pitch_length_m"), str(r.get("pitch_line_group_pace") or "").strip()
+        L, g = r.get("pitch_length_m"), str(r.get(col) or "").strip()
         if L is None or not g or L < 0 or L >= 13:
             continue
         key = (int(L), g)
@@ -875,7 +878,7 @@ def _bowler_scope(key, P, Ps, ctx):
     s.append(sec(sid("ang"), "Angle and release", who, ang))
 
     # ── movement ──
-    grids = [(hword[h], beaten_grid(Ps[h].get("beaten_df") or [])) for h in hands]
+    grids = [(hword[h], beaten_grid(Ps[h].get("beaten_df") or [], spin=bool(P.get("is_spin")))) for h in hands]
     s.append(sec(sid("mv"), "Movement", who + ", against the average " + ("spinner" if P["is_spin"] else "pace bowler"),
                  _movement(P) + panes([g[0] for g in grids], [g[1] for g in grids], "Where they beat the bat")))
 
@@ -1033,14 +1036,16 @@ def _bat_facts(P, key):
     import batting_report as BR
     out = []
     isg = bool(P.get("is_spin_group"))
-    against = "v spin" if isg else "v pace"
+    # all bowling: the length and line splits are v pace (or spin); a type's scope is that type
+    against = ("v spin" if isg else "v pace") if key == "all" else "v " + dict(BAT_GROUPS)[key].lower()
     dims = P.get("dims") or {}
     avg = P.get("average")
     for k, word in (("length", "length"), ("line", "pitching line")):
         w = BR._worst(dims.get(k) or [])
         if w and avg and w["avg"] < avg * 0.9:
             out.append((f"Lowest by {word}", f"<b>{E(BR._pitch_line(w['bucket']) if k == 'line' else str(w['bucket']).lower())}</b> "
-                        f"· average {w['avg']:.1f} over {w['balls']:,} balls ({against}, {avg:.1f} overall)"))
+                        f"· average {w['avg']:.1f} over {w['balls']:,} balls ({against}; "
+                        f"{avg:.1f} {'overall' if key == 'all' else 'against the type in all'})"))
     mv = [d for d in dims.get("seam") or [] if d["balls"] >= 40 and d.get("avg") is not None]
     if mv:
         out.append(("Movement", " · ".join(f"{E(BR._blabel(d['bucket'], 'seam_dir', isg))} {d['avg']:.1f}" for d in mv)))
@@ -1458,47 +1463,66 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         return (json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}), f"../reports/{hit[1]}.clips.json"
 
     order = lambda people: sorted(people.items(), key=lambda kv: (int(kv[1].get("order") or 99), kv[1].get("name") or ""))
-    rows_b, rows_t = [], []
     back = ("index.html", "Reports, new look")
-    if "bowling" in kinds:
-        for pid, meta in order(bowlers):
+
+    def one_bowler(pid):
+        Ps = bowler_profiles(pid, fmt=fmt, level=level)
+        if not Ps.get("All"):
+            return "no Test bowling"
+        clips, src = clips_of(pid, "bowling")
+        ctx = bowler_ctx(pid, Ps, os.path.join(web, "pics"), plan=plans.get(pid), clips=clips, img=img(pid),
+                         planner=planner, built=built, back=back, opp=opp)
+        body, hp, title = bowler_page(pid, Ps, ctx)
+        open(os.path.join(web, f"bowling_{pid}.html"), "w", encoding="utf-8").write(
+            page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))
+        return "bowling"
+
+    def one_batter(pid):
+        Pb = batter_profiles(pid, fmt=fmt, level=level)
+        if not Pb.get("All"):
+            return "no Test batting"
+        clips, src = clips_of(pid, "batting")
+        ctx = batter_ctx(pid, Pb, os.path.join(web, "pics"), clips=clips, img=img(pid), planner=planner,
+                         built=built, back=back, opp=opp,
+                         field_rows={g: rows[pid] for g, rows in overview.items() if pid in rows})
+        body, hp, title = batter_page(pid, Pb, ctx)
+        open(os.path.join(web, f"batting_{pid}.html"), "w", encoding="utf-8").write(
+            page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))
+        return "batting"
+
+    # A warehouse timeout part-way through a squad (seen 12-10-2026, after six bowlers) costs that
+    # player one retry, then is reported at the end; it does not stop the rest of the squad.
+    failed = []
+    for kind, people, fn in (("bowling", bowlers, one_bowler), ("batting", batters, one_batter)):
+        if kind not in kinds:
+            continue
+        for pid, meta in order(people):
             pid = str(pid)
             if only and pid not in only:
                 continue
             t0 = time.time()
-            Ps = bowler_profiles(pid, fmt=fmt, level=level)
-            if not Ps.get("All"):
-                print(f"  {meta.get('name')}: no Test bowling")
-                continue
-            clips, src = clips_of(pid, "bowling")
-            ctx = bowler_ctx(pid, Ps, os.path.join(web, "pics"), plan=plans.get(pid), clips=clips, img=img(pid),
-                             planner=planner, built=built, back=back, opp=opp)
-            body, hp, title = bowler_page(pid, Ps, ctx)
-            open(os.path.join(web, f"bowling_{pid}.html"), "w", encoding="utf-8").write(
-                page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))
-            rows_b.append((person(Ps["All"]["name"]), type_word(Ps["All"].get("primary_type")), f"bowling_{pid}.html", img(pid)))
-            print(f"  {person(Ps['All']['name'])}: bowling, {time.time() - t0:.0f} s", flush=True)
-    if "batting" in kinds:
-        for pid, meta in order(batters):
-            pid = str(pid)
-            if only and pid not in only:
-                continue
-            t0 = time.time()
-            Pb = batter_profiles(pid, fmt=fmt, level=level)
-            if not Pb.get("All"):
-                print(f"  {meta.get('name')}: no Test batting")
-                continue
-            clips, src = clips_of(pid, "batting")
-            ctx = batter_ctx(pid, Pb, os.path.join(web, "pics"), clips=clips, img=img(pid), planner=planner,
-                             built=built, back=back, opp=opp,
-                             field_rows={g: rows[pid] for g, rows in overview.items() if pid in rows})
-            body, hp, title = batter_page(pid, Pb, ctx)
-            open(os.path.join(web, f"batting_{pid}.html"), "w", encoding="utf-8").write(
-                page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))
-            P = Pb["All"]
-            rows_t.append((person(P["name"]), ("Left-hander" if P.get("is_lhb") else "Right-hander"), f"batting_{pid}.html", img(pid)))
-            print(f"  {person(P['name'])}: batting, {time.time() - t0:.0f} s", flush=True)
+            for attempt in (1, 2):
+                try:
+                    what = fn(pid)
+                    print(f"  {meta.get('name')}: {what}, {time.time() - t0:.0f} s", flush=True)
+                    break
+                except Exception as exc:
+                    print(f"  {meta.get('name')}: {kind} failed ({type(exc).__name__}: {str(exc)[:120]})"
+                          + (", trying once more" if attempt == 1 else ""), flush=True)
+                    if attempt == 2:
+                        failed.append(f"{meta.get('name')} ({kind})")
+                    else:
+                        time.sleep(20)
+    if failed:
+        print("NOT BUILT: " + ", ".join(failed), flush=True)
     if not only:
+        # every page on disk, not just this run's: a batting-only rebuild keeps the bowlers listed
+        def listed(people, kind, what):
+            return [(meta.get("name") or pid, what(meta), f"{kind}_{pid}.html", img(str(pid))) for pid, meta in order(people)
+                    if os.path.exists(os.path.join(web, f"{kind}_{pid}.html"))]
+        rows_b = listed(bowlers, "bowling", lambda m: str(m.get("type") or "Bowler"))
+        rows_t = listed(batters, "batting", lambda m: "Left-hander" if str(m.get("hand") or "").upper().startswith("L")
+                        else "Right-hander")
         body = _index("Reports, new look", f"{entry.get('name') or slug} · {fmt}s · beside the current reports until "
                       "Scouting links them", [("Their bowlers", rows_b), ("Their batters", rows_t)],
                       ("../index.html", entry.get("name") or "Scouting"))
