@@ -1455,12 +1455,22 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
                 return f"../img/{pid}{ext}"
         return ""
 
-    def clips_of(pid, kind):
+    def clips_of(pid, kind, name=""):
         hit = _pick(smap, pid, kind, fk, level)
-        if not hit:
+        base = hit[1] if hit else None
+        if not base and name:
+            # no render sidecars here (a machine that only holds the coach build): find the coach
+            # build's clip list by the report's file name, firstname_surname_<kind>_..._test_<hand>
+            import glob as _g
+            import re as _re
+            stem = _re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
+            got = sorted(f for f in _g.glob(os.path.join(root, "reports", f"{stem}_{kind}_*test_*.clips.json"))
+                         if "_vs_" not in f)
+            base = os.path.basename(got[0])[:-len(".clips.json")] if got else None
+        if not base:
             return {}, ""
-        p = os.path.join(root, "reports", f"{hit[1]}.clips.json")
-        return (json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}), f"../reports/{hit[1]}.clips.json"
+        p = os.path.join(root, "reports", f"{base}.clips.json")
+        return (json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}), f"../reports/{base}.clips.json"
 
     order = lambda people: sorted(people.items(), key=lambda kv: (int(kv[1].get("order") or 99), kv[1].get("name") or ""))
     back = ("index.html", "Reports, new look")
@@ -1469,7 +1479,7 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         Ps = bowler_profiles(pid, fmt=fmt, level=level)
         if not Ps.get("All"):
             return "no Test bowling"
-        clips, src = clips_of(pid, "bowling")
+        clips, src = clips_of(pid, "bowling", bowlers.get(pid, {}).get("name", ""))
         ctx = bowler_ctx(pid, Ps, os.path.join(web, "pics"), plan=plans.get(pid), clips=clips, img=img(pid),
                          planner=planner, built=built, back=back, opp=opp)
         body, hp, title = bowler_page(pid, Ps, ctx)
@@ -1481,7 +1491,7 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         Pb = batter_profiles(pid, fmt=fmt, level=level)
         if not Pb.get("All"):
             return "no Test batting"
-        clips, src = clips_of(pid, "batting")
+        clips, src = clips_of(pid, "batting", batters.get(pid, {}).get("name", ""))
         ctx = batter_ctx(pid, Pb, os.path.join(web, "pics"), clips=clips, img=img(pid), planner=planner,
                          built=built, back=back, opp=opp,
                          field_rows={g: rows[pid] for g, rows in overview.items() if pid in rows})
