@@ -302,8 +302,15 @@ from it yet. In short:
 **Live 13-10-2026**: the South Africa squad's 23 pages and the index, uploaded to `aus/coach/
 south-africa-test-away-2026/web/` (53 new files, nothing else sent). Checked in both regions as the
 test account: refused as a viewer, and with the coach role for the check, the index, all 23 pages and
-every picture and clip list answer 200 (`check_web.py`, kept on the box). Waiting on Tom's look before
-Scouting links them, then ODI and T20.
+every picture and clip list answer 200 (`check_web.py`, kept on the box).
+
+**Tom's calls, 13-10-2026 (atq):**
+1. **Scouting links the web pages in place of the A4 reports, now.** The A4 stays at its address, unlinked.
+2. **ODI and T20 get web pages too, starting now**, same layout and scope switch, live unlinked for his look.
+3. **The playerpacks gzip-cache fix deploys now**, both regions.
+4. **The A4 builders choose the match-up store by series**; the South Africa Test A4s are not re-rendered.
+5. **The coach copy inside the Pages bundle moves to a dated snapshot** in `%TEMP%`, so the next Pages
+   publish runs.
 
 `report_web.py` (with `report_web.css` and `report_web.js`) writes a page per player into the coach
 build: `python report_web.py south-africa-test-away-2026` gives `coach/<slug>/web/bowling_<id>.html`,

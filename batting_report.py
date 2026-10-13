@@ -987,11 +987,8 @@ def render_batting_report(batter_id: str, out_dir: str = "reports", group: str |
     def _sim_options_ctx():
         """Our best simulated options vs this batter, from the series matchup store."""
         try:
-            import glob as _g
-            from cricket_core.config import project_path
-            for p in _g.glob(os.path.join(project_path("matchupmodel"), "data",
-                                          "matchup_store_*.json")):
-                store = json.load(open(p, encoding="utf-8"))
+            from report import matchup_stores     # this format's stores only, newest first
+            for _p, store in matchup_stores(fmt):
                 cells = [c for c in store.get("they_bat", [])
                          if c["batter_id"] == str(batter_id) and c["sim_avg"] is not None]
                 if not cells:

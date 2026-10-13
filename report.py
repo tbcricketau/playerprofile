@@ -1499,6 +1499,33 @@ def _examples(P: dict) -> dict:
     return ex
 
 
+def matchup_stores(fmt="Test"):
+    """The match-up stores for one format, newest build first, each as (path, store).
+
+    The builders used to take the first store in the folder that named the player. A South Africa
+    player sits in both the ODI store (matchup_store_south_africa) and the Test one, and the ODI one
+    sorts first, so a Test report could print white-ball match-ups (found 12-10-2026). A store with
+    no `format` (the oldest, Bangladesh) is tried after the ones that state theirs."""
+    import glob as _g
+    import json as _json
+    from cricket_core.config import project_path
+    want = "test" if str(fmt).lower() == "test" else ("odi" if str(fmt).lower() == "odi" else "t20")
+    hits, unknown = [], []
+    for p in _g.glob(os.path.join(project_path("matchupmodel"), "data", "matchup_store_*.json")):
+        try:
+            store = _json.load(open(p, encoding="utf-8"))
+        except Exception:
+            continue
+        f = str(store.get("format") or "").lower()
+        f = "t20" if f.startswith("t20") else f
+        if f == want:
+            hits.append((store.get("built") or "", p, store))
+        elif not f:
+            unknown.append((store.get("built") or "", p, store))
+    order = sorted(hits, key=lambda t: t[0], reverse=True) + sorted(unknown, key=lambda t: t[0], reverse=True)
+    return [(p, s) for _b, p, s in order]
+
+
 def _vs_squad_ctx(bowler_id):
     """The 'vs our squad' strip (SCOUTING_REBUILD.md): exceptions only, from the series matchup
     store. Threats/targets need confidence Med/High AND a column-rank extreme; the structural
@@ -1513,8 +1540,7 @@ def _vs_squad_ctx(bowler_id):
         roles = ({pid: r.get("role") for pid, r in
                   _json.load(open(roles_p, encoding="utf-8")).items()}
                  if os.path.exists(roles_p) else {})
-        for p in _g.glob(os.path.join(mm, "data", "matchup_store_*.json")):
-            store = _json.load(open(p, encoding="utf-8"))
+        for _p, store in matchup_stores("Test"):          # this report is Test only
             cells = [c for c in store.get("we_bat", [])
                      if c["bowler_id"] == str(bowler_id) and c["sim_avg"] is not None
                      and roles.get(c["batter_id"]) != "Bowler"]
