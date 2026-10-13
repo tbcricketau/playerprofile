@@ -316,7 +316,31 @@ every picture and clip list answer 200 (`check_web.py`, kept on the box).
 (35 links; a full rebuild stopped at an interactive sign-in this laptop cannot give), the web pages' way
 back pointed into Scouting, 26 files uploaded, playerpacks restarted; checked live in both regions, no A4
 link left. (3) deployed both regions, live checks clean. (4) `report.matchup_stores(fmt)`. (5) moved to
-`%TEMP%\pages_coach_snapshot_20261013` (773 files). (2) under way.
+`%TEMP%\pages_coach_snapshot_20261013` (773 files). (2) built, see below.
+
+### The web reports, ODI and T20 (13-10-2026) — South Africa ODI live at `coach/south-africa-odi-away-2026/web/`, unlinked
+
+`report_web.py <slug>` now builds any format; `report_web_wb.py` holds the white-ball bowling page.
+
+- **A white-ball bowler's scope is the phase** (all overs, powerplay, middle, death; 60 balls a phase),
+  because `build_odi_profile` / `build_t20_profile` are built around it and do not split by hand. The
+  hand is a toggle inside the pictures. Sections: Summary (figures, facts, fingerprint), Phases (with the
+  phase percentiles where the norms exist), Length and variations, Match-ups by hand, Where they bowl
+  (wicket balls; every ball on and off pace, over and round), Vision.
+- **Batters keep the bowler-type scopes**, with the format's words. Two things left off white-ball
+  pages: the attack cards (Test deliveries only, as before) and the **batting fingerprint, whose
+  reference (`batter_vulnerability_profile.csv`) is Test only** — the A4 ODI batting report prints it
+  as "percentile vs Test batters".
+- **No picture files**: every ball is drawn as SVG on the all-overs view where a slice has 700 balls
+  or fewer, Density everywhere else, so the build runs on the build machine (no browser there).
+- **An archived series is read from `squads.json`** (name, format), so the South Africa ODI series,
+  out of `series.json`, built as the test case: 9 bowlers, 10 batters, checked live both regions. T20
+  ran on the box for one bowler and one batter (no T20 series has a coach view yet). Page sizes before
+  compression: ODI up to 644 KB, a T20 bowler 491 KB.
+- **The box had no ODI phase norms** (`referencebuilder/data/bowler_phase_profile_odi.csv`, gitignored),
+  so the first build's phase percentiles were blank; copied across 13-10 and the bowlers rebuilt. A page
+  drops those columns whenever the norms are missing. Copy referencebuilder outputs to the box before a
+  white-ball build there.
 
 `report_web.py` (with `report_web.css` and `report_web.js`) writes a page per player into the coach
 build: `python report_web.py south-africa-test-away-2026` gives `coach/<slug>/web/bowling_<id>.html`,

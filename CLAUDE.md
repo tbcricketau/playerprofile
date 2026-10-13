@@ -1227,7 +1227,7 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   shot is a cropped 540-px page. Pin the body to 390 px in a same-origin copy instead (the app sends
   `X-Frame-Options: DENY`, so an iframe will not do).
 
-### The web reports — `report_web.py` (12-10-2026, Tests; Scouting links them from 13-10)
+### The web reports — `report_web.py` (12-10-2026 Tests, linked from Scouting 13-10; ODI and T20 13-10)
 
 The A4 scouting reports as web pages in the hub's look, one page per player with a scope switch
 (bowling: all / right-handers / left-handers; batting: all / each of our attack's types). Detail and
@@ -1238,6 +1238,9 @@ the open points: `docs/PLAYER_PACK_REDESIGN.md` § "The web reports".
 .\venv\Scripts\python.exe report_web.py <slug> --only 2730017     # one player, no index
 ```
 
+- **Any format**: `report_web.py <slug>` reads the series' format; ODI/T20 bowlers come from
+  `report_web_wb.py` with the phase as the scope. An archived series is read from `squads.json`.
+  White-ball pages carry no batting fingerprint (its reference is Test only) and no attack cards.
 - **Into `coach_build`, never `player_pack_site`.** The coach view's home is `coach_build`; a `coach/`
   folder inside the Pages bundle blocks the next Pages publish (`publish_packs.py` refuses it).
 - **Numbers from the A4 builders, words written fresh**: the A4 reads say "he" and some still advise.
