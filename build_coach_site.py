@@ -126,6 +126,15 @@ def _initials(name):
     return (bits[0][:1] + bits[-1][:1]).upper() if bits else "?"
 
 
+def _report_href(root, kind, pid, a4_href):
+    """Where a player's report link goes: the web page when report_web.py has written one
+    (Tom, 13-10-2026: the web pages replace the A4 links), else the A4 report. The A4 stays at
+    its address either way. Every link here is written from a page one folder down."""
+    if os.path.exists(os.path.join(root, "web", f"{kind}_{pid}.html")):
+        return f"../web/{kind}_{pid}.html"
+    return a4_href
+
+
 def _pick(smap, pid, kind, fmt, level):
     """The report render for one opposition player: (src_dir, base) or None.
 
@@ -252,7 +261,8 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
         out.append({"id": bid, "name": b["name"], "type": b.get("type") or "", "pace": bool(b.get("pace")),
                     "tier": tier, "chip": SR.TIER_CHIP.get(tier, ""), "initials": _initials(b["name"]),
                     "head": ("../" + heads[bid]) if heads.get(bid) else "",
-                    "report": f"../reports/{reports[bid]}.html" if reports.get(bid) else "",
+                    "report": _report_href(root, "bowling", bid,
+                                           f"../reports/{reports[bid]}.html" if reports.get(bid) else ""),
                     "vision": f"../vision/{bid}.html" if reels else "", "reels": reels,
                     "hands": b["hands"]})
     tot = {h: sum((b["hands"].get(h) or {}).get("n_balls") or 0 for b in out) for h in ("RHB", "LHB")}
@@ -313,6 +323,8 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
             b = hit[1]
             if os.path.exists(os.path.join(root, "reports", f"{b}.html")):
                 report = f"../reports/{b}.html"
+        report = _report_href(root, "batting", pid, report)
+        if hit:
             if os.path.exists(os.path.join(root, "reports", f"{b}.player.html")):
                 vision = f"../reports/{b}.player.html"
         per = {}
@@ -417,7 +429,8 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
                 report_of[str(pid)] = base
                 tier = tiers.get(str(pid), "")
                 tiles.setdefault(tier, []).append(SR.bowler_tile(
-                    name, btype or meta.get("type") or "Bowler", f"../reports/{base}.html",
+                    name, btype or meta.get("type") or "Bowler",
+                    _report_href(root, "bowling", pid, f"../reports/{base}.html"),
                     badge=SR.TIER_CHIP.get(tier), badge_class=tier or "squad",
                     photo=("../" + heads[str(pid)]) if heads.get(str(pid)) else None, initials=_initials(name)))
 

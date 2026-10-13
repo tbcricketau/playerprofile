@@ -1478,7 +1478,10 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         return (json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}), f"../reports/{base}.clips.json"
 
     order = lambda people: sorted(people.items(), key=lambda kv: (int(kv[1].get("order") or 99), kv[1].get("name") or ""))
-    back = ("index.html", "Reports, new look")
+    # Scouting links these pages in place of the A4 reports (Tom, 13-10-2026), so the way back is
+    # into Scouting: a bowler from Their bowlers, a batter from the Bowling plans their card sits in
+    back_bowl = ("../batting/index.html", "Their bowlers")
+    back_bat = ("../index.html", "Bowling plans")
 
     def one_bowler(pid):
         Ps = bowler_profiles(pid, fmt=fmt, level=level)
@@ -1486,7 +1489,7 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
             return "no Test bowling"
         clips, src = clips_of(pid, "bowling", bowlers.get(pid, {}).get("name", ""))
         ctx = bowler_ctx(pid, Ps, os.path.join(web, "pics"), plan=plans.get(pid), clips=clips, img=img(pid),
-                         planner=planner, built=built, back=back, opp=opp)
+                         planner=planner, built=built, back=back_bowl, opp=opp)
         body, hp, title = bowler_page(pid, Ps, ctx)
         open(os.path.join(web, f"bowling_{pid}.html"), "w", encoding="utf-8").write(
             page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))
@@ -1502,7 +1505,7 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
             return "no Test batting"
         clips, src = clips_of(pid, "batting", batters.get(pid, {}).get("name", ""))
         ctx = batter_ctx(pid, Pb, os.path.join(web, "pics"), clips=clips, img=img(pid), planner=planner,
-                         built=built, back=back, opp=opp,
+                         built=built, back=back_bat, opp=opp,
                          field_rows={g: rows[pid] for g, rows in overview.items() if pid in rows})
         body, hp, title = batter_page(pid, Pb, ctx)
         open(os.path.join(web, f"batting_{pid}.html"), "w", encoding="utf-8").write(
