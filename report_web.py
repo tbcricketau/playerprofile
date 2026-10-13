@@ -1206,7 +1206,11 @@ def _batter_scope(key, P, Pb, ctx):
     fp = _bat_pct(ctx["fp"]) if key == "all" else ""
     s.append(sec(sid("sum"), "Summary", who,
                  notes + figs(fg) + facts(_bat_facts(P, key))
-                 + ((label(f"Against {ctx.get('one', 'Test')} batters, career and last 3 years") + fp
+                 + ((label(f"Against {ctx.get('one', 'Test')} batters, career and last 3 years" if ctx.get("fmt", "Test") == "Test"
+                          else f"Against {'T20I' if ctx.get('fmt') == 'T20' else ctx.get('one')} batters: internationals between "
+                               "full members since 2015") + fp
+                    + (f"<p class='note'>On {ctx['fp'][0]['n_balls']:,} balls, below the cohort's floor: ranked against the "
+                       "cohort, a small sample.</p>" if ctx["fp"] and ctx["fp"][0].get("small") else "")
                      + "<p class='note'>For the false-shot rows a low percentile is good: fewer false shots than most. The solid mark "
                        "is the career, the dotted gold mark the last three years. Bands: 80 and above among the highest, 60-80 above "
                        "average, 40-60 around average, 20-40 below average, under 20 among the lowest.</p>") if fp else "")))
@@ -1354,10 +1358,10 @@ def batter_ctx(pid, Pb, pics_dir, *, clips=None, img="", planner="", built="", b
         fp_recent = {k: v for k, v in (("Average", Pr.get("average")), ("Strike rate", Pr.get("strike_rate")),
                                        ("False % vs pace", vp.get("false_pct")), ("False % vs spin", vs.get("false_pct")))
                      if v is not None}
-    # The batting reference (batter_vulnerability_profile.csv) is Test cricket only: on an ODI or
-    # T20 page it would put a batter's Test record, ranked against Test batters, beside white-ball
-    # figures. Left off those pages until a white-ball reference exists (13-10-2026).
-    ctx["fp"] = BR._fingerprint_cards(P, recent_vals=fp_recent) if fmt == "Test" else []
+    # Each format ranks against its own reference (batter_vulnerability_profile[_odi|_t20i].csv). The
+    # white-ball ones count internationals between full members from 2015, so the last-three-years
+    # mark (from this page's own rows: every ODI, or every T20 league for T20) is left off there.
+    ctx["fp"] = BR._fingerprint_cards(P, recent_vals=fp_recent if fmt == "Test" else {})
     ctx["attacked"] = _attacked(pid, P.get("name")) if fmt == "Test" else None    # attack cards read Tests
     ctx["sim"] = _sim_options(pid, _store(opp))
     return ctx

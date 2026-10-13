@@ -210,17 +210,24 @@ from cricket_core.config import project_path as _pp
 _REF_DATA = _pp("referencebuilder", "data")
 
 _BAT_REF_CSV = str(_REF_DATA / "batter_vulnerability_profile.csv")
-_BAT_REF = None
+# one reference per format (13-10-2026): referencebuilder's build_batter_vulnerability_profile.py
+# --format ODI / T20I writes the _odi / _t20i files (full members, from 2015). Before that the Test
+# file was read for every format, so an ODI report ranked a batter's Test record.
+_BAT_REF_FILES = {"test": _BAT_REF_CSV, "odi": str(_REF_DATA / "batter_vulnerability_profile_odi.csv"),
+                  "t20i": str(_REF_DATA / "batter_vulnerability_profile_t20i.csv")}
+_BAT_REF = {}
 
 
-def _bat_ref():
-    global _BAT_REF
-    if _BAT_REF is None:
-        _BAT_REF = {}
-        if _os.path.exists(_BAT_REF_CSV):
-            with open(_BAT_REF_CSV, encoding="utf-8", newline="") as f:
-                _BAT_REF = {row["batter_id"]: row for row in _csv.DictReader(f)}
-    return _BAT_REF
+def _bat_ref(fmt="test"):
+    """{batter_id: row} for one format ('test' / 'odi' / 't20i'); {} when that file is not built."""
+    if fmt not in _BAT_REF:
+        rows = {}
+        p = _BAT_REF_FILES.get(fmt)
+        if p and _os.path.exists(p):
+            with open(p, encoding="utf-8", newline="") as f:
+                rows = {row["batter_id"]: row for row in _csv.DictReader(f)}
+        _BAT_REF[fmt] = rows
+    return _BAT_REF[fmt]
 
 
 # ── Stroke norms (how he scores vs the typical Test batter) ─────────────────────
@@ -490,7 +497,7 @@ def _bpctl_of(v, peers):
 
 
 def _fingerprint_cards(P: dict, recent_vals: dict = None, focus: str = None) -> list:
-    ref = _bat_ref()
+    ref = _bat_ref(_norm_fmt(P))
     me = ref.get(P["batter_id"])
     if not me:
         return []
@@ -507,6 +514,8 @@ def _fingerprint_cards(P: dict, recent_vals: dict = None, focus: str = None) -> 
             continue
         peers = []
         for row in ref.values():
+            if row.get("in_cohort", "1") in ("0", 0):      # a listed small sample, not a peer
+                continue
             try:
                 peers.append(float(row[key]))
             except (TypeError, ValueError):
@@ -522,7 +531,8 @@ def _fingerprint_cards(P: dict, recent_vals: dict = None, focus: str = None) -> 
             colour = "#15803d" if hi else (DANGER if pctl <= 20 else TEXT_SEC)
         disp = f"{val:.1f}" + ("%" if key not in ("avg", "sr") else "")
         card = {"label": label, "pctl": pctl, "value": val, "values": peers,
-                "vuln": vuln, "colour": colour, "disp": disp}
+                "vuln": vuln, "colour": colour, "disp": disp,
+                "n_balls": int(float(me.get("n_balls") or 0)), "small": me.get("in_cohort", "1") in ("0", 0)}
         rv = recent_vals.get(label)
         if rv is not None:
             card["recent"] = rv
@@ -1169,7 +1179,7 @@ _TEMPLATE = r"""
   </div>
 
   {% if fp_cards and show_fp %}
-  <h2>Batting Fingerprint <span class="sub" style="font-weight:400">(percentile vs Test batters{% if P.group %} · {{P.group_label}} traits{% endif %})</span></h2>
+  <h2>Batting Fingerprint <span class="sub" style="font-weight:400">(percentile vs {{ 'T20I' if fmt_label in ('T20', 'T20I') else fmt_label }} batters{% if P.group %} · {{P.group_label}} traits{% endif %})</span></h2>
   {% if fp_type %}<div class="read" style="font-weight:700;margin-bottom:3px">{{fp_type}}</div>{% endif %}
   {% if fp_headline %}<div class="read" style="margin-bottom:6px">{{fp_headline}}</div>{% endif %}
   <div class="fpgrid">
