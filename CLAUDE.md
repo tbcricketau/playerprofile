@@ -1245,6 +1245,15 @@ the open points: `docs/PLAYER_PACK_REDESIGN.md` § "The web reports".
   store naming the player" picks the ODI store before the Test one.
 - **Upload just the new folder** by staging `coach/<slug>/web/` alone in `%TEMP%` and pointing
   `upload_packs.py --bundle` at that, so nothing else in storage is compared or sent.
+- **On the build machine** (how the 13-10 squad was built, when this laptop lost the warehouse): it
+  holds the data files but no coach build, so copy `coach/<slug>/img`, `reports/*.clips.json` and
+  `web/pics` across first, and run with the project's `venv/bin/python` (not `~/venv`). It has **no
+  headless browser**, so a bowler whose over/round dot pictures are not in `web/pics` fails there:
+  export those balls on the box, draw them here with `angle_map_png`, copy them back, rerun with
+  `--reuse-pics`. A squad takes about four minutes there, against 30 here.
+- **Screenshots wait on the planner**: a page fetches notes and fields as it opens, and when the
+  planner's store cannot be reached the fetch hangs headless Edge. Check visuals on a scratch copy
+  with `HP.series` blanked.
 - **Locally**, serve `coach_build` with `PACKS_DIR`, `PACKS_CACHE_MB=0` and `FIELDPLANNER_DEV_USER=coach`.
   Until 12-10 the app's gzip cache was keyed on the path alone, so a rebuilt page reached a browser
   in its old form while curl saw the new one.

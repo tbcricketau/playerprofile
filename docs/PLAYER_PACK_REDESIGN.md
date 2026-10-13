@@ -297,7 +297,13 @@ from it yet. In short:
   round-2 pack page, the players' index without the planner card, a report, a gallery, and a
   viewer at Scouting sent to `/packs/`.
 
-### The web reports, Tests (12-10-2026) — built, served at `coach/<slug>/web/`, not linked yet
+### The web reports, Tests (12-10-2026) — live at `coach/<slug>/web/`, not linked yet
+
+**Live 13-10-2026**: the South Africa squad's 23 pages and the index, uploaded to `aus/coach/
+south-africa-test-away-2026/web/` (53 new files, nothing else sent). Checked in both regions as the
+test account: refused as a viewer, and with the coach role for the check, the index, all 23 pages and
+every picture and clip list answer 200 (`check_web.py`, kept on the box). Waiting on Tom's look before
+Scouting links them, then ODI and T20.
 
 `report_web.py` (with `report_web.css` and `report_web.js`) writes a page per player into the coach
 build: `python report_web.py south-africa-test-away-2026` gives `coach/<slug>/web/bowling_<id>.html`,
