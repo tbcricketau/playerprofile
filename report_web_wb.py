@@ -61,7 +61,7 @@ def _variation_mix(rows, off):
     return [(t, c, c / n * 100) for t, c in mix.most_common()]
 
 
-def _where_block(rows, hand, P, defs, key):
+def _where_block(rows, hand, P, defs, key, dots=True):
     """Where the balls pitched for one hand: on pace and off pace (pace bowlers), over and round."""
     from cricket_core import cricviz as cv
     lhb = hand == "LHB"
@@ -84,7 +84,7 @@ def _where_block(rows, hand, P, defs, key):
                 dot_figs.append(none)
                 continue
             dens_figs.append(f"<figure>{cap}{defs.use(f'{key}-{sk}-{ang}-d', RW.density_svg(ar, lhb=lhb, bands=bands))}</figure>")
-            if len(ar) <= MAX_DOTS:
+            if dots and len(ar) <= MAX_DOTS:
                 pm = cv.pitch_map(ar, lhb=lhb, metrics=False, **({"bands": bands} if bands else {}))
                 dot_figs.append(f"<figure>{cap}{defs.use(f'{key}-{sk}-{ang}-p', pm)}</figure>")
             else:
@@ -229,13 +229,17 @@ def _scope(key, phase, P, ctx, fmt):
     for h in hands:
         html_, n = _wicket_pics(rows, h, P, defs, f"{key}-wk-{h.lower()}")
         wpics.append((f"{word[h]} · {n}", html_))
-    where = [(word[h], _where_block(rows, h, P, defs, f"{key}-wh-{h.lower()}")) for h in hands]
+    # dots on all overs only: a phase scope's slices are new drawings (nothing to share), and with
+    # them a T20 page ran to 862 KB; inside a phase the Density view carries it
+    where = [(word[h], _where_block(rows, h, P, defs, f"{key}-wh-{h.lower()}", dots=phase is None)) for h in hands]
     out.append(sec(sid("thr"), "Where they bowl", who,
                    "<div class='two wide-l'><div>" + (panes([w[0] for w in wpics], [w[1] for w in wpics], "Wicket balls") if wpics else "")
                    + "<p class='note'>Where the wicket balls pitched and passed the stumps, from behind the bowler.</p></div>"
                    + "<div>" + (panes([w[0] for w in where], [w[1] for w in where], "Every ball") if where else "") + "</div></div>"
-                   + "<p class='note'>Density shades where most balls land; Dots draws each ball by what came of it (red a "
-                     "wicket, blue a four, purple a six) where a slice has few enough balls to draw.</p>"))
+                   + ("<p class='note'>Dots draws each ball by what came of it (red a wicket, blue a four, purple a six) "
+                      f"where a slice has {MAX_DOTS} balls or fewer; Density shades where most balls land.</p>" if phase is None
+                      else "<p class='note'>Density shades where most balls land. The All overs view also draws each "
+                           "ball.</p>")))
 
     out.append(sec(sid("vis"), "Vision", "", RW._vision(ctx.get("clips"))))
     return "".join(out)
