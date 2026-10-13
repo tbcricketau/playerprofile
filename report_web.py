@@ -1318,20 +1318,20 @@ _BAT_JUMP = (("sum", "Summary"), ("type", "By bowler type"), ("vul", "Where they
              ("vis", "Vision"))
 
 
-def batter_profiles(pid, raw=None, fmt="Test", level="international"):
+def batter_profiles(pid, raw=None, fmt="Test", level="international", source="warehouse"):
     """All bowling, each of our attack's types, and the last three years for the fingerprint."""
     import datetime as dt
     from batting_loaders import load_batter_deliveries
     from batter_profile import build_batter_profile, process_batting_rows
-    raw = process_batting_rows(raw if raw is not None else load_batter_deliveries(pid, fmt=fmt, level=level))
-    Pb = {"All": build_batter_profile(pid, raw=raw, fmt=fmt, level=level)}
+    raw = process_batting_rows(raw if raw is not None else load_batter_deliveries(pid, fmt=fmt, level=level, source=source))
+    Pb = {"All": build_batter_profile(pid, raw=raw, fmt=fmt, level=level, source=source), "_source": source}
     for g, _l in BAT_GROUPS:
-        P = build_batter_profile(pid, raw=raw, group=g, fmt=fmt, level=level)
+        P = build_batter_profile(pid, raw=raw, group=g, fmt=fmt, level=level, source=source)
         if sum(1 for r in P["raw"] if r.get("is_legal")) >= 300:
             Pb[g] = P
     cut = (dt.date.today() - dt.timedelta(days=int(365.25 * 3))).isoformat()
     rec = [r for r in raw if (r.get("match_date") or "") >= cut]
-    Pb["_recent"] = (build_batter_profile(pid, raw=rec, fmt=fmt, level=level)
+    Pb["_recent"] = (build_batter_profile(pid, raw=rec, fmt=fmt, level=level, source=source)
                      if sum(1 for r in rec if r.get("is_legal")) >= 300 else None)
     return Pb
 
@@ -1361,6 +1361,10 @@ def batter_ctx(pid, Pb, pics_dir, *, clips=None, img="", planner="", built="", b
 
 def batter_page(pid, Pb, ctx):
     P = Pb["All"]
+    rec_note = ""
+    if Pb.get("_source", "warehouse") != "warehouse":
+        import batting_report as BR
+        rec_note = BR._record_label(P.get("raw") or [], "Test", "international")
     name = person(P["name"])
     scopes = [("all", "All")] + [(g, lab) for g, lab in BAT_GROUPS if Pb.get(g)]
     seg = ("<div class='seg' role='tablist' aria-label='Bowling'>" + "".join(
@@ -1374,7 +1378,8 @@ def batter_page(pid, Pb, ctx):
     head = (f"<header class='ph'><div class='in'><a class='back' href='{E(ctx.get('back_href', 'index.html'))}'>‹ "
             f"{E(ctx.get('back_label', 'Reports'))}</a>"
             f"<div class='who'>{av}<div><h1>{E(name)}</h1><div class='sb'>{'Left-hander' if P.get('is_lhb') else 'Right-hander'} · "
-            f"{E(team_word(P.get('team')))} · Tests, career</div></div></div>"
+            f"{E(team_word(P.get('team')) or 'Tests and first-class')}{'' if rec_note else ' · Tests, career'}</div>"
+            f"{('<div class=\'sb\'>' + E(rec_note) + '</div>') if rec_note else ''}</div></div>"
             f"<div class='ctl'><span class='k'>Bowling</span>{seg}<span class='stamp'>Built {E(ctx['built'])} · "
             f"Tests to {_day(last)}</span></div></div></header>")
     nav = ("<nav class='jump'><div class='in'>" + "".join(
@@ -1488,7 +1493,11 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         return "bowling"
 
     def one_batter(pid):
-        Pb = batter_profiles(pid, fmt=fmt, level=level)
+        # as the packs decide it (build_pack_extras): a batter whose clips are scoped to Cricket-21
+        # has no record at this level, and is profiled from Cricket-21 as well
+        meta = batters.get(pid) or {}
+        source = "both" if any(str(v).startswith("C21:") for k, v in meta.items() if k.startswith("clip_scope_")) else "warehouse"
+        Pb = batter_profiles(pid, fmt=fmt, level=level, source=source)
         if not Pb.get("All"):
             return "no Test batting"
         clips, src = clips_of(pid, "batting", batters.get(pid, {}).get("name", ""))
