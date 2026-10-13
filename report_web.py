@@ -1354,7 +1354,10 @@ def batter_ctx(pid, Pb, pics_dir, *, clips=None, img="", planner="", built="", b
         fp_recent = {k: v for k, v in (("Average", Pr.get("average")), ("Strike rate", Pr.get("strike_rate")),
                                        ("False % vs pace", vp.get("false_pct")), ("False % vs spin", vs.get("false_pct")))
                      if v is not None}
-    ctx["fp"] = BR._fingerprint_cards(P, recent_vals=fp_recent)
+    # The batting reference (batter_vulnerability_profile.csv) is Test cricket only: on an ODI or
+    # T20 page it would put a batter's Test record, ranked against Test batters, beside white-ball
+    # figures. Left off those pages until a white-ball reference exists (13-10-2026).
+    ctx["fp"] = BR._fingerprint_cards(P, recent_vals=fp_recent) if fmt == "Test" else []
     ctx["attacked"] = _attacked(pid, P.get("name")) if fmt == "Test" else None    # attack cards read Tests
     ctx["sim"] = _sim_options(pid, _store(opp))
     return ctx
@@ -1490,6 +1493,9 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
     # into Scouting: a bowler from Their bowlers, a batter from the Bowling plans their card sits in
     back_bowl = ("../batting/index.html", "Their bowlers")
     back_bat = ("../index.html", "Bowling plans")
+    if not os.path.exists(os.path.join(root, "batting", "index.html")):
+        # an older series' coach view has no Their bowlers page: back to the series
+        back_bowl = back_bat = ("../index.html", entry.get("name") or "Scouting")
 
     def one_bowler(pid):
         if fmt != "Test":

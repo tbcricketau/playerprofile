@@ -93,7 +93,7 @@ def _where_block(rows, hand, P, defs, key):
         if all_dots and len(dot_figs) == len(dens_figs):
             # few enough balls everywhere to draw every one: Density and Dots, as on the Test page
             dots_html = "<div class='angle'>" + "".join(dot_figs) + "</div>"
-            blocks.append(RW.panes(["Density", "Dots"], [dens_html, dots_html], slabel))
+            blocks.append(RW.panes(["Dots", "Density"], [dots_html, dens_html], slabel))
         else:
             blocks.append((label(slabel) if slabel else "") + dens_html)
     return "".join(blocks)
@@ -132,7 +132,7 @@ def _scope(key, phase, P, ctx, fmt):
     if phase is None:
         tops = sorted(P.get("phases") or [], key=lambda p: -p["pct_balls"])
         if tops:
-            fx.append(("Where they bowl", " · ".join(f"{p['phase'].lower()} {p['pct_balls']:.0f}%" for p in tops) + " of their overs"))
+            fx.append(("Overs by phase", " · ".join(f"{p['phase'].lower()} {p['pct_balls']:.0f}%" for p in tops) + " of their overs"))
     else:
         if ph:
             fx.append(("Share of overs", f"{ph['pct_balls']:.0f}% of their overs are in the {phase.lower()}"))
@@ -151,8 +151,7 @@ def _scope(key, phase, P, ctx, fmt):
         tot = sum(p for _t, _c, p in mix)
         if mix:
             fx.append(("Slower balls", f"{tot:.0f}% of balls · most often the {E(mix[0][0].lower())} ({mix[0][2]:.0f}%)"))
-    s_all = s
-    fx.append(("Boundaries", f"{s_all['boundary_pct']:.0f}% of balls go for four or six"))
+    fx.append(("Boundaries", f"{s['boundary_pct']:.0f}% of balls go for four or six"))
     if phase is None:
         from cricket_core import stumps
         st = stumps.bowler_vs_type(P["raw"], fmt="ODI" if fmt == "ODI" else "T20I")
@@ -178,10 +177,16 @@ def _scope(key, phase, P, ctx, fmt):
                          + ([_n(p.get("avg_speed"), 0)] if P.get("is_pace") else []))
         heads = ["Phase", "Overs", "Economy", "Economy v type", "Wkts", "Wickets v type", "Avg", "Bowl SR", "Boundary %", "Dot %"] \
             + (["km/h"] if P.get("is_pace") else [])
+        # the percentile columns only where the phase norms were there to compute them
+        have_p = any(p.get("econ_pctl") is not None or p.get("wkt_pctl") is not None for p in P["phases"])
+        if not have_p:
+            keep = [i for i, h in enumerate(heads) if not h.endswith("v type")]
+            heads = [heads[i] for i in keep]
+            rows_ = [[r[i] for i in keep] for r in rows_]
         out.append(sec(sid("ph"), "Phases", "", table(heads, rows_)
-                       + f"<p class='note'>Percentiles against {'pace' if P.get('is_pace') else 'spin'} bowlers in {many} in the "
-                         "same phase, two-new-balls era: a higher economy percentile is harder to score off, a higher wickets "
-                         "percentile takes wickets more often.</p>"))
+                       + (f"<p class='note'>Percentiles against {'pace' if P.get('is_pace') else 'spin'} bowlers in {many} in "
+                          "the same phase, two-new-balls era: a higher economy percentile is harder to score off, a higher "
+                          "wickets percentile takes wickets more often.</p>" if have_p else "")))
 
     # ── length and variations (pace) ──
     dd = P.get("deepdive")
