@@ -1206,7 +1206,7 @@ def _batter_scope(key, P, Pb, ctx):
     fp = _bat_pct(ctx["fp"]) if key == "all" else ""
     s.append(sec(sid("sum"), "Summary", who,
                  notes + figs(fg) + facts(_bat_facts(P, key))
-                 + ((label("Against Test batters, career and last 3 years") + fp
+                 + ((label(f"Against {ctx.get('one', 'Test')} batters, career and last 3 years") + fp
                      + "<p class='note'>For the false-shot rows a low percentile is good: fewer false shots than most. The solid mark "
                        "is the career, the dotted gold mark the last three years. Bands: 80 and above among the highest, 60-80 above "
                        "average, 40-60 around average, 20-40 below average, under 20 among the lowest.</p>") if fp else "")))
@@ -1281,7 +1281,7 @@ def _batter_scope(key, P, Pb, ctx):
         s.append(sec(sid("start"), "First 30 balls", who, table([""] + _BAT_HEADS, rows, hi=weak)))
 
     # ── how attacks bowled, and our options (all bowling only) ──
-    if key == "all" and ctx.get("attacked"):
+    if key == "all" and ctx.get("attacked") and ctx.get("fmt", "Test") == "Test":
         a = ctx["attacked"]
         rows = []
         for r in a.get("series") or []:
@@ -1298,7 +1298,7 @@ def _batter_scope(key, P, Pb, ctx):
         rows = [[E(c["bowler"]), E(c.get("bowler_type") or ""), f"{c['sim_avg']:.1f}",
                  _n(c.get("fail_to_set_pct"), 1, "%"), E(c.get("top_dismissal") or "")] for c in opts[:6]]
         s.append(sec(sid("opt"), "Our options", "", "<p class='note'>From the match simulation, which plays each pairing "
-                     "thousands of times from full Test records. A lower expected average favours our bowler.</p>"
+                     f"thousands of times from full {ctx.get('one', 'Test')} records. A lower expected average favours our bowler.</p>"
                      + table(["Bowler", "Type", "Expected avg", "Out in first 30", "Top dismissal"], rows, hi=0),
                      extra="<span class='sim'>Match simulation</span>"))
 
@@ -1337,12 +1337,13 @@ def batter_profiles(pid, raw=None, fmt="Test", level="international", source="wa
 
 
 def batter_ctx(pid, Pb, pics_dir, *, clips=None, img="", planner="", built="", back=("index.html", "Reports"),
-               field_rows=None, opp=""):
+               field_rows=None, opp="", fmt="Test"):
     import batting_report as BR
     P = Pb["All"]
     d = Defs()
+    one, many = {"Test": ("Test", "Tests"), "ODI": ("ODI", "ODIs"), "T20": ("T20I", "T20Is")}.get(fmt, ("Test", "Tests"))
     ctx = {"clips": clips or {}, "img": img, "planner": planner, "built": built, "back_href": back[0], "back_label": back[1],
-           "defs": d, "out_pics": {}, "wheels": {}, "field_rows": field_rows or {}}
+           "defs": d, "out_pics": {}, "wheels": {}, "field_rows": field_rows or {}, "fmt": fmt, "one": one, "many": many}
     for k, Pk in [("all", P)] + [(g, Pb[g]) for g, _l in BAT_GROUPS if Pb.get(g)]:
         ctx["out_pics"][k] = _bat_wicket_pics(Pk, d, f"bo-{k}")
         ctx["wheels"][k] = _bat_wheel(Pk, d, f"bw-{k}")
@@ -1354,7 +1355,7 @@ def batter_ctx(pid, Pb, pics_dir, *, clips=None, img="", planner="", built="", b
                                        ("False % vs pace", vp.get("false_pct")), ("False % vs spin", vs.get("false_pct")))
                      if v is not None}
     ctx["fp"] = BR._fingerprint_cards(P, recent_vals=fp_recent)
-    ctx["attacked"] = _attacked(pid, P.get("name"))
+    ctx["attacked"] = _attacked(pid, P.get("name")) if fmt == "Test" else None    # attack cards read Tests
     ctx["sim"] = _sim_options(pid, _store(opp))
     return ctx
 
@@ -1364,7 +1365,7 @@ def batter_page(pid, Pb, ctx):
     rec_note = ""
     if Pb.get("_source", "warehouse") != "warehouse":
         import batting_report as BR
-        rec_note = BR._record_label(P.get("raw") or [], "Test", "international")
+        rec_note = BR._record_label(P.get("raw") or [], ctx.get("fmt", "Test"), "international")
     name = person(P["name"])
     scopes = [("all", "All")] + [(g, lab) for g, lab in BAT_GROUPS if Pb.get(g)]
     seg = ("<div class='seg' role='tablist' aria-label='Bowling'>" + "".join(
@@ -1378,10 +1379,10 @@ def batter_page(pid, Pb, ctx):
     head = (f"<header class='ph'><div class='in'><a class='back' href='{E(ctx.get('back_href', 'index.html'))}'>‹ "
             f"{E(ctx.get('back_label', 'Reports'))}</a>"
             f"<div class='who'>{av}<div><h1>{E(name)}</h1><div class='sb'>{'Left-hander' if P.get('is_lhb') else 'Right-hander'} · "
-            f"{E(team_word(P.get('team')) or 'Tests and first-class')}{'' if rec_note else ' · Tests, career'}</div>"
+            f"{E(team_word(P.get('team')) or 'first-class')}{'' if rec_note else ' · ' + ctx.get('many', 'Tests') + ', career'}</div>"
             f"{('<div class=\'sb\'>' + E(rec_note) + '</div>') if rec_note else ''}</div></div>"
             f"<div class='ctl'><span class='k'>Bowling</span>{seg}<span class='stamp'>Built {E(ctx['built'])} · "
-            f"Tests to {_day(last)}</span></div></div></header>")
+            f"{ctx.get('many', 'Tests')} to {_day(last)}</span></div></div></header>")
     nav = ("<nav class='jump'><div class='in'>" + "".join(
         f"<a href='#all-{a}' data-to='{a}'>{E(t)}</a>" for a, t in _BAT_JUMP) + "</div></nav>")
     body = "".join(f"<div class='scope' data-scope='{k}'{'' if i == 0 else ' hidden'}>"
@@ -1429,11 +1430,18 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
     from publish_site import _sidecar_map
     here = os.path.dirname(os.path.abspath(__file__))
     out_root = out_root or os.path.join(here, "coach_build")
-    entry = _series(slug)
-    fk, level = _fmt_level(entry)
-    if fk != "test":
-        raise SystemExit(f"{slug} is {fk}: the web reports cover Tests so far")
-    fmt = _FMT_WORD[fk]
+    try:
+        entry = _series(slug)
+        fk, level = _fmt_level(entry)
+    except SystemExit:
+        # an archived series has left series.json; squads.json still carries its name and format
+        sq = json.load(open(os.path.join(here, "squads.json"), encoding="utf-8")).get(slug)
+        if not sq:
+            raise
+        entry = {"name": sq.get("name") or slug, "format": sq.get("format"), "level": sq.get("level")}
+        fk = {"test": "test", "odi": "odi"}.get(str(sq.get("format") or "Test").lower(), "t20")
+        level = "a-team" if str(sq.get("level") or "").lower().startswith("a") else "international"
+    fmt = {"test": "Test", "odi": "ODI", "t20": "T20"}[fk]
     bowlers, batters = _about(slug)
     smap = _sidecar_map()
     planner = entry.get("planner_series") or ""
@@ -1469,7 +1477,7 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
             import glob as _g
             import re as _re
             stem = _re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
-            got = sorted(f for f in _g.glob(os.path.join(root, "reports", f"{stem}_{kind}_*test_*.clips.json"))
+            got = sorted(f for f in _g.glob(os.path.join(root, "reports", f"{stem}_{kind}_*{fk}*.clips.json"))
                          if "_vs_" not in f)
             base = os.path.basename(got[0])[:-len(".clips.json")] if got else None
         if not base:
@@ -1484,9 +1492,21 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
     back_bat = ("../index.html", "Bowling plans")
 
     def one_bowler(pid):
+        if fmt != "Test":
+            import report_web_wb as WB
+            P = WB.wb_profile(pid, fmt=fmt, level=level)
+            if P.get("empty"):
+                return f"no {fmt} bowling"
+            clips, src = clips_of(pid, "bowling", bowlers.get(pid, {}).get("name", ""))
+            ctx = {"clips": clips, "img": img(pid), "planner": planner, "built": built,
+                   "back_href": back_bowl[0], "back_label": back_bowl[1]}
+            body, hp, title = WB.wb_bowler_page(pid, P, ctx, fmt)
+            open(os.path.join(web, f"bowling_{pid}.html"), "w", encoding="utf-8").write(
+                page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))
+            return "bowling"
         Ps = bowler_profiles(pid, fmt=fmt, level=level)
         if not Ps.get("All"):
-            return "no Test bowling"
+            return f"no {fmt} bowling"
         clips, src = clips_of(pid, "bowling", bowlers.get(pid, {}).get("name", ""))
         ctx = bowler_ctx(pid, Ps, os.path.join(web, "pics"), plan=plans.get(pid), clips=clips, img=img(pid),
                          planner=planner, built=built, back=back_bowl, opp=opp)
@@ -1502,10 +1522,10 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         source = "both" if any(str(v).startswith("C21:") for k, v in meta.items() if k.startswith("clip_scope_")) else "warehouse"
         Pb = batter_profiles(pid, fmt=fmt, level=level, source=source)
         if not Pb.get("All"):
-            return "no Test batting"
+            return f"no {fmt} batting"
         clips, src = clips_of(pid, "batting", batters.get(pid, {}).get("name", ""))
         ctx = batter_ctx(pid, Pb, os.path.join(web, "pics"), clips=clips, img=img(pid), planner=planner,
-                         built=built, back=back_bat, opp=opp,
+                         built=built, back=back_bat, opp=opp, fmt=fmt,
                          field_rows={g: rows[pid] for g, rows in overview.items() if pid in rows})
         body, hp, title = batter_page(pid, Pb, ctx)
         open(os.path.join(web, f"batting_{pid}.html"), "w", encoding="utf-8").write(
@@ -1545,8 +1565,8 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         rows_b = listed(bowlers, "bowling", lambda m: str(m.get("type") or "Bowler"))
         rows_t = listed(batters, "batting", lambda m: "Left-hander" if str(m.get("hand") or "").upper().startswith("L")
                         else "Right-hander")
-        body = _index("Reports, new look", f"{entry.get('name') or slug} · {fmt}s · beside the current reports until "
-                      "Scouting links them", [("Their bowlers", rows_b), ("Their batters", rows_t)],
+        body = _index("Reports, new look", f"{entry.get('name') or slug} · {fmt} reports",
+                      [("Their bowlers", rows_b), ("Their batters", rows_t)],
                       ("../index.html", entry.get("name") or "Scouting"))
         open(os.path.join(web, "index.html"), "w", encoding="utf-8").write(page("Reports, new look", body, {}))
     return web
