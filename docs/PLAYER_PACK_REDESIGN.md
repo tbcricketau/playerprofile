@@ -297,7 +297,7 @@ from it yet. In short:
   round-2 pack page, the players' index without the planner card, a report, a gallery, and a
   viewer at Scouting sent to `/packs/`.
 
-### The web reports, Tests (12-10-2026) — live at `coach/<slug>/web/`, not linked yet
+### The web reports, Tests (12-10-2026) — live at `coach/<slug>/web/`, linked from Scouting 13-10
 
 **Live 13-10-2026**: the South Africa squad's 23 pages and the index, uploaded to `aus/coach/
 south-africa-test-away-2026/web/` (53 new files, nothing else sent). Checked in both regions as the
@@ -311,6 +311,12 @@ every picture and clip list answer 200 (`check_web.py`, kept on the box).
 4. **The A4 builders choose the match-up store by series**; the South Africa Test A4s are not re-rendered.
 5. **The coach copy inside the Pages bundle moves to a dated snapshot** in `%TEMP%`, so the next Pages
    publish runs.
+
+**Done 13-10:** (1) the three Scouting pages carrying report links rewritten in place to the web pages
+(35 links; a full rebuild stopped at an interactive sign-in this laptop cannot give), the web pages' way
+back pointed into Scouting, 26 files uploaded, playerpacks restarted; checked live in both regions, no A4
+link left. (3) deployed both regions, live checks clean. (4) `report.matchup_stores(fmt)`. (5) moved to
+`%TEMP%\pages_coach_snapshot_20261013` (773 files). (2) under way.
 
 `report_web.py` (with `report_web.css` and `report_web.js`) writes a page per player into the coach
 build: `python report_web.py south-africa-test-away-2026` gives `coach/<slug>/web/bowling_<id>.html`,

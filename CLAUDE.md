@@ -1227,7 +1227,7 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   shot is a cropped 540-px page. Pin the body to 390 px in a same-origin copy instead (the app sends
   `X-Frame-Options: DENY`, so an iframe will not do).
 
-### The web reports — `report_web.py` (12-10-2026, Tests; not linked from Scouting yet)
+### The web reports — `report_web.py` (12-10-2026, Tests; Scouting links them from 13-10)
 
 The A4 scouting reports as web pages in the hub's look, one page per player with a scope switch
 (bowling: all / right-handers / left-handers; batting: all / each of our attack's types). Detail and
@@ -1243,6 +1243,11 @@ the open points: `docs/PLAYER_PACK_REDESIGN.md` § "The web reports".
 - **Numbers from the A4 builders, words written fresh**: the A4 reads say "he" and some still advise.
 - **The match-up store is chosen by series** (`matchup_store_<opp>.json`); the A4 builders' "first
   store naming the player" picks the ODI store before the Test one.
+- **Scouting links them in place of the A4 reports** (Tom, 13-10): `build_coach_site._report_href` links
+  `web/<kind>_<pid>.html` wherever one exists, so **build the web pages before the coach view**. A page's
+  way back is into Scouting (Their bowlers for a bowler, Bowling plans for a batter).
+- **A re-upload reaches nobody until the app restarts**: playerpacks keeps every page it has served in
+  memory. `cricket-core/scripts/app_restart.py playerpacks` on the build machine (seconds, no new image).
 - **Upload just the new folder** by staging `coach/<slug>/web/` alone in `%TEMP%` and pointing
   `upload_packs.py --bundle` at that, so nothing else in storage is compared or sent.
 - **On the build machine** (how the 13-10 squad was built, when this laptop lost the warehouse): it
