@@ -923,5 +923,20 @@
    4011
   ],
   "confidence": "dob 1996-03-01 matched to warehouse, per database; Cricket21PlayerID 5810 (hand-mapped 2026-09-29)"
+ },
+ "4353843": {
+  "name": "Matthew Breetzke",
+  "c21_ids": [
+   7656,
+   6342
+  ],
+  "c21_name": "Matthew Breetzke",
+  "c21_ids_multiday": [
+   7656
+  ],
+  "c21_ids_white": [
+   6342
+  ],
+  "confidence": "dob 1998-11-03 matched to warehouse, per database (one record in each); hand-mapped 2026-10-15"
  }
 }

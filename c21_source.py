@@ -83,6 +83,10 @@ PLAYER_MAP = os.path.join(HERE, "data", "c21_player_map.json")
 # of his domestic cricket; C21 has coordinates on nearly every ball.
 SERVED_COMPETITIONS = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South Africa A in",
                        "CSA ", "SA20",
+                       # A teams touring South Africa, and a touring side's warm-up there: the
+                       # South African batter's first-class cricket at home (Matthew Breetzke,
+                       # 15-10-2026: 216 of his 857 balls are Sri Lanka A in 2024)
+                       " A in South Africa", "South Africa 4-day Warm-up",
                        "in Zimbabwe", "Zimbabwe in", "Zimbabwe A", "Zimbabwe Twenty20",
                        # "ICC Mens ...", not "T20 World Cup" and not "Mens T20 World Cup": a bare
                        # "T20 World Cup" matched the ICC Womens T20 World Cup 2024 match pulled for
@@ -274,7 +278,9 @@ def competition_names(rows):
     c = Counter()
     for r in rows:
         n = str(r.get("competition") or "")
-        if " A in " in n:
+        if " A in South Africa" in n:
+            n = "A-team series in South Africa"     # not "Sri Lanka A tours": the batter is at home
+        elif " A in " in n:
             n = n.split(" in ", 1)[0] + " tours"
         elif n.startswith("CSA ") and "Day" in n:
             n = "CSA 4-Day"
