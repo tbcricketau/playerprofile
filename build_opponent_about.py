@@ -897,13 +897,20 @@ def c21_only_note(conn, cur, bid, role, fmt, level, source):
     a-team pack needs no such line: first-class IS its level."""
     if source == "warehouse" or level != "international":
         return None
-    if _test_balls(conn, cur, bid, role, fmt=fmt, level=level, source="warehouse") > 0:
-        return None
+    own = _test_balls(conn, cur, bid, role, fmt=fmt, level=level, source="warehouse")
     import c21_source
     rows = c21_source.domestic_rows(c21_source.load_batter_deliveries(bid, fmt=fmt) if role == "bat"
                                     else c21_source.load_bowler_deliveries(bid, fmt=fmt))
     if not rows:
         return None                    # nothing, or C21's own internationals — no label owed
+    if own > 0:
+        # A thin senior record outweighed by first-class balls (Matthew Breetzke, two Tests, added
+        # 15-10-2026): the card is mostly not Test cricket and must say so; a player whose own
+        # record is the larger part needs no line.
+        if len(rows) <= own:
+            return None
+        return (f"Limited {_scope_label(fmt, level)} record ({own} balls) — most of these figures "
+                f"and clips are {c21_source.record_phrase(rows)}, from Cricket-21.")
     return (f"No {_scope_label(fmt, level)} record — these figures and clips are "
             f"{c21_source.record_phrase(rows)}, from Cricket-21.")
 
