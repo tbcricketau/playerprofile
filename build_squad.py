@@ -272,9 +272,10 @@ def main():
         if kept:
             changed.append(f"{r['name']} (kept {', '.join(sorted(kept))})")
 
-    for path, data in ((SQUADS, squads), (PLAYERS, players)):
+    # Each file keeps its own indent (squads 2, players 1), or a run reformats the whole file.
+    for path, data, ind in ((SQUADS, squads, 2), (PLAYERS, players, 1)):
         with open(path, "w", encoding="utf-8") as fh:
-            json.dump(data, fh, indent=1, ensure_ascii=False)
+            json.dump(data, fh, indent=ind, ensure_ascii=False)
             fh.write("\n")
     print(f"\nwrote {os.path.basename(SQUADS)} ({len(squads[args.series]['players'])} players) "
           f"+ {os.path.basename(PLAYERS)} ({len(players)} total); "
