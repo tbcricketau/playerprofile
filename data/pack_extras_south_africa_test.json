@@ -2665,9 +2665,114 @@
     }
    },
    "is_lhb": true
+  },
+  "4353843": {
+   "name": "Matthew Breetzke",
+   "source": "both",
+   "groups": {
+    "left_orthodox": {
+     "balls": 77,
+     "average": 9.25,
+     "n_out": 4,
+     "bpd": 19.25,
+     "false_pct": 6.521739130434782,
+     "off_pct": 69.56521739130434,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "Bowled 50%"
+      }
+     ],
+     "zones": {
+      "Cover Point": 7.0,
+      "Cover": 4.0,
+      "Third Man": 3.0,
+      "Mid-Off": 3.0,
+      "Fine Leg": 4.0,
+      "Square Leg": 1.0,
+      "Mid-Wicket": 1.0
+     },
+     "n_dismissals": 4,
+     "pics": {
+      "wheel": "bat_4353843_left_orthodox_wheel.png"
+     }
+    },
+    "left_pace": {
+     "balls": 8,
+     "thin": true
+    },
+    "off_spin": {
+     "balls": 77,
+     "average": 22.5,
+     "n_out": 2,
+     "bpd": null,
+     "false_pct": 4.054054054054054,
+     "off_pct": 17.77777777777778,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "How out",
+       "text": "Bowled 100%"
+      }
+     ],
+     "zones": {
+      "Mid-On": 16.0,
+      "Fine Leg": 4.0,
+      "Cover": 6.0,
+      "Mid-Wicket": 11.0,
+      "Mid-Off": 5.0,
+      "Square Leg": 1.0,
+      "Third Man": 2.0
+     },
+     "n_dismissals": 2,
+     "pics": {
+      "wheel": "bat_4353843_off_spin_wheel.png"
+     }
+    },
+    "right_pace": {
+     "balls": 576,
+     "average": 32.25,
+     "n_out": 8,
+     "bpd": 72.0,
+     "false_pct": 9.810126582278482,
+     "off_pct": 59.65909090909091,
+     "short_false": null,
+     "facts": [
+      {
+       "label": "Lowest average",
+       "text": "<b>back of a length</b> 19.0 · <b>pitching on the stumps</b> 7.8 (overall 32.2)"
+      },
+      {
+       "label": "Out most to",
+       "text": "<b>back of a length outside off</b> · 2.4 per 100 balls"
+      },
+      {
+       "label": "How out",
+       "text": "LBW 38%"
+      }
+     ],
+     "zones": {
+      "Cover Point": 20.0,
+      "Cover": 71.0,
+      "Mid-Wicket": 17.0,
+      "Mid-Off": 13.0,
+      "Mid-On": 25.0,
+      "Square Leg": 26.0,
+      "Fine Leg": 1.0
+     },
+     "n_dismissals": 8,
+     "pics": {
+      "pitch": "bat_4353843_right_pace_pitch.png",
+      "bee": "bat_4353843_right_pace_bee.png",
+      "wheel": "bat_4353843_right_pace_wheel.png"
+     }
+    }
+   },
+   "is_lhb": false
   }
  },
- "built": "2026-10-06",
+ "built": "2026-10-15",
  "before": null,
  "groups": [
   "left_orthodox",

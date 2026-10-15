@@ -18316,6 +18316,727 @@
    ],
    "role": null,
    "record_note": "No Test record — these figures and clips are first-class cricket (CSA 4-Day, South Africa A tours), from Cricket-21."
+  },
+  "4353843": {
+   "name": "Matthew Breetzke",
+   "hand": "",
+   "facts": [
+    "Limited Test record (55 balls) — most of these figures and clips are first-class cricket (CSA 4-Day, A-team series in South Africa), from Cricket-21.",
+    "Scores mainly through the off side; go-to shot is the drive.",
+    "Weaker against spin: averages 14 against spin, 32 against pace.",
+    "Most often out bowled (40% of dismissals).",
+    "First 30 balls: out every 30 balls, then every 72."
+   ],
+   "order": 343,
+   "facts_pace": [
+    "Limited Test record (55 balls) — most of these figures and clips are first-class cricket (CSA 4-Day, A-team series in South Africa), from Cricket-21.",
+    "Most often out <b>caught behind</b> (100% of dismissals)."
+   ],
+   "facts_spin": [
+    "Limited Test record (55 balls) — most of these figures and clips are first-class cricket (CSA 4-Day, A-team series in South Africa), from Cricket-21.",
+    "Most often out <b>bowled</b> (100% of dismissals)."
+   ],
+   "scoring_clips_pace": [
+    {
+     "delivery_id": "5460862020100904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B100904"
+    },
+    {
+     "delivery_id": "423967",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_247.MP4"
+    },
+    {
+     "delivery_id": "424053",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_333.MP4"
+    },
+    {
+     "delivery_id": "424099",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_379.MP4"
+    },
+    {
+     "delivery_id": "424151",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_431.MP4"
+    },
+    {
+     "delivery_id": "424226",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_506.MP4"
+    },
+    {
+     "delivery_id": "424227",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_507.MP4"
+    },
+    {
+     "delivery_id": "424940",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_10.MP4"
+    },
+    {
+     "delivery_id": "422574",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_62.MP4"
+    },
+    {
+     "delivery_id": "422575",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_63.MP4"
+    },
+    {
+     "delivery_id": "422608",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_96.MP4"
+    },
+    {
+     "delivery_id": "422630",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_118.MP4"
+    },
+    {
+     "delivery_id": "142049",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_108.MP4"
+    },
+    {
+     "delivery_id": "142059",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_118.MP4"
+    },
+    {
+     "delivery_id": "142893",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_139.MP4"
+    },
+    {
+     "delivery_id": "141343",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_93.MP4"
+    },
+    {
+     "delivery_id": "141395",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_145.MP4"
+    },
+    {
+     "delivery_id": "136772",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_11.MP4"
+    },
+    {
+     "delivery_id": "136797",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_36.MP4"
+    },
+    {
+     "delivery_id": "136808",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_47.MP4"
+    },
+    {
+     "delivery_id": "136827",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_66.MP4"
+    },
+    {
+     "delivery_id": "136890",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_129.MP4"
+    },
+    {
+     "delivery_id": "136892",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_131.MP4"
+    }
+   ],
+   "dismissal_clips_pace": [
+    {
+     "delivery_id": "5460862020101306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B101306"
+    },
+    {
+     "delivery_id": "5460862020200202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/2/5460862B200202"
+    },
+    {
+     "delivery_id": "424316",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_596.MP4"
+    },
+    {
+     "delivery_id": "424941",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_11.MP4"
+    },
+    {
+     "delivery_id": "142078",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_137.MP4"
+    },
+    {
+     "delivery_id": "141413",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_163.MP4"
+    },
+    {
+     "delivery_id": "136903",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_142.MP4"
+    },
+    {
+     "delivery_id": "138460",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/3rd%20Innings/Dolp%20Vs%20Warr%2027-01-223_182.MP4"
+    }
+   ],
+   "clip_scope_pace": "C21:pace",
+   "scoring_clips_spin": [
+    {
+     "delivery_id": "423856",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_136.MP4"
+    },
+    {
+     "delivery_id": "423869",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_149.MP4"
+    },
+    {
+     "delivery_id": "423924",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_204.MP4"
+    },
+    {
+     "delivery_id": "423986",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_266.MP4"
+    },
+    {
+     "delivery_id": "424108",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_388.MP4"
+    },
+    {
+     "delivery_id": "142962",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_208.MP4"
+    }
+   ],
+   "dismissal_clips_spin": [
+    {
+     "delivery_id": "5460499020102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/B/1/5460499B102806"
+    },
+    {
+     "delivery_id": "422698",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_186.MP4"
+    }
+   ],
+   "clip_scope_spin": "C21:spin",
+   "scoring_clips_right_pace": [
+    {
+     "delivery_id": "5460862020100904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B100904"
+    },
+    {
+     "delivery_id": "423967",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_247.MP4"
+    },
+    {
+     "delivery_id": "424053",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_333.MP4"
+    },
+    {
+     "delivery_id": "424099",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_379.MP4"
+    },
+    {
+     "delivery_id": "424151",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_431.MP4"
+    },
+    {
+     "delivery_id": "424226",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_506.MP4"
+    },
+    {
+     "delivery_id": "424227",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_507.MP4"
+    },
+    {
+     "delivery_id": "424940",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_10.MP4"
+    },
+    {
+     "delivery_id": "422574",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_62.MP4"
+    },
+    {
+     "delivery_id": "422575",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_63.MP4"
+    },
+    {
+     "delivery_id": "422608",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_96.MP4"
+    },
+    {
+     "delivery_id": "422630",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_118.MP4"
+    },
+    {
+     "delivery_id": "142049",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_108.MP4"
+    },
+    {
+     "delivery_id": "142059",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_118.MP4"
+    },
+    {
+     "delivery_id": "142893",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_139.MP4"
+    },
+    {
+     "delivery_id": "141343",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_93.MP4"
+    },
+    {
+     "delivery_id": "141395",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_145.MP4"
+    },
+    {
+     "delivery_id": "136772",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_11.MP4"
+    },
+    {
+     "delivery_id": "136797",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_36.MP4"
+    },
+    {
+     "delivery_id": "136808",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_47.MP4"
+    },
+    {
+     "delivery_id": "136827",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_66.MP4"
+    },
+    {
+     "delivery_id": "136890",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_129.MP4"
+    },
+    {
+     "delivery_id": "136892",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_131.MP4"
+    }
+   ],
+   "dismissal_clips_right_pace": [
+    {
+     "delivery_id": "5460862020101306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B101306"
+    },
+    {
+     "delivery_id": "5460862020200202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/2/5460862B200202"
+    },
+    {
+     "delivery_id": "424316",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_596.MP4"
+    },
+    {
+     "delivery_id": "424941",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_11.MP4"
+    },
+    {
+     "delivery_id": "142078",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_137.MP4"
+    },
+    {
+     "delivery_id": "141413",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_163.MP4"
+    },
+    {
+     "delivery_id": "136903",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_142.MP4"
+    },
+    {
+     "delivery_id": "138460",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/3rd%20Innings/Dolp%20Vs%20Warr%2027-01-223_182.MP4"
+    }
+   ],
+   "clip_scope_right_pace": "C21:right_pace",
+   "scoring_clips_left_pace": [
+    {
+     "delivery_id": "5460862020100904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B100904"
+    },
+    {
+     "delivery_id": "423967",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_247.MP4"
+    },
+    {
+     "delivery_id": "424053",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_333.MP4"
+    },
+    {
+     "delivery_id": "424099",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_379.MP4"
+    },
+    {
+     "delivery_id": "424151",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_431.MP4"
+    },
+    {
+     "delivery_id": "424226",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_506.MP4"
+    },
+    {
+     "delivery_id": "424227",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_507.MP4"
+    },
+    {
+     "delivery_id": "424940",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_10.MP4"
+    },
+    {
+     "delivery_id": "422574",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_62.MP4"
+    },
+    {
+     "delivery_id": "422575",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_63.MP4"
+    },
+    {
+     "delivery_id": "422608",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_96.MP4"
+    },
+    {
+     "delivery_id": "422630",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_118.MP4"
+    },
+    {
+     "delivery_id": "142049",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_108.MP4"
+    },
+    {
+     "delivery_id": "142059",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_118.MP4"
+    },
+    {
+     "delivery_id": "142893",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_139.MP4"
+    },
+    {
+     "delivery_id": "141343",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_93.MP4"
+    },
+    {
+     "delivery_id": "141395",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_145.MP4"
+    },
+    {
+     "delivery_id": "136772",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_11.MP4"
+    },
+    {
+     "delivery_id": "136797",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_36.MP4"
+    },
+    {
+     "delivery_id": "136808",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_47.MP4"
+    },
+    {
+     "delivery_id": "136827",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_66.MP4"
+    },
+    {
+     "delivery_id": "136890",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_129.MP4"
+    },
+    {
+     "delivery_id": "136892",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_131.MP4"
+    }
+   ],
+   "dismissal_clips_left_pace": [
+    {
+     "delivery_id": "5460862020101306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B101306"
+    },
+    {
+     "delivery_id": "5460862020200202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/2/5460862B200202"
+    },
+    {
+     "delivery_id": "424316",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_596.MP4"
+    },
+    {
+     "delivery_id": "424941",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_11.MP4"
+    },
+    {
+     "delivery_id": "142078",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_137.MP4"
+    },
+    {
+     "delivery_id": "141413",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_163.MP4"
+    },
+    {
+     "delivery_id": "136903",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_142.MP4"
+    },
+    {
+     "delivery_id": "138460",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/3rd%20Innings/Dolp%20Vs%20Warr%2027-01-223_182.MP4"
+    }
+   ],
+   "clip_scope_left_pace": "C21:pace",
+   "scoring_clips_off_spin": [
+    {
+     "delivery_id": "423856",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_136.MP4"
+    },
+    {
+     "delivery_id": "423869",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_149.MP4"
+    },
+    {
+     "delivery_id": "423924",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_204.MP4"
+    },
+    {
+     "delivery_id": "423986",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_266.MP4"
+    },
+    {
+     "delivery_id": "424108",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_388.MP4"
+    }
+   ],
+   "dismissal_clips_off_spin": [],
+   "clip_scope_off_spin": "C21:off_spin",
+   "scoring_clips_left_orthodox": [
+    {
+     "delivery_id": "142962",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_208.MP4"
+    }
+   ],
+   "dismissal_clips_left_orthodox": [
+    {
+     "delivery_id": "5460499020102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/B/1/5460499B102806"
+    },
+    {
+     "delivery_id": "422698",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_186.MP4"
+    }
+   ],
+   "clip_scope_left_orthodox": "C21:left_orthodox",
+   "scoring_clips_leg_spin": [
+    {
+     "delivery_id": "423856",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_136.MP4"
+    },
+    {
+     "delivery_id": "423869",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_149.MP4"
+    },
+    {
+     "delivery_id": "423924",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_204.MP4"
+    },
+    {
+     "delivery_id": "423986",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_266.MP4"
+    },
+    {
+     "delivery_id": "424108",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_388.MP4"
+    },
+    {
+     "delivery_id": "142962",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_208.MP4"
+    }
+   ],
+   "dismissal_clips_leg_spin": [
+    {
+     "delivery_id": "5460499020102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/B/1/5460499B102806"
+    },
+    {
+     "delivery_id": "422698",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_186.MP4"
+    }
+   ],
+   "clip_scope_leg_spin": "C21:spin",
+   "scoring_clips_left_unorthodox": [
+    {
+     "delivery_id": "423856",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_136.MP4"
+    },
+    {
+     "delivery_id": "423869",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_149.MP4"
+    },
+    {
+     "delivery_id": "423924",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_204.MP4"
+    },
+    {
+     "delivery_id": "423986",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_266.MP4"
+    },
+    {
+     "delivery_id": "424108",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_388.MP4"
+    },
+    {
+     "delivery_id": "142962",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_208.MP4"
+    }
+   ],
+   "dismissal_clips_left_unorthodox": [
+    {
+     "delivery_id": "5460499020102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/B/1/5460499B102806"
+    },
+    {
+     "delivery_id": "422698",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_186.MP4"
+    }
+   ],
+   "clip_scope_left_unorthodox": "C21:spin",
+   "scoring_clips": [
+    {
+     "delivery_id": "5460862020100904",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B100904"
+    },
+    {
+     "delivery_id": "423856",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_136.MP4"
+    },
+    {
+     "delivery_id": "423869",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_149.MP4"
+    },
+    {
+     "delivery_id": "423924",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_204.MP4"
+    },
+    {
+     "delivery_id": "423967",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_247.MP4"
+    },
+    {
+     "delivery_id": "423986",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_266.MP4"
+    },
+    {
+     "delivery_id": "424053",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_333.MP4"
+    },
+    {
+     "delivery_id": "424099",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_379.MP4"
+    },
+    {
+     "delivery_id": "424108",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_388.MP4"
+    },
+    {
+     "delivery_id": "424151",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_431.MP4"
+    },
+    {
+     "delivery_id": "424226",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_506.MP4"
+    },
+    {
+     "delivery_id": "424227",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_507.MP4"
+    },
+    {
+     "delivery_id": "424940",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_10.MP4"
+    },
+    {
+     "delivery_id": "422574",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_62.MP4"
+    },
+    {
+     "delivery_id": "422575",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_63.MP4"
+    },
+    {
+     "delivery_id": "422608",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_96.MP4"
+    },
+    {
+     "delivery_id": "422630",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_118.MP4"
+    },
+    {
+     "delivery_id": "142049",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_108.MP4"
+    },
+    {
+     "delivery_id": "142059",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_118.MP4"
+    },
+    {
+     "delivery_id": "142893",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_139.MP4"
+    },
+    {
+     "delivery_id": "142962",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/3rd%20Innings/Warr%20Vs%20Dolp%2017-11-223_208.MP4"
+    },
+    {
+     "delivery_id": "141343",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_93.MP4"
+    },
+    {
+     "delivery_id": "141395",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_145.MP4"
+    },
+    {
+     "delivery_id": "136772",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_11.MP4"
+    },
+    {
+     "delivery_id": "136797",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_36.MP4"
+    },
+    {
+     "delivery_id": "136808",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_47.MP4"
+    },
+    {
+     "delivery_id": "136827",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_66.MP4"
+    },
+    {
+     "delivery_id": "136890",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_129.MP4"
+    },
+    {
+     "delivery_id": "136892",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_131.MP4"
+    }
+   ],
+   "dismissal_clips": [
+    {
+     "delivery_id": "5460862020101306",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/1/5460862B101306"
+    },
+    {
+     "delivery_id": "5460862020200202",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2025/Men/Multi%20Day/5460862/B/2/5460862B200202"
+    },
+    {
+     "delivery_id": "5460499020102806",
+     "clip_stem": "https://auscricketfairplayase.blob.core.windows.net/fairplay/2024/Men/Multi%20Day/5460499/B/1/5460499B102806"
+    },
+    {
+     "delivery_id": "424316",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/1st%20Innings/SAA%20Vs%20SL%20A%2008-09-241_596.MP4"
+    },
+    {
+     "delivery_id": "424941",
+     "url": "https://hdvod.cricket-21.com/Volume5/2024/SEPTEMBER%202024/Sri%20Lanka%20A%20in%20South%20Africa%20Unofficial%20Test%20Series%202024/1st%20Match%20South%20Africa%20A%20vs%20Sri%20Lanka%20A%2008.09.2024/3rd%20Innings/SAA%20Vs%20SL%20A%2008-09-243_11.MP4"
+    },
+    {
+     "delivery_id": "422698",
+     "url": "https://hdvod.cricket-21.com/Volume4/2023/DECEMBER%202023/Match%20Videos/India%20A%20In%20South%20Africa%20Unofficial%20Test%20Series%202023/2nd%20unofficial%20Test%20South%20Africa%20A%20vs%20India%20A%2026.12.2023/1st%20Innings/SAA%20Vs%20INDA%2026-12-231_186.MP4"
+    },
+    {
+     "delivery_id": "142078",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/12th%20Match%20warriors%20vs%20Dolphins%2017.11.2022/1st%20Innings/Warr%20Vs%20Dolp%2017-11-221_137.MP4"
+    },
+    {
+     "delivery_id": "141413",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/NOVEMBER%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%20202223/6th%20Match%20Rocks%20vs%20Warriors%2011.10.2022/2nd%20Innings/BOL%20Vs%20Warr%2010-11-222_163.MP4"
+    },
+    {
+     "delivery_id": "136903",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/1st%20Innings/Dolp%20Vs%20Warr%2027-01-221_142.MP4"
+    },
+    {
+     "delivery_id": "138460",
+     "url": "https://hdvod.cricket-21.com/Volume3/2022/JANUARY%202022/Match%20Videos/CSA%204-Day%20Franchise%20Series%202021%2022/Dolphins%20vs%20Warriors%2027.01.2022/3rd%20Innings/Dolp%20Vs%20Warr%2027-01-223_182.MP4"
+    }
+   ],
+   "role": "Opener",
+   "record_note": "Limited Test record (55 balls) — most of these figures and clips are first-class cricket (CSA 4-Day, A-team series in South Africa), from Cricket-21."
   }
  }
 }

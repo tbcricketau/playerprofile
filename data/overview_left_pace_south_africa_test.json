@@ -1096,6 +1096,25 @@
    }
   },
   {
+   "bid": "4353843",
+   "name": "Matthew Breetzke",
+   "sub": "Opener",
+   "balls": 8,
+   "plan": null,
+   "facts": [],
+   "field": null,
+   "fields": [],
+   "threat": {
+    "balls": 8,
+    "n_out": 0,
+    "bpd": null,
+    "false_pct": 14.285714285714286,
+    "area": "leg (100% of runs)",
+    "short": null,
+    "top_out": null
+   }
+  },
+  {
    "bid": "2540186",
    "name": "Corbin Bosch",
    "sub": "RHB · Lower order",
