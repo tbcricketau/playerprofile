@@ -2,6 +2,154 @@
  "title": "Australia — Opposition Scouting",
  "series": [
   {
+   "slug": "england-odi-home-2026",
+   "name": "England Home ODI Series 2026",
+   "subtitle": "Australia v England · ODIs · in Australia",
+   "target_country": "Australia",
+   "format": "ODI",
+   "level": "international",
+   "_note": "Coach-only scouting for the England white-ball tour, 15-10-2026. Opposition pinned in matchupmodel/data/opp_squad_england_odi.json. Every report tier is 'squad' until Tom names a likely XI. Do not build player packs for this series until the playerpacks open-series gate exists.",
+   "groups": [
+    {
+     "slug": "bowlers",
+     "name": "England Bowlers",
+     "format": "ODI",
+     "kind": "bowling",
+     "reports": [
+      {
+       "id": "3550184",
+       "tier": "squad",
+       "name": "Jofra Archer"
+      },
+      {
+       "id": "4352915",
+       "tier": "squad",
+       "name": "Gus Atkinson"
+      },
+      {
+       "id": "4353038",
+       "tier": "squad",
+       "name": "Sonny Baker"
+      },
+      {
+       "id": "4352931",
+       "tier": "squad",
+       "name": "Jacob Bethell"
+      },
+      {
+       "id": "4352921",
+       "tier": "squad",
+       "name": "Henry Crocombe"
+      },
+      {
+       "id": "4352441",
+       "tier": "squad",
+       "name": "Sam Curran"
+      },
+      {
+       "id": "3760070",
+       "tier": "squad",
+       "name": "Liam Dawson"
+      },
+      {
+       "id": "3630055",
+       "tier": "squad",
+       "name": "Will Jacks"
+      },
+      {
+       "id": "1440340",
+       "tier": "squad",
+       "name": "Jamie Overton"
+      },
+      {
+       "id": "880048",
+       "tier": "squad",
+       "name": "Adil Rashid"
+      },
+      {
+       "id": "2070076",
+       "tier": "squad",
+       "name": "Joe Root"
+      },
+      {
+       "id": "3720028",
+       "tier": "squad",
+       "name": "Josh Tongue"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "england-t20i-home-2026",
+   "name": "England Home T20I Series 2026",
+   "subtitle": "Australia v England · T20Is · in Australia",
+   "target_country": "Australia",
+   "format": "T20I",
+   "level": "international",
+   "_note": "Coach-only scouting for the England white-ball tour, 15-10-2026. Opposition pinned in matchupmodel/data/opp_squad_england_t20i.json. Every report tier is 'squad' until Tom names a likely XI. Do not build player packs for this series until the playerpacks open-series gate exists.",
+   "groups": [
+    {
+     "slug": "bowlers",
+     "name": "England Bowlers",
+     "format": "T20I",
+     "kind": "bowling",
+     "reports": [
+      {
+       "id": "4352931",
+       "tier": "squad",
+       "name": "Jacob Bethell"
+      },
+      {
+       "id": "4352936",
+       "tier": "squad",
+       "name": "James Coles"
+      },
+      {
+       "id": "4352921",
+       "tier": "squad",
+       "name": "Henry Crocombe"
+      },
+      {
+       "id": "4352441",
+       "tier": "squad",
+       "name": "Sam Curran"
+      },
+      {
+       "id": "3760070",
+       "tier": "squad",
+       "name": "Liam Dawson"
+      },
+      {
+       "id": "5180392",
+       "tier": "squad",
+       "name": "Eddie Jack"
+      },
+      {
+       "id": "3630055",
+       "tier": "squad",
+       "name": "Will Jacks"
+      },
+      {
+       "id": "1440340",
+       "tier": "squad",
+       "name": "Jamie Overton"
+      },
+      {
+       "id": "880048",
+       "tier": "squad",
+       "name": "Adil Rashid"
+      },
+      {
+       "id": "5460041",
+       "tier": "squad",
+       "name": "Luke Wood"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "slug": "india-a-od-2026",
    "name": "India One-Day Series 2026",
    "subtitle": "Australia A v India A · 3 one-day matches · in Puducherry",
