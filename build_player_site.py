@@ -454,6 +454,17 @@ def _opp_roster(slug):
                             batters.setdefault(rid, (r.get("name", rid), (r.get("hand", "") or "").upper()))
                         else:
                             bowlers.setdefault(rid, (r.get("name", rid), ""))
+        # ...and the pin. `roster_check` passes a pinned player the store lacks (under the sim
+        # floor, footage-only by design), but a Test series lists only bowler groups, so a pinned
+        # BATTER outside the store had no card on any pack: Matthew Breetzke, 15-10-2026.
+        pin_path = os.path.join(project_path("matchupmodel"), "data", f"opp_squad_{opp}.json")
+        if os.path.exists(pin_path):
+            pin = json.load(open(pin_path, encoding="utf-8"))
+            names = pin.get("names", {})
+            for rid in pin.get("batters", []):
+                batters.setdefault(str(rid), (names.get(str(rid), str(rid)), ""))
+            for rid in pin.get("bowlers", []):
+                bowlers.setdefault(str(rid), (names.get(str(rid), str(rid)), ""))
         return bowlers, batters
     except Exception:
         return {}, {}

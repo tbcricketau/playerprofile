@@ -1255,10 +1255,14 @@ the open points: `docs/PLAYER_PACK_REDESIGN.md` § "The web reports".
   `upload_packs.py --bundle` at that, so nothing else in storage is compared or sent.
 - **On the build machine** (how the 13-10 squad was built, when this laptop lost the warehouse): it
   holds the data files but no coach build, so copy `coach/<slug>/img`, `reports/*.clips.json` and
-  `web/pics` across first, and run with the project's `venv/bin/python` (not `~/venv`). It has **no
-  headless browser**, so a bowler whose over/round dot pictures are not in `web/pics` fails there:
-  export those balls on the box, draw them here with `angle_map_png`, copy them back, rerun with
-  `--reuse-pics`. A squad takes about four minutes there, against 30 here.
+  `web/pics` across first, and run with the project's `venv/bin/python` (not `~/venv`). **It prints
+  now (15-10-2026)**: its snap Chromium works once `TMPDIR` is under `$HOME` (the snap has a private
+  `/tmp`), and `cricket_core.pdf.find_chromium` finds it on the PATH. The England ODI and T20I
+  reports, 160-odd renders, and Breetzke's five were all printed there. A squad takes about four
+  minutes there, against 30 here.
+- **The box's Scouting index lists only what the box has built** ("2 active, 0 archived" on
+  15-10-2026). Upload a series' own folder from the box and rewrite `coach/index.html` with
+  `--index-only` on this laptop, whose `coach_build` holds every series.
 - **Screenshots wait on the planner**: a page fetches notes and fields as it opens, and when the
   planner's store cannot be reached the fetch hangs headless Edge. Check visuals on a scratch copy
   with `HP.series` blanked.
@@ -1612,6 +1616,20 @@ it claimed to be. Now, at `level="international"` only (first-class *is* an a-te
   clause when any card on the page is starred that way.
 - **Report** — `batting_report._record_label` prints a second sub-line: *"No Test record — every
   figure here is …, from Cricket-21"*, or *"N of M balls here are …"* when mixed.
+
+**A thin Test record outweighed by first-class balls is labelled too (15-10-2026).** Matthew
+Breetzke came into the SA Test squad with two Tests (55 balls) and 698 Cricket-21 first-class balls.
+`c21_only_note` used to stay silent once a player had any Test ball; it now reads *"Limited Test
+record (55 balls) — most of these figures and clips are first-class cricket (…), from Cricket-21"*
+whenever the C21 domestic rows outnumber the player's own, and stars the reels as before. The report
+already said "698 of 753 balls here are …". `SERVED_COMPETITIONS` gained `" A in South Africa"` and
+the touring warm-up, and `competition_names` calls an A side touring South Africa *"A-team series in
+South Africa"* (it said "Sri Lanka A tours" of a South African's home cricket).
+
+**A pinned batter outside the matchup store had no card on any pack.** `roster_check` passes a
+pinned player the store lacks, but `build_player_site._opp_roster` read the store plus series.json's
+batter groups, and a Test series lists bowler groups only. It unions the pin now. Breetzke's store
+rows were merged in by hand (exported aside, his ten `they_bat` rows added, the live store kept).
 
 ⚠ **Never run a whole squad with `--source both` at senior level.** `SERVED_COMPETITIONS` now serves
 CSA and SA A cricket, so a squad-wide run would fold every South African's domestic four-day balls
