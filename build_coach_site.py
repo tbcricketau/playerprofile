@@ -266,7 +266,7 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
                     "vision": f"../vision/{bid}.html" if reels else "", "reels": reels,
                     "hands": b["hands"]})
     tot = {h: sum((b["hands"].get(h) or {}).get("n_balls") or 0 for b in out) for h in ("RHB", "LHB")}
-    fmt_word = {"ODI": "ODI", "T20I": "T20I", "T20": "T20I"}.get(str(plans.get("format") or ""), "Test")
+    fmt_word = {"ODI": "ODI", "T20I": "T20I", "T20": "T20"}.get(str(plans.get("format") or ""), "Test")
     data = {"series": entry.get("name") or slug, "planner": planner, "minBalls": 120, "fmt": fmt_word,
             "hands": [{"key": "RHB", "label": "vs right-handers", "page": "vs_rhb", "balls": tot["RHB"]},
                       {"key": "LHB", "label": "vs left-handers", "page": "vs_lhb", "balls": tot["LHB"]}],

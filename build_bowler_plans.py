@@ -153,7 +153,9 @@ def build(slug, planner_out=None, only=None):
     # the Test series' do): figures, facts and reels per hand. No estimated field — bowler_field
     # reads Test stock fields and Test catch norms, as field_engine does throughout, and the white-
     # ball Bowling plans carry no suggested field either. No planner export for the same reason.
-    FMT = {"test": "Test", "odi": "ODI", "t20": "T20I"}.get(fmt.lower(), "Test")
+    # A T20I series reads the pooled major T20 leagues ("T20"), as the packs do (Tom, 16-10-2026):
+    # far more balls per player than T20Is alone, and the packs and these cards must agree
+    FMT = {"test": "Test", "odi": "ODI", "t20": "T20"}.get(fmt.lower(), "Test")
     white = FMT != "Test"
     if white and planner_out:
         raise SystemExit(f"{slug} is {FMT}: the planner's bowler side is Test-only for now (field_engine is)")

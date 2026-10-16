@@ -1223,6 +1223,17 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   and the link text stays plain for that test.
 - **Upload**: `playerpacks/upload_packs.py --bundle hub_pack_site --prefix aus --apply` (changed files
   only). The app caches pages in memory, so a re-upload shows after its next restart or deploy.
+- **White-ball series (England ODI, 16-10-2026)**: built on the box into their own folders —
+  `build_player_site.py --squad <slug> --nest --out player_site_eng`, `build_pack_extras.py`,
+  `build_hub_packs.py --out ~/hub_eng --clips player_site_eng` — then the hub folder copied into this
+  laptop's `hub_pack_site` and `packs/index.html` rewritten from what is there, so no series drops off
+  the list. Upload `packs/<slug>/` and `players/<slug>/` (the vision pages and clip lists the hub pack
+  loads). **Check with the Pages build under `players/`**: `check_site` resolves `/players/<slug>/…`, and
+  pointing `--with` at the raw `--out` folder reports every vision link dead (948 of them, none real).
+  A new series goes up **closed to players** (playerpacks `/admin/players`) and never to GitHub Pages.
+- **A T20I series reads the pooled major T20 leagues** (Tom, 16-10-2026): the packs (`T20`, as the
+  builders always mapped it) and the Scouting Batting plans cards (`build_bowler_plans`) alike — far more
+  balls per England player than T20Is alone. Their pages say "T20", not "T20I".
 - **Phone screenshots**: headless Edge will not lay out narrower than 540 px, so a `--window-size=390`
   shot is a cropped 540-px page. Pin the body to 390 px in a same-origin copy instead (the app sends
   `X-Frame-Options: DENY`, so an iframe will not do).
