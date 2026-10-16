@@ -266,7 +266,8 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
                     "vision": f"../vision/{bid}.html" if reels else "", "reels": reels,
                     "hands": b["hands"]})
     tot = {h: sum((b["hands"].get(h) or {}).get("n_balls") or 0 for b in out) for h in ("RHB", "LHB")}
-    data = {"series": entry.get("name") or slug, "planner": planner, "minBalls": 120,
+    fmt_word = {"ODI": "ODI", "T20I": "T20I", "T20": "T20I"}.get(str(plans.get("format") or ""), "Test")
+    data = {"series": entry.get("name") or slug, "planner": planner, "minBalls": 120, "fmt": fmt_word,
             "hands": [{"key": "RHB", "label": "vs right-handers", "page": "vs_rhb", "balls": tot["RHB"]},
                       {"key": "LHB", "label": "vs left-handers", "page": "vs_lhb", "balls": tot["LHB"]}],
             "bowlers": out}
@@ -276,6 +277,9 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
     who = entry.get("target_country") or "the opposition"
     lead = (f"How {_html.escape(who)}'s bowlers go at each hand, how to play them, and the field they are "
             "likely to set. Same numbers as each bowler's own report.")
+    if fmt_word != "Test":       # white-ball: no estimated field (field_engine is red-ball)
+        lead = (f"How {_html.escape(who)}'s bowlers go at each hand in {fmt_word}s and how to play them. "
+                "No estimated field for white-ball cricket yet.")
     body = (f"<h1>Their bowlers</h1><p class=\"lead\">{lead}</p>"
             f'<div class="seg" role="tablist" aria-label="Batter\'s hand">{seg}</div><div id="bk-cards"></div>'
             f"<script>window.BK={json.dumps(data, separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')};</script>"

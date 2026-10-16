@@ -149,19 +149,24 @@ def build(slug, planner_out=None, only=None):
 
     entry = _series(slug)
     fmt, level = _fmt_level(entry)
-    if fmt.lower() != "test":
-        # bowler_field reads Test stock fields and Test catch norms, as field_engine does throughout
-        raise SystemExit(f"{slug} is {fmt}: the bowler fields are Test-only for now (field_engine is)")
+    # White-ball series get the cards too (Tom, 16-10-2026: Batting plans mirror Bowling plans, as
+    # the Test series' do): figures, facts and reels per hand. No estimated field — bowler_field
+    # reads Test stock fields and Test catch norms, as field_engine does throughout, and the white-
+    # ball Bowling plans carry no suggested field either. No planner export for the same reason.
+    FMT = {"test": "Test", "odi": "ODI", "t20": "T20I"}.get(fmt.lower(), "Test")
+    white = FMT != "Test"
+    if white and planner_out:
+        raise SystemExit(f"{slug} is {FMT}: the planner's bowler side is Test-only for now (field_engine is)")
     bowlers, _batters = _about(slug)
     tiers = _tiers(entry)
-    out = {"slug": slug, "series": entry.get("name") or slug, "format": "Test",
+    out = {"slug": slug, "series": entry.get("name") or slug, "format": FMT,
            "built": datetime.date.today().isoformat(), "new_ball_min": NEW_BALL_MIN, "bowlers": {}}
     for bid, meta in bowlers.items():
         if only and bid not in only:
             continue
         t0 = time.time()
         try:
-            raw = PR.process_rows(load_bowler_deliveries(bid, fmt="Test", level=level))
+            raw = PR.process_rows(load_bowler_deliveries(bid, fmt=FMT, level=level))
         except Exception as e:                               # a pipeline failure, said so on the card
             print(f"  ! {meta.get('name')}: no deliveries ({type(e).__name__}: {str(e)[:80]})", flush=True)
             out["bowlers"][bid] = {"name": meta.get("name"), "type": meta.get("type"), "error": True}
@@ -170,12 +175,13 @@ def build(slug, planner_out=None, only=None):
              "new_ball": meta.get("new_ball"), "order": meta.get("order") or 0, "tier": tiers.get(str(bid), ""),
              "hands": {}}
         for h, hand, word in HANDS:
-            P = PR.build_profile(bid, hand=hand, raw=raw, fmt="Test", level=level)
+            P = PR.build_profile(bid, hand=hand, raw=raw, fmt=FMT, level=level)
             group = _group(P, meta)
             b["group"] = group
             htp = P.get("how_to_play") or {}
             cats = []
-            for k, (label, fs) in enumerate(_categories(raw, group, h == "LHB", meta.get("new_ball"))):
+            for k, (label, fs) in enumerate([] if white else
+                                            _categories(raw, group, h == "LHB", meta.get("new_ball"))):
                 if not fs:
                     continue
                 kept = [f for f in fs["field"] if f["position"] != "Keeper"]
@@ -200,7 +206,8 @@ def build(slug, planner_out=None, only=None):
                 b["hands"][h]["_wheel_df"] = P.get("df")       # for the planner's wheel, dropped before writing
         print(f"  {b['name']:20} {b['hands']['RHB']['n_balls'] or 0:>6} to RHB  "
               f"{b['hands']['LHB']['n_balls'] or 0:>6} to LHB  "
-              + " / ".join(c["label"] for c in b["hands"]["RHB"]["fields"]) + f"  {time.time() - t0:.0f}s", flush=True)
+              + (" / ".join(c["label"] for c in b["hands"]["RHB"]["fields"]) or "no field")
+              + f"  {time.time() - t0:.0f}s", flush=True)
         out["bowlers"][bid] = b
 
     if planner_out:

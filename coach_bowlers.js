@@ -113,7 +113,7 @@
     const x = (b.hands || {})[state.h] || {}, balls = x.n_balls || 0, notes = notesFor(b.id);
     const head = b.head ? `<img src="${esc(b.head)}" alt="" loading="lazy">` : `<span class="rav">${esc(b.initials)}</span>`;
     let read;
-    if (!balls) read = `<p class="plan"><span class="thin">No Test balls to ${word(state.h)}.</span></p>`;
+    if (!balls) read = `<p class="plan"><span class="thin">No ${esc(BK.fmt || "Test")} balls to ${word(state.h)}.</span></p>`;
     else read = (balls < BK.minBalls ? `<p class="plan"><span class="thin">Only ${n(balls)} balls to ${word(state.h)} — read the figures with care.</span></p>` : "") + htp(x);
     if (!read) read = '<p class="none">Nothing in their record to this hand stands out.</p>';
     // name, the figures, the coaches' notes, then the scouting notes the build writes - the same order
