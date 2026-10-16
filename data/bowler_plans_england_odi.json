@@ -1,0 +1,934 @@
+{
+ "slug": "england-odi-home-2026",
+ "series": "England Home ODI Series 2026",
+ "format": "ODI",
+ "built": "2026-10-16",
+ "new_ball_min": 10,
+ "bowlers": {
+  "3550184": {
+   "name": "Jofra Archer",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 39.473684210526315,
+   "order": 2027,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 1401,
+     "n_wkts": 41,
+     "runs": 1149,
+     "economy": 4.920770877944325,
+     "bowl_avg": 28.024390243902438,
+     "strike_rate": 34.170731707317074,
+     "avg_spd": 137.79141356255968,
+     "max_spd_99": 147.5164,
+     "short_pct": 49.107780157030696,
+     "round_pct": 2.0699500356887937,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>back of a length wide outside off</b> · 4.5 per 100 balls (3 in 35)"
+       },
+       {
+        "label": "Short ball",
+        "text": "26 of 41 wickets"
+       },
+       {
+        "label": "Runs",
+        "text": "45% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full outside off</b> · 6.9 an over, beats the bat 22%"
+       },
+       {
+        "label": "Set-up",
+        "text": "the wicket ball is <b>shorter</b> than the one before 52% of the time"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>back of a length wide outside off</b> · 4.5 per 100 balls (3 in 35)",
+       "Short ball: 26 of 41 wickets"
+      ],
+      "attack": [
+       "Runs: 45% through the leg side",
+       "Most expensive: <b>full outside off</b> · 6.9 an over, beats the bat 22%"
+      ],
+      "watch": [
+       "Set-up: the wicket ball is <b>shorter</b> than the one before 52% of the time"
+      ]
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 626,
+     "n_wkts": 28,
+     "runs": 455,
+     "economy": 4.361022364217253,
+     "bowl_avg": 16.25,
+     "strike_rate": 22.357142857142858,
+     "avg_spd": 139.60517412935323,
+     "max_spd_99": 148.1182,
+     "short_pct": 43.76996805111821,
+     "round_pct": 43.29073482428115,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>back of a length down the leg side</b> · 6.1 per 100 balls (4 in 41)"
+       },
+       {
+        "label": "Short ball",
+        "text": "11 of 28 wickets"
+       },
+       {
+        "label": "Runs",
+        "text": "50% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full on the stumps</b> · 6.1 an over, beats the bat 16%"
+       },
+       {
+        "label": "Set-up",
+        "text": "the wicket ball is <b>shorter</b> than the one before 52% of the time"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>back of a length down the leg side</b> · 6.1 per 100 balls (4 in 41)",
+       "Short ball: 11 of 28 wickets"
+      ],
+      "attack": [
+       "Runs: 50% through the leg side",
+       "Most expensive: <b>full on the stumps</b> · 6.1 an over, beats the bat 16%"
+      ],
+      "watch": [
+       "Set-up: the wicket ball is <b>shorter</b> than the one before 52% of the time"
+      ]
+     },
+     "fields": []
+    }
+   },
+   "group": "right_pace"
+  },
+  "4352915": {
+   "name": "Gus Atkinson",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 0.0,
+   "order": 508,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 381,
+     "n_wkts": 9,
+     "runs": 402,
+     "economy": 6.330708661417323,
+     "bowl_avg": 44.666666666666664,
+     "strike_rate": 42.333333333333336,
+     "avg_spd": 135.49981578947367,
+     "max_spd_99": 143.7947,
+     "short_pct": 50.39370078740157,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>back of a length</b> · 2.5 per 100 balls"
+       },
+       {
+        "label": "Short ball",
+        "text": "5 of 9 wickets"
+       },
+       {
+        "label": "Runs",
+        "text": "60% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>good length wide outside off</b> · 6.8 an over, beats the bat 35%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>back of a length</b> · 2.5 per 100 balls",
+       "Short ball: 5 of 9 wickets"
+      ],
+      "attack": [
+       "Runs: 60% through the leg side",
+       "Most expensive: <b>good length wide outside off</b> · 6.8 an over, beats the bat 35%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 127,
+     "n_wkts": 5,
+     "runs": 112,
+     "economy": 5.291338582677165,
+     "bowl_avg": 22.4,
+     "strike_rate": 25.4,
+     "avg_spd": 137.6507874015748,
+     "max_spd_99": 146.1424,
+     "short_pct": 45.66929133858268,
+     "round_pct": 6.299212598425196,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Runs",
+        "text": "40% through the off side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>good length on the stumps</b> · 5.2 an over, beats the bat 5%"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 40% through the off side",
+       "Most expensive: <b>good length on the stumps</b> · 5.2 an over, beats the bat 5%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "right_pace"
+  },
+  "4352931": {
+   "name": "Jacob Bethell",
+   "type": "Left-arm orthodox",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 346,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 281,
+     "n_wkts": 9,
+     "runs": 327,
+     "economy": 6.98220640569395,
+     "bowl_avg": 36.333333333333336,
+     "strike_rate": 31.22222222222222,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 100.0,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>full on the stumps</b> · 5.2 per 100 balls (4 in 45)"
+       },
+       {
+        "label": "Runs",
+        "text": "48% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full down the leg side</b> · 9.8 an over, beats the bat 15%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>full on the stumps</b> · 5.2 per 100 balls (4 in 45)"
+      ],
+      "attack": [
+       "Runs: 48% through the leg side",
+       "Most expensive: <b>full down the leg side</b> · 9.8 an over, beats the bat 15%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 65,
+     "n_wkts": 0,
+     "runs": 86,
+     "economy": 7.938461538461538,
+     "bowl_avg": null,
+     "strike_rate": null,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 33.84615384615385,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Runs",
+        "text": "44% through the leg side"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 44% through the leg side"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "left_orthodox"
+  },
+  "4352441": {
+   "name": "Sam Curran",
+   "type": "Left pace",
+   "pace": true,
+   "new_ball": 18.181818181818183,
+   "order": 1681,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 1065,
+     "n_wkts": 25,
+     "runs": 1063,
+     "economy": 5.988732394366197,
+     "bowl_avg": 42.52,
+     "strike_rate": 42.6,
+     "avg_spd": 124.13360995850623,
+     "max_spd_99": 135.9543,
+     "short_pct": 38.21596244131455,
+     "round_pct": 34.08450704225352,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>full wide outside off</b> · 4.0 per 100 balls (3 in 40)"
+       },
+       {
+        "label": "Short ball",
+        "text": "6.8 an over, 5 wickets in 407 balls"
+       },
+       {
+        "label": "Runs",
+        "text": "48% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full outside off</b> · 7.0 an over, beats the bat 13%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>full wide outside off</b> · 4.0 per 100 balls (3 in 40)"
+      ],
+      "attack": [
+       "Short ball: 6.8 an over, 5 wickets in 407 balls",
+       "Runs: 48% through the leg side",
+       "Most expensive: <b>full outside off</b> · 7.0 an over, beats the bat 13%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 616,
+     "n_wkts": 18,
+     "runs": 588,
+     "economy": 5.727272727272727,
+     "bowl_avg": 32.666666666666664,
+     "strike_rate": 34.22222222222222,
+     "avg_spd": 125.47193430656934,
+     "max_spd_99": 135.5737,
+     "short_pct": 29.545454545454547,
+     "round_pct": 0.8116883116883116,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>full</b> · 4.5 per 100 balls"
+       },
+       {
+        "label": "Short ball",
+        "text": "6 of 18 wickets"
+       },
+       {
+        "label": "Runs",
+        "text": "51% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full on the stumps</b> · 6.5 an over, beats the bat 6%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>full</b> · 4.5 per 100 balls",
+       "Short ball: 6 of 18 wickets"
+      ],
+      "attack": [
+       "Runs: 51% through the leg side",
+       "Most expensive: <b>full on the stumps</b> · 6.5 an over, beats the bat 6%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "left_pace"
+  },
+  "3760070": {
+   "name": "Liam Dawson",
+   "type": "Left-arm orthodox",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 408,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 267,
+     "n_wkts": 4,
+     "runs": 201,
+     "economy": 4.51685393258427,
+     "bowl_avg": 50.25,
+     "strike_rate": 66.75,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 98.87640449438202,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Runs",
+        "text": "43% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>good length in the channel</b> · 5.8 an over, beats the bat 11%"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 43% through the leg side",
+       "Most expensive: <b>good length in the channel</b> · 5.8 an over, beats the bat 11%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 141,
+     "n_wkts": 3,
+     "runs": 135,
+     "economy": 5.74468085106383,
+     "bowl_avg": 45.0,
+     "strike_rate": 47.0,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 58.86524822695035,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Runs",
+        "text": "61% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full outside off</b> · 10.2 an over"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 61% through the leg side",
+       "Most expensive: <b>full outside off</b> · 10.2 an over"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "left_orthodox"
+  },
+  "3630055": {
+   "name": "Will Jacks",
+   "type": "Off-spin",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 528,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 310,
+     "n_wkts": 6,
+     "runs": 330,
+     "economy": 6.387096774193549,
+     "bowl_avg": 55.0,
+     "strike_rate": 51.666666666666664,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 28.70967741935484,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>a good length</b> · 2.3 per 100 balls"
+       },
+       {
+        "label": "Runs",
+        "text": "50% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full wide outside off</b> · 8.1 an over, beats the bat 17%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>a good length</b> · 2.3 per 100 balls"
+      ],
+      "attack": [
+       "Runs: 50% through the leg side",
+       "Most expensive: <b>full wide outside off</b> · 8.1 an over, beats the bat 17%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 218,
+     "n_wkts": 4,
+     "runs": 198,
+     "economy": 5.4495412844036695,
+     "bowl_avg": 49.5,
+     "strike_rate": 54.5,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 100.0,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Runs",
+        "text": "49% through the off side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>good length in the channel</b> · 7.4 an over, beats the bat 18%"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 49% through the off side",
+       "Most expensive: <b>good length in the channel</b> · 7.4 an over, beats the bat 18%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "off_spin"
+  },
+  "1440340": {
+   "name": "Jamie Overton",
+   "type": "Right pace",
+   "pace": true,
+   "new_ball": 25.0,
+   "order": 422,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 278,
+     "n_wkts": 11,
+     "runs": 241,
+     "economy": 5.201438848920863,
+     "bowl_avg": 21.90909090909091,
+     "strike_rate": 25.272727272727273,
+     "avg_spd": 135.96757352941177,
+     "max_spd_99": 145.6945,
+     "short_pct": 52.87769784172662,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>a good length on the 6th stump</b> · 5.2 per 100 balls (3 in 33)"
+       },
+       {
+        "label": "Short ball",
+        "text": "5 of 11 wickets"
+       },
+       {
+        "label": "Runs",
+        "text": "51% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>back of a length outside off</b> · 6.0 an over, beats the bat 20%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>a good length on the 6th stump</b> · 5.2 per 100 balls (3 in 33)",
+       "Short ball: 5 of 11 wickets"
+      ],
+      "attack": [
+       "Runs: 51% through the leg side",
+       "Most expensive: <b>back of a length outside off</b> · 6.0 an over, beats the bat 20%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 144,
+     "n_wkts": 3,
+     "runs": 157,
+     "economy": 6.541666666666667,
+     "bowl_avg": 52.333333333333336,
+     "strike_rate": 48.0,
+     "avg_spd": 136.93072463768115,
+     "max_spd_99": 144.1797,
+     "short_pct": 42.36111111111111,
+     "round_pct": 48.61111111111111,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Short ball",
+        "text": "7.6 an over, 1 wickets in 61 balls"
+       },
+       {
+        "label": "Runs",
+        "text": "61% through the off side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full wide outside off</b> · 10.4 an over"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Short ball: 7.6 an over, 1 wickets in 61 balls",
+       "Runs: 61% through the off side",
+       "Most expensive: <b>full wide outside off</b> · 10.4 an over"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "right_pace"
+  },
+  "880048": {
+   "name": "Adil Rashid",
+   "type": "Leg-spin",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 6475,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 4834,
+     "n_wkts": 141,
+     "runs": 4353,
+     "economy": 5.402978899462143,
+     "bowl_avg": 30.872340425531913,
+     "strike_rate": 34.283687943262414,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 0.7654116673562268,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>full on the 6th stump</b> · 4.4 per 100 balls (3 in 40)"
+       },
+       {
+        "label": "Runs",
+        "text": "43% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full outside off</b> · 6.4 an over, beats the bat 15%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>full on the 6th stump</b> · 4.4 per 100 balls (3 in 40)"
+      ],
+      "attack": [
+       "Runs: 43% through the leg side",
+       "Most expensive: <b>full outside off</b> · 6.4 an over, beats the bat 15%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 1641,
+     "n_wkts": 55,
+     "runs": 1660,
+     "economy": 6.06946983546618,
+     "bowl_avg": 30.181818181818183,
+     "strike_rate": 29.836363636363636,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 2.742230347349177,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>full on the stumps</b> · 4.4 per 100 balls (11 in 231)"
+       },
+       {
+        "label": "Runs",
+        "text": "55% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full outside off</b> · 8.3 an over, beats the bat 10%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>full on the stumps</b> · 4.4 per 100 balls (11 in 231)"
+      ],
+      "attack": [
+       "Runs: 55% through the leg side",
+       "Most expensive: <b>full outside off</b> · 8.3 an over, beats the bat 10%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "leg_spin"
+  },
+  "2070076": {
+   "name": "Joe Root",
+   "type": "Off-spin",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 990,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 525,
+     "n_wkts": 8,
+     "runs": 574,
+     "economy": 6.56,
+     "bowl_avg": 71.75,
+     "strike_rate": 65.625,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 38.857142857142854,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>full</b> · 2.0 per 100 balls"
+       },
+       {
+        "label": "Runs",
+        "text": "57% through the leg side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>full outside off</b> · 8.6 an over, beats the bat 10%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>full</b> · 2.0 per 100 balls"
+      ],
+      "attack": [
+       "Runs: 57% through the leg side",
+       "Most expensive: <b>full outside off</b> · 8.6 an over, beats the bat 10%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 465,
+     "n_wkts": 14,
+     "runs": 403,
+     "economy": 5.2,
+     "bowl_avg": 28.785714285714285,
+     "strike_rate": 33.214285714285715,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 95.48387096774194,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Wicket ball",
+        "text": "<b>full</b> · 3.0 per 100 balls"
+       },
+       {
+        "label": "Runs",
+        "text": "49% through the off side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>good length on the stumps</b> · 6.2 an over, beats the bat 14%"
+       }
+      ],
+      "respect": [
+       "Wicket ball: <b>full</b> · 3.0 per 100 balls"
+      ],
+      "attack": [
+       "Runs: 49% through the off side",
+       "Most expensive: <b>good length on the stumps</b> · 6.2 an over, beats the bat 14%"
+      ],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "off_spin"
+  },
+  "4353038": {
+   "name": "Sonny Baker",
+   "type": "Right arm fast",
+   "pace": true,
+   "new_ball": null,
+   "order": 4245,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 32,
+     "n_wkts": 0,
+     "runs": 57,
+     "economy": 10.6875,
+     "bowl_avg": null,
+     "strike_rate": null,
+     "avg_spd": 136.06875,
+     "max_spd_99": 142.1516,
+     "short_pct": 50.0,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "facts": [],
+      "respect": [],
+      "attack": [],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 10,
+     "n_wkts": 0,
+     "runs": 15,
+     "economy": 9.0,
+     "bowl_avg": null,
+     "strike_rate": null,
+     "avg_spd": 135.72,
+     "max_spd_99": 140.7538,
+     "short_pct": 40.0,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "facts": [],
+      "respect": [],
+      "attack": [],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "right_pace"
+  },
+  "4352921": {
+   "name": "Henry Crocombe",
+   "type": "Right arm fast",
+   "pace": true,
+   "new_ball": null,
+   "order": 8846,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 0,
+     "n_wkts": 0,
+     "runs": 0,
+     "economy": null,
+     "bowl_avg": null,
+     "strike_rate": null,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": null,
+     "how_to_play": {
+      "facts": [],
+      "respect": [],
+      "attack": [],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 0,
+     "n_wkts": 0,
+     "runs": 0,
+     "economy": null,
+     "bowl_avg": null,
+     "strike_rate": null,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": null,
+     "how_to_play": {
+      "facts": [],
+      "respect": [],
+      "attack": [],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "right_pace"
+  },
+  "3720028": {
+   "name": "Josh Tongue",
+   "type": "Right arm fast",
+   "pace": true,
+   "new_ball": null,
+   "order": 13704,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 73,
+     "n_wkts": 1,
+     "runs": 72,
+     "economy": 5.917808219178083,
+     "bowl_avg": 72.0,
+     "strike_rate": 73.0,
+     "avg_spd": 139.4849315068493,
+     "max_spd_99": 146.9108,
+     "short_pct": 42.465753424657535,
+     "round_pct": 2.73972602739726,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Runs",
+        "text": "60% through the leg side"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 60% through the leg side"
+      ],
+      "watch": []
+     },
+     "fields": []
+    },
+    "LHB": {
+     "n_balls": 17,
+     "n_wkts": 0,
+     "runs": 14,
+     "economy": 4.941176470588235,
+     "bowl_avg": null,
+     "strike_rate": null,
+     "avg_spd": 133.61705882352942,
+     "max_spd_99": 138.1688,
+     "short_pct": 41.17647058823529,
+     "round_pct": 88.23529411764706,
+     "how_to_play": {
+      "facts": [],
+      "respect": [],
+      "attack": [],
+      "watch": []
+     },
+     "fields": []
+    }
+   },
+   "group": "right_pace"
+  }
+ }
+}
