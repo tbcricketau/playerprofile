@@ -22,6 +22,9 @@ from audit_pack_hands import run_audit
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
+# The squads on GitHub Pages when Pages was closed to new series (15-10-2026); see main().
+PAGES_SQUADS = {"south-africa-test-away-2026"}
+
 BUNDLES = {
     # REVIVED 2026-09-01 (Tom) and repointed at the Zimbabwe away ODI series. The repo previously
     # served the Bangladesh home Tests, archived 2026-08-31 and still tagged archived-2026-08-31 —
@@ -325,6 +328,16 @@ def main():
         print(f"!! --revive: {cfg['archived']}")
     out = os.path.join(HERE, cfg["bundle"])
     squads = cfg.get("squads") or [cfg.get("slug", "")]
+    # New series no longer go to GitHub Pages (Tom, 15-10-2026). Pages has no sign-in, so a series
+    # there is open to anyone with the link, before its tour and after. Players read the hub packs,
+    # behind the shared login and the open-series switch (playerpacks/docs/PLAYER_ACCESS.md). Only
+    # the squads already on Pages that day may be pushed there again.
+    if a.target != "storage":
+        late = [s for s in squads if s not in PAGES_SQUADS]
+        if late:
+            raise SystemExit(f"REFUSING the GitHub Pages target for {', '.join(late)}: new series are "
+                             f"published to the hub only (--target storage), where players reach them "
+                             f"through the shared login once the series is opened.")
 
     # Every override that weakens a gate is named up front and again in the commit, so a push
     # that skipped a check can never be mistaken for one that passed it.
