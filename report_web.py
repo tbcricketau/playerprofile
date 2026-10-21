@@ -1061,10 +1061,9 @@ def _bat_facts(P, key):
     if ph.get("early") and ph.get("set"):
         out.append(("First 30 balls", f"average {_n(ph['early']['avg'], 1)}, BPD {_n(_bpd(ph['early']), 0)} · "
                     f"once set {_n(ph['set']['avg'], 1)}, BPD {_n(_bpd(ph['set']), 0)}"))
-    sg = P.get("shot_groups") or []
-    if sg:
-        top = sg[0]
-        out.append(("Scoring", f"{top['runs_pct']:.0f}% of runs off the {E(top['name'].replace('/', ' / ').lower())}"))
+    off, leg = _sides(P)
+    if off is not None:
+        out.append(("Runs by side", f"off side <b>{off:.0f}%</b> · leg side <b>{leg:.0f}%</b>"))
     if key == "all":
         vd = [(t, v) for t, v in (P.get("vs_detail") or {}).items() if v["balls"] >= 300 and v.get("avg")]
         if len(vd) >= 2:
@@ -1180,6 +1179,183 @@ def _bat_fields(pid, rows_by_group, group, title, hand):
             f"data-pack='{E(group)}' data-opts='{E(data)}'>{label(title)}<div class='fbody'></div></div>")
 
 
+# ── a batter: Tom's 16-10-2026 read of the England pages ─────────────────────────────────────────
+# Facts as tiles across the page, not a list down its left; each reel beside the numbers it shows
+# rather than a Vision section at the end; the scoring split by side only (no shot types — "off the
+# hook" against spin made no sense); and three questions answered from the record: is hitting the
+# stumps worth more, which length and line, and how they go against the slower ball.
+_OFF_SECTORS = {"Third Man", "Cover Point", "Cover", "Mid-Off"}
+
+
+def fact_tiles(rows, title="The facts"):
+    rows = [(k, v) for k, v in rows if v]
+    if not rows:
+        return ""
+    return (f"<div class='fx'><div class='lbl'>{E(title)}</div><div class='ftiles'>"
+            + "".join(f"<div class='ft'><div class='k'>{E(k)}</div><div class='v'>{v}</div></div>" for k, v in rows)
+            + "</div></div>")
+
+
+def _reels(clips, keys, used=None):
+    """Reel buttons for these clip keys, in a row under the numbers they show."""
+    out = []
+    for k in keys:
+        v = (clips or {}).get(k) or {}
+        if v.get("items"):
+            t = str(v.get("title") or k)
+            t = t.capitalize() if t.istitle() and " " in t else t
+            out.append(f"<a class='vlink rl' data-pl='{E(k)}' data-n='{len(v['items'])}' href='#'>{E(t)}</a>")
+            if used is not None:
+                used.add(k)
+    return f"<div class='reels inline'>{''.join(out)}</div>" if out else ""
+
+
+def _sides(P):
+    """Runs to the off side and the leg side, from the same eight areas the wheel draws."""
+    from cricket_core import charts
+    lhb = bool(P.get("is_lhb"))
+    off = leg = 0.0
+    for r in P["raw"]:
+        runs = r.get("bat_score_n") or 0
+        if r.get("is_legal") and runs:
+            k = charts.wagon_sector(r, lhb)
+            if k:
+                if k in _OFF_SECTORS:
+                    off += runs
+                else:
+                    leg += runs
+    tot = off + leg
+    return (off / tot * 100, leg / tot * 100) if tot else (None, None)
+
+
+def _hits_stumps(r):
+    """Would this ball have hit the stumps: through the stumps' width (plus the ball) and under the
+    bails, from the tracked line and height at the stumps. None when the ball was not tracked."""
+    line, height = r.get("at_stumps_line_m"), r.get("at_stumps_height_m")
+    if line is None or height is None or height <= 0 or height > 2.5 or abs(line) > 3:
+        return None
+    return abs(line) <= 0.15 and height <= 0.75
+
+
+_SPEED_REF = {}
+_SPEED_WORD = {"Test": "first-class", "ODI": "one-day", "T20": "T20", "T20I": "T20"}
+
+
+def _off_pace(fmt):
+    """{bowler_id: the speed below which a ball is well off their stock pace}, for this format."""
+    if fmt in _SPEED_REF:
+        return _SPEED_REF[fmt]
+    import csv
+    import os
+    from cricket_core.config import project_path
+    want = {"Test": "multi-day", "ODI": "one-day", "T20": "T20", "T20I": "T20"}.get(fmt, "multi-day")
+    p = os.path.join(project_path("referencebuilder"), "data", "bowler_speed_profile_by_format.csv")
+    out = {}
+    if os.path.exists(p):
+        for row in csv.DictReader(open(p, encoding="utf-8")):
+            if row.get("format") == want and row.get("off_pace_kph"):
+                try:
+                    out[str(row["bowler_id"])] = float(row["off_pace_kph"])
+                except ValueError:
+                    pass
+    _SPEED_REF[fmt] = out
+    return out
+
+
+def _line_length(key, P, ctx, isg, against):
+    """Is hitting the stumps worth more, which length and line, and the slower ball — each from the
+    record against this scope's bowling (pace for the all-bowling page, spin for a spin type)."""
+    from batter_profile import _split_stats
+    legal = [r for r in P["raw"] if r.get("is_legal")]
+    rows = [r for r in legal if bool(r.get("vs_pace")) != isg] if key == "all" else legal
+    blocks, grid = [], ""
+    # the stumps: on the all-bowling page pace and spin both, since a batter bowled or LBW to one
+    # and never the other is the point (Duckett's six in ODIs all came from spin)
+    sets = ([("pace", [r for r in legal if r.get("vs_pace")]), ("spin", [r for r in legal if not r.get("vs_pace")])]
+            if key == "all" else [(against, rows)])
+    trs, his, notes = [], [], []
+    for word, rs in sets:
+        hit = [r for r in rs if _hits_stumps(r) is True]
+        miss = [r for r in rs if _hits_stumps(r) is False]
+        tracked = len(hit) + len(miss)
+        if tracked < 120 or len(hit) < 30:
+            continue
+        a, b = _split_stats(hit), _split_stats(miss)
+        bm = sum(1 for r in hit if r.get("is_out") and r.get("how_out") in ("Bowled", "LBW"))
+        pre = f"{_cap(word)} · " if key == "all" else ""
+        if (_bpd(a) or 1e9) < (_bpd(b) or 1e9):
+            his.append(len(trs))
+        elif _bpd(b):
+            his.append(len(trs) + 1)
+        trs += [_bat_row(f"{pre}hitting", a), _bat_row(f"{pre}missing", b)]
+        outs = (f"{bm} of the {a['outs']} dismissals off them bowled or LBW" if a["outs"]
+                else "no dismissals off them")
+        notes.append(f"v {word}, {len(hit) / tracked * 100:.0f}% of {tracked:,} tracked balls were hitting the stumps, {outs}")
+    if trs:
+        import report_visuals as RV
+        tab = (table(["Stumps"] + _BAT_HEADS, trs, hi=his)
+               + f"<p class='note'>{_cap('; '.join(notes))}. Hitting = through the stumps' width and under the bails "
+                 "at the stumps, from ball tracking. The shaded row in each pair has the lower BPD.</p>")
+        pic = RV.stumps_view([(f"v {w}", rs) for w, rs in sets], bool(P.get("is_lhb")))
+        blocks.append(panes(["Chart", "Table"], [pic, tab], "Hitting the stumps") if pic
+                      else label("Hitting the stumps") + tab)
+    # length x pitching line
+    lengths = [d["bucket"] for d in (P.get("dims") or {}).get("length") or []]
+    lines = [d["bucket"] for d in (P.get("dims") or {}).get("line") or []]
+    if key != "all":
+        lengths = lengths or sorted({r.get("length_band") for r in rows if r.get("length_band")})
+    cells = {}
+    for r in rows:
+        lb, lr = r.get("length_band"), r.get("line_region")
+        if lb in lengths and lr in lines:
+            cells.setdefault((lb, lr), []).append(r)
+    stats = {k: _split_stats(v) for k, v in cells.items()}
+    good = {k: s for k, s in stats.items() if s["balls"] >= 20}
+    if len(good) >= 4:
+        import batting_report as BR
+        low = min((k for k, s in good.items() if s["outs"] >= 2), key=lambda k: _bpd(good[k]), default=None)
+        head = "<tr><th></th>" + "".join(f"<th>{E(_cap(str(BR._blabel(l, 'line_region', isg))))}</th>" for l in lines) + "</tr>"
+        body = ""
+        for lb in lengths:
+            tds = ""
+            for lr in lines:
+                s = good.get((lb, lr))
+                if not s:
+                    tds += "<td class='thin'>–</td>"
+                    continue
+                cls = " class='hi'" if (lb, lr) == low else ""
+                sub = f"avg {_n(s.get('avg'), 0)} · {s['balls']} balls" if s["outs"] else f"{s['balls']} balls"
+                tds += f"<td{cls}><b>{f'BPD {_bpd(s):.0f}' if s['outs'] else 'no outs'}</b><small>{sub}</small></td>"
+            body += f"<tr><th>{E(_cap(str(BR._blabel(lb, 'length_band', isg)).lower()))}</th>{tds}</tr>"
+        import report_visuals as RV
+        tab = (f"<div class='tw'><table class='t grid'><thead>{head}</thead><tbody>{body}</tbody></table></div>"
+               + "<p class='note'>BPD (balls per dismissal), then the average and the balls, on 20 balls or more. "
+                 "The shaded cell has the lowest BPD on two dismissals or more.</p>")
+        pic = RV.danger_map(rows, bool(P.get("is_lhb")), isg)
+        title = f"By length and pitching line · v {against}"
+        grid = panes(["Chart", "Table"], [pic, tab], title) if pic else label(title) + tab
+    # the slower ball (pace)
+    if not isg:
+        ref = _off_pace(ctx.get("fmt", "Test"))
+        known = [r for r in rows if r.get("ball_speed_n") and ref.get(str(r.get("bowler_id")))]
+        slow = [r for r in known if r["ball_speed_n"] < ref[str(r["bowler_id"])]]
+        stock = [r for r in known if r["ball_speed_n"] >= ref[str(r["bowler_id"])]]
+        if len(slow) >= 25 and stock:
+            a, b = _split_stats(slow), _split_stats(stock)
+            lo = 0 if (_bpd(a) or 1e9) < (_bpd(b) or 1e9) else 1
+            blocks.append(label("Slower balls · v pace") + table(
+                [""] + _BAT_HEADS, [_bat_row("Slower balls", a), _bat_row("Stock pace", b)], hi=lo)
+                + f"<p class='note'>A slower ball is one well off that bowler's own stock pace, set from their tracked "
+                  f"speeds in {_SPEED_WORD.get(ctx.get('fmt', 'Test'), 'first-class')} cricket; {len(slow) / len(known) * 100:.0f}% of the "
+                  f"{len(known):,} tracked balls from pace. The shaded row has the lower BPD.</p>")
+    # the stumps and the slower ball down the left, the length-by-line grid on the right
+    if not (blocks or grid):
+        return ""
+    if not (blocks and grid):
+        return "".join(blocks) + grid
+    return f"<div class='two'><div class='col'>{''.join(blocks)}</div><div class='col'>{grid}</div></div>"
+
+
 def _batter_scope(key, P, Pb, ctx):
     import batting_report as BR
     sid = lambda s: f"{key}-{s}"
@@ -1205,7 +1381,7 @@ def _batter_scope(key, P, Pb, ctx):
         fg.append((f"{sh['team_share_median']:.1f}%", "Typical share of team runs"))
     fp = _bat_pct(ctx["fp"]) if key == "all" else ""
     s.append(sec(sid("sum"), "Summary", who,
-                 notes + figs(fg) + facts(_bat_facts(P, key))
+                 notes + figs(fg) + fact_tiles(_bat_facts(P, key))
                  + ((label(f"Against {ctx.get('one', 'Test')} batters, career and last 3 years" if ctx.get("fmt", "Test") == "Test"
                           else f"Against {'T20I' if ctx.get('fmt') == 'T20' else ctx.get('one')} batters: internationals between "
                                "full members since 2015") + fp
@@ -1227,9 +1403,14 @@ def _batter_scope(key, P, Pb, ctx):
             rows.append(_bat_row(E(_TYPE_WORD.get(t, t)), v))
         scored = [i for i, (t, v) in enumerate(det, start=len(rows) - len(det)) if v.get("avg") is not None and v["balls"] >= 300]
         lo = min(scored, key=lambda i: det[i - (len(rows) - len(det))][1]["avg"]) if scored else None
-        s.append(sec(sid("type"), "By bowler type", who, table(["Bowler type"] + _BAT_HEADS, rows, hi=lo)
-                     + "<p class='note'>The shaded row is the lowest average on 300 balls or more. The switch at the top narrows the "
-                       "whole page to one type.</p>"))
+        import report_visuals as RV
+        tab = (table(["Bowler type"] + _BAT_HEADS, rows, hi=lo)
+               + "<p class='note'>The shaded row is the lowest average on 300 balls or more. The switch at the top narrows the "
+                 "whole page to one type.</p>")
+        vs = P.get("vs") or {}
+        bars = RV.type_bars([(f"<b>{lab}</b>", vs[k]) for lab, k in (("Pace", "pace"), ("Spin", "spin")) if vs.get(k)]
+                            + [(E(_TYPE_WORD.get(t, t)), v) for t, v in det], P.get("average"))
+        s.append(sec(sid("type"), "By bowler type", who, panes(["Chart", "Table"], [bars, tab], "Average") if bars else tab))
 
     # ── where they get out ──
     pics, n_out = ctx["out_pics"][key]
@@ -1246,43 +1427,44 @@ def _batter_scope(key, P, Pb, ctx):
     dis = P.get("dismissals")
     how = ""
     if dis:
+        import report_visuals as RV
         n = sum(dis.values())
         how = table(["How out", "Count", "Share"], [[E(k), str(v), f"{v / n * 100:.0f}%"] for k, v in dis.most_common()], cls="narrow")
+        ground = RV.catch_map(P["raw"], bool(P.get("is_lhb")))
+        how = panes(["Ground", "Table"], [ground, how], "How out") if ground else how
     extra = []
     for k, word in (("speed", "speed"), ("over_round", "angle")):
         w = BR._worst(dims.get(k) or [])
         if w:
             extra.append(f"Lowest average by {word}{' v ' + against if key == 'all' else ''}: "
                          f"{E(str(BR._blabel(w['bucket'], k)).lower())} {w['avg']:.1f} over {w['balls']:,} balls.")
+    # the reels sit with the numbers they show (the same reels on every scope, as the Vision section was)
+    clips = ctx.get("clips") or {}
+    used = set()
     s.append(sec(sid("vul"), "Where they get out", who,
-                 "<div class='two wide-l'><div class='col'>" + label(f"Dismissals · {n_out}") + pics + danger + how + "</div>"
+                 _reels(clips, ("dismissals", "danger"), used)
+                 + "<div class='two wide-l'><div class='col'>" + label(f"Dismissals · {n_out}") + pics + danger + how + "</div>"
                  f"<div class='col'>{label('By ball, v ' + against) if key == 'all' else ''}{dtabs}</div></div>"
                  f"<p class='note'>{' '.join(extra)} The shaded row in each table is the lowest average on 40 balls or more. "
                  "BPD is balls per dismissal.</p>"))
 
     # ── how they score ──
-    sg = P.get("shot_groups") or []
-    dirp = P.get("dir_pct") or {}
-    sfig = []
-    if dirp:
-        sfig.append((f"{dirp.get('off', 0):.0f}%", "Runs off side"))
-    for nm in ("Drive", "Sweep", "Pull/Hook"):
-        f = next((x for x in sg if x["name"] == nm), None)
-        if f:
-            sfig.append((f"{f['runs_pct']:.0f}%", f"Off the {nm.replace('/', ' / ').lower()}"))
+    off, leg = _sides(P)
+    sfig = [(f"{off:.0f}%", "Runs off side"), (f"{leg:.0f}%", "Runs leg side")] if off is not None else []
     st = dims.get("stroke") or []
+    shot = lambda b: "Pull" if isg and b == "Pull/Hook" else b.replace("/", " / ")
     worst_false = max(range(len(st)), key=lambda i: st[i].get("false_pct") or 0) if st else None
-    stab = (label("Shots v " + against) if key == "all" and st else "") + table(["Shot"] + _BAT_HEADS, [_bat_row(E(d["bucket"].replace("/", " / ")), d) for d in st], hi=worst_false) if st else ""
+    stab = (label("Shots v " + against) if key == "all" and st else "") + table(["Shot"] + _BAT_HEADS, [_bat_row(E(shot(d["bucket"])), d) for d in st], hi=worst_false) if st else ""
+    rest = [k for k in (clips or {}) if k not in used and k not in ("risky_stroke", "false_shots")]
     s.append(sec(sid("score"), "How they score", who,
-                 f"<div class='two'><div>{ctx['wheels'][key]}</div><div class='col'>{figs(sfig)}{stab}"
+                 _reels(clips, ("risky_stroke", "false_shots", *rest), used)
+                 + f"<div class='two'><div>{ctx['wheels'][key]}</div><div class='col'>{figs(sfig)}{stab}"
                  + ("<p class='note'>The shaded shot has the most false shots.</p>" if st else "") + "</div></div>"))
 
-    # ── first 30 balls ──
-    ph = P.get("phase") or {}
-    if ph.get("early") and ph.get("set"):
-        rows = [_bat_row("First 30 balls", ph["early"]), _bat_row("Once set", ph["set"])]
-        weak = 0 if (_bpd(ph["early"]) or 1e9) < (_bpd(ph["set"]) or 1e9) else 1
-        s.append(sec(sid("start"), "First 30 balls", who, table([""] + _BAT_HEADS, rows, hi=weak)))
+    # ── line, length and pace ──
+    llp = _line_length(key, P, ctx, isg, against if key == "all" else gword[key].lower())
+    if llp:
+        s.append(sec(sid("llp"), "Line, length and pace", who, llp))
 
     # ── how attacks bowled, and our options (all bowling only) ──
     if key == "all" and ctx.get("attacked") and ctx.get("fmt", "Test") == "Test":
@@ -1307,19 +1489,18 @@ def _batter_scope(key, P, Pb, ctx):
                      extra="<span class='sim'>Match simulation</span>"))
 
     # ── field and vision ──
-    fb = [(gword[g], _bat_fields(pid, ctx["field_rows"], g, "v " + gword[g].lower(), "LHB" if P.get("is_lhb") else "RHB")) for g in groups if ctx["field_rows"].get(g)]
+    fb = [(gword[g], _bat_fields(pid, ctx["field_rows"], g, "v " + gword[g].lower(), "LHB" if P.get("is_lhb") else "RHB"))
+          for g in groups if any(f.get("fielders") for f in (ctx["field_rows"].get(g) or {}).get("fields") or [])]
     if fb:
         body = (panes([f[0] for f in fb], [f[1] for f in fb], "Bowler type") if len(fb) > 1 else fb[0][1])
         s.append(sec(sid("fld"), "Your field", "", f"<div class='two'><div>{body}</div><div><p class='note'>The planner's fields "
                      "for this batter, one per situation. A field the coaches set replaces the estimate and carries a gold dot.</p>"
                      "</div></div>"))
-    s.append(sec(sid("vis"), "Vision", "", _vision(ctx.get("clips"))))
     return "".join(s)
 
 
 _BAT_JUMP = (("sum", "Summary"), ("type", "By bowler type"), ("vul", "Where they get out"), ("score", "How they score"),
-             ("start", "First 30 balls"), ("att", "How attacks bowled"), ("opt", "Our options"), ("fld", "Your field"),
-             ("vis", "Vision"))
+             ("llp", "Line, length and pace"), ("att", "How attacks bowled"), ("opt", "Our options"), ("fld", "Your field"))
 
 
 def batter_profiles(pid, raw=None, fmt="Test", level="international", source="warehouse"):

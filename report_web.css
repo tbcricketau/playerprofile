@@ -96,6 +96,48 @@ table.t.narrow td:first-child { min-width:0 }
 /* figures in a half-width column: as many across as fit, never six squeezed in */
 .col .figs, .two .figs { grid-template-columns:repeat(auto-fit,minmax(92px,1fr)) }
 
+/* the facts as tiles across the card (16-10-2026), not label rows down its left */
+.ftiles { display:grid; grid-template-columns:1fr; gap:8px; margin-top:8px }
+.ft { border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:4px; padding:8px 11px; min-width:0 }
+.ft .k { font-size:11.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--muted) }
+.ft .v { font-size:14px; line-height:1.35; color:var(--ink); margin-top:2px }
+
+/* reels inside a section, beside the numbers they show: a row of buttons, not a list */
+.reels.inline { flex-direction:row; flex-wrap:wrap; gap:8px; border:0; border-radius:0; margin-top:0; overflow:visible }
+.reels.inline .rl { border:1px solid var(--accent); border-radius:4px; min-height:38px; font-size:14px; padding:0 12px }
+.reels.inline .rl:first-child { border-top:1px solid var(--accent) }
+
+/* the pictures that replace tables (report_visuals.py), each on a Chart / Table switch */
+svg.vx { width:100%; height:auto; display:block; border-radius:6px; max-width:640px; margin:0 auto }
+svg.vx.ground { max-width:380px }
+.vkey { display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:8px; font-size:12.5px; color:var(--muted) }
+.vkey .k { display:inline-flex; align-items:center; gap:6px }
+.vkey i { width:14px; height:14px; border-radius:3px; display:inline-block; border:1px solid rgba(0,0,0,.08) }
+.hbar { display:flex; height:14px; border-radius:3px; overflow:hidden; margin-top:10px; gap:2px }
+.hbar span { display:block; min-width:4px }
+.tbars { display:flex; flex-direction:column; gap:8px }
+.tb { display:grid; grid-template-columns:150px minmax(0,1fr) 92px; gap:10px; align-items:center }
+.tb .n { font-size:14px }
+.tb .bar { position:relative; height:18px; background:#eef1ec; border-radius:3px }
+.tb .bar i { position:absolute; left:0; top:0; bottom:0; background:var(--accent); border-radius:3px }
+.tb .bar b { position:absolute; top:-4px; bottom:-4px; width:3px; background:var(--ink); border-radius:1px }
+.tb .v { font-family:var(--font-d); font-weight:700; font-size:18px; text-align:right; line-height:1.05 }
+.tb .v small { display:block; font-family:var(--font-b); font-weight:500; font-size:11.5px; color:var(--muted) }
+.tb.lo .bar i { background:#b5452f }
+.tb.lo .n { font-weight:700 }
+.tb.thin .bar i { opacity:.4 }
+@media (max-width:560px) { .tb { grid-template-columns:104px minmax(0,1fr) 70px; gap:8px } .tb .n { font-size:13px } }
+
+/* length by pitching line: BPD per cell, the lowest shaded */
+table.t.grid { min-width:0 }
+table.t.grid td { text-align:center; white-space:normal; line-height:1.2 }
+table.t.grid td b { display:block; font-size:14px }
+table.t.grid td small { display:block; font-size:11.5px; color:var(--muted) }
+table.t.grid td.hi { background:#fbf4dc; box-shadow:inset 0 0 0 2px var(--gold) }
+table.t.grid td.thin { color:var(--muted) }
+table.t.grid th { text-align:center; white-space:normal }
+table.t.grid td:first-child { min-width:0 }
+
 @media (min-width:900px) {
   .sx { padding:22px }
   .two { grid-template-columns:1fr 1fr; gap:24px }
@@ -104,6 +146,7 @@ table.t.narrow td:first-child { min-width:0 }
   .zc { grid-template-columns:repeat(3,1fr) }
   .zc.two-up { grid-template-columns:1fr 1fr }
   .notes2 { grid-template-columns:1fr 1fr }
+  .ftiles { grid-template-columns:repeat(auto-fill,minmax(260px,1fr)) }
   .angle { gap:24px }
 }
 
