@@ -267,6 +267,10 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
         try:
             import c21_source
             facts.update(c21_source.delivery_facts(unseen))
+            # a ball pulled from CricViz (cricviz_source) plays a Cricket-21 clip too, but its
+            # players are warehouse ids the mirror cannot resolve — its own record answers
+            import cricviz_source
+            facts.update(cricviz_source.delivery_facts(unseen))
         except Exception as e:
             raise SystemExit(
                 f"the hand audit could not resolve {len(unseen)} Cricket-21 clip(s) "

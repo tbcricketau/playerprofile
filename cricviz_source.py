@@ -7,7 +7,15 @@ match in it was 27-09. Tom's rule that day: when the warehouse has not caught up
 from the CricViz Data API first and the video from the Cricket-21 portal.
 
     python cricviz_source.py pull --country ENG --from 2026-10-01      # cache what the warehouse lacks
+    python cricviz_source.py clips                                     # link each ball to its C21 clip
     python cricviz_source.py status                                    # cached, and still a gap?
+
+The video comes second, from the Cricket-21 portal: import the competition into the mirror
+(`cricket21/bulk_import.py --comps <id> --white`, which takes over the portal's single session, so
+ask Tom first), then `clips` writes each ball's clip link into the cache. Done 28-10-2026 for the
+tri-series (competition 3785): 1,729 of 1,730 balls linked, the batter's hand and the dismissal agree
+on all 1,730, and a sample of 40 clips all serve. audit_pack_hands resolves these clips through
+`delivery_facts` here, because the mirror's player map does not hold England's players.
 
 A pulled match is written to `data/cricviz/<cricviz id>.json` (gitignored: this repo is public, and the
 feed is licensed business to business). Every loader that reads deliveries then adds that match's
@@ -35,7 +43,7 @@ copied from the warehouse's untracked shape, which stamps the fullest bucket (se
 
 Not filled from here — they query the warehouse in SQL of their own: the all-formats fallback facts and
 batting role in build_opponent_about, build_shot_matrix, build_h2h, attack_cards, and matchupmodel's
-profile CSVs. Footage is separate: a pulled ball carries no clip until the Cricket-21 portal is pulled.
+profile CSVs.
 """
 from __future__ import annotations
 
@@ -280,7 +288,8 @@ def _rows_for(match):
         r = dict(facts)
         r.update({
             "delivery_id": BALL_PREFIX + str(b["ball_id"]), "striker_id": striker, "bowler_id": bowler,
-            "video_file_name": "None", "match_innings": inn, "over": str(b["over_number"]),
+            "video_file_name": "None", "c21_video_url": str(b.get("c21_video_url") or "None"),
+            "match_innings": inn, "over": str(b["over_number"]),
             "ball_in_over": str(b["ball_number"]), "bowler_spell": str(b.get("bowling_spell") or "None"),
             "match_day": str(b.get("day_number") or "1"),
             "striker_batting_position": str(arr.get(str(b["batting_player_id"]), "None")),
@@ -482,6 +491,85 @@ def pull(country, start, end, force=False):
     return wrote
 
 
+def attach_clips():
+    """Write each cached ball's Cricket-21 clip link into the cache, from the Cricket-21 mirror
+    (`cricket21/bulk_import.py --comps <id> --white` first). The clip goes into the cached file, not
+    into a lookup at load time, so a machine with the cache and no mirror (the build box) plays it.
+
+    A C21 match is found by date and the two team names, and its deliveries are lined up with
+    CricViz's by order within each innings — C21 numbers overs from 0, so (over, ball) never
+    matches directly. An innings is linked only when both hold the same number of deliveries and
+    runs off the bat, wides and no-balls agree on every one; anything else is left without footage
+    and said so, because a clip on the wrong ball is worse than none."""
+    import sqlite3
+    import c21_source
+    con = sqlite3.connect(f"file:{c21_source.MIRROR}?mode=ro", uri=True)
+    try:
+        for f in _files():
+            with open(f, encoding="utf-8") as fh:
+                d = json.load(fh)
+            m = d["match"]
+            date = str(m["start_date"])[:10]
+            names = {str(m.get("team1_name")), str(m.get("team2_name"))}
+            hit = [r for r in con.execute("SELECT match_id, team_a, team_b FROM matches WHERE match_date = ?", (date,))
+                   if {r[1], r[2]} == names]
+            label = f"{m['match_id']} {date} {m.get('team1_name')} v {m.get('team2_name')}"
+            if len(hit) != 1:
+                print(f"  no Cricket-21 match   {label} ({len(hit)} found)")
+                continue
+            c21 = {}
+            for inn, bat, wd, nb, did, url in con.execute(
+                    "SELECT match_innings, bat_score, wide_runs, noball_runs, delivery_id, video_url "
+                    "FROM deliveries WHERE match_id = ? ORDER BY match_innings, over, ball_in_over, delivery_id",
+                    (hit[0][0],)):
+                c21.setdefault(str(inn), []).append((int(bat or 0), int(wd or 0), int(nb or 0), did, url))
+            cv = {}
+            for b in sorted(d["ball"], key=lambda b: (int(b["innings_number"]), int(b["innings_ball_number"]))):
+                cv.setdefault(str(b["innings_number"]), []).append(b)
+            linked = 0
+            for inn, balls in cv.items():
+                theirs = c21.get(inn, [])
+                same = len(theirs) == len(balls) and all(
+                    (int(b.get("runs_off_bat") or 0), int(b.get("wides") or 0), int(b.get("noballs") or 0)) == t[:3]
+                    for b, t in zip(balls, theirs))
+                for b, t in zip(balls, theirs):
+                    b["c21_video_url"] = t[4] if same and t[4] else None
+                    b["c21_delivery_id"] = t[3] if same else None
+                if same:
+                    linked += sum(1 for t in theirs if t[4])
+                else:
+                    print(f"  innings {inn} does not line up ({len(balls)} CricViz v {len(theirs)} C21) — no clips")
+            tmp = f + ".part"
+            with open(tmp, "w", encoding="utf-8") as fh:
+                json.dump(d, fh)
+            os.replace(tmp, f)
+            print(f"  {linked:4d} of {len(d['ball'])} balls linked to a clip   {label}")
+    finally:
+        con.close()
+
+
+_GROUP_OF = {"Right Fast": "right_pace", "Right Medium": "right_pace", "Left Fast": "left_pace",
+             "Left Medium": "left_pace", "Off Spin": "off_spin", "Leg Break": "leg_spin",
+             "Left Orthodox": "left_orthodox", "Left Unorthodox": "left_unorthodox"}
+_COARSE = {"Test": "Test", "ODI": "ODI", "T20I": "T20"}
+
+
+def delivery_facts(delivery_ids):
+    """{delivery_id: {hand, fmt, striker, bowler, group}} for pulled balls — what
+    audit_pack_hands needs to check a reel holding them, in the shape c21_source.delivery_facts
+    returns. A pulled ball's clip is a Cricket-21 url, but its players are WAREHOUSE ids already,
+    which the mirror's player map (Indian, Zimbabwean and South African cricket) could not give."""
+    want = {str(i) for i in delivery_ids}
+    out = {}
+    for fmt, rows in _all_rows().items():
+        for r in rows:
+            if r["delivery_id"] in want:
+                out[r["delivery_id"]] = {"hand": "lhb" if r["striker_hand_id"] == "2" else "rhb",
+                                         "fmt": _COARSE[fmt], "striker": r["striker_id"],
+                                         "bowler": r["bowler_id"], "group": _GROUP_OF.get(r["bowler_type_simple"])}
+    return out
+
+
 def status():
     st = _load_state()
     for f in _files():
@@ -508,8 +596,11 @@ if __name__ == "__main__":
     p.add_argument("--to", dest="end", default=dt.date.today().isoformat())
     p.add_argument("--force", action="store_true")
     sub.add_parser("status")
+    sub.add_parser("clips", help="link each cached ball to its Cricket-21 clip, from the mirror")
     a = ap.parse_args()
     if a.cmd == "pull":
         pull(a.country, a.start, a.end, a.force)
+    elif a.cmd == "clips":
+        attach_clips()
     else:
         status()
