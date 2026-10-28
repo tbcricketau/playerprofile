@@ -408,4 +408,7 @@ def _warehouse_bowler_rows(bowler_id: str, dev_limit: int, fmt: str, level: str)
         for col in ("season", "gender_id", "match_name", "venue_country", "venue_city",
                     "competition"):
             r[col] = m.get(col, "None")
-    return result
+    # Matches the warehouse has not loaded yet, pulled from the CricViz Data API (cricviz_source).
+    # Empty unless a pull has cached one, and each retires itself once the warehouse holds it.
+    import cricviz_source
+    return cricviz_source.merge(result, cricviz_source.bowler_rows(bowler_id, fmt, level))

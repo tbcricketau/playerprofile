@@ -190,7 +190,9 @@ def _warehouse_batter_rows(batter_id: str, fmt: str, level: str) -> list:
     """
     rows = run_query(q, conn, cur)
     conn.close()
-    return rows
+    # plus matches the warehouse has not loaded yet (cricviz_source; see data_loaders)
+    import cricviz_source
+    return cricviz_source.merge(rows, cricviz_source.batter_rows(batter_id, fmt, level))
 
 
 @st.cache_data(ttl=3600)
@@ -224,7 +226,8 @@ def load_batter_innings(batter_id: str, fmt: str = "Test",
     """
     rows = run_query(q, conn, cur)
     conn.close()
-    return rows
+    import cricviz_source
+    return rows + cricviz_source.batter_innings(batter_id, fmt, level)
 
 
 @st.cache_data(ttl=3600)
@@ -245,8 +248,11 @@ def load_batter_catch_positions(batter_id: str, fmt: str = "Test",
     """
     rows = run_query(q, conn, cur)
     conn.close()
-    return {r["delivery_id"]: (None if r["pos_id"] in (None, "None", "0", "28") else r["pos_id"])
-            for r in rows}
+    import cricviz_source
+    out = {r["delivery_id"]: (None if r["pos_id"] in (None, "None", "0", "28") else r["pos_id"])
+           for r in rows}
+    out.update(cricviz_source.batter_catch_positions(batter_id, fmt, level))
+    return out
 
 
 # Back-compat: the Test-only name every existing caller used. New code should call load_batters.

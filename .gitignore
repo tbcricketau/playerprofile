@@ -20,6 +20,9 @@ env/
 reports/*
 !reports/.gitkeep
 
+# ── Matches pulled from the CricViz Data API (cricviz_source.py) — licensed feed, never committed
+data/cricviz/
+
 # ── Published profile artefacts (artefact.py) — player-derived data, rebuildable ──
 data/profiles/
 
