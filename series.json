@@ -8,7 +8,7 @@
    "target_country": "Australia",
    "format": "ODI",
    "level": "international",
-   "_note": "Coach-only scouting for the England white-ball tour, 15-10-2026. Opposition pinned in matchupmodel/data/opp_squad_england_odi.json. Every report tier is 'squad' until Tom names a likely XI. Do not build player packs for this series until the playerpacks open-series gate exists.",
+   "_note": "Coach-only scouting for the England white-ball tour, 15-10-2026. Opposition pinned in matchupmodel/data/opp_squad_england_odi.json. TIERS set 28-10-2026 (Tom): the likely XI from England's last ten ODIs played (appearances as batter or bowler), the rest of the pin 'squad'. Player access is per series on playerpacks /admin/players (since 16-10); the series stays closed to players until Tom opens it there.",
    "groups": [
     {
      "slug": "bowlers",
@@ -18,12 +18,12 @@
      "reports": [
       {
        "id": "3550184",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Jofra Archer"
       },
       {
        "id": "4352915",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Gus Atkinson"
       },
       {
@@ -33,7 +33,7 @@
       },
       {
        "id": "4352931",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Jacob Bethell"
       },
       {
@@ -43,32 +43,32 @@
       },
       {
        "id": "4352441",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Sam Curran"
       },
       {
        "id": "3760070",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Liam Dawson"
       },
       {
        "id": "3630055",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Will Jacks"
       },
       {
        "id": "1440340",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Jamie Overton"
       },
       {
        "id": "880048",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Adil Rashid"
       },
       {
        "id": "2070076",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Joe Root"
       },
       {
@@ -78,7 +78,25 @@
       }
      ]
     }
-   ]
+   ],
+   "tiers": {
+    "2540202": "xi",
+    "2070076": "xi",
+    "4380030": "xi",
+    "4352931": "xi",
+    "3630055": "xi",
+    "3630067": "squad",
+    "3630194": "squad",
+    "4352441": "xi",
+    "1440340": "xi",
+    "3550184": "xi",
+    "4352915": "xi",
+    "4353038": "squad",
+    "4352921": "squad",
+    "3760070": "xi",
+    "880048": "xi",
+    "3720028": "squad"
+   }
   },
   {
    "slug": "england-t20i-home-2026",
@@ -87,7 +105,7 @@
    "target_country": "Australia",
    "format": "T20I",
    "level": "international",
-   "_note": "Coach-only scouting for the England white-ball tour, 15-10-2026. Opposition pinned in matchupmodel/data/opp_squad_england_t20i.json. Every report tier is 'squad' until Tom names a likely XI. Do not build player packs for this series until the playerpacks open-series gate exists.",
+   "_note": "Coach-only scouting for the England white-ball tour, 15-10-2026. Opposition pinned in matchupmodel/data/opp_squad_england_t20i.json. TIERS set 28-10-2026 (Tom): the likely XI from England's last ten T20Is played (appearances as batter or bowler), the rest of the pin 'squad'. Player access is per series on playerpacks /admin/players (since 16-10); the series stays closed to players until Tom opens it there.",
    "groups": [
     {
      "slug": "bowlers",
@@ -97,7 +115,7 @@
      "reports": [
       {
        "id": "4352931",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Jacob Bethell"
       },
       {
@@ -112,12 +130,12 @@
       },
       {
        "id": "4352441",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Sam Curran"
       },
       {
        "id": "3760070",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Liam Dawson"
       },
       {
@@ -127,27 +145,45 @@
       },
       {
        "id": "3630055",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Will Jacks"
       },
       {
        "id": "1440340",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Jamie Overton"
       },
       {
        "id": "880048",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Adil Rashid"
       },
       {
        "id": "5460041",
-       "tier": "squad",
+       "tier": "xi",
        "name": "Luke Wood"
       }
      ]
     }
-   ]
+   ],
+   "tiers": {
+    "5460035": "xi",
+    "3630067": "xi",
+    "4352931": "xi",
+    "4380030": "xi",
+    "3630055": "xi",
+    "3630194": "squad",
+    "4352441": "xi",
+    "2750034": "xi",
+    "1440340": "xi",
+    "3760070": "xi",
+    "4352936": "squad",
+    "6380729": "squad",
+    "4352921": "squad",
+    "5180392": "squad",
+    "880048": "xi",
+    "5460041": "xi"
+   }
   },
   {
    "slug": "india-a-od-2026",
