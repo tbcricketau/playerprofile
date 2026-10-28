@@ -1797,6 +1797,35 @@ threshold and carries no plan, which is the honest answer.
   live squad's packs — which is why Australia A builds into its own bundle (`ausa_player_site` →
   `ausa_player_pack_site` → `tbcricketau/australia-a-packs`) and Zimbabwe keeps naming its squad.
 
+## When the warehouse is behind — CricViz for the balls, Cricket-21 for the video (28-10-2026)
+
+Tom's rule: if a build needs cricket the warehouse has not loaded, pull the ball data from the CricViz
+Data API first and the video from the Cricket-21 portal, before offering to build on old data. It came
+up when England's ODI tri-series with Sri Lanka and Pakistan (20, 22, 25-10) was in neither the
+warehouse nor the mirror, a week before the England series.
+
+```powershell
+.\venv\Scripts\python.exe cricviz_source.py pull --country ENG --from 2026-09-28   # balls the warehouse lacks
+..\cricket21\venv\Scripts\python.exe ..\cricket21\bulk_import.py --comps 3785 --white   # takes the C21 session: ask Tom
+.\venv\Scripts\python.exe cricviz_source.py clips                                  # each ball -> its C21 clip
+.\venv\Scripts\python.exe cricviz_source.py status
+```
+
+- **It is not a fourth `source`.** The cached matches (`data/cricviz/`, gitignored, licensed) are added
+  inside `_warehouse_bowler_rows`, `_warehouse_batter_rows`, `load_batter_innings` and
+  `load_batter_catch_positions`, so every builder that reads deliveries takes them with no flag, and a
+  match drops out by itself once `MatchExternalIds` (type 40) shows the warehouse holds it.
+- **The warehouse is coded from the same feed**, and it shows: on three England v Sri Lanka ODIs held by
+  both, all 1,622 balls agree on every column filled (`batting_connection_id` is `shot_quality_id`).
+  The wagon pair is a fitted transform (median 1.8°). Calibration and the maps are in the module.
+- **No tracking.** A pulled ball looks like an untracked warehouse ball, so plans, lengths and speeds
+  are unchanged by a pull; figures, scoring areas, false shots and dismissals do move.
+- **Not reached:** queries with SQL of their own — the all-formats fallback facts and batting role in
+  `build_opponent_about`, `build_shot_matrix`, `build_h2h`, `attack_cards`, matchupmodel's CSVs.
+- **The clips** are Cricket-21 urls written into the cache, so the box needs only the three small
+  files. `audit_pack_hands` resolves them through `cricviz_source.delivery_facts` (the mirror's player
+  map has no England players). Copy `data/cricviz/` to the box before a build there.
+
 ## Known gaps / pending work
 
 - Zone label ordering (`PACE_LINE_ORDER`, `SPIN_LINE_ORDER`) uses assumed strings — verify against actual DB lookup values if cells appear out of order
