@@ -852,6 +852,12 @@ def _test_balls(conn, cur, bid, role, fmt="Test", level="international", source=
                       f"JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id "
                       f"WHERE D.{col}='{bid}' AND D.legal_ball=1 AND {_fmt_sql(fmt, level)}")
     n = int(float(r[0]["n"] or 0)) if r else 0
+    if source in ("warehouse", "both"):
+        # the matches the warehouse has not loaded yet, which the profile loaders already read
+        import cricviz_source
+        pulled = (cricviz_source.bowler_rows if role == "bowl" else cricviz_source.batter_rows)(
+            bid, fmt, level)
+        n += sum(1 for d in pulled if d.get("legal_ball") == "1")
     if source in ("c21", "both"):
         import c21_source
         bowl, bat = c21_source.coverage(bid, fmt=fmt)
@@ -965,6 +971,9 @@ def allfmt_bowler_facts(conn, cur, bid, type_label, LEN, LIN, scope_label="Test"
         D.pitch_length_group_pace_1_id len, D.pitch_line_group_pace_id lin,
         D.bowler_pace_spin_id ps, TRY_CONVERT(float, D.pitch_length) plen
         FROM [{DATA_SCHEMA}].[Deliveries] D WHERE D.bowler_id='{bid}' AND D.legal_ball=1""")
+    import cricviz_source                  # untracked, so they add to the count and the type only
+    rows += [{"spd": None, "len": None, "lin": None, "ps": d["bowler_pace_spin_id"],
+              "plen": d["pitch_length"]} for d in cricviz_source.all_format_rows(bid, "bowler_id")]
     if len(rows) < 150:
         return None
     is_pace = _mode(rows, "ps") == "1"
@@ -999,6 +1008,10 @@ def allfmt_batter_facts(conn, cur, bid, hand, STK, SQ, scope_label="Test"):
     rows = _q(conn, cur, f"""SELECT D.stroke_id, D.shot_quality_id sq, D.bowler_pace_spin_id ps,
         TRY_CONVERT(int, D.bat_score) runs, D.hit_to_angle ang
         FROM [{DATA_SCHEMA}].[Deliveries] D WHERE D.striker_id='{bid}' AND D.legal_ball=1""")
+    import cricviz_source
+    rows += [{"stroke_id": d["stroke_id"], "sq": d["shot_quality_id"], "ps": d["bowler_pace_spin_id"],
+              "runs": d["bat_score"], "ang": d["hit_to_angle"]}
+             for d in cricviz_source.all_format_rows(bid, "striker_id")]
     if len(rows) < 200:
         return None
     facts = []
@@ -1034,15 +1047,22 @@ _ROLE_BANDS = ((2, "Opener"), (4, "Top order"), (7, "Middle order"), (99, "Lower
 
 
 def batter_role(conn, cur, bid, fmt="Test", level="international"):
-    r = _q(conn, cur, f"""SELECT TOP 1 pos, COUNT(*) n FROM (
+    from collections import Counter
+    r = _q(conn, cur, f"""SELECT pos, COUNT(*) n FROM (
             SELECT TRY_CONVERT(int, D.striker_batting_position) pos, D.match_id, D.match_innings
             FROM [{DATA_SCHEMA}].[Deliveries] D JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id
             WHERE D.striker_id='{bid}' AND {_fmt_sql(fmt, level)} AND TRY_CONVERT(int, D.striker_batting_position) BETWEEN 1 AND 11
             GROUP BY TRY_CONVERT(int, D.striker_batting_position), D.match_id, D.match_innings) t
-        GROUP BY pos ORDER BY COUNT(*) DESC""")
-    if not r or r[0].get("pos") in (None, "None"):
+        GROUP BY pos""")
+    innings = Counter({int(x["pos"]): int(float(x["n"])) for x in r or []
+                       if x.get("pos") not in (None, "None")})
+    import cricviz_source                  # one innings per (match, innings) in the pulled matches
+    seen = {(d["match_id"], d["match_innings"], d["striker_batting_position"])
+            for d in cricviz_source.batter_rows(bid, fmt, level)}
+    innings.update(int(p) for _, _, p in seen if p not in (None, "None") and 1 <= int(p) <= 11)
+    if not innings:
         return None
-    pos = int(r[0]["pos"])
+    pos = innings.most_common(1)[0][0]
     return next((lbl for hi, lbl in _ROLE_BANDS if pos <= hi), None)
 
 

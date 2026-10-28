@@ -384,6 +384,15 @@ def batter_rows(batter_id, fmt="Test", level="international"):
     return [_public(r) for r in _in_scope(fmt, level) if r["striker_id"] == str(batter_id)]
 
 
+def all_format_rows(player_id, col):
+    """Legal balls in every pulled format where `col` (bowler_id / striker_id) is the player —
+    for the all-formats fallback card, which reads the warehouse across formats in its own SQL."""
+    if not enabled():
+        return []
+    return [_public(r) for rows in _all_rows().values() for r in rows
+            if r[col] == str(player_id) and r["legal_ball"] == "1"]
+
+
 def batter_innings(batter_id, fmt="Test", level="international"):
     """`batting_loaders.load_batter_innings` rows for the pulled matches."""
     if not enabled():

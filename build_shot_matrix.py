@@ -71,6 +71,29 @@ def _query(conn, cur, batter_ids, fmt="Test", level="international"):
         GROUP BY D.striker_id""", conn, cur)
 
 
+def _add_cricviz(rows, batter_ids, fmt="Test", level="international"):
+    """Count the matches the warehouse has not loaded yet (cricviz_source) into the SQL totals."""
+    import ast
+    import cricviz_source
+    pace, spin = ast.literal_eval(_PACE), ast.literal_eval(_SPIN)
+    by_id = {r["bid"]: r for r in rows}
+    for bid in batter_ids:
+        for d in cricviz_source.batter_rows(bid, fmt, level):
+            if d.get("legal_ball") != "1":
+                continue
+            sty = str(d.get("bowler_style_id"))
+            tag = "p" if sty in pace else "s" if sty in spin else None
+            if not tag:
+                continue
+            r = by_id.setdefault(bid, {"bid": bid, "pace_balls": 0, "spin_balls": 0})
+            col = "pace_balls" if tag == "p" else "spin_balls"
+            r[col] = _f(r.get(col)) + 1
+            key = f"{tag}{d.get('stroke_id')}"
+            if any(sid == str(d.get("stroke_id")) for sid, _ in SHOTS):
+                r[key] = _f(r.get(key)) + 1
+    return list(by_id.values())
+
+
 def _f(v):
     try:
         return float(v)
@@ -88,6 +111,7 @@ def build(opp, fmt="Test", level="international"):
     conn, cur = set_conn_cursor()
     rows = _query(conn, cur, list(batters.keys()), fmt=fmt, level=level)
     conn.close()
+    rows = _add_cricviz(rows, list(batters.keys()), fmt=fmt, level=level)
 
     # a single column order across both tables: most-established (most Test balls faced) first
     total = {r["bid"]: _f(r.get("pace_balls")) + _f(r.get("spin_balls")) for r in rows}
