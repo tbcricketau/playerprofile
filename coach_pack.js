@@ -82,7 +82,8 @@
     }
     if (!options.length)
       return `<div class="fhead"><span class="lbl">Field</span>${link ? `<a href="${link}">${linkText}</a>` : ""}</div>`
-        + `<p class="fnone">No field yet — ${row && row.balls ? "too few balls vs " + esc(labelOf(g)) + " to generate one" : "no record vs " + esc(labelOf(g))}, and none set by the coaches.</p>`;
+        + `<p class="fnone">No field yet — ${PK.autoFields === false ? "fields are generated for Tests only"
+          : row && row.balls ? "too few balls vs " + esc(labelOf(g)) + " to generate one" : "no record vs " + esc(labelOf(g))}, and none set by the coaches.</p>`;
     const i = Math.min(state.chip[key] || 0, options.length - 1), o = options[i];
     return `<div class="fhead"><span class="lbl">${label}</span>`
       + `<span class="ftags">${o.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</span>`

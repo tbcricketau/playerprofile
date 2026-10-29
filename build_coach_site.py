@@ -351,7 +351,7 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
                     "head": ("../" + heads[pid]) if heads.get(pid) else "", "report": report, "vision": vision,
                     "groups": per})
     data = {"pack": pack, "label": title, "series": entry.get("name") or slug, "planner": planner,
-            "minBalls": min_balls,
+            "minBalls": min_balls, "autoFields": fmt == "Test",     # field_engine is Test-only
             "groups": [{"key": g, "label": _SWITCH.get(g, (g, ""))[0], "long": long_label[g],
                         "balls": sum((rows[g].get(b["id"]) or {}).get("balls") or 0 for b in out)}
                        for g, _d in groups],

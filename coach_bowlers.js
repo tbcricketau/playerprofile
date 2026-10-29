@@ -89,7 +89,7 @@
     const link = plannerHref(b.id), key = b.id + "|" + state.h, options = optionsFor(b, x);
     const linkText = "Open in the planner";
     if (!options.length)
-      return `<div class="fhead"><span class="lbl">Field</span>${link ? `<a href="${link}">${linkText}</a>` : ""}</div><p class="fnone">No field for this hand yet.</p>`;
+      return `<div class="fhead"><span class="lbl">Field</span>${link ? `<a href="${link}">${linkText}</a>` : ""}</div><p class="fnone">No field for this hand yet${BK.fmt && BK.fmt !== "Test" ? " — fields are generated for Tests only" : ""}.</p>`;
     const i = Math.min(state.chip[key] || 0, options.length - 1), o = options[i];
     const label = o.coach ? "Coaches' field" : "Auto-generated field";
     const est = !o.coach ? `<ul class="est">${o.notes.map(t => `<li>${esc(t)}</li>`).join("")}<li>${o.adjusted

@@ -152,13 +152,12 @@ def build(slug, planner_out=None, only=None):
     # White-ball series get the cards too (Tom, 16-10-2026: Batting plans mirror Bowling plans, as
     # the Test series' do): figures, facts and reels per hand. No estimated field — bowler_field
     # reads Test stock fields and Test catch norms, as field_engine does throughout, and the white-
-    # ball Bowling plans carry no suggested field either. No planner export for the same reason.
+    # ball Bowling plans carry no suggested field either. Their planner export (Tom, 29-10-2026) starts
+    # each bowler from the white-ball STOCK fields for their type and the hand, one per phase.
     # A T20I series reads the pooled major T20 leagues ("T20"), as the packs do (Tom, 16-10-2026):
     # far more balls per player than T20Is alone, and the packs and these cards must agree
     FMT = {"test": "Test", "odi": "ODI", "t20": "T20"}.get(fmt.lower(), "Test")
     white = FMT != "Test"
-    if white and planner_out:
-        raise SystemExit(f"{slug} is {FMT}: the planner's bowler side is Test-only for now (field_engine is)")
     bowlers, _batters = _about(slug)
     tiers = _tiers(entry)
     out = {"slug": slug, "series": entry.get("name") or slug, "format": FMT,
@@ -228,6 +227,30 @@ def build(slug, planner_out=None, only=None):
     return out
 
 
+_FMT_WORDS = {"Test": "Tests", "ODI": "ODIs", "T20": "T20s"}
+
+
+def _white_stock(fmt, group, hand):
+    """A white-ball bowler's starting options: the stock field for their type to this hand in each
+    phase (cricket_core.fields), labelled as the planner's phases are. No estimate is made from their
+    record — field_engine's tactics are red-ball — so these say what they are."""
+    from build_planner_batters import GROUP_TYPE
+    from cricket_core.fields import stock_field
+    from cricket_core.lookups import FIELD_POS, field_coords
+    phases = {"ODI": (("pp1", "Powerplay stock (overs 1-10)"), ("middle", "Middle overs stock (11-40)"),
+                      ("death", "Death stock (41-50)")),
+              "T20": (("powerplay", "Powerplay stock (overs 1-6)"), ("middle", "Middle overs stock (7-15)"),
+                      ("death", "Death stock (16-20)"))}[fmt]
+    out = []
+    for key, label in phases:
+        names = stock_field(fmt.lower(), GROUP_TYPE.get(group, ""), hand, key) or []
+        pts = [FIELD_POS.get(n) or field_coords(n) for n in names]
+        if len(pts) == 9:
+            out.append({"slot": "option1" if not out else f"c{len(out) + 1}", "label": label, "spare": None,
+                        "fielders": [{"angle": round(p["angle"], 1), "radius": round(p["radius"], 3)} for p in pts]})
+    return out
+
+
 def _planner_export(slug, entry, out, root):
     """The field planner's second side: a page per batter hand, a card per bowler (headshot, sample
     line, the runs-off-them wheel and the spider, and the categories' fields as the options it starts from)."""
@@ -273,14 +296,18 @@ def _planner_export(slug, entry, out, root):
                     except Exception as e:
                         print(f"  ! {kind} {b['name']} {h}: {type(e).__name__}: {str(e)[:60]}")
             n, w = x.get("n_balls") or 0, x.get("n_wkts") or 0
-            hands[h] = {"sample": f"Tests to {word}, career · {w:,} wickets off {n:,} balls" if n else "",
-                        "wheel": wheel, "spider": spider, "wheel_note": f"No Test balls to {word}",
-                        "fields": [{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
-                                    "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
-                                   for c in x["fields"] if len(c["fielders"]) == 9]}
+            fw = _FMT_WORDS.get(out.get("format") or "Test", "Tests")
+            fields = ([{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
+                        "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
+                       for c in x["fields"] if len(c["fielders"]) == 9]
+                      if (out.get("format") or "Test") == "Test" else _white_stock(out["format"], b.get("group"), h))
+            hands[h] = {"sample": f"{fw} to {word}, career · {w:,} wickets off {n:,} balls" if n else "",
+                        "wheel": wheel, "spider": spider, "wheel_note": f"No {fw[:-1]} balls to {word}",
+                        "fields": fields}
         rows.append({"player_id": bid, "name": b["name"], "type": b["type"], "tier": b.get("tier", ""),
                      "headshot": head, "hands": hands})
-    man = {"series": series, "opposition": entry.get("target_country") or "", "format": "Test",
+    man = {"series": series, "opposition": entry.get("opposition") or entry.get("target_country") or "",
+           "format": out.get("format") or "Test",
            "coach_slug": slug, "coach_series_name": entry.get("name") or slug, "built": out["built"],
            "pages": [{"key": "vs_rhb", "label": "vs right-handers", "hand": "RHB"},
                      {"key": "vs_lhb", "label": "vs left-handers", "hand": "LHB"}],
