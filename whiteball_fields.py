@@ -25,6 +25,23 @@ PHASES = {"ODI": (("odi", "pp1", "Powerplay"), ("odi", "middle", "Middle overs")
           "T20": (("t20", "powerplay", "Powerplay"), ("t20", "middle", "Middle overs"), ("t20", "death", "Death"))}
 
 
+_CHECKED = False
+
+
+def _need_gps():
+    """Refuse rather than fall back. Without catapultgps's field_corrections.csv and field_menu.json,
+    gps_corrected_field quietly returns the hand-written stock draft and field_menu returns nothing,
+    so a card would claim GPS evidence it does not have. The build box had neither on 29-10-2026."""
+    global _CHECKED
+    if _CHECKED:
+        return
+    from cricket_core import gps
+    if not gps.load_field_corrections() or not gps.load_field_menu():
+        raise RuntimeError(f"GPS field files missing in {gps.data_dir()} (field_corrections.csv, "
+                           "field_menu.json) — copy them from catapultgps/data before building white-ball fields")
+    _CHECKED = True
+
+
 def _fmt(fmt):
     f = str(fmt or "").upper()
     return "T20" if f.startswith("T20") else ("ODI" if f == "ODI" else None)
@@ -47,6 +64,7 @@ def phase_fields(fmt, group, hand, menu=True):
     fmt = _fmt(fmt)
     if not fmt or group not in SIMPLE:
         return []
+    _need_gps()
     out = []
     for key, phase, word in PHASES[fmt]:
         gps = F.gps_corrected_field(key, SIMPLE[group], hand, phase)
