@@ -78,7 +78,7 @@
       label = "Auto-generated field"; linkText = "Set a field in the planner";
       options = (row && row.fields || []).filter(c => c.fielders && c.fielders.length).map(c => ({
         name: c.label, plan: { fielders: c.fielders, arrows: [], spare: c.spare }, tags: [],
-        spare: c.spare_name || spareOf({ fielders: c.fielders, spare: c.spare }), title: "" }));
+        spare: c.spare_name || spareOf({ fielders: c.fielders, spare: c.spare }), title: c.basis || "" }));
     }
     if (!options.length)
       return `<div class="fhead"><span class="lbl">Field</span>${link ? `<a href="${link}">${linkText}</a>` : ""}</div>`

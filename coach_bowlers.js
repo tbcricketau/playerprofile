@@ -38,7 +38,8 @@
     const coach = f => ({ name: f.name, plan: f.plan, tags: f.tags || [], spare: spareOf(f.plan), notes: [], coach: true,
       title: `Set by ${f.updated_by || f.owner_name || ""} · ${dayFirst(f.updated_utc)}${f.private ? " · private draft" : ""}` });
     const auto = c => ({ name: c.label, plan: { fielders: c.fielders, arrows: [], spare: c.spare }, tags: [],
-      spare: c.spare_name || spareOf({ fielders: c.fielders, spare: c.spare }), notes: c.notes || [], adjusted: c.adjusted, title: "" });
+      spare: c.spare_name || spareOf({ fielders: c.fielders, spare: c.spare }), notes: c.notes || [], adjusted: c.adjusted,
+      basis: c.basis || "", title: "" });
     const out = [];
     (x.fields || []).forEach(c => {
       const got = mine.find(f => slotOf(f) === c.slot);
@@ -92,7 +93,7 @@
       return `<div class="fhead"><span class="lbl">Field</span>${link ? `<a href="${link}">${linkText}</a>` : ""}</div><p class="fnone">No field for this hand yet${BK.fmt && BK.fmt !== "Test" ? " — fields are generated for Tests only" : ""}.</p>`;
     const i = Math.min(state.chip[key] || 0, options.length - 1), o = options[i];
     const label = o.coach ? "Coaches' field" : "Auto-generated field";
-    const est = !o.coach ? `<ul class="est">${o.notes.map(t => `<li>${esc(t)}</li>`).join("")}<li>${o.adjusted
+    const est = !o.coach ? `<ul class="est">${o.notes.map(t => `<li>${esc(t)}</li>`).join("")}<li>${o.basis ? esc(o.basis) : o.adjusted
       ? `Our estimate: the stock field for their type to ${word(state.h)}, adjusted to their record.`
       : `The stock field for their type to ${word(state.h)}${o.name === "Bouncer plan" ? "" : " — too few balls to adjust it to them"}.`} Not yet checked against vision.</li></ul>` : "";
     return `<div class="fhead"><span class="lbl">${label}</span>`

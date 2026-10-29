@@ -5,8 +5,8 @@ individual-opposition decks (`scripts/export_field_planner.py`). A white-ball se
 so the Bowling plans cards had nowhere to set a field (Tom, 29-10-2026). This writes the same
 `fieldplanner/<planner series>/manifest.json` from our own data instead: a pack per bowler type the
 coach view shows, a card per opposition batter (headshot, sample line, the runs-by-area wheel and the
-spider), and the white-ball STOCK field for that type and the batter's hand as Option 1 — middle
-overs, the phase with the most balls. Coaches set the rest in the planner.
+spider), and the GPS-corrected middle-overs field for that type and the batter's hand as Option 1
+(whiteball_fields.py). Coaches set the rest in the planner.
 
     venv/bin/python build_planner_batters.py --slug england-odi-home-2026 --out ~/fp_eng
 
@@ -22,28 +22,11 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
-# the coach view's packs, in its order, and the stock-field bowler type for each
-GROUP_TYPE = {"right_pace": "Right Fast", "left_pace": "Left Fast", "off_spin": "Off Spin",
-              "left_orthodox": "Left Orthodox", "leg_spin": "Leg Break", "left_unorthodox": "Left Unorthodox"}
+# the coach view's packs, in its order
 GROUP_WORDS = {"right_pace": "right-arm pace", "left_pace": "left-arm pace", "off_spin": "off spin",
                "left_orthodox": "left-arm orthodox", "leg_spin": "leg spin", "left_unorthodox": "left-arm wrist spin"}
-# cricket_core.fields' format and middle-overs phase keys
-STOCK_FMT = {"ODI": ("odi", "middle"), "T20": ("t20", "middle")}
 FMT_WORD = {"ODI": "ODIs", "T20": "T20s"}
 MIN_WHEEL = 30          # legal balls against the type before a wheel says anything
-
-
-def stock_fielders(fmt, group, hand):
-    """The white-ball stock field for a bowler type to this hand, as planner angle/radius."""
-    from cricket_core.fields import stock_field
-    from cricket_core.lookups import FIELD_POS, field_coords
-    key, phase = STOCK_FMT[fmt]
-    names = stock_field(key, GROUP_TYPE[group], hand, phase) or []
-    out = []
-    for n in names:
-        p = FIELD_POS.get(n) or field_coords(n)
-        out.append({"label": n, "angle": round(p["angle"], 1), "radius": round(p["radius"], 3)})
-    return out if len(out) == 9 else []
 
 
 def build(slug, out_root):
@@ -53,6 +36,7 @@ def build(slug, out_root):
     from build_coach_site import _PACKS, _about, _fmt_level, _overview, _series
     from photos import get_photo_bytes
     from report import _start_kaleido
+    from whiteball_fields import middle_field
     from cricket_core import cricviz
 
     entry = _series(slug)
@@ -116,7 +100,7 @@ def build(slug, out_root):
             packs[g].append({"player_id": pid, "name": name, "hand": hand.upper(), "notes": [],
                              "sample": f"{words} · {runs:,} runs off {len(rows):,} balls" if rows else "",
                              "wheels": wheels, "wheel_note": note, "headshot": head,
-                             "deck_field": {"fielders": stock_fielders(FMT, g, hand.upper())}})
+                             "deck_field": {"fielders": middle_field(FMT, g, hand.upper())}})
         print(f"  {name:22} {hand:4} " + " · ".join(f"{g} {n}" for g, n in seen.items()), flush=True)
     man = {"series": series, "format": FMT, "opposition": entry.get("opposition") or entry.get("target_country") or "",
            "coach_slug": slug, "coach_series_name": entry.get("name") or slug,
@@ -127,7 +111,7 @@ def build(slug, out_root):
            "geometry": {"note": "angle: degrees from straight, + = batter's off side, +/-180 behind the "
                                 "keeper; radius: 0 at the bat, 1 at the rope in that direction. Batter-relative."},
            "packs": [{"key": g, "label": GROUP_WORDS[g][:1].upper() + GROUP_WORDS[g][1:], "bowler_type": GROUP_WORDS[g],
-                      "deck": "", "stock_field": {"fielders": stock_fielders(FMT, g, "RHB")},
+                      "deck": "", "stock_field": {"fielders": middle_field(FMT, g, "RHB")},
                       "batters": packs[g]} for g in groups]}
     json.dump(man, open(os.path.join(base, "manifest.json"), "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     print(f"planner batter side: {len(groups)} packs, {len(order)} batters -> {base}")

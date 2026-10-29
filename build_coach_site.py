@@ -340,11 +340,16 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
             # → "Lowest average: …"); files built before 06-10-2026 say "Plan for X: bowl …"
             plan = re.sub(r"^Lowest average v [^:]+: ", "Lowest average: ", r.get("plan") or "")
             plan = re.sub(r"^Plan for [^:]+: ", "", plan)
+            fields = [{"label": f["label"].replace(" — ", " · "), "fielders": f.get("fielders") or [],
+                       "spare": f.get("spare"), "spare_name": f.get("spare_name") or ""}
+                      for f in (r.get("fields") or [])]
+            if not fields and fmt != "test":           # white-ball: the GPS-measured fields per phase
+                from whiteball_fields import phase_fields
+                fields = [{"label": c["label"], "fielders": c["fielders"], "spare": None, "spare_name": "",
+                           "basis": c["basis"]} for c in phase_fields(fmt, g, hand.upper())]
             per[g] = {"balls": r.get("balls") or 0, "plan": (plan[:1].upper() + plan[1:]) if plan else "",
                       "field": r.get("field"), "threat": r.get("threat"), "error": bool(r.get("error")),
-                      "fields": [{"label": f["label"].replace(" — ", " · "), "fielders": f.get("fielders") or [],
-                                  "spare": f.get("spare"), "spare_name": f.get("spare_name") or ""}
-                                 for f in (r.get("fields") or [])]}
+                      "fields": fields}
         tier = tiers.get(pid, "")
         out.append({"id": pid, "name": name, "hand": hand, "role": role, "tier": tier,
                     "chip": SR.TIER_CHIP.get(tier, ""), "initials": _initials(name),

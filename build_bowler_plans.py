@@ -96,23 +96,31 @@ WHEEL_PX = 560          # the batters' side export's wheel size (presentationbui
 
 
 def _zones_png(rows, is_lhb):
-    """The runs-off-them wheel drawn as the batters' side draws theirs (presentationbuilder
-    build_individual_packs.zones_wagon): a square 600 figure, labels at 1.25, cropped to the ink with
-    a 16 px margin. Until 11-10-2026 it went out at 500x430 uncropped, which squares the plot to a
-    430-wide circle with dead white round it, so on the card it drew at about 60% of a batter's wheel."""
-    from PIL import Image, ImageChops
-    from cricket_core.charts import wagon_wheel_zones
-    fig = wagon_wheel_zones(rows, metric="runs", title="", n_sectors=8, is_lhb=is_lhb,
-                            width=600, height=600, font_scale=1.25)
-    im = Image.open(io.BytesIO(fig.to_image(format="png", width=600, height=600, scale=2))).convert("RGB")
-    box = ImageChops.difference(im, Image.new("RGB", im.size, (255, 255, 255))).getbbox()
-    if box:
-        pad = 16
-        im = im.crop((max(0, box[0] - pad), max(0, box[1] - pad),
-                      min(im.width, box[2] + pad), min(im.height, box[3] + pad)))
-    buf = io.BytesIO()
-    im.save(buf, "PNG")
-    return buf.getvalue()
+    """Runs by fielding area as the hub packs and web reports draw it (build_hub_packs._zones_svg,
+    the green zones wheel; Tom 29-10-2026, in place of the old purple plotly one): runs, share and
+    area name per sector, shaded by runs. Rasterised by cricviz.to_png's headless browser, so no
+    kaleido. The sectors are charts.wagon_sector's, the same as every other runs-by-area count."""
+    import tempfile
+    from build_hub_packs import _zones_svg
+    from cricket_core import charts, cricviz
+    zones = {}
+    for r in rows:
+        runs = r.get("bat_score_n") or 0
+        if runs and r.get("is_legal", True):
+            k = charts.wagon_sector(r, is_lhb)
+            if k:
+                zones[k] = zones.get(k, 0) + runs
+    px = 560
+    inner = _zones_svg(zones, is_lhb).replace("<svg ", f'<svg width="{px}" height="{px}" ', 1)
+    svg = (f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {px} {px}' width='{px}' height='{px}'>"
+           f"{inner}</svg>")
+    fd, path = tempfile.mkstemp(suffix=".png", prefix="zones_")      # %TEMP%, never the repo
+    os.close(fd)
+    try:
+        cricviz.to_png(svg, path, scale=1)
+        return open(path, "rb").read()
+    finally:
+        os.remove(path)                                                # our own file, made above
 
 
 def _spider_png(rows, is_lhb):
@@ -152,8 +160,8 @@ def build(slug, planner_out=None, only=None):
     # White-ball series get the cards too (Tom, 16-10-2026: Batting plans mirror Bowling plans, as
     # the Test series' do): figures, facts and reels per hand. No estimated field — bowler_field
     # reads Test stock fields and Test catch norms, as field_engine does throughout, and the white-
-    # ball Bowling plans carry no suggested field either. Their planner export (Tom, 29-10-2026) starts
-    # each bowler from the white-ball STOCK fields for their type and the hand, one per phase.
+    # ball Bowling plans carried no suggested field either. Since 29-10-2026 (Tom) a white-ball card
+    # and its planner options are the GPS-measured fields per phase (whiteball_fields.py).
     # A T20I series reads the pooled major T20 leagues ("T20"), as the packs do (Tom, 16-10-2026):
     # far more balls per player than T20Is alone, and the packs and these cards must agree
     FMT = {"test": "Test", "odi": "ODI", "t20": "T20"}.get(fmt.lower(), "Test")
@@ -191,6 +199,9 @@ def build(slug, planner_out=None, only=None):
                              "fielders": _fielders(kept), "spare": spare_i,
                              "spare_name": FE.pretty_position(fs["spare"]) if spare_i is not None else "",
                              "adjusted": fs.get("adjusted"), "balls": fs.get("legal"), "notes": fs.get("notes") or []})
+            if white:                          # GPS-measured white-ball fields per phase (whiteball_fields)
+                from whiteball_fields import phase_fields
+                cats = phase_fields(FMT, group, h)
             b["hands"][h] = {
                 "n_balls": P.get("n_balls"), "n_wkts": P.get("n_wkts"), "runs": P.get("runs"),
                 "economy": P.get("economy"), "bowl_avg": P.get("bowl_avg"), "strike_rate": P.get("strike_rate"),
@@ -228,27 +239,6 @@ def build(slug, planner_out=None, only=None):
 
 
 _FMT_WORDS = {"Test": "Tests", "ODI": "ODIs", "T20": "T20s"}
-
-
-def _white_stock(fmt, group, hand):
-    """A white-ball bowler's starting options: the stock field for their type to this hand in each
-    phase (cricket_core.fields), labelled as the planner's phases are. No estimate is made from their
-    record — field_engine's tactics are red-ball — so these say what they are."""
-    from build_planner_batters import GROUP_TYPE
-    from cricket_core.fields import stock_field
-    from cricket_core.lookups import FIELD_POS, field_coords
-    phases = {"ODI": (("pp1", "Powerplay stock (overs 1-10)"), ("middle", "Middle overs stock (11-40)"),
-                      ("death", "Death stock (41-50)")),
-              "T20": (("powerplay", "Powerplay stock (overs 1-6)"), ("middle", "Middle overs stock (7-15)"),
-                      ("death", "Death stock (16-20)"))}[fmt]
-    out = []
-    for key, label in phases:
-        names = stock_field(fmt.lower(), GROUP_TYPE.get(group, ""), hand, key) or []
-        pts = [FIELD_POS.get(n) or field_coords(n) for n in names]
-        if len(pts) == 9:
-            out.append({"slot": "option1" if not out else f"c{len(out) + 1}", "label": label, "spare": None,
-                        "fielders": [{"angle": round(p["angle"], 1), "radius": round(p["radius"], 3)} for p in pts]})
-    return out
 
 
 def _planner_export(slug, entry, out, root):
@@ -297,10 +287,9 @@ def _planner_export(slug, entry, out, root):
                         print(f"  ! {kind} {b['name']} {h}: {type(e).__name__}: {str(e)[:60]}")
             n, w = x.get("n_balls") or 0, x.get("n_wkts") or 0
             fw = _FMT_WORDS.get(out.get("format") or "Test", "Tests")
-            fields = ([{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
-                        "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
-                       for c in x["fields"] if len(c["fielders"]) == 9]
-                      if (out.get("format") or "Test") == "Test" else _white_stock(out["format"], b.get("group"), h))
+            fields = [{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
+                       "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
+                      for c in x["fields"] if len(c["fielders"]) == 9]
             hands[h] = {"sample": f"{fw} to {word}, career · {w:,} wickets off {n:,} balls" if n else "",
                         "wheel": wheel, "spider": spider, "wheel_note": f"No {fw[:-1]} balls to {word}",
                         "fields": fields}
