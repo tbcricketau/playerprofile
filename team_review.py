@@ -167,7 +167,7 @@ def _reads(R: dict) -> list:
                    f"(avg {best_avg['avg']:.0f}, {best_avg['share_career']:.1f}% of team runs).")
         carry = max(reg, key=lambda r: r["carried"])
         out.append(f"Carries the innings most often: <b>{carry['name'].split(',')[0]}</b> — "
-                   f"{carry['carried']:.0f}% of innings he makes ≥25% of the team's runs.")
+                   f"{carry['carried']:.0f}% of innings they make ≥25% of the team's runs.")
         weak_pace = [r for r in reg if r["vs_pace"] and r["vs_spin"] and r["vs_pace"] < r["vs_spin"] * 0.75]
         weak_spin = [r for r in reg if r["vs_pace"] and r["vs_spin"] and r["vs_spin"] < r["vs_pace"] * 0.75]
         if weak_spin:
@@ -244,7 +244,7 @@ _TEMPLATE = r"""
   <h1>{{title}}</h1>
   <div class="sub">Test cricket, since {{since_txt}} · {{R.n_matches}} matches · {{R.n_innings}} innings · {{team_runs}} team runs off the bat.
      <b>Share</b> = a batter's runs ÷ the team's off-the-bat runs (career = volume-weighted · median = typical innings ·
-     carry = % of innings he makes ≥25% of the team).</div>
+     carry = % of innings they make ≥25% of the team).</div>
 
   <div class="grid">
     <div>

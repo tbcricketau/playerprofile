@@ -257,47 +257,47 @@ def _rules(P, group, phase, is_spin):
     if is_spin:                                          # R1 lap/sweep (vs spin)
         p, v = _sr("spin", "Sweep")
         fire("R1", p, v, ["Deep backward square leg", "Deep square leg"],
-             f"He sweeps/laps {v:.0f}% of his runs vs spin (P{p:.0f}) — protect deep backward square." if v else "")
+             f"They sweep/lap {v:.0f}% of their runs vs spin (P{p:.0f}) — protect deep backward square." if v else "")
         # R8 charger — stumped-prone or a slogger vs spin → keep the straight boundary back even early
         stumped = sum(1 for r in P["raw"] if r.get("is_out") and r.get("how_out") == "Stumped")
         sp, sv = _sr("spin", "Slog")
         if stumped >= 2 or (sp is not None and sp >= 75):
             strength = sp if (sp is not None and sp >= 75) else 80.0
-            why = ((f"He's been stumped {stumped}× vs spin" if stumped >= 2
-                    else f"He slogs {sv:.0f}% of his runs vs spin (P{sp:.0f})")
-                   + " — he uses his feet, so keep the straight boundary back even early.")
+            why = ((f"They've been stumped {stumped}× vs spin" if stumped >= 2
+                    else f"They slog {sv:.0f}% of their runs vs spin (P{sp:.0f})")
+                   + " — they use their feet, so keep the straight boundary back even early.")
             fired.append({"id": "R8", "pctl": strength, "value": float(stumped),
                           "add": ["Long-on", "Long-off"], "why": why,
                           "protect": True, "strength": strength})
     else:                                                # R4 cut (vs pace)
         p, v = _sr("pace", "Cut")
         fire("R4", p, v, ["Deep point", "Third man"],
-             f"Cuts carry {v:.0f}% of his runs vs pace (P{p:.0f}) — deep point saver." if v else "")
+             f"Cuts carry {v:.0f}% of their runs vs pace (P{p:.0f}) — deep point saver." if v else "")
 
     p, v = _sr(coarse, "Pull/Hook")                      # R5 pull/hook
     fire("R5", p, v, ["Deep square leg", "Deep backward square leg"],
-         f"Pulls/hooks {v:.0f}% of his runs (P{p:.0f}) — deep square leg back." if v else "")
+         f"Pulls/hooks {v:.0f}% of their runs (P{p:.0f}) — deep square leg back." if v else "")
 
     p, v = _sr(coarse, "Work/Nudge")                     # R7 leg-side nudge
     fire("R7", p, v, ["Backward square leg", "Deep square leg"],
-         f"He works {v:.0f}% of his runs to leg (P{p:.0f}) — squarer leg-side saver." if v else "")
+         f"They work {v:.0f}% of their runs to leg (P{p:.0f}) — squarer leg-side saver." if v else "")
 
     if phase == "early":                                 # R2 square early
         t = _trigger_row(bid, coarse, "early")
         p, v = _fnum(t.get("square_share_pctl")), _fnum(t.get("square_share"))
         fire("R2", p, v, ["Deep point", "Backward point"],
-             f"{v:.0f}% of his early runs go square of the wicket (P{p:.0f}) — square saver early." if v else "")
+             f"{v:.0f}% of their early runs go square of the wicket (P{p:.0f}) — square saver early." if v else "")
         if not is_spin:                                  # R6 edge-prone starter (cordon rule)
             t6 = _trigger_row(bid, "all", "early")
             p6, v6 = _fnum(t6.get("false_pct_pctl")), _fnum(t6.get("false_pct"))
             fire("R6", p6, v6, ["Slip 3", "Slip 2", "Gully"],
-                 f"He plays a false shot at {v6:.0f}% over his first 30 (P{p6:.0f}) — extra catcher while he starts." if v6 else "",
+                 f"They play a false shot at {v6:.0f}% over their first 30 (P{p6:.0f}) — extra catcher while they start." if v6 else "",
                  protect=False)
     else:                                                # R3 down-ground (set)
         t = _trigger_row(bid, coarse, "set")
         p, v = _fnum(t.get("straight_share_pctl")), _fnum(t.get("straight_share"))
         fire("R3", p, v, ["Long-on", "Long-off"],
-             f"{v:.0f}% of his runs go straight down the ground (P{p:.0f}) — straight boundary back." if v else "")
+             f"{v:.0f}% of their runs go straight down the ground (P{p:.0f}) — straight boundary back." if v else "")
 
     return fired
 
@@ -637,11 +637,11 @@ def build_field(P, group, phase):
         common = ("One slip, a catcher in front of square, and the two legal leg-side riders "
                   "(deep backward square + deep fine leg).")
         if pull_p is not None and pull_p >= 80:
-            sb_note = f"A genuine plan — heavy puller/hooker (P{pull_p:.0f} vs pace). " + common
+            sb_note = f"A wicket-taking plan — heavy puller/hooker (P{pull_p:.0f} vs pace). " + common
         elif pull_p is not None and pull_p >= 60:
-            sb_note = f"He pulls a fair amount (P{pull_p:.0f}) — the bumper can buy a top-edge. " + common
+            sb_note = f"They pull a fair amount (P{pull_p:.0f}) — the bumper can buy a top-edge. " + common
         else:
-            sb_note = ("A standard bumper field — he isn't a heavy puller"
+            sb_note = ("A standard bumper field — they aren't a heavy puller"
                        + (f" (P{pull_p:.0f})" if pull_p is not None else "")
                        + ", so this is a holding / surprise option, not a wicket-taking plan. " + common)
         short_ball = _short_ball_field(is_lhb, sb_note)

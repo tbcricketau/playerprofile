@@ -191,13 +191,13 @@ def _narrative(P: dict) -> dict:
         o, r = orr["over"], orr["round"]
         seg = []
         if o["modal_zone"] and r["modal_zone"] and o["modal_zone"] != r["modal_zone"]:
-            seg.append(f"shifts his pitching line from {o['modal_zone'].lower()} to {r['modal_zone'].lower()}")
+            seg.append(f"shift their pitching line from {o['modal_zone'].lower()} to {r['modal_zone'].lower()}")
         ld = orr["len_delta"]
         if ld is not None and abs(ld) >= 0.3 and r["med_len"] is not None:
-            seg.append(f"brings his length back to {r['med_len']:.1f} m" if ld > 0
-                       else f"pitches fuller, up to {r['med_len']:.1f} m")
+            seg.append(f"bring their length back to {r['med_len']:.1f} m" if ld > 0
+                       else f"pitch fuller, up to {r['med_len']:.1f} m")
         if seg:
-            themes.append(f"<b>Round the wicket</b> he {' and '.join(seg)}.")
+            themes.append(f"<b>Round the wicket</b> they {' and '.join(seg)}.")
     if is_spin and P["avg_turn"] is not None:
         themes.append(f"Turns it {_fmt(P['avg_turn'])}° on average — {_pct(P['big_turn_pct'])} of balls turn ≥5°.")
     # sequencing — a condensed line (full detail in the Sequencing section)
@@ -205,11 +205,11 @@ def _narrative(P: dict) -> dict:
     if sq and sq.get("length_sd") is not None:
         sd = sq["length_sd"]
         if is_spin:
-            rep = ("repeats his length ball after ball" if sd < 1.05
-                   else "mixes his flight and length" if sd > 1.45 else "holds a fairly consistent length")
+            rep = ("repeat their length ball after ball" if sd < 1.05
+                   else "mix their flight and length" if sd > 1.45 else "hold a fairly consistent length")
         else:
-            rep = ("hammers a repeatable length" if sd < 1.85
-                   else "varies his length a lot" if sd > 2.25 else "holds a fairly consistent length")
+            rep = ("hammer a repeatable length" if sd < 1.85
+                   else "vary their length a lot" if sd > 2.25 else "hold a fairly consistent length")
         os_ = [o for o in sq["over_shape"] if o["med_len"] is not None]
         early, late = [o for o in os_ if o["pos"] <= 2], [o for o in os_ if o["pos"] >= 5]
         trend = ""
@@ -220,7 +220,7 @@ def _narrative(P: dict) -> dict:
                 trend = ", banging it in more as the over goes on"
             elif es - ls >= 3:
                 trend = ", starting shorter then pitching up through the over"
-        themes.append(f"Across an over he <b>{rep}</b>{trend}.")
+        themes.append(f"Across an over they <b>{rep}</b>{trend}.")
 
     # Biggest threats
     if P["danger_length"]:
@@ -247,7 +247,7 @@ def _narrative(P: dict) -> dict:
         # there's no standout, state the dominant type REFINED (caught behind / in the field, not "caught")
         if td.get("signature"):
             threats.append(f"Gets you <b>{td['label']}</b> more than most — {_pct(td['share'])} of "
-                           f"his wickets ({td['index']:.1f}× the typical rate for this type).")
+                           f"their wickets ({td['index']:.1f}× the typical rate for this type).")
         else:
             threats.append(f"Wickets come mostly <b>{td['label']}</b> ({_pct(td['share'])}).")
     if P["n_caught"]:
@@ -558,7 +558,7 @@ def _danger_read(P: dict) -> str:
                    f"({dlen['wickets']} wkts, {dlen['adj_rate']:.1f}% strike).")
     if wz and rz:
         out.append(f"Most wickets come from {_ball_phrase(wz['length'], wz['line'])}, "
-                   f"while he leaks the most runs {_ball_phrase(rz['length'], rz['line'])}.")
+                   f"while they leak the most runs {_ball_phrase(rz['length'], rz['line'])}.")
     return " ".join(out)
 
 
@@ -570,14 +570,14 @@ def _speed_read(P: dict) -> str:
     # spell
     if s1 and s3:
         d = s1 - s3
-        out.append("holds his pace across spells" if abs(d) < 1.5
-                   else (f"drops ~{abs(d):.1f} {unit} from his opening spell to later spells" if d > 0
-                         else f"is ~{abs(d):.1f} {unit} quicker in later spells"))
+        out.append("hold their pace across spells" if abs(d) < 1.5
+                   else (f"drop ~{abs(d):.1f} {unit} from their opening spell to later spells" if d > 0
+                         else f"are ~{abs(d):.1f} {unit} quicker in later spells"))
     # innings
     if i1 and i2:
         di = i1 - i2
-        out.append("is a touch slower in the 2nd innings" if di > 0.7
-                   else ("is quicker in the 2nd innings" if di < -0.7 else "keeps his pace into the 2nd innings"))
+        out.append("are a touch slower in the 2nd innings" if di > 0.7
+                   else ("are quicker in the 2nd innings" if di < -0.7 else "keep their pace into the 2nd innings"))
     # match day — day 1 vs the later days (fatigue across a Test)
     def _mean(vs):
         return sum(vs) / len(vs) if vs else None
@@ -591,12 +591,12 @@ def _speed_read(P: dict) -> str:
     dl = _mean(late)
     if d1 and dl and len(late) >= 30:
         dd = d1 - dl
-        out.append("and is as quick on the final day as day one" if abs(dd) < 1.5
-                   else (f"and loses ~{abs(dd):.1f} {unit} by the later days" if dd > 0
-                         else f"and is ~{abs(dd):.1f} {unit} quicker later in the match"))
+        out.append("and are as quick on the final day as day one" if abs(dd) < 1.5
+                   else (f"and lose ~{abs(dd):.1f} {unit} by the later days" if dd > 0
+                         else f"and are ~{abs(dd):.1f} {unit} quicker later in the match"))
     if not out:
         return ""
-    sentence = "He " + ", ".join(out)
+    sentence = "They " + ", ".join(out)
     return sentence + "."
 
 
@@ -718,7 +718,7 @@ def _pace_style(m: dict) -> str:
             parts.append(f"a swing bowler who {_swing_shape_phrase(v)}")
         else:
             _, ph = _dir_phrase(wd, "outswing", "inswing")
-            parts.append(f"a swing bowler who {ph}" if ph else "a genuine swing bowler")
+            parts.append(f"a swing bowler who {ph}" if ph else "a swing bowler")
     elif hi(seam_p):
         _, ph = _dir_phrase(sd, "leaves the bat off the seam", "nips it back off the seam")
         parts.append(f"a seam bowler who {ph}" if ph else "a seam bowler")
@@ -755,7 +755,7 @@ def _spin_style(m: dict) -> str:
     # — not the batter-relative artefact where a stock off-break reads in-to-RHB / away-from-LHB.
     if tp and min(tp["off_pct"], tp["leg_pct"]) >= 25:
         parts.append(f"turns it both ways ({tp['off_pct']:.0f}% off break / {tp['leg_pct']:.0f}% "
-                     "leg break) — a genuine two-way threat")
+                     "leg break) — a two-way threat")
     if hi(bounce_p):
         parts.append("extracts steep bounce")
     elif lo(bounce_p):
@@ -818,12 +818,12 @@ def _scoring_read(P: dict) -> str:
 
     bpb_txt = f" — a boundary every {bpb:.0f} balls" if bpb else ""
     if b >= 45:
-        lead = f"{b:.0f}% of his runs come in boundaries{bpb_txt}"
+        lead = f"{b:.0f}% of their runs come in boundaries{bpb_txt}"
     elif b <= 30:
         lead = (f"Hard to get away — only {b:.0f}% of runs are boundaries{bpb_txt}. "
                 "The strike is rotated in ones and twos")
     else:
-        lead = f"{b:.0f}% of his runs come in boundaries{bpb_txt}"
+        lead = f"{b:.0f}% of their runs come in boundaries{bpb_txt}"
 
     bits = [lead]
     if d:
@@ -839,7 +839,7 @@ def _scoring_read(P: dict) -> str:
             bits.append(f"the {bthreat['name'].lower()} hurts most "
                         f"({bthreat['bdry']} fours/sixes at {bthreat['rpb']:.1f} runs/ball)")
         elif worked and worked["runs_pct"] >= 30:
-            bits.append(f"runs come mostly by working him around ({worked['runs_pct']:.0f}% of runs)")
+            bits.append(f"runs come mostly by working them around ({worked['runs_pct']:.0f}% of runs)")
 
     read = ". ".join(_cap(b) for b in bits) + "."
     return read[0].upper() + read[1:]
@@ -926,14 +926,14 @@ def _over_round_read(P: dict) -> str:
     o, r = orr["over"], orr["round"]
     bits = []
     if o["modal_zone"] and r["modal_zone"] and o["modal_zone"] != r["modal_zone"]:
-        bits.append(f"round the wicket his pitching line moves from {o['modal_zone'].lower()} "
+        bits.append(f"round the wicket their pitching line moves from {o['modal_zone'].lower()} "
                     f"to {r['modal_zone'].lower()}")
     elif orr["line_delta"] is not None and abs(orr["line_delta"]) >= 0.08:
         ld = orr["line_delta"]
-        bits.append(f"round the wicket his pitching line moves {abs(ld) * 100:.0f} cm "
+        bits.append(f"round the wicket their pitching line moves {abs(ld) * 100:.0f} cm "
                     f"{'wider of off' if ld < 0 else 'straighter, into the pads'}")
     else:
-        bits.append("his pitching line stays similar over and round the wicket")
+        bits.append("their pitching line stays similar over and round the wicket")
     if orr["len_delta"] is not None and abs(orr["len_delta"]) >= 0.3:
         bits.append(f"and pitches {abs(orr['len_delta']) * 100:.0f} cm "
                     f"{'fuller' if orr['len_delta'] < 0 else 'shorter'}")
@@ -974,13 +974,13 @@ def _sequencing_read(P: dict) -> str:
     parts = []
     if sd is not None:
         if is_spin:
-            rep = ("Relentlessly consistent — repeats his length ball after ball" if sd < 1.05
-                   else "Varies his flight and length rather than hammering one spot" if sd > 1.45
-                   else "Consistent with his length")
+            rep = ("Relentlessly consistent — repeats their length ball after ball" if sd < 1.05
+                   else "Varies their flight and length rather than hammering one spot" if sd > 1.45
+                   else "Consistent with their length")
         else:
             rep = ("Metronomic — hammers the same length repeatedly, little to feast on" if sd < 1.85
-                   else "Variable with his length" if sd > 2.25
-                   else "Moderately consistent with his length")
+                   else "Variable with their length" if sd > 2.25
+                   else "Moderately consistent with their length")
         peer = _repeatability_peer(P)
         parts.append(f"{rep} (length spread ±{sd:.1f} m{peer})")
 
@@ -1000,7 +1000,7 @@ def _sequencing_read(P: dict) -> str:
             parts.append("pitches fuller as the over goes on")
         elif sd is not None and ((is_spin and sd > 1.45) or (not is_spin and sd > 2.25)):
             # high overall spread → 'no trend' rather than a contradictory 'steady length'
-            parts.append("with no consistent trend to his length across the over")
+            parts.append("with no consistent trend to their length across the over")
         else:
             parts.append("holds a steady length right through the over")
 
@@ -1014,7 +1014,7 @@ def _sequencing_read(P: dict) -> str:
             parts.append(f"and moves wider on the crease as the over goes on "
                          f"({statistics.mean(ce):.0f}→{statistics.mean(cl):.0f} cm from the stumps)")
         elif d <= -6:
-            parts.append(f"and tightens his crease position later in the over "
+            parts.append(f"and tightens their crease position later in the over "
                          f"({statistics.mean(ce):.0f}→{statistics.mean(cl):.0f} cm)")
         else:
             parts.append("and holds the same crease position through the over")
@@ -1053,7 +1053,7 @@ def _seq_pattern_read(P: dict) -> str:
                     f"({wst:.0f}% straighter than the ball before)")
 
     if not bits:
-        return "Takes his wickets with the stock ball rather than obvious set-ups."
+        return "Takes their wickets with the stock ball rather than obvious set-ups."
     read = ", ".join(bits)
     return read[0].upper() + read[1:] + "."
 
@@ -1104,7 +1104,7 @@ def _crease_read(P: dict) -> str:
 
     vp = _pctl("var_pctl")
     if vp is not None and vp >= 70:
-        parts.append(f"varies his spot on the crease a lot (more than {vp:.0f}% of {peer})")
+        parts.append(f"varies their spot on the crease a lot (more than {vp:.0f}% of {peer})")
     elif vp is not None and vp <= 30:
         parts.append(f"releases from the same spot almost every ball (steadier than {100 - vp:.0f}% of {peer})")
     elif vp is None:
@@ -1390,12 +1390,12 @@ def _recent_form_read(P: dict) -> str:
     if not (r["avg"] and c["avg"]):
         return f"Last {rf['n_matches']} Tests: {r['wkts']} wickets."
     if r["avg"] <= c["avg"] * 0.8:
-        trend = f"striking more often right now (avg {r['avg']:.0f} in his last {rf['n_matches']} Tests vs {c['avg']:.0f} career)"
+        trend = f"striking more often right now (avg {r['avg']:.0f} in their last {rf['n_matches']} Tests vs {c['avg']:.0f} career)"
     elif r["avg"] >= c["avg"] * 1.2:
-        trend = f"less penetrative of late (avg {r['avg']:.0f} in his last {rf['n_matches']} Tests vs {c['avg']:.0f} career)"
+        trend = f"less penetrative of late (avg {r['avg']:.0f} in their last {rf['n_matches']} Tests vs {c['avg']:.0f} career)"
     else:
-        trend = f"around his career level lately (avg {r['avg']:.0f} last {rf['n_matches']} vs {c['avg']:.0f} career)"
-    return f"He's {trend}."
+        trend = f"around their career level lately (avg {r['avg']:.0f} last {rf['n_matches']} vs {c['avg']:.0f} career)"
+    return f"They're {trend}."
 
 
 def _matchup_split_tables(P: dict) -> dict:
@@ -1430,8 +1430,8 @@ def _wicket_setup_read(P: dict) -> str:
         if abs(dv) >= 2:
             parts.append(f"about {abs(dv):.0f} km/h {'quicker' if dv > 0 else 'slower'}")
     if not parts:
-        return (f"Across {ws['n']} dismissals, his wicket ball is close in length and pace to the "
-                f"delivery before it — he builds pressure with repetition, not a big change-up.")
+        return (f"Across {ws['n']} dismissals, their wicket ball is close in length and pace to the "
+                f"delivery before it — they build pressure with repetition, not a big change-up.")
     return f"Across {ws['n']} dismissals, {' and '.join(parts)} — that's the change that brings the wicket."
 
 
@@ -1558,7 +1558,7 @@ def _vs_squad_ctx(bowler_id):
             if struct:
                 names = sorted({c["batter"].split()[-1] for c in struct})
                 hand = struct[0]["bat_hand"]
-                sline = (f"Structurally he takes the ball away from the {hand} — harder work for "
+                sline = (f"Structurally they take the ball away from the {hand} — harder work for "
                          f"{', '.join(names)} regardless of individual reads. A left/right pairing "
                          f"at the crease blunts it.")
             h2h_note = ""
@@ -1887,7 +1887,7 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (where enough recent balls). Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin · movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much he moves his release point sideways across the crease from ball to ball (within his main angle): a high percentile = he varies where he lets the ball go a lot, a low percentile = he releases from the same spot every ball. <b>Repeatability</b> = length consistency over his stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers, a low percentile = he varies his length more. A marker at the very edge = he sits beyond the typical peer range on that trait.</div>
+  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (where enough recent balls). Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin · movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much they move their release point sideways across the crease from ball to ball (within their main angle): a high percentile = they vary where they let the ball go a lot, a low percentile = they release from the same spot every ball. <b>Repeatability</b> = length consistency over their stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers, a low percentile = they vary their length more. A marker at the very edge = they sit beyond the typical peer range on that trait.</div>
   {% endif %}
 
   {% if recent_form %}
@@ -1912,12 +1912,12 @@ _TEMPLATE = r"""
   <div class="grid2 avoid" style="margin-top:8px;align-items:start">
     <div>
       <table class="mtab">
-        <tr><th>How he gets you out</th><th>His&nbsp;%</th><th>Base</th><th>Index</th></tr>
+        <tr><th>How they get you out</th><th>Their&nbsp;%</th><th>Base</th><th>Index</th></tr>
         {% for typ, share, base, idx_txt, colour in dismissal_rows %}
         <tr><td class="lab">{{typ}}</td><td>{{share}}</td><td>{{base}}</td><td style="color:{{colour}};font-weight:700">{{idx_txt}}</td></tr>
         {% endfor %}
       </table>
-      <div class="cap" style="text-align:left">Share of his {{P.n_dismissals}} wickets by type, indexed against the base rate {{dismissal_peer}} (men's Tests). <b>Index&nbsp;&gt;1</b> = he does it more than most, <b>&lt;1</b> = less. Caught is high for everyone — the signal is the over-indexed row.</div>
+      <div class="cap" style="text-align:left">Share of their {{P.n_dismissals}} wickets by type, indexed against the base rate {{dismissal_peer}} (men's Tests). <b>Index&nbsp;&gt;1</b> = they do it more than most, <b>&lt;1</b> = less. Caught is high for everyone — the signal is the over-indexed row.</div>
     </div>
     <div class="pills">
       {% if catch_positions %}<b>Catches to:</b>
@@ -1968,7 +1968,7 @@ _TEMPLATE = r"""
     {{ agecol(ball_age.new) }}
     {{ agecol(ball_age.old) }}
   </div>
-  <div class="cap" style="text-align:left">How his ball types and threat shift with ball age (split at {{P.ball_age.split_over}} overs). Empty side = too few balls in that phase.</div>
+  <div class="cap" style="text-align:left">How their ball types and threat shift with ball age (split at {{P.ball_age.split_over}} overs). Empty side = too few balls in that phase.</div>
   {% endif %}
   {% endif %}
 
@@ -1986,7 +1986,7 @@ _TEMPLATE = r"""
     {% endfor %}
   </div>
   {% if danger_read %}<div class="read" style="margin-top:7px">{{danger_read}}</div>{% endif %}
-  {% if unmapped_wkts > 0 %}<div class="cap" style="text-align:left;margin-top:4px">Zone shares are over his <b>mapped</b> wickets — {{unmapped_wkts}} wicket{{'s' if unmapped_wkts != 1 else ''}} pitched too full to place on the map (tracked length at/behind the crease), so they sit outside the grid.</div>{% endif %}
+  {% if unmapped_wkts > 0 %}<div class="cap" style="text-align:left;margin-top:4px">Zone shares are over their <b>mapped</b> wickets — {{unmapped_wkts}} wicket{{'s' if unmapped_wkts != 1 else ''}} pitched too full to place on the map (tracked length at/behind the crease), so they sit outside the grid.</div>{% endif %}
   {% if ball_age and ((ball_age.new and ball_age.new.danger) or (ball_age.old and ball_age.old.danger)) %}
   {% macro agedanger(b) %}
     {% if b %}
@@ -2022,14 +2022,14 @@ _TEMPLATE = r"""
     {{ mutable('By batting position', matchup_tables.position) }}
   </div>
   {% if matchup_insight %}<div class="read" style="margin-top:6px">{{matchup_insight}}</div>{% endif %}
-  <div class="cap" style="text-align:left">Lower average / higher false-shot = the match-up that suits him · higher average = where batters have got on top. Med length = his median pitch length in that split.</div>
+  <div class="cap" style="text-align:left">Lower average / higher false-shot = the match-up that suits them · higher average = where batters have got on top. Med length = their median pitch length in that split.</div>
   {% endif %}
 
   {% if vs_squad %}
   <h2>Vs Our Squad <span class="sub" style="font-weight:400">(simulated matchups)</span></h2>
-  <div class="cap" style="text-align:left;margin-bottom:5px">From the match simulation — each pairing played out thousands of times from full Test profiles. Only the matchups that sit clearly away from this bowler's norm are listed. Everyone unlisted profiles as roughly average against him. The full grid for every pairing is on the series Match-ups page.</div>
+  <div class="cap" style="text-align:left;margin-bottom:5px">From the match simulation — each pairing played out thousands of times from full Test profiles. Only the matchups that sit clearly away from this bowler's norm are listed. Everyone unlisted profiles as roughly average against them. The full grid for every pairing is on the series Match-ups page.</div>
   {% if vs_squad.threats %}
-  <div class="read"><b>Best matchups for him:</b>
+  <div class="read"><b>Best matchups for them:</b>
     {% for nm, hand, avg, dis in vs_squad.threats %} {{nm}} ({{hand}}, exp avg {{avg}}{% if dis %}, {{dis}}{% endif %}){{ "," if not loop.last }}{% endfor %}.</div>
   {% endif %}
   {% if vs_squad.targets %}
@@ -2096,9 +2096,9 @@ _TEMPLATE = r"""
   </table>
   <div class="grid2 avoid" style="margin-top:6px">
     <div class="fig"><div class="ct">Over the Wicket</div><img class="chart pmap" style="width:66%" src="{{figs.over_map}}">
-      <div class="cap">{% if P.over_round.over_enough %}Where he pitches it from over the wicket ({{P.over_round.over_n}} balls).{% else %}Over the wicket — only {{P.over_round.over_n}} balls to {{hand_noun}}, too few to read into.{% endif %}</div></div>
+      <div class="cap">{% if P.over_round.over_enough %}Where they pitch it from over the wicket ({{P.over_round.over_n}} balls).{% else %}Over the wicket — only {{P.over_round.over_n}} balls to {{hand_noun}}, too few to read into.{% endif %}</div></div>
     <div class="fig"><div class="ct">Round the Wicket</div><img class="chart pmap" style="width:66%" src="{{figs.round_map}}">
-      <div class="cap">{% if P.over_round.round_enough %}Where he pitches it from round the wicket ({{P.over_round.round_n}} balls).{% else %}Round the wicket — only {{P.over_round.round_n}} balls to {{hand_noun}}, too few to read into.{% endif %}</div></div>
+      <div class="cap">{% if P.over_round.round_enough %}Where they pitch it from round the wicket ({{P.over_round.round_n}} balls).{% else %}Round the wicket — only {{P.over_round.round_n}} balls to {{hand_noun}}, too few to read into.{% endif %}</div></div>
   </div>
   {% endif %}
 
@@ -2115,7 +2115,7 @@ _TEMPLATE = r"""
     {% endfor %}
   </table>
   <div class="cap" style="text-align:left;margin:4px 0 0">
-    Length spread = std-dev of pitch length (smaller = more repeatable). The table shows how his length,
+    Length spread = std-dev of pitch length (smaller = more repeatable). The table shows how their length,
     scoring and wicket rate shift across the six balls of an over. Set-up lines compare each ball with the
     previous delivery in the same over (career, all batters).
   </div>
@@ -2134,7 +2134,7 @@ _TEMPLATE = r"""
         <tr><td class="lab">{{band}}</td><td>{{share}}</td><td>{{balls}}</td><td>{{econ}}</td><td>{{wkts}}</td><td>{{avg}}</td><td>{{sr}}</td></tr>
         {% endfor %}
       </table>
-      <div class="cap" style="text-align:left">How he goes when he releases tight / standard / wide of the middle stump (all release-tracked balls).</div>
+      <div class="cap" style="text-align:left">How they go when they release tight / standard / wide of the middle stump (all release-tracked balls).</div>
       {% endif %}
       {% if crease_usage_rows %}
       <table class="mtab" style="margin-top:8px">
@@ -2143,12 +2143,12 @@ _TEMPLATE = r"""
         <tr><td class="lab">{{angle}}</td><td>{{balls}}</td><td>{{tight}}</td><td>{{std}}</td><td>{{wide}}</td></tr>
         {% endfor %}
       </table>
-      <div class="cap" style="text-align:left">His crease-position mix, split by over vs round. Release data is modern-era (2017+). Percentiles vs same hand + type.</div>
+      <div class="cap" style="text-align:left">Their crease-position mix, split by over vs round. Release data is modern-era (2017+). Percentiles vs same hand + type.</div>
       {% endif %}
     </div>
     {% if figs.release_map %}
     <div class="fig"><div class="ct">Release Point (behind the bowler)</div><img class="chart rel" src="{{figs.release_map}}">
-      <div class="cap">Where he lets the ball go — lateral position × height (purple density). Over and round labelled. Dotted lines mark tight/standard/wide and the return creases.</div></div>
+      <div class="cap">Where they let the ball go — lateral position × height (purple density). Over and round labelled. Dotted lines mark tight/standard/wide and the return creases.</div></div>
     {% endif %}
   </div>
   {% endif %}
@@ -2173,13 +2173,13 @@ _TEMPLATE = r"""
   <h2>Beaten Zones (play-and-miss)</h2>
   <div class="grid2 avoid">
     <div class="fig"><div class="ct">Beaten — Grid</div><img class="chart pmap" src="{{figs.beaten}}">
-      <div class="cap">Length × line where he beats the bat — exact counts per cell.</div></div>
+      <div class="cap">Length × line where they beat the bat — exact counts per cell.</div></div>
     <div class="fig"><div class="ct">Beaten — Heatmap</div><img class="chart pmap" src="{{figs.beaten_heat}}">
       <div class="cap">The same play-and-miss density, smoothed, with pitch markings.</div></div>
   </div>
   <div class="read" style="margin-top:6px">
     {% if miss_zone %}Beats the bat most at <b>{{miss_zone.length}} / {{miss_zone.line}}</b> ({{pct(miss_zone.share*100)}} of play-and-misses). {% endif %}
-    Overall he beats the bat {{pct(P.beaten_pct,1)}} of tracked balls (false-shot {{pct(P.false_pct,1)}}, n={{'{:,}'.format(P.n_tracked)}}).
+    Overall they beat the bat {{pct(P.beaten_pct,1)}} of tracked balls (false-shot {{pct(P.false_pct,1)}}, n={{'{:,}'.format(P.n_tracked)}}).
   </div>
   {% endif %}
 

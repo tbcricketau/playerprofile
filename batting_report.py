@@ -467,7 +467,7 @@ def _dim_weakness_reads(P: dict) -> list:
     if strokes:
         risky = max(strokes, key=lambda d: d["false_pct"])
         if risky["false_pct"] >= 25:
-            out.append(f"His <b>{risky['bucket'].lower()}</b> is high-risk (false shot {risky['false_pct']:.0f}%, "
+            out.append(f"Their <b>{risky['bucket'].lower()}</b> is high-risk (false shot {risky['false_pct']:.0f}%, "
                        f"{risky['dismissal_per100']:.1f} outs/100).")
     return out[:6]
 
@@ -1174,7 +1174,7 @@ _TEMPLATE = r"""
       {% for t in narrative.themes %}<li>{{t|safe}}</li>{% endfor %}</ul></div>
     <div class="sbox"><h3 style="color:#15803d">Strengths</h3><ul>
       {% for t in narrative.strengths %}<li>{{t|safe}}</li>{% endfor %}</ul></div>
-    <div class="sbox"><h3 style="color:{{c.DANGER}}">Weaknesses / how to get him</h3><ul>
+    <div class="sbox"><h3 style="color:{{c.DANGER}}">Weaknesses / how to get them</h3><ul>
       {% for t in narrative.weak %}<li>{{t|safe}}</li>{% endfor %}</ul></div>
   </div>
 

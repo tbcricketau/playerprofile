@@ -474,13 +474,13 @@ with st.expander("How is the danger length / lethal zone worked out?"):
 
 We *don't* simply crown the length with the highest wicket percentage. If a bowler
 took 1 wicket from only 33 balls at a length, that reads as a scary 3% — but it's
-really just one ball, and one ball doesn't make a length dangerous.
+one ball, and one ball doesn't make a length dangerous.
 
 So we **blend each length's record with the bowler's overall average**, and we trust
-a length more the *more deliveries* he's bowled there:
+a length more the *more deliveries* they've bowled there:
 
-- A length he's hammered away at for hundreds of balls is taken at face value.
-- A length with only a handful of balls gets pulled back towards his normal rate,
+- A length they've hammered away at for hundreds of balls is taken at face value.
+- A length with only a handful of balls gets pulled back towards their normal rate,
   because we haven't seen enough to believe a freak number.
 
 A length only rises to the top of the list if it's **consistently** productive over a
@@ -490,7 +490,7 @@ flags *“low sample”* when a winner is built on very few wickets.
 
 *Example — Cummins to top-4 left-handers:* short balls read 3.0% raw off 33 balls, but
 adjust to ~1.9%. Back-of-a-length is 2.0% off **490** balls and holds at ~2.0% — so
-back-of-a-length is the genuine danger, not the short ball.
+back-of-a-length is the danger, not the short ball.
 
 ---
 
