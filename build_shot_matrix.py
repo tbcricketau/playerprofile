@@ -148,7 +148,7 @@ def build(opp, fmt="Test", level="international"):
 
     body = (CSS + "<h1>Unorthodox shot options</h1>"
             "<p class=sub>How often each opposition batter plays the cross-batted / innovative shots — "
-            "vs pace and vs spin. From our warehouse (ball-by-ball era); a batter needs "
+            "vs pace and vs spin. From our warehouse (ball-by-ball era). A batter needs "
             f"{MIN_BALLS}+ balls vs the type to show.</p>"
             + _table("Pace shot options", data["pace"])
             + _table("Spin shot options", data["spin"])

@@ -156,7 +156,7 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left"><b style="color:#003087">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b>. Percentile within same-type <b>T20</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. These are skill/physical traits, so — unlike economy — they carry across leagues without a strength adjustment. <b>Repeatability</b> = length consistency over their stock band (high = more metronomic).</div>
+  <div class="cap" style="text-align:left"><b style="color:#003087">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b>. Percentile within same-type <b>T20</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin · movement/speed/repeatability vs pace/spin. These are skill/physical traits, so — unlike economy — they carry across leagues without a strength adjustment. <b>Repeatability</b> = length consistency over their stock band (high = more metronomic).</div>
   {% endif %}
 
   <h2>Phase Profile <span class="sub" style="font-weight:400">(Powerplay 1–6 · Middle 7–15 · Death 16–20)</span>{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ wickets</a>{% endif %}</h2>

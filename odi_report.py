@@ -47,8 +47,8 @@ def _variation_read(P):
     lead = v["rows"][0]
     return (f"Around <b>{v['slower_pct']:.0f}%</b> of their balls are slower-ball variations "
             f"(most often the {lead['type'].lower()}). "
-            f"<span style='color:{TEXT_SEC}'>{v['coded_pct']:.0f}% of balls carry a coded delivery type; "
-            f"the rest are inferred from pace.</span>")
+            f"<span style='color:{TEXT_SEC}'>{v['coded_pct']:.0f}% of balls carry a coded delivery type. "
+            f"The rest are inferred from pace.</span>")
 
 
 def _variation_tables(P):
@@ -224,7 +224,7 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left"><b style="color:#003087">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b>. Percentile within same-type <b>ODI</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. <b>Crease variation</b> = how much they shift their release point sideways across the crease ball to ball (high = varies a lot, low = same spot every ball). <b>Repeatability</b> = length consistency over their stock-length band, so deliberate yorkers/bouncers don't count as poor control (high = tighter, more metronomic than peers). A marker at the very edge = beyond the typical peer range on that trait.</div>
+  <div class="cap" style="text-align:left"><b style="color:#003087">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b>. Percentile within same-type <b>ODI</b> peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin · movement/speed/repeatability vs pace/spin. <b>Crease variation</b> = how much they shift their release point sideways across the crease ball to ball (high = varies a lot, low = same spot every ball). <b>Repeatability</b> = length consistency over their stock-length band, so deliberate yorkers/bouncers don't count as poor control (high = tighter, more metronomic than peers). A marker at the very edge = beyond the typical peer range on that trait.</div>
   {% endif %}
 
   <h2>Phase Profile <span class="sub" style="font-weight:400">(where they bowl &amp; how they go there)</span>{% if video.lists.wickets %}<a class="vlink" data-pl="wickets" href="{{video.player}}#wickets">▶ wickets</a>{% endif %}</h2>
@@ -241,7 +241,7 @@ _TEMPLATE = r"""
       {% if P.is_pace %}<td>{{ p.avg_speed|round|int if p.avg_speed else '—' }}</td>{% endif %}
     </tr>{% endfor %}
   </table>
-  <div class="cap" style="text-align:left">Blue <b>P##</b> = percentile vs modern-era ODI {{ 'pace' if P.is_pace else 'spin' }} peers in that phase (two-new-balls era, 2011+; economy inverted so <b>higher = harder to score off</b>, wickets = strike threat; grey = bottom third). So a high death-economy percentile means cheap <em>for the death</em>, where everyone leaks.</div>
+  <div class="cap" style="text-align:left">Blue <b>P##</b> = percentile vs modern-era ODI {{ 'pace' if P.is_pace else 'spin' }} peers in that phase (two-new-balls era, 2011+ · economy inverted so <b>higher = harder to score off</b>, wickets = strike threat · grey = bottom third). So a high death-economy percentile means cheap <em>for the death</em>, where everyone leaks.</div>
 
   {% if P.deepdive and P.deepdive.overall %}
   {% set o = P.deepdive.overall %}
@@ -300,11 +300,11 @@ _TEMPLATE = r"""
   </div>
   {% endif %}
   {% endfor %}
-  <div class="cap" style="text-align:left">The % on each pitch map is that slice's share of all legal balls (e.g. over the wicket, on pace). Off pace = slower-ball variations.{% if P.supplement_from %} <b>These maps and the speed cards also include this bowler's {{P.supplement_from}} deliveries</b> — their ODI record alone is too thin to read. Where the ball lands and how fast it is bowled carry across white-ball formats; the economy, average, wicket and phase numbers on this page are ODI only.{% endif %}</div>
+  <div class="cap" style="text-align:left">The % on each pitch map is that slice's share of all legal balls (e.g. over the wicket, on pace). Off pace = slower-ball variations.{% if P.supplement_from %} <b>These maps and the speed cards also include this bowler's {{P.supplement_from}} deliveries</b> — their ODI record alone is too thin to read. Where the ball lands and how fast it is bowled carry across white-ball formats. The economy, average, wicket and phase numbers on this page are ODI only.{% endif %}</div>
 
   <div class="note">
     ODI internationals only. Ball-change eras in this sample:
-    {% for e, v in P.eras.items() %}{{v.label}} {{v.pct|round|int}}%{{ "; " if not loop.last }}{% endfor %}.
+    {% for e, v in P.eras.items() %}{{v.label}} {{v.pct|round|int}}%{{ " · " if not loop.last }}{% endfor %}.
     Phase = Powerplay 1–10 / Middle 11–40 / Death 41–50. Economy charges wides + no-balls to the bowler.
     {{version}} · {{build_date}}.
   </div>

@@ -204,7 +204,7 @@ st.divider()
 st.subheader("Threat Profile")
 st.caption(
     "What you'll face most, and where the danger is. Beaten / false-shot rates use "
-    "deliveries with shot-quality tracking; turn & drift use ball-tracking — both partial coverage."
+    "deliveries with shot-quality tracking. Turn & drift use ball-tracking — both partial coverage."
 )
 
 _threat_cards = [
@@ -489,7 +489,7 @@ trust) next to the **raw** rate (the unsmoothed number), plus the balls behind i
 flags *“low sample”* when a winner is built on very few wickets.
 
 *Example — Cummins to top-4 left-handers:* short balls read 3.0% raw off 33 balls, but
-adjust to ~1.9%; back-of-a-length is 2.0% off **490** balls and holds at ~2.0% — so
+adjust to ~1.9%. Back-of-a-length is 2.0% off **490** balls and holds at ~2.0% — so
 back-of-a-length is the genuine danger, not the short ball.
 
 ---
@@ -505,7 +505,7 @@ adjusted_rate = (wickets + K·p₀) / (balls + K)
 
 `K` is the prior strength in balls (currently **80** — roughly 13 overs). It's
 equivalent to starting every zone from a `Beta(K·p₀, K·(1−p₀))` prior and updating it
-with that zone's `(wickets, balls)`. Small samples sit near `p₀`; large samples
+with that zone's `(wickets, balls)`. Small samples sit near `p₀`, large samples
 dominate the prior and converge on the raw rate. Zones are ranked by `adjusted_rate`,
 with a `min_balls = 30` floor, a `min_wkts = 3` eligibility gate, and a low-confidence
 flag when `wickets < 5`. The baseline `p₀` is recomputed for whatever hand / position /

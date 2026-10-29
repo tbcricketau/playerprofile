@@ -72,7 +72,7 @@ def distil_bowler(P, type_label):
         round_p = (_angle_phrase(orr.get("round"))
                    if orr.get("round_enough") and (orr.get("round_share") or 0) >= 12 else None)
         if over_p and round_p and over_p != round_p:   # only note it when the angles differ
-            facts.append(f"By angle — over the wicket, {over_p}; round the wicket, {round_p}.")
+            facts.append(f"By angle — over the wicket, {over_p} · round the wicket, {round_p}.")
         elif round_p and round_p != (st.get("phrase") if st else None):
             facts.append(f"Round the wicket, their stock ball is {round_p}.")
     dlen, dline = P.get("danger_length"), P.get("danger_line")
@@ -103,7 +103,7 @@ def distil_batter(P, hand):
         top = sg[0]["name"].lower()
         if dp:
             area = _AREA[max(dp, key=dp.get)]
-            facts.append(f"Scores mainly {area}; go-to shot is the {top}.")
+            facts.append(f"Scores mainly {area}. Go-to shot is the {top}.")
         else:
             facts.append(f"Main scoring shot is the {top}.")
     w = P.get("weakness")

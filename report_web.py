@@ -566,7 +566,7 @@ def _form_table(P, all_note=""):
     if r.get("sr") and c.get("sr"):
         note = (f"A wicket every {r['sr']:.0f} balls in the last {rf['n_matches']} Tests, every {c['sr']:.0f} across the career")
         if r.get("false_pct") is not None and c.get("false_pct") is not None:
-            note += f"; false shots {r['false_pct']:.0f}% against {c['false_pct']:.0f}%"
+            note += f". False shots {r['false_pct']:.0f}% against {c['false_pct']:.0f}%"
         note += "."
     return (label(f"Current form{all_note} · last {rf['n_matches']} Tests, {_day(rf['date_from'])} to {_day(rf['date_to'])}")
             + table(["", "Balls", "Wkts", "Avg", "Econ", "Bowl SR", "False shots", "km/h", "Length"],
@@ -843,7 +843,7 @@ def _bowler_scope(key, P, Ps, ctx):
             lead = f"Median {sp[0][1]:.1f} km/h in the first spell, {sp[-1][1]:.1f} in {sp[-1][0].lower()}"
             dy = g.get("By day")
             if dy and len(dy) >= 2:
-                lead += f"; {dy[0][1]:.1f} on {dy[0][0].lower()}, {dy[-1][1]:.1f} on {dy[-1][0].lower()}"
+                lead += f" — {dy[0][1]:.1f} on {dy[0][0].lower()}, {dy[-1][1]:.1f} on {dy[-1][0].lower()}"
             lead += "."
         s.append(sec(sid("pace"), "Pace", who, (f"<p class='lead'>{E(lead)}</p>" if lead else "")
                      + f"<div class='speed'>{chart}</div><p class='note'>Median speed in km/h, legal balls with a recorded speed. "
@@ -868,7 +868,7 @@ def _bowler_scope(key, P, Ps, ctx):
     if maps:
         ang += panes([m[0] for m in maps], [m[1] for m in maps], "Where they pitch it, by angle")
         ang += ("<p class='note'>Every ball, from behind the bowler. The Dots view colours each ball by what came of it "
-                "(red a wicket, blue a four, purple a six); Density shades where most balls land.</p>")
+                "(red a wicket, blue a four, purple a six). Density shades where most balls land.</p>")
     rel, nrel = ctx["release"]
     ang += ("<div class='two'><div>" + (label("Release point · from behind the bowler, all batters") + rel
             + f"<p class='note'>{min(nrel, 1400):,} of {nrel:,} tracked balls. Green over the wicket, gold round. Dashed white: "
@@ -1044,7 +1044,7 @@ def _bat_facts(P, key):
         w = BR._worst(dims.get(k) or [])
         if w and avg and w["avg"] < avg * 0.9:
             out.append((f"Lowest by {word}", f"<b>{E(BR._pitch_line(w['bucket']) if k == 'line' else str(w['bucket']).lower())}</b> "
-                        f"· average {w['avg']:.1f} over {w['balls']:,} balls ({against}; "
+                        f"· average {w['avg']:.1f} over {w['balls']:,} balls ({against}, "
                         f"{avg:.1f} {'overall' if key == 'all' else 'against the type in all'})"))
     mv = [d for d in dims.get("seam") or [] if d["balls"] >= 40 and d.get("avg") is not None]
     if mv:
@@ -1294,7 +1294,7 @@ def _line_length(key, P, ctx, isg, against):
     if trs:
         import report_visuals as RV
         tab = (table(["Stumps"] + _BAT_HEADS, trs, hi=his)
-               + f"<p class='note'>{_cap('; '.join(notes))}. Hitting = through the stumps' width and under the bails "
+               + f"<p class='note'>{'. '.join(_cap(n) for n in notes)}. Hitting = through the stumps' width and under the bails "
                  "at the stumps, from ball tracking. The shaded row in each pair has the lower BPD.</p>")
         pic = RV.stumps_view([(f"v {w}", rs) for w, rs in sets], bool(P.get("is_lhb")))
         blocks.append(panes(["Chart", "Table"], [pic, tab], "Hitting the stumps") if pic
@@ -1346,7 +1346,7 @@ def _line_length(key, P, ctx, isg, against):
             blocks.append(label("Slower balls · v pace") + table(
                 [""] + _BAT_HEADS, [_bat_row("Slower balls", a), _bat_row("Stock pace", b)], hi=lo)
                 + f"<p class='note'>A slower ball is one well off that bowler's own stock pace, set from their tracked "
-                  f"speeds in {_SPEED_WORD.get(ctx.get('fmt', 'Test'), 'first-class')} cricket; {len(slow) / len(known) * 100:.0f}% of the "
+                  f"speeds in {_SPEED_WORD.get(ctx.get('fmt', 'Test'), 'first-class')} cricket — {len(slow) / len(known) * 100:.0f}% of the "
                   f"{len(known):,} tracked balls from pace. The shaded row has the lower BPD.</p>")
     # the stumps and the slower ball down the left, the length-by-line grid on the right
     if not (blocks or grid):

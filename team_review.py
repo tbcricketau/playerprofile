@@ -243,7 +243,7 @@ _TEMPLATE = r"""
   <div class="ver">v{{version}}<br>{{build_date}}</div>
   <h1>{{title}}</h1>
   <div class="sub">Test cricket, since {{since_txt}} · {{R.n_matches}} matches · {{R.n_innings}} innings · {{team_runs}} team runs off the bat.
-     <b>Share</b> = a batter's runs ÷ the team's off-the-bat runs (career = volume-weighted; median = typical innings;
+     <b>Share</b> = a batter's runs ÷ the team's off-the-bat runs (career = volume-weighted · median = typical innings ·
      carry = % of innings he makes ≥25% of the team).</div>
 
   <div class="grid">

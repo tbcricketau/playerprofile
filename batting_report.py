@@ -62,7 +62,7 @@ def _impact_read(P: dict) -> str:
     tc, tm = s["team_share_career"], s["team_share_median"]
     lead = (f"Makes <b>{tc:.1f}%</b> of their team's runs over a career (typical innings "
             f"{tm:.1f}%), and <b>{_fmt(s['match_share_career'], '.1f', '%')}</b> of all runs in their matches")
-    carry = (f"; carries the innings (≥25% of the team's runs) {s['carried_rate']:.0f}% of the time"
+    carry = (f". Carries the innings (≥25% of the team's runs) {s['carried_rate']:.0f}% of the time"
              + (f", and dominates (≥40%) {s['big_rate']:.0f}%" if s["big_rate"] >= 3 else ""))
     return lead + carry + "."
 
@@ -110,7 +110,7 @@ def _dir_read(P: dict) -> str:
         return ""
     top = max(d, key=d.get)
     side = {"off": "the off side", "leg": "the leg side", "straight": "straight down the ground"}[top]
-    return f"Scores most of their runs through {side} ({d[top]:.0f}%; off {d['off']:.0f}% · leg {d['leg']:.0f}% · straight {d['straight']:.0f}%)."
+    return f"Scores most of their runs through {side} ({d[top]:.0f}% — off{d['off']:.0f}% · leg {d['leg']:.0f}% · straight {d['straight']:.0f}%)."
 
 
 def _phase_rows(P: dict) -> list:
@@ -141,12 +141,12 @@ def _phase_read(P: dict) -> str:
         txt = (f"<b>Get them early</b> — they're {ratio:.1f}× more likely to fall in their first 30 balls "
                f"({e['dismissal_per100']:.1f} vs {s['dismissal_per100']:.1f} dismissals/100 once set")
         if e["false_pct"] and s["false_pct"]:
-            txt += f"; false shot {e['false_pct']:.0f}% vs {s['false_pct']:.0f}%"
+            txt += f", false shot {e['false_pct']:.0f}% vs {s['false_pct']:.0f}%"
         txt += ")."
     elif ratio and ratio <= 1.1:
         txt = (f"Starts securely — their dismissal rate barely drops once set "
-               f"({e['dismissal_per100']:.1f} early vs {s['dismissal_per100']:.1f}/100); "
-               f"early pressure alone won't buy their wicket.")
+               f"({e['dismissal_per100']:.1f} early vs {s['dismissal_per100']:.1f}/100). "
+               f"Early pressure alone won't buy their wicket.")
     else:
         txt = (f"Somewhat more vulnerable early ({e['dismissal_per100']:.1f} vs "
                f"{s['dismissal_per100']:.1f} dismissals/100 once set).")
@@ -164,7 +164,7 @@ def _dismissal_read(P: dict, include_matchup: bool = True) -> str:
     bt = P["dismissal_bowler_type"].most_common(1)
     # the bowler-type they get out to most is coach matchup detail — kept in the scouting report,
     # dropped on the player pack card (which is already scoped to the bowler's type).
-    btxt = f"; most often to {bt[0][0].lower()} ({bt[0][1]})" if (bt and include_matchup) else ""
+    btxt = f", most often to {bt[0][0].lower()} ({bt[0][1]})" if (bt and include_matchup) else ""
     return f"Most often out <b>{top[0].lower()}</b> ({top[1] / n * 100:.0f}% of dismissals){btxt}."
 
 
@@ -327,8 +327,8 @@ def _stroke_norm_caption(P: dict) -> str:
         return ""
     grp, label, n = grain
     scope = f"vs {label}" if label else "all bowling"
-    return (f"Share of stroke-coded runs {scope}; index = their share ÷ cohort median "
-            f"({n} Test batters). Highlight = signature shot; ▼ = scores unusually little there.")
+    return (f"Share of stroke-coded runs {scope}. Index = their share ÷ cohort median "
+            f"({n} Test batters). Highlight = signature shot · ▼ = scores unusually little there.")
 
 
 def _stroke_norm_read(P: dict) -> str:
@@ -441,7 +441,7 @@ def _dim_weakness_reads(P: dict) -> list:
     # length
     w = _worst(dims.get("length", []))
     if w and base_avg and w["avg"] < base_avg * 0.8:
-        out.append(f"Vulnerable to the <b>{w['bucket'].lower()}</b> (averages {w['avg']:.0f} there vs {base_avg:.0f} overall; "
+        out.append(f"Vulnerable to the <b>{w['bucket'].lower()}</b> (averages {w['avg']:.0f} there vs {base_avg:.0f} overall, "
                    f"{w['dismissal_per100']:.1f} dismissals/100).")
     # line
     w = _worst(dims.get("line", []))
@@ -559,7 +559,7 @@ def _fingerprint_headline(cards: list) -> str | None:
     if not moves:
         return None
     moves.sort(reverse=True)
-    return "Changing (last 3 years vs career): " + "; ".join(t for _s, t in moves[:3]) + "."
+    return "Changing (last 3 years vs career): " + " · ".join(t for _s, t in moves[:3]) + "."
 
 
 def _fingerprint_type(cards: list) -> str | None:
@@ -607,7 +607,7 @@ def _plan_read(P: dict) -> str:
         bits.append(f"most often out <b>{top[0].lower()}</b>")
     if not bits:
         return f"Against {P['group_label']}: no length, line or movement stands out."
-    return f"Against {P['group_label']}: " + "; ".join(bits) + "."
+    return f"Against {P['group_label']}: " + ", ".join(bits) + "."
 
 
 def _moves(P: dict, baseline: dict = None) -> list:
@@ -1192,7 +1192,7 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (avg / SR / false% vs pace &amp; spin). Percentile among Test batters (&ge;1500 balls). Red = a target (high vulnerability); green = a strength.</div>
+  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (avg / SR / false% vs pace &amp; spin). Percentile among Test batters (&ge;1500 balls). Red = a target (high vulnerability) · green = a strength.</div>
   {% endif %}
 
   {% if impact_read and show_fp %}
@@ -1329,7 +1329,7 @@ _TEMPLATE = r"""
 
   {% if field_blocks %}
   <h2 class="pbreak">Suggested Fields <span class="sub" style="font-weight:400">(the stock field &plusmn; their evidenced deviations)</span></h2>
-  <div class="cap" style="text-align:left;margin-bottom:6px">Each field starts from the <b>stock template</b> for that bowler type &amp; phase (orthodox because it works), then makes at most <b>three</b> changes — each one earned by a trigger in <b>their</b> game clearing the cohort P75 bar (do they lap, cut, pull, score square, edge early?). <b>Change</b> rows are highlighted with their stat; <b>Stock</b> rows carry the orthodoxy line. The read line backtests the changes against the pure stock field. Early = first 30 balls; Set = once in. Drawn from behind the bowler (bowler bottom, striker top); off side is on the {% if P.is_lhb %}right{% else %}left{% endif %}.</div>
+  <div class="cap" style="text-align:left;margin-bottom:6px">Each field starts from the <b>stock template</b> for that bowler type &amp; phase (orthodox because it works), then makes at most <b>three</b> changes — each one earned by a trigger in <b>their</b> game clearing the cohort P75 bar (do they lap, cut, pull, score square, edge early?). <b>Change</b> rows are highlighted with their stat, <b>Stock</b> rows carry the orthodoxy line. The read line backtests the changes against the pure stock field. Early = first 30 balls · Set = once in. Drawn from behind the bowler (bowler bottom, striker top) — off side is on the {% if P.is_lhb %}right{% else %}left{% endif %}.</div>
   {% for blk in field_blocks %}
     <div style="font-weight:700;font-size:11.5px;margin:10px 0 4px;color:{{c.ACCENT}}">Field vs {{blk.label}}</div>
     {% for col in blk.cols %}

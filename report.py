@@ -167,7 +167,7 @@ def _narrative(P: dict) -> dict:
         themes.append(f"{'Usually' if nb >= 45 else 'Often'} takes the new ball "
                       f"(opens in {_pct(nb)} of innings).")
     if P["common_len_band"]:
-        themes.append(f"Typical length is <b>{P['common_len_band']}</b> (their good length); "
+        themes.append(f"Typical length is <b>{P['common_len_band']}</b> (their good length), "
                       f"median {_fmt(P['avg_len_m'], '.1f')} m.")
     if P.get("ball_types") and P["ball_types"]["stock"]:
         s = P["ball_types"]["stock"]
@@ -199,7 +199,7 @@ def _narrative(P: dict) -> dict:
         if seg:
             themes.append(f"<b>Round the wicket</b> he {' and '.join(seg)}.")
     if is_spin and P["avg_turn"] is not None:
-        themes.append(f"Turns it {_fmt(P['avg_turn'])}° on average; {_pct(P['big_turn_pct'])} of balls turn ≥5°.")
+        themes.append(f"Turns it {_fmt(P['avg_turn'])}° on average — {_pct(P['big_turn_pct'])} of balls turn ≥5°.")
     # sequencing — a condensed line (full detail in the Sequencing section)
     sq = P.get("sequencing")
     if sq and sq.get("length_sd") is not None:
@@ -254,7 +254,7 @@ def _narrative(P: dict) -> dict:
         cb = P["caught_behind"] / P["n_caught"] * 100
         tops = ", ".join(k.lower() for k, _ in P["catch_pos_counts"].most_common(3))
         line = f"{_pct(cb)} of catches are behind the wicket (keeper / slips / gully)"
-        threats.append(line + (f"; most often to {tops}." if tops else "."))
+        threats.append(line + (f" — most often to {tops}." if tops else "."))
 
     # Areas to exploit
     if P["run_zone"]:
@@ -534,7 +534,7 @@ def _chart_reads(P: dict) -> dict:
     if st:
         sh = P["short_pct"]
         tail = "drops short often" if sh >= 28 else ("mixes in the short ball" if sh >= 15 else "rarely drops short")
-        I["pitch_count"] = f"Pitches it {_ball_phrase(st['length'], st['line'])} most often ({int(st['share'] * 100)}%); {tail} ({int(sh)}%)."
+        I["pitch_count"] = f"Pitches it {_ball_phrase(st['length'], st['line'])} most often ({int(st['share'] * 100)}%), {tail} ({int(sh)}%)."
     if wz:
         extra = f", but strikes most often pitching {_LINE_PHRASE.get(dl['line'], dl['line'].lower())}" if dl else ""
         I["pitch_wkts"] = f"Wickets come mostly from balls pitched {_ball_phrase(wz['length'], wz['line'])}{extra}."
@@ -616,7 +616,7 @@ def _movement_read(P: dict) -> str:
     sd = m["seam_dir"]
     if sd:
         who = _BATTER_DESC.get(P["filters"]["hand"], "the batter")
-        read += f"; {'turns' if is_spin else 'seams'} it {'away' if sd['out_pct'] >= sd['in_pct'] else 'in'} more to {who} ({int(max(sd['out_pct'], sd['in_pct']))}%)"
+        read += f". {'Turns' if is_spin else 'Seams'} it {'away' if sd['out_pct'] >= sd['in_pct'] else 'in'} more to {who} ({int(max(sd['out_pct'], sd['in_pct']))}%)"
     return read + "."
 
 
@@ -674,7 +674,7 @@ def _swing_age_read(P: dict) -> str:
     who = _BATTER_DESC.get(P["filters"]["hand"], "the batter")
     def part(d):
         return f"{d['out_pct']:.0f}% away / {d['in_pct']:.0f}% in"
-    read = (f"Swing by ball age to {who}: new ball (≤25 ov, n={new['n']}) {part(new)}; "
+    read = (f"Swing by ball age to {who}: new ball (≤25 ov, n={new['n']}) {part(new)} · "
             f"old ball (≥40 ov, n={old['n']}) {part(old)}")
     if _swing_verdict(m):
         read += " — the swing direction reverses with the old ball"
@@ -732,7 +732,7 @@ def _pace_style(m: dict) -> str:
             parts.append("gets extra bounce")
         elif lo(bounce_p):
             parts.append("skids through at a lower trajectory")
-    return "; ".join(parts)
+    return ". ".join(_cap(p) for p in parts)
 
 
 def _spin_style(m: dict) -> str:
@@ -762,7 +762,7 @@ def _spin_style(m: dict) -> str:
         parts.append("skids it on with lower bounce")
     if hi(drift_p):
         parts.append("gets sharp drift in the air")
-    return "; ".join(parts)
+    return ". ".join(_cap(p) for p in parts)
 
 
 def _bowler_style(P: dict) -> str:
@@ -820,8 +820,8 @@ def _scoring_read(P: dict) -> str:
     if b >= 45:
         lead = f"{b:.0f}% of his runs come in boundaries{bpb_txt}"
     elif b <= 30:
-        lead = (f"Hard to get away — only {b:.0f}% of runs are boundaries{bpb_txt}; "
-                "the strike is rotated in ones and twos")
+        lead = (f"Hard to get away — only {b:.0f}% of runs are boundaries{bpb_txt}. "
+                "The strike is rotated in ones and twos")
     else:
         lead = f"{b:.0f}% of his runs come in boundaries{bpb_txt}"
 
@@ -841,7 +841,7 @@ def _scoring_read(P: dict) -> str:
         elif worked and worked["runs_pct"] >= 30:
             bits.append(f"runs come mostly by working him around ({worked['runs_pct']:.0f}% of runs)")
 
-    read = "; ".join(bits) + "."
+    read = ". ".join(_cap(b) for b in bits) + "."
     return read[0].upper() + read[1:]
 
 
@@ -892,7 +892,7 @@ def _round_by_hand_read(P: dict) -> str:
             return f"over the wicket to {h} ({100 - rpct:.0f}% over)"
         return f"a mix to {h} ({rpct:.0f}% round)"
     parts = [p for p in (phrase("RHB", P.get("round_rhb")), phrase("LHB", P.get("round_lhb"))) if p]
-    return "Bowls " + "; ".join(parts) + "." if parts else ""
+    return "Bowls " + ", ".join(parts) + "." if parts else ""
 
 
 def _over_round_read(P: dict) -> str:
@@ -922,7 +922,7 @@ def _over_round_read(P: dict) -> str:
             return f"Bowls exclusively {dom} {target} ({dn:,} balls) — never goes {minor} in this data."
         tail = (f"{minor} is a rare change-up ({ms:.0f}%, {mn} balls)" if enough
                 else f"the {minor} sample ({mn} balls) is too small to read into")
-        return f"Almost exclusively {dom} {target} ({ds:.0f}%, {dn:,} balls); {tail}."
+        return f"Almost exclusively {dom} {target} ({ds:.0f}%, {dn:,} balls). {_cap(tail)}."
     o, r = orr["over"], orr["round"]
     bits = []
     if o["modal_zone"] and r["modal_zone"] and o["modal_zone"] != r["modal_zone"]:
@@ -942,7 +942,7 @@ def _over_round_read(P: dict) -> str:
         thr.append(f"economy {o['econ']:.2f}→{r['econ']:.2f}")
     if o["sr"] and r["sr"]:
         thr.append(f"a wicket every {o['sr']:.0f}→{r['sr']:.0f} balls")
-    read = "; ".join(bits)
+    read = ", ".join(bits)
     if thr:
         read += " — " + ", ".join(thr) + " (over→round)"
     return read[0].upper() + read[1:] + "."
@@ -961,7 +961,7 @@ def _repeatability_peer(P: dict) -> str:
     kind = rp.get("pace_spin") or ("spin" if P["is_spin"] else "pace")
     # length_sd_pctl = % of same-type bowlers with SD <= his (low = tighter),
     # so 'more repeatable than' = 100 - pctl.
-    return f"; more repeatable than {100 - pctl:.0f}% of {kind} bowlers"
+    return f", more repeatable than {100 - pctl:.0f}% of {kind} bowlers"
 
 
 def _sequencing_read(P: dict) -> str:
@@ -1021,7 +1021,7 @@ def _sequencing_read(P: dict) -> str:
 
     if not parts:
         return ""
-    read = "; ".join(parts)
+    read = ", ".join(parts)
     return read[0].upper() + read[1:] + "."
 
 
@@ -1054,7 +1054,7 @@ def _seq_pattern_read(P: dict) -> str:
 
     if not bits:
         return "Takes his wickets with the stock ball rather than obvious set-ups."
-    read = "; ".join(bits)
+    read = ", ".join(bits)
     return read[0].upper() + read[1:] + "."
 
 
@@ -1113,7 +1113,7 @@ def _crease_read(P: dict) -> str:
         elif sd <= 10:
             parts.append("releases from a consistent spot")
 
-    read = "; ".join(parts)
+    read = " · ".join(parts)
     o, r = c["over"], c["round"]
     if o and r and min(o["n"], r["n"]) >= 100 and abs(o["width_cm"] - r["width_cm"]) >= 15:
         wider = "round" if r["width_cm"] > o["width_cm"] else "over"
@@ -1160,7 +1160,7 @@ def _fingerprint_headline(P: dict) -> str | None:
     others.sort(reverse=True)                             # biggest shifts first
     parts = ([pace_txt] if pace_txt else []) + [t for _s, t in others]
     parts = parts[:3]
-    return ("Changing (last 3 years vs career): " + "; ".join(parts) + ".") if parts else None
+    return ("Changing (last 3 years vs career): " + " · ".join(parts) + ".") if parts else None
 
 
 def _crease_band_rows(P: dict) -> list:
@@ -1471,7 +1471,7 @@ def _matchup_insight(P: dict) -> str:
             bits.append(f"more yorkers/full at the tail ({_pct(tail['full_pct'])})")
     if not bits:
         return ""
-    return "; ".join(bits)[0].upper() + "; ".join(bits)[1:] + "."
+    return " · ".join(bits)[0].upper() + " · ".join(bits)[1:] + "."
 
 
 def _examples(P: dict) -> dict:
@@ -1559,7 +1559,7 @@ def _vs_squad_ctx(bowler_id):
                 names = sorted({c["batter"].split()[-1] for c in struct})
                 hand = struct[0]["bat_hand"]
                 sline = (f"Structurally he takes the ball away from the {hand} — harder work for "
-                         f"{', '.join(names)} regardless of individual reads; a left/right pairing "
+                         f"{', '.join(names)} regardless of individual reads. A left/right pairing "
                          f"at the crease blunts it.")
             h2h_note = ""
             opp = store["opp"].lower().replace(" ", "_")
@@ -1572,7 +1572,7 @@ def _vs_squad_ctx(bowler_id):
                     wkts = sum(r["wickets"] for r in mine)
                     h2h_note = (f"Real meetings with this squad: {balls} balls across "
                                 f"{len(mine)} batters ({wkts} wicket{'s' if wkts != 1 else ''}) — "
-                                "too few to average; the footage is in each player's pack and on "
+                                "too few to average. The footage is in each player's pack and on "
                                 "the Match-ups page.")
             if not (threats or targets or sline):
                 return None                    # nothing clears the gate — the strip stays silent
@@ -1887,7 +1887,7 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (where enough recent balls). Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin; movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much he moves his release point sideways across the crease from ball to ball (within his main angle): a high percentile = he varies where he lets the ball go a lot, a low percentile = he releases from the same spot every ball. <b>Repeatability</b> = length consistency over his stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers; a low percentile = he varies his length more. A marker at the very edge = he sits beyond the typical peer range on that trait.</div>
+  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (where enough recent balls). Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin · movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much he moves his release point sideways across the crease from ball to ball (within his main angle): a high percentile = he varies where he lets the ball go a lot, a low percentile = he releases from the same spot every ball. <b>Repeatability</b> = length consistency over his stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers, a low percentile = he varies his length more. A marker at the very edge = he sits beyond the typical peer range on that trait.</div>
   {% endif %}
 
   {% if recent_form %}
@@ -1945,7 +1945,7 @@ _TEMPLATE = r"""
   </table>
   <div class="cap" style="text-align:left;margin:4px 0 0">
     Ball type = pitch-length band × pitching-line region. <b>Movement</b> = swing in the air + seam/turn off
-    the pitch, whichever is material, dominant first (ball-tracking, tracked balls only; blank if too few).
+    the pitch, whichever is material, dominant first (ball-tracking, tracked balls only · blank if too few).
     <b>Beaten %</b> = false-shot rate on tracked balls. The stock-ball line above also notes where it passes the stumps.
   </div>
   {% if ball_age and (ball_age.new or ball_age.old) %}
@@ -2022,12 +2022,12 @@ _TEMPLATE = r"""
     {{ mutable('By batting position', matchup_tables.position) }}
   </div>
   {% if matchup_insight %}<div class="read" style="margin-top:6px">{{matchup_insight}}</div>{% endif %}
-  <div class="cap" style="text-align:left">Lower average / higher false-shot = the match-up that suits him; higher average = where batters have got on top. Med length = his median pitch length in that split.</div>
+  <div class="cap" style="text-align:left">Lower average / higher false-shot = the match-up that suits him · higher average = where batters have got on top. Med length = his median pitch length in that split.</div>
   {% endif %}
 
   {% if vs_squad %}
   <h2>Vs Our Squad <span class="sub" style="font-weight:400">(simulated matchups)</span></h2>
-  <div class="cap" style="text-align:left;margin-bottom:5px">From the match simulation — each pairing played out thousands of times from full Test profiles. Only the matchups that sit clearly away from this bowler's norm are listed; everyone unlisted profiles as roughly average against him. The full grid for every pairing is on the series Match-ups page.</div>
+  <div class="cap" style="text-align:left;margin-bottom:5px">From the match simulation — each pairing played out thousands of times from full Test profiles. Only the matchups that sit clearly away from this bowler's norm are listed. Everyone unlisted profiles as roughly average against him. The full grid for every pairing is on the series Match-ups page.</div>
   {% if vs_squad.threats %}
   <div class="read"><b>Best matchups for him:</b>
     {% for nm, hand, avg, dis in vs_squad.threats %} {{nm}} ({{hand}}, exp avg {{avg}}{% if dis %}, {{dis}}{% endif %}){{ "," if not loop.last }}{% endfor %}.</div>
@@ -2057,7 +2057,7 @@ _TEMPLATE = r"""
     {% endfor %}
   </table>
   <div class="cap" style="text-align:left;margin:4px 0 0">
-    Direction from ball-tracking (all scoring shots); shot type recorded on {{pct(P.scoring.stroke_cov)}} of scoring balls
+    Direction from ball-tracking (all scoring shots). Shot type recorded on {{pct(P.scoring.stroke_cov)}} of scoring balls
     ({{P.scoring.n_stroke}}/{{P.scoring.n_scoring}}) — groups with &lt;5 balls omitted.
   </div>
   {% endif %}
@@ -2143,12 +2143,12 @@ _TEMPLATE = r"""
         <tr><td class="lab">{{angle}}</td><td>{{balls}}</td><td>{{tight}}</td><td>{{std}}</td><td>{{wide}}</td></tr>
         {% endfor %}
       </table>
-      <div class="cap" style="text-align:left">His crease-position mix, split by over vs round. Release data is modern-era (2017+); percentiles vs same hand + type.</div>
+      <div class="cap" style="text-align:left">His crease-position mix, split by over vs round. Release data is modern-era (2017+). Percentiles vs same hand + type.</div>
       {% endif %}
     </div>
     {% if figs.release_map %}
     <div class="fig"><div class="ct">Release Point (behind the bowler)</div><img class="chart rel" src="{{figs.release_map}}">
-      <div class="cap">Where he lets the ball go — lateral position × height (purple density). Over and round labelled; dotted lines mark tight/standard/wide and the return creases.</div></div>
+      <div class="cap">Where he lets the ball go — lateral position × height (purple density). Over and round labelled. Dotted lines mark tight/standard/wide and the return creases.</div></div>
     {% endif %}
   </div>
   {% endif %}
@@ -2159,7 +2159,7 @@ _TEMPLATE = r"""
   {% if movement_read %}<div class="read">{{movement_read}}</div>{% endif %}
   {% if swing_age_read %}<div class="read">{{swing_age_read}}</div>{% endif %}
   <div class="cap" style="text-align:left;margin:0 0 6px">
-    Percentile vs all Test {{P.movement.pace_spin}} bowlers; direction is which way it moves to this batter. Bounce = extra bounce vs expected.
+    Percentile vs all Test {{P.movement.pace_spin}} bowlers. Direction is which way it moves to this batter. Bounce = extra bounce vs expected.
   </div>
   <table class="mtab">
     <tr><th>Movement</th><th>Avg</th><th>vs average</th><th>Direction ({{hand_label}})</th></tr>
@@ -2184,8 +2184,8 @@ _TEMPLATE = r"""
   {% endif %}
 
   <div class="foot">
-    Test-match career data. Beaten/false-shot use ~38% shot-quality tracking; turn/drift ~30% ball-tracking.
-    Catches split by fielding position (DeliveryFielders view); some catches have no recorded position.
+    Test-match career data. Beaten/false-shot use ~38% shot-quality tracking, turn/drift ~30% ball-tracking.
+    Catches split by fielding position (DeliveryFielders view). Some catches have no recorded position.
     Danger zones use empirical-Bayes shrinkage (≥3 wkts to qualify).
   </div>
 

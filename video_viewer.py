@@ -43,6 +43,6 @@ st.subheader(meta.get("bowler") or _label(choice))
 counts = meta.get("counts", {})
 if counts:
     st.caption(" · ".join(f"{k}: {v.get('shown')} of {v.get('in_group')}" for k, v in counts.items())
-               + "  — 'in_group' = deliveries matching the insight; clips exist for recent matches only.")
+               + "  — 'in_group' = deliveries matching the insight. Clips exist for recent matches only.")
 
 playlist_widget(data.get("playlists", {}), key_prefix="viewer")

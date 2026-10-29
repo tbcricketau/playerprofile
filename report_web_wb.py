@@ -237,7 +237,7 @@ def _scope(key, phase, P, ctx, fmt):
                    + "<p class='note'>Where the wicket balls pitched and passed the stumps, from behind the bowler.</p></div>"
                    + "<div>" + (panes([w[0] for w in where], [w[1] for w in where], "Every ball") if where else "") + "</div></div>"
                    + ("<p class='note'>Dots draws each ball by what came of it (red a wicket, blue a four, purple a six) "
-                      f"where a slice has {MAX_DOTS} balls or fewer; Density shades where most balls land.</p>" if phase is None
+                      f"where a slice has {MAX_DOTS} balls or fewer. Density shades where most balls land.</p>" if phase is None
                       else "<p class='note'>Density shades where most balls land. The All overs view also draws each "
                            "ball.</p>")))
 

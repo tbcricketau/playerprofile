@@ -309,4 +309,4 @@ def type_bars(rows_by_type, career_avg, min_balls=300):
                    f"<div class='v'>{s['avg']:.1f}<small>{s['balls']:,} balls</small></div></div>")
     return (f"<div class='tbars'>{''.join(out)}</div><p class='note'>Average against each type. The dark mark is "
             f"their career average{f' ({career_avg:.1f})' if career_avg else ''}. The red bar is the lowest on "
-            f"{min_balls} balls or more; a faded bar is under {min_balls} balls.</p>")
+            f"{min_balls} balls or more. A faded bar is under {min_balls} balls.</p>")

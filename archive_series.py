@@ -142,7 +142,7 @@ def _stamp_banner(index_path, when, note):
         return
     extra = f" {note}" if note else ""
     banner = (f'{_BANNER_MARK}<p class="note">Archived {when} — a frozen copy of this series as it '
-              f'stood at the end of it. The pages and numbers do not change; the vision links are '
+              f'stood at the end of it. The pages and numbers do not change. The vision links are '
               f'kept current.{extra}</p>')
     if "</p>" in text:                       # straight after the lead paragraph
         head, sep, tail = text.partition("</p>")
