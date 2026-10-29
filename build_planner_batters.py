@@ -109,7 +109,7 @@ def build(slug, out_root):
            "source": "playerprofile build_planner_batters.py (no decks): Option 1 is the stock field "
                      "for the type and hand, middle overs",
            "geometry": {"note": "angle: degrees from straight, + = batter's off side, +/-180 behind the "
-                                "keeper; radius: 0 at the bat, 1 at the rope in that direction. Batter-relative."},
+                                "keeper. Radius: 0 at the bat, 1 at the rope in that direction. Batter-relative."},
            "packs": [{"key": g, "label": GROUP_WORDS[g][:1].upper() + GROUP_WORDS[g][1:], "bowler_type": GROUP_WORDS[g],
                       "deck": "", "stock_field": {"fielders": middle_field(FMT, g, "RHB")},
                       "batters": packs[g]} for g in groups]}
