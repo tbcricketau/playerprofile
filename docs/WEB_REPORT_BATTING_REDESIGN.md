@@ -35,8 +35,9 @@ Built on Ben Duckett's England ODI page (2540202), from Tom's read of the Englan
   4. Bowler types as bars: the average per type, a line at the career average.
 - **Chart first, table on a switch.** Each chart gets a Chart / Table toggle (the `panes` switch the
   wheel uses). The chart shows by default.
-- **England T20I packs: not yet.** Tom has not reviewed the England ODI pack. The T20I packs and the
-  T20I Batting plans cards (pooled T20 leagues) wait on that.
+- **England T20I packs: build now (Tom, 29-10-2026)**, closed to players, without waiting on his
+  review of the ODI pack. If that review changes the design, both sets are rebuilt. The T20I Batting
+  plans cards (pooled T20 leagues) were built with the 28-10 rebuild.
 
 ## Visuals: built on Duckett, waiting on Tom's read (16-10-2026)
 
