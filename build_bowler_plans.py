@@ -275,7 +275,7 @@ def _planner_export(slug, entry, out, root):
                 # New names, not the old bowler_<id>_<hand>.webp: the app lets a browser keep an
                 # image for a day, so a redrawn wheel under the old name could show the old one.
                 for kind, draw in (("wheel", _zones_png), ("spider", _spider_png)):
-                    name = f"bowler_{bid}_{h.lower()}_" + ("area" if kind == "wheel" else "spider") + ".webp"
+                    name = f"bowler_{bid}_{h.lower()}_" + ("zones" if kind == "wheel" else "spider") + ".webp"
                     try:
                         png = draw(x["_wheel_df"], h == "LHB")
                         open(os.path.join(img, name), "wb").write(_webp(png, WHEEL_PX))

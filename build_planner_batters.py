@@ -84,7 +84,7 @@ def build(slug, out_root):
             wheels, note = {}, ""
             if len(rows) >= MIN_WHEEL:
                 try:
-                    name_a = f"{g}_{pid}_report.webp"
+                    name_a = f"{g}_{pid}_zones.webp"      # a new name for the green wheel: browsers keep images a day
                     open(os.path.join(img, name_a), "wb").write(_webp(_zones_png(rows, lhb), WHEEL_PX))
                     wheels["report"] = f"img/{name_a}"
                     tmp = os.path.join(img, f"_{g}_{pid}_spider.png")
