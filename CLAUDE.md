@@ -1172,10 +1172,21 @@ row above:
 - **The data is `build_bowler_plans.py`** — two profiles per bowler, so **run it on the build
   machine**: `venv/bin/python build_bowler_plans.py --slug <slug> --planner-out ~/fp_bowlers`, copy
   `data/bowler_plans_<opp>.json` back (it is committed) and upload `~/fp_bowlers` (the planner's
-  bowler side) with `playerpacks/upload_packs.py --bundle <copy> --prefix aus --apply`. Test-only, as
-  `field_engine` is. `--only <id>` rebuilds one bowler into the existing file. The planner export
+  bowler side) with `playerpacks/upload_packs.py --bundle <copy> --prefix aus --apply`. The estimated
+  fields are Test-only, as `field_engine` is. `--only <id>` rebuilds one bowler into the existing file. The planner export
   draws two wheels per hand, as the batters' cards carry (11-10-2026): runs off them by area, drawn
   and cropped as the decks draw theirs, and the `cricviz` spider; both 560 px WebP.
+- **A white-ball series gets a planner too, from our own data (Tom, 29-10-2026)** — the batter side
+  was only ever exported from presentationbuilder's decks, and England has none, so neither plan page
+  had anywhere to set a field. `build_planner_batters.py --slug <slug> --out ~/fp_eng` writes the
+  batter side (a pack per type the coach view shows; each batter's headshot, sample, area wheel and
+  spider; Option 1 = `cricket_core.fields.stock_field` for the type and their hand, middle overs), and
+  `build_bowler_plans.py --planner-out` the bowler side (powerplay, middle and death stock fields as
+  each bowler's starting options). Both need `planner_series` and `opposition` on the series.json entry
+  (`target_country` is the HOST, so it read "Australia batters"), then a coach-view rebuild for the
+  Set Field Plans tab and links. Run on the box, ~90 min for both England series. No estimate from the
+  record is made for white-ball, and the cards say "fields are generated for Tests only" — they used to
+  say "too few balls", which read as a data fault (Root: 2,693 ODI balls v right-arm pace).
 - **The fields are `field_engine.bowler_field`** — an estimate, said so on every card: the
   GPS-corrected stock for the type, our batter's hand and the phase (new ball = the first 30 overs,
   the bowling report's own split); the orthodox variant that fits where the runs off them go (pace,
