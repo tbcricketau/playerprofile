@@ -53,7 +53,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 43% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 45% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 33% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 1262,
@@ -95,7 +432,232 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 42% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "left_pace"
@@ -143,7 +705,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": -153.0,
+         "radius": 0.3,
+         "label": "Leg gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: split, set 34% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 50% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -78.0,
+         "radius": 0.9,
+         "label": "Cow corner"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 51% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 922,
@@ -180,7 +1079,232 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: leg-loaded ring, set 41% of the time (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "left_orthodox"
@@ -228,7 +1352,232 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -153.0,
+         "radius": 0.3,
+         "label": "Leg gully"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 41% of the time (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 723,
@@ -265,7 +1614,232 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: leg-loaded ring, set 29% of the time (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "off_spin"
@@ -318,7 +1892,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 30% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 32% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 34% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 603,
@@ -360,7 +2271,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 26% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 31% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 32% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "right_pace"
@@ -408,7 +2656,288 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.5,
+         "label": "Third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 56% of the time (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 144.0,
+         "radius": 0.4,
+         "label": "Slip 3"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 48% of the time (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 1229,
@@ -445,7 +2974,288 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: leg-loaded ring, set 44% of the time (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.9,
+         "label": "Deep cover"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: leg-loaded ring, set 25% of the time (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "leg_spin"
@@ -498,7 +3308,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 43% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 45% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 33% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 1091,
@@ -540,7 +3687,232 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 42% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "left_pace"
@@ -588,7 +3960,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": -153.0,
+         "radius": 0.3,
+         "label": "Leg gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: split, set 34% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 50% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -78.0,
+         "radius": 0.9,
+         "label": "Cow corner"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 51% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 66,
@@ -614,7 +4323,232 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: leg-loaded ring, set 41% of the time (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "left_orthodox"
@@ -662,7 +4596,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": -153.0,
+         "radius": 0.3,
+         "label": "Leg gully"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: split, set 34% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 50% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -78.0,
+         "radius": 0.9,
+         "label": "Cow corner"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 51% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 139,
@@ -688,7 +4959,232 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.5,
+         "label": "Square leg"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: leg-loaded ring, set 41% of the time (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "left_orthodox"
@@ -698,7 +5194,7 @@
    "type": "Right arm fast",
    "pace": true,
    "new_ball": null,
-   "order": 8846,
+   "order": 8883,
    "tier": "squad",
    "hands": {
     "RHB": {
@@ -725,7 +5221,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 30% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 32% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 34% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 130,
@@ -751,7 +5584,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 26% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 31% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 32% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "right_pace"
@@ -788,7 +5958,344 @@
       ],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 30% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 32% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 34% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     },
     "LHB": {
      "n_balls": 42,
@@ -807,7 +6314,344 @@
       "attack": [],
       "watch": []
      },
-     "fields": []
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Powerplay · most set",
+       "fielders": [
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 162.0,
+         "radius": 0.3,
+         "label": "Slip 1"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: two back, set 26% of the time (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 31% of the time (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.55,
+         "label": "Extra cover"
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death · most set",
+       "fielders": [
+        {
+         "angle": 150.0,
+         "radius": 0.9,
+         "label": "Deep third man"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34,
+         "label": "Gully"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9,
+         "label": "Deep fine leg"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "Australia's most-set field in this cell, from GPS: even ring, set 32% of the time (not adjusted to this player).",
+       "slot": "c6",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
     }
    },
    "group": "right_pace"
