@@ -1180,13 +1180,22 @@ row above:
   was only ever exported from presentationbuilder's decks, and England has none, so neither plan page
   had anywhere to set a field. `build_planner_batters.py --slug <slug> --out ~/fp_eng` writes the
   batter side (a pack per type the coach view shows; each batter's headshot, sample, area wheel and
-  spider; Option 1 = `cricket_core.fields.stock_field` for the type and their hand, middle overs), and
-  `build_bowler_plans.py --planner-out` the bowler side (powerplay, middle and death stock fields as
-  each bowler's starting options). Both need `planner_series` and `opposition` on the series.json entry
-  (`target_country` is the HOST, so it read "Australia batters"), then a coach-view rebuild for the
-  Set Field Plans tab and links. Run on the box, ~90 min for both England series. No estimate from the
-  record is made for white-ball, and the cards say "fields are generated for Tests only" — they used to
-  say "too few balls", which read as a data fault (Root: 2,693 ODI balls v right-arm pace).
+  spider), and `build_bowler_plans.py --planner-out` the bowler side. Both need `planner_series` and
+  `opposition` on the series.json entry (`target_country` is the HOST, so it read "Australia batters"),
+  then a coach-view rebuild for the Set Field Plans tab and links. Run on the box, ~90 min for both
+  England series. No estimate from the record is made for white-ball.
+- **Every auto-generated field is a starting point a coach can edit or delete** (Tom, 30-10-2026).
+  A white-ball card's fields are `whiteball_fields.phase_fields`: each phase's GPS-corrected field and
+  its most-set alternative, up to six. Both planner sides seed all of them, the first as Option 1 and
+  the rest in slots `c2`… (`auto_fields` in the batter manifest, `fields` in `bowlers.json`), and every
+  card that shows them (Bowling plans, Their bowlers, hub packs, web reports) reads them slot by slot:
+  a field saved in a slot replaces that one, a slot a coach deleted stays gone, the coaches' other
+  fields follow. Until 30-10 the batter side seeded the middle-overs field alone, so the other phases
+  showed on the cards with no way to edit them, and saving that one field hid them all. The slots are
+  positional, so **the cards and the planner must be built from the same GPS files** — rebuild both
+  if `field_corrections.csv` or `field_menu.json` changes. `build_planner_batters.py --reseed`
+  rewrites a manifest's starting fields in seconds without redrawing its wheels. Test cards carry no
+  slots and read as before.
 - **The fields are `field_engine.bowler_field`** — an estimate, said so on every card: the
   GPS-corrected stock for the type, our batter's hand and the phase (new ball = the first 30 overs,
   the bowling report's own split); the orthodox variant that fits where the runs off them go (pace,
