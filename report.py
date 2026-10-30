@@ -488,9 +488,9 @@ def _movement_rows(P: dict) -> list:
     if m["seam_pctl"] is not None:
         rows.append(("Turn" if is_spin else "Seam", _fmt(m["avg_seam"], ".2f", "°"),
                      f"{_ord(m['seam_pctl'])} pct ({_pctl_word(m['seam_pctl'])})", _dir(m["seam_dir"])))
-    if m["bounce_pctl"] is not None:
-        rows.append(("Bounce", _fmt(m["avg_bounce"], ".1f", "°"),
-                     f"{_ord(m['bounce_pctl'])} pct ({_pctl_word(m['bounce_pctl'])})", "—"))
+    if m["bounce_above_pctl"] is not None:          # cm above the usual for the length, signed
+        rows.append(("Bounce", _fmt(m["bounce_above_cm"], "+.1f", " cm"),
+                     f"{_ord(m['bounce_above_pctl'])} pct ({_pctl_word(m['bounce_above_pctl'])})", "—"))
     return rows
 
 
@@ -684,7 +684,7 @@ def _swing_age_read(P: dict) -> str:
 def _pace_style(m: dict) -> str:
     """Archetype read for a seam/pace bowler: hit-the-deck seamer vs swing bowler,
     two-way movement vs one-directional."""
-    seam_p, swing_p, bounce_p = m["seam_pctl"], m["swing_pctl"], m["bounce_pctl"]
+    seam_p, swing_p, bounce_p = m["seam_pctl"], m["swing_pctl"], m["bounce_above_pctl"]
     sd, wd = m["seam_dir"], m["swing_dir"]
 
     def hi(p, t=60): return p is not None and p >= t
@@ -737,7 +737,7 @@ def _pace_style(m: dict) -> str:
 
 def _spin_style(m: dict) -> str:
     """Archetype read for a spinner: big turner vs flight/accuracy, two-way threat, bounce."""
-    turn_p, drift_p, bounce_p = m["seam_pctl"], m["swing_pctl"], m["bounce_pctl"]
+    turn_p, drift_p, bounce_p = m["seam_pctl"], m["swing_pctl"], m["bounce_above_pctl"]
     td = m["seam_dir"]
 
     def hi(p): return p is not None and p >= 60
@@ -1887,7 +1887,7 @@ _TEMPLATE = r"""
     </div>
     {% endfor %}
   </div>
-  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (where enough recent balls). Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin · movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much they move their release point sideways across the crease from ball to ball (within their main angle): a high percentile = they vary where they let the ball go a lot, a low percentile = they release from the same spot every ball. <b>Repeatability</b> = length consistency over their stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers, a low percentile = they vary their length more. A marker at the very edge = they sit beyond the typical peer range on that trait.</div>
+  <div class="cap" style="text-align:left"><b style="color:{{c.ACCENT}}">Solid line = career</b>, <b style="color:#d9822b">dotted = last 3 years</b> (where enough recent balls). Percentile within same-type peers (grey = the peer distribution, line = this bowler). Release/crease vs hand × pace/spin · movement/speed/repeatability vs pace/spin. Release &amp; speed are modern-era (2017+ / partial). <b>Crease variation</b> = how much they move their release point sideways across the crease from ball to ball (within their main angle): a high percentile = they vary where they let the ball go a lot, a low percentile = they release from the same spot every ball. <b>Repeatability</b> = length consistency over their stock-length band (2–11&nbsp;m, so deliberate yorkers and bouncers don't count as poor control): a high percentile = tighter, more metronomic lengths than peers, a low percentile = they vary their length more. <b>Bounce</b> = height at the stumps above the usual for the length the ball pitched, in cm (career only). A marker at the very edge = they sit beyond the typical peer range on that trait.</div>
   {% endif %}
 
   {% if recent_form %}
@@ -2159,7 +2159,7 @@ _TEMPLATE = r"""
   {% if movement_read %}<div class="read">{{movement_read}}</div>{% endif %}
   {% if swing_age_read %}<div class="read">{{swing_age_read}}</div>{% endif %}
   <div class="cap" style="text-align:left;margin:0 0 6px">
-    Percentile vs all Test {{P.movement.pace_spin}} bowlers. Direction is which way it moves to this batter. Bounce = extra bounce vs expected.
+    Percentile vs all Test {{P.movement.pace_spin}} bowlers. Direction is which way it moves to this batter. Bounce = height at the stumps above the usual for the length the ball pitched, in cm (negative = keeps lower).
   </div>
   <table class="mtab">
     <tr><th>Movement</th><th>Avg</th><th>vs average</th><th>Direction ({{hand_label}})</th></tr>

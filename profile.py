@@ -911,10 +911,13 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test"
     if mrow:
         ps = mrow.get("pace_spin")
         peers_rows = [r for r in mv.values() if r.get("pace_spin") == ps]
-        for col, pcol, ncol, pace_lbl, spin_lbl in [
-            ("avg_seam", "seam_pctl", "n_seam", "Seam", "Turn"),
-            ("avg_swing", "swing_pctl", "n_swing", "Swing", "Drift"),
-            ("avg_bounce", "bounce_pctl", "n_bounce", "Bounce", "Bounce"),
+        # Bounce = height at the stumps above the usual for the length the ball pitched, in cm
+        # (negative = keeps lower than usual). Higher = bouncier, so no invert.
+        for col, pcol, ncol, pace_lbl, spin_lbl, disp in [
+            ("avg_seam", "seam_pctl", "n_seam", "Seam", "Turn", lambda v: f"{v:.1f}°"),
+            ("avg_swing", "swing_pctl", "n_swing", "Swing", "Drift", lambda v: f"{v:.1f}°"),
+            ("bounce_above_cm", "bounce_above_pctl", "n_bounce_above", "Bounce", "Bounce",
+             lambda v: f"{v:+.1f} cm"),
         ]:
             v = _num(mrow, col)
             if v is None or (_num(mrow, ncol) or 0) < 40:
@@ -924,7 +927,7 @@ def _fingerprint(bowler_id: str, is_pace: bool, is_spin: bool, fmt: str = "Test"
             if len(vals) >= 8:
                 cards.append({"label": spin_lbl if is_spin else pace_lbl, "value": v, "values": vals,
                               "pctl": _num(mrow, pcol), "invert": False,
-                              "disp": f"{v:.1f}°", "peer": f"{ps} bowlers"})
+                              "disp": disp(v), "peer": f"{ps} bowlers"})
 
     # ── length repeatability (pace/spin) — lower SD = tighter, so invert ──
     rp = load_repeatability_profiles(fmt); rrow = rp.get(bid)
@@ -972,7 +975,9 @@ def recent_fingerprint_vals(raw: list, is_spin: bool, years: int = 3) -> dict:
         "Pace": rmean([r.get("ball_speed_n") for r in rec], 60),
         ("Turn" if is_spin else "Seam"): rmean([abs(r["turn_n"]) for r in rec if r.get("turn_n") is not None], 40),
         ("Drift" if is_spin else "Swing"): rmean([abs(r["drift_n"]) for r in rec if r.get("drift_n") is not None], 40),
-        "Bounce": rmean([r["bounce_n"] for r in rec if r.get("bounce_n") is not None], 40),
+        # No recent "Bounce": the career card is height above the usual for the length (cm), and
+        # that needs referencebuilder's per-length baseline. A mean of bounce_angle_delta (degrees,
+        # opposite direction) on the same strip would mark the wrong place.
         "Repeatability": (_st.pstdev(length) if len(length) >= 40 else None),
         "Release height": (_mean(height) / 10.0) if len(height) >= 40 else None,
     }
@@ -1530,7 +1535,8 @@ def build_profile(
             "pace_spin": mp.get("pace_spin"),
             "avg_swing": _safe_float(mp.get("avg_swing")),   "swing_pctl": _safe_float(mp.get("swing_pctl")),
             "avg_seam": _safe_float(mp.get("avg_seam")),     "seam_pctl": _safe_float(mp.get("seam_pctl")),
-            "avg_bounce": _safe_float(mp.get("avg_bounce")), "bounce_pctl": _safe_float(mp.get("bounce_pctl")),
+            "bounce_above_cm": _safe_float(mp.get("bounce_above_cm")),
+            "bounce_above_pctl": _safe_float(mp.get("bounce_above_pctl")),
             "swing_dir": _label_dir_split(legal, "swing_dir"),   # coder swing label (batter-relative)
             # swing_age needs the hand-filtered set (legal already is, when a vs-LHB/vs-RHB
             # filter is active): the new->old direction flip is opposite for LHB vs RHB, so

@@ -672,12 +672,15 @@ def _movement(P):
     def d(x):
         return f"{x['out_pct']:.0f}% away · {x['in_pct']:.0f}% in" if x else ""
     rows = []
-    for lab, avg, pc, dr, dp in (("Drift" if spin else "Swing", m.get("avg_swing"), m.get("swing_pctl"), m.get("swing_dir"), 2),
-                                 ("Turn" if spin else "Seam", m.get("avg_seam"), m.get("seam_pctl"), m.get("seam_dir"), 2),
-                                 ("Bounce", m.get("avg_bounce"), m.get("bounce_pctl"), None, 1)):
+    # Bounce is height at the stumps above the usual for the length, in cm and signed.
+    bounce = m.get("bounce_above_cm")
+    for lab, val, pc, dr in (("Drift" if spin else "Swing", _n(m.get("avg_swing"), 2, "°"), m.get("swing_pctl"), m.get("swing_dir")),
+                             ("Turn" if spin else "Seam", _n(m.get("avg_seam"), 2, "°"), m.get("seam_pctl"), m.get("seam_dir")),
+                             ("Bounce", f"{bounce:+.1f} cm" if bounce is not None else "–",
+                              m.get("bounce_above_pctl"), None)):
         if pc is None:
             continue
-        rows.append([lab, _n(avg, dp, "°"), f"P{pc:.0f} · {band_word(pc)}", d(dr)])
+        rows.append([lab, val, f"P{pc:.0f} · {band_word(pc)}", d(dr)])
     peer = "spinner" if spin else "pace bowler"
     return table(["", "Average", f"Against the average {peer}", "Direction"], rows) if rows else ""
 
