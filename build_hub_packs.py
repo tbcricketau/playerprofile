@@ -329,11 +329,19 @@ def _bowler_field_opts(plan_hand):
             for f in (plan_hand or {}).get("fields") or [] if f.get("fielders")]
 
 
-def _batter_field_opts(row):
-    return [{"slot": "", "name": _FIELD_NAME.get(f["label"], f["label"]),
+def _batter_field_opts(row, fmt="Test", group="", hand="RHB"):
+    opts = [{"slot": "", "name": _FIELD_NAME.get(f["label"], f["label"]),
              "fielders": [{"angle": p["angle"], "radius": p["radius"]} for p in f["fielders"]],
              "spare": f.get("spare")}
             for f in (row or {}).get("fields") or [] if f.get("fielders") and "alternative" not in f["label"]]
+    if not opts and fmt != "Test":
+        # white-ball: the GPS-measured fields per phase, in the planner slots they were seeded into
+        # (build_planner_batters), so a coach's edit there replaces the one here (30-10-2026)
+        from whiteball_fields import phase_fields
+        opts = [{"slot": c["slot"], "name": c["label"], "spare": None,
+                 "fielders": [{"angle": p["angle"], "radius": p["radius"]} for p in c["fielders"]]}
+                for c in phase_fields(fmt, group, hand)]
+    return opts
 
 
 # ── the two kinds of card ─────────────────────────────────────────────────────────────────────
@@ -405,7 +413,7 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
     thin = not x or x.get("thin") or not x.get("balls")
     sample = (f"{fmt_pl} · {n:,} balls v {glabel}" if not thin
               else f"{'Only ' + format(n, ',') if n else 'No'} {fmt} balls v {glabel}")
-    plan_half = [_notes_slot(bid), _field(bid, "Your field", _batter_field_opts(row), hand, "batter")]
+    plan_half = [_notes_slot(bid), _field(bid, "Your field", _batter_field_opts(row, fmt, group, hand), hand, "batter")]
     nums = []
     if not thin:
         # under three dismissals there is no balls-per-dismissal figure; the count says why

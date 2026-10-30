@@ -77,11 +77,12 @@
   const autoOpt = c => ({ name: c.name, plan: { fielders: c.fielders, arrows: [], spare: c.spare }, cap: EST });
 
   /* As the packs: a coaches' field saved in a category replaces the estimate, a category the
-     coaches deleted stays gone, any other field they set follows. */
+     coaches deleted stays gone, any other field they set follows. A batter's fields read the same
+     way when they carry planner slots (white-ball, 30-10-2026). */
   function options(box) {
     const bid = box.dataset.fb, auto = JSON.parse(box.dataset.opts || "[]"), st = state.packs[box.dataset.pack];
     const mine = ((st && st.saved) || []).filter(f => f.batter_id === bid && !f.private);
-    if (box.dataset.kind === "bowler") {
+    if (box.dataset.kind === "bowler" || auto.some(c => c.slot)) {
       const slotOf = f => f.seed || (f.option1 ? "option1" : "");
       const gone = s => s === "option1" ? ((st && st.option1Saved) || []).includes(bid) : ((st && st.seededSaved) || []).includes(`${bid}|${s}`);
       const out = [];

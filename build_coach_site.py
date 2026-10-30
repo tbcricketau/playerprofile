@@ -345,8 +345,10 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
                       for f in (r.get("fields") or [])]
             if not fields and fmt != "test":           # white-ball: the GPS-measured fields per phase
                 from whiteball_fields import phase_fields
-                fields = [{"label": c["label"], "fielders": c["fielders"], "spare": None, "spare_name": "",
-                           "basis": c["basis"]} for c in phase_fields(fmt, g, hand.upper())]
+                # each carries the planner slot it was seeded into (build_planner_batters), so a field
+                # a coach saves there replaces this one and a deleted one stays gone (30-10-2026)
+                fields = [{"slot": c["slot"], "label": c["label"], "fielders": c["fielders"], "spare": None,
+                           "spare_name": "", "basis": c["basis"]} for c in phase_fields(fmt, g, hand.upper())]
             per[g] = {"balls": r.get("balls") or 0, "plan": (plan[:1].upper() + plan[1:]) if plan else "",
                       "field": r.get("field"), "threat": r.get("threat"), "error": bool(r.get("error")),
                       "fields": fields}

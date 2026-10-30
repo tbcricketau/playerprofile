@@ -5,8 +5,10 @@ individual-opposition decks (`scripts/export_field_planner.py`). A white-ball se
 so the Bowling plans cards had nowhere to set a field (Tom, 29-10-2026). This writes the same
 `fieldplanner/<planner series>/manifest.json` from our own data instead: a pack per bowler type the
 coach view shows, a card per opposition batter (headshot, sample line, the runs-by-area wheel and the
-spider), and the GPS-corrected middle-overs field for that type and the batter's hand as Option 1
-(whiteball_fields.py). Coaches set the rest in the planner.
+spider), and the GPS-measured fields for that type and the batter's hand, one per phase and its
+most-set alternative (whiteball_fields.phase_fields). The first is Option 1 and the rest follow as
+seeded slots, so each is a starting point a coach can edit or delete (Tom, 30-10-2026). The slots are
+the cards' own (build_coach_site, build_hub_packs), so a field saved here replaces the one on the card.
 
     venv/bin/python build_planner_batters.py --slug england-odi-home-2026 --out ~/fp_eng
 
@@ -36,7 +38,7 @@ def build(slug, out_root):
     from build_coach_site import _PACKS, _about, _fmt_level, _overview, _series
     from photos import get_photo_bytes
     from report import _start_kaleido
-    from whiteball_fields import middle_field
+    from whiteball_fields import middle_field, phase_fields
     from cricket_core import cricviz
 
     entry = _series(slug)
@@ -100,14 +102,14 @@ def build(slug, out_root):
             packs[g].append({"player_id": pid, "name": name, "hand": hand.upper(), "notes": [],
                              "sample": f"{words} · {runs:,} runs off {len(rows):,} balls" if rows else "",
                              "wheels": wheels, "wheel_note": note, "headshot": head,
-                             "deck_field": {"fielders": middle_field(FMT, g, hand.upper())}})
+                             **planner_seeds(phase_fields(FMT, g, hand.upper()))})
         print(f"  {name:22} {hand:4} " + " · ".join(f"{g} {n}" for g, n in seen.items()), flush=True)
     man = {"series": series, "format": FMT, "opposition": entry.get("opposition") or entry.get("target_country") or "",
            "coach_slug": slug, "coach_series_name": entry.get("name") or slug,
            "title": entry.get("name") or slug, "venue": "",
            "exported_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-           "source": "playerprofile build_planner_batters.py (no decks): Option 1 is the stock field "
-                     "for the type and hand, middle overs",
+           "source": "playerprofile build_planner_batters.py (no decks): the starting fields are the "
+                     "GPS-measured fields for the type and hand, one per phase and its most-set alternative",
            "geometry": {"note": "angle: degrees from straight, + = batter's off side, +/-180 behind the "
                                 "keeper. Radius: 0 at the bat, 1 at the rope in that direction. Batter-relative."},
            "packs": [{"key": g, "label": GROUP_WORDS[g][:1].upper() + GROUP_WORDS[g][1:], "bowler_type": GROUP_WORDS[g],
@@ -118,11 +120,41 @@ def build(slug, out_root):
     return man
 
 
+def planner_seeds(fs):
+    """A batter's starting fields as the planner reads them: `auto_fields` (slot, label, fielders,
+    spare), and `deck_field` = the first, for a planner that reads Option 1 alone."""
+    autos = [{"slot": c["slot"], "label": c["label"], "spare": c.get("spare"),
+              "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
+             for c in fs if len(c.get("fielders") or []) == 9]
+    return {"deck_field": {"fielders": autos[0]["fielders"] if autos else []}, "auto_fields": autos}
+
+
+def reseed(path):
+    """Rewrite an exported manifest's starting fields in place, without the slow wheels and headshots."""
+    from whiteball_fields import phase_fields
+    m = json.load(open(path, encoding="utf-8"))
+    for p in m["packs"]:
+        for b in p["batters"]:
+            b.update(planner_seeds(phase_fields(m["format"], p["key"], b["hand"])))
+    m["source"] = ("playerprofile build_planner_batters.py (no decks): the starting fields are the "
+                   "GPS-measured fields for the type and hand, one per phase and its most-set alternative")
+    json.dump(m, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+    n = sum(len(b["auto_fields"]) for p in m["packs"] for b in p["batters"])
+    print(f"reseeded {path}: {n} starting fields")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--slug", required=True)
     ap.add_argument("--out", required=True, help="the folder that gets fieldplanner/<series>/ (not the repo)")
+    ap.add_argument("--reseed", action="store_true",
+                    help="only rewrite the starting fields of the manifest already in --out")
     a = ap.parse_args()
+    if a.reseed:
+        from build_coach_site import _series
+        series = _series(a.slug).get("planner_series")
+        reseed(os.path.join(os.path.expanduser(a.out), "fieldplanner", series, "manifest.json"))
+        return
     build(a.slug, a.out)
     from report import finish_rendering           # the wheels went through kaleido: skip its exit hang
     finish_rendering(0)

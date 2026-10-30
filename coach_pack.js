@@ -70,21 +70,40 @@
     const link = plannerHref(b.id, g), key = b.id + "|" + g;
     const saved = savedFor(b.id, g);
     let label, linkText, options;                      // options: [{name, plan, tags, spare, title}]
-    if (saved.length) {
+    const autos = (row && row.fields || []).filter(c => c.fielders && c.fielders.length);
+    const coachOpt = f => ({ name: f.name, plan: f.plan, tags: (f.phase ? [f.phase] : []).concat(f.tags || []),
+      spare: spareOf(f.plan), coach: true,
+      title: `Set by ${f.updated_by || f.owner_name || ""} · ${dayFirst(f.updated_utc)}${f.private ? " · private draft" : ""}` });
+    const autoOpt = c => ({ name: c.label, plan: { fielders: c.fielders, arrows: [], spare: c.spare }, tags: [],
+      spare: c.spare_name || spareOf({ fielders: c.fielders, spare: c.spare }), title: c.basis || "" });
+    if (autos.some(c => c.slot)) {
+      /* White-ball (30-10-2026): every auto field was seeded into the planner in its own slot, so it
+         reads as the planner does. A field saved in a slot replaces that one, a slot a coach deleted
+         stays gone, the coaches' other fields follow. */
+      const st = state.planner[g] || {};
+      const slotOf = f => f.seed || (f.option1 ? "option1" : "");
+      const gone = s => s === "option1" ? (st.option1Saved || []).includes(b.id) : (st.seededSaved || []).includes(`${b.id}|${s}`);
+      options = [];
+      autos.forEach(c => {
+        const got = saved.find(f => slotOf(f) === c.slot);
+        if (got) options.push(coachOpt(got));
+        else if (!gone(c.slot)) options.push(autoOpt(c));
+      });
+      options = options.concat(saved.filter(f => !slotOf(f)).map(coachOpt));
+      linkText = saved.length ? "Open in the planner" : "Set a field in the planner";
+    } else if (saved.length) {
       label = "Coaches' field"; linkText = "Open in the planner";
-      options = saved.map(f => ({ name: f.name, plan: f.plan, tags: (f.phase ? [f.phase] : []).concat(f.tags || []),
-        spare: spareOf(f.plan), title: `Set by ${f.updated_by || f.owner_name || ""} · ${dayFirst(f.updated_utc)}${f.private ? " · private draft" : ""}` }));
+      options = saved.map(coachOpt);
     } else {
       label = "Auto-generated field"; linkText = "Set a field in the planner";
-      options = (row && row.fields || []).filter(c => c.fielders && c.fielders.length).map(c => ({
-        name: c.label, plan: { fielders: c.fielders, arrows: [], spare: c.spare }, tags: [],
-        spare: c.spare_name || spareOf({ fielders: c.fielders, spare: c.spare }), title: c.basis || "" }));
+      options = autos.map(autoOpt);
     }
     if (!options.length)
       return `<div class="fhead"><span class="lbl">Field</span>${link ? `<a href="${link}">${linkText}</a>` : ""}</div>`
         + `<p class="fnone">No field yet — ${PK.autoFields === false ? "fields are generated for Tests only"
           : row && row.balls ? "too few balls vs " + esc(labelOf(g)) + " to generate one" : "no record vs " + esc(labelOf(g))}, and none set by the coaches.</p>`;
     const i = Math.min(state.chip[key] || 0, options.length - 1), o = options[i];
+    if (!label) label = o.coach ? "Coaches' field" : "Auto-generated field";
     return `<div class="fhead"><span class="lbl">${label}</span>`
       + `<span class="ftags">${o.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</span>`
       + (link ? `<a href="${link}">${linkText}</a>` : "") + `</div>`

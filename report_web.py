@@ -1168,12 +1168,17 @@ def _vs_squad(bid, store):
             "targets": [(c["batter"], c["bat_hand"], c["sim_avg"]) for c in targets]}
 
 
-def _bat_fields(pid, rows_by_group, group, title, hand):
+def _bat_fields(pid, rows_by_group, group, title, hand, fmt="Test"):
     import json as _j
     row = rows_by_group.get(group) or {}
     opts = [{"slot": "", "name": _FIELD_NAME.get(f["label"], f["label"]),
              "fielders": [{"angle": p["angle"], "radius": p["radius"]} for p in f["fielders"]], "spare": f.get("spare")}
             for f in row.get("fields") or [] if f.get("fielders") and "alternative" not in f["label"]]
+    if not opts and fmt != "Test":
+        from build_hub_packs import _batter_field_opts  # white-ball: the packs' GPS fields, in their planner slots
+        opts = _batter_field_opts(row, fmt, group, hand)
+    if not opts:
+        return ""
     data = _j.dumps(opts, ensure_ascii=False, separators=(",", ":"))
     return (f"<div class='fb' data-fb='{E(str(pid))}' data-kind='batter' data-hand='{hand}' "
             f"data-pack='{E(group)}' data-opts='{E(data)}'>{label(title)}<div class='fbody'></div></div>")
@@ -1489,8 +1494,10 @@ def _batter_scope(key, P, Pb, ctx):
                      extra="<span class='sim'>Match simulation</span>"))
 
     # ── field and vision ──
-    fb = [(gword[g], _bat_fields(pid, ctx["field_rows"], g, "v " + gword[g].lower(), "LHB" if P.get("is_lhb") else "RHB"))
-          for g in groups if any(f.get("fielders") for f in (ctx["field_rows"].get(g) or {}).get("fields") or [])]
+    fb = [(gword[g], _bat_fields(pid, ctx["field_rows"], g, "v " + gword[g].lower(), "LHB" if P.get("is_lhb") else "RHB",
+                                 ctx.get("fmt") or "Test"))
+          for g in groups]
+    fb = [f for f in fb if f[1]]
     if fb:
         body = (panes([f[0] for f in fb], [f[1] for f in fb], "Bowler type") if len(fb) > 1 else fb[0][1])
         s.append(sec(sid("fld"), "Your field", "", f"<div class='two'><div>{body}</div><div><p class='note'>The planner's fields "

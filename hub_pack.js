@@ -46,11 +46,12 @@
 
   /* Their bowlers' fields come in categories (new ball, old ball, bouncer…): a coaches' field saved
      in a category replaces the estimate, a category the coaches deleted stays gone, and any other
-     field they set follows — the planner's own order. Our bowlers' fields: the coaches' first,
-     then the estimates. */
+     field they set follows — the planner's own order. Our bowlers' fields read the same way when
+     their estimates were seeded into the planner too (white-ball, 30-10-2026: each carries its
+     slot); a Test pack's carry none, so there the coaches' come first, then the estimates. */
   function options(box) {
     const bid = box.dataset.fb, auto = JSON.parse(box.dataset.opts || "[]"), mine = shared(bid);
-    if (box.dataset.kind === "bowler") {
+    if (box.dataset.kind === "bowler" || auto.some(c => c.slot)) {
       const st = state.cards || {};
       const slotOf = f => f.seed || (f.option1 ? "option1" : "");
       const gone = s => s === "option1" ? (st.option1Saved || []).includes(bid) : (st.seededSaved || []).includes(`${bid}|${s}`);
