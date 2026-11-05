@@ -1162,7 +1162,8 @@ row above:
 - **Their bowlers** (`batting/index.html`, script `coach_bowlers.js` → `/coach/bowlers.js`): a
   vs right-handers / vs left-handers switch, then a card per bowler — the facts from the bowling
   report's `how_to_play`, the coaches' notes, the figures to that hand
-  (pace adds km/h average/p99 and short %), their reels to that hand and the report, and the field
+  (km/h average/p99 for every bowler, spin included since 06-11-2026, and short % for pace), their
+  reels to that hand and the report, and the field
   they are likely to set **by category**: pace **New ball** (when they take it 10% of the time or
   more), **Old ball**, **Bouncer plan**; spin **New batter**, **Set batter**. Each category shows the
   coaches' version where one is saved in the planner, the auto-generated one otherwise. The reels are
