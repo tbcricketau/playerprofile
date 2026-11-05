@@ -205,8 +205,10 @@ def build(slug, planner_out=None, only=None):
             b["hands"][h] = {
                 "n_balls": P.get("n_balls"), "n_wkts": P.get("n_wkts"), "runs": P.get("runs"),
                 "economy": P.get("economy"), "bowl_avg": P.get("bowl_avg"), "strike_rate": P.get("strike_rate"),
-                "avg_spd": P.get("avg_spd") if P.get("is_pace") else None,
-                "max_spd_99": P.get("max_spd_99") if P.get("is_pace") else None,
+                # every bowler's speed, spin included (Tom, 06-11-2026): a spinner's pace through the
+                # air is part of how to play them. Short % stays pace-only
+                "avg_spd": P.get("avg_spd"),
+                "max_spd_99": P.get("max_spd_99"),
                 "short_pct": P.get("short_pct") if P.get("is_pace") else None,
                 "round_pct": P.get("round_pct"),
                 # labelled facts (Tom, 06-10-2026: generated text states facts, the coaches instruct);

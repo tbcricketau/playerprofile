@@ -67,8 +67,10 @@
     const one = v => v == null ? "—" : Number(v).toFixed(1);
     const parts = [fig(n(x.n_balls), "balls"), fig(n(x.n_wkts), "wickets"), fig(one(x.bowl_avg), "average"),
       fig(x.economy == null ? "—" : Number(x.economy).toFixed(2), "economy"), fig(one(x.strike_rate), "Bowl SR")];
-    if (b.pace) parts.push(fig(x.avg_spd == null ? "—" : `${Math.round(x.avg_spd)}<small>/${Math.round(x.max_spd_99)}</small>`, "km/h · top"),
-                           fig(x.short_pct == null ? "—" : Math.round(x.short_pct) + "%", "short"));
+    // speed for every bowler, spin included (Tom, 06-11-2026); a file built before then has none for spin
+    if (b.pace || x.avg_spd != null)
+      parts.push(fig(x.avg_spd == null ? "—" : `${Math.round(x.avg_spd)}<small>/${Math.round(x.max_spd_99)}</small>`, "km/h · top"));
+    if (b.pace) parts.push(fig(x.short_pct == null ? "—" : Math.round(x.short_pct) + "%", "short"));
     parts.push(fig(x.round_pct == null ? "—" : Math.round(x.round_pct) + "%", "round the wicket"));
     return `<div class="figs fn" style="--n:${parts.length}">${parts.join("")}</div>`;
   }
