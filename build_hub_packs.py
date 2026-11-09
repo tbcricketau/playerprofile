@@ -475,6 +475,9 @@ def _player_reports(slug, s_dir, coach_root):
         h = _BACK.sub("<a class='back' href='../index.html' onclick='if(history.length>1){history.back();return false}'>"
                       "‹ Back</a>", h, count=1)
         h = h.replace("window.HP={", 'window.HP={"readOnly": true, ', 1)
+        # readOnly already keeps report_web.js from drawing its planner link, and the copy carries
+        # none at all (check_site read the template as a dead link, 10-11-2026)
+        h = h.replace('href="${editHref(el.dataset.pack, bid)}"', "")
         open(os.path.join(dst, f), "w", encoding="utf-8").write(h)
         out[(m.group(1), m.group(2))] = f"reports/{f}"
     print(f"  {len(out)} web report(s) copied for the players -> {os.path.relpath(dst, HERE)}")
