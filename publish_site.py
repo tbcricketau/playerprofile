@@ -355,18 +355,26 @@ def build(out_dir, sas_hours, only=None, stage_archive=True):
             continue
         s_dir = os.path.join(out_dir, s["slug"])
         os.makedirs(s_dir, exist_ok=True)
-        # series-level Match-ups matrix (render_matchups.py) — the ONE full simulated grid
-        mx_src = os.path.join(REPORTS_DIR, f"matchups_{s['slug'].split('-')[0]}.html")
-        has_mx = os.path.exists(mx_src)
+        # series-level Match-ups matrix (render_matchups.py) — the ONE full simulated grid.
+        # Both builders name their page by the series' DATA key (squads.opp_key: "england_odi"),
+        # not the slug's first word ("england"), which the England ODI and T20I series share. Looking
+        # for the first word found nothing, and neither England coach view had a Match-ups or an
+        # Unorthodox shots tab from 28-10 to 09-11-2026. The first word stays as the fallback for
+        # series built before opp_key existed.
+        from squads import opp_key
+        key, word = opp_key(s["slug"]), s["slug"].split("-")[0]
+        mx_src = next((os.path.join(REPORTS_DIR, f"matchups_{k}.html") for k in (key, word)
+                       if os.path.exists(os.path.join(REPORTS_DIR, f"matchups_{k}.html"))), "")
+        has_mx = bool(mx_src)
         if has_mx:
             shutil.copy(mx_src, os.path.join(s_dir, "matchups.html"))
         # series-level unorthodox-shot matrix (build_shot_matrix.py)
-        # build_shot_matrix now puts the format in the filename ("_odi", "_t20i") so one format
-        # cannot overwrite another's; builds from before it have none. Take a format-suffixed
-        # file when one exists, else the bare name, so neither generation loses its link.
-        sm_stem = f"shot_matrix_{s['slug'].split('-')[0]}"
-        sm_src = next((os.path.join(REPORTS_DIR, n)
-                       for n in (f"{sm_stem}_odi.html", f"{sm_stem}_t20i.html", f"{sm_stem}.html")
+        # build_shot_matrix puts the format in the filename ("_odi", "_t20i") so one format
+        # cannot overwrite another's; builds from before it have none. Take this series' own
+        # format first, then the older names, so neither generation loses its link.
+        sfx = "" if (s.get("format") or "Test") == "Test" else f"_{s['format'].lower()}"
+        sm_names = [f"shot_matrix_{key}{sfx}.html"] + [f"shot_matrix_{word}{x}.html" for x in ("_odi", "_t20i", "")]
+        sm_src = next((os.path.join(REPORTS_DIR, n) for n in sm_names
                        if os.path.exists(os.path.join(REPORTS_DIR, n))), None)
         has_sm = bool(sm_src)
         if has_sm:
