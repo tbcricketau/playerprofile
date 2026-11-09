@@ -1205,9 +1205,17 @@ N.mp4`, plus a loose headline clip per variation. The England ODI set was 11 bow
    would read twice. `videobuilder/scripts/plan_from_folder.py` builds the combined per-bowler
    video from the same folder when one is wanted for a meeting — it is not what the packs use.
 
-Decisions on the England ODI set (Tom, atq 09-11-2026): the three squad bowlers with no folder
-(Archer, Bethell, Root) have **clips still to come** — re-run the publisher when they land;
-**ODI only** for now, not the T20I series; the combined videos stay on disk, unpublished.
+Decisions on the England ODI set (Tom, atq 09-11-2026): **ODI only** for now, not the T20I series,
+and the combined videos stay on disk, unpublished. The reel went **live on 09-11** — eight of the
+eleven roster bowlers, 70 clips, on the scouting cards and in the hub packs in one upload.
+
+The three with no folder (Archer, Bethell, Root) are **not** waiting on the analyst any more: Tom's
+later call the same day was to **build theirs from the warehouse** through
+`videobuilder/scripts/plan_variations.py`, with a QA pass before a coach sees them, because the
+eight live reels are a human's selections and an unchecked list beside them would make the button
+mean two different things. `videobuilder/docs/VARIATIONS_PLAN.md` § A third round. A set that
+lands from the analyst later still goes through `publish_variations.py`, which skips what is
+already uploaded.
 
 ### The coach view's series page: a tab row, two plan packs, the bowlers grid (04-10-2026)
 
