@@ -1273,6 +1273,12 @@ the open points: `docs/PLAYER_PACK_REDESIGN.md` § "The web reports".
 - **Any format**: `report_web.py <slug>` reads the series' format; ODI/T20 bowlers come from
   `report_web_wb.py` with the phase as the scope. An archived series is read from `squads.json`.
   White-ball pages carry no batting fingerprint (its reference is Test only) and no attack cards.
+- **A batter's type tabs** (`BAT_GROUPS`, Tom 09-11-2026): right-arm pace, left-arm pace, off spin,
+  left-arm orthodox and leg spin, each shown from `MIN_TAB_BALLS` = 60 legal balls (build_overview's
+  floor, so every Bowling plans card with a plan has a tab). It was four types at 300 balls, which
+  gave Root no leg-spin tab on 570 balls and most of the England ODI XI a right-arm pace tab alone. A
+  type tab's summary leads with its ball count. The tabs read today's deliveries, so they can count
+  more than an overview built earlier (England ODI overviews predate the CricViz tri-series fill).
 - **Into `coach_build`, never `player_pack_site`.** The coach view's home is `coach_build`; a `coach/`
   folder inside the Pages bundle blocks the next Pages publish (`publish_packs.py` refuses it).
 - **Numbers from the A4 builders, words written fresh**: the A4 reads say "he" and some still advise.
