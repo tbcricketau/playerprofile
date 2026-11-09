@@ -1007,6 +1007,9 @@ BAT_GROUPS = (("right_pace", "Right-arm pace"), ("left_pace", "Left-arm pace"), 
 # plans card with a plan has a tab (Tom, 09-11-2026). It was 300, which left most of the England
 # ODI XI with a right-arm pace tab alone. A type tab's summary leads with its ball count.
 MIN_TAB_BALLS = 60
+# One-off tabs under the minimum, (player, group, format) (Tom, 09-11-2026): Sam Curran's 57 ODI balls
+# of leg spin, which fell under 60 when Saim Ayub's balls were typed per ball.
+TAB_EXCEPTIONS = {("4352441", "leg_spin", "ODI")}
 _TYPE_GROUP = {"Right Fast": "right_pace", "Right Medium": "right_pace", "Left Fast": "left_pace",
                "Left Medium": "left_pace", "Off Spin": "off_spin", "Left Orthodox": "left_orthodox",
                "Leg Break": "leg_spin", "Left Unorthodox": "left_unorthodox"}
@@ -1529,7 +1532,8 @@ def batter_profiles(pid, raw=None, fmt="Test", level="international", source="wa
     Pb = {"All": build_batter_profile(pid, raw=raw, fmt=fmt, level=level, source=source), "_source": source}
     for g, _l in BAT_GROUPS:
         P = build_batter_profile(pid, raw=raw, group=g, fmt=fmt, level=level, source=source)
-        if sum(1 for r in P["raw"] if r.get("is_legal")) >= MIN_TAB_BALLS:
+        nb = sum(1 for r in P["raw"] if r.get("is_legal"))
+        if nb >= MIN_TAB_BALLS or (nb and (str(pid), g, fmt) in TAB_EXCEPTIONS):
             Pb[g] = P
     cut = (dt.date.today() - dt.timedelta(days=int(365.25 * 3))).isoformat()
     rec = [r for r in raw if (r.get("match_date") or "") >= cut]

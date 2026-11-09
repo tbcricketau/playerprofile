@@ -31,7 +31,7 @@ from cricket_core.lookups import BOWLER_TYPE_OVERRIDE, BOWLER_TYPE_LABEL, bowler
 # "the death overs" start to drift apart.
 from cricket_core.formats import phase_bands, PHASE_LABEL
 from cricket_core.video import clip_stem
-from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
+from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS, PER_BALL_TYPE_BOWLERS
 from report import build_profile
 from batter_profile import build_batter_profile
 from batting_report import card_summary, early_line
@@ -795,6 +795,13 @@ def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test", level="intern
         # an arm-switcher is coded as one type but bowls two — keep them out of the exact-type reel
         where += " AND D.bowler_id NOT IN (" + ", ".join(
             f"'{i}'" for i in AMBIDEXTROUS_BOWLERS) + ")"
+    kind = {"off_spin": "off", "left_orthodox": "off", "leg_spin": "leg", "left_unorthodox": "leg"}.get(against)
+    for pb, rule in (PER_BALL_TYPE_BOWLERS.items() if where and kind else ()):
+        # a per-ball bowler's ball stays in an exact-type reel only when its coded variation is that
+        # type. It only ever narrows: a ball the style code puts elsewhere is not pulled in, because
+        # the hand audit reads the style code and would refuse it.
+        ids = ", ".join(f"'{i}'" for i in rule.get(kind) or []) or "''"
+        where += f" AND (D.bowler_id <> '{pb}' OR D.ball_movement_id IN ({ids}))"
     filt = f" AND {where}" if where else ""
     # A borrowed body of cricket is cut to the phase that matches the pack (Tom, 2026-09-17): a Test
     # pack reading ODI footage takes the middle overs, where the bowling is doing the same job. The

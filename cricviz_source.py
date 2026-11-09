@@ -318,7 +318,7 @@ def _rows_for(match):
             "striker_hand_id": "2" if lhb else "1", "striker_hand": look.get(("10", "2" if lhb else "1"), "None"),
             "bowler_style_id": sty, "bowler_hand_id": hnd, "bowler_pace_spin_id": ps,
             "bowler_pace_spin": look.get(("2805", ps), "None"),
-            "bowler_type_simple": _type_simple(sty, hnd),
+            "bowler_type_simple": _type_simple(sty, hnd, bowler, mv),
             "pitch_length_group_pace": "None", "pitch_length_group_pace_2": "None",
             "pitch_line_group_pace": "None", "pitch_length_group_spin": "None",
             "pitch_line_group_spin": "None", "pitch_length_group_pace_1_id": "None",
@@ -330,8 +330,19 @@ def _rows_for(match):
     return fmt, out
 
 
-def _type_simple(style, hand):
-    """The loaders' CASE expression, so a pulled row's type reads exactly as a warehouse one."""
+def _type_simple(style, hand, bowler=None, movement=None):
+    """The loaders' CASE expression, so a pulled row's type reads exactly as a warehouse one,
+    the per-ball and arm-switcher overrides included (batting_loaders._BOWLER_TYPE_CASE)."""
+    from config import AMBIDEXTROUS_BOWLERS, PER_BALL_TYPE_BOWLERS
+    rule = PER_BALL_TYPE_BOWLERS.get(str(bowler))
+    if rule and style in ("4", "5"):
+        if str(movement) in (rule.get("leg") or []):
+            return "Leg Break" if hand == "1" else "Left Unorthodox"
+        if str(movement) in (rule.get("off") or []):
+            return "Off Spin" if hand == "1" else "Left Orthodox"
+        return "Ambi Spin"
+    if str(bowler) in AMBIDEXTROUS_BOWLERS and style in ("4", "5"):
+        return "Ambi Spin"
     if style in ("1", "2"):
         return "Right Fast" if hand == "1" else "Left Fast"
     if style == "3":

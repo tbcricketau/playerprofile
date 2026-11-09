@@ -17,7 +17,7 @@ copy here would drift the moment that list changes.
 import streamlit as st
 
 from cricket_core.warehouse import set_conn_cursor, run_query
-from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS
+from config import DATA_SCHEMA, AMBIDEXTROUS_BOWLERS, PER_BALL_TYPE_BOWLERS
 from data_loaders import _scope
 
 
@@ -29,9 +29,27 @@ def _intl_test(alias: str = "M", fmt: str = "Test", level: str = "international"
 # Arm-switchers are caught FIRST: the feed codes every one of their balls with one registered
 # style+hand, so they'd otherwise land wholesale in an exact type they only bowl half the time.
 # 'Ambi Spin' keeps them in the macro spin group and out of the four exact spin types.
+# A per-ball bowler (config.PER_BALL_TYPE_BOWLERS) is typed by each ball's coded variation first,
+# and whatever is left of theirs reads 'Ambi Spin' the same way.
 _AMBI_IDS = ", ".join(f"'{i}'" for i in AMBIDEXTROUS_BOWLERS) or "''"
+
+
+def _per_ball_case() -> str:
+    out = []
+    for bid, rule in PER_BALL_TYPE_BOWLERS.items():
+        for kind, right, left in (("leg", "Leg Break", "Left Unorthodox"), ("off", "Off Spin", "Left Orthodox")):
+            ids = ", ".join(f"'{i}'" for i in rule.get(kind) or [])
+            if ids:
+                for hand, name in (("1", right), ("2", left)):
+                    out.append(f"WHEN D.[bowler_id]='{bid}' AND D.[bowler_style_id] IN ('4','5') AND "
+                               f"D.[bowler_hand_id]='{hand}' AND D.[ball_movement_id] IN ({ids}) THEN '{name}'")
+        out.append(f"WHEN D.[bowler_id]='{bid}' AND D.[bowler_style_id] IN ('4','5') THEN 'Ambi Spin'")
+    return "\n        ".join(out)
+
+
 _BOWLER_TYPE_CASE = f"""
     CASE
+        {_per_ball_case()}
         WHEN D.[bowler_id] IN ({_AMBI_IDS}) AND D.[bowler_style_id] IN ('4','5') THEN 'Ambi Spin'
         WHEN D.[bowler_style_id] IN ('1','2') AND D.[bowler_hand_id]='1' THEN 'Right Fast'
         WHEN D.[bowler_style_id] IN ('1','2') AND D.[bowler_hand_id]='2' THEN 'Left Fast'

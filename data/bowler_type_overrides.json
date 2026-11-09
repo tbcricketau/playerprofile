@@ -3,5 +3,10 @@
   "ambidextrous": {
     "5181166": "Rathnayake, Tharindu — bowls left-arm orthodox and off spin; all 767 balls coded right-arm off spin (spotted by Tom on Lyon's pack, 2026-08-09)",
     "3380011": "Mendis, Kamindu — bowls left-arm orthodox and off spin; coded right-arm off spin"
+  },
+  "per_ball": {
+    "_note": "Spinners who bowl off spin and leg spin with one arm. Each ball is typed by its coded variation (Deliveries.ball_movement_id, lookup 2812): leg = Legbreak 15, Googly 11, Flipper 20 and off = Offbreak 10, Doosra 18. Every other ball of theirs (carrom ball, arm ball, quicker ball, uncoded) drops out of the exact types and stays in the macro spin group.",
+    "5180994": {"why": "Ayub, Saim. Bowls off spin and leg spin (Tom, 09-11-2026). Coded off spin on every match to 20-09-2026 and leg break on every match from 01-10-2026, so the registered style is not a guide.",
+                "leg": ["15", "11", "20"], "off": ["10", "18"]}
   }
 }
