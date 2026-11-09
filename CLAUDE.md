@@ -779,6 +779,19 @@ Shanto's "off spin" record was 28% Rathnayake, and dropping those balls moved hi
 and changed Mehidy's plan from *good length* to *full*. Add an id when footage disagrees with the
 coded type, and say who verified it.
 
+**`per_ball` types a one-arm spinner who bowls both off spin and leg spin by each ball's coded
+variation** (Tom, 09-11-2026). Saim Ayub was coded off spin on every match to 20-09-2026 and leg
+break on every match from 01-10-2026, so a rebuild moved all 60 of his tri-series balls to England
+from off spin to leg spin. His balls are now typed from `ball_movement_id` (lookup 2812): Legbreak,
+Googly and Flipper read leg spin, Offbreak and Doosra off spin, and anything else (carrom ball, arm
+ball, uncoded) reads `Ambi Spin`, in the spin total and out of the exact types. Applied in
+`batting_loaders._BOWLER_TYPE_CASE`, `cricviz_source._type_simple` and the exact-type clip filter in
+`build_opponent_about.batter_clips`, which only ever removes a ball (the hand audit reads the style
+code, so a ball pulled in by its variation would be refused). Not applied on the bowling side
+(`data_loaders`), in matchupmodel or in the reference norms. None of his 60 balls to England was
+coded leg spin, so the England ODI leg-spin counts are their 28-10 figures. Sam Curran keeps a
+leg-spin tab on 57 balls as a one-off (`report_web.TAB_EXCEPTIONS`).
+
 ## Mid-series, a h2h refresh silently re-points every reel at the match just played
 
 `build_h2h.py` takes the newest `MAX_BALLS` (20) of the best available format per pairing. The
