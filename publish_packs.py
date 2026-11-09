@@ -54,7 +54,15 @@ BUNDLES = {
             # squad is archived in squads.json. Still built with `--nest`: the Test packs were
             # published under players/south-africa-test-away-2026/, and flattening would move
             # every link players already hold (the Zimbabwe 404s of 19-09).
-            "squads": ["south-africa-test-away-2026"]},
+            "squads": ["south-africa-test-away-2026"],
+            "archived": (
+                "The SA Test packs were ARCHIVED 2026-11-09 (Tom: 'sa tests get archived, available "
+                "for coaches to see but not players'). GitHub Pages is disabled on "
+                "tbcricketau/player-packs, the last published state is tagged archived-2026-11-09, "
+                "and the series is closed to players on the hub (/admin/players), where coaches still "
+                "see it. New series go to the hub only, never to Pages.\n"
+                "To bring the Pages copy back: re-enable Pages on the repo (branch main, root) and "
+                "publish with --revive. Its Fairplay links will have expired, so rebuild first.")},
     # Australia A in India, Sep-Oct 2026 — the first bundle carrying TWO squads, a four-day and a
     # one-day, on one landing page. `squads` replaces the single opp/slug pair: the hand audit is
     # per squad (it resolves our batters' hands from that squad's matchup store) and each squad's
