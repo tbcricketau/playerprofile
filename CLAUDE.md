@@ -1445,6 +1445,12 @@ series has no scouting pages anywhere, so it is not listed.
 
 ### Archived so far
 
+- **South Africa Test — 2026-11-09** (Tom: "available for coaches to see but not players"). Squad
+  archived in `squads.json`, so Scouting lists it under Archive. Closed to players on the hub
+  (`/admin/players`), where coaches still see it. GitHub Pages off on `tbcricketau/player-packs`
+  (tag `archived-2026-11-09`), and the `aus` bundle in `publish_packs.py` is marked archived. **From
+  here players reach packs only through the hub**: the link opens to a password box for the shared
+  players' login (playerpacks `docs/PLAYER_ACCESS.md`), and England ODI is the one series open to them.
 - **AUS player packs — 2026-08-31.** Bangladesh home Tests. Pages off on `tbcricketau/player-packs`,
   tag `archived-2026-08-31`. Coach-side copy frozen at `archive/bangladesh-home-2026` and still
   served, gated, with live vision. The bundle's own SAS expired 2026-08-27.
