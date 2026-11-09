@@ -190,33 +190,32 @@
       "2480059",
       "4390215",
       "350104",
-      "1300007",
-      "1300076",
-      "880149",
       "2840029",
-      "2580072",
       "3080018",
       "4390234",
-      "5180345",
       "1070522",
-      "3550715",
-      "6380036",
       "2850086",
-      "1940305",
       "2700297"
     ],
     "opponent": "England",
     "opp_key": "england_odi",
     "extras": [
       "4390234",
-      "5180345",
       "1070522",
-      "3550715",
-      "6380036",
       "2850086",
-      "1940305",
       "2700297"
-    ]
+    ],
+    "_not_picked": "Off the roster 09-11-2026 (Tom): not in Australia's ODI squad named 02-11-2026. Kept here so they can be brought back by moving the id into players.",
+    "not_picked": {
+      "1300007": "Mitchell Starc, rested",
+      "1300076": "Pat Cummins, rested",
+      "880149": "Josh Hazlewood, rested",
+      "2580072": "Nathan Ellis, side strain",
+      "5180345": "Callum Vidler, extra, not picked",
+      "3550715": "Joel Davies, extra, not picked",
+      "6380036": "Nikhil Chaudhary, extra, not picked",
+      "1940305": "Will Sutherland, extra, not picked"
+    }
   },
   "england-t20i-home-2026": {
     "name": "England Home T20I Series 2026",

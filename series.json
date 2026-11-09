@@ -35,7 +35,7 @@
       },
       {
        "id": "4352931",
-       "tier": "xi",
+       "tier": "squad",
        "name": "Jacob Bethell"
       },
       {
@@ -50,7 +50,7 @@
       },
       {
        "id": "3760070",
-       "tier": "xi",
+       "tier": "squad",
        "name": "Liam Dawson"
       },
       {
@@ -72,11 +72,6 @@
        "id": "2070076",
        "tier": "xi",
        "name": "Joe Root"
-      },
-      {
-       "id": "3720028",
-       "tier": "squad",
-       "name": "Josh Tongue"
       }
      ]
     }
@@ -85,20 +80,20 @@
     "2540202": "xi",
     "2070076": "xi",
     "4380030": "xi",
-    "4352931": "xi",
+    "4352931": "squad",
     "3630055": "xi",
-    "3630067": "squad",
-    "3630194": "squad",
+    "3630067": "xi",
+    "3630194": "xi",
     "4352441": "xi",
     "1440340": "xi",
     "3550184": "xi",
     "4352915": "xi",
     "4353038": "squad",
     "4352921": "squad",
-    "3760070": "xi",
-    "880048": "xi",
-    "3720028": "squad"
-   }
+    "3760070": "squad",
+    "880048": "xi"
+   },
+   "_tiers_09_11": "XI reset 09-11-2026 (Tom): the decks' XI, the WACA tour-match side (07-11) with Rashid in for Dawson. Banton and Cox in, Bethell and Dawson to squad. Josh Tongue removed from the series 09-11-2026 (Tom): ruled out of the ODIs, left big toe (ECB, 07-11-2026). Bring him back by re-adding his report and tier line, and his pin, store, about and h2h rows from the box snapshot ~/bak/sq-2026-11-09."
   },
   {
    "slug": "england-t20i-home-2026",
