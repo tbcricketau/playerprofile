@@ -1000,8 +1000,13 @@ def bowler_profiles(bid, raw=None, fmt="Test", level="international"):
 # ── a batter's page ───────────────────────────────────────────────────────────────────────────
 # The scopes: all bowling, then each type our attack carries. Our side's types, not every type the
 # batter has faced: the page is for planning against them.
+# Leg spin since 09-11-2026 (Tom): Root had 570 ODI balls against it and no tab.
 BAT_GROUPS = (("right_pace", "Right-arm pace"), ("left_pace", "Left-arm pace"), ("off_spin", "Off spin"),
-              ("left_orthodox", "Left-arm orthodox"))
+              ("left_orthodox", "Left-arm orthodox"), ("leg_spin", "Leg spin"))
+# A tab needs this many legal balls against the type: build_overview's MIN_BALLS, so every Bowling
+# plans card with a plan has a tab (Tom, 09-11-2026). It was 300, which left most of the England
+# ODI XI with a right-arm pace tab alone. A type tab's summary leads with its ball count.
+MIN_TAB_BALLS = 60
 _TYPE_GROUP = {"Right Fast": "right_pace", "Right Medium": "right_pace", "Left Fast": "left_pace",
                "Left Medium": "left_pace", "Off Spin": "off_spin", "Left Orthodox": "left_orthodox",
                "Leg Break": "leg_spin", "Left Unorthodox": "left_unorthodox"}
@@ -1382,6 +1387,8 @@ def _batter_scope(key, P, Pb, ctx):
     fg = [(f"{P['runs']:,.0f}", "Runs"), (_n(P.get("average"), 1), "Average"), (_n(P.get("strike_rate"), 1), "Strike rate"),
           (f"{P.get('n_out') or 0}", "Dismissals")]
     nb = sum(1 for r in P["raw"] if r.get("is_legal"))
+    if key != "all":                    # a type tab can be as thin as MIN_TAB_BALLS, so it says its sample
+        fg.insert(0, (f"{nb:,}", "Balls"))
     if P.get("n_out"):
         fg.append((f"{nb / P['n_out']:.0f}", "BPD"))
     sh = P.get("share") or {}
@@ -1522,7 +1529,7 @@ def batter_profiles(pid, raw=None, fmt="Test", level="international", source="wa
     Pb = {"All": build_batter_profile(pid, raw=raw, fmt=fmt, level=level, source=source), "_source": source}
     for g, _l in BAT_GROUPS:
         P = build_batter_profile(pid, raw=raw, group=g, fmt=fmt, level=level, source=source)
-        if sum(1 for r in P["raw"] if r.get("is_legal")) >= 300:
+        if sum(1 for r in P["raw"] if r.get("is_legal")) >= MIN_TAB_BALLS:
             Pb[g] = P
     cut = (dt.date.today() - dt.timedelta(days=int(365.25 * 3))).isoformat()
     rec = [r for r in raw if (r.get("match_date") or "") >= cut]
