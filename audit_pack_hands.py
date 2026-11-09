@@ -78,6 +78,11 @@ def _classify(key):
         return "manual", None
     if key == "similar":
         return "similar", None
+    # An analyst's hand-cut variations (09-11-2026). Hand-free on purpose — an off cutter is an off
+    # cutter whoever is facing — so there is no L/R suffix to check, and the clips are media-store
+    # urls with no delivery behind them, which puts them with `manual` in the unchecked count.
+    if re.match(r'^var_\d+$', key):
+        return "variations", None
     return "unknown", None
 
 
@@ -345,7 +350,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
     for (fn, pkind, nm, k), (kind, det, ids, n_items) in sorted(reels.items()):
         pages.add(fn)
         pid = name2pid.get(nm)
-        if kind in ("manual", "similar"):
+        if kind in ("manual", "similar", "variations"):
             unchecked += 1                # no delivery ids to resolve; counted so it is visible
             continue
         if pid is None:
@@ -427,7 +432,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
     print(f"  coverage — player resolved on {len(pages) - len(blind)} of {len(pages)} pages"
           f"{' (NO batter hands at all: matchup store missing?)' if not hands else ''} · "
           f"format {want_fmt or 'NOT CHECKED'} · {len(reels) - unres - unchecked} of {len(reels)} "
-          f"reels resolved · {unchecked} manual/similar reels not checkable · "
+          f"reels resolved · {unchecked} hand-supplied reels not checkable · "
           f"{len(unknown)} unrecognised keys")
     return {"mixed": mixed, "wrong": wrong, "pooled": pooled, "offfmt": offfmt, "owner": owner,
             "type": typ, "macro": macro, "unres": unres, "blind": sorted(blind),

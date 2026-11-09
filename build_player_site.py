@@ -1157,9 +1157,12 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
     # nothing already in `playlists` is touched, and the hand-maintained manual_vision_*.json is
     # left alone (playerprofile/CLAUDE.md: adding a reel must not touch a coach's notes or fields).
     # A variation is not a property of the batter's hand, so there is one reel, not one per hand.
+    # Only for a bowler this pack actually covers: a set stays in the sidecar after its bowler is
+    # cut from the squad (Crane, Tongue and Coles went on 09-11-2026, and their clips stay in
+    # storage for a recall), and without this every pack carried their reels for nothing.
     for bid, v in (_load_variations(_VAR_KEY) or {}).items():
         vclips = [c for c in (v.get("clips") or []) if c.get("url")]
-        if not vclips or f"var_{bid}" in playlists:
+        if not vclips or f"var_{bid}" in playlists or bid not in (opp_clips or {}):
             continue
         items = [{"delivery_id": None, "clip_stem": None, "url": c["url"],
                   "caption": c.get("caption") or "Variation", "meta": {}} for c in vclips]
