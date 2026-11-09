@@ -934,6 +934,18 @@ not for adding a name to a live one. To add one player, edit the two files:
 Then re-run the pipeline below from `publish_site.py`. No warehouse rebuild is needed — nothing about
 the opposition changed.
 
+**Taking players off a live roster: `not_picked`** (Tom, 09-11-2026). England ODI's roster held 22,
+the 14 Australia named on 02-11 plus eight set before the announcement. The eight moved from
+`players` to a `not_picked` map (id → why) on the same slug, so bringing one back means moving the
+id into `players`. Their rows also came out of the matchup store and h2h (snapshot
+`~/bak/sq-2026-11-09` on the box), and their old hub pages were moved, not deleted, to
+`hub_stale` there, because `build_hub_packs` never removes a page and the hand audit walks every
+page in the folder. A pack page stays in storage once uploaded (`upload_packs` never deletes), just
+unlinked. **An opposition player out of a series** (Josh Tongue, injured 07-11) comes off all five
+files the roster check compares, plus `bowler_plans`, `pack_extras` and the planner's
+`bowlers.json`. Run `playerpacks/fieldbackup.py who <id>` first: a removed player's saved fields stay
+in the store and off every page.
+
 **`build_squad.py` is now safe to run for a new squad** (it was not before 2026-08-31): it snapshots
 both files, **merges** into the registry instead of replacing entries — only `name`/`role`/`packs`
 are derived, so `bowl_types`, `bowl_groups`, `new_ball_footage`, `similar_bowler`, `release_detail`
