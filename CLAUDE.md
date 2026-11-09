@@ -18,6 +18,33 @@ Other fronts have their own plan docs: `WEBAPP_PLAN.md`, `FIELD_PLAN.md`, `VIDEO
 say anything about Tests, read **`CROSSFORMAT_TRANSLATION.md`** — what translates (tempo/rates)
 and what must not be projected (averages, wicket rates), with the measured environment ratios.
 
+## ⛔ The coaches' fields and notes — back them up first, prove nothing was lost last (Tom, 09-11-2026)
+
+Every field and note a coach saves in the planner, on the Bowling plans and Batting plans cards
+and on a hub pack's top note lives in one place: the `fieldplans` schema of the sign-in database
+(`playerpacks/fieldstore.py`). No build can make it again. The database is Basic tier, so Azure's
+own backups go back 7 days. Tom: under no circumstances can it be lost. As of 09-11 it holds
+James Franklin's 15 England ODI fields and 3 notes, and Tom's own.
+
+- **No build writes to it.** Only the planner app does, and the app never overwrites blind, never
+  hard-deletes and keeps every save as a revision. Keep it that way. A script that writes to
+  `fieldplans` is a new rule to put to Tom first.
+- **Every box build script starts with `playerpacks/fieldbackup.py backup` and ends with
+  `fieldbackup.py diff <that copy>`**, which exits 1 if any row or revision is gone or went back a
+  version. `box_sq_0911.sh` is the pattern. A cron job on the box also takes a copy every six hours
+  (`~/bin/fieldplans_backup.sh`, copies in `~/bak/fieldplans`, never deleted).
+- **Hiding is losing, as far as a coach can tell.** A field is keyed (planner series, pack,
+  player), so a player taken off a page, a renamed pack key, a changed `planner_series` or a
+  re-ordered seed slot leaves the work in the store and off every page. Before removing anyone or
+  renaming a key, run `fieldbackup.py who <ids>` and tell Tom what it finds. The seed slots are
+  positional (`whiteball_fields.phase_fields`), so the GPS files under the cards and the planner
+  must stay the same.
+- **The way back**: `fieldbackup.py history <field_id>`, then `restore <field_id> <version>`
+  (or `restore-notes <series> <pack> <player> <version>`), with `--from <copy>` for a row gone from
+  the store altogether. A restore adds a version on top and never rewrites history. It is a dry run
+  until `--apply`. All six paths were tested against the live store on 09-11 under a throwaway
+  series, `zz_restore_test`, which no page reads.
+
 **Setup:** `.\setup.ps1` (venv + requirements incl. `-e ../cricket-core`).
 **Run:** `.\venv\Scripts\python.exe run.py` — starts Streamlit on port 8060.
 
