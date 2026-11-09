@@ -299,6 +299,12 @@ def _bowler_reels(clips, bid, hand, about):
             xkey = f"{kk}X{O}_{bid}"
             if clips.get(xkey):
                 out.append((xkey, f"{clips.vision_url}#{xkey}", f"{lab} · to {word}", clips.count(xkey)))
+    # An analyst's hand-cut variations, if a set has been published for this series. One reel, not
+    # one per hand: an off cutter is an off cutter whoever faces it (Tom, 09-11-2026). Added after
+    # the hand reels, never in place of one.
+    vkey = f"var_{bid}"
+    if clips.get(vkey):
+        out.append((vkey, f"{clips.vision_url}#{vkey}", "Variations", clips.count(vkey)))
     return out, (f"* {' and '.join(sorted(borrowed))} footage" if borrowed else "")
 
 

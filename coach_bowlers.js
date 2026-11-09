@@ -108,8 +108,14 @@
 
   function reels(b) {
     const r = (b.reels || {})[state.h] || {}, s = state.h[0];
-    return [["stock", "stock", "Stock ball"], ["wicket", "wkt", "Wickets"], ["new_ball", "nb", "New ball"]]
+    const byHand = [["stock", "stock", "Stock ball"], ["wicket", "wkt", "Wickets"], ["new_ball", "nb", "New ball"]]
       .filter(([k]) => r[k]).map(([, key, lab]) => `<a href="${esc(b.vision)}#${key}${s}">${PLAY} ${lab}</a>`).join("");
+    // A variation is not a property of the batter's hand, so this one button shows on both sides
+    // of the segment (Tom, 09-11-2026). Its tooltip names what is in it.
+    const nv = (b.reels || {}).var || 0;
+    const kinds = ((b.reels || {}).var_kinds || []).join(" · ");
+    const vbtn = nv ? `<a href="${esc(b.vision)}#var" title="${esc(kinds || "Variations")}">${PLAY} Variations</a>` : "";
+    return byHand + vbtn;
   }
 
   function card(b) {

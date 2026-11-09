@@ -1140,6 +1140,63 @@ player-mode pages, so keep them.
 Say in the note what the archive does *not* carry. Both archived bundles have a dead SAS baked in,
 so reviving means rebuilding from source, never re-pushing the tag.
 
+### ⛔ ADDING A REEL MUST NOT TOUCH A COACH'S NOTES OR FIELDS (Tom, 09-11-2026)
+
+**The hard rule for the Coaches Hub scouting site**: when a playlist, reel or any other build
+output is added to a bowler or batter card, it is **added beside** what is already there. Nothing
+a person typed or set is removed, replaced, reordered or rebuilt as a side effect. If adding the
+new thing cannot be done without rewriting something a human owns, **stop and ask** — the same
+rule as the root [`../CLAUDE.md`](../CLAUDE.md) § Never destroy human work, stated here because
+this is where it is easiest to break without noticing.
+
+What on these pages is human work, and must survive every build:
+
+- **The coaches' notes** on every card (`COACHES' NOTES · vs right-handers`) and the **saved
+  fields** — both live in the **planner**, not in this repo, and the page fetches them when it
+  opens (`/fields/<planner_series>/api/fields?pack=<group>`). A site rebuild cannot hurt them;
+  **a write to the planner's API can.** Never PUT or POST a whole record to replace one — merge.
+- **Hand-written content in a data file**: a tactical line, a retyped card, a note in
+  `bowler_plans_*.json` or an overview. These sit next to generated fields in the same file, so a
+  builder that rewrites the file wholesale takes them with it.
+- **Whatever is already in `about`.** `build_opponent_about.py` regenerates
+  `data/opponent_about_<key>.json` in full, so a reel written into it is lost on the next build —
+  and worse, a hand-edit in it would be too.
+
+The pattern that follows from this, and the one the variations reel uses: **a new reel goes in its
+own sidecar** (`data/variations_<key>.json`, written by `videobuilder/scripts/publish_variations.py`),
+is read at build time, and is merged into the card's buttons in `_bowler_vision`. Nothing already
+on the card is read-modify-written. A sidecar is also what makes the reel safe to rebuild: delete
+it and the card goes back to what it was, with every note and field untouched.
+
+⚠ It is a separate file from **`manual_vision_<opp>.json`** for the same reason: that one is
+**maintained by hand** for uncapped players (`manual_vision_bangladesh.json` is somebody's work)
+and a builder must never write it.
+
+### The Variations reel (09-11-2026)
+
+An analyst hands over a folder of cut variations — `<Player>/<Variation>/<Player> - <Variation>
+N.mp4`, plus a loose headline clip per variation. The England ODI set was 11 bowlers, 87 clips,
+1.87 GB. The route from that folder to a button on a card:
+
+1. **`videobuilder/scripts/publish_variations.py`** uploads the clips to the media store behind
+   the durable policy (a year, revocable), resolves each folder name to a warehouse player id, and
+   writes `data/variations_<key>.json`. Re-running **skips what is already uploaded at the same
+   size**, so a second batch of bowlers costs only the new files. ⚠ The sidecar holds **signed**
+   links, so it is gitignored — data, never source.
+2. **Both surfaces read it and add one button**, keyed `var`, hand-free:
+   - the coach scouting card — `build_coach_site._variations` + `_bowler_vision`, drawn by
+     `coach_bowlers.js reels()`, tooltip naming the variations it holds;
+   - the player packs — `build_player_site` writes `var_<bid>` into the player's clip sidecar and
+     `build_hub_packs._bowler_reels` renders it.
+3. The **original** clips are uploaded, not the per-ball files cut from a videobuilder render:
+   those carry the render's burned-in label and the pack's own player draws a caption, so the text
+   would read twice. `videobuilder/scripts/plan_from_folder.py` builds the combined per-bowler
+   video from the same folder when one is wanted for a meeting — it is not what the packs use.
+
+Decisions on the England ODI set (Tom, atq 09-11-2026): the three squad bowlers with no folder
+(Archer, Bethell, Root) have **clips still to come** — re-run the publisher when they land;
+**ODI only** for now, not the T20I series; the combined videos stay on disk, unpublished.
+
 ### The coach view's series page: a tab row, two plan packs, the bowlers grid (04-10-2026)
 
 Built by `build_coach_site.py --slug <slug>` into `coach_build/coach/<slug>/`, after Tom's read of

@@ -214,9 +214,32 @@ def _bowler_plans(slug):
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
 
 
-def _bowler_vision(root, bid, name, about):
+def _variations(slug):
+    """The hand-cut variation reels, if an analyst's set has been published for this series.
+
+    Written by `videobuilder/scripts/publish_variations.py` as `data/variations_<key>.json`, NOT
+    into the `about` file — `build_opponent_about.py` regenerates that one, which would drop it on
+    the next build. The clips carry a signed media-store `url` and no Fairplay stem, the door
+    `resolve_playlist` already keeps open for Cricket-21 footage.
+    """
+    p = os.path.join(DATA, f"variations_{_opp_key(slug)}.json")
+    if not os.path.exists(p):
+        return {}
+    try:
+        return (json.load(open(p, encoding="utf-8")) or {}).get("bowlers") or {}
+    except Exception as e:                                               # noqa: BLE001
+        print(f"  variations sidecar unreadable ({type(e).__name__}) - skipped")
+        return {}
+
+
+def _bowler_vision(root, bid, name, about, variations=None):
     """One vision page per bowler with their reels to each hand — stock ball, wicket balls, new
-    ball — keyed stockR, wktL and so on for the card's buttons. Returns {hand: {kind: n clips}}."""
+    ball — keyed stockR, wktL and so on for the card's buttons. Returns {hand: {kind: n clips}},
+    plus a hand-free `var` count when the bowler has a variations reel.
+
+    **A variation is not a property of the batter's hand** (Tom, 09-11-2026): an off cutter is an
+    off cutter whoever is facing, so it is one reel keyed `var` rather than one per hand, and the
+    card shows the same button on both sides of the segment."""
     from cricket_core.video import build_player_html, playlist_item, resolve_playlist
     keys = {"stock": "stock", "wicket": "wkt", "new_ball": "nb"}
     playlists, titles, counts = {}, {}, {"RHB": {}, "LHB": {}}
@@ -237,6 +260,20 @@ def _bowler_vision(root, bid, name, about):
                 playlists[key] = resolved
                 titles[key] = f"{title} to {word}"
                 counts[h][kind] = avail
+    v = (variations or {}).get(str(bid)) or {}
+    vclips = [c for c in (v.get("clips") or []) if c.get("url")]
+    if vclips:
+        items = []
+        for c in vclips:
+            it = playlist_item(None, None, caption=c.get("caption") or "Variation")
+            it["url"] = c["url"]
+            items.append(it)
+        resolved, avail, _n = resolve_playlist(items)
+        if avail:
+            playlists["var"] = resolved
+            titles["var"] = "Variations"
+            counts["var"] = avail
+            counts["var_kinds"] = v.get("variations") or []
     if playlists:
         os.makedirs(os.path.join(root, "vision"), exist_ok=True)
         build_player_html(playlists, os.path.join(root, "vision", f"{bid}.html"), title=name,
@@ -249,15 +286,17 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
     notes, the figures, their reels and report, and the field they are likely to set by category.
     The cards are drawn by coach_bowlers.js from window.BK; the planner's notes and saved fields
     arrive when the page opens, as on the Pace and Spin packs."""
-    out, n_vis = [], 0
+    out, n_vis, n_var = [], 0, 0
+    variations = _variations(slug)
     order = sorted(plans["bowlers"].items(),
                    key=lambda kv: (-int(kv[1].get("order") or 0), kv[1].get("name") or ""))
     for bid, b in order:
         if b.get("error"):
             continue
         tier = tiers.get(bid, b.get("tier") or "")
-        reels = _bowler_vision(root, bid, b["name"], about.get(bid) or {})
+        reels = _bowler_vision(root, bid, b["name"], about.get(bid) or {}, variations)
         n_vis += bool(reels)
+        n_var += bool(reels.get("var"))
         out.append({"id": bid, "name": b["name"], "type": b.get("type") or "", "pace": bool(b.get("pace")),
                     "tier": tier, "chip": SR.TIER_CHIP.get(tier, ""), "initials": _initials(b["name"]),
                     "head": ("../" + heads[bid]) if heads.get(bid) else "",
@@ -285,7 +324,7 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
             f"<script>window.BK={json.dumps(data, separators=(',', ':'), ensure_ascii=False).replace('</', '<\\/')};</script>"
             f'<script src="/static/fields.js?v={_fields_js_version()}"></script>'
             f'<script src="/coach/bowlers.js?v={_file_version(BOWLERS_JS)}"></script>')
-    print(f"  their bowlers: {len(out)} cards, vision for {n_vis}")
+    print(f"  their bowlers: {len(out)} cards, vision for {n_vis}, variations for {n_var}")
     return body
 
 

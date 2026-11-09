@@ -1152,6 +1152,20 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
             playlists[pk] = items
             titles[pk] = f'{mv.get("name", "Footage")} — {_MKEY_LABEL.get(key, key)}'
             manual_href[(bid, key)] = f"{page_slug}-vision.html#{pk}"
+    # An analyst's hand-cut VARIATIONS reel, keyed var_<bid> so the pack card can offer it beside
+    # the stock-ball and wicket reels (Tom, 09-11-2026). Read from its own sidecar and only ADDED —
+    # nothing already in `playlists` is touched, and the hand-maintained manual_vision_*.json is
+    # left alone (playerprofile/CLAUDE.md: adding a reel must not touch a coach's notes or fields).
+    # A variation is not a property of the batter's hand, so there is one reel, not one per hand.
+    for bid, v in (_load_variations(_VAR_KEY) or {}).items():
+        vclips = [c for c in (v.get("clips") or []) if c.get("url")]
+        if not vclips or f"var_{bid}" in playlists:
+            continue
+        items = [{"delivery_id": None, "clip_stem": None, "url": c["url"],
+                  "caption": c.get("caption") or "Variation", "meta": {}} for c in vclips]
+        playlists[f"var_{bid}"] = items
+        titles[f"var_{bid}"] = "Variations"
+
     # similar reference bowler (e.g. Sajid Khan for Lyon) — how they went vs the opposition batters
     similar_href = None
     if similar and similar.get("clips"):
@@ -1509,6 +1523,30 @@ def _manual_for(manual_href, bid, key):
     return manual_href.get((bid, key)) or (manual_href.get((bid, fam)) if fam else None)
 
 
+# Which variations sidecar this build reads, set once per run from the pack's series slug.
+_VAR_KEY = ""
+
+
+def _load_variations(key):
+    """{bid: {name, variations, clips:[{caption, url}]}} — an analyst's hand-cut variation reels,
+    written by `videobuilder/scripts/publish_variations.py` as `data/variations_<key>.json`.
+
+    Its own file on purpose: `manual_vision_*.json` is maintained BY HAND for uncapped players and
+    must never be written over, and `opponent_about_*.json` is regenerated in full by its own
+    builder, so a reel put there would be lost on the next run. The clips carry a playable url and
+    no Fairplay stem, so they pass through `resolve_playlist` untouched."""
+    if not key:
+        return {}
+    p = os.path.join(HERE, "data", f"variations_{key}.json")
+    if not os.path.exists(p):
+        return {}
+    try:
+        return (json.load(open(p, encoding="utf-8")) or {}).get("bowlers") or {}
+    except Exception as e:                                               # noqa: BLE001
+        print(f"  variations sidecar unreadable ({type(e).__name__}) — skipped")
+        return {}
+
+
 def _load_manual_vision(slug):
     """{opposition_player_id: {name, clips:[{caption, url}]}} — hand-supplied footage for players the
     warehouse has nothing on (uncapped call-ups). The urls are already playable, so these skip the
@@ -1791,6 +1829,8 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
         similar_data = _load_similar(slug)              # reference-bowler footage per our bowler
         release_data = _load_release_detail()            # opt-in own-release table (per bowler)
         manual_vision = _load_manual_vision(slug)        # hand-supplied footage for uncapped opponents
+        global _VAR_KEY                                  # the analyst's variation reels, if published
+        _VAR_KEY = _opp_key(slug)
         # signature footage for the opponents shown (N_OPP each) — bowlers get stock/wicket balls
         # (linked from batting packs), batters get scoring/dismissal (linked from bowling packs).
         # An all-rounder gets ALL four kinds (distinct keys → no collision), so their bowler card

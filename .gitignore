@@ -79,3 +79,7 @@ site_gated/
 *.bak-*
 # Same, for a snapshot taken when a run failed part-way (.bad-auth-DATE).
 *.bad-*
+
+# -- Variation reels (videobuilder/scripts/publish_variations.py) — the sidecar carries SIGNED
+# media-store links, so it is data and never source. Rebuild it by re-running that script.
+data/variations_*.json
