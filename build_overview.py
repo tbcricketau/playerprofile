@@ -347,10 +347,7 @@ def write_page(opp, group, label, rows):
             body.append(f'<tr><td class=bat>{html.escape(r["name"])}</td>'
                         f'<td colspan={5 if spin else 6} class=thin>No record vs {html.escape(label)}.</td></tr>')
             continue
-        if r["balls"] < MIN_BALLS:            # rates off a handful of balls would read as fact
-            body.append(f'<tr><td class=bat>{html.escape(r["name"])}</td><td>{t["balls"]}</td>'
-                        f'<td colspan={4 if spin else 5} class=thin>Too few balls vs {html.escape(label)} to rate.</td></tr>')
-            continue
+        # every row is rated however few its balls, which the Balls column states (Tom, 10-11-2026)
         bpd = f'{t["bpd"]:.0f}' if t["bpd"] else f'<span class=thin>{t["n_out"]} out</span>'
         body.append(
             f'<tr><td class=bat>{html.escape(r["name"])}</td>'

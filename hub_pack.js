@@ -4,9 +4,9 @@
      - the coaches' notes on each card, their fields, and the note to this player at the top, fetched
        from the field planner when the page opens (shared ones only — a coach's private drafts never
        show on a player's pack, even to the coach who wrote them);
-     - the field and wheel toggles;
-     - for a coach, editing the note at the top in place. Card notes and fields are edited in the
-       planner, which the card links to for a coach.
+     - the field and wheel toggles.
+   Nothing on a pack leads to editing, for a coach either (Tom, 10-11-2026): notes and fields are set
+   in the planner, and a note box with nothing in it is not shown.
 
    Fields are drawn by the planner's own code (/static/fields.js, window.FieldPlanner.drawField), so an
    estimated field and a coaches' one share one drawing. */
@@ -16,7 +16,9 @@
   const FP = window.FieldPlanner;
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const api = p => `/fields/${encodeURIComponent(HP.series)}/api/fields?pack=${encodeURIComponent(p)}`;
-  const state = { cards: null, band: null, pick: {}, editing: false, msg: "" };
+  const state = { cards: null, band: null, pick: {} };
+  // the planner's seeded slots, in order (playerpacks fieldstore.SEED_SLOTS)
+  const SLOTS = ["option1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"];
 
   // ── the wheel: Zones / Spider ────────────────────────────────────────────────────────────
   document.querySelectorAll("[data-switch]").forEach(box => {
@@ -48,18 +50,23 @@
      in a category replaces the estimate, a category the coaches deleted stays gone, and any other
      field they set follows — the planner's own order. Our bowlers' fields read the same way when
      their estimates were seeded into the planner too (white-ball, 30-10-2026: each carries its
-     slot); a Test pack's carry none, so there the coaches' come first, then the estimates. */
+     slot); a Test pack's carry none, so there the coaches' come first, then the estimates.
+     A coaches' field saved in a slot that is no longer seeded (the ODI most-set alternatives, taken
+     out 10-11-2026) still shows, in its slot's place: hiding it would lose it, as far as a coach can tell. */
   function options(box) {
     const bid = box.dataset.fb, auto = JSON.parse(box.dataset.opts || "[]"), mine = shared(bid);
     if (box.dataset.kind === "bowler" || auto.some(c => c.slot)) {
       const st = state.cards || {};
       const slotOf = f => f.seed || (f.option1 ? "option1" : "");
       const gone = s => s === "option1" ? (st.option1Saved || []).includes(bid) : (st.seededSaved || []).includes(`${bid}|${s}`);
+      const rank = s => { const i = SLOTS.indexOf(s); return i < 0 ? SLOTS.length : i; };
+      const slots = [...new Set(auto.map(c => c.slot).concat(mine.map(slotOf).filter(Boolean)))]
+        .sort((a, b) => rank(a) - rank(b));
       const out = [];
-      auto.forEach(c => {
-        const got = mine.find(f => slotOf(f) === c.slot);
+      slots.forEach(s => {
+        const got = mine.find(f => slotOf(f) === s), c = auto.find(a => a.slot === s);
         if (got) out.push(coachOpt(got));
-        else if (!(state.cards && gone(c.slot))) out.push(autoOpt(c));
+        else if (c && !(state.cards && gone(s))) out.push(autoOpt(c));
       });
       return out.concat(mine.filter(f => !slotOf(f)).map(coachOpt));
     }
@@ -93,77 +100,29 @@
   }
 
   // ── the coaches' notes on each card ──────────────────────────────────────────────────────
-  const editHref = bid => `/fields/${encodeURIComponent(HP.series)}/?pack=${encodeURIComponent(HP.cardPack)}#b${encodeURIComponent(bid)}`;
   function notesOf(st, bid) {
     const saved = st && st.notes && st.notes[bid];
     const lines = saved ? saved.notes : (st && st.deck && st.deck[bid]);
     return (lines || []).filter(l => String(l).trim());
   }
-  /* A player sees the coaches' notes only when some are written. A coach sees a pencil on every card
-     (into the planner) and, where nothing is written yet, a dashed box saying so (11-10-2026). */
+  // shown only when some are written, to coaches and players alike (Tom, 10-11-2026)
   function drawNotes() {
-    const st = state.cards, coach = !!(st && st.canEdit);
-    document.querySelectorAll("[data-pen]").forEach(a => {
-      a.hidden = !coach;
-      if (coach) a.href = editHref(a.dataset.pen);
-    });
     document.querySelectorAll("[data-notes]").forEach(el => {
-      const bid = el.dataset.notes, lines = notesOf(st, bid);
-      if (!lines.length && !coach) { el.hidden = true; return; }
-      el.classList.toggle("empty", !lines.length);
-      el.innerHTML = `<div class="t"><b>Coaches' notes</b></div>`
-        + (lines.length ? lines.map(l => `<p>${esc(l)}</p>`).join("")
-           : `<p>None yet. <a href="${editHref(bid)}">Add notes in the planner</a></p>`);
-      el.hidden = false;
+      const lines = notesOf(state.cards, el.dataset.notes);
+      el.hidden = !lines.length;
+      el.innerHTML = lines.length ? `<div class="t"><b>Coaches' notes</b></div>` + lines.map(l => `<p>${esc(l)}</p>`).join("") : "";
     });
   }
 
-  // ── the note to this player, at the top ──────────────────────────────────────────────────
+  // ── the note to this player, at the top: shown only when one is written ─────────────────
   function drawBand() {
     const el = document.querySelector(".band-note");
     if (!el) return;
     const st = state.band, saved = st && st.notes && st.notes[HP.pid];
     const lines = ((saved && saved.notes) || []).filter(l => String(l).trim());
-    const coach = !!(st && st.canEdit);
-    if (state.editing && coach) {
-      el.className = "band-note"; el.hidden = false;
-      el.innerHTML = `<div class="t"><b>${esc(HP.bandTitle)}</b></div>`
-        + `<textarea aria-label="Note to ${esc(HP.first)}">${esc(lines.join("\n"))}</textarea>`
-        + `<div class="ed-row"><button type="button" data-a="save">Save</button><button type="button" class="ghost" data-a="cancel">Cancel</button>`
-        + `<span class="msg">${esc(state.msg)}</span></div>`;
-      el.querySelector('[data-a="cancel"]').addEventListener("click", () => { state.editing = false; state.msg = ""; drawBand(); });
-      el.querySelector('[data-a="save"]').addEventListener("click", () => save(el.querySelector("textarea").value, saved));
-      el.querySelector("textarea").focus();
-      return;
-    }
-    if (!lines.length && !coach) { el.hidden = true; return; }
-    el.className = "band-note" + (lines.length ? "" : " empty");
-    const btn = coach ? `<button type="button" class="lnk" data-a="edit">${lines.length ? "Edit" : `Add a note for ${esc(HP.first)}`}</button>` : "";
-    el.innerHTML = `<div class="t"><b>${esc(HP.bandTitle)}</b>${btn}</div>` + lines.map(l => `<p>${esc(l)}</p>`).join("");
-    el.hidden = false;
-    const b = el.querySelector('[data-a="edit"]');
-    if (b) b.addEventListener("click", () => { state.editing = true; state.msg = ""; drawBand(); });
+    el.hidden = !lines.length;
+    el.innerHTML = lines.length ? `<div class="t"><b>${esc(HP.bandTitle)}</b></div>` + lines.map(l => `<p>${esc(l)}</p>`).join("") : "";
   }
-
-  async function save(text, saved) {
-    const lines = String(text || "").split("\n").map(l => l.trim()).filter(Boolean);
-    state.msg = "Saving…"; drawBandMsg();
-    let r, data = {};
-    try {
-      r = await fetch(`/fields/${encodeURIComponent(HP.series)}/api/notes`, {
-        method: "POST", credentials: "same-origin",
-        headers: { "Content-Type": "application/json", "X-Requested-With": "fieldplanner" },
-        body: JSON.stringify({ pack: HP.bandPack, batter_id: HP.pid, version: saved ? saved.version : 0, notes: lines }) });
-      try { data = await r.json(); } catch (e) { data = { error: "The app did not answer as expected — you may have been signed out. Reload the page." }; }
-    } catch (e) {
-      state.msg = "Could not reach the app. Check the connection and try again."; drawBandMsg(); return;
-    }
-    if (r.status !== 200) { state.msg = data.error || `Could not save (${r.status}).`; drawBandMsg(); return; }
-    state.editing = false; state.msg = "";
-    await load(HP.bandPack, d => { state.band = d; });
-    drawBand();
-  }
-  function drawBandMsg() { const m = document.querySelector(".band-note .msg"); if (m) m.textContent = state.msg; }
 
   // ── load ─────────────────────────────────────────────────────────────────────────────────
   async function load(pack, put) {
@@ -178,13 +137,4 @@
     load(HP.cardPack, d => { state.cards = d; }).then(() => { drawNotes(); drawFields(); });
     load(HP.bandPack, d => { state.band = d; }).then(drawBand);
   }
-  // a jump to a card behind a squad row opens it
-  function openTarget() {
-    const id = decodeURIComponent(location.hash.slice(1));
-    const el = id && document.getElementById(id);
-    const d = el && el.closest("details");
-    if (d) { d.open = true; el.scrollIntoView(); }
-  }
-  window.addEventListener("hashchange", openTarget);
-  openTarget();
 })();

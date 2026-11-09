@@ -725,10 +725,7 @@ def _overview_section(ov, opp):
         if not t:
             thr.append(f'<tr>{who}<td colspan=6 class=othin>No record vs {html.escape(label)}.</td></tr>')
             continue
-        if (r.get("balls") or 0) < mb:
-            thr.append(f'<tr>{who}<td>{t["balls"]}</td><td colspan=5 class=othin>'
-                       f'Too few balls vs {html.escape(label)} to rate.</td></tr>')
-            continue
+        # every row is rated however few its balls, which the Balls column states (Tom, 10-11-2026)
         bpd = f'{t["bpd"]:.0f}' if t.get("bpd") else f'<span class=othin>{t.get("n_out", 0)} out</span>'
         f_ = f'{t["false_pct"]:.1f}%' if t.get("false_pct") is not None else '<span class=othin>—</span>'
         thr.append(f'<tr>{who}<td>{t["balls"]}</td><td>{bpd}</td><td>{f_}</td>'

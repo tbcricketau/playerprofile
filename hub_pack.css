@@ -82,12 +82,10 @@ h2.sec span { font-weight:600; letter-spacing:.04em; color:var(--muted); font-si
 .chip { font-size:11px; font-weight:700; letter-spacing:.06em; color:#fff; background:var(--accent); border-radius:3px;
         padding:2px 6px }
 .chip.squad, .chip.fringe { background:#fff; color:var(--muted); border:1px solid var(--line-strong) }
-/* a coach's way into the planner for this card (shown by the script when they may edit) */
-.hd .pen { width:36px; height:36px; border:1px solid var(--line-strong); border-radius:4px; display:flex; align-items:center;
-           justify-content:center; color:var(--accent); flex:none; align-self:flex-start }
-.hd .pen svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round;
-               stroke-linejoin:round }
-.hd .pen:hover { background:var(--accent-soft) }
+/* the player's web report, top right of the card (10-11-2026) */
+.hd .rep { flex:none; align-self:flex-start; font-family:var(--font-d); font-weight:700; font-size:14px; letter-spacing:.06em;
+           text-transform:uppercase; color:#fff; background:var(--accent); border-radius:4px; padding:8px 12px; line-height:1 }
+.hd .rep:hover { background:var(--accent-deep) }
 
 .cn { background:var(--accent-soft); border-radius:6px; padding:11px 13px; display:flex; flex-direction:column; gap:4px }
 .cn .t { display:flex; justify-content:space-between; align-items:baseline; gap:10px }
@@ -148,20 +146,20 @@ h2.sec span { font-weight:600; letter-spacing:.04em; color:var(--muted); font-si
 .rl.h2h:hover { background:var(--accent-deep) }
 .vis .cap { margin-top:8px }
 
-/* the rest of the squad: a row each, the card behind it */
-.mores { display:flex; flex-direction:column; gap:6px }
-.more > summary { list-style:none; display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line);
-                  border-radius:8px; padding:9px 14px; min-height:44px; cursor:pointer }
-.more > summary::-webkit-details-marker { display:none }
-.more > summary .t { flex:1; display:flex; flex-direction:column; min-width:0 }
-.more > summary .t b { font-size:15px; font-weight:600; color:var(--ink) }
-.more > summary .t span { font-size:13px; color:var(--muted) }
-.more > summary .ch { font-size:20px; color:var(--muted); transition:transform .15s }
-.more[open] > summary { border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-color:transparent }
-.more[open] > summary .ch { transform:rotate(90deg) }
-.more > .pc { border-top-left-radius:0; border-top-right-radius:0; border-top:0 }
+/* the squad index: a list of names, each with its packs (10-11-2026, as the old packs) */
+.roster { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px }
+.roster li { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; background:#fff;
+             border:1px solid var(--line); border-radius:8px; padding:9px 14px; min-height:44px }
+.roster .who { display:flex; align-items:center; gap:12px; min-width:0 }
+.roster .who > span { display:flex; flex-direction:column; min-width:0 }
+.roster b { font-size:15px; font-weight:600; color:var(--ink) }
+.roster .who > span > span { font-size:13px; color:var(--muted) }
+.roster .pks { display:flex; gap:6px; flex-wrap:wrap }
+.roster .pk { font-family:var(--font-d); font-weight:700; font-size:14px; letter-spacing:.06em; text-transform:uppercase;
+              color:var(--accent); background:#fff; border:1.5px solid var(--accent); border-radius:4px; padding:7px 12px; line-height:1 }
+.roster .pk:hover { background:var(--accent); color:#fff }
 
-/* the squad index */
+/* the list of series */
 .tiles { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:8px }
 .tile { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line); border-radius:8px;
         padding:9px 14px; min-height:44px; color:var(--ink) }
@@ -189,4 +187,4 @@ h2.sec span { font-weight:600; letter-spacing:.04em; color:var(--muted); font-si
   .fb svg { max-width:380px }
   .wb .zw, .wb .sp { max-width:360px }
 }
-@media print { .tg, .reels, .ph .ptabs, .ph .back, .jump, .hd .pen { display:none } .pc { break-inside:avoid } }
+@media print { .tg, .reels, .ph .ptabs, .ph .back, .jump, .hd .rep { display:none } .pc { break-inside:avoid } }

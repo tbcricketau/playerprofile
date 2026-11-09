@@ -1,0 +1,239 @@
+{
+ "_note": "England ODI's starting fields for every pace bowler on Batting plans (Tom, 10-11-2026: 'I have set Gus Atkinson as the default for batting plans to use'). Copied from the fields on Gus Atkinson's card in the planner on 10-11-2026: Powerplay is the estimate he kept, Middle overs and Death are the ones he saved. A copy, so a later edit to his card does not move these. Read by whiteball_fields.with_defaults.",
+ "pace": {
+  "RHB": {
+   "_from": "Gus Atkinson's card",
+   "Powerplay": [
+    {
+     "angle": 162.0,
+     "radius": 0.3
+    },
+    {
+     "angle": 153.0,
+     "radius": 0.35
+    },
+    {
+     "angle": -58.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 90.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 55.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 150.0,
+     "radius": 0.9
+    },
+    {
+     "angle": -145.0,
+     "radius": 0.9
+    }
+   ],
+   "Middle overs": [
+    {
+     "angle": 105.0,
+     "radius": 0.52
+    },
+    {
+     "angle": 45.0,
+     "radius": 0.34
+    },
+    {
+     "angle": 24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -58.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 150.0,
+     "radius": 0.9
+    },
+    {
+     "angle": -24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -145.0,
+     "radius": 0.9
+    },
+    {
+     "angle": -90.0,
+     "radius": 0.9
+    },
+    {
+     "angle": 90.0,
+     "radius": 0.9
+    }
+   ],
+   "Death": [
+    {
+     "angle": 55.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -145.0,
+     "radius": 0.9
+    },
+    {
+     "angle": 90.0,
+     "radius": 0.9
+    },
+    {
+     "angle": 24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -18.0,
+     "radius": 0.92
+    },
+    {
+     "angle": -90.0,
+     "radius": 0.9
+    },
+    {
+     "angle": 105.0,
+     "radius": 0.52
+    },
+    {
+     "angle": -58.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 150.0,
+     "radius": 0.9
+    }
+   ]
+  },
+  "LHB": {
+   "_from": "Gus Atkinson's card",
+   "Powerplay": [
+    {
+     "angle": 162.0,
+     "radius": 0.3
+    },
+    {
+     "angle": -58.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 143.0,
+     "radius": 0.34
+    },
+    {
+     "angle": 105.0,
+     "radius": 0.52
+    },
+    {
+     "angle": 55.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 150.0,
+     "radius": 0.9
+    },
+    {
+     "angle": -145.0,
+     "radius": 0.9
+    }
+   ],
+   "Middle overs": [
+    {
+     "angle": 105.0,
+     "radius": 0.52
+    },
+    {
+     "angle": -58.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": 45.0,
+     "radius": 0.34
+    },
+    {
+     "angle": 150.0,
+     "radius": 0.9
+    },
+    {
+     "angle": 24.0,
+     "radius": 0.5
+    },
+    {
+     "angle": -145.0,
+     "radius": 0.9
+    },
+    {
+     "angle": 90.0,
+     "radius": 0.9
+    },
+    {
+     "angle": -90.0,
+     "radius": 0.9
+    }
+   ],
+   "Death": [
+    {
+     "angle": 121.0,
+     "radius": 0.457
+    },
+    {
+     "angle": 46.6,
+     "radius": 0.573
+    },
+    {
+     "angle": 20.2,
+     "radius": 0.936
+    },
+    {
+     "angle": -26.7,
+     "radius": 0.53
+    },
+    {
+     "angle": 150.0,
+     "radius": 0.9
+    },
+    {
+     "angle": -147.0,
+     "radius": 0.927
+    },
+    {
+     "angle": -63.2,
+     "radius": 0.521
+    },
+    {
+     "angle": 90.0,
+     "radius": 0.9
+    },
+    {
+     "angle": -90.0,
+     "radius": 0.9
+    }
+   ]
+  }
+ }
+}

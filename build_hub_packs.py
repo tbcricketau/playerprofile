@@ -110,19 +110,16 @@ def _avatar(pid, name, img, cls="av"):
     return f'<span class="{cls} ini">{E(ini)}</span>'
 
 
-_PEN = ('<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/>'
-        '<path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>')
-
-
-def _head(pid, name, img, tier, sub, sample=""):
+def _head(pid, name, img, tier, sub, sample="", report=""):
     """Photo, name, the XI chip, the type line, and the sample the card's figures rest on ("Tests ·
     193 wickets to right-handers") — so every card states its basis before any number (round 2,
-    11-10-2026). The pencil is filled in for a coach by the script (a link into the planner)."""
+    11-10-2026). Top right, the player's web report where one is built (Tom, 10-11-2026: as the old
+    packs' View report). Nothing on a card leads into the planner, for a coach either."""
     chip = f'<span class="chip {E(tier)}">{_TIER_CHIP[tier]}</span>' if tier in _TIER_CHIP else ""
     smp = f'<div class="smp">{E(sample)}</div>' if sample else ""
+    rep = f'<a class="rep" href="{E(report)}">View report</a>' if report else ""
     return (f'<header class="hd o1">{_avatar(pid, name, img)}<div class="hdt"><div class="nm"><span>{E(name)}</span>{chip}'
-            f'</div><div class="sb">{E(sub)}</div>{smp}</div>'
-            f'<a class="pen" data-pen="{E(pid)}" hidden aria-label="Edit notes and fields in the planner">{_PEN}</a></header>')
+            f'</div><div class="sb">{E(sub)}</div>{smp}</div>{rep}</header>')
 
 
 def _label(t):
@@ -237,13 +234,6 @@ def _card(anchor, head, plan, nums):
     right, under a header that spans both."""
     return (f'<article class="pc" id="{E(anchor)}">{head}<div class="plan">{"".join(plan)}</div>'
             f'<div class="nums">{"".join(nums)}</div></article>')
-
-
-def _more(anchor, name, sub, img, card_html):
-    """A squad (not XI) player: one row, the full card behind it."""
-    return (f'<details class="more" id="m-{E(anchor)}"><summary>{_avatar(anchor, name, img, "av sm")}'
-            f'<span class="t"><b>{E(name)}</b><span>{E(sub)}</span></span><span class="ch">›</span></summary>'
-            f'{card_html}</details>')
 
 
 # ── reels from the Pages packs' clip file ─────────────────────────────────────────────────────
@@ -363,7 +353,7 @@ def _bowler_sub(meta, plan, hand, new_ball_min):
     return " · ".join(bits[:2])
 
 
-def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_min, fmt, opp_short):
+def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_min, fmt, opp_short, report=""):
     word = "left-handers" if hand == "LHB" else "right-handers"
     sub = _bowler_sub(meta, plan, hand, new_ball_min)
     fmt_pl = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
@@ -375,8 +365,9 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
     if (x or {}).get("n_balls"):
         spin = x.get("spd_lo") is not None or not plan.get("pace", True)
         st = x.get("stumps") or {}
-        # the type's rate rides inside the value: as a label it wrapped to three lines (11-10-2026)
-        stumps = ((f'{st["rate"]:.1f}%<small class="ln">type {st["expected"]:.1f}</small>', "Hit the stumps")
+        # the type's rate rides inside the value: as a label it wrapped to three lines (11-10-2026).
+        # Named for what it is: "type 10.0" left Tom asking what it meant (10-11-2026)
+        stumps = ((f'{st["rate"]:.1f}%<small class="ln">type average {st["expected"]:.1f}%</small>', "Hit the stumps")
                   if st.get("rate") is not None and st.get("expected") is not None else (None, ""))
         if spin:
             spd = (f'{x["avg_spd"]:.0f}<small> {x["spd_lo"]:.0f}–{x["spd_hi"]:.0f}</small>'
@@ -403,10 +394,10 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
     elif not h2h:
         none = f"You v {opp_short}: no available footage."
     plan_half.append(_vision(reels, h2h, none, note))
-    return _card(f"b{bid}", _head(bid, meta["name"], img, tier, sub, sample), plan_half, nums)
+    return _card(f"b{bid}", _head(bid, meta["name"], img, tier, sub, sample, report), plan_half, nums)
 
 
-def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_short, source):
+def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_short, source, report=""):
     lhb = (meta.get("hand") or "").upper().startswith("L")
     role = (meta.get("role") or "").lower()
     sub = " · ".join([("Left-hander" if lhb else "Right-hander")]
@@ -421,14 +412,18 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
               else f"{'Only ' + format(n, ',') if n else 'No'} {fmt} balls v {glabel}")
     plan_half = [_notes_slot(bid), _field(bid, "Your field", _batter_field_opts(row, fmt, group, hand), hand, "batter")]
     nums = []
-    if not thin:
+    # a small sample still shows its numbers and pictures, under its "Only N balls" line (Tom, 10-11-2026)
+    if n:
         # under three dismissals there is no balls-per-dismissal figure; the count says why
         bpd = ((f'{x["bpd"]:.0f}', "Balls per dismissal") if x.get("bpd")
                else (f'{int(x.get("n_out") or 0)}', "Dismissals"))
         figs = [(_num(x.get("balls"), 0), "Balls"), (_num(x.get("average")), "Average"), bpd,
                 (_pct(x.get("false_pct"), 1), "False shots"), (_pct(x.get("off_pct")), "Runs off side")]
         if group.endswith("pace") and x.get("short_false") is not None:
-            figs.append((_pct(x["short_false"]), "False v short ball"))
+            # drawn on any sample since 10-11-2026, so it carries its own count
+            sb = x.get("short_balls")
+            figs.append((_pct(x["short_false"]) + (f'<small class="ln">of {sb:,} short</small>' if sb else ""),
+                         "False v short ball"))
         nums.append(_figures(figs))
         nums.append(_facts(x.get("facts")))
         nums.append(_wheel(bid, x, lhb, pics_url))
@@ -442,7 +437,48 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
     elif not h2h:
         none = f"You to {opp_short}: no available footage."
     plan_half.append(_vision(reels, h2h, none, note))
-    return _card(f"b{bid}", _head(bid, meta["name"], img, tier, sub, sample), plan_half, nums)
+    return _card(f"b{bid}", _head(bid, meta["name"], img, tier, sub, sample, report), plan_half, nums)
+
+
+# ── the web reports, copied in for the players ───────────────────────────────────────────────
+_BACK = re.compile(r"<a class='back' href='[^']*'>‹ [^<]*</a>")
+
+
+def _player_reports(slug, s_dir, coach_root):
+    """{(kind, id): href} for the web reports (report_web.py) copied under packs/<slug>/reports/.
+    Scouting is coaches only, so a card's View report opens a copy here (Tom, 10-11-2026). Each copy
+    reads its clip list and headshot from beside it, its way back returns to the page it was opened
+    from, and it never shows a way into the planner (`readOnly`, read by report_web.js)."""
+    src = os.path.join(coach_root or "", "coach", slug, "web")
+    if not coach_root or not os.path.isdir(src):
+        print(f"  ! no web reports at {src}: the cards carry no View report")
+        return {}
+    coach = os.path.dirname(src)
+    dst = os.path.join(s_dir, "reports")
+    os.makedirs(os.path.join(dst, "clips"), exist_ok=True)
+    out = {}
+    for f in sorted(os.listdir(src)):
+        m = re.match(r"(bowling|batting)_(\d+)\.html$", f)
+        if not m:
+            continue
+        h = open(os.path.join(src, f), encoding="utf-8").read()
+        for base in set(re.findall(r"\.\./reports/([\w.-]+\.clips\.json)", h)):
+            shutil.copy2(os.path.join(coach, "reports", base), os.path.join(dst, "clips", base))
+        h = h.replace("../reports/", "clips/")
+        for name in set(re.findall(r"\.\./img/([\w.-]+)", h)):
+            if not os.path.exists(os.path.join(s_dir, "img", name)) and os.path.exists(os.path.join(coach, "img", name)):
+                shutil.copy2(os.path.join(coach, "img", name), os.path.join(s_dir, "img", name))
+        for name in set(re.findall(r"""["']pics/([\w.-]+)""", h)):
+            os.makedirs(os.path.join(dst, "pics"), exist_ok=True)
+            if os.path.exists(os.path.join(src, "pics", name)):
+                shutil.copy2(os.path.join(src, "pics", name), os.path.join(dst, "pics", name))
+        h = _BACK.sub("<a class='back' href='../index.html' onclick='if(history.length>1){history.back();return false}'>"
+                      "‹ Back</a>", h, count=1)
+        h = h.replace("window.HP={", 'window.HP={"readOnly": true, ', 1)
+        open(os.path.join(dst, f), "w", encoding="utf-8").write(h)
+        out[(m.group(1), m.group(2))] = f"reports/{f}"
+    print(f"  {len(out)} web report(s) copied for the players -> {os.path.relpath(dst, HERE)}")
+    return out
 
 
 # ── pages ─────────────────────────────────────────────────────────────────────────────────────
@@ -471,26 +507,26 @@ def _player_head(name, img, sub, tabs, back_href, back_label):
             f'<nav class="ptabs">{t}</nav></div></header>')
 
 
-def _jump(chips, more):
-    """The opposition as a strip that stays put while the cards scroll, with a Squad chip for the
-    rest of them (11-10-2026). Written outside <main> so it can stick to the top of the page."""
+def _jump(chips):
+    """The opposition as a strip that stays put while the cards scroll, a chip per player, the likely
+    XI first (11-10-2026). Written outside <main> so it can stick to the top of the page."""
     if not chips:
         return ""
     a = "".join(f'<a href="#{E(a)}">{E(n)}</a>' for n, a in chips)
-    if more:
-        a += '<a class="rest" href="#also">Squad</a>'
     return f"<nav class='jump'><div class='in'>{a}</div></nav>"
 
 
 def _section(title, sub, xi_cards, more_cards):
+    """The likely XI, then the rest of the squad as the same full cards (Tom, 10-11-2026: they were
+    rows that opened, and should read like anyone else)."""
     s = f' <span>{E(sub)}</span>' if sub else ""
     out = f"<h2 class='sec'>{E(title)}{s}</h2>{''.join(xi_cards)}"
     if more_cards:
-        out += f"<h2 class='sec' id='also'>Also in the squad</h2><div class='mores'>{''.join(more_cards)}</div>"
+        out += f"<h2 class='sec' id='also'>Also in the squad</h2>{''.join(more_cards)}"
     return out
 
 
-def build(slug, out_root, only=None, clips_root=None):
+def build(slug, out_root, only=None, clips_root=None, coach_root=None):
     import build_player_site as BPS
     from build_coach_site import _series, _fmt_level, _opp_key, _about, _tiers
     from squads import roster
@@ -556,6 +592,8 @@ def build(slug, out_root, only=None, clips_root=None):
                     pass
         return f"img/{pid}.png" if os.path.exists(dst) else None
 
+    reports = _player_reports(slug, s_dir, coach_root or os.path.join(HERE, "coach_build"))
+
     # the script, under a URL that changes with its content
     shutil.copy2(PACK_JS, os.path.join(out_root, "packs", "pack.js"))
     js_v = _hash(PACK_JS)
@@ -563,7 +601,7 @@ def build(slug, out_root, only=None, clips_root=None):
     short = _short
 
     # opposition order: a batting pack opens on the new-ball bowlers, a bowling pack runs down the
-    # batting order (Tom, 06-10-2026); the likely XI as cards, the rest of the squad behind a row
+    # batting order (Tom, 06-10-2026); the likely XI first, then the rest of the squad
     def nb_of(bid):
         p = plans.get(bid) or {}
         v = p.get("new_ball") if p.get("new_ball") is not None else (about_bowl.get(bid) or {}).get("new_ball")
@@ -596,24 +634,20 @@ def build(slug, out_root, only=None, clips_root=None):
             tab_list = tab_list[1:] + tab_list[:1]           # a bowler's pack opens on bowling
 
         # ── the batting pack: their bowlers, to our batter's hand ────────────────────────────
-        xi, more, chips = [], [], []
+        xi, more, chips, more_chips = [], [], [], []
         for bid in bowl_order:
             meta, plan = about_bowl[bid] or {}, plans.get(bid) or {}
             x = ((extras["bowlers"].get(bid) or {}).get("hands") or {}).get(hand)
             tier = tiers.get(bid) or plan.get("tier") or ""
             c = bowler_card(bid, meta, plan, x, hand, clips, img(bid, meta.get("name")), "pics/", tier,
-                            new_ball_min, fmt, short(meta.get("name") or ""))
-            if tier == "xi":
-                xi.append(c)
-                chips.append((short(meta.get("name") or bid), f"b{bid}"))
-            else:
-                more.append(_more(bid, meta.get("name") or bid, _bowler_sub(meta, plan, hand, new_ball_min),
-                                  img(bid, meta.get("name")), c))
+                            new_ball_min, fmt, short(meta.get("name") or ""), reports.get(("bowling", str(bid)), ""))
+            (xi if tier == "xi" else more).append(c)
+            (chips if tier == "xi" else more_chips).append((short(meta.get("name") or bid), f"b{bid}"))
         hp = {"series": planner, "kind": "bat", "pid": str(pid), "hand": hand, "first": name.split()[0],
               "cardPack": f"vs_{hand.lower()}", "bandPack": "us_bat", "bandTitle": "From the batting coach"}
         body = (_player_head(name, my_img, f"{hand_word} · Batting pack",
                              [(lbl, h, h == bat_href) for lbl, h in tab_list], "index.html", series_name)
-                + _jump(chips, more)
+                + _jump(chips + more_chips)
                 + "<main class='wrap hpw'><section class='band-note' hidden></section>"
                 + _section("Their attack", f"{fmt_pl} · to {'left' if hand == 'LHB' else 'right'}-handers",
                            xi, more) + "</main>")
@@ -626,56 +660,50 @@ def build(slug, out_root, only=None, clips_root=None):
             ov = _load(os.path.join(DATA, f"overview_{group}_{opp}.json"), {}) or {}
             rows = {str(r.get("bid")): r for r in ov.get("rows") or []}
             glabel = _GROUP_LABEL.get(group, group)
-            xi, more, chips = [], [], []
+            xi, more, chips, more_chips = [], [], [], []
             for bid in bat_order:
                 meta = about_bat[bid] or {}
                 eb = extras["batters"].get(bid) or {}
                 x = (eb.get("groups") or {}).get(group)
                 tier = tiers.get(bid) or ""
                 c = batter_card(bid, meta, x, rows.get(bid), group, clips, img(bid, meta.get("name")), "pics/",
-                                tier, fmt, short(meta.get("name") or ""), eb.get("source"))
-                if tier == "xi":
-                    xi.append(c)
-                    chips.append((short(meta.get("name") or bid), f"b{bid}"))
-                else:
-                    lhb = (meta.get("hand") or "").upper().startswith("L")
-                    sub = " · ".join(["Left-hander" if lhb else "Right-hander"]
-                                     + ([meta["role"].lower()] if meta.get("role") else []))
-                    more.append(_more(bid, meta.get("name") or bid, sub, img(bid, meta.get("name")), c))
+                                tier, fmt, short(meta.get("name") or ""), eb.get("source"),
+                                reports.get(("batting", str(bid)), ""))
+                (xi if tier == "xi" else more).append(c)
+                (chips if tier == "xi" else more_chips).append((short(meta.get("name") or bid), f"b{bid}"))
             hp = {"series": planner, "kind": "bowl", "pid": str(pid), "group": group, "first": name.split()[0],
                   "cardPack": group, "bandPack": "us_bowl", "bandTitle": "From the bowling coach"}
             body = (_player_head(name, my_img, f"{glabel[:1].upper() + glabel[1:]} · Bowling pack",
                                  [(lbl, h, h == href) for lbl, h in tab_list], "index.html", series_name)
-                    + _jump(chips, more)
+                    + _jump(chips + more_chips)
                     + "<main class='wrap hpw'><section class='band-note' hidden></section>"
                     + _section("Their batters", f"{fmt_pl} · v {glabel}", xi, more) + "</main>")
             open(os.path.join(s_dir, href), "w", encoding="utf-8").write(
                 _page(f"{name} — bowling ({bt})", body, hp, js_v, fields_v, snippet))
             pages += 1
 
-    # ── the squad index ──────────────────────────────────────────────────────────────────────────
+    # ── the squad index: a list of names, each with its packs (Tom, 10-11-2026: as the old packs) ──
     groups = [("Batter", "Batters"), ("Wicketkeeper", "Wicketkeepers"), ("All-rounder", "All-rounders"),
               ("Bowler", "Bowlers")]
     known = {r for r, _ in groups}
-    tiles = []
+    lists = []
     for role, head in groups + [("", "Squad")]:
         rows = [r for r in index_rows if (r[2] == role if role else r[2] not in known)]
         if not rows:
             continue
-        def tile(pid, nm, rl, p, b):
-            packs = ["Batting"] + (["Bowling"] if len(b) == 1 else ["Pace and spin"] if b else [])
-            if b and rl == "Bowler":                     # a bowler's pack opens on bowling
-                href, packs = f"{p}-bowling-{b[0]}.html", packs[1:] + packs[:1]
-            else:
-                href = f"{p}-batting.html"
-            return (f'<a class="tile" href="{E(href)}">{_avatar(pid, nm, img(pid, nm), "av")}'
-                    f'<span><b>{E(nm)}</b><span>{E(" · ".join(packs))}</span></span></a>')
-        items = "".join(tile(*r) for r in rows)
-        tiles.append(f"<h2 class='sec'>{E(head)}</h2><div class='tiles'>{items}</div>")
+        def row(pid, nm, rl, p, b):
+            packs = [("Batting", f"{p}-batting.html")] + [
+                ("Bowling" if len(b) == 1 else f"Bowling: {bt.capitalize()}", f"{p}-bowling-{bt}.html") for bt in b]
+            chips = "".join(f'<a class="pk" href="{E(h)}">{E(lbl)}</a>' for lbl, h in packs)
+            return (f'<li><span class="who">{_avatar(pid, nm, img(pid, nm), "av")}'
+                    f'<span><b>{E(nm)}</b><span>{E(rl)}</span></span></span><span class="pks">{chips}</span></li>')
+        lists.append(f"<h2 class='sec'>{E(head)} <span>{len(rows)}</span></h2>"
+                     f"<ul class='roster'>{''.join(row(*r) for r in rows)}</ul>")
+    lead = " · ".join(x for x in (smeta.get("subtitle") or entry.get("subtitle") or "", "tap Batting or Bowling") if x)
     idx = (f"<header class='ph'><div class='in'><a class='back' href='../index.html'>‹ Series</a>"
            f"<div class='who'><div><h1>{E(series_name)}</h1>"
-           f"<div class='sb'>{E(entry.get('subtitle') or '')}</div></div></div></div></header>"
-           f"<main class='wrap hpw'>{''.join(tiles)}</main>")
+           f"<div class='sb'>{E(lead)}</div></div></div></div></header>"
+           f"<main class='wrap hpw'>{''.join(lists)}</main>")
     open(os.path.join(s_dir, "index.html"), "w", encoding="utf-8").write(_page(f"{series_name} — player packs", idx))
 
     # the list of series, rebuilt from what is on disk so a second series never drops the first
@@ -698,8 +726,9 @@ def main(argv=None):
     ap.add_argument("--out", default=os.path.join(HERE, "hub_pack_site"))
     ap.add_argument("--only", nargs="*", help="rebuild these of our players' pages, leave the rest")
     ap.add_argument("--clips", help="where the Pages packs were built (default player_site)")
+    ap.add_argument("--coach", help="the coach build holding coach/<slug>/web/ (default coach_build)")
     a = ap.parse_args(argv)
-    build(a.slug, a.out, only=set(a.only) if a.only else None, clips_root=a.clips)
+    build(a.slug, a.out, only=set(a.only) if a.only else None, clips_root=a.clips, coach_root=a.coach)
 
 
 if __name__ == "__main__":

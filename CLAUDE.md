@@ -1314,6 +1314,19 @@ row above:
   if `field_corrections.csv` or `field_menu.json` changes. `build_planner_batters.py --reseed`
   rewrites a manifest's starting fields in seconds without redrawing its wheels. Test cards carry no
   slots and read as before.
+- **An ODI card starts from three fields, Powerplay, Middle overs and Death** (Tom, 10-11-2026).
+  `whiteball_fields.ALTERNATIVES` drops the most-set alternatives for ODIs (T20 keeps them), and
+  **the remaining fields keep the slot numbers they had**, counted over the full list. Coaches had
+  saved fields in the old most-set slots (James Franklin on Root and Duckett, c2/c4/c6), so every
+  reader (`fields.js` fieldsFor, `hub_pack.js`, `coach_pack.js`, `coach_bowlers.js`, `report_web.js`)
+  now shows a saved field whose slot is no longer seeded, in its slot's place. Never renumber slots.
+- **England ODI's pace bowlers start from Gus Atkinson's card** (Tom, 10-11-2026: "I have set Gus
+  Atkinson as the default for batting plans to use"). `data/default_fields_england_odi.json` holds a
+  copy of the three fields per hand he left on that card (Powerplay the estimate he kept, Middle overs
+  and Death the ones he saved), and `whiteball_fields.with_defaults` puts them in each pace bowler's
+  Powerplay, Middle overs and Death slots. Spinners keep the estimate per phase. It is a copy, so a
+  later edit to his card moves nothing until the file is rewritten. `build_bowler_plans.py --reseed
+  --planner-out ~/fp_eng` rewrites the cards' file and the planner's `bowlers.json` in seconds.
 - **The fields are `field_engine.bowler_field`** — an estimate, said so on every card: the
   GPS-corrected stock for the type, our batter's hand and the phase (new ball = the first 30 overs,
   the bowling report's own split); the orthodox variant that fits where the runs off them go (pace,
@@ -1337,20 +1350,34 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
 
 - **A card is two halves** (Tom, 11-10-2026): the plan — the coaches' notes, the field, the vision —
   first on a phone and on the left on a laptop; the numbers — four to six figures, the facts, the
-  pictures — after. The header carries the sample ("Tests · 193 wickets to right-handers"), and a
-  pencil into the planner for a coach. A field the coaches set is marked (gold dot, "Set by the
+  pictures — after. The header carries the sample ("Tests · 193 wickets to right-handers") and a
+  View report button. A field the coaches set is marked (gold dot, "Set by the
   coaches · tags · date"); an estimate says "Estimated from the data". The opposition chips stay
-  pinned under the bar while the cards scroll. The likely XI as cards (new-ball bowlers first on a
-  batting pack, batting order on a bowling pack), the rest of the squad as rows that open into the
-  same card. No report link. Fielder labels are drawn a size up (`labelSize` in the planner's
+  pinned under the bar while the cards scroll. The likely XI first (new-ball bowlers first on a
+  batting pack, batting order on a bowling pack), then "Also in the squad" as the same full cards.
+  Fielder labels are drawn a size up (`labelSize` in the planner's
   `fields.js`): the planner's 7 px at 340 px wide was unreadable.
+- **Changes after the England ODI packs went live (Tom, 10-11-2026)**: nothing on a pack leads to
+  editing, for a coach either (no pencil, no "Add notes in the planner", no in-place top note), and a
+  note box with nothing in it is not shown. The squad players are full cards, not rows that open. A
+  small sample still shows its figures, wheel and pictures under its "Only N balls" line. The landing
+  page is the old packs' list of names, each with its Batting and Bowling links. The hit-the-stumps
+  figure reads "type average 10.0%", not "type 10.0".
+- **View report opens a copy of the web report inside the packs** (`_player_reports`, `--coach
+  coach_build`): Scouting is coaches only, so the players' login cannot open `coach/<slug>/web/`.
+  The copies sit in `packs/<slug>/reports/` with their clip lists in `reports/clips/`, go back to the
+  page they were opened from, and carry `HP.readOnly`, which `report_web.js` reads to offer no way
+  into the planner. **Build the web reports before the packs** (`report_web.py <slug>`), or the
+  cards carry no button.
 - **Built from**: `pack_extras_<opp>.json` (facts, figures, stumps, zones, pictures — the only new
   data), `bowler_plans_<opp>.json` and `overview_<group>_<opp>.json` (the estimated fields), the
   about file (order, types, clip scopes) and the Pages packs' clip sidecars, fetched at
   `/players/<slug>/<p>-clips.json`. So the Pages packs must be built (and uploaded) for the reels to play.
 - **From the planner when the page opens**, shared only: the card notes and fields (`vs_rhb`/`vs_lhb` for
   their bowlers, the group key for their batters) and the note at the top (`us_bat`/`us_bowl`, keyed by
-  our player). A coach edits the top note in place; card notes and fields are edited in the planner.
+  our player). Card notes and fields are written in the planner. The top note's only editor was in
+  place on the pack, and it went with the other edit links on 10-11-2026, so none can be written
+  until the planner offers one (none had been, as of that day).
 - **The page carries `<!--hub-bar-->`**, which `hubstyle.dress` fills with the hub's bar and does
   nothing else to — so it must never carry `<div class="crumb">`, `@page` or the vision gallery's
   background, or the old-page restyle would be laid over it.

@@ -16,6 +16,7 @@
   const state = { g: (PK.groups && PK.groups[0] || {}).key, chip: {}, planner: {} };   // planner: group -> {saved, notes}
   const labelOf = g => ((PK.groups || []).find(x => x.key === g) || {}).long || g;
   const subs = () => (PK.groups || []).map(x => x.key);
+  const SLOTS = ["option1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"];   // the planner's seeded slots, in order
 
   function dayFirst(iso) {
     if (!iso) return "";
@@ -52,10 +53,11 @@
   // The short ball is a pace question, so the Spin pack has five figures, not six.
   const shortBall = () => PK.pack !== "spin";
   function fig(v, k, small) { return `<div class="fig"><div class="v${small ? " sm" : ""}">${v}</div><span class="k">${k}</span></div>`; }
-  function figures(t, thin, g) {
+  // Drawn however few the balls (Tom, 10-11-2026): the balls figure states the sample. Only the plan
+  // line, a claim, still needs PK.minBalls.
+  function figures(t) {
     if (!t) return "";
     const cls = shortBall() ? "figs" : "figs f5";
-    if (thin) return `<div class="${cls}">${fig(n(t.balls), "balls")}<div class="fig" style="grid-column:span ${shortBall() ? 5 : 4}"><div class="v sm muted">Too few balls vs ${esc(labelOf(g))} to rate.</div></div></div>`;
     const bpd = t.bpd ? Math.round(t.bpd) : `<span class="muted">${t.n_out} out</span>`;
     return `<div class="${cls}">${fig(n(t.balls), "balls")}${fig(bpd, "BPD")}${fig(t.false_pct != null ? Number(t.false_pct).toFixed(1) + "%" : "—", "false shot")}`
       + `${fig(t.area ? esc(t.area) : "—", "scores mostly", true)}`
@@ -79,15 +81,19 @@
     if (autos.some(c => c.slot)) {
       /* White-ball (30-10-2026): every auto field was seeded into the planner in its own slot, so it
          reads as the planner does. A field saved in a slot replaces that one, a slot a coach deleted
-         stays gone, the coaches' other fields follow. */
+         stays gone, the coaches' other fields follow. A field saved in a slot that is no longer
+         seeded (the ODI most-set alternatives, 10-11-2026) still shows in its slot's place. */
       const st = state.planner[g] || {};
       const slotOf = f => f.seed || (f.option1 ? "option1" : "");
       const gone = s => s === "option1" ? (st.option1Saved || []).includes(b.id) : (st.seededSaved || []).includes(`${b.id}|${s}`);
+      const rank = s => { const i = SLOTS.indexOf(s); return i < 0 ? SLOTS.length : i; };
+      const slots = [...new Set(autos.map(c => c.slot).concat(saved.map(slotOf).filter(Boolean)))]
+        .sort((p, q) => rank(p) - rank(q));
       options = [];
-      autos.forEach(c => {
-        const got = saved.find(f => slotOf(f) === c.slot);
+      slots.forEach(s => {
+        const got = saved.find(f => slotOf(f) === s), c = autos.find(a => a.slot === s);
         if (got) options.push(coachOpt(got));
-        else if (!gone(c.slot)) options.push(autoOpt(c));
+        else if (c && !gone(s)) options.push(autoOpt(c));
       });
       options = options.concat(saved.filter(f => !slotOf(f)).map(coachOpt));
       linkText = saved.length ? "Open in the planner" : "Set a field in the planner";
@@ -126,7 +132,7 @@
     return `<article class="pcard" data-b="${esc(b.id)}" id="b${esc(b.id)}">
       <div>
         <div class="who">${head}<div><h3>${esc(b.name)}${b.tier ? `<span class="tier ${esc(b.tier)}">${esc(b.chip)}</span>` : ""}</h3><div class="hand">${esc(b.hand)}${b.role ? " · " + esc(b.role) : ""}</div></div></div>
-        ${figures(row.threat, thin, g)}
+        ${figures(row.threat)}
         <div class="notes"><span class="lbl">Coaches' notes</span>${notes ? `<ul>${notes.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="none">None yet${PK.planner ? " — add them in the planner." : "."}</p>`}</div>
         <div class="scout"><span class="lbl">Scouting notes</span><p class="plan">${plan}</p></div>
         <div class="acts">${b.vision && row.balls && !thin ? `<a href="${esc(b.vision)}">${PLAY} Vision</a>` : ""}${b.report ? `<a class="solid" href="${esc(b.report)}">View report</a>` : ""}</div>

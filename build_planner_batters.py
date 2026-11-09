@@ -5,8 +5,8 @@ individual-opposition decks (`scripts/export_field_planner.py`). A white-ball se
 so the Bowling plans cards had nowhere to set a field (Tom, 29-10-2026). This writes the same
 `fieldplanner/<planner series>/manifest.json` from our own data instead: a pack per bowler type the
 coach view shows, a card per opposition batter (headshot, sample line, the runs-by-area wheel and the
-spider), and the GPS-measured fields for that type and the batter's hand, one per phase and its
-most-set alternative (whiteball_fields.phase_fields). The first is Option 1 and the rest follow as
+spider), and the GPS-measured fields for that type and the batter's hand, one per phase, and for a
+T20 its most-set alternative (whiteball_fields.phase_fields). The first is Option 1 and the rest follow as
 seeded slots, so each is a starting point a coach can edit or delete (Tom, 30-10-2026). The slots are
 the cards' own (build_coach_site, build_hub_packs), so a field saved here replaces the one on the card.
 
@@ -28,7 +28,8 @@ sys.path.insert(0, HERE)
 GROUP_WORDS = {"right_pace": "right-arm pace", "left_pace": "left-arm pace", "off_spin": "off spin",
                "left_orthodox": "left-arm orthodox", "leg_spin": "leg spin", "left_unorthodox": "left-arm wrist spin"}
 FMT_WORD = {"ODI": "ODIs", "T20": "T20s"}
-MIN_WHEEL = 30          # legal balls against the type before a wheel says anything
+# No floor on the wheels (Tom, 10-11-2026: "even if the sample is small, draw them anyway"): a batter
+# with one ball against the type gets both, and the sample line says how many balls they are drawn from.
 
 
 def build(slug, out_root):
@@ -84,7 +85,7 @@ def build(slug, out_root):
             seen[g] = len(rows)
             words = f"{FMT_WORD[FMT]} v {GROUP_WORDS[g]}, career"
             wheels, note = {}, ""
-            if len(rows) >= MIN_WHEEL:
+            if rows:
                 try:
                     name_a = f"{g}_{pid}_zones.webp"      # a new name for the green wheel: browsers keep images a day
                     open(os.path.join(img, name_a), "wb").write(_webp(_zones_png(rows, lhb), WHEEL_PX))
@@ -98,9 +99,10 @@ def build(slug, out_root):
                 except Exception as e:
                     print(f"  ! wheels {name} {g}: {type(e).__name__}: {str(e)[:60]}")
             else:
-                note = f"{len(rows)} {FMT_WORD[FMT]} balls v {GROUP_WORDS[g]}, too few to draw"
+                note = f"No {FMT} balls v {GROUP_WORDS[g]}"
             packs[g].append({"player_id": pid, "name": name, "hand": hand.upper(), "notes": [],
-                             "sample": f"{words} · {runs:,} runs off {len(rows):,} balls" if rows else "",
+                             "sample": (f"{words} · {runs:,} run{'' if runs == 1 else 's'} off "
+                                        f"{len(rows):,} ball{'' if len(rows) == 1 else 's'}") if rows else "",
                              "wheels": wheels, "wheel_note": note, "headshot": head,
                              **planner_seeds(phase_fields(FMT, g, hand.upper()))})
         print(f"  {name:22} {hand:4} " + " · ".join(f"{g} {n}" for g, n in seen.items()), flush=True)
@@ -109,7 +111,8 @@ def build(slug, out_root):
            "title": entry.get("name") or slug, "venue": "",
            "exported_utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
            "source": "playerprofile build_planner_batters.py (no decks): the starting fields are the "
-                     "GPS-measured fields for the type and hand, one per phase and its most-set alternative",
+                     "GPS-measured fields for the type and hand, one per phase (and its most-set alternative "
+                     "where whiteball_fields offers one)",
            "geometry": {"note": "angle: degrees from straight, + = batter's off side, +/-180 behind the "
                                 "keeper. Radius: 0 at the bat, 1 at the rope in that direction. Batter-relative."},
            "packs": [{"key": g, "label": GROUP_WORDS[g][:1].upper() + GROUP_WORDS[g][1:], "bowler_type": GROUP_WORDS[g],
@@ -137,7 +140,8 @@ def reseed(path):
         for b in p["batters"]:
             b.update(planner_seeds(phase_fields(m["format"], p["key"], b["hand"])))
     m["source"] = ("playerprofile build_planner_batters.py (no decks): the starting fields are the "
-                   "GPS-measured fields for the type and hand, one per phase and its most-set alternative")
+                   "GPS-measured fields for the type and hand, one per phase (and its most-set alternative "
+                   "where whiteball_fields offers one)")
     json.dump(m, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     n = sum(len(b["auto_fields"]) for p in m["packs"] for b in p["batters"])
     print(f"reseeded {path}: {n} starting fields")

@@ -12,7 +12,17 @@ So a card gets, per phase, the GPS-corrected field, and the menu's most-set fiel
 Neither is adjusted to the individual player, and every option says so. Both are how AUSTRALIA sets
 fields: on their bowlers' cards that is a reference for the type, not a read of what that bowler's
 captain does.
+
+An ODI card offers three fields, Powerplay, Middle overs and Death (Tom, 10-11-2026): the most-set
+alternatives are not offered. They keep their slot numbers all the same, so every field keeps the
+planner slot it was seeded into and a coach's field saved in a most-set slot still shows (the pages
+show a saved field whose slot is no longer seeded). A series can also name its own starting fields
+for its pace bowlers (`data/default_fields_<opp>.json`, `with_defaults`): England ODI's are the three
+Tom set on Gus Atkinson's card.
 """
+import json
+import os
+
 from cricket_core import fields as F
 from cricket_core.lookups import FIELD_POS, field_coords
 
@@ -23,6 +33,10 @@ MENU = {"right_pace": "RA pace", "left_pace": "LA pace", "off_spin": "Off spin",
         "left_orthodox": "SLA orthodox", "leg_spin": "Leg spin", "left_unorthodox": "SLA unorthodox"}
 PHASES = {"ODI": (("odi", "pp1", "Powerplay"), ("odi", "middle", "Middle overs"), ("odi", "death", "Death")),
           "T20": (("t20", "powerplay", "Powerplay"), ("t20", "middle", "Middle overs"), ("t20", "death", "Death"))}
+# whether a card also offers each phase's most-set field (Tom, 10-11-2026: not for ODIs)
+ALTERNATIVES = {"ODI": False, "T20": True}
+PACE = ("right_pace", "left_pace")
+DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
 _CHECKED = False
@@ -83,9 +97,37 @@ def phase_fields(fmt, group, hand, menu=True):
                         f"Australia's most-set field in this cell, from GPS: {top['name']}"
                         + (f", set {pct:.0f}% of the time" if pct is not None else "")
                         + " (not adjusted to this player)."})
+    # slots are numbered over the whole list, alternatives included, so dropping them moves no field
     for i, c in enumerate(out):
         c.update({"slot": "option1" if i == 0 else f"c{i + 1}", "spare": None, "spare_name": "",
                   "adjusted": False, "notes": []})
+    if menu and not ALTERNATIVES[fmt]:
+        out = [c for c in out if not c["label"].endswith("· most set")]
+    return out
+
+
+def series_defaults(opp):
+    """{hand: {phase label: fielders}} for a series' pace bowlers, or {} when it names none."""
+    path = os.path.join(DATA, f"default_fields_{opp}.json")
+    if not os.path.exists(path):
+        return {}
+    return (json.load(open(path, encoding="utf-8")).get("pace") or {})
+
+
+def with_defaults(cats, opp, group, hand):
+    """A pace bowler's phase fields with the series' own starting fields in place of the estimates,
+    each in the slot its phase was seeded into. A spinner's, or a series with none, are unchanged."""
+    d = series_defaults(opp).get(hand) if group in PACE else None
+    if not d:
+        return cats
+    out = []
+    for c in cats:
+        own = d.get(c["label"])
+        if own:
+            c = dict(c, fielders=[dict(p) for p in own], basis=(
+                "The series' starting field for pace in this phase, set by the coaches on "
+                f"{d.get('_from') or 'one card'} (not adjusted to this bowler)."))
+        out.append(c)
     return out
 
 

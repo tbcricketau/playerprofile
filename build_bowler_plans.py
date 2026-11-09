@@ -200,8 +200,8 @@ def build(slug, planner_out=None, only=None):
                              "spare_name": FE.pretty_position(fs["spare"]) if spare_i is not None else "",
                              "adjusted": fs.get("adjusted"), "balls": fs.get("legal"), "notes": fs.get("notes") or []})
             if white:                          # GPS-measured white-ball fields per phase (whiteball_fields)
-                from whiteball_fields import phase_fields
-                cats = phase_fields(FMT, group, h)
+                from whiteball_fields import phase_fields, with_defaults
+                cats = with_defaults(phase_fields(FMT, group, h), _opp_key(slug), group, h)
             b["hands"][h] = {
                 "n_balls": P.get("n_balls"), "n_wkts": P.get("n_wkts"), "runs": P.get("runs"),
                 "economy": P.get("economy"), "bowl_avg": P.get("bowl_avg"), "strike_rate": P.get("strike_rate"),
@@ -307,12 +307,67 @@ def _planner_export(slug, entry, out, root):
     print(f"planner export: {len(rows)} bowlers -> {base}")
 
 
+def reseed(slug, planner_out=None):
+    """Rewrite a white-ball series' starting fields in place, in the cards' file and (given the
+    planner's folder) its bowlers.json, from whiteball_fields, with no warehouse read. Every other
+    value in both files is left as it was (10-11-2026)."""
+    from build_coach_site import _series, _opp_key
+    from whiteball_fields import phase_fields, with_defaults
+    entry, opp = _series(slug), _opp_key(slug)
+    path = os.path.join(DATA, f"bowler_plans_{opp}.json")
+    doc = json.load(open(path, encoding="utf-8"))
+    FMT = doc.get("format") or "Test"
+    if FMT == "Test":
+        raise SystemExit(f"{slug} is a Test series: its fields come from field_engine, not whiteball_fields")
+    seeds = {}
+    for bid, b in doc["bowlers"].items():
+        if b.get("error") or not b.get("group"):
+            continue
+        for h, x in (b.get("hands") or {}).items():
+            x["fields"] = with_defaults(phase_fields(FMT, b["group"], h), opp, b["group"], h)
+            seeds[(bid, h)] = x["fields"]
+    json.dump(doc, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False, default=str)
+    print(f"reseeded {os.path.relpath(path, HERE)}: {len(seeds)} bowler-hands")
+    if planner_out:
+        man_path = os.path.join(os.path.expanduser(planner_out), "fieldplanner", entry["planner_series"], "bowlers.json")
+        man = json.load(open(man_path, encoding="utf-8"))
+        n = 0
+        for row in man["bowlers"]:
+            if not row.get("headshot"):                   # a headshot found since the export (10-11-2026)
+                try:
+                    from photos import get_photo_bytes
+                    data = get_photo_bytes(row["player_id"], fmt="test", name=row["name"])
+                    if data:
+                        name = f"bowler_{row['player_id']}.webp"
+                        open(os.path.join(os.path.dirname(man_path), "img", name), "wb").write(_webp(data, 132))
+                        row["headshot"] = f"img/{name}"
+                        print(f"  headshot added: {row['name']}")
+                except Exception as e:
+                    print(f"  ! headshot {row['name']}: {type(e).__name__}")
+            for h, x in (row.get("hands") or {}).items():
+                cats = seeds.get((str(row["player_id"]), h))
+                if cats is None:
+                    continue
+                x["fields"] = [{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
+                                "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
+                               for c in cats if len(c["fielders"]) == 9]
+                n += len(x["fields"])
+        json.dump(man, open(man_path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+        print(f"reseeded {man_path}: {n} starting fields")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--slug", required=True, help="the squad slug, as in series.json")
     ap.add_argument("--planner-out", help="also write the field planner's bowler side under this directory")
     ap.add_argument("--only", action="append", default=[], metavar="ID", help="just these bowlers (repeatable)")
+    ap.add_argument("--reseed", action="store_true",
+                    help="white-ball only: rewrite the starting fields in place (the cards' file and, with "
+                         "--planner-out, the planner's bowlers.json), no warehouse")
     a = ap.parse_args()
+    if a.reseed:
+        reseed(a.slug, a.planner_out)
+        return
     build(a.slug, a.planner_out, set(a.only) or None)
     if a.planner_out:                   # the wheels went through kaleido: leave without its exit hang
         from report import finish_rendering

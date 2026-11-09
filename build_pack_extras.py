@@ -25,6 +25,14 @@ their notes.
 
 `--before` cuts every match on or after that day, as build_overview does: during a series, pass the
 first Test's date so the packs do not quietly re-point at the game just played.
+
+Small samples are drawn and counted (Tom, 10-11-2026: "even if the sample is small, draw them
+anyway"). Every type a batter has faced at least one ball of gets its figures, zones, wheel and
+pictures, and every bowler's wicket balls are drawn from the first one. Each entry keeps its ball
+count so the card states its sample. What still needs a sample is a generated claim: the facts
+(where their record is weakest, how they get out) need MIN_BALLS against the type, and balls per
+dismissal needs three dismissals. An entry under MIN_BALLS carries `thin: true` to say its facts
+were withheld, not its numbers.
 """
 import argparse
 import datetime
@@ -37,10 +45,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "data")
 sys.path.insert(0, HERE)
 
-MIN_BALLS = 60           # as build_overview: below this against a type there is no card to set
-MIN_PICS = 5             # wicket / dismissal balls before a picture says anything
-_MIN_SHORT_BALLS = 40    # as build_overview._short_read
-_MIN_OUTS_FOR_BPD = 3    # as build_overview._threat
+MIN_BALLS = 60           # as build_overview: the generated facts (claims) need this against a type.
+                         # The figures, zones and pictures do not (Tom, 10-11-2026)
+_MIN_OUTS_FOR_BPD = 3    # under three dismissals there is no balls-per-dismissal figure
 _SPIN = {"off_spin", "leg_spin", "left_orthodox", "left_unorthodox", "spin"}
 _LABEL = {"right_pace": "right-arm pace", "left_pace": "left-arm pace", "off_spin": "off spin",
           "leg_spin": "leg spin", "left_orthodox": "left-arm orthodox", "left_unorthodox": "left-arm wrist spin",
@@ -59,11 +66,12 @@ def _cut(rows, before):
 
 
 def _pics(kind_rows, out_dir, stem, lhb, spin, wheel_rows=None):
-    """Render the pictures for one card; returns {kind: filename} for those drawn."""
+    """Render the pictures for one card; returns {kind: filename} for those drawn. The pitch map
+    and beehive are drawn from the first wicket or dismissal ball, the wheel from the first ball."""
     from cricket_core import cricviz
     out = {}
     os.makedirs(out_dir, exist_ok=True)
-    if len(kind_rows) >= MIN_PICS:
+    if kind_rows:
         marked = [dict(r, striker_dismissed="1") for r in kind_rows]
         bands = {"bands": cricviz.SPIN_BANDS} if spin else {}
         for kind, opts in (("pitch", dict(metrics=False, **bands)), ("bee", {})):
@@ -116,35 +124,42 @@ def batter_entry(bid, meta, groups, fmt, level, before, pic_dir, source="warehou
         P = build_batter_profile(bid, raw=raw, group=g, fmt=fmt, level=level, source=source)
         balls = int(P.get("n_balls") or 0)
         e["is_lhb"] = bool(P.get("is_lhb"))
-        if balls < MIN_BALLS:
-            e["groups"][g] = {"balls": balls, "thin": True}
+        if not balls:
+            e["groups"][g] = {"balls": 0, "thin": True}
             continue
-        if g in _SPIN and g != "spin" and baseline is None:
-            try:
-                baseline = build_batter_profile(bid, raw=raw, group="spin", fmt=fmt, level=level,
-                                                source=source).get("dims") or {}
-            except Exception:
-                baseline = {}
-        facts = plan_facts(P, baseline=baseline if g in _SPIN else None)
-        gd = P.get("grid_danger")
-        if gd:
-            facts.append({"label": "Out most to",
-                          "text": f"<b>{gd['length_band'].lower()} {gd['line_region']}</b> · "
-                                  f"{gd['dismissal_per100']:.1f} per 100 balls"})
-        ph = P.get("phase") or {}
-        es, ss = ph.get("early"), ph.get("set")
-        if (es and ss and es.get("dismissal_per100") and ss.get("dismissal_per100")
-                and es["dismissal_per100"] >= 1.4 * ss["dismissal_per100"]):
-            facts.append({"label": "First 30 balls", "text": early_line(es, ss)[len("First 30 balls: "):].rstrip(".")})
+        # The facts are claims about where their record is weakest, so they still need MIN_BALLS.
+        # The figures, zones and pictures below are drawn however few the balls (Tom, 10-11-2026)
+        thin = balls < MIN_BALLS
+        facts = []
         dis = P.get("dismissals") or {}
         n = sum(dis.values()) if dis else 0
-        if n:
-            mode, c = max(dis.items(), key=lambda kv: kv[1])
-            facts.append({"label": "How out", "text": f"{mode} {c / n * 100:.0f}%"})
+        if not thin:
+            if g in _SPIN and g != "spin" and baseline is None:
+                try:
+                    baseline = build_batter_profile(bid, raw=raw, group="spin", fmt=fmt, level=level,
+                                                    source=source).get("dims") or {}
+                except Exception:
+                    baseline = {}
+            facts = plan_facts(P, baseline=baseline if g in _SPIN else None)
+            gd = P.get("grid_danger")
+            if gd:
+                facts.append({"label": "Out most to",
+                              "text": f"<b>{gd['length_band'].lower()} {gd['line_region']}</b> · "
+                                      f"{gd['dismissal_per100']:.1f} per 100 balls"})
+            ph = P.get("phase") or {}
+            es, ss = ph.get("early"), ph.get("set")
+            if (es and ss and es.get("dismissal_per100") and ss.get("dismissal_per100")
+                    and es["dismissal_per100"] >= 1.4 * ss["dismissal_per100"]):
+                facts.append({"label": "First 30 balls", "text": early_line(es, ss)[len("First 30 balls: "):].rstrip(".")})
+            if n:
+                mode, c = max(dis.items(), key=lambda kv: kv[1])
+                facts.append({"label": "How out", "text": f"{mode} {c / n * 100:.0f}%"})
         rows = [r for r in (P.get("raw") or []) if r.get("is_legal")]
         sq = [r for r in (P.get("raw") or []) if r.get("has_shot_q")]     # as build_overview._threat
-        short = next((d for d in ((P.get("dims") or {}).get("length") or [])
-                      if str(d.get("bucket", "")).lower() == "short"), None)
+        # the short ball from the rows, not from `dims`, which drops a length band under 40 balls.
+        # Same false-shot test as batter_profile._split_stats, and the count goes with it
+        short = [r for r in (P.get("raw") or []) if r.get("length_band") == "Short"]
+        short_q = [r for r in short if r.get("has_shot_q")]
         n_out = int(P.get("n_out") or 0)
         zones = {}
         for r in rows:
@@ -153,12 +168,13 @@ def batter_entry(bid, meta, groups, fmt, level, before, pic_dir, source="warehou
                 k = charts.wagon_sector(r, bool(P.get("is_lhb")))
                 if k:
                     zones[k] = zones.get(k, 0) + runs
-        x = {"balls": balls, "average": P.get("average"), "n_out": n_out,
+        x = {"balls": balls, "thin": thin, "average": P.get("average"), "n_out": n_out,
              "bpd": (balls / n_out) if n_out >= _MIN_OUTS_FOR_BPD else None,
              "false_pct": (100 * sum(1 for r in sq if r.get("is_false_shot")) / len(sq)) if sq else None,
              "off_pct": (P.get("dir_pct") or {}).get("off"),
-             "short_false": (short["false_pct"] if short and short.get("balls", 0) >= _MIN_SHORT_BALLS
-                             and short.get("false_pct") is not None else None),
+             "short_false": (100 * sum(1 for r in short_q if r.get("is_false_shot")) / len(short_q)
+                             if short_q else None),
+             "short_balls": sum(1 for r in short if r.get("is_legal")),
              "facts": facts, "zones": zones, "n_dismissals": n, "pics": {}}
         if pics:
             outs = [r for r in rows if r.get("is_out") or r.get("is_wicket")

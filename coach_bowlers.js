@@ -30,21 +30,28 @@
   // ── the coaches' notes and fields, from the planner's page for this hand ────────────────
   const plannerState = () => state.planner[handOf(state.h).page];
   /* The options in the planner's own order: each category as the coaches saved it, else as
-     generated (a category a coach deleted stays gone), then the coaches' other fields. */
+     generated (a category a coach deleted stays gone), then the coaches' other fields. A field
+     saved in a slot that is no longer seeded (the ODI most-set alternatives, 10-11-2026) still
+     shows in its slot's place. */
+  const SLOTS = ["option1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"];
   function optionsFor(b, x) {
     const st = plannerState() || {}, mine = (st.saved || []).filter(f => f.batter_id === b.id);
     const slotOf = f => f.seed || (f.option1 ? "option1" : "");
     const gone = s => s === "option1" ? (st.option1Saved || []).includes(b.id) : (st.seededSaved || []).includes(`${b.id}|${s}`);
+    const rank = s => { const i = SLOTS.indexOf(s); return i < 0 ? SLOTS.length : i; };
+    const fields = x.fields || [];
+    const slots = [...new Set(fields.map(c => c.slot).concat(mine.map(slotOf).filter(Boolean)))]
+      .sort((p, q) => rank(p) - rank(q));
     const coach = f => ({ name: f.name, plan: f.plan, tags: f.tags || [], spare: spareOf(f.plan), notes: [], coach: true,
       title: `Set by ${f.updated_by || f.owner_name || ""} · ${dayFirst(f.updated_utc)}${f.private ? " · private draft" : ""}` });
     const auto = c => ({ name: c.label, plan: { fielders: c.fielders, arrows: [], spare: c.spare }, tags: [],
       spare: c.spare_name || spareOf({ fielders: c.fielders, spare: c.spare }), notes: c.notes || [], adjusted: c.adjusted,
       basis: c.basis || "", title: "" });
     const out = [];
-    (x.fields || []).forEach(c => {
-      const got = mine.find(f => slotOf(f) === c.slot);
+    slots.forEach(s => {
+      const got = mine.find(f => slotOf(f) === s), c = fields.find(a => a.slot === s);
       if (got) out.push(coach(got));
-      else if (!gone(c.slot) && c.fielders && c.fielders.length) out.push(auto(c));
+      else if (c && !gone(s) && c.fielders && c.fielders.length) out.push(auto(c));
     });
     return out.concat(mine.filter(f => !slotOf(f)).map(coach));
   }

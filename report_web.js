@@ -78,18 +78,23 @@
 
   /* As the packs: a coaches' field saved in a category replaces the estimate, a category the
      coaches deleted stays gone, any other field they set follows. A batter's fields read the same
-     way when they carry planner slots (white-ball, 30-10-2026). */
+     way when they carry planner slots (white-ball, 30-10-2026). A coaches' field saved in a slot
+     that is no longer seeded (the ODI most-set alternatives, 10-11-2026) still shows in its place. */
+  const SLOTS = ["option1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"];
   function options(box) {
     const bid = box.dataset.fb, auto = JSON.parse(box.dataset.opts || "[]"), st = state.packs[box.dataset.pack];
     const mine = ((st && st.saved) || []).filter(f => f.batter_id === bid && !f.private);
     if (box.dataset.kind === "bowler" || auto.some(c => c.slot)) {
       const slotOf = f => f.seed || (f.option1 ? "option1" : "");
       const gone = s => s === "option1" ? ((st && st.option1Saved) || []).includes(bid) : ((st && st.seededSaved) || []).includes(`${bid}|${s}`);
+      const rank = s => { const i = SLOTS.indexOf(s); return i < 0 ? SLOTS.length : i; };
+      const slots = [...new Set(auto.map(c => c.slot).concat(mine.map(slotOf).filter(Boolean)))]
+        .sort((a, b) => rank(a) - rank(b));
       const out = [];
-      auto.forEach(c => {
-        const got = mine.find(f => slotOf(f) === c.slot);
+      slots.forEach(s => {
+        const got = mine.find(f => slotOf(f) === s), c = auto.find(a => a.slot === s);
         if (got) out.push(coachOpt(got));
-        else if (!(st && gone(c.slot))) out.push(autoOpt(c));
+        else if (c && !(st && gone(s))) out.push(autoOpt(c));
       });
       return out.concat(mine.filter(f => !slotOf(f)).map(coachOpt));
     }
@@ -129,10 +134,11 @@
     return (lines || []).filter(l => String(l).trim());
   }
   /* A coach sees a dashed box where nothing is written, with a way into the planner; anyone else
-     sees the notes only when some are written. */
+     sees the notes only when some are written. The players' copies in the packs carry `readOnly`
+     and offer no way into the planner, to a coach either (Tom, 10-11-2026). */
   function drawNotes() {
     document.querySelectorAll("[data-notes]").forEach(el => {
-      const st = state.packs[el.dataset.pack], coach = !!(st && st.canEdit);
+      const st = state.packs[el.dataset.pack], coach = !!(st && st.canEdit) && !HP.readOnly;
       const bid = el.dataset.notes, lines = notesOf(st, bid);
       // an optional box (all bowling, one per type) shows only when written, coach or not
       if (!lines.length && (!coach || el.dataset.optional)) { el.hidden = true; return; }
