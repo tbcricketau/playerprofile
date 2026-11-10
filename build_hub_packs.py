@@ -247,7 +247,7 @@ def _summary(anchor, name, sub, img, tier, facts, buttons, h2h, h2h_label, star_
             else f"{h2h_label}: no available footage." if not h2h else None)
     return (f'<details class="opp" id="{E(anchor)}"><summary>{_avatar(anchor, name, img, "av sm")}'
             f'<span class="t"><span class="nm"><b>{E(name)}</b>{chip}</span><span>{E(sub)}</span></span>'
-            f'<a class="rep" href="{E(detail)}" onclick="event.stopPropagation()">View report</a></summary>'
+            f'<a class="rep" href="{E(detail)}" onclick="event.stopPropagation()">View coach notes and fields</a></summary>'
             f'<div class="sbody">{pts}{_notes_slot(anchor[1:])}{_vision(buttons, h2h, none, star_note)}</div></details>')
 
 
@@ -357,15 +357,9 @@ def _batter_field_opts(row, fmt="Test", group="", hand="RHB"):
 
 # ── the two kinds of card ─────────────────────────────────────────────────────────────────────
 def _bowler_sub(meta, plan, hand, new_ball_min):
-    typ = _TYPE_LABEL.get(str(meta.get("type") or plan.get("type") or "").lower(), meta.get("type") or "Bowler")
-    bits = [typ]
-    nb = plan.get("new_ball") if plan.get("new_ball") is not None else meta.get("new_ball")
-    if nb is not None and nb >= new_ball_min:
-        bits.append(f"new ball in {nb:.0f}% of innings")
-    rnd = meta.get("round_lhb" if hand == "LHB" else "round_rhb")
-    if rnd is not None and rnd >= 20:
-        bits.append(f"{rnd:.0f}% round the wicket")
-    return " · ".join(bits[:2])
+    """The line under a bowler's name: their type and nothing else (Tom, 10-11-2026). The summary
+    points carry the new ball and, where the angle matters, over and round the wicket."""
+    return _TYPE_LABEL.get(str(meta.get("type") or plan.get("type") or "").lower(), meta.get("type") or "Bowler")
 
 
 def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_min, fmt, opp_short, report=""):
@@ -515,6 +509,8 @@ def build(slug, out_root, only=None, clips_root=None):
     plans = plans_doc.get("bowlers") or {}
     new_ball_min = plans_doc.get("new_ball_min") or 10
     about_bowl, about_bat = _about(slug)
+    # white-ball: each bowler's usual overs per phase (build_over_split.py), the summary's second point
+    splits = (_load(os.path.join(DATA, f"over_split_{opp}.json"), {}) or {}).get("bowlers") or {}
     tiers = _tiers(entry)
     squads = _load(os.path.join(HERE, "squads.json"), {})
     players = _load(os.path.join(HERE, "players.json"), {})
@@ -622,6 +618,10 @@ def build(slug, out_root, only=None, clips_root=None):
             # the summary points, as the old packs read them: the about facts, and the over/round
             # split where the angle matters to this hand (build_player_site._over_round_point)
             facts = list(meta.get("facts") or [])
+            # the usual overs per phase, straight after the speeds (Tom, 10-11-2026)
+            over_split = (splits.get(str(bid)) or {}).get("text")
+            if over_split:
+                facts.insert(1 if facts else 0, over_split)
             orp = BPS._over_round_point(meta, hand.lower())
             if orp:
                 facts.append(orp)
