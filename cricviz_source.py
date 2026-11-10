@@ -370,8 +370,10 @@ def _all_rows():
 
 
 def _in_scope(fmt, level):
-    """Only senior internationals are pulled. The pooled T20 scope takes the T20Is too."""
-    if level != "international":
+    """Only senior internationals are pulled. The pooled T20 scope takes the T20Is too. A record read
+    with its domestic one-day cricket (level "with-domestic", domestic_topup.py) keeps its pulled
+    internationals: the domestic matches are in the warehouse already."""
+    if level not in ("international", "with-domestic"):
         return []
     rows = _all_rows()
     if fmt == "T20":

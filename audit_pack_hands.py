@@ -113,8 +113,8 @@ def _series_fmt(series_name):
         return "Test"                       # A-team / tour red-ball cricket
     if "test" in n:
         return "Test"
-    if "odi" in n or "one day" in n or "one-day" in n or "list a" in n:
-        return "ODI"
+    if "odi" in n or "one day" in n or "one-day" in n or "list a" in n or re.search(r"\bod\b", n):
+        return "ODI"                        # "\bod\b": "England Domestic OD M", county one-day (10-11-2026)
     if "t20" in n or "hundred" in n or "t10" in n:
         return "T20"
     return ""

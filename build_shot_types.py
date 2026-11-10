@@ -134,6 +134,7 @@ def build(slug, only=None, before=None):
     import build_opponent_about as BOA
     from build_coach_site import _series, _fmt_level, _opp_key, _about
     from build_pack_extras import _our_groups
+    from domestic_topup import level_for
     entry = _series(slug)
     fmt, level = _fmt_level(entry)
     fmt = {"test": "Test", "odi": "ODI", "t20i": "T20I", "t20": "T20"}.get(str(fmt).lower(), fmt)
@@ -159,7 +160,8 @@ def build(slug, only=None, before=None):
                                if k.startswith("clip_scope_")) else "warehouse"
         t0 = time.time()
         try:
-            e = batter_entry(bid, meta, groups, fmt, level, before, source)
+            # a short ODI record is read with the domestic one-day cricket beside it (domestic_topup.py)
+            e = batter_entry(bid, meta, groups, fmt, level_for(opp, bid, "bat", fmt, level), before, source)
             out["batters"][bid] = e
             summ = " · ".join(f"{g} " + "/".join(str(k["n"]) for k in ge["kinds"].values())
                               for g, ge in e["groups"].items() if ge["balls"])

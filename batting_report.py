@@ -715,12 +715,17 @@ def early_line(e: dict, s: dict) -> str:
             f"then every {100 / s['dismissal_per100']:.0f}.")
 
 
-def card_summary(batter_id: str, group: str | None = None, include_matchup: bool = False) -> list:
+def card_summary(batter_id: str, group: str | None = None, include_matchup: bool = False,
+                 fmt: str = "Test", level: str = "international", source: str = "warehouse") -> list:
     """The report's TL;DR summary points for a batter scoped to a bowler group — reused verbatim as
     the opposition-batter CARD summary in the packs (so the card matches the report). `include_matchup`
     defaults False: the 'most often to <bowler type>' clause is coach-only, dropped on the pack card
-    which is already scoped to the bowler's type. Returns HTML-bearing strings (bold lead-ins)."""
-    P = build_batter_profile(batter_id, group=group)
+    which is already scoped to the bowler's type. Returns HTML-bearing strings (bold lead-ins).
+
+    `fmt`, `level` and `source` are the pack's. Until 10-11-2026 none was passed, so every white-ball
+    pack's batter summary was read from the batter's TEST record: Root's spin points on the England ODI
+    packs were his 5,462 Test balls, not his 2,156 ODI balls."""
+    P = build_batter_profile(batter_id, group=group, fmt=fmt, level=level, source=source)
     focus = ("spin" if P.get("is_spin_group") else "pace") if group else None
     fp_type = _fingerprint_type(_fingerprint_cards(P, focus=focus))
     return _summary_points(P, fp_type, include_matchup=include_matchup)

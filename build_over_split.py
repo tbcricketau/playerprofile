@@ -46,13 +46,14 @@ def split(rows, fmt, last=LAST):
             "overs": {ph: round(sum(len(overs[k][ph]) for k in keys) / len(keys), 2) for ph, _a, _b in bands}}
 
 
-def text(s, fmt):
-    """"Overs: 4 PP · 4 Mid · 2 Death (last 20 ODIs)", or "" without a split."""
+def text(s, fmt, domestic=False):
+    """"Overs: 4 PP · 4 Mid · 2 Death (last 20 ODIs)", or "" without a split. A bowler read with
+    their domestic one-day cricket (domestic_topup.py) counts "one-day matches"."""
     if not s:
         return ""
     o = s["overs"]
     whole = lambda v: int(v + 0.5)
-    fw = {"ODI": "ODIs", "T20I": "T20Is", "T20": "T20s"}.get(fmt, fmt)
+    fw = "one-day matches" if domestic else {"ODI": "ODIs", "T20I": "T20Is", "T20": "T20s"}.get(fmt, fmt)
     return (f"Overs: {whole(o.get('powerplay', 0))} PP · {whole(o.get('middle', 0))} Mid · "
             f"{whole(o.get('death', 0))} Death (last {s['matches']} {fw})")
 
@@ -68,11 +69,13 @@ def build(slug):
         raise SystemExit(f"{slug} is not a white-ball series: no phases to split overs into")
     bowlers, _batters = _about(slug)
     out = {"slug": slug, "format": fmt, "last": LAST, "built": datetime.date.today().isoformat(), "bowlers": {}}
+    from domestic_topup import level_for
     for bid, meta in bowlers.items():
-        rows = PR.process_rows(load_bowler_deliveries(bid, fmt=fmt, level=level))
+        lvl = level_for(_opp_key(slug), bid, "bowl", fmt, level)
+        rows = PR.process_rows(load_bowler_deliveries(bid, fmt=fmt, level=lvl))
         s = split(rows, fmt)
         if s:
-            s["text"] = text(s, fmt)
+            s["text"] = text(s, fmt, domestic=lvl != level)
             out["bowlers"][str(bid)] = s
         print(f"  {meta.get('name') or bid:20} {s['text'] if s else 'no ' + fmt + ' overs'}", flush=True)
     path = os.path.join(HERE, "data", f"over_split_{_opp_key(slug)}.json")

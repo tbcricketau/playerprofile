@@ -201,6 +201,7 @@ def _our_groups(slug):
 
 def build(slug, only=None, before=None, pics=True):
     from build_coach_site import _series, _fmt_level, _opp_key, _about
+    from domestic_topup import level_for
     entry = _series(slug)
     fmt, level = _fmt_level(entry)
     fmt = {"test": "Test", "odi": "ODI", "t20i": "T20I", "t20": "T20"}.get(str(fmt).lower(), fmt)
@@ -220,7 +221,9 @@ def build(slug, only=None, before=None, pics=True):
             continue
         t0 = time.time()
         try:
-            out["bowlers"][bid] = bowler_entry(bid, meta, fmt, level, before, pic_dir, pics)
+            # a short ODI record is read with the domestic one-day cricket beside it (domestic_topup.py)
+            out["bowlers"][bid] = bowler_entry(bid, meta, fmt, level_for(opp, bid, "bowl", fmt, level),
+                                               before, pic_dir, pics)
             print(f"  bowler {meta.get('name', bid):22} {time.time() - t0:5.0f}s", flush=True)
         except Exception as e:
             failed.append(bid)
@@ -234,7 +237,8 @@ def build(slug, only=None, before=None, pics=True):
                                if k.startswith("clip_scope_")) else "warehouse"
         t0 = time.time()
         try:
-            out["batters"][bid] = batter_entry(bid, meta, groups, fmt, level, before, pic_dir, source, pics)
+            out["batters"][bid] = batter_entry(bid, meta, groups, fmt, level_for(opp, bid, "bat", fmt, level),
+                                               before, pic_dir, source, pics)
             print(f"  batter {meta.get('name', bid):22} {time.time() - t0:5.0f}s  {source}", flush=True)
         except Exception as e:
             failed.append(bid)
