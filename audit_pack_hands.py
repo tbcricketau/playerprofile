@@ -187,6 +187,15 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
             for c in rec.get("cells", []):
                 for e in c.get("clips") or []:
                     _index(e)
+    # …and the sweep and ramp reels' in build_shot_types.py's sidecar. Without it the first build
+    # carrying them was refused on 138 reels it could not resolve (10-11-2026).
+    shot_path = os.path.join(HERE, "data", f"shot_types_{opp}.json")
+    if os.path.exists(shot_path):
+        for b in (json.load(open(shot_path, encoding="utf-8")).get("batters") or {}).values():
+            for ge in (b.get("groups") or {}).values():
+                for rv in (ge.get("reels") or {}).values():
+                    for e in rv.get("clips") or []:
+                        _index(e)
 
     reels, allids, kinds, unknown = {}, set(), {}, []
     for root, fn, pkind, ps in _pack_pages(site):

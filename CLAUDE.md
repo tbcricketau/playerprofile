@@ -1217,6 +1217,31 @@ mean two different things. `videobuilder/docs/VARIATIONS_PLAN.md` § A third rou
 lands from the analyst later still goes through `publish_variations.py`, which skips what is
 already uploaded.
 
+### Sweeps against spin, ramps against pace (10-11-2026)
+
+Tom asked for them on the batter cards of the hub packs, mocked first and approved as mocked. On a
+spin bowling pack: the share of balls a batter plays as a sweep, reverse sweep and slog sweep against
+our bowler's type, with runs, strike rate and outs; a **Sweeps** pane on the wagon wheel, one line per
+scoring sweep, coloured by the sweep, no dot at the end; and a reel of each. On a pace pack: ramp and
+reverse ramp the same way, no wheel, and **False v slower ball** in the figure row (Balls makes way,
+the sample line already gives it).
+
+- **`build_shot_types.py --slug <slug>`** on the box writes `data/shot_types_<opp>.json`, a sidecar,
+  so nothing in pack_extras or the about file is rewritten. Run it before `build_player_site.py`.
+- **Shot codes, as Tom grouped them**: Sweep = sweep (9) + paddle (26) · Reverse sweep (18) · Slog
+  sweep (15) · Ramp = ramp (17) + paddle (26) · Reverse ramp = 32 + reverse sweep (18) against pace,
+  how older matches code it. Switch hits are left out. Slower ball = coded variation 5, 8, 9, 24, 25
+  (lookup 2812), no speed backfill.
+- **The reels are a new kind, and went into all four places**: the builder, `build_player_site`
+  (added beside the clip file's other reels, keys `swp`/`rsw`/`slg`/`rmp`/`rrm` + the scoring reels'
+  type code), `build_hub_packs._batter_reels` (list and card), and `audit_pack_hands`, twice: its
+  `_classify` holds them to the batter, the declared type and the format like `sco`/`dsm`, and its
+  clip index reads the sidecar, without which the first build was refused on 138 reels it could not
+  map to a delivery. A type with no
+  clips of a shot falls back to the wider spin or pace set, starred and footnoted.
+- **The clips live in the Pages clip files**, so the upload carries `players/<slug>/` as well as
+  `packs/<slug>/`. `~/tmp/box_eng_1011_s6.sh` on the box is the pattern.
+
 ### The coach view's series page: a tab row, two plan packs, the bowlers grid (04-10-2026)
 
 Built by `build_coach_site.py --slug <slug>` into `coach_build/coach/<slug>/`, after Tom's read of
