@@ -1194,15 +1194,19 @@ N.mp4`, plus a loose headline clip per variation. The England ODI set was 11 bow
    the durable policy (a year, revocable), resolves each folder name to a warehouse player id, and
    writes `data/variations_<key>.json`. Re-running **skips what is already uploaded at the same
    size**, so a second batch of bowlers costs only the new files. ⚠ The sidecar holds **signed**
-   links, so it is gitignored — data, never source.
+   links, so it is gitignored — data, never source. **A run ADDS to the sidecar** (since
+   10-11-2026, videobuilder `5c2b48f`): every bowler it does not cover is kept byte for byte and the
+   old file is copied to `data/_history/` (gitignored, signed links too) first. Before that it wrote
+   the file from the folder alone, so `--only <one bowler>` would have taken every other reel off
+   the cards. A `captions.json` in a player folder adds a note to a clip's caption ("· T20I").
 2. **Both surfaces read it and add one button**, keyed `var`, hand-free:
    - the coach scouting card — `build_coach_site._variations` + `_bowler_vision`, drawn by
      `coach_bowlers.js reels()`, tooltip naming the variations it holds;
    - the player packs — `build_player_site` writes `var_<bid>` into the player's clip sidecar and
      `build_hub_packs._bowler_reels` renders it.
-3. The **original** clips are uploaded, not the per-ball files cut from a videobuilder render:
-   those carry the render's burned-in label and the pack's own player draws a caption, so the text
-   would read twice. `videobuilder/scripts/plan_from_folder.py` builds the combined per-bowler
+3. The **original** clips are uploaded, or a render's **clean** per-ball files
+   (`renders/<collection>/balls/<plan>/`, `clean: true` in its playlist.json, since 09-11-2026). A
+   burned-in label would read twice under the caption the pack's own player draws. `videobuilder/scripts/plan_from_folder.py` builds the combined per-bowler
    video from the same folder when one is wanted for a meeting — it is not what the packs use.
 
 Decisions on the England ODI set (Tom, atq 09-11-2026): **ODI only** for now, not the T20I series,
@@ -1216,6 +1220,13 @@ eight live reels are a human's selections and an unchecked list beside them woul
 mean two different things. `videobuilder/docs/VARIATIONS_PLAN.md` § A third round. A set that
 lands from the analyst later still goes through `publish_variations.py`, which skips what is
 already uploaded.
+
+**Archer's went up on 10-11-2026** after Tom's QA in the editor: the 10 slower balls and the 4
+cutters under 131 kph from his reviewed plan, 14 clips, the plan's Wickets section left out (most
+of those balls are not variations, Tom) and the three cutters at 131-138 kph too. Nine are T20Is
+and say so in the caption. Staged from the render's clean per-ball files into the analyst's folder
+shape and published with `--only "Jofra Archer"`. Tom's plan file was read, never written, so it
+still shows those cutters included. Bethell and Root wait on his QA.
 
 ### Sweeps against spin, ramps against pace (10-11-2026)
 
