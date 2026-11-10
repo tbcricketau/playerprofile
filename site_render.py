@@ -121,6 +121,11 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  .pcard .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0} .pcard .chips button{background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:5px 10px;font:inherit;font-size:12.5px;color:#6b7280;cursor:pointer} .pcard .chips button.on{border-color:#003087;color:#003087;font-weight:600;box-shadow:0 0 0 2px rgba(0,48,135,.12)}
  .pcard .setline{display:flex;flex-wrap:wrap;gap:4px 14px;margin:8px 0 0;font-size:12.5px} .pcard .setline b{letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-size:11px;margin-right:4px}
  .pcard .fnone{color:#6b7280;font-style:italic;font-size:13.5px;margin:0} .pcard .tags{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 0} .pcard .tag{background:#eef1f6;color:#003087;border-radius:4px;padding:2px 8px;font-size:12px;font-weight:600}
+ .pcard .shots{margin:12px 0 0} .pcard .shots .lbl{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;font-weight:700}
+ .pcard .shots .figs{margin-top:6px} .pcard .fig .v small.ln{display:block;margin-top:2px;font-size:11.5px;line-height:1.2}
+ .pcard .fig .k i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
+ .pcard .cap{color:#6b7280;font-size:12px;margin:6px 0 0} .pcard .fieldp .cap{text-align:center} .pcard .pview{margin:0 0 8px}
+ .pcard .sleg{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:13px;margin:6px 0 0} .pcard .sleg span{display:inline-flex;align-items:center;gap:6px} .pcard .sleg i{width:14px;height:4px;border-radius:2px;display:inline-block}
  @media(max-width:860px){.pcard{grid-template-columns:1fr} .pcard .fieldp{border-left:0;padding-left:0;border-top:1px solid #e5e7eb;padding-top:12px} .pcard .figs,.pcard .figs.f5{grid-template-columns:repeat(3,minmax(0,1fr))}}
  details.archive{margin-top:26px;border-top:1px solid #e5e7eb}
  details.archive>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:12px 0 4px;font-weight:700;font-size:15px;color:#1a1a2e}

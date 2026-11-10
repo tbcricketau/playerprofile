@@ -13,7 +13,7 @@
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const n = v => v == null ? "" : Number(v).toLocaleString("en-AU");
   const PLAY = "&#9654;";
-  const state = { g: (PK.groups && PK.groups[0] || {}).key, chip: {}, planner: {} };   // planner: group -> {saved, notes}
+  const state = { g: (PK.groups && PK.groups[0] || {}).key, chip: {}, view: {}, planner: {} };   // planner: group -> {saved, notes}
   const labelOf = g => ((PK.groups || []).find(x => x.key === g) || {}).long || g;
   const subs = () => (PK.groups || []).map(x => x.key);
   const SLOTS = ["option1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"];   // the planner's seeded slots, in order
@@ -55,14 +55,62 @@
   function fig(v, k, small) { return `<div class="fig"><div class="v${small ? " sm" : ""}">${v}</div><span class="k">${k}</span></div>`; }
   // Drawn however few the balls (Tom, 10-11-2026): the balls figure states the sample. Only the plan
   // line, a claim, still needs PK.minBalls.
-  function figures(t) {
+  // False v slower ball sits beside the short ball on the Pace pack (Tom, 10-11-2026), from
+  // build_shot_types.py: coded slower balls, the count under the rate.
+  function figures(t, sh) {
     if (!t) return "";
-    const cls = shortBall() ? "figs" : "figs f5";
+    const slow = shortBall() && sh && sh.slow;
+    const cls = !shortBall() ? "figs f5" : slow ? "figs fn" : "figs";
     const bpd = t.bpd ? Math.round(t.bpd) : `<span class="muted">${t.n_out} out</span>`;
-    return `<div class="${cls}">${fig(n(t.balls), "balls")}${fig(bpd, "BPD")}${fig(t.false_pct != null ? Number(t.false_pct).toFixed(1) + "%" : "—", "false shot")}`
+    return `<div class="${cls}"${slow ? ' style="--n:7"' : ""}>${fig(n(t.balls), "balls")}${fig(bpd, "BPD")}${fig(t.false_pct != null ? Number(t.false_pct).toFixed(1) + "%" : "—", "false shot")}`
       + `${fig(t.area ? esc(t.area) : "—", "scores mostly", true)}`
       + (shortBall() ? fig(t.short ? esc(t.short) : '<span class="muted">too few</span>', "vs the short ball", true) : "")
+      + (slow ? fig(`${Math.round(slow[1])}%<small class="ln">of ${n(slow[0])} slower</small>`, "false v slower ball") : "")
       + `${fig(t.top_out ? esc(t.top_out) : "—", "most often out", true)}</div>`;
+  }
+
+  // ── sweeps against spin, ramps against pace (build_shot_types.py, Tom 10-11-2026) ─────────
+  // The sweep colours are the hub packs' own, so a coach sees the same key in both places.
+  const SHOT = { sweep: ["Sweep", "#2a78d6"], reverse: ["Reverse sweep", "#eb6834"], slog: ["Slog sweep", "#1baf7a"],
+    ramp: ["Ramp", ""], reverse_ramp: ["Reverse ramp", ""] };
+  const TYPE = { right_pace: "right-arm pace", left_pace: "left-arm pace", off_spin: "off spin", leg_spin: "leg spin",
+    left_orthodox: "left-arm orthodox", left_unorthodox: "left-arm wrist spin" };
+  const many = (v, w) => `${n(v)} ${w}${v === 1 ? "" : "s"}`;
+  function shotsBlock(sh, g) {
+    if (!sh) return "";
+    const kinds = Object.entries(sh.kinds || {});
+    const cells = kinds.map(([k, [c, runs, outs]]) => {
+      const sr = c ? ` · SR ${Math.round(100 * runs / c)}` : "";
+      const sw = SHOT[k][1] ? `<i style="background:${SHOT[k][1]}"></i>` : "";
+      return `<div class="fig"><div class="v">${(100 * c / sh.balls).toFixed(1)}%<small class="ln">${many(c, "ball")} · ${many(runs, "run")}${sr} · ${outs} out</small></div><span class="k">${sw}${esc(SHOT[k][0])}</span></div>`;
+    }).join("");
+    return `<div class="shots"><span class="lbl">${PK.pack === "spin" ? "Sweeps" : "Ramps"} v ${esc(TYPE[g] || labelOf(g))}</span>`
+      + `<div class="figs fn" style="--n:${kinds.length}">${cells}</div>`
+      + `<p class="cap">Share of their ${n(sh.balls)} balls. SR = runs per 100 balls.</p></div>`;
+  }
+  // Every scoring sweep as one line from the striker, coloured by the sweep, no dot at the end.
+  // Drawn as the hub's wheel: the bowler at the bottom, a right-hander's off side on the left. The
+  // angle is batter-relative, positive to the off side for either hand.
+  function sweepsPanel(b, sh, g) {
+    const lhb = /^l/i.test(b.hand || "");
+    const p = ['<circle cx="0" cy="0" r="1.005" fill="#fcfcfb" stroke="#0d5b3b" stroke-width=".012"/>',
+      '<circle cx="0" cy="0" r=".42" fill="none" stroke="#c9d6cd" stroke-width=".008" stroke-dasharray=".03 .025"/>',
+      '<rect x="-.035" y="-.09" width=".07" height=".18" fill="#d8c08a" stroke="#b89a5c" stroke-width=".006"/>'];
+    const count = {};
+    sh.lines.forEach(([k, a, l, r]) => {
+      count[k] = (count[k] || 0) + 1;
+      const rad = Math.min(l, 103) / 100, t = a * Math.PI / 180;
+      const x = ((lhb ? 1 : -1) * Math.sin(t) * rad).toFixed(4), y = (Math.cos(t) * rad).toFixed(4);
+      p.push(`<g><title>${esc(SHOT[k][0])} · ${many(r, "run")}</title><line x1="0" y1="0" x2="${x}" y2="${y}" stroke="${SHOT[k][1]}" stroke-width=".013" stroke-linecap="round" opacity=".9"/>`
+        + `<line x1="0" y1="0" x2="${x}" y2="${y}" stroke="transparent" stroke-width=".05"/></g>`);
+    });
+    const [left, right] = lhb ? ["LEG", "OFF"] : ["OFF", "LEG"];
+    p.push(`<text x="-.98" y="-.93" font-size=".07" fill="#5a6b61" font-weight="600">${left}</text>`
+      + `<text x=".98" y="-.93" font-size=".07" fill="#5a6b61" font-weight="600" text-anchor="end">${right}</text>`);
+    const leg = Object.keys(SHOT).filter(k => count[k]).map(k =>
+      `<span><i style="background:${SHOT[k][1]}"></i>${esc(SHOT[k][0])} <b>${count[k]}</b></span>`).join("");
+    return `<svg class="sweeps" viewBox="-1.06 -1.06 2.12 2.12" role="img" aria-label="Every scoring sweep by ${esc(b.name)}, coloured by the sweep">${p.join("")}</svg>`
+      + `<div class="sleg">${leg}</div><p class="cap">Every scoring sweep v ${esc(TYPE[g] || labelOf(g))}, one line each</p>`;
   }
 
   /* One panel for both kinds of field (Tom, 04-10-2026): the label and any tags across the top, the
@@ -132,13 +180,25 @@
     return `<article class="pcard" data-b="${esc(b.id)}" id="b${esc(b.id)}">
       <div>
         <div class="who">${head}<div><h3>${esc(b.name)}${b.tier ? `<span class="tier ${esc(b.tier)}">${esc(b.chip)}</span>` : ""}</h3><div class="hand">${esc(b.hand)}${b.role ? " · " + esc(b.role) : ""}</div></div></div>
-        ${figures(row.threat)}
+        ${figures(row.threat, row.shots)}
         <div class="notes"><span class="lbl">Coaches' notes</span>${notes ? `<ul>${notes.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="none">None yet${PK.planner ? " — add them in the planner." : "."}</p>`}</div>
         <div class="scout"><span class="lbl">Scouting notes</span><p class="plan">${plan}</p></div>
+        ${shotsBlock(row.shots, g)}
         <div class="acts">${b.vision && row.balls && !thin ? `<a href="${esc(b.vision)}">${PLAY} Vision</a>` : ""}${b.report ? `<a class="solid" href="${esc(b.report)}">View report</a>` : ""}</div>
       </div>
-      <div class="fieldp">${fieldPanel(b, g, row)}</div>
+      <div class="fieldp">${rightPanel(b, g, row)}</div>
     </article>`;
+  }
+
+  // The field panel, with a Field | Sweeps switch on a Spin card that has a sweep to draw (Tom,
+  // 10-11-2026): the card keeps its height, the wheel takes the field's place while it is shown.
+  function rightPanel(b, g, row) {
+    const sh = row.shots;
+    if (PK.pack !== "spin" || !sh || !sh.lines || !sh.lines.length) return fieldPanel(b, g, row);
+    const view = state.view[b.id + "|" + g] === "sweeps" ? "sweeps" : "field";
+    const btn = (v, t) => `<button type="button" class="${view === v ? "on" : ""}" data-view="${v}">${t}</button>`;
+    return `<div class="chips pview">${btn("field", "Field")}${btn("sweeps", "Sweeps")}</div>`
+      + (view === "sweeps" ? sweepsPanel(b, sh, g) : fieldPanel(b, g, row));
   }
 
   function render() {
@@ -152,6 +212,8 @@
     });
     box.querySelectorAll("[data-chip]").forEach(x => x.addEventListener("click", () => {
       state.chip[x.closest(".pcard").dataset.b + "|" + state.g] = +x.dataset.chip; render(); }));
+    box.querySelectorAll("[data-view]").forEach(x => x.addEventListener("click", () => {
+      state.view[x.closest(".pcard").dataset.b + "|" + state.g] = x.dataset.view; render(); }));
     document.querySelectorAll(".seg button").forEach(x => x.classList.toggle("on", x.dataset.g === state.g));
   }
 

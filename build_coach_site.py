@@ -185,6 +185,19 @@ def _overview(slug, group):
     return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
 
 
+def _shot_view(entry):
+    """One batter's sweeps (spin) or ramps (pace) against one type from build_shot_types.py, cut down
+    for the Pace and Spin packs (Tom, 10-11-2026): the count, runs and outs per shot, every scoring
+    sweep's line for the Sweeps wheel, and the false-shot rate against slower balls. None without one."""
+    if not entry or not entry.get("balls") or not entry.get("kinds"):
+        return None
+    slow = entry.get("slow")
+    return {"balls": entry["balls"],
+            "kinds": {k: [v["n"], v["runs"], v["outs"]] for k, v in entry["kinds"].items()},
+            "lines": [[k, round(float(a)), round(float(ln)), r] for k, a, ln, r, *_d in entry.get("lines") or []],
+            "slow": [slow["balls"], round(slow["false_pct"], 1)] if slow else None}
+
+
 def _nav(slug, have, planner):
     """The two rows of tabs (Tom, 04-10-2026): [(side, label, [(key, label, href)])] — Bowling plans
     (their batters, for our bowlers) first, then Batting plans (their bowlers, for our batters), each
@@ -350,6 +363,8 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
     rows = {g: {r["bid"]: r for r in d["rows"]} for g, d in groups}
     whole = _overview(slug, macro)            # only for each technique's share of the balls
     whole_rows = {r["bid"]: r for r in whole["rows"]} if whole else {}
+    sp = os.path.join(DATA, f"shot_types_{_opp_key(slug)}.json")
+    shot_types = (json.load(open(sp, encoding="utf-8")).get("batters") or {}) if os.path.exists(sp) else {}
     long_label = {g: d.get("label") or g for g, d in groups}
     # the overview's own order: `order` is the career record, largest first
     order = sorted(batters.items(), key=lambda kv: (-int(kv[1].get("order") or 0), kv[1].get("name") or ""))
@@ -390,7 +405,8 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
                            "spare_name": "", "basis": c["basis"]} for c in phase_fields(fmt, g, hand.upper())]
             per[g] = {"balls": r.get("balls") or 0, "plan": (plan[:1].upper() + plan[1:]) if plan else "",
                       "field": r.get("field"), "threat": r.get("threat"), "error": bool(r.get("error")),
-                      "fields": fields}
+                      "fields": fields,
+                      "shots": _shot_view(((shot_types.get(pid) or {}).get("groups") or {}).get(g))}
         tier = tiers.get(pid, "")
         out.append({"id": pid, "name": name, "hand": hand, "role": role, "tier": tier,
                     "chip": SR.TIER_CHIP.get(tier, ""), "initials": _initials(name),
