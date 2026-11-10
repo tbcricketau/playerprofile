@@ -182,7 +182,76 @@ def _zones_svg(zones, lhb):
             f'{"".join(p)}</svg>')
 
 
-def _wheel(bid, x, lhb, pics_url):
+# Sweeps against spin, ramps against pace (build_shot_types.py, Tom 10-11-2026). The sweep colours are
+# the first three of the charting skill's checked categorical palette, in its fixed order.
+_SPIN_GROUPS = {"off_spin", "leg_spin", "left_orthodox", "left_unorthodox", "spin"}
+_SHOT_LABEL = {"sweep": "Sweep", "reverse": "Reverse sweep", "slog": "Slog sweep",
+               "ramp": "Ramp", "reverse_ramp": "Reverse ramp"}
+_SHOT_COLOUR = {"sweep": "#2a78d6", "reverse": "#eb6834", "slog": "#1baf7a"}
+_SHOT_KEY = {"sweep": "swp", "reverse": "rsw", "slog": "slg", "ramp": "rmp", "reverse_ramp": "rrm"}
+_SHOT_TITLE = {"sweep": "Sweeps", "reverse": "Reverse sweeps", "slog": "Slog sweeps",
+               "ramp": "Ramps", "reverse_ramp": "Reverse ramps"}
+
+
+def _many(n, word):
+    return f"{n:,} {word}{'' if n == 1 else 's'}"
+
+
+def _shots(shot, group):
+    """How often they play each sweep (spin) or ramp (pace), as a share of their balls against the
+    type, with what it brought them."""
+    kinds, balls = (shot or {}).get("kinds") or {}, (shot or {}).get("balls") or 0
+    if not kinds or not balls:
+        return ""
+    spin = group in _SPIN_GROUPS
+    cells = []
+    for kind, k in kinds.items():
+        sr = f" · SR {100 * k['runs'] / k['n']:.0f}" if k["n"] else ""
+        sw = f'<i style="background:{_SHOT_COLOUR[kind]}"></i>' if spin else ""
+        cells.append(f'<div class="fg"><div class="v">{100 * k["n"] / balls:.1f}%<small class="ln">'
+                     f'{_many(k["n"], "ball")} · {_many(k["runs"], "run")}{sr} · {k["outs"]} out</small></div>'
+                     f'<div class="k">{sw}{E(_SHOT_LABEL[kind])}</div></div>')
+    title = f"{'Sweeps' if spin else 'Ramps'} v {_GROUP_LABEL.get(group, group)}"
+    return (f'<div class="shots o5">{_label(title)}<div class="figs">{"".join(cells)}</div>'
+            f'<div class="cap">Share of their {balls:,} balls. SR = runs per 100 balls.</div></div>')
+
+
+def _sweeps_svg(lines, lhb):
+    """Every scoring sweep as one line from the striker, coloured by the sweep (Tom, 10-11-2026: no
+    dot at the end). Drawn as the zones are: the bowler at the bottom, a right-hander's off side on
+    the left. The angle is batter-relative, positive to the off side for either hand."""
+    p = ['<circle cx="0" cy="0" r="1.005" fill="#fcfcfb" stroke="#0d5b3b" stroke-width=".012"/>',
+         '<circle cx="0" cy="0" r=".42" fill="none" stroke="#c9d6cd" stroke-width=".008" stroke-dasharray=".03 .025"/>',
+         '<rect x="-.035" y="-.09" width=".07" height=".18" fill="#d8c08a" stroke="#b89a5c" stroke-width=".006"/>']
+    for kind, ang, ln, runs, day in lines:
+        r = min(float(ln), 103) / 100
+        x = (1 if lhb else -1) * math.sin(math.radians(float(ang))) * r
+        y = math.cos(math.radians(float(ang))) * r
+        d = str(day or "")
+        tip = f"{_SHOT_LABEL[kind]} · {_many(int(runs), 'run')}" + (f" · {d[8:10]}-{d[5:7]}-{d[:4]}" if len(d) >= 10 else "")
+        # a wider see-through line under the drawn one, so the hover finds a 2-pixel line
+        p.append(f'<g><title>{E(tip)}</title><line x1="0" y1="0" x2="{x:.4f}" y2="{y:.4f}" stroke="{_SHOT_COLOUR[kind]}" '
+                 f'stroke-width=".013" stroke-linecap="round" opacity=".9"/><line x1="0" y1="0" x2="{x:.4f}" '
+                 f'y2="{y:.4f}" stroke="transparent" stroke-width=".05"/></g>')
+    left, right = ("LEG", "OFF") if lhb else ("OFF", "LEG")
+    p.append(f'<text x="-.98" y="-.93" font-size=".07" fill="#5a6b61" font-weight="600">{left}</text>')
+    p.append(f'<text x=".98" y="-.93" font-size=".07" fill="#5a6b61" font-weight="600" text-anchor="end">{right}</text>')
+    return (f'<svg class="zw" viewBox="-1.06 -1.06 2.12 2.12" role="img" aria-label="Every scoring sweep, '
+            f'coloured by the sweep">{"".join(p)}</svg>')
+
+
+def _sweeps_pane(shot, lhb, group):
+    lines = (shot or {}).get("lines") or []
+    if not lines:
+        return None
+    n = {k: sum(1 for ln in lines if ln[0] == k) for k in _SHOT_COLOUR}
+    leg = "".join(f'<span><i style="background:{c}"></i>{_SHOT_LABEL[k]} <b>{n[k]}</b></span>'
+                  for k, c in _SHOT_COLOUR.items() if n[k])
+    return (f'{_sweeps_svg(lines, lhb)}<div class="sleg">{leg}</div>'
+            f'<div class="cap mid">Every scoring sweep v {E(_GROUP_LABEL.get(group, group))}, one line each</div>')
+
+
+def _wheel(bid, x, lhb, pics_url, shot=None, group=""):
     zones = x.get("zones") or {}
     if not zones:
         return ""
@@ -191,6 +260,9 @@ def _wheel(bid, x, lhb, pics_url):
     panes = [("Zones", _zones_svg(zones, lhb))]
     if spider:
         panes.append(("Spider", f'<img class="sp" src="{E(pics_url + spider)}" alt="Wagon wheel: every scoring shot" loading="lazy">'))
+    sweeps = _sweeps_pane(shot, lhb, group) if group in _SPIN_GROUPS else None
+    if sweeps:
+        panes.append(("Sweeps", sweeps))
     btns = "".join(f'<button type="button" class="{"on" if i == 0 else ""}" data-pane="{i}">{n}</button>'
                    for i, (n, _) in enumerate(panes)) if len(panes) > 1 else ""
     body = "".join(f'<div class="pane"{"" if i == 0 else " hidden"}>{p}</div>' for i, (_, p) in enumerate(panes))
@@ -313,10 +385,27 @@ def _bowler_reels(clips, bid, hand, about):
     return out, (f"* {' and '.join(sorted(borrowed))} footage" if borrowed else "")
 
 
-def _batter_reels(clips, bid, group, about, fmt):
-    """Scoring and dismissal reels against our bowler's exact type. A reel the builder had to widen
-    (another format, a wider type, or Cricket-21 first-class footage) is starred and footnoted.
-    Returns (buttons, footnote)."""
+def _batter_reels(clips, bid, group, about, fmt, shot=None):
+    """Scoring and dismissal reels against our bowler's exact type, then the sweeps or ramps. A reel
+    the builder had to widen (another format, a wider type, or Cricket-21 first-class footage) is
+    starred and footnoted. Returns (buttons, footnote)."""
+    out, note = _scoring_reels(clips, bid, group, about, fmt)
+    notes = [note] if note else []
+    # a sweep or ramp reel against the exact type, or against the wider spin or pace set when the
+    # exact type has none, starred like the scoring reels (build_shot_types.py, 10-11-2026)
+    for kind, rv in ((shot or {}).get("reels") or {}).items():
+        scope = rv.get("scope") or group
+        b = clips.button(f"{_SHOT_KEY[kind]}{_GROUP_CODE.get(scope, '')}_{bid}",
+                         _SHOT_TITLE[kind] + ("*" if scope != group else ""))
+        if b:
+            out.append(b)
+            if scope != group:
+                notes.append(f"* Footage against {_GROUP_LABEL.get(scope, scope)}")
+    return out, " · ".join(dict.fromkeys(notes))
+
+
+def _scoring_reels(clips, bid, group, about, fmt):
+    """Scoring and dismissal reels against our bowler's exact type. Returns (buttons, footnote)."""
     code = _GROUP_CODE.get(group, "")
     scope = str((about or {}).get(f"clip_scope_{group}") or "")
     note = ""
@@ -404,7 +493,8 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
     return _card(f"b{bid}", _head(bid, meta["name"], img, tier, sub, sample, report), plan_half, nums)
 
 
-def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_short, source, report=""):
+def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_short, source, report="",
+                shot=None):
     lhb = (meta.get("hand") or "").upper().startswith("L")
     role = (meta.get("role") or "").lower()
     sub = " · ".join([("Left-hander" if lhb else "Right-hander")]
@@ -431,12 +521,20 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
             sb = x.get("short_balls")
             figs.append((_pct(x["short_false"]) + (f'<small class="ln">of {sb:,} short</small>' if sb else ""),
                          "False v short ball"))
+        slow = (shot or {}).get("slow") if group.endswith("pace") else None
+        if slow:
+            # coded slower balls: slower ball, cutters, back of the hand, knuckle ball (Tom, 10-11-2026)
+            figs.append((_pct(slow["false_pct"]) + f'<small class="ln">of {slow["balls"]:,} slower</small>',
+                         "False v slower ball"))
+        if len(figs) > 6:
+            figs = figs[1:]       # Balls makes way, as mocked: the sample line under the name gives it
         nums.append(_figures(figs))
         nums.append(_facts(x.get("facts")))
-        nums.append(_wheel(bid, x, lhb, pics_url))
+        nums.append(_shots(shot, group))
+        nums.append(_wheel(bid, x, lhb, pics_url, shot, group))
         n_d = x.get("n_dismissals") or 0
         nums.append(_pics("Their dismissals", x, f"{n_d:,} dismissal{'s' if n_d != 1 else ''}", pics_url))
-    reels, note = _batter_reels(clips, bid, group, meta, fmt)
+    reels, note = _batter_reels(clips, bid, group, meta, fmt, shot)
     h2h = clips.button(f"hbowl_{bid}", f"You to {opp_short}")
     none = None
     if not reels and not h2h:
@@ -509,6 +607,8 @@ def build(slug, out_root, only=None, clips_root=None):
     about_bowl, about_bat = _about(slug)
     # white-ball: each bowler's usual overs per phase (build_over_split.py), the summary's second point
     splits = (_load(os.path.join(DATA, f"over_split_{opp}.json"), {}) or {}).get("bowlers") or {}
+    # their sweeps against spin, ramps against pace, false shots against slower balls (build_shot_types.py)
+    shots = (_load(os.path.join(DATA, f"shot_types_{opp}.json"), {}) or {}).get("batters") or {}
     tiers = _tiers(entry)
     squads = _load(os.path.join(HERE, "squads.json"), {})
     players = _load(os.path.join(HERE, "players.json"), {})
@@ -633,7 +733,7 @@ def build(slug, out_root, only=None, clips_root=None):
                 + "<main class='wrap hpw'><section class='band-note' hidden></section>"
                 + _section("Their attack", f"{fmt_pl} · to {'left' if hand == 'LHB' else 'right'}-handers",
                            "Tap a bowler for their summary, the coaches' notes and the vision. "
-                           "View report opens everything on them.", xi, more) + "</main>")
+                           "View coach notes and fields opens everything on them.", xi, more) + "</main>")
         open(os.path.join(s_dir, bat_href), "w", encoding="utf-8").write(
             _page(f"{name} — batting", body, hp, js_v, fields_v, snippet))
         pages += 1
@@ -652,13 +752,14 @@ def build(slug, out_root, only=None, clips_root=None):
                 meta = about_bat[bid] or {}
                 eb = extras["batters"].get(bid) or {}
                 x = (eb.get("groups") or {}).get(group)
+                shot = ((shots.get(bid) or {}).get("groups") or {}).get(group)
                 tier = tiers.get(bid) or ""
                 nm, face = meta.get("name") or bid, img(bid, meta.get("name"))
                 detail = f"{href[:-len('.html')]}-v{bid}.html"     # keeps "-bowling-" for the audit
                 _detail(os.path.join(s_dir, detail), f"{name} — {nm}",
                         _player_head(name, my_img, f"{gword} · Bowling pack · {nm}", [], href, "All batters"),
                         batter_card(bid, meta, x, rows.get(bid), group, clips, face, "pics/", tier, fmt,
-                                    short(nm), eb.get("source")),
+                                    short(nm), eb.get("source"), shot=shot),
                         hp, js_v, fields_v, snippet)
                 pages += 1
                 # the summary points, as the old packs read them: the facts for this macro type, with
@@ -672,7 +773,7 @@ def build(slug, out_root, only=None, clips_root=None):
                 lhb = (meta.get("hand") or "").upper().startswith("L")
                 sub = " · ".join(["Left-hander" if lhb else "Right-hander"]
                                  + ([meta["role"].lower()] if meta.get("role") else []))
-                reels, note = _batter_reels(clips, bid, group, meta, fmt)
+                reels, note = _batter_reels(clips, bid, group, meta, fmt, shot)
                 label = f"You to {short(nm)}"
                 (xi if tier == "xi" else more).append(_summary(
                     f"b{bid}", nm, sub, face, tier, facts, reels, clips.button(f"hbowl_{bid}", label),
@@ -682,7 +783,7 @@ def build(slug, out_root, only=None, clips_root=None):
                     + "<main class='wrap hpw'><section class='band-note' hidden></section>"
                     + _section("Their batters", f"{fmt_pl} · v {glabel}",
                                "Tap a batter for their summary, the coaches' notes and the vision. "
-                               "View report opens everything on them.", xi, more) + "</main>")
+                               "View coach notes and fields opens everything on them.", xi, more) + "</main>")
             open(os.path.join(s_dir, href), "w", encoding="utf-8").write(
                 _page(f"{name} — bowling ({bt})", body, hp, js_v, fields_v, snippet))
             pages += 1

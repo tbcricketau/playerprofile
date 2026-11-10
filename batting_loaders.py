@@ -183,7 +183,7 @@ def _warehouse_batter_rows(batter_id: str, fmt: str, level: str) -> list:
         D.[off_bat_angle], D.[off_bat_speed],
         D.[hit_to_angle], D.[hit_to_x_physical], D.[hit_to_length],
         D.[striker_movement_id], L_sm.[description] AS striker_movement,
-        D.[ball_speed],
+        D.[ball_speed], D.[ball_movement_id],
         D.[pitch_line], D.[pitch_length], D.[at_stumps_line], D.[at_stumps_height],
         D.[movement_in_air], D.[movement_off_pitch],
         D.[movement_in_air_group_swing_id], D.[movement_off_pitch_group_seam_id],

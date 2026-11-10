@@ -120,6 +120,15 @@ h2.sec span { font-weight:600; letter-spacing:.04em; color:var(--muted); font-si
 .fg .v small.ln { display:block; margin-top:2px; line-height:1.1 }
 .fg .k { font-size:11.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-top:4px; line-height:1.25 }
 
+/* sweeps against spin, ramps against pace: a figure per shot, a swatch tying each sweep to its colour
+   on the Sweeps wheel (10-11-2026) */
+.shots { display:flex; flex-direction:column; gap:8px }
+.fg .k i { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:5px; vertical-align:0 }
+.sleg { display:flex; flex-wrap:wrap; justify-content:center; gap:6px 16px; font-size:13px; color:var(--ink) }
+.sleg span { display:inline-flex; align-items:center; gap:6px }
+.sleg i { width:14px; height:4px; border-radius:2px; display:inline-block }
+.wb .pane .cap.mid { text-align:center }
+
 .facts { display:grid; grid-template-columns:100px minmax(0,1fr); gap:7px 10px; margin-top:8px }
 .facts .k { font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); padding-top:2px }
 .facts .v { font-size:14.5px; line-height:1.4; color:var(--ink) }

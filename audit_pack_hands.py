@@ -42,7 +42,8 @@ KEY_RE = r'-vision\.html#([A-Za-z0-9_]+)'
 # player the key names (the `_<id>` suffix) or the pack's own player (`page`).
 #   opp_bowler  stock|wkt|nb|dth|mid + hand, on a BATTING pack: an opposition bowler's balls, all
 #               bowled BY that bowler, TO the pack batter's hand, in the pack's red/white format.
-#   opp_batter  sco|dsm + type code, on a BOWLING pack: an opposition batter's balls, all faced BY
+#   opp_batter  sco|dsm (and the shot reels swp|rsw|slg|rmp|rrm) + type code, on a BOWLING pack: an
+#               opposition batter's balls, all faced BY
 #               that batter, FROM the bowler type the key declares (RP/LP/OS/LS/LO/LU exact; s/p
 #               the declared macro fallback), in the pack's format.
 #   h2h         hbat_<bowler> on a batting pack / hbowl_<striker> on a bowling pack: the pack
@@ -63,7 +64,10 @@ def _classify(key):
     if m:
         return "opp_bowler", {"x": bool(m.group(2)), "hand": "lhb" if m.group(3) == "L" else "rhb",
                               "them": m.group(4)}
-    m = re.match(r'^(sco|dsm)(RP|LP|OS|LS|LO|LU|s|p)_(\d+)$', key)
+    # sco/dsm the scoring and dismissal reels. swp/rsw/slg/rmp/rrm the sweeps, reverse sweeps, slog
+    # sweeps, ramps and reverse ramps (build_shot_types.py, 10-11-2026): the same batter's balls from
+    # the same declared type, so the same rules
+    m = re.match(r'^(sco|dsm|swp|rsw|slg|rmp|rrm)(RP|LP|OS|LS|LO|LU|s|p)_(\d+)$', key)
     if m:
         return "opp_batter", {"group": _TYPE_CODE[m.group(2)], "them": m.group(3),
                               "macro": m.group(2) in ("s", "p")}

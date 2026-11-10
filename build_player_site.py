@@ -1165,6 +1165,26 @@ def _build_vision(dest_dir, page_slug, name, card, extra=None, opp_clips=None, s
                   "caption": c.get("caption") or "Variation", "meta": {}} for c in vclips]
         playlists[f"var_{bid}"] = items
         titles[f"var_{bid}"] = "Variations"
+    # Each opposition batter's sweeps against spin and ramps against pace (Tom, 10-11-2026), read
+    # from build_shot_types.py's sidecar and only ADDED, as the variations above. One reel per shot
+    # and bowling type, keyed like the scoring reels (swpLS_<bid>, rmpRP_<bid>; s/p for the wider
+    # set a type with none falls back to), so audit_pack_hands holds each to its batter, the type it
+    # declares and the pack's format.
+    for bid, e in ((_load_shot_types(_VAR_KEY) or {}).get("batters") or {}).items():
+        if bid not in (opp_clips or {}):
+            continue
+        for _g, ge in (e.get("groups") or {}).items():
+            for kind, rv in (ge.get("reels") or {}).items():
+                key = f"{_SHOT_KEY[kind]}{_SHOT_CODE[rv['scope']]}_{bid}"
+                if key in playlists:
+                    continue
+                items = [_clip_item(c, caption=c.get("caption") or "") for c in rv.get("clips") or [] if _playable(c)]
+                if not items:
+                    continue
+                resolved, avail, _tot = resolve_playlist(items)
+                if avail:
+                    playlists[key] = resolved[:20]
+                    titles[key] = f"{_SHOT_TITLE[kind]} v {_SHOT_GROUP[rv['scope']]}"
 
     # similar reference bowler (e.g. Sajid Khan for Lyon) — how they went vs the opposition batters
     similar_href = None
@@ -1545,6 +1565,34 @@ def _load_variations(key):
     except Exception as e:                                               # noqa: BLE001
         print(f"  variations sidecar unreadable ({type(e).__name__}) — skipped")
         return {}
+
+
+# The sweep and ramp reels (build_shot_types.py): key prefix, button title and type word per reel.
+# The type codes are the scoring reels' own, which audit_pack_hands reads.
+_SHOT_KEY = {"sweep": "swp", "reverse": "rsw", "slog": "slg", "ramp": "rmp", "reverse_ramp": "rrm"}
+_SHOT_TITLE = {"sweep": "Sweeps", "reverse": "Reverse sweeps", "slog": "Slog sweeps",
+               "ramp": "Ramps", "reverse_ramp": "Reverse ramps"}
+_SHOT_CODE = {"right_pace": "RP", "left_pace": "LP", "off_spin": "OS", "left_orthodox": "LO",
+              "leg_spin": "LS", "left_unorthodox": "LU", "pace": "p", "spin": "s"}
+_SHOT_GROUP = {"right_pace": "right-arm pace", "left_pace": "left-arm pace", "off_spin": "off spin",
+               "leg_spin": "leg spin", "left_orthodox": "left-arm orthodox",
+               "left_unorthodox": "left-arm wrist spin", "pace": "pace", "spin": "spin"}
+_SHOT_CACHE = {}
+
+
+def _load_shot_types(key):
+    """build_shot_types.py's sidecar, `data/shot_types_<key>.json`, read once per build. Missing or
+    unreadable reads as empty: the packs are then exactly what they were before the reels existed."""
+    if not key:
+        return {}
+    if key not in _SHOT_CACHE:
+        p = os.path.join(HERE, "data", f"shot_types_{key}.json")
+        try:
+            _SHOT_CACHE[key] = json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
+        except Exception as e:                                           # noqa: BLE001
+            print(f"  shot types sidecar unreadable ({type(e).__name__}) — skipped")
+            _SHOT_CACHE[key] = {}
+    return _SHOT_CACHE[key]
 
 
 def _load_manual_vision(slug):
