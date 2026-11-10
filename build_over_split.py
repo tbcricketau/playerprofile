@@ -6,7 +6,8 @@ Tom, 10-11-2026: a bowler's summary in the player packs carries "their expected 
 distribution" as its second point, e.g. "Overs: 4 PP · 4 Mid · 2 Death (last 20 ODIs)". For each
 bowler in the series' about file: the overs they bowled in each phase per match, averaged over
 their last 20 matches in the format and rounded to whole overs, so it can add to less than ten for
-a bowler who does not usually bowl out. Phases are `cricket_core.formats.phase_bands`, the same
+a bowler who does not usually bowl out. Tom kept whole overs and no minimum sample on 10-11-2026
+(the match count in the label says how thin it is), and T20 packs do not carry it yet. Phases are `cricket_core.formats.phase_bands`, the same
 bands as the phase reels. An over counts in a match when they bowled any ball of it.
 
 Writes `data/over_split_<opp>.json`, which build_hub_packs.py reads. Reads the warehouse (and the

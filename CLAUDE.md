@@ -1369,7 +1369,9 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   split for this hand, batters: `facts_<pace|spin>` with the overview's exact-type plan), the coaches'
   notes for that card, the reels and the head-to-head. A white-ball bowler's second point is their
   usual overs per phase ("Overs: 4 PP · 4 Mid · 2 Death (last 20 ODIs)", `build_over_split.py`,
-  averaged over their last 20 matches in the format, run on the box before the packs). The line
+  averaged over their last 20 matches in the format, run on the box before the packs). Tom's calls
+  (atq 10-11-2026): whole overs, though it makes every England bowler "1 Death" · no minimum
+  sample, the "(last N ODIs)" label says it · ODI packs only, T20 left for later. The line
   under a name is the type alone. **View coach notes and fields** on the row opens the full card
   on its own page (`<player>-v<id>-batting.html`, `<player>-bowling-<type>-v<id>.html`, names the
   hand audit reads as pack pages), which goes back to the list and links nowhere else, not to the
