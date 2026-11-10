@@ -136,7 +136,7 @@ def _facts(facts):
         return ""
     rows = "".join(f'<span class="k">{E(f.get("label", ""))}</span><span class="v">{_rich(f.get("text"))}</span>'
                    for f in facts)
-    return f'<div class="fx o5">{_label("The numbers")}<div class="facts">{rows}</div></div>'
+    return f'<div class="fx o5"><div class="facts">{rows}</div></div>'
 
 
 def _figures(items):
@@ -374,10 +374,8 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
     if (x or {}).get("n_balls"):
         spin = x.get("spd_lo") is not None or not plan.get("pace", True)
         st = x.get("stumps") or {}
-        # the type's rate rides inside the value: as a label it wrapped to three lines (11-10-2026).
-        # Named for what it is: "type 10.0" left Tom asking what it meant (10-11-2026)
-        stumps = ((f'{st["rate"]:.1f}%<small class="ln">type average {st["expected"]:.1f}%</small>', "Hit the stumps")
-                  if st.get("rate") is not None and st.get("expected") is not None else (None, ""))
+        # the bowler's own rate alone, without the type average (Tom, 10-11-2026)
+        stumps = ((f'{st["rate"]:.1f}%', "Hit stumps %") if st.get("rate") is not None else (None, ""))
         if spin:
             spd = (f'{x["avg_spd"]:.0f}<small> {x["spd_lo"]:.0f}–{x["spd_hi"]:.0f}</small>'
                    if x.get("avg_spd") and x.get("spd_lo") and x.get("spd_hi") else None)

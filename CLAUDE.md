@@ -1361,8 +1361,9 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   editing, for a coach either (no pencil, no "Add notes in the planner", no in-place top note), and a
   note box with nothing in it is not shown. The squad players read the same as the XI. A
   small sample still shows its figures, wheel and pictures under its "Only N balls" line. The landing
-  page is the old packs' list of names, each with its Batting and Bowling links. The hit-the-stumps
-  figure reads "type average 10.0%", not "type 10.0".
+  page is the old packs' list of names, each with its Batting and Bowling links. The hit-stumps
+  figure is the bowler's own rate under "Hit stumps %", with no type average, and the facts carry
+  no "The numbers" title (Tom, later on 10-11).
 - **A pack is a list again, as the old packs were (Tom, 10-11-2026, after one round the other way).**
   The landing list opens a pack, which lists the opposition (XI, then the squad), each a row that
   opens in place to the old summary: the about file's facts (bowlers: `facts` plus the over/round
