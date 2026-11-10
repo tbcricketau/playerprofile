@@ -15,7 +15,8 @@
   const HP = window.HP || {};
   const FP = window.FieldPlanner;
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const api = p => `/fields/${encodeURIComponent(HP.series)}/api/fields?pack=${encodeURIComponent(p)}`;
+  // view=players: the series as at its last publish, for a coach looking at a pack too (Tom, 10-11-2026)
+  const api = p => `/fields/${encodeURIComponent(HP.series)}/api/fields?pack=${encodeURIComponent(p)}&view=players`;
   const state = { cards: null, band: null, pick: {} };
   // the planner's seeded slots, in order (playerpacks fieldstore.SEED_SLOTS)
   const SLOTS = ["option1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"];

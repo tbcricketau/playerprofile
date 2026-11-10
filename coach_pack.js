@@ -85,8 +85,7 @@
       return `<div class="fig"><div class="v">${(100 * c / sh.balls).toFixed(1)}%<small class="ln">${many(c, "ball")} · ${many(runs, "run")}${sr} · ${outs} out</small></div><span class="k">${sw}${esc(SHOT[k][0])}</span></div>`;
     }).join("");
     return `<div class="shots"><span class="lbl">${PK.pack === "spin" ? "Sweeps" : "Ramps"} v ${esc(TYPE[g] || labelOf(g))}</span>`
-      + `<div class="figs fn" style="--n:${kinds.length}">${cells}</div>`
-      + `<p class="cap">Share of their ${n(sh.balls)} balls. SR = runs per 100 balls.</p></div>`;
+      + `<div class="figs fn" style="--n:${kinds.length}">${cells}</div></div>`;   // no caption (Tom, 10-11-2026)
   }
   // Every scoring sweep as one line from the striker, coloured by the sweep, no dot at the end.
   // Drawn as the hub's wheel: the bowler at the bottom, a right-hander's off side on the left. The

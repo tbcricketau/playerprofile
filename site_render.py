@@ -146,17 +146,19 @@ def series_tabs(items, active):
                       for key, label, href in items) + "</nav>")
 
 
-def series_nav(sides, side, active):
+def series_nav(sides, side, active, extra=""):
     """The two rows every page of a series carries since Batting plans (Tom, 04-10-2026): the sides,
     then the pages of the one open. `sides` is [(key, label, [(key, label, href)])], in the order
-    the top row shows them."""
+    the top row shows them. `extra` goes under the rows, inside the block (the Publish to players
+    bar), and must hold no <div>: `build_coach_site._insert_tabs` finds the block's end by its first
+    closing div."""
     top = "".join(f'<a href="{_html.escape(items[0][2])}"{" class=\"on\"" if key == side else ""}>{_html.escape(label)}</a>'
                   for key, label, items in sides if items)
     rows = next((items for key, _l, items in sides if key == side), [])
     second = ('<nav class="stabs l2" aria-label="Pages">'
               + "".join(f'<a href="{_html.escape(href)}"{" class=\"on\"" if key == active else ""}>{_html.escape(label)}</a>'
                         for key, label, href in rows) + "</nav>") if rows else ""
-    return f'<div class="snav"><nav class="stabs l1" aria-label="Plans">{top}</nav>{second}</div>'
+    return f'<div class="snav"><nav class="stabs l1" aria-label="Plans">{top}</nav>{second}{extra}</div>'
 
 
 def bowler_tile(name, btype, href, badge=None, badge_class="squad", photo=None, initials=""):

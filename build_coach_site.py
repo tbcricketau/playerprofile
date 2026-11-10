@@ -161,6 +161,7 @@ _SWITCH = {"pace": ("All pace", "right- and left-arm"), "spin": ("All spin", "ev
            "left_orthodox": ("Left-arm orthodox", ""), "leg_spin": ("Leg spin", ""),
            "left_unorthodox": ("Left-arm wrist spin", "")}
 PACK_JS = os.path.join(HERE, "coach_pack.js")
+PUBLISH_JS = os.path.join(HERE, "coach_publish.js")     # Publish to players (Tom, 10-11-2026)
 
 
 def _file_version(path):
@@ -509,7 +510,14 @@ def build(slug, out, sas_hours=DEFAULT_SAS_HOURS):
     plans = _bowler_plans(slug)
     have["bowler_plans"] = bool(plans)
     sides = _nav(slug, have, planner)
-    nav_for = lambda side, key: SR.series_nav(sides, side, key)        # noqa: E731
+    # Publish to players under the tabs of every page, for a series with a planner: the player packs
+    # show the coaches' fields and notes as at the last publish (coach_publish.js, Tom 10-11-2026)
+    pub = ""
+    if planner:
+        shutil_copy(PUBLISH_JS, os.path.join(out, "coach", "publish.js"))
+        pub = (f'<p class="pub" data-series="{_html.escape(planner)}" hidden></p>'
+               f'<script src="/coach/publish.js?v={_file_version(PUBLISH_JS)}" defer></script>')
+    nav_for = lambda side, key: SR.series_nav(sides, side, key, pub)   # noqa: E731
     home = next(items[0][2] for _s, _l, items in sides if items)     # where the series opens
     crumb = [("/coach/index.html", "Scouting"), (home, title)]
     if any(k in have for k in ("pace", "spin")):

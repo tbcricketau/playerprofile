@@ -212,8 +212,8 @@ def _shots(shot, group):
                      f'{_many(k["n"], "ball")} · {_many(k["runs"], "run")}{sr} · {k["outs"]} out</small></div>'
                      f'<div class="k">{sw}{E(_SHOT_LABEL[kind])}</div></div>')
     title = f"{'Sweeps' if spin else 'Ramps'} v {_GROUP_LABEL.get(group, group)}"
-    return (f'<div class="shots o5">{_label(title)}<div class="figs">{"".join(cells)}</div>'
-            f'<div class="cap">Share of their {balls:,} balls. SR = runs per 100 balls.</div></div>')
+    # no caption under the figures (Tom, 10-11-2026): the sample line already gives the balls
+    return f'<div class="shots o5">{_label(title)}<div class="figs">{"".join(cells)}</div></div>'
 
 
 def _sweeps_svg(lines, lhb):
@@ -836,7 +836,9 @@ def build(slug, out_root, only=None, clips_root=None):
         lists.append(f"<h2 class='sec'>{E(head)} <span>{len(rows)}</span></h2>"
                      f"<ul class='roster'>{''.join(row(*r) for r in rows)}</ul>")
     lead = " · ".join(x for x in (smeta.get("subtitle") or entry.get("subtitle") or "", "tap Batting or Bowling") if x)
-    idx = (f"<header class='ph'><div class='in'><a class='back' href='../index.html'>‹ Series</a>"
+    # data-hub-nav: the playerpacks app takes this link out for the players' login, whose link opens
+    # one series and leads nowhere else (Tom, 10-11-2026). Coaches keep it.
+    idx = (f"<header class='ph'><div class='in'><a class='back' data-hub-nav href='../index.html'>‹ Series</a>"
            f"<div class='who'><div><h1>{E(series_name)}</h1>"
            f"<div class='sb'>{E(lead)}</div></div></div></div></header>"
            f"<main class='wrap hpw'>{''.join(lists)}</main>")
