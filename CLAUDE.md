@@ -1350,25 +1350,28 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
 
 - **A card is two halves** (Tom, 11-10-2026): the plan — the coaches' notes, the field, the vision —
   first on a phone and on the left on a laptop; the numbers — four to six figures, the facts, the
-  pictures — after. The header carries the sample ("Tests · 193 wickets to right-handers") and a
-  View report button. A field the coaches set is marked (gold dot, "Set by the
-  coaches · tags · date"); an estimate says "Estimated from the data". The opposition chips stay
-  pinned under the bar while the cards scroll. The likely XI first (new-ball bowlers first on a
-  batting pack, batting order on a bowling pack), then "Also in the squad" as the same full cards.
+  pictures — after. The header carries the sample ("Tests · 193 wickets to right-handers"). A field
+  the coaches set is marked (gold dot, "Set by the
+  coaches · tags · date"); an estimate says "Estimated from the data". Since 10-11-2026 each card
+  sits on its own page behind its summary row (below). The likely XI first (new-ball bowlers first
+  on a batting pack, batting order on a bowling pack), then "Also in the squad", the same rows.
   Fielder labels are drawn a size up (`labelSize` in the planner's
   `fields.js`): the planner's 7 px at 340 px wide was unreadable.
 - **Changes after the England ODI packs went live (Tom, 10-11-2026)**: nothing on a pack leads to
   editing, for a coach either (no pencil, no "Add notes in the planner", no in-place top note), and a
-  note box with nothing in it is not shown. The squad players are full cards, not rows that open. A
+  note box with nothing in it is not shown. The squad players read the same as the XI. A
   small sample still shows its figures, wheel and pictures under its "Only N balls" line. The landing
   page is the old packs' list of names, each with its Batting and Bowling links. The hit-the-stumps
   figure reads "type average 10.0%", not "type 10.0".
-- **View report opens a copy of the web report inside the packs** (`_player_reports`, `--coach
-  coach_build`): Scouting is coaches only, so the players' login cannot open `coach/<slug>/web/`.
-  The copies sit in `packs/<slug>/reports/` with their clip lists in `reports/clips/`, go back to the
-  page they were opened from, and carry `HP.readOnly`, which `report_web.js` reads to offer no way
-  into the planner. **Build the web reports before the packs** (`report_web.py <slug>`), or the
-  cards carry no button.
+- **A pack is a list again, as the old packs were (Tom, 10-11-2026, after one round the other way).**
+  The landing list opens a pack, which lists the opposition (XI, then the squad), each a row that
+  opens in place to the old summary: the about file's facts (bowlers: `facts` plus the over/round
+  split for this hand, batters: `facts_<pace|spin>` with the overview's exact-type plan), the coaches'
+  notes for that card, the reels and the head-to-head. **View report** on the row opens the full card
+  on its own page (`<player>-v<id>-batting.html`, `<player>-bowling-<type>-v<id>.html`, names the
+  hand audit reads as pack pages), which goes back to the list and links nowhere else, not to the
+  scouting report. For a few hours on 10-11 View report opened copies of the web reports under
+  `packs/<slug>/reports/`, and `report_web.js` still honours the `HP.readOnly` those copies carried.
 - **Built from**: `pack_extras_<opp>.json` (facts, figures, stumps, zones, pictures — the only new
   data), `bowler_plans_<opp>.json` and `overview_<group>_<opp>.json` (the estimated fields), the
   about file (order, types, clip scopes) and the Pages packs' clip sidecars, fetched at
