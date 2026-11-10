@@ -1241,6 +1241,11 @@ the sample line already gives it).
   clips of a shot falls back to the wider spin or pace set, starred and footnoted.
 - **The clips live in the Pages clip files**, so the upload carries `players/<slug>/` as well as
   `packs/<slug>/`. `~/tmp/box_eng_1011_s6.sh` on the box is the pattern.
+- **Scouting's Pace and Spin packs carry them too** (Tom, same day): the figures under the scouting
+  notes, False v slower ball in the Pace row, and on a Spin card a **Field | Sweeps** switch on the
+  field panel, his choice over a wheel beside the field. No ramps wheel anywhere, and no reels in
+  Scouting. `build_coach_site._shot_view` feeds `coach_pack.js`. Upload `coach/<slug>/` and
+  `coach/*.js` only: the box's Scouting index lists just what the box has built.
 
 ### The coach view's series page: a tab row, two plan packs, the bowlers grid (04-10-2026)
 
