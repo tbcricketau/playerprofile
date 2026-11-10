@@ -1426,14 +1426,19 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   data), `bowler_plans_<opp>.json` and `overview_<group>_<opp>.json` (the estimated fields), the
   about file (order, types, clip scopes) and the Pages packs' clip sidecars, fetched at
   `/players/<slug>/<p>-clips.json`. So the Pages packs must be built (and uploaded) for the reels to play.
-- **From the planner when the page opens**, shared only: the card notes and fields (`vs_rhb`/`vs_lhb` for
+- **From the planner when the page opens**, shared only and **as at the series' last publish** (since
+  10-11-2026, `view=players`: a coach's save shows in Scouting at once and on the packs once someone
+  presses Publish to players, `coach_publish.js` + playerpacks `docs/PLAYER_ACCESS.md`): the card notes
+  and fields (`vs_rhb`/`vs_lhb` for
   their bowlers, the group key for their batters) and the note at the top (`us_bat`/`us_bowl`, keyed by
   our player). Card notes and fields are written in the planner. The top note's only editor was in
   place on the pack, and it went with the other edit links on 10-11-2026, so none can be written
   until the planner offers one (none had been, as of that day).
 - **The page carries `<!--hub-bar-->`**, which `hubstyle.dress` fills with the hub's bar and does
   nothing else to — so it must never carry `<div class="crumb">`, `@page` or the vision gallery's
-  background, or the old-page restyle would be laid over it.
+  background, or the old-page restyle would be laid over it. The players' login gets a bar with no
+  links, and any link marked `data-hub-nav` is taken out for it (Tom, 10-11-2026: a player's link
+  leads only to its own series). Mark any new link that leaves the series the same way.
 - **Reels are full-width rows**, one per reel with the clip count on the right (Tom, 06-10-2026:
   buttons sized by their labels did not line up). A declared fallback reel ends in `*` with a one-line
   footnote ("* ODI footage", "* First-class footage"), the Pages packs' convention, which is how
