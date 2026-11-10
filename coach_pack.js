@@ -109,7 +109,8 @@
       + `<text x=".98" y="-.93" font-size=".07" fill="#5a6b61" font-weight="600" text-anchor="end">${right}</text>`);
     const leg = Object.keys(SHOT).filter(k => count[k]).map(k =>
       `<span><i style="background:${SHOT[k][1]}"></i>${esc(SHOT[k][0])} <b>${count[k]}</b></span>`).join("");
-    return `<svg class="sweeps" viewBox="-1.06 -1.06 2.12 2.12" role="img" aria-label="Every scoring sweep by ${esc(b.name)}, coloured by the sweep">${p.join("")}</svg>`
+    // the field drawing's own frame, so the ground is the same size whichever view is showing
+    return `<svg class="sweeps" viewBox="-1.12 -1.12 2.24 2.24" role="img" aria-label="Every scoring sweep by ${esc(b.name)}, coloured by the sweep">${p.join("")}</svg>`
       + `<div class="sleg">${leg}</div><p class="cap">Every scoring sweep v ${esc(TYPE[g] || labelOf(g))}, one line each</p>`;
   }
 
