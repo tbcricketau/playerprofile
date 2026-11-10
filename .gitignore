@@ -83,3 +83,5 @@ site_gated/
 # -- Variation reels (videobuilder/scripts/publish_variations.py) — the sidecar carries SIGNED
 # media-store links, so it is data and never source. Rebuild it by re-running that script.
 data/variations_*.json
+# ...and the copy it keeps of the previous sidecar before a run adds to it (signed links too).
+data/_history/
