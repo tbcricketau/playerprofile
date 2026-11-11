@@ -1405,6 +1405,17 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   page is the old packs' list of names, each with its Batting and Bowling links. The hit-stumps
   figure is the bowler's own rate under "Hit stumps %", with no type average, and the facts carry
   no "The numbers" title (Tom, later on 10-11).
+- **A rate is balls per dismissal or per wicket, never per 100 balls** (Tom, 11-11-2026). The danger
+  ball reads "(out every 14 balls)" in the summary point (`batting_report._summary_points`) and "out
+  every 14 balls" on the card (`build_pack_extras`). The bowler's wicket ball reads "a wicket every 19
+  balls (12 in 230)" (`profile._wicket_every`). That bowler line is still chosen on the adjusted rate
+  but states the raw figure its counts give, so a small cell reads sharper than the old shrunk rate
+  did. The England ODI files and both Scouting files were patched in place on 11-11. Each line was
+  re-derived and had to match the stored text, and five ODI Scouting bowlers were rebuilt on the
+  day's record because theirs had grown. Still in the old form, and on no page: the England T20I
+  pack extras (13 lines whose records have grown) and the T20I about file, whose batter summaries
+  still read the Test record. A `--facts-only` run and a pack-extras build put both right before any
+  T20I pack is built.
 - **A pack is a list again, as the old packs were (Tom, 10-11-2026, after one round the other way).**
   The landing list opens a pack, which lists the opposition (XI, then the squad), each a row that
   opens in place to the old summary: the coaches' notes for that card when any are written (first,
