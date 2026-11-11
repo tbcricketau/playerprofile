@@ -1407,9 +1407,9 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   no "The numbers" title (Tom, later on 10-11).
 - **A pack is a list again, as the old packs were (Tom, 10-11-2026, after one round the other way).**
   The landing list opens a pack, which lists the opposition (XI, then the squad), each a row that
-  opens in place to the old summary: the about file's facts (bowlers: `facts` plus the over/round
-  split for this hand, batters: `facts_<pace|spin>` with the overview's exact-type plan), the coaches'
-  notes for that card, the reels and the head-to-head. A white-ball bowler's second point is the
+  opens in place to the old summary: the coaches' notes for that card when any are written (first,
+  Tom 11-11-2026), the about file's facts (bowlers: `facts` plus the over/round split for this hand,
+  batters: `facts_<pace|spin>` with the overview's exact-type plan), the reels and the head-to-head. A white-ball bowler's second point is the
   overs they can be expected to bowl per phase in a full 50 ("Expected overs: 4 PP · 4 Mid · 2 Death
   (last 20 ODIs)", `build_over_split.py`, run on the box before the packs). Tom's calls (atq
   10-11-2026): whole overs · no minimum sample, the "(last N ODIs)" label says it · ODI packs only,
