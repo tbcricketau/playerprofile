@@ -1409,7 +1409,10 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   The landing list opens a pack, which lists the opposition (XI, then the squad), each a row that
   opens in place to the old summary: the coaches' notes for that card when any are written (first,
   Tom 11-11-2026), the about file's facts (bowlers: `facts` plus the over/round split for this hand,
-  batters: `facts_<pace|spin>` with the overview's exact-type plan), the reels and the head-to-head. A white-ball bowler's second point is the
+  batters: `facts_<pace|spin>` with the overview's exact-type plan), the reels and the head-to-head.
+  ⚠ The `oN` classes (`.o2{order:2}`) set the flex order, so a block that carries one is drawn by
+  its class, not where it sits in the HTML. Moving the notes slot first in the HTML changed nothing
+  on screen until `.opp .sbody > .cn` set `order:0`. Check a reorder on a screenshot, not a grep. A white-ball bowler's second point is the
   overs they can be expected to bowl per phase in a full 50 ("Expected overs: 4 PP · 4 Mid · 2 Death
   (last 20 ODIs)", `build_over_split.py`, run on the box before the packs). Tom's calls (atq
   10-11-2026): whole overs · no minimum sample, the "(last N ODIs)" label says it · ODI packs only,
