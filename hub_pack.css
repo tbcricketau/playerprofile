@@ -172,6 +172,7 @@ h2.sec span { font-weight:600; letter-spacing:.04em; color:var(--muted); font-si
 .opp[open] > summary { border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-color:transparent }
 .opp .sbody { background:#fff; border:1px solid var(--line); border-top:0; border-radius:0 0 8px 8px; padding:4px 14px 16px;
               display:flex; flex-direction:column; gap:14px }
+.opp .sbody > .cn { margin-top:10px }
 .sfacts { margin:0; padding-left:20px; display:flex; flex-direction:column; gap:6px; font-size:15.5px; line-height:1.45;
           color:var(--ink) }
 

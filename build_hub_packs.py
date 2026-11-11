@@ -310,8 +310,9 @@ def _card(anchor, head, plan, nums):
 
 def _summary(anchor, name, sub, img, tier, facts, buttons, h2h, h2h_label, star_note, detail):
     """One opposition player in a pack's list, as the old packs had it (Tom, 10-11-2026): a row that
-    opens in place to their summary points, the coaches' notes, the reels and the footage of you
-    against them, with View report into the full card on its own page."""
+    opens in place to the coaches' notes when any are written (first, Tom 11-11-2026), their summary
+    points, the reels and the footage of you against them, with View coach notes and fields into the
+    full card on its own page."""
     chip = f'<span class="chip {E(tier)}">{_TIER_CHIP[tier]}</span>' if tier in _TIER_CHIP else ""
     pts = ('<ul class="sfacts">' + "".join(f"<li>{_rich(f)}</li>" for f in facts) + "</ul>" if facts
            else '<p class="cap">Not enough data on this player yet.</p>')
@@ -320,7 +321,7 @@ def _summary(anchor, name, sub, img, tier, facts, buttons, h2h, h2h_label, star_
     return (f'<details class="opp" id="{E(anchor)}"><summary>{_avatar(anchor, name, img, "av sm")}'
             f'<span class="t"><span class="nm"><b>{E(name)}</b>{chip}</span><span>{E(sub)}</span></span>'
             f'<a class="rep" href="{E(detail)}" onclick="event.stopPropagation()">View coach notes and fields</a></summary>'
-            f'<div class="sbody">{pts}{_notes_slot(anchor[1:])}{_vision(buttons, h2h, none, star_note)}</div></details>')
+            f'<div class="sbody">{_notes_slot(anchor[1:])}{pts}{_vision(buttons, h2h, none, star_note)}</div></details>')
 
 
 # ── reels from the Pages packs' clip file ─────────────────────────────────────────────────────
