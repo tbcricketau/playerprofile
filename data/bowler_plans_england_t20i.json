@@ -28,7 +28,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>short down the leg side</b> · 6.9 per 100 balls (7 in 77)"
+        "text": "<b>short down the leg side</b> · a wicket every 11 balls (7 in 77)"
        },
        {
         "label": "Short ball",
@@ -44,7 +44,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>short down the leg side</b> · 6.9 per 100 balls (7 in 77)",
+       "Wicket ball: <b>short down the leg side</b> · a wicket every 11 balls (7 in 77)",
        "Short ball: 45 of 172 wickets"
       ],
       "attack": [
@@ -407,7 +407,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full on the stumps</b> · 6.6 per 100 balls (4 in 34)"
+        "text": "<b>full on the stumps</b> · a wicket every 8 balls (4 in 34)"
        },
        {
         "label": "Short ball",
@@ -423,7 +423,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full on the stumps</b> · 6.6 per 100 balls (4 in 34)",
+       "Wicket ball: <b>full on the stumps</b> · a wicket every 8 balls (4 in 34)",
        "Short ball: 15 of 65 wickets"
       ],
       "attack": [
@@ -685,7 +685,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>a good length wide outside off</b> · 5.9 per 100 balls (5 in 68)"
+        "text": "<b>a good length wide outside off</b> · a wicket every 14 balls (5 in 68)"
        },
        {
         "label": "Runs",
@@ -697,7 +697,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>a good length wide outside off</b> · 5.9 per 100 balls (5 in 68)"
+       "Wicket ball: <b>a good length wide outside off</b> · a wicket every 14 balls (5 in 68)"
       ],
       "attack": [
        "Runs: 41% through the leg side",
@@ -1059,7 +1059,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full on the stumps</b> · 6.9 per 100 balls (3 in 35)"
+        "text": "<b>full on the stumps</b> · a wicket every 12 balls (3 in 35)"
        },
        {
         "label": "Runs",
@@ -1071,7 +1071,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full on the stumps</b> · 6.9 per 100 balls (3 in 35)"
+       "Wicket ball: <b>full on the stumps</b> · a wicket every 12 balls (3 in 35)"
       ],
       "attack": [
        "Runs: 49% through the leg side",
@@ -1332,7 +1332,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>a good length in the 4th-stump channel</b> · 6.2 per 100 balls (3 in 34)"
+        "text": "<b>a good length in the 4th-stump channel</b> · a wicket every 11 balls (3 in 34)"
        },
        {
         "label": "Runs",
@@ -1344,7 +1344,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>a good length in the 4th-stump channel</b> · 6.2 per 100 balls (3 in 34)"
+       "Wicket ball: <b>a good length in the 4th-stump channel</b> · a wicket every 11 balls (3 in 34)"
       ],
       "attack": [
        "Runs: 54% through the leg side",
@@ -1594,7 +1594,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full in the 4th-stump channel</b> · 7.3 per 100 balls (4 in 33)"
+        "text": "<b>full in the 4th-stump channel</b> · a wicket every 8 balls (4 in 33)"
        },
        {
         "label": "Runs",
@@ -1606,7 +1606,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full in the 4th-stump channel</b> · 7.3 per 100 balls (4 in 33)"
+       "Wicket ball: <b>full in the 4th-stump channel</b> · a wicket every 8 balls (4 in 33)"
       ],
       "attack": [
        "Runs: 48% through the leg side",
@@ -1867,7 +1867,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>back of a length on the 6th stump</b> · 9.5 per 100 balls (9 in 67)"
+        "text": "<b>back of a length on the 6th stump</b> · a wicket every 7 balls (9 in 67)"
        },
        {
         "label": "Short ball",
@@ -1883,7 +1883,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>back of a length on the 6th stump</b> · 9.5 per 100 balls (9 in 67)",
+       "Wicket ball: <b>back of a length on the 6th stump</b> · a wicket every 7 balls (9 in 67)",
        "Short ball: 30 of 97 wickets"
       ],
       "attack": [
@@ -2246,7 +2246,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full on the stumps</b> · 7.6 per 100 balls (4 in 35)"
+        "text": "<b>full on the stumps</b> · a wicket every 9 balls (4 in 35)"
        },
        {
         "label": "Short ball",
@@ -2262,7 +2262,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full on the stumps</b> · 7.6 per 100 balls (4 in 35)",
+       "Wicket ball: <b>full on the stumps</b> · a wicket every 9 balls (4 in 35)",
        "Short ball: 9 of 35 wickets"
       ],
       "attack": [
@@ -2636,7 +2636,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full on the 6th stump</b> · 8.2 per 100 balls (16 in 166)"
+        "text": "<b>full on the 6th stump</b> · a wicket every 10 balls (16 in 166)"
        },
        {
         "label": "Runs",
@@ -2648,7 +2648,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full on the 6th stump</b> · 8.2 per 100 balls (16 in 166)"
+       "Wicket ball: <b>full on the 6th stump</b> · a wicket every 10 balls (16 in 166)"
       ],
       "attack": [
        "Runs: 48% through the leg side",
@@ -2954,7 +2954,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full in the 4th-stump channel</b> · 11.5 per 100 balls (12 in 70)"
+        "text": "<b>full in the 4th-stump channel</b> · a wicket every 6 balls (12 in 70)"
        },
        {
         "label": "Runs",
@@ -2966,7 +2966,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full in the 4th-stump channel</b> · 11.5 per 100 balls (12 in 70)"
+       "Wicket ball: <b>full in the 4th-stump channel</b> · a wicket every 6 balls (12 in 70)"
       ],
       "attack": [
        "Runs: 53% through the leg side",
@@ -3283,7 +3283,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full in the 4th-stump channel</b> · 6.4 per 100 balls (3 in 30)"
+        "text": "<b>full in the 4th-stump channel</b> · a wicket every 10 balls (3 in 30)"
        },
        {
         "label": "Short ball",
@@ -3299,7 +3299,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full in the 4th-stump channel</b> · 6.4 per 100 balls (3 in 30)",
+       "Wicket ball: <b>full in the 4th-stump channel</b> · a wicket every 10 balls (3 in 30)",
        "Short ball: 27 of 128 wickets"
       ],
       "attack": [
@@ -3662,7 +3662,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>a good length on the 6th stump</b> · 6.4 per 100 balls (3 in 35)"
+        "text": "<b>a good length on the 6th stump</b> · a wicket every 12 balls (3 in 35)"
        },
        {
         "label": "Short ball",
@@ -3678,7 +3678,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>a good length on the 6th stump</b> · 6.4 per 100 balls (3 in 35)",
+       "Wicket ball: <b>a good length on the 6th stump</b> · a wicket every 12 balls (3 in 35)",
        "Short ball: 10 of 66 wickets"
       ],
       "attack": [
@@ -3940,7 +3940,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>full</b> · 6.6 per 100 balls"
+        "text": "<b>full</b> · a wicket every 12 balls (3 in 35)"
        },
        {
         "label": "Runs",
@@ -3952,7 +3952,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>full</b> · 6.6 per 100 balls"
+       "Wicket ball: <b>full</b> · a wicket every 12 balls (3 in 35)"
       ],
       "attack": [
        "Runs: 49% through the leg side",
@@ -4576,7 +4576,7 @@
       "facts": [
        {
         "label": "Wicket ball",
-        "text": "<b>a good length</b> · 4.8 per 100 balls"
+        "text": "<b>a good length</b> · a wicket every 16 balls (3 in 47)"
        },
        {
         "label": "Runs",
@@ -4588,7 +4588,7 @@
        }
       ],
       "respect": [
-       "Wicket ball: <b>a good length</b> · 4.8 per 100 balls"
+       "Wicket ball: <b>a good length</b> · a wicket every 16 balls (3 in 47)"
       ],
       "attack": [
        "Runs: 43% through the leg side",
