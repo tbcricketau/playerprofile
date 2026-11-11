@@ -1193,6 +1193,11 @@ def ball_phrase(length: str | None, line: str | None) -> str:
     return f"{lp} {lnp}".strip()
 
 
+def _wicket_every(cell: dict) -> str:
+    """'a wicket every 19 balls (12 in 230)': a danger cell or length as balls per wicket."""
+    return f"a wicket every {cell['balls'] / cell['wickets']:.0f} balls ({cell['wickets']} in {cell['balls']})"
+
+
 def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, matchups,
                  seq_patterns, wicket_setup, ball_types, sb_econ, sb_wkts, sb_n,
                  repeatability, common_len_band, n_wkts=None) -> dict:
@@ -1210,14 +1215,14 @@ def _how_to_play(*, is_pace, is_spin, danger_cell, danger_length, scoring, match
         facts.append({"label": label, "text": text})
         group.append(f"{label}: {text}")
 
-    # where the wickets come from — the danger cell, else the danger length
+    # where the wickets come from — the danger cell, else the danger length. Chosen on the adjusted
+    # rate, stated as the balls per wicket its own counts give (Tom, 11-11-2026: not per 100 balls)
     if danger_cell and danger_cell.get("adj_rate"):
         add(respect, "Wicket ball",
-            f"<b>{ball_phrase(danger_cell['length'], danger_cell['line'])}</b> · "
-            f"{danger_cell['adj_rate']:.1f} per 100 balls ({danger_cell['wickets']} in {danger_cell['balls']})")
+            f"<b>{ball_phrase(danger_cell['length'], danger_cell['line'])}</b> · {_wicket_every(danger_cell)}")
     elif danger_length and danger_length.get("adj_rate"):
         add(respect, "Wicket ball", f"<b>{_LEN_PHRASE.get(danger_length['length'], danger_length['length'].lower())}</b> · "
-                                    f"{danger_length['adj_rate']:.1f} per 100 balls")
+                                    f"{_wicket_every(danger_length)}")
     # short ball (pace)
     if is_pace and sb_n and sb_n >= 40 and sb_econ is not None:
         if sb_econ >= 4.0 and sb_wkts <= max(1, sb_n // 60):

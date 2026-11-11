@@ -690,11 +690,12 @@ def _summary_points(P: dict, fp_type: str = None, include_matchup: bool = True) 
     plan_txt = plan_sentence(P)
     if plan_txt:
         pts.append(plan_txt)
-    # their danger ball (the length×line that dismisses them most) — the ball to hunt
+    # their danger ball (the length×line that dismisses them most) — the ball to hunt. As balls per
+    # dismissal, not dismissals per 100 balls (Tom, 11-11-2026)
     g = P.get("grid_danger")
     if g and not (plan_txt and g["line_region"] in plan_txt and g["length_band"].lower() in plan_txt):
         pts.append(f"They get out most often to balls that are <b>{g['length_band'].lower()} and "
-                   f"{g['line_region']}</b> ({g['dismissal_per100']:.1f} dismissals/100).")
+                   f"{g['line_region']}</b> (out every {g['balls'] / g['outs']:.0f} balls).")
     # how they get out (mode)
     d = _dismissal_read(P, include_matchup=include_matchup)
     if d:

@@ -142,10 +142,10 @@ def batter_entry(bid, meta, groups, fmt, level, before, pic_dir, source="warehou
                     baseline = {}
             facts = plan_facts(P, baseline=baseline if g in _SPIN else None)
             gd = P.get("grid_danger")
-            if gd:
+            if gd:                         # balls per dismissal, not per 100 balls (Tom, 11-11-2026)
                 facts.append({"label": "Out most to",
                               "text": f"<b>{gd['length_band'].lower()} {gd['line_region']}</b> · "
-                                      f"{gd['dismissal_per100']:.1f} per 100 balls"})
+                                      f"out every {gd['balls'] / gd['outs']:.0f} balls"})
             ph = P.get("phase") or {}
             es, ss = ph.get("early"), ph.get("set")
             if (es and ss and es.get("dismissal_per100") and ss.get("dismissal_per100")
