@@ -166,6 +166,7 @@ def build(slug, planner_out=None, only=None):
     # far more balls per player than T20Is alone, and the packs and these cards must agree
     FMT = {"test": "Test", "odi": "ODI", "t20": "T20"}.get(fmt.lower(), "Test")
     white = FMT != "Test"
+    import domestic_topup as DT
     bowlers, _batters = _about(slug)
     tiers = _tiers(entry)
     out = {"slug": slug, "series": entry.get("name") or slug, "format": FMT,
@@ -174,8 +175,11 @@ def build(slug, planner_out=None, only=None):
         if only and bid not in only:
             continue
         t0 = time.time()
+        # a bowler with no ODI record reads their domestic one-day cricket here, labelled (Tom, 13-11-2026)
+        dom = DT.no_record(_opp_key(slug), bid, "bowl") if FMT == "ODI" and level == "international" else None
+        lvl = DT.LEVEL if dom else level
         try:
-            raw = PR.process_rows(load_bowler_deliveries(bid, fmt=FMT, level=level))
+            raw = PR.process_rows(load_bowler_deliveries(bid, fmt=FMT, level=lvl))
         except Exception as e:                               # a pipeline failure, said so on the card
             print(f"  ! {meta.get('name')}: no deliveries ({type(e).__name__}: {str(e)[:80]})", flush=True)
             out["bowlers"][bid] = {"name": meta.get("name"), "type": meta.get("type"), "error": True}
@@ -183,8 +187,10 @@ def build(slug, planner_out=None, only=None):
         b = {"name": meta.get("name") or bid, "type": meta.get("type") or "", "pace": bool(meta.get("is_pace")),
              "new_ball": meta.get("new_ball"), "order": meta.get("order") or 0, "tier": tiers.get(str(bid), ""),
              "hands": {}}
+        if dom:
+            b["domestic"] = dom
         for h, hand, word in HANDS:
-            P = PR.build_profile(bid, hand=hand, raw=raw, fmt=FMT, level=level)
+            P = PR.build_profile(bid, hand=hand, raw=raw, fmt=FMT, level=lvl)
             group = _group(P, meta)
             b["group"] = group
             htp = P.get("how_to_play") or {}
@@ -213,7 +219,8 @@ def build(slug, planner_out=None, only=None):
                 "round_pct": P.get("round_pct"),
                 # labelled facts (Tom, 06-10-2026: generated text states facts, the coaches instruct);
                 # the grouped keys stay for anything still reading them
-                "how_to_play": {"facts": list(htp.get("facts") or [])[:6],
+                "how_to_play": {"facts": ([{"label": "Record", "text": DT.label(dom)}] if dom else [])
+                                         + list(htp.get("facts") or [])[:6],
                                 **{k: _they(htp.get(k)) for k in ("respect", "attack", "watch")}},
                 "fields": cats}
             if planner_out:
@@ -225,7 +232,7 @@ def build(slug, planner_out=None, only=None):
         out["bowlers"][bid] = b
 
     if planner_out:
-        _planner_export(slug, entry, out, planner_out)
+        _planner_export(slug, entry, out, planner_out, merge=bool(only))
     for b in out["bowlers"].values():
         for x in (b.get("hands") or {}).values():
             x.pop("_wheel_df", None)
@@ -243,9 +250,14 @@ def build(slug, planner_out=None, only=None):
 _FMT_WORDS = {"Test": "Tests", "ODI": "ODIs", "T20": "T20s"}
 
 
-def _planner_export(slug, entry, out, root):
+def _planner_export(slug, entry, out, root, merge=False):
     """The field planner's second side: a page per batter hand, a card per bowler (headshot, sample
-    line, the runs-off-them wheel and the spider, and the categories' fields as the options it starts from)."""
+    line, the runs-off-them wheel and the spider, and the categories' fields as the options it starts from).
+
+    `merge` (an --only run): the bowlers built now replace their own rows in the bowlers.json already
+    there, a new one goes in at the end of its tier, and every other row is kept as it was. Until
+    13-11-2026 an --only run wrote bowlers.json with the named bowlers alone, which would have taken
+    every other bowler, and the fields the coaches saved on them, off Set Field Plans."""
     from photos import get_photo_bytes
     from report import _start_kaleido
     _start_kaleido()            # one Chrome for every wheel: a browser per figure hung on the second
@@ -289,21 +301,36 @@ def _planner_export(slug, entry, out, root):
                         print(f"  ! {kind} {b['name']} {h}: {type(e).__name__}: {str(e)[:60]}")
             n, w = x.get("n_balls") or 0, x.get("n_wkts") or 0
             fw = _FMT_WORDS.get(out.get("format") or "Test", "Tests")
+            if b.get("domestic"):                       # no ODI record: the domestic one-day cricket
+                fw = "Domestic one-day"
             fields = [{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
                        "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
                       for c in x["fields"] if len(c["fielders"]) == 9]
             hands[h] = {"sample": f"{fw} to {word}, career · {w:,} wickets off {n:,} balls" if n else "",
-                        "wheel": wheel, "spider": spider, "wheel_note": f"No {fw[:-1]} balls to {word}",
+                        "wheel": wheel, "spider": spider,
+                        "wheel_note": f"No {fw if b.get('domestic') else fw[:-1]} balls to {word}",
                         "fields": fields}
         rows.append({"player_id": bid, "name": b["name"], "type": b["type"], "tier": b.get("tier", ""),
                      "headshot": head, "hands": hands})
+    path = os.path.join(base, "bowlers.json")
+    if merge and os.path.exists(path):
+        prev = json.load(open(path, encoding="utf-8")).get("bowlers") or []
+        new = {r["player_id"]: r for r in rows}
+        merged = [new.pop(str(r["player_id"]), r) for r in prev]
+        for r in rows:                                  # a bowler new to the file: after the last of their tier
+            if r["player_id"] in new:
+                rank = _TIER_ORDER.get(r.get("tier"), 3)
+                at = max((i + 1 for i, q in enumerate(merged) if _TIER_ORDER.get(q.get("tier"), 3) <= rank), default=0)
+                merged.insert(at, r)
+        print(f"planner export: {len(rows)} bowler(s) merged into {len(prev)} already there")
+        rows = merged
     man = {"series": series, "opposition": entry.get("opposition") or entry.get("target_country") or "",
            "format": out.get("format") or "Test",
            "coach_slug": slug, "coach_series_name": entry.get("name") or slug, "built": out["built"],
            "pages": [{"key": "vs_rhb", "label": "vs right-handers", "hand": "RHB"},
                      {"key": "vs_lhb", "label": "vs left-handers", "hand": "LHB"}],
            "bowlers": rows}
-    json.dump(man, open(os.path.join(base, "bowlers.json"), "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+    json.dump(man, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     print(f"planner export: {len(rows)} bowlers -> {base}")
 
 

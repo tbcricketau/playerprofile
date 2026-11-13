@@ -208,14 +208,19 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
         batters = {b: m for b, m in batters.items() if b in only}
         print(f"merge mode: rebuilding {', '.join(m.get('name', b) for b, m in batters.items())} "
               f"— keeping {len(kept)} existing row(s)")
+    import domestic_topup as DT
     for bid, meta in sorted(batters.items(), key=lambda kv: -(kv[1].get("order") or 0)):
         name = (meta.get("name") or bid).strip()
+        # a batter with no ODI record reads their domestic one-day cricket, and the row says so
+        # (Tom, 13-11-2026); a short ODI record keeps the ODI-only row it had
+        dom = DT.no_record(opp, bid, "bat") if fmt == "ODI" and level == "international" else None
+        lvl = DT.LEVEL if dom else level
         # Retry: the warehouse connection drops intermittently, and a failed build must NOT be
         # written as a zero — "no record vs X" is a claim about the player, not about our pipeline.
         P, err = None, None
         for attempt in range(3):
             try:
-                P = build_batter_profile(bid, group=group, fmt=fmt, level=level,
+                P = build_batter_profile(bid, group=group, fmt=fmt, level=lvl,
                                          source=source, before=before)
                 break
             except Exception as e:
@@ -236,7 +241,7 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
         baseline = None
         if group in _SPIN_SUBS and not thin:
             try:
-                baseline = build_batter_profile(bid, group="spin", fmt=fmt, level=level,
+                baseline = build_batter_profile(bid, group="spin", fmt=fmt, level=lvl,
                                                 source=source, before=before).get("dims")
             except Exception as e:
                 print(f"     ! spin baseline for {name}: {type(e).__name__}")
@@ -250,13 +255,15 @@ def build(opp, group, only=None, fmt="Test", level="international", source="ware
                      "fields": [] if thin else _field_images(
                          P, group, os.path.join(HERE, "reports", "fields", opp, group), bid, fmt),
                      "threat": _threat(P) if balls else None})
+        if dom:
+            rows[-1]["note"] = DT.label(dom)
         # Short balls from ONE pace sub-type are too few to rate, so fall back to the batter's
         # whole pace record for that column and say so — an unanswered bouncer question is worse
         # than a wider-but-labelled one.
         t = rows[-1]["threat"]
         if t and not t["short"] and group in _PACE_SUBS:
             try:
-                s = _short_read(build_batter_profile(bid, group="pace", fmt=fmt, level=level,
+                s = _short_read(build_batter_profile(bid, group="pace", fmt=fmt, level=lvl,
                                                      source=source, before=before))
                 if s:
                     t["short"] = f"{s} — vs all pace"

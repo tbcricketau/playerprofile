@@ -1571,8 +1571,8 @@ def batter_ctx(pid, Pb, pics_dir, *, clips=None, img="", planner="", built="", b
 
 def batter_page(pid, Pb, ctx):
     P = Pb["All"]
-    rec_note = ""
-    if Pb.get("_source", "warehouse") != "warehouse":
+    rec_note = ctx.get("rec_note") or ""            # no ODI record: domestic one-day (domestic_topup)
+    if not rec_note and Pb.get("_source", "warehouse") != "warehouse":
         import batting_report as BR
         rec_note = BR._record_label(P.get("raw") or [], ctx.get("fmt", "Test"), "international")
     name = person(P["name"])
@@ -1591,7 +1591,7 @@ def batter_page(pid, Pb, ctx):
             f"{E(team_word(P.get('team')) or 'first-class')}{'' if rec_note else ' · ' + ctx.get('many', 'Tests') + ', career'}</div>"
             f"{('<div class=\'sb\'>' + E(rec_note) + '</div>') if rec_note else ''}</div></div>"
             f"<div class='ctl'><span class='k'>Bowling</span>{seg}<span class='stamp'>Built {E(ctx['built'])} · "
-            f"{ctx.get('many', 'Tests')} to {_day(last)}</span></div></div></header>")
+            f"{'Record' if ctx.get('rec_note') else ctx.get('many', 'Tests')} to {_day(last)}</span></div></div></header>")
     nav = ("<nav class='jump'><div class='in'>" + "".join(
         f"<a href='#all-{a}' data-to='{a}'>{E(t)}</a>" for a, t in _BAT_JUMP) + "</div></nav>")
     body = "".join(f"<div class='scope' data-scope='{k}'{'' if i == 0 else ' hidden'}>"
@@ -1703,15 +1703,24 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         # an older series' coach view has no Their bowlers page: back to the series
         back_bowl = back_bat = ("../index.html", entry.get("name") or "Scouting")
 
+    import domestic_topup as DT
+
+    def no_odi(pid, role):
+        """A player with no ODI record in the role: their domestic one-day cricket, and the line that
+        says so (Tom, 13-11-2026). None for everyone else."""
+        return DT.no_record(opp, pid, role) if fmt == "ODI" and level == "international" else None
+
     def one_bowler(pid):
         if fmt != "Test":
             import report_web_wb as WB
-            P = WB.wb_profile(pid, fmt=fmt, level=level)
+            dom = no_odi(pid, "bowl")
+            P = WB.wb_profile(pid, fmt=fmt, level=DT.LEVEL if dom else level)
             if P.get("empty"):
                 return f"no {fmt} bowling"
             clips, src = clips_of(pid, "bowling", bowlers.get(pid, {}).get("name", ""))
             ctx = {"clips": clips, "img": img(pid), "planner": planner, "built": built,
-                   "back_href": back_bowl[0], "back_label": back_bowl[1]}
+                   "back_href": back_bowl[0], "back_label": back_bowl[1],
+                   "rec_note": DT.label(dom) if dom else ""}
             body, hp, title = WB.wb_bowler_page(pid, P, ctx, fmt)
             open(os.path.join(web, f"bowling_{pid}.html"), "w", encoding="utf-8").write(
                 page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))
@@ -1732,13 +1741,16 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
         # has no record at this level, and is profiled from Cricket-21 as well
         meta = batters.get(pid) or {}
         source = "both" if any(str(v).startswith("C21:") for k, v in meta.items() if k.startswith("clip_scope_")) else "warehouse"
-        Pb = batter_profiles(pid, fmt=fmt, level=level, source=source)
+        dom = no_odi(pid, "bat")
+        Pb = batter_profiles(pid, fmt=fmt, level=DT.LEVEL if dom else level, source=source)
         if not Pb.get("All"):
             return f"no {fmt} batting"
         clips, src = clips_of(pid, "batting", batters.get(pid, {}).get("name", ""))
         ctx = batter_ctx(pid, Pb, os.path.join(web, "pics"), clips=clips, img=img(pid), planner=planner,
                          built=built, back=back_bat, opp=opp, fmt=fmt,
                          field_rows={g: rows[pid] for g, rows in overview.items() if pid in rows})
+        if dom:
+            ctx["rec_note"] = DT.label(dom)
         body, hp, title = batter_page(pid, Pb, ctx)
         open(os.path.join(web, f"batting_{pid}.html"), "w", encoding="utf-8").write(
             page(title, body, hp, fields_v=fields_v, snippet=_snippet(clips, src)))

@@ -34,9 +34,9 @@
        "name": "Sonny Baker"
       },
       {
-       "id": "4352931",
+       "id": "4352936",
        "tier": "squad",
-       "name": "Jacob Bethell"
+       "name": "James Coles"
       },
       {
        "id": "4352921",
@@ -52,6 +52,11 @@
        "id": "3760070",
        "tier": "squad",
        "name": "Liam Dawson"
+      },
+      {
+       "id": "5180392",
+       "tier": "squad",
+       "name": "Eddie Jack"
       },
       {
        "id": "3630055",
@@ -80,7 +85,8 @@
     "2540202": "xi",
     "2070076": "xi",
     "4380030": "xi",
-    "4352931": "squad",
+    "4352936": "squad",
+    "5180392": "squad",
     "3630055": "xi",
     "3630067": "xi",
     "3630194": "xi",
@@ -93,7 +99,8 @@
     "3760070": "squad",
     "880048": "xi"
    },
-   "_tiers_09_11": "XI reset 09-11-2026 (Tom): the decks' XI, the WACA tour-match side (07-11) with Rashid in for Dawson. Banton and Cox in, Bethell and Dawson to squad. Josh Tongue removed from the series 09-11-2026 (Tom): ruled out of the ODIs, left big toe (ECB, 07-11-2026). Bring him back by re-adding his report and tier line, and his pin, store, about and h2h rows from the box snapshot ~/bak/sq-2026-11-09."
+   "_tiers_09_11": "XI reset 09-11-2026 (Tom): the decks' XI, the WACA tour-match side (07-11) with Rashid in for Dawson. Banton and Cox in, Bethell and Dawson to squad. Josh Tongue removed from the series 09-11-2026 (Tom): ruled out of the ODIs, left big toe (ECB, 07-11-2026). Bring him back by re-adding his report and tier line, and his pin, store, about and h2h rows from the box snapshot ~/bak/sq-2026-11-09.",
+   "_squad_13_11": "Squad change 13-11-2026 (Tom): Jacob Bethell out of the tour, James Coles and Eddie Jack in, both in the squad tier, so the XI is unchanged. Neither has an ODI record: the packs and Scouting read their domestic one-day cricket, labelled (domestic_topup.scouting_level). Bethell's rows are in the box snapshot ~/bak/sq-2026-11-13."
   },
   {
    "slug": "england-t20i-home-2026",
@@ -112,11 +119,6 @@
      "format": "T20I",
      "kind": "bowling",
      "reports": [
-      {
-       "id": "4352931",
-       "tier": "xi",
-       "name": "Jacob Bethell"
-      },
       {
        "id": "4352936",
        "tier": "squad",
@@ -168,10 +170,9 @@
    "tiers": {
     "5460035": "xi",
     "3630067": "xi",
-    "4352931": "xi",
     "4380030": "xi",
     "3630055": "xi",
-    "3630194": "squad",
+    "3630194": "xi",
     "4352441": "xi",
     "2750034": "xi",
     "1440340": "xi",
@@ -182,7 +183,8 @@
     "5180392": "squad",
     "880048": "xi",
     "5460041": "xi"
-   }
+   },
+   "_squad_13_11": "Squad change 13-11-2026 (Tom): Jacob Bethell out of the tour. Jordan Cox takes his place in the likely XI, next by the rule it was set on (1 appearance in England's last ten T20Is, the most of the squad tier). Bethell's rows are in the box snapshot ~/bak/sq-2026-11-13."
   },
   {
    "slug": "india-a-od-2026",

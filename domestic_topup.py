@@ -13,6 +13,8 @@ build_opponent_about (summary points and reels), build_pack_extras, build_shot_t
 build_over_split. A player with no domestic one-day balls is left as they are.
 
 Tom's calls, 10-11-2026: under 300 ODI balls · it feeds every number and reel · labelled on the card.
+Scouting reads ODIs only, except for a player with no ODI balls at all in the role, who reads their
+domestic one-day cricket there too, labelled (Tom, 13-11-2026: `scouting_level`).
 The warehouse holds every England One-Day Cup season since 2017 (66 to 77 matches a year, each with
 its CricViz id), so nothing has to be pulled. The gaps are players who did not play it, mostly because
 it runs alongside The Hundred.
@@ -64,12 +66,38 @@ def level_for(opp, pid, role, fmt, level="international"):
     return LEVEL if topped(opp, pid, role) else level
 
 
+def no_record(opp, pid, role):
+    """The topped-up record of a player with no ODI balls at all in this role, else None."""
+    r = topped(opp, pid, role)
+    return r if r and not r.get("odi") else None
+
+
+def scouting_level(opp, pid, role, fmt, level="international"):
+    """The level Scouting reads a player at (the Bowling plans and Their bowlers cards, the planner and
+    the web reports). Only a player with NO ODI record in the role reads their domestic one-day cricket
+    there (Tom, 13-11-2026, for James Coles and Eddie Jack), so a short ODI record keeps the
+    ODI-only Scouting card it already had."""
+    if str(fmt) != "ODI" or level != "international":
+        return level
+    return LEVEL if no_record(opp, pid, role) else level
+
+
 def label(rec):
     """The card's first summary point for a topped-up record, e.g. "Short ODI record (174 balls).
-    These figures add 455 balls of domestic one-day cricket, 2021 to 2022."."""
+    These figures add 455 balls of domestic one-day cricket, 2021 to 2022.", or for a player with no
+    ODI balls at all "No ODI record. These figures are 975 balls of domestic one-day cricket, 2021 to
+    2026."."""
     span = str(rec["first"]) if rec["first"] == rec["last"] else f"{rec['first']} to {rec['last']}"
+    if not rec.get("odi"):
+        return f"No ODI record. These figures are {rec['domestic']:,} balls of domestic one-day cricket, {span}."
     return (f"Short ODI record ({rec['odi']:,} ball{'' if rec['odi'] == 1 else 's'}). These figures add "
             f"{rec['domestic']:,} balls of domestic one-day cricket, {span}.")
+
+
+def sample_words(rec, plural="ODIs"):
+    """How a card's sample line names a topped-up record: "Domestic one-day" with no ODI balls,
+    "ODIs and domestic one-day" with some."""
+    return "Domestic one-day" if not rec.get("odi") else f"{plural} and domestic one-day"
 
 
 def build(slug):

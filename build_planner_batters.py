@@ -11,6 +11,7 @@ seeded slots, so each is a starting point a coach can edit or delete (Tom, 30-10
 the cards' own (build_coach_site, build_hub_packs), so a field saved here replaces the one on the card.
 
     venv/bin/python build_planner_batters.py --slug england-odi-home-2026 --out ~/fp_eng
+    venv/bin/python build_planner_batters.py --slug england-odi-home-2026 --out ~/fp_eng --only 4352936
 
 Run it on the build machine (it reads deliveries), with `build_bowler_plans.py --planner-out` into
 the same --out for the planner's bowler side, then upload <out> with playerpacks/upload_packs.py.
@@ -32,15 +33,19 @@ FMT_WORD = {"ODI": "ODIs", "T20": "T20s"}
 # with one ball against the type gets both, and the sample line says how many balls they are drawn from.
 
 
-def build(slug, out_root):
+def build(slug, out_root, only=None):
+    """`only`: just these batter ids, merged into the manifest already in out_root. Each one's entry
+    is replaced where it is, a new one goes in by the about file's order, and every other batter's
+    entry is left exactly as it was."""
     from batter_profile import build_batter_profile, process_batting_rows
     from batting_loaders import load_batter_deliveries
     from build_bowler_plans import _webp, _zones_png, WHEEL_PX
-    from build_coach_site import _PACKS, _about, _fmt_level, _overview, _series
+    from build_coach_site import _PACKS, _about, _fmt_level, _opp_key, _overview, _series
     from photos import get_photo_bytes
     from report import _start_kaleido
     from whiteball_fields import middle_field, phase_fields
     from cricket_core import cricviz
+    import domestic_topup as DT
 
     entry = _series(slug)
     series = entry.get("planner_series")
@@ -66,6 +71,11 @@ def build(slug, out_root):
     packs = {g: [] for g in groups}
     for pid, meta in order:
         pid, name = str(pid), meta.get("name") or str(pid)
+        if only and pid not in only:
+            continue
+        # no ODI record: their domestic one-day cricket, said so in the sample line (Tom, 13-11-2026)
+        dom = DT.no_record(_opp_key(slug), pid, "bat") if FMT == "ODI" and level == "international" else None
+        lvl = DT.LEVEL if dom else level
         hand = hand_of.get(pid) or meta.get("hand") or "RHB"
         lhb = hand.upper() == "LHB"
         head = ""
@@ -76,14 +86,15 @@ def build(slug, out_root):
                 head = f"img/head_{pid}.webp"
         except Exception as e:
             print(f"  ! headshot {name}: {type(e).__name__}")
-        raw = process_batting_rows(load_batter_deliveries(pid, fmt=load_fmt, level=level))
+        raw = process_batting_rows(load_batter_deliveries(pid, fmt=load_fmt, level=lvl))
         seen = {}
         for g in groups:
-            P = build_batter_profile(pid, raw=raw, group=g, fmt=load_fmt, level=level)
+            P = build_batter_profile(pid, raw=raw, group=g, fmt=load_fmt, level=lvl)
             rows = [r for r in (P.get("raw") or []) if r.get("is_legal")]
             runs = int(sum(r.get("bat_score_n") or 0 for r in rows))
             seen[g] = len(rows)
-            words = f"{FMT_WORD[FMT]} v {GROUP_WORDS[g]}, career"
+            fword = "Domestic one-day" if dom else FMT_WORD[FMT]
+            words = f"{fword} v {GROUP_WORDS[g]}, career"
             wheels, note = {}, ""
             if rows:
                 try:
@@ -99,13 +110,30 @@ def build(slug, out_root):
                 except Exception as e:
                     print(f"  ! wheels {name} {g}: {type(e).__name__}: {str(e)[:60]}")
             else:
-                note = f"No {FMT} balls v {GROUP_WORDS[g]}"
+                note = f"No {'domestic one-day' if dom else FMT} balls v {GROUP_WORDS[g]}"
             packs[g].append({"player_id": pid, "name": name, "hand": hand.upper(), "notes": [],
                              "sample": (f"{words} · {runs:,} run{'' if runs == 1 else 's'} off "
                                         f"{len(rows):,} ball{'' if len(rows) == 1 else 's'}") if rows else "",
                              "wheels": wheels, "wheel_note": note, "headshot": head,
                              **planner_seeds(phase_fields(FMT, g, hand.upper()))})
         print(f"  {name:22} {hand:4} " + " · ".join(f"{g} {n}" for g, n in seen.items()), flush=True)
+    path = os.path.join(base, "manifest.json")
+    if only and os.path.exists(path):
+        man = json.load(open(path, encoding="utf-8"))
+        rank = {str(p): -int(m.get("order") or 0) for p, m in batters.items()}
+        for p in man["packs"]:
+            fresh = {b["player_id"]: b for b in packs.get(p["key"], [])}
+            kept = [fresh.pop(b["player_id"], b) for b in p["batters"]]
+            for b in packs.get(p["key"], []):          # a batter new to the file: by the about file's order
+                if b["player_id"] in fresh:
+                    r = rank.get(b["player_id"], 0)
+                    at = next((i for i, q in enumerate(kept) if rank.get(q["player_id"], 0) > r), len(kept))
+                    kept.insert(at, b)
+            p["batters"] = kept
+        man["exported_utc"] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        json.dump(man, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+        print(f"planner batter side: {', '.join(sorted(only))} merged into {path}")
+        return man
     man = {"series": series, "format": FMT, "opposition": entry.get("opposition") or entry.get("target_country") or "",
            "coach_slug": slug, "coach_series_name": entry.get("name") or slug,
            "title": entry.get("name") or slug, "venue": "",
@@ -153,13 +181,14 @@ def main():
     ap.add_argument("--out", required=True, help="the folder that gets fieldplanner/<series>/ (not the repo)")
     ap.add_argument("--reseed", action="store_true",
                     help="only rewrite the starting fields of the manifest already in --out")
+    ap.add_argument("--only", nargs="*", help="just these batter ids, merged into the manifest already in --out")
     a = ap.parse_args()
     if a.reseed:
         from build_coach_site import _series
         series = _series(a.slug).get("planner_series")
         reseed(os.path.join(os.path.expanduser(a.out), "fieldplanner", series, "manifest.json"))
         return
-    build(a.slug, a.out)
+    build(a.slug, a.out, set(a.only) if a.only else None)
     from report import finish_rendering           # the wheels went through kaleido: skip its exit hang
     finish_rendering(0)
 

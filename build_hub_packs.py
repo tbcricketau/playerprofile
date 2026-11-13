@@ -469,8 +469,9 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
     word = "left-handers" if hand == "LHB" else "right-handers"
     sub = _bowler_sub(meta, plan, hand, new_ball_min)
     fmt_pl = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
-    if domestic:
-        fmt_pl += " and domestic one-day"          # a short ODI record, topped up (domestic_topup.py)
+    if domestic:                                    # a short ODI record, topped up (domestic_topup.py)
+        import domestic_topup as DT
+        fmt_pl = DT.sample_words(domestic, fmt_pl)
     n_w = (x or {}).get("n_wkts") or 0
     sample = (f"{fmt_pl} · {n_w:,} wicket{'s' if n_w != 1 else ''} to {word}" if (x or {}).get("n_balls")
               else f"No {fmt} balls to {word}")
@@ -521,7 +522,9 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
     fmt_pl = {"Test": "Tests", "ODI": "ODIs", "T20I": "T20Is"}.get(fmt, fmt)
     fmt_one = fmt
     if domestic:                                    # a short ODI record, topped up (domestic_topup.py)
-        fmt_pl, fmt_one = fmt_pl + " and domestic one-day", fmt + " and domestic one-day"
+        import domestic_topup as DT
+        fmt_pl = DT.sample_words(domestic, fmt_pl)
+        fmt_one =fmt_pl if not domestic.get("odi") else fmt + " and domestic one-day"
     n = (x or {}).get("balls") or 0
     thin = not x or x.get("thin") or not x.get("balls")
     sample = (f"{fmt_pl} · {n:,} balls v {glabel}" if not thin

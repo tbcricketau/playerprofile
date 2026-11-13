@@ -174,7 +174,9 @@
     else if (!row.balls) plan = `<span class="thin">No record vs ${esc(labelOf(g))}.</span>`;
     else if (thin) plan = `<span class="thin">Only ${n(row.balls)} balls faced vs ${esc(labelOf(g))} — too little to set a plan from.</span>`;
     else plan = row.plan || `<span class="thin">No clear length or line target.</span>`;
-    const head = b.head ? `<img src="${esc(b.head)}" alt="" loading="lazy">` : `<span class="rav">${esc(b.initials)}</span>`;
+    // a batter with no ODI record is read from their domestic one-day cricket (Tom, 13-11-2026)
+    if (row.note && row.balls) plan = `<span class="thin">${esc(row.note)}</span> ` + plan;
+    const head =b.head ? `<img src="${esc(b.head)}" alt="" loading="lazy">` : `<span class="rav">${esc(b.initials)}</span>`;
     // name, the figures, the coaches' notes, then the scouting notes the build writes (Tom, 04-10-2026:
     // the coaches' notes matter most, so they sit above the generated ones)
     return `<article class="pcard" data-b="${esc(b.id)}" id="b${esc(b.id)}">

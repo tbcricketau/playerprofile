@@ -406,7 +406,7 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
                            "spare_name": "", "basis": c["basis"]} for c in phase_fields(fmt, g, hand.upper())]
             per[g] = {"balls": r.get("balls") or 0, "plan": (plan[:1].upper() + plan[1:]) if plan else "",
                       "field": r.get("field"), "threat": r.get("threat"), "error": bool(r.get("error")),
-                      "fields": fields,
+                      "fields": fields, "note": r.get("note") or "",
                       "shots": _shot_view(((shot_types.get(pid) or {}).get("groups") or {}).get(g))}
         tier = tiers.get(pid, "")
         out.append({"id": pid, "name": name, "hand": hand, "role": role, "tier": tier,

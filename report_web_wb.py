@@ -263,12 +263,16 @@ def wb_bowler_page(bid, P, ctx, fmt="ODI"):
     img = ctx.get("img") or ""
     av = (f"<img class='av lg' src='{E(img)}' alt=''>" if img else
           f"<span class='av lg ini'>{E(''.join(w[0] for w in name.split()[:2]))}</span>")
+    # a bowler with no ODI record is read from their domestic one-day cricket, said on a line of its own
+    note = ctx.get("rec_note") or ""
+    career = "" if note else f" · {many}, career"
+    note_line = f"<div class='sb'>{E(note)}</div>" if note else ""
     head = (f"<header class='ph'><div class='in'><a class='back' href='{E(ctx.get('back_href', 'index.html'))}'>‹ "
             f"{E(ctx.get('back_label', 'Reports'))}</a>"
             f"<div class='who'>{av}<div><h1>{E(name)}</h1><div class='sb'>{E(RW.type_word(P.get('primary_type')))} · "
-            f"{E(RW.team_word(P.get('team')))} · {many}, career · {P.get('matches') or 0} matches</div></div></div>"
+            f"{E(RW.team_word(P.get('team')))}{career} · {P.get('matches') or 0} matches</div>{note_line}</div></div>"
             f"<div class='ctl'><span class='k'>Phase</span>{seg}<span class='stamp'>Built {E(ctx['built'])} · "
-            f"{many} to {_day(last)}</span></div></div></header>")
+            f"{'Record' if note else many} to {_day(last)}</span></div></div></header>")
     nav = ("<nav class='jump'><div class='in'>" + "".join(
         f"<a href='#all-{a}' data-to='{a}'>{E(t)}</a>" for a, t in _JUMP) + "</div></nav>")
     body = "".join(f"<div class='scope' data-scope='{k}'{'' if i == 0 else ' hidden'}>{_scope(k, ph, P, ctx, fmt)}</div>"
