@@ -941,10 +941,22 @@ id into `players`. Their rows also came out of the matchup store and h2h (snapsh
 `~/bak/sq-2026-11-09` on the box), and their old hub pages were moved, not deleted, to
 `hub_stale` there, because `build_hub_packs` never removes a page and the hand audit walks every
 page in the folder. A pack page stays in storage once uploaded (`upload_packs` never deletes), just
-unlinked. **An opposition player out of a series** (Josh Tongue, injured 07-11) comes off all five
-files the roster check compares, plus `bowler_plans`, `pack_extras` and the planner's
-`bowlers.json`. Run `playerpacks/fieldbackup.py who <id>` first: a removed player's saved fields stay
-in the store and off every page.
+unlinked.
+
+**An opposition player out of a series is WITHDRAWN, never removed** (Tom, 13-11-2026: "a player can
+be in a squad, never play a game, be removed, but will still be part of that squad", as in
+selectionplanner). Set their tier to `withdrawn` in series.json (the `tiers` map and their group
+`reports` entry) and record them in the entry's `withdrawn` map (`name`, `date`, `why`, `was` = the
+tier they had). Nothing else changes: they stay in the pin, the store, the about file, h2h and the
+planner, so every builder keeps them and the roster check passes. Scouting shows their card under a
+**Withdrawn** heading at the foot of each page, with the coaches' notes and fields on it, and the web
+reports' index marks them. The player packs skip them (`build_hub_packs` filters the opposition order,
+`build_player_site` the roster its cards come from). Their old card pages in the hub folder are moved
+to the snapshot, since `build_hub_packs` never removes a page. Bringing one back is setting the tier
+back to `was`. Jacob Bethell (both England series, 13-11, with six fields and two notes of James
+Franklin's on him) was the first. Josh Tongue had been removed on 09-11 by deleting his rows, the old
+way, and was put back as withdrawn. Run `playerpacks/fieldbackup.py who <id>` first and tell Tom
+what it finds.
 
 **`build_squad.py` is now safe to run for a new squad** (it was not before 2026-08-31): it snapshots
 both files, **merges** into the registry instead of replacing entries — only `name`/`role`/`packs`
@@ -1332,7 +1344,10 @@ row above:
   machine**: `venv/bin/python build_bowler_plans.py --slug <slug> --planner-out ~/fp_bowlers`, copy
   `data/bowler_plans_<opp>.json` back (it is committed) and upload `~/fp_bowlers` (the planner's
   bowler side) with `playerpacks/upload_packs.py --bundle <copy> --prefix aus --apply`. The estimated
-  fields are Test-only, as `field_engine` is. `--only <id>` rebuilds one bowler into the existing file. The planner export
+  fields are Test-only, as `field_engine` is. `--only <id>` rebuilds one bowler into the existing file,
+  and with `--planner-out` merges their row into the planner's `bowlers.json` (until 13-11-2026 it
+  wrote that file with the named bowlers alone, which would have taken every other bowler and their
+  saved fields off Set Field Plans). `build_planner_batters.py --only <id>` merges the same way. The planner export
   draws two wheels per hand, as the batters' cards carry (11-10-2026): runs off them by area, drawn
   and cropped as the decks draw theirs, and the `cricviz` spider; both 560 px WebP.
 - **A white-ball series gets a planner too, from our own data (Tom, 29-10-2026)** — the batter side
@@ -1405,6 +1420,13 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   page is the old packs' list of names, each with its Batting and Bowling links. The hit-stumps
   figure is the bowler's own rate under "Hit stumps %", with no type average, and the facts carry
   no "The numbers" title (Tom, later on 10-11).
+- **A short ODI record is read with domestic one-day cricket** (`domestic_topup.py`, Tom 10-11-2026):
+  under 300 ODI balls in the role, the packs' figures and reels add the counties' One-Day Cup, said
+  first on the card. Scouting stays on ODIs, except for a player with **no ODI balls at all** in the
+  role, who reads their domestic one-day cricket there too (`scouting_level`, Tom 13-11-2026, for James
+  Coles and Eddie Jack): the Their bowlers and Bowling plans cards, the planner's sample lines and the
+  web reports, each labelled "No ODI record. These figures are N balls of domestic one-day cricket".
+  The A4 reports have no domestic level, so those two have no ODI A4 report behind their web pages.
 - **A rate is balls per dismissal or per wicket, never per 100 balls** (Tom, 11-11-2026). The danger
   ball reads "(out every 14 balls)" in the summary point (`batting_report._summary_points`) and "out
   every 14 balls" on the card (`build_pack_extras`). The bowler's wicket ball reads "a wicket every 19

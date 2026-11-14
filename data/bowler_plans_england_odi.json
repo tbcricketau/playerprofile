@@ -2,7 +2,7 @@
  "slug": "england-odi-home-2026",
  "series": "England Home ODI Series 2026",
  "format": "ODI",
- "built": "2026-11-11",
+ "built": "2026-11-14",
  "new_ball_min": 10,
  "bowlers": {
   "3550184": {
@@ -4163,6 +4163,1134 @@
      "max_spd_99": null,
      "short_pct": 0.0,
      "round_pct": 100.0,
+     "how_to_play": {
+      "facts": [],
+      "respect": [],
+      "attack": [],
+      "watch": []
+     },
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 121.0,
+         "radius": 0.457
+        },
+        {
+         "angle": 46.6,
+         "radius": 0.573
+        },
+        {
+         "angle": 20.2,
+         "radius": 0.936
+        },
+        {
+         "angle": -26.7,
+         "radius": 0.53
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -147.0,
+         "radius": 0.927
+        },
+        {
+         "angle": -63.2,
+         "radius": 0.521
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
+    }
+   },
+   "group": "right_pace"
+  },
+  "4352936": {
+   "name": "James Coles",
+   "type": "Left Orthodox",
+   "pace": false,
+   "new_ball": 0.0,
+   "order": 760,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 623,
+     "n_wkts": 19,
+     "runs": 598,
+     "economy": 5.759229534510434,
+     "bowl_avg": 31.473684210526315,
+     "strike_rate": 32.78947368421053,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 96.95024077046548,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Record",
+        "text": "No ODI record. These figures are 760 balls of domestic one-day cricket, 2021 to 2023."
+       },
+       {
+        "label": "Runs",
+        "text": "50% through the leg side"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 50% through the leg side"
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c4",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 137,
+     "n_wkts": 2,
+     "runs": 137,
+     "economy": 6.0,
+     "bowl_avg": 68.5,
+     "strike_rate": 68.5,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": null,
+     "round_pct": 47.44525547445255,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Record",
+        "text": "No ODI record. These figures are 760 balls of domestic one-day cricket, 2021 to 2023."
+       },
+       {
+        "label": "Runs",
+        "text": "50% through the leg side"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 50% through the leg side"
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": -90.0,
+         "radius": 0.17,
+         "label": "Short leg"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5,
+         "label": "Point"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5,
+         "label": "Midwicket"
+        },
+        {
+         "angle": -105.0,
+         "radius": 0.9,
+         "label": "Deep backward square"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52,
+         "label": "Backward point"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.5,
+         "label": "Fine leg"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c2",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 45.0,
+         "radius": 0.34,
+         "label": "Short cover"
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5,
+         "label": "Cover"
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5,
+         "label": "Mid-off"
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5,
+         "label": "Mid-on"
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9,
+         "label": "Deep point"
+        },
+        {
+         "angle": 18.0,
+         "radius": 0.92,
+         "label": "Long-off"
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92,
+         "label": "Long-on"
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.9,
+         "label": "Deep midwicket"
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9,
+         "label": "Deep square leg"
+        }
+       ],
+       "basis": "The stock field for the type in this phase, with the changes GPS shows Australia makes (not adjusted to this player).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
+    }
+   },
+   "domestic": {
+    "odi": 0,
+    "domestic": 760,
+    "first": 2021,
+    "last": 2023,
+    "topped": true
+   },
+   "group": "left_orthodox"
+  },
+  "5180392": {
+   "name": "Eddie Jack",
+   "type": "Right Medium",
+   "pace": true,
+   "new_ball": 14.285714285714285,
+   "order": 975,
+   "tier": "squad",
+   "hands": {
+    "RHB": {
+     "n_balls": 685,
+     "n_wkts": 29,
+     "runs": 626,
+     "economy": 5.483211678832117,
+     "bowl_avg": 21.586206896551722,
+     "strike_rate": 23.620689655172413,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": 4.817518248175182,
+     "round_pct": 0.0,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Record",
+        "text": "No ODI record. These figures are 975 balls of domestic one-day cricket, 2023 to 2026."
+       },
+       {
+        "label": "Runs",
+        "text": "49% through the leg side"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 49% through the leg side"
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 55.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 290,
+     "n_wkts": 9,
+     "runs": 248,
+     "economy": 5.13103448275862,
+     "bowl_avg": 27.555555555555557,
+     "strike_rate": 32.22222222222222,
+     "avg_spd": null,
+     "max_spd_99": null,
+     "short_pct": 5.517241379310345,
+     "round_pct": 63.10344827586207,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Record",
+        "text": "No ODI record. These figures are 975 balls of domestic one-day cricket, 2023 to 2026."
+       },
+       {
+        "label": "Runs",
+        "text": "56% through the off side"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Runs: 56% through the off side"
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 143.0,
+         "radius": 0.34
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 121.0,
+         "radius": 0.457
+        },
+        {
+         "angle": 46.6,
+         "radius": 0.573
+        },
+        {
+         "angle": 20.2,
+         "radius": 0.936
+        },
+        {
+         "angle": -26.7,
+         "radius": 0.53
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -147.0,
+         "radius": 0.927
+        },
+        {
+         "angle": -63.2,
+         "radius": 0.521
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
+    }
+   },
+   "domestic": {
+    "odi": 0,
+    "domestic": 975,
+    "first": 2023,
+    "last": 2026,
+    "topped": true
+   },
+   "group": "right_pace"
+  },
+  "3720028": {
+   "name": "Josh Tongue",
+   "type": "Right Fast",
+   "pace": true,
+   "new_ball": 25.0,
+   "order": 846,
+   "tier": "withdrawn",
+   "hands": {
+    "RHB": {
+     "n_balls": 173,
+     "n_wkts": 2,
+     "runs": 204,
+     "economy": 7.075144508670521,
+     "bowl_avg": 102.0,
+     "strike_rate": 86.5,
+     "avg_spd": 137.29624277456648,
+     "max_spd_99": 146.304,
+     "short_pct": 41.040462427745666,
+     "round_pct": 1.1560693641618496,
+     "how_to_play": {
+      "facts": [
+       {
+        "label": "Short ball",
+        "text": "8.5 an over, 1 wickets in 71 balls"
+       },
+       {
+        "label": "Runs",
+        "text": "44% through the off side"
+       },
+       {
+        "label": "Most expensive",
+        "text": "<b>back of a length wide outside off</b> · 11.0 an over, beats the bat 4%"
+       }
+      ],
+      "respect": [],
+      "attack": [
+       "Short ball: 8.5 an over, 1 wickets in 71 balls",
+       "Runs: 44% through the off side",
+       "Most expensive: <b>back of a length wide outside off</b> · 11.0 an over, beats the bat 4%"
+      ],
+      "watch": []
+     },
+     "fields": [
+      {
+       "label": "Powerplay",
+       "fielders": [
+        {
+         "angle": 162.0,
+         "radius": 0.3
+        },
+        {
+         "angle": 153.0,
+         "radius": 0.35
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 55.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "option1",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Middle overs",
+       "fielders": [
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": 45.0,
+         "radius": 0.34
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c3",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      },
+      {
+       "label": "Death",
+       "fielders": [
+        {
+         "angle": 55.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -145.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 24.0,
+         "radius": 0.5
+        },
+        {
+         "angle": -18.0,
+         "radius": 0.92
+        },
+        {
+         "angle": -90.0,
+         "radius": 0.9
+        },
+        {
+         "angle": 105.0,
+         "radius": 0.52
+        },
+        {
+         "angle": -58.0,
+         "radius": 0.5
+        },
+        {
+         "angle": 150.0,
+         "radius": 0.9
+        }
+       ],
+       "basis": "The series' starting field for pace in this phase, set by the coaches on Gus Atkinson's card (not adjusted to this bowler).",
+       "slot": "c5",
+       "spare": null,
+       "spare_name": "",
+       "adjusted": false,
+       "notes": []
+      }
+     ]
+    },
+    "LHB": {
+     "n_balls": 42,
+     "n_wkts": 3,
+     "runs": 33,
+     "economy": 4.714285714285714,
+     "bowl_avg": 11.0,
+     "strike_rate": 14.0,
+     "avg_spd": 134.80095238095237,
+     "max_spd_99": 143.1266,
+     "short_pct": 28.57142857142857,
+     "round_pct": 85.71428571428571,
      "how_to_play": {
       "facts": [],
       "respect": [],
