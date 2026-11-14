@@ -50,7 +50,10 @@ _GROUP_CODE = {"right_pace": "RP", "left_pace": "LP", "off_spin": "OS", "left_or
 _TYPE_LABEL = {"right pace": "Right-arm pace", "left pace": "Left-arm pace", "off-spin": "Off spin",
                "off spin": "Off spin", "left-arm orthodox": "Left-arm orthodox", "leg-spin": "Leg spin",
                "leg spin": "Leg spin", "left-arm unorthodox": "Left-arm wrist spin",
-               "right medium": "Right-arm medium", "left medium": "Left-arm medium"}
+               "right medium": "Right-arm medium", "left medium": "Left-arm medium",
+               # the profile's own spellings, for a bowler the match-up store does not type (13-11-2026)
+               "right fast": "Right-arm pace", "left fast": "Left-arm pace", "left orthodox": "Left-arm orthodox",
+               "left unorthodox": "Left-arm wrist spin", "leg break": "Leg spin"}
 _FIELD_NAME = {"Early — first 30 balls": "First 30 balls", "Bouncer plan": "Bouncer"}
 _ZONE_NAME = {"Third Man": "Third man", "Cover Point": "Cover point", "Mid-Off": "Mid-off", "Mid-On": "Mid-on",
               "Mid-Wicket": "Midwicket", "Square Leg": "Square leg", "Fine Leg": "Fine leg"}
