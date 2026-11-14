@@ -34,6 +34,11 @@
        "name": "Sonny Baker"
       },
       {
+       "id": "4352931",
+       "tier": "withdrawn",
+       "name": "Jacob Bethell"
+      },
+      {
        "id": "4352936",
        "tier": "squad",
        "name": "James Coles"
@@ -77,6 +82,11 @@
        "id": "2070076",
        "tier": "xi",
        "name": "Joe Root"
+      },
+      {
+       "id": "3720028",
+       "tier": "withdrawn",
+       "name": "Josh Tongue"
       }
      ]
     }
@@ -85,6 +95,8 @@
     "2540202": "xi",
     "2070076": "xi",
     "4380030": "xi",
+    "4352931": "withdrawn",
+    "3720028": "withdrawn",
     "4352936": "squad",
     "5180392": "squad",
     "3630055": "xi",
@@ -100,7 +112,11 @@
     "880048": "xi"
    },
    "_tiers_09_11": "XI reset 09-11-2026 (Tom): the decks' XI, the WACA tour-match side (07-11) with Rashid in for Dawson. Banton and Cox in, Bethell and Dawson to squad. Josh Tongue removed from the series 09-11-2026 (Tom): ruled out of the ODIs, left big toe (ECB, 07-11-2026). Bring him back by re-adding his report and tier line, and his pin, store, about and h2h rows from the box snapshot ~/bak/sq-2026-11-09.",
-   "_squad_13_11": "Squad change 13-11-2026 (Tom): Jacob Bethell out of the tour, James Coles and Eddie Jack in, both in the squad tier, so the XI is unchanged. Neither has an ODI record: the packs and Scouting read their domestic one-day cricket, labelled (domestic_topup.scouting_level). Bethell's rows are in the box snapshot ~/bak/sq-2026-11-13."
+   "_squad_13_11": "Squad change 13-11-2026 (Tom): Jacob Bethell out of the tour, James Coles and Eddie Jack in, both in the squad tier, so the XI is unchanged. Neither has an ODI record: the packs and Scouting read their domestic one-day cricket, labelled (domestic_topup.scouting_level). A player out of the squad is never deleted: tier 'withdrawn' keeps every row of theirs in place, shows their card under Withdrawn on Scouting with the coaches' notes and fields, and takes them off the player packs. Bring one back by giving them their old tier again.",
+   "withdrawn": {
+    "4352931": {"name": "Jacob Bethell", "date": "2026-11-13", "why": "Out of the tour (Tom). James Franklin's ODI fields and notes on him are kept and show on his Scouting card.", "was": "squad"},
+    "3720028": {"name": "Josh Tongue", "date": "2026-11-09", "why": "Ruled out of the ODIs, left big toe (ECB, 07-11-2026). Removed on 09-11 and put back on 13-11 as withdrawn.", "was": "squad"}
+   }
   },
   {
    "slug": "england-t20i-home-2026",
@@ -119,6 +135,11 @@
      "format": "T20I",
      "kind": "bowling",
      "reports": [
+      {
+       "id": "4352931",
+       "tier": "withdrawn",
+       "name": "Jacob Bethell"
+      },
       {
        "id": "4352936",
        "tier": "squad",
@@ -170,6 +191,7 @@
    "tiers": {
     "5460035": "xi",
     "3630067": "xi",
+    "4352931": "withdrawn",
     "4380030": "xi",
     "3630055": "xi",
     "3630194": "xi",
@@ -184,7 +206,10 @@
     "880048": "xi",
     "5460041": "xi"
    },
-   "_squad_13_11": "Squad change 13-11-2026 (Tom): Jacob Bethell out of the tour. Jordan Cox takes his place in the likely XI, next by the rule it was set on (1 appearance in England's last ten T20Is, the most of the squad tier). Bethell's rows are in the box snapshot ~/bak/sq-2026-11-13."
+   "_squad_13_11": "Squad change 13-11-2026 (Tom): Jacob Bethell out of the tour, tier 'withdrawn' (on record and on Scouting, off the player packs). Jordan Cox takes his place in the likely XI, next by the rule it was set on (1 appearance in England's last ten T20Is, the most of the squad tier).",
+   "withdrawn": {
+    "4352931": {"name": "Jacob Bethell", "date": "2026-11-13", "why": "Out of the tour (Tom).", "was": "xi"}
+   }
   },
   {
    "slug": "india-a-od-2026",

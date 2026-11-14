@@ -1874,6 +1874,10 @@ def build(out_dir, no_video=False, only=None, squad=None, include_archived=False
         opp_bowlers, opp_batters = _opp_roster(slug)  # {id: (name, type/hand)}
         about_bowl, about_bat = _load_about(slug)      # distilled facts, per role, id-keyed
         opp_tiers = _opp_tiers(slug)                    # opposition squad status (XI/squad/fringe)
+        # a withdrawn player stays on record and on Scouting, and is off the player packs (Tom, 13-11-2026)
+        gone = {p for p, t in opp_tiers.items() if t == "withdrawn"}
+        opp_bowlers = {b: v for b, v in opp_bowlers.items() if str(b) not in gone}
+        opp_batters = {b: v for b, v in opp_batters.items() if str(b) not in gone}
         similar_data = _load_similar(slug)              # reference-bowler footage per our bowler
         release_data = _load_release_detail()            # opt-in own-release table (per bowler)
         manual_vision = _load_manual_vision(slug)        # hand-supplied footage for uncapped opponents

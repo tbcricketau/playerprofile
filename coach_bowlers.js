@@ -148,7 +148,9 @@
 
   function render() {
     const box = document.getElementById("bk-cards");
-    const tiers = [["xi", "Most likely XI"], ["squad", "In the squad"], ["fringe", "Fringe / outside chance"], ["", "Their bowlers"]];
+    // Withdrawn last: out of the squad, kept here for the coaches' notes on them (Tom, 13-11-2026)
+    const tiers = [["xi", "Most likely XI"], ["squad", "In the squad"], ["fringe", "Fringe / outside chance"], ["", "Their bowlers"],
+                   ["withdrawn", "Withdrawn"]];
     box.innerHTML = tiers.map(([t, h]) => { const bs = (BK.bowlers || []).filter(b => (b.tier || "") === t);
       return bs.length ? `<h2 class="tier ${t || "squad"}">${h}<span>${bs.length}</span></h2>` + bs.map(card).join("") : ""; }).join("");
     box.querySelectorAll("svg[data-plan]").forEach(s => {

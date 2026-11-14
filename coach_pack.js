@@ -205,7 +205,9 @@
 
   function render() {
     const box = document.getElementById("pk-cards");
-    const tiers = [["xi", "Most likely XI"], ["squad", "In the squad"], ["fringe", "Fringe / outside chance"], ["", "Batters"]];
+    // Withdrawn last: out of the squad, kept here for the coaches' notes on them (Tom, 13-11-2026)
+    const tiers = [["xi", "Most likely XI"], ["squad", "In the squad"], ["fringe", "Fringe / outside chance"], ["", "Batters"],
+                   ["withdrawn", "Withdrawn"]];
     box.innerHTML = tiers.map(([t, h]) => { const bs = PK.batters.filter(b => (b.tier || "") === t);
       return bs.length ? `<h2 class="tier ${t || "squad"}">${h}<span>${bs.length}</span></h2>` + bs.map(card).join("") : ""; }).join("");
     box.querySelectorAll("svg[data-plan]").forEach(s => {

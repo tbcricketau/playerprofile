@@ -697,10 +697,14 @@ def build(slug, out_root, only=None, clips_root=None):
         v = p.get("new_ball") if p.get("new_ball") is not None else (about_bowl.get(bid) or {}).get("new_ball")
         return v or 0
 
-    bowl_order = sorted(about_bowl, key=lambda b: (nb_of(b) < new_ball_min, -nb_of(b) if nb_of(b) >= new_ball_min else 0,
-                                                  -((about_bowl[b] or {}).get("order") or 0)))
-    bat_order = sorted(about_bat, key=lambda b: (_ROLE_RANK.get((about_bat[b] or {}).get("role"), 4),
-                                                -((about_bat[b] or {}).get("order") or 0)))
+    # A withdrawn player (series.json tier "withdrawn", Tom 13-11-2026) stays on record and on the
+    # Scouting pages under Withdrawn, and is off the player packs
+    live = lambda b: tiers.get(str(b)) != "withdrawn"                        # noqa: E731
+    bowl_order = sorted(filter(live, about_bowl),
+                        key=lambda b: (nb_of(b) < new_ball_min, -nb_of(b) if nb_of(b) >= new_ball_min else 0,
+                                       -((about_bowl[b] or {}).get("order") or 0)))
+    bat_order = sorted(filter(live, about_bat), key=lambda b: (_ROLE_RANK.get((about_bat[b] or {}).get("role"), 4),
+                                                               -((about_bat[b] or {}).get("order") or 0)))
 
     pages, index_rows = 0, []
     for pid in roster(slug):

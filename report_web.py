@@ -1782,9 +1782,14 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
     if failed:
         print("NOT BUILT: " + ", ".join(failed), flush=True)
     if not only:
-        # every page on disk, not just this run's: a batting-only rebuild keeps the bowlers listed
+        from build_coach_site import _tiers
+        gone = {p for p, t in _tiers(entry).items() if t == "withdrawn"}
+
+        # every page on disk, not just this run's: a batting-only rebuild keeps the bowlers listed;
+        # a withdrawn player keeps their report and says so (Tom, 13-11-2026)
         def listed(people, kind, what):
-            return [(meta.get("name") or pid, what(meta), f"{kind}_{pid}.html", img(str(pid))) for pid, meta in order(people)
+            return [(meta.get("name") or pid, what(meta) + (" · withdrawn" if str(pid) in gone else ""),
+                     f"{kind}_{pid}.html", img(str(pid))) for pid, meta in order(people)
                     if os.path.exists(os.path.join(web, f"{kind}_{pid}.html"))]
         rows_b = listed(bowlers, "bowling", lambda m: str(m.get("type") or "Bowler"))
         rows_t = listed(batters, "batting", lambda m: "Left-hander" if str(m.get("hand") or "").upper().startswith("L")

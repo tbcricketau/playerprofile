@@ -17,6 +17,8 @@ TYPE_RE = re.compile(r"(Right Fast|Left Fast|Right Medium|Left Medium|Off Spin|"
 TIER_META = [("xi", "Most likely XI", "XI"),
              ("squad", "In the squad", "Squad"),
              ("fringe", "Fringe / outside chance", "Fringe"),
+             # out of the squad, kept on record and on Scouting, off the player packs (Tom, 13-11-2026)
+             ("withdrawn", "Withdrawn", "Withdrawn"),
              ("reference", "Reference — our bowlers", "Ref"),
              ("test", "Test report", "TEST")]        # audit-app badge (no XI/squad in that env)
 TIER_CHIP = {t: chip for t, _h, chip in TIER_META}
@@ -65,9 +67,9 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  ul.reports .rav{width:44px;height:44px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#9aa4b2}
  ul.reports .rinfo{flex:1;min-width:0} ul.reports .rinfo b{font-size:15px;color:#1a1a2e} ul.reports .rtype{display:block;color:#6b7280;font-size:13px;margin-top:1px}
  .tier{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle}
- .tier.xi{background:#dcfce7;color:#15803d} .tier.squad{background:#e0e7ff;color:#3730a3} .tier.fringe{background:#eef2f6;color:#64748b} .tier.reference{background:#fef3c7;color:#92400e} .tier.test{background:#e0e7ff;color:#3730a3}
+ .tier.xi{background:#dcfce7;color:#15803d} .tier.squad{background:#e0e7ff;color:#3730a3} .tier.fringe{background:#eef2f6;color:#64748b} .tier.reference{background:#fef3c7;color:#92400e} .tier.test{background:#e0e7ff;color:#3730a3} .tier.withdrawn{background:#f3f4f6;color:#6b7280}
  h2.tierhead{font-size:14px;color:#1a1a2e;margin:22px 0 8px;display:flex;align-items:center;gap:8px;padding-left:8px;border-left:3px solid #cbd5e1}
- h2.tierhead:first-of-type{margin-top:10px} h2.tierhead.xi{border-left-color:#15803d} h2.tierhead.squad{border-left-color:#3730a3} h2.tierhead.fringe{border-left-color:#94a3b8} h2.tierhead.test{border-left-color:#003087}
+ h2.tierhead:first-of-type{margin-top:10px} h2.tierhead.xi{border-left-color:#15803d} h2.tierhead.squad{border-left-color:#3730a3} h2.tierhead.fringe{border-left-color:#94a3b8} h2.tierhead.test{border-left-color:#003087} h2.tierhead.withdrawn{border-left-color:#d1d5db;color:#6b7280}
  h2.tierhead span{font-size:12px;font-weight:600;color:#6b7280;background:#eef1f6;border-radius:999px;padding:1px 8px}
  ul.reports a.btn{flex:0 0 auto;font-size:13px;font-weight:600;text-decoration:none;padding:7px 14px;border-radius:7px;background:#003087;color:#fff;white-space:nowrap}
  ul.reports a.btn.ghost{background:#eef1f6;color:#003087;border:1px solid #d5dced}
@@ -101,7 +103,7 @@ SHELL = """<!doctype html><meta charset=utf8><meta name=viewport content="width=
  .seg button+button{border-left:1px solid #e5e7eb} .seg button.on{background:#003087;color:#fff}
  .seg small{font-weight:500;font-size:11.5px;letter-spacing:0;text-transform:none;opacity:.85}
  h2.tier{font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin:16px 0 8px;padding-left:8px;border-left:3px solid #15803d;display:flex;align-items:center;gap:8px}
- h2.tier span{font-size:12px;font-weight:600;color:#6b7280;background:#eef1f6;border-radius:999px;padding:1px 8px} h2.tier.squad{border-left-color:#94a3b8}
+ h2.tier span{font-size:12px;font-weight:600;color:#6b7280;background:#eef1f6;border-radius:999px;padding:1px 8px} h2.tier.squad{border-left-color:#94a3b8} h2.tier.withdrawn{border-left-color:#d1d5db;color:#6b7280;margin-top:28px}
  .pcard{background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);padding:16px 18px;margin:0 0 12px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:14px 26px;align-items:start}
  .pcard .who{display:flex;align-items:center;gap:12px} .pcard .who img,.pcard .who .rav{width:56px;height:56px;border-radius:50%;object-fit:cover;background:#eef1f6;flex:none;display:flex;align-items:center;justify-content:center;font-weight:700;color:#9aa4b2}
  .pcard .who h3{margin:0;font-size:21px;line-height:1.1;display:flex;align-items:center;gap:8px;flex-wrap:wrap} .pcard .hand{color:#6b7280;font-size:13px;font-weight:600}
