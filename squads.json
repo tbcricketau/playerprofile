@@ -239,13 +239,17 @@
       "2840029",
       "1070522",
       "4390234",
-      "2580072",
+      "1070472",
       "5180345",
       "1070429",
       "1070606",
       "2840070",
       "3630006"
     ],
+    "_changed_15_11": "Nathan Ellis (2580072) out and Ben Dwarshuis (1070472) in, 15-11-2026 (Tom). Ellis kept under not_picked so he can be brought back by moving the id into players.",
+    "not_picked": {
+      "2580072": "Nathan Ellis, out of the T20I squad"
+    },
     "opponent": "England",
     "opp_key": "england_t20i",
     "extras": [
