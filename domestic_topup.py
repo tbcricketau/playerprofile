@@ -10,7 +10,10 @@ for a bowler card) is under FLOOR balls, the floor for a full profile, has their
 cricket added (`cricket_core.config.DOMESTIC_OD_SERIES`, the counties' One-Day Cup for England). Every
 builder that reads their deliveries asks `level_for` and reads level "with-domestic" for them:
 build_opponent_about (summary points and reels), build_pack_extras, build_shot_types and
-build_over_split. A player with no domestic one-day balls is left as they are.
+build_over_split. A player with no domestic one-day balls is left as they are. A player whose
+c21_player_map entry carries "with_domestic" reads their Cricket-21 one-day cricket too, the county cups
+and the England Lions one-dayers (c21_source.source_for, Tom 15-11-2026): counted here, and named on the
+card as "domestic and England Lions one-day cricket" when it holds A-team balls.
 
 Tom's calls, 10-11-2026: under 300 ODI balls · it feeds every number and reel · labelled on the card.
 Scouting reads ODIs only, except for a player with no ODI balls at all in the role, who reads their

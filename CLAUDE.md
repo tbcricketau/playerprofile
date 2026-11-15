@@ -1427,6 +1427,18 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   Coles and Eddie Jack): the Their bowlers and Bowling plans cards, the planner's sample lines and the
   web reports, each labelled "No ODI record. These figures are N balls of domestic one-day cricket".
   The A4 reports have no domestic level, so those two have no ODI A4 report behind their web pages.
+- **Coles and Jack read their Cricket-21 one-day cricket as well** (Tom, atq 15-11-2026: vision and
+  figures, senior one-day only, "domestic and England Lions one-day cricket"). Neither had any vision
+  on the packs, since Fairplay holds no county footage. A `c21_player_map.json` entry with
+  `"with_domestic": true` makes `c21_source.source_for` turn a warehouse read at level
+  "with-domestic" **for an ODI** into source "both", in both loaders, `batter_clips` and `_test_balls`.
+  So every builder takes their county One-Day Cup and England Lions one-dayers with no flag, one copy
+  of a match for the numbers and both for the clips. ODI only, so a borrowed phase reel never reaches
+  Coles' SA20 or Jack's Lions four-day games. The record counts the C21 balls (`domestic_topup
+  --only`), names the A side (`words`, `short_words`: "Domestic and Lions one-day" on a sample line
+  and a reel footnote), and stars C21 reels. Built 15-11: Coles 893 bowling balls and 525 batting (was
+  760 and none on film), Jack 1,158 (was 975), 228 and 142 clips. The 40 matches were imported one at
+  a time into the mirror, which was then copied to the box. Under-19 one-dayers and all T20 left out.
 - **A rate is balls per dismissal or per wicket, never per 100 balls** (Tom, 11-11-2026). The danger
   ball reads "(out every 14 balls)" in the summary point (`batting_report._summary_points`) and "out
   every 14 balls" on the card (`build_pack_extras`). The bowler's wicket ball reads "a wicket every 19
@@ -1984,6 +1996,12 @@ maps to a CLUSTER around its per-hand intercept — about **−1810 mm for a rig
 left-hander** (RHB −1810.2/−1798.0/−1785.9, LHB −2195.4/−2182.9/−2145.5), on **14.9% of right-hand
 and 15.4% of left-hand deliveries**. Same trap as the warehouse's −20000, with no single value to
 match on: use the RANGE. Never `is not None`, never an equality test.
+
+**C21 counts overs from 0, the warehouse from 1** (fixed 15-11-2026). 1,007 of the mirror's 1,009
+innings start at over 0. `_to_warehouse` passed the number through, so every C21 ball sat one over
+early: over_n 0 is in no phase, so a C21 first over fell out of the powerplay and new-ball reels, and
+the 40th over read as the death. It adds 1 now. `c21_source.innings_lengths` gives
+`build_over_split` the length of a C21 innings, which has no warehouse match id to look up.
 
 ### Where level has to be CARRIED, not just passed
 
