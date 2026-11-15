@@ -241,6 +241,11 @@ def load_bowler_deliveries(bowler_id: str, dev_limit: int = 0, fmt: str = "Test"
     """
     if source not in ("warehouse", "c21", "both"):
         raise ValueError(f"unknown source {source!r} — warehouse | c21 | both")
+    # a player read with domestic cricket whose Cricket-21 one-day cricket joins it (James Coles and
+    # Eddie Jack, Tom 15-11-2026: c21_source.source_for), whatever the builder asked for
+    if source == "warehouse" and level == "with-domestic":
+        import c21_source
+        source = c21_source.source_for(bowler_id, level, source, fmt)
     if source != "warehouse":
         import c21_source
         extra = c21_source.load_bowler_deliveries(bowler_id, fmt=fmt)

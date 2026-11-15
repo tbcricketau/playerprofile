@@ -358,10 +358,20 @@ class Clips:
         return inline_player_snippet(playlists, titles, src=self.url)
 
 
-def _bowler_reels(clips, bid, hand, about, dom=None):
+def _dom_words(rec, cap=True):
+    """How a topped-up record's footage is named in a footnote: "Domestic one-day", or "Domestic and
+    Lions one-day" when it holds England Lions one-dayers (domestic_topup.short_words, 15-11-2026)."""
+    if not rec:
+        return "Domestic one-day" if cap else "domestic one-day"
+    import domestic_topup as DT
+    return DT.short_words(rec, cap=cap)
+
+
+def _bowler_reels(clips, bid, hand, about, dom=None, rec=None):
     """Stock, wicket and new-ball reels to our batter's hand — or the declared stand-in from the
     other hand, labelled with the hand it shows. `dom` names the about reels carrying domestic
-    one-day footage (domestic_topup.py), starred and footnoted. Returns (buttons, footnote)."""
+    one-day footage (domestic_topup.py), starred and footnoted, and `rec` is the topped-up record
+    that names it. Returns (buttons, footnote)."""
     H = "L" if hand == "LHB" else "R"
     out, borrowed = [], set()
     for kind, kk, lab in (("stock", "stock", "Stock ball"), ("wicket", "wkt", "Wicket balls"),
@@ -370,7 +380,7 @@ def _bowler_reels(clips, bid, hand, about, dom=None):
         v = clips.get(key)
         home = (dom or {}).get(f"{kind}_clips_{hand.lower()}")
         if home:
-            borrowed.add("Domestic one-day")
+            borrowed.add(_dom_words(rec))
         if v:
             t = "Recent bowling" if str(v.get("title", "")).startswith("Recent bowling") else lab
             fmt = (about or {}).get(f"clip_format_{kind}_{hand.lower()}")
@@ -394,7 +404,7 @@ def _bowler_reels(clips, bid, hand, about, dom=None):
     return out, (f"* {' and '.join(sorted(borrowed))} footage" if borrowed else "")
 
 
-def _batter_reels(clips, bid, group, about, fmt, shot=None, dom=None):
+def _batter_reels(clips, bid, group, about, fmt, shot=None, dom=None, rec=None):
     """Scoring and dismissal reels against our bowler's exact type, then the sweeps or ramps. A reel
     the builder had to widen (another format, a wider type, Cricket-21 first-class footage, or the
     domestic one-day cricket beside a short ODI record) is starred and footnoted. Returns (buttons,
@@ -406,7 +416,7 @@ def _batter_reels(clips, bid, group, about, fmt, shot=None, dom=None):
     for i, (k, href, t, n) in enumerate(out):
         if home.get(k[:3]):
             out[i] = (k, href, t if t.endswith("*") else t + "*", n)
-            notes.append("* Includes domestic one-day footage")
+            notes.append(f"* Includes {_dom_words(rec, cap=False)} footage")
     # a sweep or ramp reel against the exact type, or against the wider spin or pace set when the
     # exact type has none, starred like the scoring reels (build_shot_types.py, 10-11-2026)
     for kind, rv in ((shot or {}).get("reels") or {}).items():
@@ -502,7 +512,7 @@ def bowler_card(bid, meta, plan, x, hand, clips, img, pics_url, tier, new_ball_m
         nums.append(_pics("Their wicket balls", x, "", pics_url))
     opts = _bowler_field_opts((plan.get("hands") or {}).get(hand))
     plan_half.append(_field(bid, "Their field", opts, hand, "bowler"))
-    reels, note = _bowler_reels(clips, bid, hand, meta, dom_reels)
+    reels, note = _bowler_reels(clips, bid, hand, meta, dom_reels, domestic)
     h2h = clips.button(f"hbat_{bid}", f"You v {opp_short}")
     none = None
     if not reels and not h2h:
@@ -527,7 +537,9 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
     if domestic:                                    # a short ODI record, topped up (domestic_topup.py)
         import domestic_topup as DT
         fmt_pl = DT.sample_words(domestic, fmt_pl)
-        fmt_one =fmt_pl if not domestic.get("odi") else fmt + " and domestic one-day"
+        # mid-sentence ("Only 20 domestic one-day balls v off spin"), so lower case
+        fmt_one = (DT.short_words(domestic, cap=False) if not domestic.get("odi")
+                   else f"{fmt} and {DT.short_words(domestic, cap=False)}")
     n = (x or {}).get("balls") or 0
     thin = not x or x.get("thin") or not x.get("balls")
     sample = (f"{fmt_pl} · {n:,} balls v {glabel}" if not thin
@@ -559,7 +571,7 @@ def batter_card(bid, meta, x, row, group, clips, img, pics_url, tier, fmt, opp_s
         nums.append(_wheel(bid, x, lhb, pics_url, shot, group))
         n_d = x.get("n_dismissals") or 0
         nums.append(_pics("Their dismissals", x, f"{n_d:,} dismissal{'s' if n_d != 1 else ''}", pics_url))
-    reels, note = _batter_reels(clips, bid, group, meta, fmt, shot, dom_reels)
+    reels, note = _batter_reels(clips, bid, group, meta, fmt, shot, dom_reels, domestic)
     h2h = clips.button(f"hbowl_{bid}", f"You to {opp_short}")
     none = None
     if not reels and not h2h:
@@ -760,7 +772,7 @@ def build(slug, out_root, only=None, clips_root=None):
                 facts.append(orp)
             if dom:
                 facts.insert(0, DT.label(dom))        # first, so nothing is read before it
-            reels, note = _bowler_reels(clips, bid, hand, meta, dom_reels.get(bid))
+            reels, note = _bowler_reels(clips, bid, hand, meta, dom_reels.get(bid), dom)
             label = f"You v {short(nm)}"
             (xi if tier == "xi" else more).append(_summary(
                 f"b{bid}", nm, _bowler_sub(meta, plan, hand, new_ball_min), face, tier, facts, reels,
@@ -814,7 +826,7 @@ def build(slug, out_root, only=None, clips_root=None):
                 lhb = (meta.get("hand") or "").upper().startswith("L")
                 sub = " · ".join(["Left-hander" if lhb else "Right-hander"]
                                  + ([meta["role"].lower()] if meta.get("role") else []))
-                reels, note = _batter_reels(clips, bid, group, meta, fmt, shot, dom_reels.get(bid))
+                reels, note = _batter_reels(clips, bid, group, meta, fmt, shot, dom_reels.get(bid), dom)
                 label = f"You to {short(nm)}"
                 (xi if tier == "xi" else more).append(_summary(
                     f"b{bid}", nm, sub, face, tier, facts, reels, clips.button(f"hbowl_{bid}", label),

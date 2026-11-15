@@ -938,5 +938,37 @@
    6342
   ],
   "confidence": "dob 1998-11-03 matched to warehouse, per database (one record in each); hand-mapped 2026-10-15"
+ },
+ "4352936": {
+  "name": "James Coles",
+  "c21_ids": [
+   24479,
+   24481
+  ],
+  "c21_name": "James Matthew Coles",
+  "confidence": "dob 2004-04-02 matched to warehouse, one record per database (2026-11-15)",
+  "c21_ids_multiday": [
+   24481
+  ],
+  "c21_ids_white": [
+   24479
+  ],
+  "with_domestic": true
+ },
+ "5180392": {
+  "name": "Eddie Jack",
+  "c21_ids": [
+   33469,
+   33484
+  ],
+  "c21_name": "Eddie Jack",
+  "confidence": "dob 2005-09-09 matched to warehouse, one record per database (2026-11-15)",
+  "c21_ids_multiday": [
+   33469
+  ],
+  "c21_ids_white": [
+   33484
+  ],
+  "with_domestic": true
  }
 }

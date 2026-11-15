@@ -100,7 +100,13 @@ def split(rows, fmt, last=LAST, named=False):
     keys = sorted(inn, key=lambda k: inn[k]["date"])[-last:]
     if not keys:
         return None
-    reach = lengths(keys)
+    # a Cricket-21 match (c21_source.source_for, 15-11-2026) has its length in the mirror, not the
+    # warehouse: its match ids are another numbering and must not be looked up there
+    c21 = {(str(r.get("match_id")), str(r.get("match_innings"))) for r in rows if r.get("source") == "c21"}
+    reach = lengths([k for k in keys if k not in c21])
+    if c21 & set(keys):
+        import c21_source
+        reach.update(c21_source.innings_lengths([k for k in keys if k in c21]))
     total = lambda ks: sum(len(v) for k in ks for v in inn[k]["overs"].values())
     full = [k for k in keys if reach.get(k, 0) >= FULL_FROM]
     avg_all = total(keys) / len(keys)
@@ -134,7 +140,7 @@ def text(s, fmt, domestic=False):
             f"{e.get('death', 0)} Death (last {s['matches']} {fw})")
 
 
-def build(slug):
+def build(slug, only=None):
     import profile as PR
     from build_coach_site import _series, _fmt_level, _opp_key, _about
     from data_loaders import load_bowler_deliveries
@@ -146,8 +152,19 @@ def build(slug):
         raise SystemExit(f"{slug} is not a white-ball series: no phases to split overs into")
     named = {str(b) for b in entry.get("frontline_bowlers") or []}
     bowlers, _batters = _about(slug)
+    path = os.path.join(HERE, "data", f"over_split_{_opp_key(slug)}.json")
     out = {"slug": slug, "format": fmt, "last": LAST, "full_from": FULL_FROM, "frontline_overs": FRONTLINE,
            "built": datetime.date.today().isoformat(), "bowlers": {}}
+    if only:
+        # merge: every other bowler's line stays exactly as it was built
+        only = {str(i) for i in only}
+        missing = only - {str(b) for b in bowlers}
+        if missing:
+            raise SystemExit(f"ABORTING: {sorted(missing)} not among {slug}'s bowlers")
+        out = json.load(open(path, encoding="utf-8"))
+        for b in only:
+            out["bowlers"].pop(b, None)
+        bowlers = {b: m for b, m in bowlers.items() if str(b) in only}
     for bid, meta in bowlers.items():
         lvl = level_for(_opp_key(slug), bid, "bowl", fmt, level)
         rows = PR.process_rows(load_bowler_deliveries(bid, fmt=fmt, level=lvl))
@@ -158,7 +175,6 @@ def build(slug):
         how = ("" if not s else f"  [{'named' if s['named'] else 'frontline' if s['frontline'] else 'support'} "
                f"{s['allocation']} · full innings {s['full']} avg {s['avg_full']} · all avg {s['avg_all']}]")
         print(f"  {meta.get('name') or bid:20} {s['text'] if s else 'no ' + fmt + ' overs'}{how}", flush=True)
-    path = os.path.join(HERE, "data", f"over_split_{_opp_key(slug)}.json")
     json.dump(out, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     print(f"wrote {os.path.relpath(path, HERE)} ({len(out['bowlers'])} bowlers)")
 
@@ -166,7 +182,9 @@ def build(slug):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--slug", required=True, help="the squad slug, as in series.json")
-    build(ap.parse_args().slug)
+    ap.add_argument("--only", nargs="*", help="rebuild these bowler ids into the existing file")
+    a = ap.parse_args()
+    build(a.slug, a.only)
 
 
 if __name__ == "__main__":

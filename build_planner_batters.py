@@ -93,7 +93,7 @@ def build(slug, out_root, only=None):
             rows = [r for r in (P.get("raw") or []) if r.get("is_legal")]
             runs = int(sum(r.get("bat_score_n") or 0 for r in rows))
             seen[g] = len(rows)
-            fword = "Domestic one-day" if dom else FMT_WORD[FMT]
+            fword = DT.short_words(dom) if dom else FMT_WORD[FMT]      # "Domestic and Lions one-day"
             words = f"{fword} v {GROUP_WORDS[g]}, career"
             wheels, note = {}, ""
             if rows:
@@ -110,7 +110,7 @@ def build(slug, out_root, only=None):
                 except Exception as e:
                     print(f"  ! wheels {name} {g}: {type(e).__name__}: {str(e)[:60]}")
             else:
-                note = f"No {'domestic one-day' if dom else FMT} balls v {GROUP_WORDS[g]}"
+                note = f"No {DT.short_words(dom, cap=False) if dom else FMT} balls v {GROUP_WORDS[g]}"
             packs[g].append({"player_id": pid, "name": name, "hand": hand.upper(), "notes": [],
                              "sample": (f"{words} · {runs:,} run{'' if runs == 1 else 's'} off "
                                         f"{len(rows):,} ball{'' if len(rows) == 1 else 's'}") if rows else "",

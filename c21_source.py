@@ -94,7 +94,15 @@ SERVED_COMPETITIONS = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South A
                        # tests, so the pattern has to carry the distinguishing prefix. Nothing leaks
                        # today (the reels select by player id), but a loose pattern here is how a
                        # record quietly acquires cricket that is not its own.
-                       "ICC Mens T20 World Cup", "T20I Tri-Series")
+                       "ICC Mens T20 World Cup", "T20I Tri-Series",
+                       # England's one-day cricket, for James Coles and Eddie Jack (Tom,
+                       # 15-11-2026): the counties' Royal London / One-Day Cup and the England Lions
+                       # one-dayers. "One-Day Cup 2024" and "2026" carry no other word, so they are
+                       # prefixes (SERVED_PREFIXES): as a substring "One-Day Cup 20" would take the
+                       # ECB Womens One-Day Cup as well. South Africa A in England is served above.
+                       "Royal London One-Day Cup", "One Day Cup (England)", "England Lions")
+# Matched at the START of the competition name (LIKE 'x%'), for names too generic for a substring.
+SERVED_PREFIXES = ("One-Day Cup 20",)
 
 # The old name, kept so nothing that imports it breaks. It was only ever India by accident of what
 # had been pulled, and a list called INDIA_DOMESTIC is the last place anyone would look when a
@@ -227,7 +235,8 @@ def _rows(pid, role, fmt):
     if not idl:
         return []
     ids = ",".join(str(int(i)) for i in idl)
-    comps = " OR ".join(f"m.competition_name LIKE '%{k}%'" for k in INDIA_DOMESTIC)
+    comps = " OR ".join([f"m.competition_name LIKE '%{k}%'" for k in INDIA_DOMESTIC]
+                        + [f"m.competition_name LIKE '{k}%'" for k in SERVED_PREFIXES])
     fl = " OR ".join(f"m.format = '{f}'" for f in fmts)
     col = "bowler_id" if role == "bowler" else "striker_id"
     q = f"""
@@ -254,6 +263,8 @@ def _rows(pid, role, fmt):
 _DOMESTIC_COUNTRY = (("CSA ", "South Africa"), ("SA20", "South Africa"),
                      ("Ranji", "India"), ("Duleep", "India"), ("Irani", "India"),
                      ("Vijay Hazare", "India"),
+                     ("Royal London One-Day Cup", "England"), ("One-Day Cup 20", "England"),
+                     ("One Day Cup (England)", "England"),
                      ("Bangladesh Cricket League", "Bangladesh"),
                      ("National Cricket League", "Bangladesh"),
                      ("Zimbabwe Twenty20", "Zimbabwe"))
@@ -325,6 +336,14 @@ def _wagon_polar(r, lhb):
     return round(ang, 1), round(min(110.0, math.hypot(dx, dy) / _WW_R * 100), 1)
 
 
+def _over_from_1(v):
+    """A mirror over number (0 = the first over) as the warehouse writes it (1 = the first over)."""
+    try:
+        return int(v) + 1
+    except (TypeError, ValueError):
+        return None
+
+
 def _to_warehouse(r):
     """One mirror row -> the warehouse row shape the loaders return (all values strings).
 
@@ -347,7 +366,11 @@ def _to_warehouse(r):
         "season": _s(r.get("match_date"))[:4], "gender_id": "1",
         "match_length_id": "None", "match_name": _s(r.get("competition_name")),
         "match_innings": _s(r.get("match_innings")),
-        "over": _s(r.get("over")), "ball_in_over": _s(r.get("ball_in_over")),
+        # Cricket-21 counts overs from 0 (its "Overs" field reads 0.1 for the first ball: 1,007 of
+        # the mirror's 1,009 innings start at over 0) and the warehouse from 1. Passed through as it
+        # was until 15-11-2026, every C21 ball sat one over early: the first over fell out of the
+        # powerplay reel (over_n 0 is in no phase) and the 40th was read as the death.
+        "over": _s(_over_from_1(r.get("over"))), "ball_in_over": _s(r.get("ball_in_over")),
         "bowler_spell": "None", "match_day": _s(r.get("match_day")),
         "striker_batting_position": "None",
         "over_the_wicket": ("True" if otw.startswith("Over") else
@@ -559,3 +582,86 @@ def coverage(pid, fmt="Test"):
     """(bowling balls, batting balls) available for a player — for a gate to decide whether to
     reach for C21 at all, without loading the rows."""
     return len(_rows(pid, "bowler", fmt)), len(_rows(pid, "striker", fmt))
+
+
+# ── A short ODI record read with domestic cricket, and Cricket-21 beside it ─────────
+# domestic_topup.py reads a player with a short ODI record at level "with-domestic": their ODIs plus
+# the warehouse's domestic one-day series. James Coles and Eddie Jack came into the England ODI squad
+# on 13-11-2026 with no ODIs and no vision at all, and Cricket-21 holds their county one-day cricket
+# and their England Lions one-dayers with a clip on nearly every ball. Tom, 15-11-2026: their
+# figures and reels read both. A map entry with "with_domestic": true is that switch: wherever such a
+# player is read with domestic cricket and asked for the warehouse alone, the loaders read
+# source "both" instead (one copy of a match for the numbers, both for the clips). It is per player
+# and explicit because the warehouse-only default is what every other card was built on.
+_WITH_DOMESTIC = "with-domestic"
+
+
+def reads_with_domestic(pid):
+    """Does this player's Cricket-21 cricket join their record whenever it is read with domestic?"""
+    return bool((player_map().get(str(pid)) or {}).get("with_domestic"))
+
+
+def source_for(pid, level, source="warehouse", fmt="ODI"):
+    """The source a loader should read: "both" for a with_domestic player read at the with-domestic
+    level from the warehouse alone, otherwise the source it was given. ODI reads only: Tom's call was
+    their senior one-day cricket and no T20 (15-11-2026), and a phase reel that borrows T20I overs or
+    a middle-overs reel that borrows Test balls must not reach Coles' SA20 or Jack's Lions four-day
+    games through this switch."""
+    if (source == "warehouse" and level == _WITH_DOMESTIC and str(fmt) == "ODI"
+            and reads_with_domestic(pid)):
+        return "both"
+    return source
+
+
+def is_a_team(competition_name):
+    """Is this C21 competition an A-team's (England Lions, South Africa A touring)?"""
+    n = str(competition_name or "")
+    return "Lions" in n or " A in " in n or n.startswith(("England A ", "South Africa A "))
+
+
+def a_team_rows(rows):
+    """The C21 rows of A-team cricket, for a card that has to name it ("… England Lions one-day")."""
+    return [r for r in rows if r.get("source") == "c21" and is_a_team(r.get("competition"))]
+
+
+def non_international_ids(delivery_ids):
+    """The C21 delivery ids among these whose match is not an international in the mirror (county,
+    domestic or A-team cricket), as strings."""
+    ids = [str(i) for i in delivery_ids if i not in (None, "", "None")]
+    if not ids or not available():
+        return set()
+    out = set()
+    con = _connect()
+    try:
+        for i in range(0, len(ids), 800):
+            chunk = ids[i:i + 800]
+            q = (f"SELECT d.delivery_id, m.format FROM deliveries d JOIN matches m ON m.match_id = d.match_id "
+                 f"WHERE d.delivery_id IN ({','.join('?' * len(chunk))})")
+            for did, fmt in con.execute(q, chunk):
+                if str(fmt or "") not in _INTERNATIONAL:
+                    out.add(str(did))
+    finally:
+        con.close()
+    return out
+
+
+def innings_lengths(keys):
+    """{(match_id, innings): the last over reached, 1-based} for C21 innings, whoever bowled it —
+    what build_over_split asks the warehouse for its own matches."""
+    keys = [(str(m), str(i)) for m, i in keys]
+    if not keys or not available():
+        return {}
+    mids = sorted({m for m, _i in keys})
+    out = {}
+    con = _connect()
+    try:
+        for i in range(0, len(mids), 500):
+            chunk = mids[i:i + 500]
+            q = (f"SELECT match_id, match_innings, MAX([over]) FROM deliveries "
+                 f"WHERE match_id IN ({','.join('?' * len(chunk))}) GROUP BY match_id, match_innings")
+            for m, inn, o in con.execute(q, chunk):
+                if o is not None:
+                    out[(str(m), str(inn))] = int(o) + 1
+    finally:
+        con.close()
+    return {k: v for k, v in out.items() if k in set(keys)}

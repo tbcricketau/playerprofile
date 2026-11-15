@@ -302,13 +302,14 @@ def _planner_export(slug, entry, out, root, merge=False):
             n, w = x.get("n_balls") or 0, x.get("n_wkts") or 0
             fw = _FMT_WORDS.get(out.get("format") or "Test", "Tests")
             if b.get("domestic"):                       # no ODI record: the domestic one-day cricket
-                fw = "Domestic one-day"
+                import domestic_topup as DT
+                fw = DT.short_words(b["domestic"])      # "Domestic and Lions one-day" (15-11-2026)
             fields = [{"slot": c["slot"], "label": c["label"], "spare": c["spare"],
                        "fielders": [{"angle": f["angle"], "radius": f["radius"]} for f in c["fielders"]]}
                       for c in x["fields"] if len(c["fielders"]) == 9]
             hands[h] = {"sample": f"{fw} to {word}, career · {w:,} wickets off {n:,} balls" if n else "",
                         "wheel": wheel, "spider": spider,
-                        "wheel_note": f"No {fw if b.get('domestic') else fw[:-1]} balls to {word}",
+                        "wheel_note": f"No {fw[:1].lower() + fw[1:] if b.get('domestic') else fw[:-1]} balls to {word}",
                         "fields": fields}
         rows.append({"player_id": bid, "name": b["name"], "type": b["type"], "tier": b.get("tier", ""),
                      "headshot": head, "hands": hands})

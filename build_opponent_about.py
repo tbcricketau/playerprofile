@@ -791,6 +791,8 @@ def batter_clips(conn, cur, bid, cap=40, against=None, fmt="Test", level="intern
     `against` scopes to the bowling type the viewer actually bowls. Unscoped, a spinner's pack served
     whatever the batter's most recent boundaries were — overwhelmingly pace. Scoped only to the macro
     group, an off spinner still got left-arm-orthodox footage."""
+    import c21_source
+    source = c21_source.source_for(bid, level, source, fmt)     # Coles' C21 one-day cricket (15-11-2026)
     where = _STYLE.get(against)
     if where and against not in ("pace", "spin") and AMBIDEXTROUS_BOWLERS:
         # an arm-switcher is coded as one type but bowls two — keep them out of the exact-type reel
@@ -855,6 +857,8 @@ def _test_balls(conn, cur, bid, role, fmt="Test", level="international", source=
     while building from `source='both'` sent every player whose record is only in Cricket-21 down
     the fallback path — which is warehouse-only too, found nothing, and skipped them entirely.
     Aman Mokhade and Ayush Pandey have no warehouse record and 788 and 163 C21 balls."""
+    import c21_source
+    source = c21_source.source_for(bid, level, source, fmt)     # as the loaders do (15-11-2026)
     col = "bowler_id" if role == "bowl" else "striker_id"
     r = _q(conn, cur, f"SELECT COUNT(*) n FROM [{DATA_SCHEMA}].[Deliveries] D "
                       f"JOIN [{DATA_SCHEMA}].[Matches] M ON D.match_id=M.match_id "
