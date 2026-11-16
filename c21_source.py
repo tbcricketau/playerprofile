@@ -102,7 +102,11 @@ SERVED_COMPETITIONS = ("Ranji", "Duleep", "Hazare", "Irani", "India A", "South A
                        # ECB Womens One-Day Cup as well. South Africa A in England is served above.
                        "Royal London One-Day Cup", "One Day Cup (England)", "England Lions")
 # Matched at the START of the competition name (LIKE 'x%'), for names too generic for a substring.
-SERVED_PREFIXES = ("One-Day Cup 20",)
+# The T20 Blast names (Coles, Jack and Thomas Rew in the England T20I packs, Tom 16-11-2026) are
+# prefixes for the same reason as the One-Day Cup: "Vitality Blast" as a substring also matches
+# "Vitality Blast Women". C21 calls it "Vitality Blast 2023"/"2024", "T20 Blast 2025" and
+# "Vitality Blast Men 2026". The England Lions T20 series are served by "England Lions" above.
+SERVED_PREFIXES = ("One-Day Cup 20", "Vitality Blast 20", "Vitality Blast Men", "T20 Blast 20")
 
 # The old name, kept so nothing that imports it breaks. It was only ever India by accident of what
 # had been pulled, and a list called INDIA_DOMESTIC is the last place anyone would look when a
@@ -265,6 +269,7 @@ _DOMESTIC_COUNTRY = (("CSA ", "South Africa"), ("SA20", "South Africa"),
                      ("Vijay Hazare", "India"),
                      ("Royal London One-Day Cup", "England"), ("One-Day Cup 20", "England"),
                      ("One Day Cup (England)", "England"),
+                     ("Vitality Blast", "England"), ("T20 Blast", "England"),
                      ("Bangladesh Cricket League", "Bangladesh"),
                      ("National Cricket League", "Bangladesh"),
                      ("Zimbabwe Twenty20", "Zimbabwe"))
@@ -295,6 +300,10 @@ def competition_names(rows):
             n = n.split(" in ", 1)[0] + " tours"
         elif n.startswith("CSA ") and "Day" in n:
             n = "CSA 4-Day"
+        elif "Blast" in n:
+            n = "T20 Blast"                         # three names over four seasons, one competition
+        elif "Lions" in n:
+            n = "England Lions"
         else:
             n = re.sub(r"\s+(Division\s+\w+\s+)?\d{4}(/\d{2})?$", "", n).strip()
         c[n] += 1
@@ -309,7 +318,25 @@ def record_phrase(rows):
     kind = {"First Class": "first-class", "List A": "List A", "T20": "domestic T20"}.get(
         fm[0][0] if fm else "", "domestic")
     comps = competition_names(rows)
+    if kind.startswith("domestic") and "England Lions" in comps:
+        # "domestic and England Lions T20 cricket (T20 Blast, SA20)", the wording Tom chose for the
+        # one-day packs (15-11-2026), with the Lions named once
+        kind = kind.replace("domestic", "domestic and England Lions", 1)
+        comps = [c for c in comps if c != "England Lions"]
     return f"{kind} cricket" + (f" ({', '.join(comps[:3])})" if comps else "")
+
+
+def footage_words(rows):
+    """How a pack footnote names a body of Cricket-21 domestic footage: "Domestic T20", "Domestic
+    and Lions T20", "First-class" — short, capitalised, before the word "footage"."""
+    from collections import Counter
+    fm = Counter(str(r.get("c21_format") or "") for r in rows).most_common(1)
+    f = fm[0][0] if fm else ""
+    if f == "First Class":
+        return "First-class"
+    kind = {"List A": "one-day", "T20": "T20"}.get(f, "")
+    lions = any("Lions" in str(r.get("competition") or "") for r in rows)
+    return ("Domestic and Lions" if lions else "Domestic") + (f" {kind}" if kind else "")
 
 
 # Cricket-21's wagon wheel is a 600 px ground image with the striker at (300, 233) and the bowler
@@ -602,13 +629,21 @@ def reads_with_domestic(pid):
 
 
 def source_for(pid, level, source="warehouse", fmt="ODI"):
-    """The source a loader should read: "both" for a with_domestic player read at the with-domestic
-    level from the warehouse alone, otherwise the source it was given. ODI reads only: Tom's call was
-    their senior one-day cricket and no T20 (15-11-2026), and a phase reel that borrows T20I overs or
-    a middle-overs reel that borrows Test balls must not reach Coles' SA20 or Jack's Lions four-day
-    games through this switch."""
-    if (source == "warehouse" and level == _WITH_DOMESTIC and str(fmt) == "ODI"
-            and reads_with_domestic(pid)):
+    """The source a loader should read: "both" for a with_domestic player read from the warehouse
+    alone in one of two bodies of cricket, otherwise the source it was given.
+
+    - ODI at the with-domestic level: their senior one-day cricket (Tom, 15-11-2026).
+    - The pooled "T20" scope, which already holds the counties' T20 cricket in the warehouse
+      without footage: their T20 Blast, England Lions T20s and SA20 (Tom, 16-11-2026, for the
+      England T20I packs). A match the warehouse holds is counted once (merge_with_warehouse).
+
+    Nothing else: "T20I" (internationals) is what an ODI pack's powerplay and death reels borrow,
+    and a Test middle-overs borrow is red-ball, so neither reaches county cricket through this."""
+    if source != "warehouse" or not reads_with_domestic(pid):
+        return source
+    if level == _WITH_DOMESTIC and str(fmt) == "ODI":
+        return "both"
+    if str(fmt).upper() == "T20":
         return "both"
     return source
 

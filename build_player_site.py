@@ -1331,6 +1331,9 @@ def _batting_body(meta, pid, rec, card=None, vision=None, h2h_links=None, had_me
                 _kf = ab.get(f"clip_format_{_k}_{hand}")
                 if _kf and _kf != fmt:
                     lim.add(_k)
+                    if _kf == "C21":          # Cricket-21 domestic footage, named by the builder (16-11-2026)
+                        _w = ab.get("c21_words") or "Cricket-21"
+                        _kf = _w[:1].lower() + _w[1:]
                     borrowed.add(_kf)
                 if ab.get(f"clip_hand_{_k}_{hand}"):
                     xh[_k] = ab[f"clip_hand_{_k}_{hand}"]

@@ -905,15 +905,19 @@ def _scope_label(fmt="Test", level="international"):
     return {"Test": "Test", "ODI": "ODI", "T20I": "T20I"}.get(fmt, fmt)
 
 
-def c21_only_note(conn, cur, bid, role, fmt, level, source):
+def c21_only_note(conn, cur, bid, role, fmt, level, source, profiled=True):
     """The line a card must carry when a SENIOR pack's player has no record at this level and every
     number and clip on the card came from Cricket-21 — or None.
 
     Added 2026-09-30 for Marques Ackerman, uncapped in the South Africa Test squad. Built with
     --source both, his card showed first-class figures with nothing saying so and his clips scoped
     'Test:right_pace', so a coach reading "averages 56 vs pace" would take it for Test cricket. An
-    a-team pack needs no such line: first-class IS its level."""
-    if source == "warehouse" or level != "international":
+    a-team pack needs no such line: first-class IS its level.
+
+    `profiled` False is the thin-record branch, whose facts come from the warehouse's all-formats
+    fallback and not from Cricket-21, so the line would misstate them (Eddie Jack and Thomas Rew in
+    the England T20I packs, 16-11-2026). Their reels are still starred, by mark_c21_reels."""
+    if source == "warehouse" or level != "international" or not profiled:
         return None
     own = _test_balls(conn, cur, bid, role, fmt=fmt, level=level, source="warehouse")
     import c21_source
@@ -944,6 +948,47 @@ def mark_c21_only(entry, note, fmt):
         v = entry.get(k) or ""
         if v.startswith(f"{fmt}:"):
             entry[k] = "C21:" + v.split(":", 1)[1]
+
+
+def mark_c21_reels(entry, bid, role, fmt):
+    """Star every reel on a SENIOR pack's entry that holds Cricket-21 domestic or A-team footage,
+    and name that footage for the pack's footnote (`c21_words`: "Domestic and Lions T20"). Returns
+    how many reels it starred.
+
+    Added 16-11-2026 for the England T20I packs, where Coles, Jack and Rew have no T20I footage and
+    their T20 Blast and Lions T20s are read from Cricket-21. mark_c21_only covered batters with a
+    profiled record only: a bowler's reels, and the reels of a thin record, went unstarred under
+    the pack's own format. A batter's reel is starred through its clip scope (`C21:<group>`), a
+    bowler's through `clip_format_{kind}_{hand}` = "C21", the two fields the packs star from.
+    Only clips whose match the mirror holds as non-international count, so C21's own
+    internationals (Zimbabwe's ODIs) are never starred by this."""
+    import c21_source
+    lists = {k: v for k, v in entry.items() if isinstance(v, list) and (k.endswith("_clips") or "_clips_" in k)}
+    ids = [str(it.get("delivery_id")) for v in lists.values() for it in v
+           if isinstance(it, dict) and it.get("url") and not it.get("clip_stem")]
+    dom = c21_source.non_international_ids(ids) if ids else set()
+    if not dom:
+        return 0
+    has = lambda lst: any(isinstance(it, dict) and str(it.get("delivery_id")) in dom for it in (lst or []))
+    n = 0
+    if role == "bat":
+        for k in [k for k in entry if k.startswith("clip_scope_")]:
+            g = k[len("clip_scope_"):]
+            v = entry.get(k) or ""
+            if v.startswith(f"{fmt}:") and (has(entry.get(f"scoring_clips_{g}"))
+                                            or has(entry.get(f"dismissal_clips_{g}"))):
+                entry[k] = "C21:" + v.split(":", 1)[1]
+                n += 1
+    else:
+        for h in ("lhb", "rhb"):
+            for kind in ("stock", "wicket", "new_ball", "middle", "death"):
+                if has(entry.get(f"{kind}_clips_{h}")) and not entry.get(f"clip_format_{kind}_{h}"):
+                    entry[f"clip_format_{kind}_{h}"] = "C21"
+                    n += 1
+    rows = c21_source.domestic_rows(c21_source.load_batter_deliveries(bid, fmt=fmt) if role == "bat"
+                                    else c21_source.load_bowler_deliveries(bid, fmt=fmt))
+    entry["c21_words"] = c21_source.footage_words(rows) if rows else "Cricket-21"
+    return n
 
 
 def _override_type(bid):
@@ -1251,8 +1296,9 @@ def main():
             # a short ODI record is read with the player's domestic one-day cricket
             # beside it (domestic_topup.py, Tom 10-11-2026), and said so on the pack
             lvl = level_for(args.opp, bid, "bowl", args.fmt, args.level)
-            if _test_balls(conn, cur, bid, "bowl", fmt=args.fmt, level=lvl,
-                           source=args.source) >= TEST_FLOOR:
+            _prof = _test_balls(conn, cur, bid, "bowl", fmt=args.fmt, level=lvl,
+                                source=args.source) >= TEST_FLOOR
+            if _prof:
                 P = build_profile(bid, hand="All", fmt=args.fmt, level=lvl,
                                   source=args.source)
                 # The type label comes from the matchup store, which drops any bowler it cannot
@@ -1318,6 +1364,17 @@ def main():
                         continue
                 tag = (f" [{fb.get('source')} · vision {src or 'none'}"
                        f" · stock {len(st)} wkt {len(wk)}]")
+            # Cricket-21 domestic footage in a senior pack says so (16-11-2026). A short ODI record
+            # read with domestic cricket is labelled by domestic_topup instead, so it is left alone.
+            if args.level == "international" and lvl != "with-domestic":
+                _note = c21_only_note(conn, cur, bid, "bowl", args.fmt, args.level, args.source,
+                                      profiled=_prof)
+                if _note:
+                    mark_c21_only(out["bowlers"][bid], _note, args.fmt)
+                    tag += " · C21 record, labelled"
+                _n = mark_c21_reels(out["bowlers"][bid], bid, "bowl", args.fmt)
+                if _n:
+                    tag += f" · {_n} C21 reels starred ({out['bowlers'][bid].get('c21_words')})"
             print(f"  bowler {nm}: {len(out['bowlers'][bid]['facts'])} facts{tag}")
         except Exception as e:
             n_err += 1
@@ -1325,8 +1382,9 @@ def main():
     for bid, (nm, hand) in batters.items():
         try:
             lvl = level_for(args.opp, bid, "bat", args.fmt, args.level)
-            if _test_balls(conn, cur, bid, "bat", fmt=args.fmt, level=lvl,
-                           source=args.source) >= TEST_FLOOR:
+            _prof = _test_balls(conn, cur, bid, "bat", fmt=args.fmt, level=lvl,
+                                source=args.source) >= TEST_FLOOR
+            if _prof:
                 out["batters"][bid] = {"name": nm,
                                        **distil_batter(build_batter_profile(
                                            bid, fmt=args.fmt, level=lvl,
@@ -1384,10 +1442,15 @@ def main():
                 tag = f" [{fb.get('source')} · sco {len(sc)} dsm {len(ds)}]"
             out["batters"][bid]["role"] = batter_role(conn, cur, bid, fmt=args.fmt,
                                                       level=lvl)   # opener/top/middle/lower
-            _note = c21_only_note(conn, cur, bid, "bat", args.fmt, args.level, args.source)
+            _note = c21_only_note(conn, cur, bid, "bat", args.fmt, args.level, args.source,
+                                  profiled=_prof)
             if _note:
                 mark_c21_only(out["batters"][bid], _note, args.fmt)
                 tag += " · C21-only record, labelled"
+            if args.level == "international" and lvl != "with-domestic":
+                _n = mark_c21_reels(out["batters"][bid], bid, "bat", args.fmt)
+                if _n:
+                    tag += f" · {_n} C21 reels starred ({out['batters'][bid].get('c21_words')})"
             print(f"  batter {nm}: {len(out['batters'][bid]['facts'])} facts{tag}")
         except Exception as e:
             n_err += 1

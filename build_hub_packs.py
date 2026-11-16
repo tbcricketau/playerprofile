@@ -385,7 +385,9 @@ def _bowler_reels(clips, bid, hand, about, dom=None, rec=None):
             t = "Recent bowling" if str(v.get("title", "")).startswith("Recent bowling") else lab
             fmt = (about or {}).get(f"clip_format_{kind}_{hand.lower()}")
             if fmt:
-                borrowed.add(str(fmt))
+                # "C21" = Cricket-21 domestic or Lions footage, named by the builder
+                # (build_opponent_about.mark_c21_reels, 16-11-2026)
+                borrowed.add(str((about or {}).get("c21_words") or "Cricket-21") if fmt == "C21" else str(fmt))
             out.append((key, f"{clips.vision_url}#{key}", t + ("*" if fmt or home else ""), clips.count(key)))
             continue
         for O, word in (("L", "left-handers"), ("R", "right-handers")):
@@ -437,7 +439,10 @@ def _scoring_reels(clips, bid, group, about, fmt):
     note = ""
     if scope and scope != f"{fmt}:{group}":
         sf, _, sg = scope.partition(":")
-        note = ("* First-class footage" if sf == "C21" else f"* {sf} footage" if sf != fmt
+        # a C21 scope is the builder's Cricket-21 footage: first-class for a Test pack (Ackerman),
+        # named on the entry since 16-11-2026 ("Domestic and Lions T20")
+        note = (f"* {(about or {}).get('c21_words') or 'First-class'} footage" if sf == "C21"
+                else f"* {sf} footage" if sf != fmt
                 else f"* Footage against {_GROUP_LABEL.get(sg, sg)}" if sg != group else "")
     out = []
     for kk, lab in (("sco", "Scoring shots"), ("dsm", "Dismissals")):

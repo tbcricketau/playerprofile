@@ -151,9 +151,10 @@ def load_batter_deliveries(batter_id: str, fmt: str = "Test",
     there and hundreds of tracked balls in Cricket-21 (see c21_source)."""
     if source not in ("warehouse", "c21", "both"):
         raise ValueError(f"unknown source {source!r} — warehouse | c21 | both")
-    # a player read with domestic cricket whose Cricket-21 one-day cricket joins it (James Coles,
-    # Tom 15-11-2026: c21_source.source_for), whatever the builder asked for
-    if source == "warehouse" and level == "with-domestic":
+    # a player read with domestic cricket whose Cricket-21 cricket joins it, whatever the builder
+    # asked for (c21_source.source_for): their one-day cricket (James Coles, Tom 15-11-2026) and, in
+    # the pooled T20 scope, their T20 Blast and Lions T20s (16-11-2026)
+    if source == "warehouse" and (level == "with-domestic" or str(fmt).upper() == "T20"):
         import c21_source
         source = c21_source.source_for(batter_id, level, source, fmt)
     if source != "warehouse":
