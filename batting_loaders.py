@@ -225,7 +225,18 @@ def load_batter_innings(batter_id: str, fmt: str = "Test",
     """Per-innings aggregation for the share-of-runs metric: the batter's off-bat runs
     and balls in each innings, the team's off-bat innings total, and the match total
     (both teams) — computed in SQL so we don't pull every ball twice."""
+    import cricviz_source
     conn, cur = set_conn_cursor()
+    # A batter with no balls in this scope gets no innings, and the query below is not asked. Thomas
+    # Rew has county T20s in the warehouse and no T20Is, and for him it scanned every T20I innings
+    # and hit the 120 s timeout on every try (16-11-2026). Everyone else runs the query unchanged.
+    has = run_query(f"""
+    SELECT TOP 1 D.[match_id] FROM [{DATA_SCHEMA}].[Deliveries] D
+    JOIN [{DATA_SCHEMA}].[Matches] M ON D.[match_id] = M.[match_id]
+    WHERE D.[striker_id] = '{batter_id}' AND {_scope(fmt, 'M', level)}""", conn, cur)
+    if not has:
+        conn.close()
+        return cricviz_source.batter_innings(batter_id, fmt, level)
     q = f"""
     WITH inn AS (
         SELECT D.[match_id], D.[match_innings],
@@ -250,7 +261,6 @@ def load_batter_innings(batter_id: str, fmt: str = "Test",
     """
     rows = run_query(q, conn, cur)
     conn.close()
-    import cricviz_source
     return rows + cricviz_source.batter_innings(batter_id, fmt, level)
 
 
