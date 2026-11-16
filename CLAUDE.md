@@ -1439,6 +1439,28 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   and a reel footnote), and stars C21 reels. Built 15-11: Coles 893 bowling balls and 525 batting (was
   760 and none on film), Jack 1,158 (was 975), 228 and 142 clips. The 40 matches were imported one at
   a time into the mirror, which was then copied to the box. Under-19 one-dayers and all T20 left out.
+- **…and in the T20I packs their T20 cricket, with Thomas Rew's** (Tom, atq 16-11-2026: vision and
+  figures). None of the three had T20I vision. `source_for` also turns a warehouse read in the pooled
+  **"T20"** scope into "both" for a with_domestic player. That is the scope the T20I pack figures,
+  Scouting cards, planner and web reports read, and it already held their county T20 without
+  footage, so a match is counted once. The about file and plan rows read T20Is, so they take it with
+  `--only-batters`/`--only-bowlers` and `--source both`. "T20I" reads (an ODI pack's borrowed phase
+  reels) never reach county T20. `build_opponent_about.mark_c21_reels` stars every reel that holds
+  Cricket-21 domestic or Lions footage, bowlers' reels included (`clip_format_*` = "C21"; a batter's
+  through its `C21:` scope), and names the footage (`c21_words`: "Domestic and Lions T20"). The hub and
+  Pages footnotes read that, and a Test pack's C21 reel still says "First-class". `c21_only_note` now
+  labels a profiled record only, because a thin record's facts come from the warehouse's
+  all-formats fallback. The mirror gained 78 matches: the T20 Blast 2023-26, England Lions T20s and
+  Coles' SA20. Hong Kong Sixes, T10 and The Hundred were left out. Rew is white-ball 56959, not his
+  brother James (24471). Coles 879 batting and 995 bowling balls, Jack 167 bowling, Rew 229 batting.
+  `load_batter_innings` now skips its query for a batter with no balls in the scope: for Rew (county
+  T20s, no T20Is) it read every T20I innings and timed out at 120 s on every try.
+- **Mitch Owen's T20I bowling is simulated on a borrowed shape** (Tom, atq 16-11-2026). matchupmodel's
+  T20 profiles read T20Is alone and want 200 tracked balls, and Owen has 30 T20I balls against 666
+  tracked in T20 leagues. `build_bowler_delivery.py --fmt T20I --supplement t20 --min-present 20` was
+  run aside and his rows alone were added to `bowler_delivery_t20.csv`. Outcomes are never borrowed,
+  so he simulates at the right-arm pace average, `shape_source` t20 in the store. A rebuild of that
+  CSV without the flags drops him again.
 - **A rate is balls per dismissal or per wicket, never per 100 balls** (Tom, 11-11-2026). The danger
   ball reads "(out every 14 balls)" in the summary point (`batting_report._summary_points`) and "out
   every 14 balls" on the card (`build_pack_extras`). The bowler's wicket ball reads "a wicket every 19
