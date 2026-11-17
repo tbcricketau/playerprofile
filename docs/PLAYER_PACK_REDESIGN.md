@@ -377,3 +377,23 @@ only, because it sits under `coach/`. Scouting does not link it yet.
   Every figure, plan sentence, Respect / Attack / Watch line and field is from the built 04-10 pages
   and `bowler_plans_south_africa_test.json`; the pitch map and wheel are cricviz renders from the
   warehouse (Rabada's 192 wickets to right-handers; Markram's 2,973 balls against right-arm pace).
+
+## T20I packs to parity with the ODI packs (Tom, atq 17-11-2026)
+
+Tom: "bring them up to parity with the ODI packs (i.e. bowling distribution on the opposition
+player notes)". Compared on the box on 17-11, the T20I packs lacked five things. His calls:
+
+1. **Expected overs** on every bowler card, in a full 20. Read from their last 20 T20Is. A bowler
+   with fewer than 5 T20Is reads their last 20 T20s in any major competition, and the line says
+   which. The ODI rule scaled: 4 overs for a bowler averaging 3.2 or more in innings that ran the
+   full 20, anyone else their own average.
+2. **Sweeps, ramps and False v slower ball**, same as ODI: figures, the Sweeps pane, the reels and
+   the Scouting cards, read from all T20 cricket as the card figures are.
+3. **Variations reel**: the six T20I bowlers who have one on the ODI cards (Rashid, Curran, Overton,
+   Dawson, Jacks, Crocombe) carry the same reels. The ODI file is read, never rewritten.
+4. **Thin T20I records** (under 300 T20I balls in the role) read the player's T20 league cricket,
+   facts and reels, said first on the card. League reels are starred.
+5. **Starting fields**: three per card (Powerplay, Middle overs, Death), each the estimate. No
+   default card. Slot numbers are kept, so a saved field still shows.
+
+Build status: not started.
