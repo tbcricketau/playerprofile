@@ -236,7 +236,8 @@ def _variations(slug):
     the next build. The clips carry a signed media-store `url` and no Fairplay stem, the door
     `resolve_playlist` already keeps open for Cricket-21 footage.
     """
-    p = os.path.join(DATA, f"variations_{_opp_key(slug)}.json")
+    import variations_source
+    p = variations_source.path(_opp_key(slug))     # its own file, or the series it reads from
     if not os.path.exists(p):
         return {}
     try:

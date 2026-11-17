@@ -645,6 +645,11 @@ def _fmt_sql(fmt="Test", level="international"):
     A-team first-class cricket, not senior Test cricket — same format, different standard.
     Unknown pairs (there is no men's A-team T20 bucket) fall back to the senior scope for that
     format, which is what the fallback chain then steps past."""
+    if str(fmt).upper() == "T20":
+        # the pooled T20 scope (every major men's T20 competition, T20Is included), as the loaders
+        # read it. It is not a level, so series_sql does not know it.
+        from data_loaders import _t20_all
+        return _t20_all("M")
     try:
         return (f"M.series_id IN (SELECT series_id FROM [{DATA_SCHEMA}].[Series] "
                 f"WHERE name IN {series_sql(fmt, level)})")
@@ -991,6 +996,41 @@ def mark_c21_reels(entry, bid, role, fmt):
     return n
 
 
+def thin_t20i(conn, cur, bid, role, fmt, level, source):
+    """(T20I balls, all T20 balls) when a T20I pack's player is read with their T20 league cricket,
+    else None.
+
+    Tom, atq 17-11-2026, the T20I packs brought to parity with the ODI packs: a record under
+    TEST_FLOOR T20I balls in the role reads the pooled T20 scope instead (T20Is and every major
+    league, the scope the card's figures already read), says so first on the card, and its reels
+    are starred. The ODI packs' domestic top-up is the same idea (domestic_topup.py). A player with
+    nothing more in the leagues, or a build that names its own source, is left alone."""
+    if str(fmt) != "T20I" or level != "international" or source != "warehouse":
+        return None
+    own = _test_balls(conn, cur, bid, role, fmt="T20I", level=level)
+    if own >= TEST_FLOOR:
+        return None
+    pooled = _test_balls(conn, cur, bid, role, fmt="T20", level=level)
+    return (own, pooled) if pooled > own else None
+
+
+def mark_t20_leagues(entry, role, thin, profiled):
+    """Say on a thin T20I record's card that it reads T20 league cricket, and star its reels."""
+    own, pooled = thin
+    if profiled:
+        note = (f"Short T20I record ({own:,} balls). These figures add {pooled - own:,} balls of T20 league cricket."
+                if own else f"No T20I record. These figures are {pooled:,} balls of T20 league cricket.")
+        entry["record_note"] = note
+        for k in [k for k in entry if k == "facts" or k.startswith("facts_")]:
+            entry[k] = [note] + [f for f in (entry.get(k) or []) if f != note]
+    entry["t20_leagues"] = {"t20i_balls": own, "t20_balls": pooled}
+    if role == "bowl":           # a batter's reels carry their scope ("T20:<group>") already
+        for h in ("lhb", "rhb"):
+            for kind in ("stock", "wicket", "new_ball", "middle", "death"):
+                if entry.get(f"{kind}_clips_{h}") and not entry.get(f"clip_format_{kind}_{h}"):
+                    entry[f"clip_format_{kind}_{h}"] = "T20"
+
+
 def _override_type(bid):
     """The hand-checked bowler type, for a player the matchup store has no label for.
 
@@ -1296,10 +1336,13 @@ def main():
             # a short ODI record is read with the player's domestic one-day cricket
             # beside it (domestic_topup.py, Tom 10-11-2026), and said so on the pack
             lvl = level_for(args.opp, bid, "bowl", args.fmt, args.level)
-            _prof = _test_balls(conn, cur, bid, "bowl", fmt=args.fmt, level=lvl,
+            # a thin T20I record reads the pooled T20 scope (thin_t20i, 17-11-2026)
+            thin = thin_t20i(conn, cur, bid, "bowl", args.fmt, args.level, args.source)
+            pf = "T20" if thin else args.fmt
+            _prof = _test_balls(conn, cur, bid, "bowl", fmt=pf, level=lvl,
                                 source=args.source) >= TEST_FLOOR
             if _prof:
-                P = build_profile(bid, hand="All", fmt=args.fmt, level=lvl,
+                P = build_profile(bid, hand="All", fmt=pf, level=lvl,
                                   source=args.source)
                 # The type label comes from the matchup store, which drops any bowler it cannot
                 # simulate — so a squad-union addition like Auqib Nabi had none and his card opened
@@ -1307,11 +1350,11 @@ def main():
                 # falling back to a word that says nothing.
                 entry = {"name": nm, **distil_bowler(
                     P, ty or _override_type(bid) or P.get("primary_type") or "Bowler")}
-                R = bowler_clips_from_profile(P, fmt=args.fmt)
+                R = bowler_clips_from_profile(P, fmt=pf)
                 (entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"],
                  entry["middle_clips"], entry["death_clips"]) = (
                      R["stock"], R["wicket"], R["new_ball"], R["middle"], R["death"])
-                byh, _src = bowler_clips_by_hand(bid, fmt=args.fmt, level=lvl,
+                byh, _src = bowler_clips_by_hand(bid, fmt=pf, level=lvl,
                                                  source=args.source)   # a pack shows only its own hand
                 _store_hand_reels(entry, byh)
                 out["bowlers"][bid] = entry
@@ -1338,7 +1381,7 @@ def main():
                 # A thin record used to mean NO vision at all, which is the one thing a player can
                 # always use. Step formats until there is something to watch and record which one,
                 # so the card can say the footage is from another format.
-                st, wk, nbc, src = bowler_clips_best(bid, fmt=args.fmt, level=lvl,
+                st, wk, nbc, src = bowler_clips_best(bid, fmt=pf, level=lvl,
                                                      source=args.source)
                 entry["stock_clips"], entry["wicket_clips"], entry["new_ball_clips"] = st, wk, nbc
                 # `src` is the format the POOLED reel used, and it is no longer stamped as
@@ -1348,7 +1391,7 @@ def main():
                 # The BATTING packs read only the hand-scoped reels — an unscoped one is the pooled
                 # defect this codebase forbids — so build those too or the card has no buttons.
                 try:
-                    byh, _hsrc = bowler_clips_by_hand(bid, fmt=args.fmt, level=lvl,
+                    byh, _hsrc = bowler_clips_by_hand(bid, fmt=pf, level=lvl,
                                                        source=args.source)
                     _store_hand_reels(entry, byh)
                 except Exception as e:
@@ -1370,11 +1413,14 @@ def main():
                 _note = c21_only_note(conn, cur, bid, "bowl", args.fmt, args.level, args.source,
                                       profiled=_prof)
                 if _note:
-                    mark_c21_only(out["bowlers"][bid], _note, args.fmt)
+                    mark_c21_only(out["bowlers"][bid], _note, pf)
                     tag += " · C21 record, labelled"
-                _n = mark_c21_reels(out["bowlers"][bid], bid, "bowl", args.fmt)
+                _n = mark_c21_reels(out["bowlers"][bid], bid, "bowl", pf)
                 if _n:
                     tag += f" · {_n} C21 reels starred ({out['bowlers'][bid].get('c21_words')})"
+            if thin:
+                mark_t20_leagues(out["bowlers"][bid], "bowl", thin, _prof)
+                tag += f" · T20I {thin[0]} balls, read with all T20 ({thin[1]})"
             print(f"  bowler {nm}: {len(out['bowlers'][bid]['facts'])} facts{tag}")
         except Exception as e:
             n_err += 1
@@ -1382,17 +1428,19 @@ def main():
     for bid, (nm, hand) in batters.items():
         try:
             lvl = level_for(args.opp, bid, "bat", args.fmt, args.level)
-            _prof = _test_balls(conn, cur, bid, "bat", fmt=args.fmt, level=lvl,
+            thin = thin_t20i(conn, cur, bid, "bat", args.fmt, args.level, args.source)
+            pf = "T20" if thin else args.fmt
+            _prof = _test_balls(conn, cur, bid, "bat", fmt=pf, level=lvl,
                                 source=args.source) >= TEST_FLOOR
             if _prof:
                 out["batters"][bid] = {"name": nm,
                                        **distil_batter(build_batter_profile(
-                                           bid, fmt=args.fmt, level=lvl,
+                                           bid, fmt=pf, level=lvl,
                                            source=args.source), hand)}
                 # card facts = the report's TL;DR summary (richer than distil; coach matchup dropped)
                 for tw in ("pace", "spin"):
                     try:
-                        pts = card_summary(bid, tw, include_matchup=False, fmt=args.fmt,
+                        pts = card_summary(bid, tw, include_matchup=False, fmt=pf,
                                            level=lvl, source=args.source)
                         if pts:
                             out["batters"][bid][f"facts_{tw}"] = pts
@@ -1400,12 +1448,12 @@ def main():
                         print(f"  ! card summary {nm} ({tw}): {type(e).__name__}: {str(e)[:60]}")
                 # per EXACT bowling type: pace/spin alone still pooled all spin together
                 for _tw in _CLIP_GROUPS:
-                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt, level=lvl,
+                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=pf, level=lvl,
                                                          source=args.source)
                     out["batters"][bid][f"scoring_clips_{_tw}"] = _sc
                     out["batters"][bid][f"dismissal_clips_{_tw}"] = _ds
                     out["batters"][bid][f"clip_scope_{_tw}"] = _scope
-                sc, ds = batter_clips(conn, cur, bid, fmt=args.fmt, level=lvl,
+                sc, ds = batter_clips(conn, cur, bid, fmt=pf, level=lvl,
                                       source=args.source)      # unscoped TYPE, kept as fallback
                 out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
                 tag = f" · sco {len(sc)} dsm {len(ds)}"
@@ -1426,12 +1474,12 @@ def main():
                 # and no clips, so Brad Evans had no footage in any of the eleven bowling packs while
                 # 31 ODI and 111 T20I balls of him batting play. Same reels as the full branch.
                 for _tw in _CLIP_GROUPS:
-                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=args.fmt, level=lvl,
+                    _sc, _ds, _scope = batter_clips_best(conn, cur, bid, _tw, fmt=pf, level=lvl,
                                                          source=args.source)
                     out["batters"][bid][f"scoring_clips_{_tw}"] = _sc
                     out["batters"][bid][f"dismissal_clips_{_tw}"] = _ds
                     out["batters"][bid][f"clip_scope_{_tw}"] = _scope
-                sc, ds = batter_clips(conn, cur, bid, fmt=args.fmt, level=lvl, source=args.source)
+                sc, ds = batter_clips(conn, cur, bid, fmt=pf, level=lvl, source=args.source)
                 out["batters"][bid]["scoring_clips"], out["batters"][bid]["dismissal_clips"] = sc, ds
                 if fb.get("source") == "footage-only":
                     _e = out["batters"][bid]
@@ -1440,17 +1488,20 @@ def main():
                         print(f"  batter {nm}: SKIPPED — nothing to say or show in any format")
                         continue
                 tag = f" [{fb.get('source')} · sco {len(sc)} dsm {len(ds)}]"
-            out["batters"][bid]["role"] = batter_role(conn, cur, bid, fmt=args.fmt,
+            out["batters"][bid]["role"] = batter_role(conn, cur, bid, fmt=pf,
                                                       level=lvl)   # opener/top/middle/lower
             _note = c21_only_note(conn, cur, bid, "bat", args.fmt, args.level, args.source,
                                   profiled=_prof)
             if _note:
-                mark_c21_only(out["batters"][bid], _note, args.fmt)
+                mark_c21_only(out["batters"][bid], _note, pf)
                 tag += " · C21-only record, labelled"
             if args.level == "international" and lvl != "with-domestic":
-                _n = mark_c21_reels(out["batters"][bid], bid, "bat", args.fmt)
+                _n = mark_c21_reels(out["batters"][bid], bid, "bat", pf)
                 if _n:
                     tag += f" · {_n} C21 reels starred ({out['batters'][bid].get('c21_words')})"
+            if thin:
+                mark_t20_leagues(out["batters"][bid], "bat", thin, _prof)
+                tag += f" · T20I {thin[0]} balls, read with all T20 ({thin[1]})"
             print(f"  batter {nm}: {len(out['batters'][bid]['facts'])} facts{tag}")
         except Exception as e:
             n_err += 1

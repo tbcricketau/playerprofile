@@ -387,7 +387,9 @@ def _bowler_reels(clips, bid, hand, about, dom=None, rec=None):
             if fmt:
                 # "C21" = Cricket-21 domestic or Lions footage, named by the builder
                 # (build_opponent_about.mark_c21_reels, 16-11-2026)
-                borrowed.add(str((about or {}).get("c21_words") or "Cricket-21") if fmt == "C21" else str(fmt))
+                # "T20" on a T20I card = a thin T20I record's league reels (thin_t20i, 17-11-2026)
+                borrowed.add(str((about or {}).get("c21_words") or "Cricket-21") if fmt == "C21"
+                             else "T20 league" if fmt == "T20" else str(fmt))
             out.append((key, f"{clips.vision_url}#{key}", t + ("*" if fmt or home else ""), clips.count(key)))
             continue
         for O, word in (("L", "left-handers"), ("R", "right-handers")):
@@ -437,12 +439,16 @@ def _scoring_reels(clips, bid, group, about, fmt):
     code = _GROUP_CODE.get(group, "")
     scope = str((about or {}).get(f"clip_scope_{group}") or "")
     note = ""
-    if scope and scope != f"{fmt}:{group}":
+    # A T20I series' cards are built as "T20" (their figures read all T20 cricket) while the reels'
+    # own format is T20Is. Until 17-11-2026 that starred every reel "* T20I footage". The reels'
+    # own scope is T20I now, and a thin record's league reels ("T20:") are the starred ones.
+    own = "T20I" if fmt == "T20" else fmt
+    if scope and scope != f"{own}:{group}":
         sf, _, sg = scope.partition(":")
         # a C21 scope is the builder's Cricket-21 footage: first-class for a Test pack (Ackerman),
         # named on the entry since 16-11-2026 ("Domestic and Lions T20")
         note = (f"* {(about or {}).get('c21_words') or 'First-class'} footage" if sf == "C21"
-                else f"* {sf} footage" if sf != fmt
+                else f"* {'T20 league' if sf == 'T20' else sf} footage" if sf != own
                 else f"* Footage against {_GROUP_LABEL.get(sg, sg)}" if sg != group else "")
     out = []
     for kk, lab in (("sco", "Scoring shots"), ("dsm", "Dismissals")):

@@ -1560,7 +1560,8 @@ def _load_variations(key):
     no Fairplay stem, so they pass through `resolve_playlist` untouched."""
     if not key:
         return {}
-    p = os.path.join(HERE, "data", f"variations_{key}.json")
+    import variations_source
+    p = variations_source.path(key)                # its own file, or the series it reads from
     if not os.path.exists(p):
         return {}
     try:
