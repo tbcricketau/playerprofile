@@ -1656,6 +1656,8 @@ def build(slug, out_root=None, only=None, kinds=("bowling", "batting")):
     planner = entry.get("planner_series") or ""
     plans = (_bowler_plans(slug) or {}).get("bowlers") or {}
     opp = _opp_key(slug)
+    import whiteball_fields
+    whiteball_fields.for_series(opp)      # the starting fields differ by series (17-11-2026)
     overview = {}
     for g, _l in BAT_GROUPS:
         p = os.path.join(here, "data", f"overview_{g}_{opp}.json")
