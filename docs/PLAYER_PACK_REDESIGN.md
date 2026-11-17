@@ -393,7 +393,23 @@ player notes)". Compared on the box on 17-11, the T20I packs lacked five things.
    Dawson, Jacks, Crocombe) carry the same reels. The ODI file is read, never rewritten.
 4. **Thin T20I records** (under 300 T20I balls in the role) read the player's T20 league cricket,
    facts and reels, said first on the card. League reels are starred.
-5. **Starting fields**: three per card (Powerplay, Middle overs, Death), each the estimate. No
-   default card. Slot numbers are kept, so a saved field still shows.
+5. **Starting fields**: three per card (Powerplay, Middle overs, Death). His first answer was the
+   estimate. Later the same day: "the default field should be the most set field, as that one was
+   generally more correct". So each phase starts from Australia's most-set field, and the corrected
+   field only where a phase has none. That holds for ODI and T20 from here on, with **no change to
+   the current England ODI packs** (`whiteball_fields.CORRECTED_START`). A phase's field sits in the
+   phase's own slot, so a saved field still shows.
+6. **A previous series' fields and notes are the default** for the same player (Tom, 17-11). Same
+   format only: a T20I card starts from the player's last T20I series, an ODI card from their last
+   ODI series. Shown, not copied: the card shows them marked "From <series>", nothing is written
+   until a coach saves, the old series' record is never changed and no build writes to the store.
+   No earlier T20 series holds saved fields, so the England T20I cards get nothing from it yet.
 
-Build status: not started.
+To look at later (Tom, 17-11): some generated fields do not make sense, such as a point and a deep
+point on nearly the same angle.
+
+Build status (17-11): items 1 to 5 are live on the T20I packs, Scouting and the planner
+(playerprofile `77c81a9` `c22e989` `9812498` `7206100`). 1,638 reels clean, 959 files match storage,
+coaches' work 0 lost. Six batters and four bowlers were thin and read all T20 cricket. Seven T20I
+bowlers carry Variations (Coles is in the ODI file too). Not built: item 6, the carry-forward of a
+previous series, which is a planner change (playerpacks) and has nothing to show on these cards yet.

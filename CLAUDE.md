@@ -1461,6 +1461,25 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   run aside and his rows alone were added to `bowler_delivery_t20.csv`. Outcomes are never borrowed,
   so he simulates at the right-arm pace average, `shape_source` t20 in the store. A rebuild of that
   CSV without the flags drops him again.
+- **The T20I packs carry what the ODI packs carry** (Tom, atq 17-11-2026, his six calls in
+  `docs/PLAYER_PACK_REDESIGN.md`). A T20I series' builders run as "T20" (figures from the pooled T20
+  scope) while its about file is built at T20I. Five things came across.
+  - **Expected overs** (`build_over_split.py`, `RULES`): 4 in a full 20, frontline at 3.2, from the last
+    20 T20Is, or the last 20 T20s for a bowler with fewer than 5 T20Is (`MIN_T20I`).
+  - **Shot types**: `build_shot_types.py --slug` runs unchanged on the pooled scope.
+  - **Variations**: `variations_source.READS_FROM` lets a series read another's file. England T20I
+    reads the ODI one, which is never written.
+  - **Thin records**: `build_opponent_about.thin_t20i`. Under 300 T20I balls in the role, the entry
+    is built from the pooled "T20" scope, says so first ("Short T20I record (74 balls). These figures
+    add 2,145 balls of T20 league cricket."), and its reels are starred "T20 league footage". The
+    hub treats `T20I:` as a T20I card's own reel scope. Before that every T20I reel was starred.
+  - **Starting fields** (`whiteball_fields`): three a card, each phase from Australia's **most-set**
+    field, in the PHASE's slot (the first is always `option1`, where the planner files a card's first
+    field). ODI and T20 from here on. England ODI is pinned as built (`CORRECTED_START`). Every
+    builder calls `whiteball_fields.for_series(opp)` and fields asked for without it raise, which is
+    how `report_web` was caught missing it.
+  - Not built: a previous series' fields and notes as a card's default (same format, shown and
+    not copied). A planner change.
 - **A rate is balls per dismissal or per wicket, never per 100 balls** (Tom, 11-11-2026). The danger
   ball reads "(out every 14 balls)" in the summary point (`batting_report._summary_points`) and "out
   every 14 balls" on the card (`build_pack_extras`). The bowler's wicket ball reads "a wicket every 19
