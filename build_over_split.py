@@ -1,5 +1,5 @@
 """build_over_split.py — the overs an opposition bowler can be expected to bowl in each phase of a
-full 50-over innings.
+full innings: 50 overs for an ODI pack, 20 for a T20I pack.
 
     venv/bin/python build_over_split.py --slug england-odi-home-2026
 
@@ -41,6 +41,10 @@ FULL_FROM = 49       # over numbers are 1-based: an innings that reached its 49t
 FRONTLINE = 8.0      # averaging this many overs in those innings makes a frontline bowler (Tom, 10-11)
 ALLOCATION = 10
 MIN_FULL = 5
+# The same rule in a full 20 (Tom, atq 17-11-2026, the T20I packs brought to parity): an innings that
+# reached its 19th over ran its course, a frontline bowler bowls 4, and 3.2 is 8 of 10 scaled.
+RULES = {"ODI": (FULL_FROM, FRONTLINE, ALLOCATION), "T20": (19, 3.2, 4), "T20I": (19, 3.2, 4)}
+MIN_T20I = 5         # fewer T20Is than this and a T20I pack reads the bowler's last 20 T20s instead
 
 
 def _innings(rows, fmt):
@@ -64,9 +68,10 @@ def lengths(keys):
     from config import DATA_SCHEMA as S
     import cricviz_source
     out = {}
-    for r in cricviz_source._all_rows().get("ODI", []) if cricviz_source.enabled() else []:
-        k = (str(r["match_id"]), str(r["match_innings"]))
-        out[k] = max(out.get(k, 0), int(r["over"]))
+    for rows in (cricviz_source._all_rows().values() if cricviz_source.enabled() else ()):
+        for r in rows:                      # every pulled format: match ids do not repeat across them
+            k = (str(r["match_id"]), str(r["match_innings"]))
+            out[k] = max(out.get(k, 0), int(r["over"]))
     mids = sorted({m for m, _i in keys if (m, _i) not in out})
     if mids:
         conn, cur = set_conn_cursor()
@@ -96,6 +101,7 @@ def split(rows, fmt, last=LAST, named=False):
     if not bands:
         return None
     phases = [ph for ph, _a, _b in bands]
+    full_from, frontline_at, allocation = RULES.get(fmt, RULES["ODI"])
     inn = _innings(rows, fmt)
     keys = sorted(inn, key=lambda k: inn[k]["date"])[-last:]
     if not keys:
@@ -108,7 +114,7 @@ def split(rows, fmt, last=LAST, named=False):
         import c21_source
         reach.update(c21_source.innings_lengths([k for k in keys if k in c21]))
     total = lambda ks: sum(len(v) for k in ks for v in inn[k]["overs"].values())
-    full = [k for k in keys if reach.get(k, 0) >= FULL_FROM]
+    full = [k for k in keys if reach.get(k, 0) >= full_from]
     avg_all = total(keys) / len(keys)
     avg_full = total(full) / len(full) if full else None
     basis = full if len(full) >= MIN_FULL else keys
@@ -117,8 +123,8 @@ def split(rows, fmt, last=LAST, named=False):
         return None
     shares = {ph: sum(len(inn[k]["overs"].get(ph, ())) for k in basis) / n for ph in phases}
     usual = avg_full if len(full) >= MIN_FULL else avg_all
-    frontline = named or usual >= FRONTLINE
-    alloc = ALLOCATION if frontline else min(ALLOCATION, int(usual + 0.5))
+    frontline = named or usual >= frontline_at
+    alloc = allocation if frontline else min(allocation, int(usual + 0.5))
     if alloc < 1:
         return None
     return {"matches": len(keys), "first": inn[keys[0]]["date"][:10], "last": inn[keys[-1]]["date"][:10],
@@ -167,10 +173,22 @@ def build(slug, only=None):
         bowlers = {b: m for b, m in bowlers.items() if str(b) in only}
     for bid, meta in bowlers.items():
         lvl = level_for(_opp_key(slug), bid, "bowl", fmt, level)
-        rows = PR.process_rows(load_bowler_deliveries(bid, fmt=fmt, level=lvl))
-        s = split(rows, fmt, named=str(bid) in named)
+        read = fmt
+        if fmt == "T20":
+            # a T20I pack: their last 20 T20Is, England's use of them. Fewer than MIN_T20I and the
+            # last 20 T20s in any major competition are read instead, and the line says which
+            # (Tom, atq 17-11-2026).
+            rows = PR.process_rows(load_bowler_deliveries(bid, fmt="T20I", level=level))
+            if len(_innings(rows, "T20I")) >= MIN_T20I:
+                read = "T20I"
+            else:
+                rows = PR.process_rows(load_bowler_deliveries(bid, fmt="T20", level=level))
+        else:
+            rows = PR.process_rows(load_bowler_deliveries(bid, fmt=fmt, level=lvl))
+        s = split(rows, read, named=str(bid) in named)
         if s:
-            s["text"] = text(s, fmt, domestic=lvl != level)
+            s["read"] = read
+            s["text"] = text(s, read, domestic=lvl != level)
             out["bowlers"][str(bid)] = s
         how = ("" if not s else f"  [{'named' if s['named'] else 'frontline' if s['frontline'] else 'support'} "
                f"{s['allocation']} · full innings {s['full']} avg {s['avg_full']} · all avg {s['avg_all']}]")

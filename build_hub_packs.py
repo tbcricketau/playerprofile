@@ -649,6 +649,8 @@ def build(slug, out_root, only=None, clips_root=None):
     about_bowl, about_bat = _about(slug)
     # white-ball: each bowler's usual overs per phase (build_over_split.py), the summary's second point
     splits = (_load(os.path.join(DATA, f"over_split_{opp}.json"), {}) or {}).get("bowlers") or {}
+    import whiteball_fields
+    whiteball_fields.for_series(opp)
     # their sweeps against spin, ramps against pace, false shots against slower balls (build_shot_types.py)
     shots = (_load(os.path.join(DATA, f"shot_types_{opp}.json"), {}) or {}).get("batters") or {}
     # a short ODI record read with its domestic one-day cricket: who, and which reels carry it

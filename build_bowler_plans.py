@@ -206,7 +206,9 @@ def build(slug, planner_out=None, only=None):
                              "spare_name": FE.pretty_position(fs["spare"]) if spare_i is not None else "",
                              "adjusted": fs.get("adjusted"), "balls": fs.get("legal"), "notes": fs.get("notes") or []})
             if white:                          # GPS-measured white-ball fields per phase (whiteball_fields)
+                import whiteball_fields
                 from whiteball_fields import phase_fields, with_defaults
+                whiteball_fields.for_series(_opp_key(slug))
                 cats = with_defaults(phase_fields(FMT, group, h), _opp_key(slug), group, h)
             b["hands"][h] = {
                 "n_balls": P.get("n_balls"), "n_wkts": P.get("n_wkts"), "runs": P.get("runs"),
@@ -342,6 +344,8 @@ def reseed(slug, planner_out=None):
     from build_coach_site import _series, _opp_key
     from whiteball_fields import phase_fields, with_defaults
     entry, opp = _series(slug), _opp_key(slug)
+    import whiteball_fields
+    whiteball_fields.for_series(opp)
     path = os.path.join(DATA, f"bowler_plans_{opp}.json")
     doc = json.load(open(path, encoding="utf-8"))
     FMT = doc.get("format") or "Test"

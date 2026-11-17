@@ -13,12 +13,22 @@ Neither is adjusted to the individual player, and every option says so. Both are
 fields: on their bowlers' cards that is a reference for the type, not a read of what that bowler's
 captain does.
 
-An ODI card offers three fields, Powerplay, Middle overs and Death (Tom, 10-11-2026): the most-set
-alternatives are not offered. They keep their slot numbers all the same, so every field keeps the
-planner slot it was seeded into and a coach's field saved in a most-set slot still shows (the pages
-show a saved field whose slot is no longer seeded). A series can also name its own starting fields
-for its pace bowlers (`data/default_fields_<opp>.json`, `with_defaults`): England ODI's are the three
-Tom set on Gus Atkinson's card.
+A card offers three fields, Powerplay, Middle overs and Death, and each STARTS FROM THE MOST-SET
+field (Tom, 17-11-2026: "the default field should be the most set field, as that one was generally
+more correct"). The GPS-corrected field is the start only in a phase with no most-set field of its
+own. Every field keeps the slot number it had in the full list of six, so a field keeps the planner
+slot it was seeded into and a coach's field saved in any slot still shows (the pages show a saved
+field whose slot is no longer seeded).
+
+England ODI is the exception and stays as it was built (Tom, 17-11: "no changes made to the current
+England ODI packs"): the three GPS-corrected fields (his 10-11 call), with its pace bowlers starting
+from the three he set on Gus Atkinson's card (`data/default_fields_<opp>.json`, `with_defaults`).
+`CORRECTED_START` names such a series. Every builder says which series it is building
+(`for_series`), and asking for fields without one raises, so the wrong start is never a default.
+
+Not built yet (Tom, atq 17-11): a card for a player who has fields and coach notes from an earlier
+series of the same format starts from those, shown and marked with the series they came from, and
+written nowhere until a coach saves. docs/PLAYER_PACK_REDESIGN.md.
 """
 import json
 import os
@@ -33,8 +43,15 @@ MENU = {"right_pace": "RA pace", "left_pace": "LA pace", "off_spin": "Off spin",
         "left_orthodox": "SLA orthodox", "leg_spin": "Leg spin", "left_unorthodox": "SLA unorthodox"}
 PHASES = {"ODI": (("odi", "pp1", "Powerplay"), ("odi", "middle", "Middle overs"), ("odi", "death", "Death")),
           "T20": (("t20", "powerplay", "Powerplay"), ("t20", "middle", "Middle overs"), ("t20", "death", "Death"))}
-# whether a card also offers each phase's most-set field (Tom, 10-11-2026: not for ODIs)
-ALTERNATIVES = {"ODI": False, "T20": True}
+# series that start from the GPS-corrected field, as they were built (see the docstring)
+CORRECTED_START = {"england_odi"}
+_SERIES = None
+
+
+def for_series(opp):
+    """Say which series' fields are being built (its opp key). Call it once at a builder's start."""
+    global _SERIES
+    _SERIES = str(opp)
 PACE = ("right_pace", "left_pace")
 DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
@@ -78,13 +95,16 @@ def phase_fields(fmt, group, hand, menu=True):
     fmt = _fmt(fmt)
     if not fmt or group not in SIMPLE:
         return []
+    if _SERIES is None:
+        raise RuntimeError("whiteball_fields.for_series(<opp key>) was not called: the starting fields "
+                           "differ by series (England ODI starts from the corrected field)")
     _need_gps()
     out = []
     for key, phase, word in PHASES[fmt]:
         gps = F.gps_corrected_field(key, SIMPLE[group], hand, phase)
         pts = _pts(gps)
         if pts:
-            out.append({"label": word, "fielders": pts, "basis":
+            out.append({"label": word, "phase": word, "kind": "corrected", "fielders": pts, "basis":
                         "The stock field for the type in this phase, with the changes GPS shows Australia makes "
                         "(not adjusted to this player)."})
         if not menu:
@@ -93,7 +113,7 @@ def phase_fields(fmt, group, hand, menu=True):
         mpts = _pts([p["label"] for p in (top or {}).get("positions", [])]) if top else []
         if mpts and sorted(f["label"] for f in mpts) != sorted(f["label"] for f in pts):
             pct = top.get("freq_pct")
-            out.append({"label": f"{word} · most set", "fielders": mpts, "basis":
+            out.append({"label": f"{word} · most set", "phase": word, "kind": "most_set", "fielders": mpts, "basis":
                         f"Australia's most-set field in this cell, from GPS: {top['name']}"
                         + (f", set {pct:.0f}% of the time" if pct is not None else "")
                         + " (not adjusted to this player)."})
@@ -101,8 +121,17 @@ def phase_fields(fmt, group, hand, menu=True):
     for i, c in enumerate(out):
         c.update({"slot": "option1" if i == 0 else f"c{i + 1}", "spare": None, "spare_name": "",
                   "adjusted": False, "notes": []})
-    if menu and not ALTERNATIVES[fmt]:
-        out = [c for c in out if not c["label"].endswith("· most set")]
+    if menu:
+        if _SERIES in CORRECTED_START:
+            out = [c for c in out if c["kind"] == "corrected"]
+        else:
+            # one field a phase: the most-set field under the phase's own name, the corrected field
+            # only where the phase has no most-set field
+            has = {c["phase"] for c in out if c["kind"] == "most_set"}
+            out = [dict(c, label=c["phase"]) for c in out
+                   if c["kind"] == "most_set" or c["phase"] not in has]
+    for c in out:
+        c.pop("phase", None), c.pop("kind", None)
     return out
 
 

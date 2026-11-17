@@ -56,6 +56,8 @@ def build(slug, out_root, only=None):
     if not FMT:
         raise SystemExit(f"{slug} is {fmt}: a Test series takes its planner from the decks")
     load_fmt = "T20" if FMT == "T20" else "ODI"       # a T20I series reads the pooled leagues, as the packs do
+    import whiteball_fields
+    whiteball_fields.for_series(_opp_key(slug))
     _start_kaleido()
     base = os.path.join(os.path.expanduser(out_root), "fieldplanner", series)
     img = os.path.join(base, "img")
@@ -168,8 +170,8 @@ def reseed(path):
         for b in p["batters"]:
             b.update(planner_seeds(phase_fields(m["format"], p["key"], b["hand"])))
     m["source"] = ("playerprofile build_planner_batters.py (no decks): the starting fields are the "
-                   "GPS-measured fields for the type and hand, one per phase (and its most-set alternative "
-                   "where whiteball_fields offers one)")
+                   "GPS-measured fields for the type and hand, one per phase (whiteball_fields: the most-set "
+                   "field, or the corrected field for a series built on it)")
     json.dump(m, open(path, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
     n = sum(len(b["auto_fields"]) for p in m["packs"] for b in p["batters"])
     print(f"reseeded {path}: {n} starting fields")
@@ -184,7 +186,9 @@ def main():
     ap.add_argument("--only", nargs="*", help="just these batter ids, merged into the manifest already in --out")
     a = ap.parse_args()
     if a.reseed:
-        from build_coach_site import _series
+        from build_coach_site import _series, _opp_key
+        import whiteball_fields
+        whiteball_fields.for_series(_opp_key(a.slug))
         series = _series(a.slug).get("planner_series")
         reseed(os.path.join(os.path.expanduser(a.out), "fieldplanner", series, "manifest.json"))
         return

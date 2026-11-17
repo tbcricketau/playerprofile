@@ -364,6 +364,8 @@ def _pack_page(slug, root, pack, entry, batters, tiers, smap, fmt, level, planne
     rows = {g: {r["bid"]: r for r in d["rows"]} for g, d in groups}
     whole = _overview(slug, macro)            # only for each technique's share of the balls
     whole_rows = {r["bid"]: r for r in whole["rows"]} if whole else {}
+    import whiteball_fields
+    whiteball_fields.for_series(_opp_key(slug))
     sp = os.path.join(DATA, f"shot_types_{_opp_key(slug)}.json")
     shot_types = (json.load(open(sp, encoding="utf-8")).get("batters") or {}) if os.path.exists(sp) else {}
     long_label = {g: d.get("label") or g for g, d in groups}
