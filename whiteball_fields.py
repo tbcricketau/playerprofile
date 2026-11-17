@@ -16,9 +16,9 @@ captain does.
 A card offers three fields, Powerplay, Middle overs and Death, and each STARTS FROM THE MOST-SET
 field (Tom, 17-11-2026: "the default field should be the most set field, as that one was generally
 more correct"). The GPS-corrected field is the start only in a phase with no most-set field of its
-own. Every field keeps the slot number it had in the full list of six, so a field keeps the planner
-slot it was seeded into and a coach's field saved in any slot still shows (the pages show a saved
-field whose slot is no longer seeded).
+own. A phase's field sits in the slot its corrected field had in the full list of six (the first is
+always "option1", which is where the planner files a card's first field), and a coach's field
+saved in any slot still shows (the pages show a saved field whose slot is no longer seeded).
 
 England ODI is the exception and stays as it was built (Tom, 17-11: "no changes made to the current
 England ODI packs"): the three GPS-corrected fields (his 10-11 call), with its pace bowlers starting
@@ -125,10 +125,15 @@ def phase_fields(fmt, group, hand, menu=True):
         if _SERIES in CORRECTED_START:
             out = [c for c in out if c["kind"] == "corrected"]
         else:
-            # one field a phase: the most-set field under the phase's own name, the corrected field
-            # only where the phase has no most-set field
+            # One field a phase: the most-set field under the phase's own name, the corrected field
+            # only where the phase has no most-set field. It sits in the PHASE's slot, the one its
+            # corrected field was numbered into, so the first field is always "option1": the planner
+            # files a card's first field there whatever slot it carries, and a most-set field left
+            # in its own slot (c2) was saved by the planner under option1 and read by the cards
+            # under c2 (found in review, 17-11-2026, before any upload).
+            slot_of = {c["phase"]: c["slot"] for c in out if c["kind"] == "corrected"}
             has = {c["phase"] for c in out if c["kind"] == "most_set"}
-            out = [dict(c, label=c["phase"]) for c in out
+            out = [dict(c, label=c["phase"], slot=slot_of.get(c["phase"], c["slot"])) for c in out
                    if c["kind"] == "most_set" or c["phase"] not in has]
     for c in out:
         c.pop("phase", None), c.pop("kind", None)
