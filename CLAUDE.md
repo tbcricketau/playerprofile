@@ -1490,8 +1490,9 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
     field). ODI and T20 from here on. England ODI is pinned as built (`CORRECTED_START`). Every
     builder calls `whiteball_fields.for_series(opp)` and fields asked for without it raise, which is
     how `report_web` was caught missing it.
-  - Not built: a previous series' fields and notes as a card's default (same format, shown and
-    not copied). A planner change.
+  - A previous series' fields and notes as a card's default (same format, shown and not copied):
+    built 18-11-2026 in the planner (`fieldstore.carried`, read-only, coaches only, the most recent
+    per item). Detail and one open point for the next ODI series in `docs/PLAYER_PACK_REDESIGN.md`.
 - **A rate is balls per dismissal or per wicket, never per 100 balls** (Tom, 11-11-2026). The danger
   ball reads "(out every 14 balls)" in the summary point (`batting_report._summary_points`) and "out
   every 14 balls" on the card (`build_pack_extras`). The bowler's wicket ball reads "a wicket every 19

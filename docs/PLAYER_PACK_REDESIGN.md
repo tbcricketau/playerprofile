@@ -411,5 +411,28 @@ point on nearly the same angle.
 Build status (17-11): items 1 to 5 are live on the T20I packs, Scouting and the planner
 (playerprofile `77c81a9` `c22e989` `9812498` `7206100`). 1,638 reels clean, 959 files match storage,
 coaches' work 0 lost. Six batters and four bowlers were thin and read all T20 cricket. Seven T20I
-bowlers carry Variations (Coles is in the ODI file too). Not built: item 6, the carry-forward of a
-previous series, which is a planner change (playerpacks) and has nothing to show on these cards yet.
+bowlers carry Variations (Coles is in the ODI file too).
+
+**Item 6 built 18-11-2026** (playerpacks `b2a323f`, deployed. playerprofile `b7c3605`). Tom's four
+further calls (atq 18-11): the most recent series **per item**, so a card can draw on two ·
+**coaches only**, the players' packs show nothing carried until a coach saves and publishes · a
+carried field **takes the place of** the generated starting field in its slot · build it now.
+
+- `fieldstore.carried(series, pack)` reads, for each seeded slot (Option 1, c2 to c8) and each
+  batter's notes, what was last saved for that player in an earlier series of the same format (the
+  key's suffix). Earlier is by each series' first save. `zz_*` series never carry. It only reads.
+- The planner page draws a carried field as the slot's starting field, with "From England home ODI
+  · James Franklin · 09-11-2026" as its first tag, and carried notes with the same line under them.
+  Saving is an ordinary first save in this series, and deleting leaves the slot gone here.
+- Scouting's cards (`coach_pack.js`, `coach_bowlers.js`, `report_web.js`) ask with `carry=shown`
+  and get carried items where a coaches' field goes, tagged "From <series>". They pick this up at a
+  series' next coach build. The players' packs (`view=players`) never carry.
+- Not carried: a coach's extra fields beyond the seeded slots, private drafts, deleted fields.
+- Nothing shows today: no series has an earlier one of its format. Read against the live store, a
+  new ODI series would carry 24 fields and 9 batters' notes on right-arm pace, and 8 fields on 3
+  bowlers to right-handers.
+- ⚠ **Open before the next ODI series**: England ODI's cards were seeded with the corrected field in
+  option1/c3/c5 and the most-set one in c2/c4/c6, and coaches saved in both. A new ODI card seeds
+  option1/c3/c5 only, so a field saved in c4 ("Middle overs") carries as an extra option beside the
+  generated c3 Middle overs, not in place of it. Decide with Tom whether c2/c4/c6 should map onto
+  option1/c3/c5 for that one series.
