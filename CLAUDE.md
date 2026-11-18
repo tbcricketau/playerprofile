@@ -1459,8 +1459,10 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   T20 profiles read T20Is alone and want 200 tracked balls, and Owen has 30 T20I balls against 666
   tracked in T20 leagues. `build_bowler_delivery.py --fmt T20I --supplement t20 --min-present 20` was
   run aside and his rows alone were added to `bowler_delivery_t20.csv`. Outcomes are never borrowed,
-  so he simulates at the right-arm pace average, `shape_source` t20 in the store. A rebuild of that
-  CSV without the flags drops him again.
+  so he simulates at the right-arm pace average, `shape_source` t20 in the store. Since 18-11-2026
+  matchupmodel's `shape_supplements.json` names him, so a plain `--fmt T20I` rebuild keeps him (its
+  16 rows matched the hand-added ones), and `export_matchup_store` prints any squad bowler it
+  leaves out for having no profile.
 - **The T20I packs carry what the ODI packs carry** (Tom, atq 17-11-2026, his six calls in
   `docs/PLAYER_PACK_REDESIGN.md`). A T20I series' builders run as "T20" (figures from the pooled T20
   scope) while its about file is built at T20I. Five things came across.
