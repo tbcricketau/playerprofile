@@ -55,6 +55,11 @@
     });
     return out.concat(mine.filter(f => !slotOf(f)).map(coach));
   }
+  // notes carried from an earlier series of this format (18-11-2026) say where they came from
+  function notesFrom(bid) {
+    const st = plannerState(), saved = st && st.notes && st.notes[bid];
+    return saved && saved.from ? ` · from ${esc(saved.from)}` : "";
+  }
   function notesFor(bid) {
     const st = plannerState(), saved = st && st.notes && st.notes[bid];
     return saved && saved.notes.length ? saved.notes : null;
@@ -138,7 +143,7 @@
       <div>
         <div class="who">${head}<div><h3>${esc(b.name)}${b.tier ? `<span class="tier ${esc(b.tier)}">${esc(b.chip)}</span>` : ""}</h3><div class="t">${esc(b.type)}</div></div></div>
         ${balls ? figures(b, x) : ""}
-        <div class="notes"><span class="lbl">Coaches' notes · vs ${word(state.h)}</span>${notes ? `<ul>${notes.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` : `<p class="none">None yet${BK.planner ? " — add them in the planner." : "."}</p>`}</div>
+        <div class="notes"><span class="lbl">Coaches' notes · vs ${word(state.h)}${notesFrom(b.id)}</span>${notes ? `<ul>${notes.map(l => `<li>${esc(l)}</li>`).join("")}</ul>` : `<p class="none">None yet${BK.planner ? " — add them in the planner." : "."}</p>`}</div>
         <div class="scout"><span class="lbl">Scouting notes</span>${read}</div>
         <div class="acts">${reels(b)}${b.report ? `<a class="solid" href="${esc(b.report)}">View report</a>` : ""}</div>
       </div>
@@ -168,7 +173,7 @@
   // the planner's current notes and fields for both hands
   if (BK.planner && window.fetch) {
     (BK.hands || []).forEach(h => {
-      fetch(`/fields/${encodeURIComponent(BK.planner)}/api/fields?pack=${encodeURIComponent(h.page)}`, { credentials: "same-origin", cache: "no-store" })
+      fetch(`/fields/${encodeURIComponent(BK.planner)}/api/fields?pack=${encodeURIComponent(h.page)}&carry=shown`, { credentials: "same-origin", cache: "no-store" })
         .then(r => r.ok ? r.json() : null)
         .then(d => { if (d) { state.planner[h.page] = d; render(); } })
         .catch(() => {});

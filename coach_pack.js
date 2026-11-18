@@ -35,6 +35,11 @@
     const mine = (st.saved || []).filter(f => f.batter_id === bid);
     return mine.filter(f => f.option1).concat(mine.filter(f => !f.option1));
   }
+  // notes carried from an earlier series of this format (18-11-2026) say where they came from
+  function notesFrom(bid, g) {
+    const st = state.planner[g], saved = st && st.notes && st.notes[bid];
+    return saved && saved.from ? ` · from ${esc(saved.from)}` : "";
+  }
   function notesFor(bid, g) {
     const st = state.planner[g];
     const saved = st && st.notes && st.notes[bid];
@@ -183,7 +188,7 @@
       <div>
         <div class="who">${head}<div><h3>${esc(b.name)}${b.tier ? `<span class="tier ${esc(b.tier)}">${esc(b.chip)}</span>` : ""}</h3><div class="hand">${esc(b.hand)}${b.role ? " · " + esc(b.role) : ""}</div></div></div>
         ${figures(row.threat, row.shots)}
-        <div class="notes"><span class="lbl">Coaches' notes</span>${notes ? `<ul>${notes.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="none">None yet${PK.planner ? " — add them in the planner." : "."}</p>`}</div>
+        <div class="notes"><span class="lbl">Coaches' notes${notesFrom(b.id, g)}</span>${notes ? `<ul>${notes.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p class="none">None yet${PK.planner ? " — add them in the planner." : "."}</p>`}</div>
         <div class="scout"><span class="lbl">Scouting notes</span><p class="plan">${plan}</p></div>
         ${shotsBlock(row.shots, g)}
         <div class="acts">${b.vision && row.balls && !thin ? `<a href="${esc(b.vision)}">${PLAY} Vision</a>` : ""}${b.report ? `<a class="solid" href="${esc(b.report)}">View report</a>` : ""}</div>
@@ -227,7 +232,7 @@
   // the planner's current notes and fields for every sub-type this pack covers
   if (PK.planner && window.fetch) {
     subs().forEach(g => {
-      fetch(`/fields/${encodeURIComponent(PK.planner)}/api/fields?pack=${encodeURIComponent(g)}`, { credentials: "same-origin", cache: "no-store" })
+      fetch(`/fields/${encodeURIComponent(PK.planner)}/api/fields?pack=${encodeURIComponent(g)}&carry=shown`, { credentials: "same-origin", cache: "no-store" })
         .then(r => r.ok ? r.json() : null)
         .then(d => { if (d) { state.planner[g] = d; render(); } })
         .catch(() => {});

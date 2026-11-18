@@ -144,7 +144,7 @@
       if (!lines.length && (!coach || el.dataset.optional)) { el.hidden = true; return; }
       el.classList.toggle("empty", !lines.length);
       const edit = coach ? `<a href="${editHref(el.dataset.pack, bid)}">${lines.length ? "Edit in the planner" : "Add in the planner"}</a>` : "";
-      el.innerHTML = `<div class="t"><b>${esc(el.dataset.title || "Coaches' notes")}</b>${edit}</div>`
+      el.innerHTML = `<div class="t"><b>${esc(el.dataset.title || "Coaches' notes")}${st && st.notes && st.notes[bid] && st.notes[bid].from ? " · from " + esc(st.notes[bid].from) : ""}</b>${edit}</div>`
         + (lines.length ? lines.map(l => `<p>${esc(l)}</p>`).join("") : "<p>None yet.</p>");
       el.hidden = false;
     });
@@ -152,7 +152,7 @@
 
   async function load(pack) {
     try {
-      const r = await fetch(`/fields/${encodeURIComponent(HP.series)}/api/fields?pack=${encodeURIComponent(pack)}`,
+      const r = await fetch(`/fields/${encodeURIComponent(HP.series)}/api/fields?pack=${encodeURIComponent(pack)}${HP.readOnly ? "" : "&carry=shown"}`,
                             { credentials: "same-origin", cache: "no-store" });
       if (r.ok) state.packs[pack] = await r.json();
     } catch (e) { /* the page stands without the planner: estimates and no notes */ }
