@@ -655,6 +655,8 @@ def build(slug, out_root, only=None, clips_root=None):
     about_bowl, about_bat = _about(slug)
     # white-ball: each bowler's usual overs per phase (build_over_split.py), the summary's second point
     splits = (_load(os.path.join(DATA, f"over_split_{opp}.json"), {}) or {}).get("bowlers") or {}
+    import build_swing_split as SW
+    swings = SW.load(opp)
     import whiteball_fields
     whiteball_fields.for_series(opp)
     # their sweeps against spin, ramps against pace, false shots against slower balls (build_shot_types.py)
@@ -780,6 +782,10 @@ def build(slug, out_root, only=None, clips_root=None):
             over_split = (splits.get(str(bid)) or {}).get("text")
             if over_split:
                 facts.insert(1 if facts else 0, over_split)
+            # which way they swing the new ball to this hand (build_swing_split.py, Tom 18-11-2026)
+            swing = (swings.get(str(bid)) or {}).get(hand)
+            if swing:
+                facts.insert(min(len(facts), 2 if over_split else 1), f"{SW.LABEL}: {swing}")
             orp = BPS._over_round_point(meta, hand.lower())
             if orp:
                 facts.append(orp)

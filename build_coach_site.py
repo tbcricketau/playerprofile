@@ -303,6 +303,11 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
     arrive when the page opens, as on the Pace and Spin packs."""
     out, n_vis, n_var = [], 0, 0
     variations = _variations(slug)
+    # which way each pace bowler swings the new ball, a fact added beside the plan file's own
+    # (build_swing_split.py, Tom 18-11-2026). The plan file is read, never rewritten.
+    import copy
+    import build_swing_split as SW
+    swings = SW.load(_opp_key(slug))
     order = sorted(plans["bowlers"].items(),
                    key=lambda kv: (-int(kv[1].get("order") or 0), kv[1].get("name") or ""))
     for bid, b in order:
@@ -312,6 +317,14 @@ def _bowlers_page(slug, root, entry, plans, about, tiers, heads, reports, planne
         reels = _bowler_vision(root, bid, b["name"], about.get(bid) or {}, variations)
         n_vis += bool(reels)
         n_var += bool(reels.get("var"))
+        hands = b["hands"]
+        if swings.get(str(bid)):
+            hands = copy.deepcopy(hands)
+            for h, line in swings[str(bid)].items():
+                facts = ((hands.get(h) or {}).get("how_to_play") or {}).get("facts")
+                if line and isinstance(facts, list):
+                    facts.append({"label": SW.LABEL, "text": line})
+        b = dict(b, hands=hands)
         out.append({"id": bid, "name": b["name"], "type": b.get("type") or "", "pace": bool(b.get("pace")),
                     "tier": tier, "chip": SR.TIER_CHIP.get(tier, ""), "initials": _initials(b["name"]),
                     "head": ("../" + heads[bid]) if heads.get(bid) else "",
