@@ -1463,6 +1463,16 @@ own tree, `hub_pack_site/packs/<slug>/`, which the playerpacks app serves at `/p
   matchupmodel's `shape_supplements.json` names him, so a plain `--fmt T20I` rebuild keeps him (its
   16 rows matched the hand-added ones), and `export_matchup_store` prints any squad bowler it
   leaves out for having no profile.
+- **New-ball swing split on their pace bowlers' cards** (Tom, atq 18-11-2026, to show who swings it
+  both ways, as Sonny Baker does). `build_swing_split.py --slug <slug>` on the box writes
+  `data/swing_split_<opp>.json`, a sidecar. Of a bowler's new-ball deliveries the coders labelled
+  as swinging (lookup 2827, overs 1-20 first-class, 1-10 one-day, 1-6 T20, all formats), the share
+  in and away to each hand: "New-ball swing: 72% in, 28% away (147 balls that swung, all formats)".
+  No bar for "both ways", the split always shows from 40 swinging balls to that hand. Read by
+  `build_hub_packs` (the bowler's summary, our batter's hand) and `build_coach_site._bowlers_page`
+  (a fact on Their bowlers). Not the web reports. Over whole innings Baker read 13% away to
+  right-handers, which is why it is new ball only and of balls that swung. Only tracked balls carry
+  a label, so Crocombe (17) and Jack (0) have no line.
 - **The T20I packs carry what the ODI packs carry** (Tom, atq 17-11-2026, his six calls in
   `docs/PLAYER_PACK_REDESIGN.md`). A T20I series' builders run as "T20" (figures from the pooled T20
   scope) while its about file is built at T20I. Five things came across.
