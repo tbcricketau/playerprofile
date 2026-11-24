@@ -397,7 +397,15 @@ def _bowler_reels(clips, bid, hand, about, dom=None, rec=None):
                 continue
             xkey = f"{kk}X{O}_{bid}"
             if clips.get(xkey):
-                out.append((xkey, f"{clips.vision_url}#{xkey}", f"{lab} · to {word}" + ("*" if home else ""),
+                # The other hand's reel can itself be a borrow from another format (Daryl Mitchell's
+                # wicket balls in the New Zealand Test packs are ODI middle overs, 24-11-2026). The
+                # builder records it under the PACK's hand, so star and name it as above.
+                xfmt = (about or {}).get(f"clip_format_{kind}_{hand.lower()}")
+                if xfmt:
+                    borrowed.add(str((about or {}).get("c21_words") or "Cricket-21") if xfmt == "C21"
+                                 else "T20 league" if xfmt == "T20" else str(xfmt))
+                out.append((xkey, f"{clips.vision_url}#{xkey}",
+                            f"{lab} · to {word}" + ("*" if home or xfmt else ""),
                             clips.count(xkey)))
     # An analyst's hand-cut variations, if a set has been published for this series. One reel, not
     # one per hand: an off cutter is an off cutter whoever faces it (Tom, 09-11-2026). Added after

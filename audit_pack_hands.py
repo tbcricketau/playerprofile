@@ -323,12 +323,35 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
         if not m:
             return None
         kind = _BORROW_KIND[m.group(1)]
-        declared = (about.get("bowlers", {}).get(str(det["them"])) or {}).get(
-            f"clip_format_{kind}_{det['hand']}")
+        entry = about.get("bowlers", {}).get(str(det["them"])) or {}
+        hand = str(det["hand"]).lower()
+        if det.get("x"):
+            # An other-hand reel is recorded under the PACK's hand (the builder's
+            # `clip_format_{kind}_{pack hand}` beside `clip_hand_…`), not the hand it shows.
+            hand = {"lhb": "rhb", "rhb": "lhb", "l": "r", "r": "l"}.get(hand, hand)
+        declared = entry.get(f"clip_format_{kind}_{hand}")
         if not declared:
             return None
         legal = {_norm(src) for src, _phase in _borrow_for(
             {"Test": "Test", "ODI": "ODI", "T20": "T20I"}[want_fmt], kind)}
+        return _norm(declared) if _norm(declared) in legal else None
+
+    def _declared_batter_borrow(k, det):
+        """A starred scoring or dismissal reel may carry the one format its `clip_scope_<type>`
+        declares, if the borrow table permits that format for a whole-innings (stock) reel of the
+        pack's format: `batter_clips_best` steps exactly where a stock reel may. Until 24-11-2026
+        this audit allowed a batter reel no borrow at all, and refused Blair Tickner's and Matthew
+        Fisher's ODI middle-overs reels on the New Zealand Test packs. Shot-type reels (sweeps,
+        ramps) have a scope of their own and get none."""
+        if not det.get("starred") or not want_fmt or not re.match(r"(sco|dsm)", k):
+            return None
+        scope = str((about.get("batters", {}).get(str(det["them"])) or {}).get(
+            f"clip_scope_{det['group']}") or "")
+        declared = scope.split(":", 1)[0]
+        if not declared:
+            return None
+        legal = {_norm(src) for src, _phase in _borrow_for(
+            {"Test": "Test", "ODI": "ODI", "T20": "T20I"}[want_fmt], "stock")}
         return _norm(declared) if _norm(declared) in legal else None
 
     def _fmt_check(fn, k, ids, allow=None):
@@ -420,7 +443,7 @@ def run_audit(site, opp="bangladesh", slug="bangladesh-home-2026", quiet=False, 
             if bad:
                 typ += 1
                 print(f"  TYPE    {fn:<30} {k:<16} declares {det['group']}, reel has {sorted(groups)}")
-            _fmt_check(fn, k, ids)
+            _fmt_check(fn, k, ids, allow=_declared_batter_borrow(k, det))
 
         elif kind == "h2h":
             me, them = ("striker", "bowler") if det["dir"] == "bat" else ("bowler", "striker")
