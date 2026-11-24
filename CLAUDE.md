@@ -1612,6 +1612,37 @@ the open points: `docs/PLAYER_PACK_REDESIGN.md` § "The web reports".
   Until 12-10 the app's gzip cache was keyed on the path alone, so a rebuilt page reached a browser
   in its old form while curl saw the new one.
 
+### New Zealand home Tests, first build (24-11-2026)
+
+Slug `new-zealand-home-2026-27`, opp key `new_zealand_test`, planner series
+`new_zealand_home_test`. Both squads are provisional (ours the selection planner's wider 21, theirs
+the India XI plus the old squad). Built on the box in two stages and uploaded closed to players.
+The scripts are `box_nz_2411a.sh` (data) and `box_nz_2411b.sh` (pages) in `~/tmp` there. What the
+build turned up, each fixed in code:
+
+- **The box had no Test profile CSVs**, so the store export failed. Stage A builds them, and copies
+  the Test effect files in from `matchupmodel/data/_test_effects/` for the export only.
+- **The hand audit refused 48 declared borrows.** A batter's scoring and dismissal reels may borrow
+  ODI middle overs in a Test pack (`batter_clips_best` steps where a stock reel may), and an
+  other-hand bowler reel can be a borrow too. The audit allowed neither. It now reads
+  `clip_scope_<type>` for a starred `sco`/`dsm` reel and the pack hand's `clip_format_*` for an `X`
+  reel, and `build_hub_packs` stars an other-hand reel that is also a borrow.
+- **A bowler coded under two types took the type read last** in matchupmodel (`7547792`). Michael
+  Bracewell, 1,606 off-spin balls and 286 coded left-arm orthodox, was labelled and simulated as
+  left-arm orthodox. The label and the simulated type are now the type bowled most.
+- **The swing split is pace bowlers only.** A spinner's arm ball is coded as swing (Ajaz Patel read
+  "100% in").
+- **`build_overview` can hang on a database read** with no CPU and no log line (leg spin, 25
+  minutes). Kill it and rerun. A stage that waits on another needs a longer wait than two hours.
+- **A Test series' planner batter side comes from the decks**: presentationbuilder's
+  `export_field_planner.py` writes under the config's `planner_series`, and the folder is merged
+  into the box's `~/fp_nz` before staging.
+- `check_site coach_build` reports the web reports' `${editHref(...)}` template as a dead link on
+  every page. It is script text, not a link.
+
+Open: Connolly, Rocchiccioli, Bartlett and Fisher have no Test delivery profile and so no
+match-ups. Devon Conway has no headshot. One refresh is due before 09-12 with head-to-head frozen.
+
 ### The hub half — the Scouting page's Archive (04-10-2026)
 
 The hub's Scouting index (`coach/index.html`, written by `build_coach_site._write_index`) lists the
