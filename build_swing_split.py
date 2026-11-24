@@ -98,8 +98,10 @@ def build(slug):
            "new_ball": NEW_BALL, "bowlers": {}}
     for bid, meta in bowlers.items():
         c = got.get(str(bid))
-        if not c:
-            continue                                   # a spinner, or a pace bowler never tracked
+        if not c or meta.get("is_pace") is False:
+            # a pace bowler never tracked, or a spinner. A spinner's arm ball is coded as swing
+            # too: Ajaz Patel read "100% in" on 106 balls in the first New Zealand build.
+            continue
         row = {h: dict(c.get(h) or {"in": 0, "out": 0, "none": 0}) for h in ("RHB", "LHB")}
         for h in row:
             row[h]["text"] = text(row[h])
