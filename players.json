@@ -798,5 +798,19 @@
   "bowl_groups": {
    "pace": "right_pace"
   }
+ },
+ "3080078": {
+  "name": "Mitchell Swepson",
+  "role": "Bowler",
+  "packs": [
+   "batting",
+   "bowling"
+  ],
+  "bowl_types": [
+   "spin"
+  ],
+  "bowl_groups": {
+   "spin": "leg_spin"
+  }
  }
 }

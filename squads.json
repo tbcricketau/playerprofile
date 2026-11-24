@@ -254,5 +254,37 @@
     },
     "opponent": "England",
     "opp_key": "england_t20i"
+  },
+  "new-zealand-home-2026-27": {
+    "name": "New Zealand Home Test Series 2026/27",
+    "team": "Australia",
+    "opponent": "New Zealand",
+    "opposition": "Australia v New Zealand · Tests · in Australia",
+    "format": "Test",
+    "opp_key": "new_zealand_test",
+    "players": [
+      "350104",
+      "2950104",
+      "2840030",
+      "880149",
+      "1940169",
+      "2480059",
+      "1300007",
+      "1300076",
+      "2710059",
+      "940135",
+      "3080014",
+      "2480067",
+      "3550371",
+      "3750021",
+      "2730059",
+      "2750002",
+      "3080078",
+      "1300071",
+      "3550677",
+      "2700257",
+      "2840029"
+    ],
+    "_note": "Provisional, 24-11-2026 (Tom, atq): the selection planner's wider squad for Tests v New Zealand, its 11 selected and 9 possible, plus Xavier Bartlett (marked unavailable there, added on Tom's call). Cut to the named squad before the series is opened to players."
   }
 }
